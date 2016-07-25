@@ -74,7 +74,7 @@ import Foundation
     /// - parameter results: The results (in case of success).
     /// - parameter error: The error (in case of failure).
     ///
-    public typealias ResultHandler = (results: SearchResults?, error: NSError?) -> Void
+    public typealias ResultHandler = @convention(block) (results: SearchResults?, error: NSError?) -> Void
 
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
@@ -124,8 +124,10 @@ import Foundation
     /// The index used by this search helper.
     @objc public let index: Index
     
-    /// User callback for handling results.
-    private let resultHandler: ResultHandler
+    /// User callbacks for handling results.
+    /// There should be at least one, but multiple handlers may be registered if necessary.
+    ///
+    private var resultHandlers: [ResultHandler] = []
     
     // MARK: State management
     // ----------------------
@@ -166,11 +168,19 @@ import Foundation
 
     // MARK: -
     
-    @objc public init(index: Index, resultHandler: ResultHandler) {
+    @objc public init(index: Index) {
         self.index = index
-        self.resultHandler = resultHandler
     }
-
+    
+    @objc public convenience init(index: Index, resultHandler: ResultHandler) {
+        self.init(index: index)
+        self.resultHandlers = [resultHandler]
+    }
+    
+    @objc public func addResultHandler(resultHandler: ResultHandler) {
+        self.resultHandlers.append(resultHandler)
+    }
+    
     /// Search.
     @objc public func search() {
         requestedState = State(copy: nextState)
@@ -242,25 +252,21 @@ import Foundation
     
     /// Completion handler for search requests.
     private func handleResults(content: [String: AnyObject]?, error: NSError?) {
-        do {
-            if content != nil && error == nil {
-                try _handleResults(content!)
-                resultHandler(results: self.results, error: nil)
+        if let content = content {
+            if receivedState.page == receivedState.initialPage {
+                self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
             } else {
-                resultHandler(results: nil, error: error)
+                self.results?.add(content)
             }
-        } catch let e as NSError {
-            resultHandler(results: nil, error: e)
+            callResultHandlers(self.results, error: nil)
+        } else {
+            callResultHandlers(nil, error: error)
         }
     }
     
-    /// Exception-throwing flavor of `handleResults`.
-    private func _handleResults(content: [String: AnyObject]) throws {
-        // Update hits.
-        if receivedState.page == receivedState.initialPage {
-            self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
-        } else {
-            self.results?.add(content)
+    private func callResultHandlers(results: SearchResults?, error: NSError?) {
+        for resultHandler in resultHandlers {
+            resultHandler(results: results, error: error)
         }
     }
 
