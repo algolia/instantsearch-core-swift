@@ -25,111 +25,155 @@ import AlgoliaSearch
 import Foundation
 
 
-/// Match level of a highlight or snippet result.
-public enum MatchLevel: String {
+/// Match level of a highlight or snippet result (internal version).
+enum MatchLevel_: String {
     case Full = "full"
     case Partial = "partial"
     case None = "none"
 }
 
+/// Match level of a highlight or snippet result.
+@objc public enum MatchLevel: Int {
+    case Full = 2
+    case Partial = 1
+    case None = 0
+}
+
+/// Convert a Swift enum into
+func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
+    if let level = matchLevel {
+        switch level {
+        case .Full: return .Full
+        case .Partial: return .Partial
+        case .None: return .None
+        }
+    }
+    return .None
+}
+
 /// Highlight result for an attribute of a hit.
+///
 /// NOTE: Wraps the raw JSON returned by the API.
 ///
-public struct HighlightResult {
-    public let json: [String: AnyObject]
-    public var value: String? { return json["value"] as? String }
-    public var matchLevel: MatchLevel? {
+@objc public class HighlightResult: NSObject {
+    @objc public let json: [String: AnyObject]
+    @objc public var value: String? { return json["value"] as? String }
+    @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
+    @objc public var matchedWords: [String]? { return json["matchedWords"] as? [String] }
+    
+    var matchLevel_: MatchLevel_? {
         if let matchLevelString = json["matchLevel"] as? String {
-            return MatchLevel(rawValue: matchLevelString)
+            return MatchLevel_(rawValue: matchLevelString)
         } else {
             return nil
         }
     }
-    public var matchedWords: [String]? { return json["matchedWords"] as? [String] }
+    
+    init(json: [String: AnyObject]) {
+        self.json = json
+    }
 }
 
 /// Snippet result for an attribute of a hit.
+///
 /// NOTE: Wraps the raw JSON returned by the API.
 ///
-public struct SnippetResult {
-    public let json: [String: AnyObject]
-    public var value: String? { return json["value"] as? String }
-    public var matchLevel: MatchLevel? {
+@objc public class SnippetResult: NSObject {
+    @objc public let json: [String: AnyObject]
+    @objc public var value: String? { return json["value"] as? String }
+    @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
+    
+    var matchLevel_: MatchLevel_? {
         if let matchLevelString = json["matchLevel"] as? String {
-            return MatchLevel(rawValue: matchLevelString)
+            return MatchLevel_(rawValue: matchLevelString)
         } else {
             return nil
         }
+    }
+
+    init(json: [String: AnyObject]) {
+        self.json = json
     }
 }
 
 /// Ranking info for a hit.
+///
 /// NOTE: Wraps the raw JSON returned by the API.
 ///
-public struct RankingInfo {
-    public let json: [String: AnyObject]
-    public var nbTypos: Int? { return json["nbTypos"] as? Int }
-    public var firstMatchedWord: Int? { return json["firstMatchedWord"] as? Int }
-    public var proximityDistance: Int? { return json["proximityDistance"] as? Int }
-    public var userScore: Int? { return json["userScore"] as? Int }
-    public var geoDistance: Int? { return json["geoDistance"] as? Int }
-    public var geoPrecision: Int? { return json["geoPrecision"] as? Int }
-    public var nbExactWords: Int? { return json["nbExactWords"] as? Int }
-    public var words: Int? { return json["words"] as? Int }
-    public var filters: Int? { return json["filters"] as? Int }
+@objc public class RankingInfo: NSObject {
+    @objc public let json: [String: AnyObject]
+    @objc public var nbTypos: Int { return json["nbTypos"] as? Int ?? 0 }
+    @objc public var firstMatchedWord: Int { return json["firstMatchedWord"] as? Int ?? 0 }
+    @objc public var proximityDistance: Int { return json["proximityDistance"] as? Int ?? 0 }
+    @objc public var userScore: Int { return json["userScore"] as? Int ?? 0 }
+    @objc public var geoDistance: Int { return json["geoDistance"] as? Int ?? 0 }
+    @objc public var geoPrecision: Int { return json["geoPrecision"] as? Int ?? 0 }
+    @objc public var nbExactWords: Int { return json["nbExactWords"] as? Int ?? 0 }
+    @objc public var words: Int { return json["words"] as? Int ?? 0 }
+    @objc public var filters: Int { return json["filters"] as? Int ?? 0 }
+    
+    init(json: [String: AnyObject]) {
+        self.json = json
+    }
 }
 
 /// A value of a given facet, together with its number of occurrences.
 ///
-public struct FacetValue {
-    public let value: String
-    public let count: Int
+@objc public class FacetValue: NSObject {
+    @objc public let value: String
+    @objc public let count: Int
+    
+    init(value: String, count: Int) {
+        self.value = value
+        self.count = count
+    }
 }
+
 
 /// Search results.
 /// NOTE: Wraps the raw JSON returned by the API.
 ///
-public class SearchResults {
+@objc public class SearchResults: NSObject {
     /// The last received JSON content.
     /// Either that passed to the initializer, or that last passed to `add()`.
-    public private(set) var lastContent: [String: AnyObject]
+    @objc public private(set) var lastContent: [String: AnyObject]
     
     /// Facets that will be treated as disjunctive (`OR`). By default, facets are conjunctive (`AND`).
-    public let disjunctiveFacets: [String]
+    @objc public let disjunctiveFacets: [String]
 
     /// Hits for all the received pages.
-    public private(set) var hits: [[String: AnyObject]] = []
+    @objc public private(set) var hits: [[String: AnyObject]] = []
     
     /// Facets for the last results. Lazily computed; accessed through `facets()`.
     private var facets: [String: [FacetValue]] = [:]
 
     /// Total number of hits.
-    public var nbHits: Int? { return lastContent["nbHits"] as? Int }
+    @objc public var nbHits: Int { return lastContent["nbHits"] as? Int ?? 0 }
 
     /// Last returned page.
-    public var page: Int? { return lastContent["page"] as? Int }
+    @objc public var page: Int { return lastContent["page"] as? Int ?? 0 }
 
     /// Total number of pages.
-    public var nbPages: Int? { return lastContent["nbPages"] as? Int }
+    @objc public var nbPages: Int { return lastContent["nbPages"] as? Int ?? 0 }
     
     /// Number of hits per page.
-    public var hitsPerPage: Int? { return lastContent["hitsPerPage"] as? Int }
+    @objc public var hitsPerPage: Int { return lastContent["hitsPerPage"] as? Int ?? 0 }
     
     /// Processing time of the last query (in ms).
-    public var processingTimeMS: Int? { return lastContent["processingTimeMS"] as? Int }
+    @objc public var processingTimeMS: Int { return lastContent["processingTimeMS"] as? Int ?? 0 }
     
     /// Whether facet counts are exhaustive.
-    public var exhaustiveFacetsCount: Bool? { return lastContent["exhaustiveFacetsCount"] as? Bool }
+    @objc public var exhaustiveFacetsCount: Bool { return lastContent["exhaustiveFacetsCount"] as? Bool ?? false }
     
     /// Query corresponding to the last results.
     /// WARNING: Do not modify it!
     ///
-    public private(set) var lastQuery: Query
+    @objc public private(set) var lastQuery: Query
 
     // MARK: - Initialization, termination
     
     /// Create search results from an initial response from the API.
-    public init(content: [String: AnyObject], disjunctiveFacets: [String]) {
+    init(content: [String: AnyObject], disjunctiveFacets: [String]) {
         self.lastContent = content
         self.disjunctiveFacets = disjunctiveFacets
         self.hits = content["hits"] as? [[String: AnyObject]] ?? [[String: AnyObject]]()
@@ -141,7 +185,7 @@ public class SearchResults {
     }
     
     /// Add a new page to the results.
-    public func add(results: [String: AnyObject]) {
+    func add(results: [String: AnyObject]) {
         if let hits = results["hits"] as? [[String: AnyObject]] {
             self.hits.appendContentsOf(hits)
         }
@@ -156,7 +200,7 @@ public class SearchResults {
     /// - parameter disjunctive: true if this is a disjunctive facet, false if it's a conjunctive facet (default).
     /// - return: The corresponding facet values.
     ///
-    public func facets(name: String) -> [FacetValue]? {
+    @objc public func facets(name: String) -> [FacetValue]? {
         // Use stored values if available.
         if let values = facets[name] {
             return values
@@ -187,12 +231,12 @@ public class SearchResults {
     }
     
     /// Get the highlight result for an attribute of a hit.
-    public func highlightResult(index: Int, path: String) -> HighlightResult? {
+    @objc public func highlightResult(index: Int, path: String) -> HighlightResult? {
         return SearchResults.getHighlightResult(hits[index], path: path)
     }
 
     /// Get the snippet result for an attribute of a hit.
-    public func snippetResult(index: Int, path: String) -> SnippetResult? {
+    @objc public func snippetResult(index: Int, path: String) -> SnippetResult? {
         return SearchResults.getSnippetResult(hits[index], path: path)
     }
 

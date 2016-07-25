@@ -26,20 +26,20 @@ import Foundation
 
 /// Renders marked up text into attributed strings with markup removed and the visual attributes applied to highlights.
 ///
-public class HighlightRenderer {
+@objc public class HighlightRenderer: NSObject {
     /// Visual attributes to apply to the highlights.
-    var highlightAttrs: [String: AnyObject]
+    @objc public var highlightAttrs: [String: AnyObject]
     
     /// Markup identifying the beginning of a highlight. Defaults to "<em>".
-    var startTag: String = "<em>"
+    @objc public var startTag: String = "<em>"
 
     /// Markup identifying the end of a highlight. Defaults to "</em>".
-    var endTag: String = "</em>"
+    @objc public var endTag: String = "</em>"
 
     /// Whether the markup is case sensitive. Defaults to false.
-    var caseSensitive: Bool = false
+    @objc public var caseSensitive: Bool = false
     
-    public init(highlightAttrs: [String: AnyObject]) {
+    @objc public init(highlightAttrs: [String: AnyObject]) {
         self.highlightAttrs = highlightAttrs
     }
 
@@ -48,7 +48,7 @@ public class HighlightRenderer {
     /// - param text: The marked up text to render.
     /// - return: An atributed string with highlights outlined.
     ///
-    public func render(text: String) -> NSAttributedString {
+    @objc public func render(text: String) -> NSAttributedString {
         let newText = NSMutableString(string: text)
         var rangesToHighlight = [NSRange]()
         

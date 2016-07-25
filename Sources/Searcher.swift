@@ -68,7 +68,7 @@ import Foundation
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
 ///
-public class Searcher: NSObject {
+@objc public class Searcher: NSObject {
     /// Handler for search results.
     ///
     /// - parameter results: The results (in case of success).
@@ -122,7 +122,7 @@ public class Searcher: NSObject {
     }
 
     /// The index used by this search helper.
-    public let index: Index
+    @objc public let index: Index
     
     /// User callback for handling results.
     private let resultHandler: ResultHandler
@@ -131,13 +131,13 @@ public class Searcher: NSObject {
     // ----------------------
     
     /// The query that will be used for the next search.
-    public var query: Query {
+    @objc public var query: Query {
         get { return nextState.query }
         set { nextState.query = newValue }
     }
     
     /// The disjunctive facets that will be used for the next search.
-    public var disjunctiveFacets: [String] {
+    @objc public var disjunctiveFacets: [String] {
         get { return nextState.disjunctiveFacets }
         set { nextState.disjunctiveFacets = newValue }
     }
@@ -159,27 +159,27 @@ public class Searcher: NSObject {
     private var receivedState: State!
     
     /// The last received results.
-    public private(set) var results: SearchResults?
+    @objc public private(set) var results: SearchResults?
     
     /// All currently ongoing requests.
-    public private(set) dynamic var pendingRequests: [NSOperation] = []
+    @objc public private(set) dynamic var pendingRequests: [NSOperation] = []
 
     // MARK: -
     
-    public init(index: Index, resultHandler: ResultHandler) {
+    @objc public init(index: Index, resultHandler: ResultHandler) {
         self.index = index
         self.resultHandler = resultHandler
     }
 
     /// Search.
-    public func search() {
+    @objc public func search() {
         requestedState = State(copy: nextState)
         requestedState.page = requestedState.initialPage
         _doNextRequest()
     }
     
     /// Load more content, if possible.
-    public func loadMore() {
+    @objc public func loadMore() {
         // Cannot load more when no results have been received.
         if results == nil {
             return
@@ -270,7 +270,7 @@ public class Searcher: NSObject {
     /// Because if search results are slow to come, the user will be acting on the received state. If you just toggle
     /// the next query state, it might lead to inconsistent results.
     ///
-    public func toggleFacetRefinement(facetRefinement: FacetRefinement) {
+    @objc public func toggleFacetRefinement(facetRefinement: FacetRefinement) {
         let receivedQueryHelper = QueryHelper(query: receivedState.query)
         var enabled = receivedQueryHelper.hasFacetRefinement(facetRefinement)
         enabled = !enabled

@@ -25,22 +25,22 @@ import AlgoliaSearch
 import Foundation
 
 
-public struct FacetRefinement: Equatable {
+@objc public class FacetRefinement: NSObject {
     /// Name of the facet.
-    public var name: String
+    @objc public var name: String
     
     /// Value for the facet.
-    public var value: String
+    @objc public var value: String
 
     /// Whether the refinement is inclusive (default) or exclusive (value prefixed with "-").
-    public var inclusive: Bool = true
+    @objc public var inclusive: Bool = true
     
     /// Build a facet filter corresponding to this refinement.
-    public func buildFacetFilter() -> String {
+    @objc public func buildFacetFilter() -> String {
         return "\(name):\(inclusive ? "" : "-")\(value)"
     }
     
-    public init(name: String, value: String, inclusive: Bool = true) {
+    @objc public init(name: String, value: String, inclusive: Bool = true) {
         self.name = name
         self.value = value
         self.inclusive = inclusive
@@ -54,16 +54,16 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
 
 /// Utilities to build and interpret `Query` instances.
 ///
-public class QueryHelper {
-    public let query: Query
+@objc public class QueryHelper: NSObject {
+    @objc public let query: Query
     
     /// Create an initially empty query builder.
-    public convenience init() {
+    @objc public convenience override init() {
         self.init(query: Query())
     }
     
     /// Create a query builder wrapping the specified query.
-    public init(query: Query) {
+    @objc public init(query: Query) {
         self.query = query
     }
     
@@ -71,7 +71,7 @@ public class QueryHelper {
     ///
     /// - return: A dictionary mapping each facet name to the corresponding list of values.
     ///
-    public func buildFacetRefinementsForDisjunctiveFaceting() -> [String: [String]] {
+    @objc public func buildFacetRefinementsForDisjunctiveFaceting() -> [String: [String]] {
         if let facetFilters = query.facetFilters {
             return _buildFacetRefinementsForDisjunctiveFaceting(facetFilters)
         } else {
@@ -105,7 +105,7 @@ public class QueryHelper {
     /// Test whether the query contains the specified facet refinement.
     /// The test looks for both conjunctive or disjunctive refinements.
     ///
-    public func hasFacetRefinement(facetRefinement: FacetRefinement) -> Bool {
+    @objc public func hasFacetRefinement(facetRefinement: FacetRefinement) -> Bool {
         return findFacetRefinement({ $0 == facetRefinement }) != nil
     }
     
@@ -114,12 +114,12 @@ public class QueryHelper {
     ///
     /// - parameter facetRefinement: The facet refinement to add.
     ///
-    public func addConjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
+    @objc public func addConjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
         query.facetFilters = query.facetFilters ?? []
         query.facetFilters?.append(facetRefinement.buildFacetFilter())
     }
 
-    public func toggleConjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
+    @objc public func toggleConjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
         if hasFacetRefinement(facetRefinement) {
             removeFacetRefinement(facetRefinement)
         } else {
@@ -135,7 +135,7 @@ public class QueryHelper {
     ///
     /// - parameter facetRefinement: The facet refinement to add.
     ///
-    public func addDisjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
+    @objc public func addDisjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
         let newValue = facetRefinement.buildFacetFilter()
         // If the facet already has refined values, add them to this list.
         if let indices = findFacetRefinement({ $0.name == facetRefinement.name }) {
@@ -158,7 +158,7 @@ public class QueryHelper {
         }
     }
 
-    public func toggleDisjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
+    @objc public func toggleDisjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
         if hasFacetRefinement(facetRefinement) {
             removeFacetRefinement(facetRefinement)
         } else {
@@ -174,7 +174,7 @@ public class QueryHelper {
     ///
     /// - parameter facetRefinement: The facet refinement to remove.
     ///
-    public func removeFacetRefinement(facetRefinement: FacetRefinement) {
+    @objc public func removeFacetRefinement(facetRefinement: FacetRefinement) {
         if let indices = findFacetRefinement({ $0 == facetRefinement }) {
             assert(indices.count == 1 || indices.count == 2)
             if indices.count == 1 {
@@ -196,7 +196,7 @@ public class QueryHelper {
     /// - parameter matching: A predicate indicating which refinements should match.
     /// - return The list of matching refinements.
     ///
-    public func getFacetRefinements(matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
+    @objc public func getFacetRefinements(matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
         if let facetFilters = query.facetFilters {
             return _getFacetRefinements(facetFilters, matching: matching)
         } else {
@@ -249,7 +249,7 @@ public class QueryHelper {
     /// - parameter facetFilter: A string representation of a facet filter, as used by `Query`.
     /// - return: The corresponding facet refinement, or nil if the string is invalid.
     ///
-    public static func parseFacetRefinement(facetFilter: String) -> FacetRefinement? {
+    private static func parseFacetRefinement(facetFilter: String) -> FacetRefinement? {
         let components = facetFilter.characters.split(":", maxSplit: 1, allowEmptySlices: true)
         if components.count == 2 {
             let facetName = String(components[0])
