@@ -90,7 +90,7 @@ public class Searcher: NSObject {
     public typealias ResultHandler = (results: SearchResults?, error: NSError?) -> Void
 
     /// Pluggable state representation.
-    public struct State: CustomStringConvertible {
+    private struct State: CustomStringConvertible {
         /// Search query.
         /// NOTE: The page may be overridden when loading more content.
         ///
@@ -146,20 +146,33 @@ public class Searcher: NSObject {
     // MARK: State management
     // ----------------------
     
-    public var nextSequenceNumber: Int = 0
+    /// The query that will be used for the next search.
+    public var query: Query {
+        get { return nextState.query }
+        set { nextState.query = newValue }
+    }
+    
+    /// The disjunctive facets that will be used for the next search.
+    public var disjunctiveFacets: [String] {
+        get { return nextState.disjunctiveFacets }
+        set { nextState.disjunctiveFacets = newValue }
+    }
+    
+    /// Sequence number for the next request.
+    private var nextSequenceNumber: Int = 0
     
     /// The state that will be used for the next search.
     /// It can be modified at will. It is not taken into account until the `search()` method is called; then it is
     /// copied and transferred to `requestedState`.
-    public var nextState: State = State()
+    private var nextState: State = State()
 
     /// The state corresponding to the last issued request.
     /// WARNING: Only valid after the first call to `search()`.
-    public private(set) var requestedState: State!
+    private var requestedState: State!
 
     /// The state corresponding to the last received results.
     /// WARNING: Only valid after the first call to the result handler.
-    public private(set) var receivedState: State!
+    private var receivedState: State!
     
     /// The last received results.
     public private(set) var results: SearchResults?
