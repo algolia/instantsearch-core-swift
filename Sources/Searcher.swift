@@ -64,19 +64,6 @@ import Foundation
 // ------------------------------------------------------------------------
 
 
-/// Delegate for `Searcher`.
-public protocol SearchDelegate: class {
-    func slowRequestDetected(request: NSOperation, query: Query) -> Void
-}
-
-// Default implementation for `SearchDelegate`.
-public extension SearchDelegate {
-    func slowRequestDetected(request: NSOperation, query: Query) -> Void {
-        // Default implementation does nothing.
-    }
-}
-
-
 /// Manages search on an Algolia index.
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
@@ -140,9 +127,6 @@ public class Searcher: NSObject {
     /// User callback for handling results.
     private let resultHandler: ResultHandler
     
-    /// Delegate that will be notified of various events (optional).
-    public weak var delegate: SearchDelegate?
-
     // MARK: State management
     // ----------------------
     
@@ -180,13 +164,6 @@ public class Searcher: NSObject {
     /// All currently ongoing requests.
     public private(set) dynamic var pendingRequests: [NSOperation] = []
 
-    // MARK: Configuration
-    // -------------------
-    
-    /// Threshold for slow request detection. When nil (default), slow request detection is disabled.
-    /// Any request taking more than this threshold will trigger a call to `SearchDelegate.slowRequestDetected()`.
-    public var slowRequestThreshold: NSTimeInterval?
-    
     // MARK: -
     
     public init(index: Index, resultHandler: ResultHandler) {
@@ -261,15 +238,6 @@ public class Searcher: NSObject {
             operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: queryHelper.buildFacetRefinementsForDisjunctiveFaceting(), completionHandler: completionHandler)
         }
         self.pendingRequests.append(operation)
-        
-        // Schedule a task to check if the request is slow.
-        if let threshold = slowRequestThreshold {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(threshold * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-                if !requestCompleted {
-                    self.delegate?.slowRequestDetected(operation, query: query)
-                }
-            }
-        }
     }
     
     /// Completion handler for search requests.
