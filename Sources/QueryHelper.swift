@@ -154,6 +154,7 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
         }
         // Otherwise, add a new array.
         else {
+            query.facetFilters = query.facetFilters ?? []
             query.facetFilters?.append([newValue])
         }
     }
