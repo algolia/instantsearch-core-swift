@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		354A89BC5919D47BC934A087 /* Pods_InstantSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E5DC5C3C6482D96BB53935D /* Pods_InstantSearch.framework */; };
-		BC3426351D460DB70055E0F2 /* InstantSearch.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3426341D460DB70055E0F2 /* InstantSearch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BC34263C1D460DB70055E0F2 /* InstantSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* InstantSearch.framework */; };
+		88B828BFA2C21475EB6E51FA /* Pods_AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BFE7E583ABA49F07AC096C9 /* Pods_AlgoliaSearchHelper.framework */; };
+		BC3426351D460DB70055E0F2 /* AlgoliaSearchHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BC34263C1D460DB70055E0F2 /* AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */; };
 		BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */; };
 		BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */; };
 		BC3426511D4613CB0055E0F2 /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264D1D4613CB0055E0F2 /* Searcher.swift */; };
@@ -30,12 +30,14 @@
 
 /* Begin PBXFileReference section */
 		09CB11432C5D58B1FF70BC97 /* Pods-InstantSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearch/Pods-InstantSearch.release.xcconfig"; sourceTree = "<group>"; };
+		10FC205FFE466D69D8DBDC30 /* Pods-AlgoliaSearchHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper/Pods-AlgoliaSearchHelper.debug.xcconfig"; sourceTree = "<group>"; };
+		2656E6104B6D9A6ED9190958 /* Pods-AlgoliaSearchHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper/Pods-AlgoliaSearchHelper.release.xcconfig"; sourceTree = "<group>"; };
+		3BFE7E583ABA49F07AC096C9 /* Pods_AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		472B8E5B84BB572A5646A29A /* Pods-InstantSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearch/Pods-InstantSearch.debug.xcconfig"; sourceTree = "<group>"; };
-		5E5DC5C3C6482D96BB53935D /* Pods_InstantSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC3426311D460DB70055E0F2 /* InstantSearch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InstantSearch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC3426341D460DB70055E0F2 /* InstantSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstantSearch.h; sourceTree = "<group>"; };
+		BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlgoliaSearchHelper.h; sourceTree = "<group>"; };
 		BC3426361D460DB70055E0F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BC34263B1D460DB70055E0F2 /* InstantSearchTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstantSearchTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC34263B1D460DB70055E0F2 /* AlgoliaSearchHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlgoliaSearchHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3426421D460DB70055E0F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightRenderer.swift; sourceTree = "<group>"; };
 		BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
@@ -50,7 +52,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				354A89BC5919D47BC934A087 /* Pods_InstantSearch.framework in Frameworks */,
+				88B828BFA2C21475EB6E51FA /* Pods_AlgoliaSearchHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC34263C1D460DB70055E0F2 /* InstantSearch.framework in Frameworks */,
+				BC34263C1D460DB70055E0F2 /* AlgoliaSearchHelper.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +70,7 @@
 		00763CEB98C2374470027328 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5E5DC5C3C6482D96BB53935D /* Pods_InstantSearch.framework */,
+				3BFE7E583ABA49F07AC096C9 /* Pods_AlgoliaSearchHelper.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -78,6 +80,8 @@
 			children = (
 				472B8E5B84BB572A5646A29A /* Pods-InstantSearch.debug.xcconfig */,
 				09CB11432C5D58B1FF70BC97 /* Pods-InstantSearch.release.xcconfig */,
+				10FC205FFE466D69D8DBDC30 /* Pods-AlgoliaSearchHelper.debug.xcconfig */,
+				2656E6104B6D9A6ED9190958 /* Pods-AlgoliaSearchHelper.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -96,8 +100,8 @@
 		BC3426321D460DB70055E0F2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BC3426311D460DB70055E0F2 /* InstantSearch.framework */,
-				BC34263B1D460DB70055E0F2 /* InstantSearchTests.xctest */,
+				BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */,
+				BC34263B1D460DB70055E0F2 /* AlgoliaSearchHelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,14 +109,14 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				BC3426341D460DB70055E0F2 /* InstantSearch.h */,
+				BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */,
 				BC3426361D460DB70055E0F2 /* Info.plist */,
+				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
 				BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */,
 				BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */,
 				BC3426531D4615040055E0F2 /* QueryHelper.swift */,
 				BC34264D1D4613CB0055E0F2 /* Searcher.swift */,
 				BC34264E1D4613CB0055E0F2 /* SearchResults.swift */,
-				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -132,16 +136,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC3426351D460DB70055E0F2 /* InstantSearch.h in Headers */,
+				BC3426351D460DB70055E0F2 /* AlgoliaSearchHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		BC3426301D460DB70055E0F2 /* InstantSearch */ = {
+		BC3426301D460DB70055E0F2 /* AlgoliaSearchHelper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC3426451D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "InstantSearch" */;
+			buildConfigurationList = BC3426451D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "AlgoliaSearchHelper" */;
 			buildPhases = (
 				83A0ED875C6D4FBB55DC4D3E /* [CP] Check Pods Manifest.lock */,
 				BC34262C1D460DB70055E0F2 /* Sources */,
@@ -154,14 +158,14 @@
 			);
 			dependencies = (
 			);
-			name = InstantSearch;
+			name = AlgoliaSearchHelper;
 			productName = InstantSearch;
-			productReference = BC3426311D460DB70055E0F2 /* InstantSearch.framework */;
+			productReference = BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		BC34263A1D460DB70055E0F2 /* InstantSearchTests */ = {
+		BC34263A1D460DB70055E0F2 /* AlgoliaSearchHelperTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BC3426481D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "InstantSearchTests" */;
+			buildConfigurationList = BC3426481D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "AlgoliaSearchHelperTests" */;
 			buildPhases = (
 				BC3426371D460DB70055E0F2 /* Sources */,
 				BC3426381D460DB70055E0F2 /* Frameworks */,
@@ -172,9 +176,9 @@
 			dependencies = (
 				BC34263E1D460DB70055E0F2 /* PBXTargetDependency */,
 			);
-			name = InstantSearchTests;
+			name = AlgoliaSearchHelperTests;
 			productName = InstantSearchTests;
-			productReference = BC34263B1D460DB70055E0F2 /* InstantSearchTests.xctest */;
+			productReference = BC34263B1D460DB70055E0F2 /* AlgoliaSearchHelperTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -195,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = BC34262B1D460DB70055E0F2 /* Build configuration list for PBXProject "InstantSearch" */;
+			buildConfigurationList = BC34262B1D460DB70055E0F2 /* Build configuration list for PBXProject "AlgoliaSearchHelper" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -207,8 +211,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BC3426301D460DB70055E0F2 /* InstantSearch */,
-				BC34263A1D460DB70055E0F2 /* InstantSearchTests */,
+				BC3426301D460DB70055E0F2 /* AlgoliaSearchHelper */,
+				BC34263A1D460DB70055E0F2 /* AlgoliaSearchHelperTests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,7 +262,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InstantSearch/Pods-InstantSearch-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlgoliaSearchHelper/Pods-AlgoliaSearchHelper-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -289,7 +293,7 @@
 /* Begin PBXTargetDependency section */
 		BC34263E1D460DB70055E0F2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BC3426301D460DB70055E0F2 /* InstantSearch */;
+			target = BC3426301D460DB70055E0F2 /* AlgoliaSearchHelper */;
 			targetProxy = BC34263D1D460DB70055E0F2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -388,7 +392,7 @@
 		};
 		BC3426461D460DB70055E0F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 472B8E5B84BB572A5646A29A /* Pods-InstantSearch.debug.xcconfig */;
+			baseConfigurationReference = 10FC205FFE466D69D8DBDC30 /* Pods-AlgoliaSearchHelper.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -398,7 +402,7 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -407,7 +411,7 @@
 		};
 		BC3426471D460DB70055E0F2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 09CB11432C5D58B1FF70BC97 /* Pods-InstantSearch.release.xcconfig */;
+			baseConfigurationReference = 2656E6104B6D9A6ED9190958 /* Pods-AlgoliaSearchHelper.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
@@ -417,7 +421,7 @@
 				INFOPLIST_FILE = Sources/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -428,7 +432,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -438,7 +442,7 @@
 			buildSettings = {
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -446,7 +450,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BC34262B1D460DB70055E0F2 /* Build configuration list for PBXProject "InstantSearch" */ = {
+		BC34262B1D460DB70055E0F2 /* Build configuration list for PBXProject "AlgoliaSearchHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC3426431D460DB70055E0F2 /* Debug */,
@@ -455,7 +459,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC3426451D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "InstantSearch" */ = {
+		BC3426451D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "AlgoliaSearchHelper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC3426461D460DB70055E0F2 /* Debug */,
@@ -464,7 +468,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BC3426481D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "InstantSearchTests" */ = {
+		BC3426481D460DB70055E0F2 /* Build configuration list for PBXNativeTarget "AlgoliaSearchHelperTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BC3426491D460DB70055E0F2 /* Debug */,
