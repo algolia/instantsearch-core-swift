@@ -30,10 +30,16 @@ import Foundation
 /// the timer is reset and the first call is ignored. When the delay expires, the last call is fired.
 ///
 @objc public class Debouncer: NSObject {
-    public typealias DebouncedBlock = () -> ()
+    /// Signature of calls passed to a `Debouncer`.
+    public typealias DebouncedCall = () -> ()
     
+    /// Amount of time by which calls will be delayed before being fired.
     @objc public let delay: NSTimeInterval
-    private var block: DebouncedBlock!
+    
+    /// The next call to fire.
+    private var block: DebouncedCall!
+    
+    /// Timer used to delay the next call.
     private var timer: NSTimer?
     
     /// Init a debouncer with a given delay.
@@ -54,7 +60,7 @@ import Foundation
     ///
     /// - parameter block: The call to debounce.
     ///
-    @objc public func call(block: DebouncedBlock) {
+    @objc public func call(block: DebouncedCall) {
         self.block = block
         timer?.invalidate()
         timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: #selector(self.runBlock), userInfo: nil, repeats: false)

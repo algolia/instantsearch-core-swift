@@ -39,7 +39,7 @@ enum MatchLevel_: String {
     case None = 0
 }
 
-/// Convert a Swift enum into
+/// Convert a pure Swift enum into an Objective-C bridgeable one.
 func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     if let level = matchLevel {
         switch level {
@@ -53,12 +53,19 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Highlight result for an attribute of a hit.
 ///
-/// NOTE: Wraps the raw JSON returned by the API.
+/// **Note:** Wraps the raw JSON returned by the API.
 ///
 @objc public class HighlightResult: NSObject {
+    /// The wrapped JSON object.
     @objc public let json: [String: AnyObject]
+    
+    /// Value of this highlight.
     @objc public var value: String? { return json["value"] as? String }
+    
+    /// Match level.
     @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
+    
+    /// List of matched words.
     @objc public var matchedWords: [String]? { return json["matchedWords"] as? [String] }
     
     var matchLevel_: MatchLevel_? {
@@ -76,11 +83,16 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Snippet result for an attribute of a hit.
 ///
-/// NOTE: Wraps the raw JSON returned by the API.
+/// **Note:** Wraps the raw JSON returned by the API.
 ///
 @objc public class SnippetResult: NSObject {
+    /// The wrapped JSON object.
     @objc public let json: [String: AnyObject]
+    
+    /// Value of this snippet.
     @objc public var value: String? { return json["value"] as? String }
+    
+    /// Match level.
     @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
     
     var matchLevel_: MatchLevel_? {
@@ -98,10 +110,12 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Ranking info for a hit.
 ///
-/// NOTE: Wraps the raw JSON returned by the API.
+/// **Note:** Wraps the raw JSON returned by the API.
 ///
 @objc public class RankingInfo: NSObject {
+    /// The wrapped JSON object.
     @objc public let json: [String: AnyObject]
+    
     @objc public var nbTypos: Int { return json["nbTypos"] as? Int ?? 0 }
     @objc public var firstMatchedWord: Int { return json["firstMatchedWord"] as? Int ?? 0 }
     @objc public var proximityDistance: Int { return json["proximityDistance"] as? Int ?? 0 }
@@ -131,7 +145,8 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 
 /// Search results.
-/// NOTE: Wraps the raw JSON returned by the API.
+///
+/// **Note:** Wraps the raw JSON returned by the API.
 ///
 @objc public class SearchResults: NSObject {
     /// The last received JSON content.
@@ -198,7 +213,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     /// - parameter name: Facet name.
     /// - parameter disjunctive: true if this is a disjunctive facet, false if it's a conjunctive facet (default).
-    /// - return: The corresponding facet values.
+    /// - returns: The corresponding facet values.
     ///
     @objc public func facets(name: String) -> [FacetValue]? {
         // Use stored values if available.
@@ -241,7 +256,12 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     }
 
     /// Get the ranking information for a hit.
-    /// NOTE: Only available when `Query.getRankingInfo` is set to true.
+    ///
+    /// **Note:** Only available when `getRankingInfo` was set to true on the query.
+    ///
+    /// - parameter index: Index of the hit in the hits array.
+    /// - returns: The corresponding ranking information, or nil if no ranking information is available.
+    ///
     public func rankingInfo(index: Int) -> RankingInfo? {
         if let rankingInfo = hits[index]["_rankingInfo"] as? [String: AnyObject] {
             return RankingInfo(json: rankingInfo)
@@ -254,9 +274,9 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     
     /// Retrieve the highlight result corresponding to an attribute inside the JSON representation of a hit.
     ///
-    /// - param hit: The JSON object for a hit.
-    /// - param path: Path of the attribute to retrieve, in dot notation.
-    /// - return The highlight result, or nil if not available.
+    /// - parameter hit: The JSON object for a hit.
+    /// - parameter path: Path of the attribute to retrieve, in dot notation.
+    /// - returns: The highlight result, or nil if not available.
     ///
     public static func getHighlightResult(hit: [String: AnyObject], path: String) -> HighlightResult? {
         guard let highlights = hit["_highlightResult"] as? [String: AnyObject] else { return nil }
@@ -266,9 +286,9 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     
     /// Retrieve the snippet result corresponding to an attribute inside the JSON representation of a hit.
     ///
-    /// - param hit: The JSON object for a hit.
-    /// - param path: Path of the attribute to retrieve, in dot notation.
-    /// - return The snippet result, or nil if not available.
+    /// - parameter hit: The JSON object for a hit.
+    /// - parameter path: Path of the attribute to retrieve, in dot notation.
+    /// - returns: The snippet result, or nil if not available.
     ///
     public static func getSnippetResult(hit: [String: AnyObject], path: String) -> SnippetResult? {
         guard let snippets = hit["_snippetResult"] as? [String: AnyObject] else { return nil }

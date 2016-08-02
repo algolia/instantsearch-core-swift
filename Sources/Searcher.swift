@@ -168,12 +168,21 @@ import Foundation
 
     // MARK: -
     
+    /// Create a new searcher targeting the specified index.
+    ///
+    /// - parameter index: The index to target when searching.
+    ///
     @objc public init(index: Index) {
         self.index = index
         super.init()
         updateClientUserAgents()
     }
     
+    /// Create a new searcher targeting the specified index and register a result handler with it.
+    ///
+    /// - parameter index: The index to target when searching.
+    /// - parameter resultHandler: The result handler to register.
+    ///
     @objc public convenience init(index: Index, resultHandler: ResultHandler) {
         self.init(index: index)
         self.resultHandlers = [resultHandler]
@@ -191,11 +200,14 @@ import Foundation
         }
     }
     
+    /// Register a result handler with this searcher.
     @objc public func addResultHandler(resultHandler: ResultHandler) {
         self.resultHandlers.append(resultHandler)
     }
     
-    /// Search.
+    /// Search using the current settings.
+    /// This uses the current value for `query` and `disjunctiveFacets`.
+    ///
     @objc public func search() {
         requestedState = State(copy: nextState)
         requestedState.page = requestedState.initialPage
@@ -289,6 +301,8 @@ import Foundation
     /// The trick here is that the toggle reads the *received* query state, but updates the *next* query. Why?
     /// Because if search results are slow to come, the user will be acting on the received state. If you just toggle
     /// the next query state, it might lead to inconsistent results.
+    ///
+    /// - parameter facetRefinement: The facet refinement to toggle.
     ///
     @objc public func toggleFacetRefinement(facetRefinement: FacetRefinement) {
         let receivedQueryHelper = QueryHelper(query: receivedState.query)

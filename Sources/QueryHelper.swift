@@ -25,6 +25,7 @@ import AlgoliaSearch
 import Foundation
 
 
+/// A refinement of a facet.
 @objc public class FacetRefinement: NSObject {
     /// Name of the facet.
     @objc public var name: String
@@ -32,7 +33,7 @@ import Foundation
     /// Value for the facet.
     @objc public var value: String
 
-    /// Whether the refinement is inclusive (default) or exclusive (value prefixed with "-").
+    /// Whether the refinement is inclusive (default) or exclusive (value prefixed with a dash).
     @objc public var inclusive: Bool = true
     
     /// Build a facet filter corresponding to this refinement.
@@ -55,9 +56,10 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
 /// Utilities to build and interpret `Query` instances.
 ///
 @objc public class QueryHelper: NSObject {
+    /// The query wrapped by this helper.
     @objc public let query: Query
     
-    /// Create an initially empty query builder.
+    /// Create a query helper initially wrapping the empty query.
     @objc public convenience override init() {
         self.init(query: Query())
     }
@@ -69,7 +71,7 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     
     /// Build facet refinements suitable for use with `Index.searchDisjunctiveFaceting()`.
     ///
-    /// - return: A dictionary mapping each facet name to the corresponding list of values.
+    /// - returns: A dictionary mapping each facet name to the corresponding list of values.
     ///
     @objc public func buildFacetRefinementsForDisjunctiveFaceting() -> [String: [String]] {
         if let facetFilters = query.facetFilters {
@@ -109,7 +111,7 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
         return findFacetRefinement({ $0 == facetRefinement }) != nil
     }
     
-    /// Add a conjunctive facet refinement ("AND").
+    /// Add a conjunctive facet refinement (`AND`).
     /// As per the query syntax, it will be added at the first level of the facet filters.
     ///
     /// - parameter facetRefinement: The facet refinement to add.
@@ -127,10 +129,10 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
         }
     }
 
-    /// Add a disjunctive facet refinement ("OR").
+    /// Add a disjunctive facet refinement (`OR`).
     /// As per the query syntax, it will be added at the second level of the facet filters (i.e. inside a nested array).
     ///
-    /// NOTE: If refinements already exist for the same facet, this new refinements will be added to the first
+    /// **Note:** If refinements already exist for the same facet, this new refinements will be added to the first
     /// occurrence (and that occurrence will be converted to a nested array if necessary).
     ///
     /// - parameter facetRefinement: The facet refinement to add.
@@ -159,6 +161,11 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
         }
     }
 
+    /// Toggle a disjunctive facet refinement.
+    /// This method adds the refinement if it does not already exists, and removes it otherwise.
+    ///
+    /// - parameter facetRefinement: The facet refinement to toggle.
+    ///
     @objc public func toggleDisjunctiveFacetRefinement(facetRefinement: FacetRefinement) {
         if hasFacetRefinement(facetRefinement) {
             removeFacetRefinement(facetRefinement)
@@ -168,10 +175,9 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     }
 
     /// Remove a facet refinement.
+    /// Works for both conjunctive and disjunctive refinements.
     ///
-    /// NOTE: Does not distinguish between conjunctive and disjunctive refinements.
-    ///
-    /// NOTE: In case the refinement appears more than once, this will only remove its first occurrence.
+    /// **Note:** In case the refinement appears more than once, this will only remove its first occurrence.
     ///
     /// - parameter facetRefinement: The facet refinement to remove.
     ///
@@ -195,7 +201,7 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     /// Retrieve all facet refinements matching a predicate.
     ///
     /// - parameter matching: A predicate indicating which refinements should match.
-    /// - return The list of matching refinements.
+    /// - returns: The list of matching refinements.
     ///
     @objc public func getFacetRefinements(matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
         if let facetFilters = query.facetFilters {
@@ -248,7 +254,7 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     /// Parse a facet filter into a facet refinement.
     ///
     /// - parameter facetFilter: A string representation of a facet filter, as used by `Query`.
-    /// - return: The corresponding facet refinement, or nil if the string is invalid.
+    /// - returns: The corresponding facet refinement, or nil if the string is invalid.
     ///
     private static func parseFacetRefinement(facetFilter: String) -> FacetRefinement? {
         let components = facetFilter.characters.split(":", maxSplit: 1, allowEmptySlices: true)

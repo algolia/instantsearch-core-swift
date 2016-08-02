@@ -35,7 +35,7 @@ class JSONHelper {
     ///
     /// - parameter json: The root JSON object.
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
-    /// - return The corresponding value, or nil if it does not exist.
+    /// - returns: The corresponding value, or nil if it does not exist.
     ///
     static func valueForKeyPath(json: [String: AnyObject], path: String) -> AnyObject? {
         var value: AnyObject = json

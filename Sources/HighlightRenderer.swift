@@ -30,23 +30,28 @@ import Foundation
     /// Visual attributes to apply to the highlights.
     @objc public var highlightAttrs: [String: AnyObject]
     
-    /// Markup identifying the beginning of a highlight. Defaults to "<em>".
+    /// Markup identifying the beginning of a highlight. Defaults to `<em>`.
     @objc public var startTag: String = "<em>"
 
-    /// Markup identifying the end of a highlight. Defaults to "</em>".
+    /// Markup identifying the end of a highlight. Defaults to `</em>`.
     @objc public var endTag: String = "</em>"
 
     /// Whether the markup is case sensitive. Defaults to false.
     @objc public var caseSensitive: Bool = false
-    
+
+    /// Create a new highlighter with the specified text attributes for highlights.
+    ///
+    /// - parameter highlightAttrs: Text attributes to apply to highlights. The content must be suitable for use within
+    ///   an `NSAttributedString`.
+    ///
     @objc public init(highlightAttrs: [String: AnyObject]) {
         self.highlightAttrs = highlightAttrs
     }
 
     /// Render the specified text.
     ///
-    /// - param text: The marked up text to render.
-    /// - return: An atributed string with highlights outlined.
+    /// - parameter text: The marked up text to render.
+    /// - returns: An atributed string with highlights outlined.
     ///
     @objc public func render(text: String) -> NSAttributedString {
         let newText = NSMutableString(string: text)
