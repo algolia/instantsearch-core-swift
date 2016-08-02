@@ -170,11 +170,25 @@ import Foundation
     
     @objc public init(index: Index) {
         self.index = index
+        super.init()
+        updateClientUserAgents()
     }
     
     @objc public convenience init(index: Index, resultHandler: ResultHandler) {
         self.init(index: index)
         self.resultHandlers = [resultHandler]
+    }
+    
+    /// Add the helper library's version to the client's user agents, if not already present.
+    private func updateClientUserAgents() {
+        let bundleInfo = NSBundle(forClass: self.dynamicType).infoDictionary!
+        let name = bundleInfo["CFBundleName"] as! String
+        let version = bundleInfo["CFBundleShortVersionString"] as! String
+        let libraryVersion = LibraryVersion(name: name, version: version)
+        let client = index.client
+        if client.userAgents.indexOf({ $0 == libraryVersion }) == nil {
+            client.userAgents.append(libraryVersion)
+        }
     }
     
     @objc public func addResultHandler(resultHandler: ResultHandler) {
