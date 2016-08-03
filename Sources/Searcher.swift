@@ -233,26 +233,50 @@ import Foundation
     
     /// Load more content, if possible.
     @objc public func loadMore() {
-        // Cannot load more when no results have been received.
-        if results == nil {
+        if !canLoadMore() {
             return
         }
-        // Must not load more if the results are outdated with respect to the currently on-going search.
-        if requestedState.query != receivedState.query {
+        if !hasMore() {
             return
         }
         let nextPage = receivedState.page + 1
-        // Cannot load more if the end has already been reached.
-        if nextPage >= results!.nbPages {
-            return
-        }
-        // Must not load more if already loading.
+        // Don't load more if already loading.
         if nextPage <= requestedState.page {
             return
         }
         // OK, everything's fine; let's go!
         requestedState.page = nextPage
         _doNextRequest()
+    }
+    
+    /// Test whether the current state allows loading more results.
+    /// Loading more requires that we have already received results (obviously) and also that another more recent
+    /// request is not pending.
+    ///
+    /// **Note:** It does indicate whether they are actually more results to load. For this, see `hasMore()`.
+    ///
+    /// - returns: true if the current state allows loading more results, false otherwise.
+    ///
+    private func canLoadMore() -> Bool {
+        // Cannot load more when no results have been received.
+        if results == nil {
+            return false
+        }
+        // Must not load more if the results are outdated with respect to the currently on-going search.
+        if requestedState.query != receivedState.query {
+            return false
+        }
+        return true
+    }
+    
+    /// Test whether the current results have more pages to load.
+    ///
+    /// - returns: true if more pages are available, false otherwise or if no results have been received yet.
+    ///
+    private func hasMore() -> Bool {
+        // If no results have been received yet, there are obviously no additional pages.
+        guard let receivedState = receivedState, results = results else { return false }
+        return receivedState.page + 1 < results.nbPages
     }
     
     private func _doNextRequest() {
