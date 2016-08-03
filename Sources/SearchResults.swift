@@ -143,6 +143,26 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     }
 }
 
+/// Statistics for a numerical facet.
+/// + NOTE: Since values may either be integers or floats, they are typed as `NSNumber`.
+@objc public class FacetStats: NSObject {
+    /// The minimum value.
+    @objc public let min: NSNumber
+    /// The maximum value.
+    @objc public let max: NSNumber
+    /// The average of all values.
+    @objc public let avg: NSNumber
+    /// The sum of all values.
+    @objc public let sum: NSNumber
+    
+    internal init(min: NSNumber, max: NSNumber, avg: NSNumber, sum: NSNumber) {
+        self.min = min
+        self.max = max
+        self.avg = avg
+        self.sum = sum
+    }
+}
+
 
 /// Search results.
 ///
@@ -154,6 +174,8 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     
     /// Facets that will be treated as disjunctive (`OR`). By default, facets are conjunctive (`AND`).
     @objc public let disjunctiveFacets: [String]
+    
+    // MARK: - Fields
 
     /// Hits.
     @objc public let hits: [[String: AnyObject]]
@@ -188,6 +210,74 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Whether facet counts are exhaustive.
     @objc public var exhaustiveFacetsCount: Bool { return content["exhaustiveFacetsCount"] as? Bool ?? false }
     
+    /// Used to return warnings about the query. Should be nil most of the time.
+    @objc public var message: String? { return content["message"] as? String }
+    
+    /// A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty
+    /// result set. The removed parts are surrounded by `<em>` tags.
+    ///
+    /// + NOTE: Only returned when `removeWordsIfNoResults` is set.
+    ///
+    @objc public var queryAfterRemoval: String? { return content["queryAfterRemoval"] as? String }
+
+    /// The computed geo location.
+    ///
+    /// + NOTE: Only returned when `aroundLatLngViaIP` is set.
+    ///
+    @objc public var aroundLatLng: LatLng? {
+        // WARNING: For legacy reasons, this parameter is returned as a string and not an object.
+        // Format: `${lat},${lng}`, where the latitude and longitude are expressed as decimal floating point numbers.
+        if let stringValue = content["aroundLatLng"] as? String {
+            let components = stringValue.componentsSeparatedByString(",")
+            if components.count == 2 {
+                if let lat = Double(components[0]), let lng = Double(components[1]) {
+                    return LatLng(lat: lat, lng: lng)
+                }
+            }
+        }
+        return nil
+    }
+    
+    /// The automatically computed radius.
+    ///
+    /// + NOTE: Only returned for geo queries without an explicitly specified radius (see `aroundRadius`).
+    ///
+    @objc public var automaticRadius: Int {
+        // WARNING: For legacy reasons, this parameter is returned as a string and not an integer.
+        if let stringValue = content["automaticRadius"] as? String, let intValue = Int(stringValue) {
+            return intValue
+        }
+        return 0
+    }
+    
+    // MARK: Only when `getRankingInfo` = true
+
+    /// Actual host name of the server that processed the request. (Our DNS supports automatic failover and load
+    /// balancing, so this may differ from the host name used in the request.)
+    ///
+    /// + NOTE: Only returned when `getRankingInfo` is true.
+    ///
+    @objc public var serverUsed: String? { return content["serverUsed"] as? String }
+    
+    /// The query string that will be searched, after normalization.
+    ///
+    /// + NOTE: Only returned when `getRankingInfo` is true.
+    ///
+    @objc public var parsedQuery: String? { return content["parsedQuery"] as? String }
+    
+    /// Whether a timeout was hit when computing the facet counts. When true, the counts will be interpolated
+    /// (i.e. approximate). See also `exhaustiveFacetsCount`.
+    ///
+    /// + NOTE: Only returned when `getRankingInfo` is true.
+    ///
+    @objc public var timeoutCounts: Bool { return content["timeoutCounts"] as? Bool ?? false }
+    
+    /// Whether a timeout was hit when retrieving the hits. When true, some results may be missing.
+    ///
+    /// + NOTE: Only returned when `getRankingInfo` is true.
+    ///
+    @objc public var timeoutHits: Bool { return content["timeoutHits"] as? Bool ?? false }
+
     // MARK: - Initialization, termination
     
     /// Create search results from an initial response from the API.
@@ -258,6 +348,25 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
             self.facets[name] = values
             return values
         }
+    }
+    
+    /// Retrieve the statistics for a numerical facet.
+    ///
+    /// - parameter name: The facet's name.
+    /// - returns: The statistics for this facet, or nil if this facet does not exist or is not a numerical facet.
+    ///
+    @objc public func facetStats(name: String) -> FacetStats? {
+        guard let allStats = content["facets_stats"] as? [String: AnyObject] else { return nil }
+        guard let facetStats = allStats[name] as? [String: AnyObject] else { return nil }
+        guard
+            let min = facetStats["min"] as? NSNumber,
+            let max = facetStats["max"] as? NSNumber,
+            let avg = facetStats["avg"] as? NSNumber,
+            let sum = facetStats["sum"] as? NSNumber
+        else {
+            return nil
+        }
+        return FacetStats(min: min, max: max, avg: avg, sum: sum)
     }
     
     /// Get the highlight result for an attribute of a hit.
