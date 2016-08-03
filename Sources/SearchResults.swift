@@ -325,6 +325,10 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
         if let values = facets[name] {
             return values
         }
+        // If the facet was not requested, return nil.
+        else if !(params.facets?.contains(name) ?? false) {
+            return nil
+        }
         // Otherwise lazily compute the values.
         else {
             let disjunctive = disjunctiveFacets.contains(name)
