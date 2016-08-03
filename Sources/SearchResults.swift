@@ -268,7 +268,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter index: Index of the hit in the hits array.
     /// - returns: The corresponding ranking information, or nil if no ranking information is available.
     ///
-    public func rankingInfo(index: Int) -> RankingInfo? {
+    @objc public func rankingInfo(index: Int) -> RankingInfo? {
         if let rankingInfo = hits[index]["_rankingInfo"] as? [String: AnyObject] {
             return RankingInfo(json: rankingInfo)
         } else {
@@ -284,7 +284,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The highlight result, or nil if not available.
     ///
-    public static func getHighlightResult(hit: [String: AnyObject], path: String) -> HighlightResult? {
+    @objc public static func getHighlightResult(hit: [String: AnyObject], path: String) -> HighlightResult? {
         guard let highlights = hit["_highlightResult"] as? [String: AnyObject] else { return nil }
         guard let attribute = JSONHelper.valueForKeyPath(highlights, path: path) as? [String: AnyObject] else { return nil }
         return HighlightResult(json: attribute)
@@ -296,7 +296,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The snippet result, or nil if not available.
     ///
-    public static func getSnippetResult(hit: [String: AnyObject], path: String) -> SnippetResult? {
+    @objc public static func getSnippetResult(hit: [String: AnyObject], path: String) -> SnippetResult? {
         guard let snippets = hit["_snippetResult"] as? [String: AnyObject] else { return nil }
         guard let attribute = JSONHelper.valueForKeyPath(snippets, path: path) as? [String: AnyObject] else { return nil }
         return SnippetResult(json: attribute)
