@@ -183,7 +183,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Query corresponding to the last results.
     /// WARNING: Do not modify it!
     ///
-    @objc public private(set) var lastQuery: Query
+    @objc public private(set) var lastQuery: Query = Query()
 
     // MARK: - Initialization, termination
     
@@ -192,19 +192,25 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
         self.lastContent = content
         self.disjunctiveFacets = disjunctiveFacets
         self.hits = content["hits"] as? [[String: AnyObject]] ?? [[String: AnyObject]]()
-        if let queryString = content["params"] as? String {
-            self.lastQuery = Query.parse(queryString)
-        } else {
-            self.lastQuery = Query() // TODO: Suboptimal
-        }
+        super.init()
+        updateLastQuery(content)
     }
     
     /// Add a new page to the results.
-    func add(results: [String: AnyObject]) {
-        if let hits = results["hits"] as? [[String: AnyObject]] {
+    func add(content: [String: AnyObject]) {
+        if let hits = content["hits"] as? [[String: AnyObject]] {
             self.hits.appendContentsOf(hits)
         }
         self.facets.removeAll() // TODO: Should we really parse facets from start again?
+        updateLastQuery(content)
+    }
+    
+    private func updateLastQuery(content: [String: AnyObject]) {
+        if let queryString = content["params"] as? String {
+            self.lastQuery = Query.parse(queryString)
+        } else {
+            // TODO: Suboptimal: should propagate error.
+        }
     }
     
     // MARK: - Accessors
