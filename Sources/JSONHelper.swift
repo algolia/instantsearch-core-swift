@@ -26,7 +26,7 @@ import Foundation
 
 /// Various helpers to deal with JSON data.
 ///
-class JSONHelper {
+internal class JSONHelper {
     // NOTE: Should be an extension, but restricting a generic type non the non-protocol type String does not compile.
     
     /// Get the value for an attribute with a "deep" path (dot notation).
@@ -37,7 +37,7 @@ class JSONHelper {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The corresponding value, or nil if it does not exist.
     ///
-    static func valueForKeyPath(json: [String: AnyObject], path: String) -> AnyObject? {
+    internal static func valueForKeyPath(json: [String: AnyObject], path: String) -> AnyObject? {
         var value: AnyObject = json
         for name in path.componentsSeparatedByString(".") {
             if let newValue = (value as? [String: AnyObject])?[name] {

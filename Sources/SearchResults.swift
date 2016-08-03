@@ -26,7 +26,7 @@ import Foundation
 
 
 /// Match level of a highlight or snippet result (internal version).
-enum MatchLevel_: String {
+private enum MatchLevel_: String {
     case Full = "full"
     case Partial = "partial"
     case None = "none"
@@ -40,7 +40,7 @@ enum MatchLevel_: String {
 }
 
 /// Convert a pure Swift enum into an Objective-C bridgeable one.
-func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
+private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     if let level = matchLevel {
         switch level {
         case .Full: return .Full
@@ -68,7 +68,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// List of matched words.
     @objc public var matchedWords: [String]? { return json["matchedWords"] as? [String] }
     
-    var matchLevel_: MatchLevel_? {
+    private var matchLevel_: MatchLevel_? {
         if let matchLevelString = json["matchLevel"] as? String {
             return MatchLevel_(rawValue: matchLevelString)
         } else {
@@ -76,7 +76,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
         }
     }
     
-    init(json: [String: AnyObject]) {
+    internal init(json: [String: AnyObject]) {
         self.json = json
     }
 }
@@ -95,7 +95,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Match level.
     @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
     
-    var matchLevel_: MatchLevel_? {
+    private var matchLevel_: MatchLevel_? {
         if let matchLevelString = json["matchLevel"] as? String {
             return MatchLevel_(rawValue: matchLevelString)
         } else {
@@ -103,7 +103,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
         }
     }
 
-    init(json: [String: AnyObject]) {
+    internal init(json: [String: AnyObject]) {
         self.json = json
     }
 }
@@ -126,7 +126,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public var words: Int { return json["words"] as? Int ?? 0 }
     @objc public var filters: Int { return json["filters"] as? Int ?? 0 }
     
-    init(json: [String: AnyObject]) {
+    internal init(json: [String: AnyObject]) {
         self.json = json
     }
 }
@@ -137,7 +137,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public let value: String
     @objc public let count: Int
     
-    init(value: String, count: Int) {
+    internal init(value: String, count: Int) {
         self.value = value
         self.count = count
     }
@@ -188,7 +188,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     // MARK: - Initialization, termination
     
     /// Create search results from an initial response from the API.
-    init(content: [String: AnyObject], disjunctiveFacets: [String]) {
+    internal init(content: [String: AnyObject], disjunctiveFacets: [String]) {
         self.lastContent = content
         self.disjunctiveFacets = disjunctiveFacets
         self.hits = content["hits"] as? [[String: AnyObject]] ?? [[String: AnyObject]]()
@@ -197,7 +197,7 @@ func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     }
     
     /// Add a new page to the results.
-    func add(content: [String: AnyObject]) {
+    internal func add(content: [String: AnyObject]) {
         if let hits = content["hits"] as? [[String: AnyObject]] {
             self.hits.appendContentsOf(hits)
         }
