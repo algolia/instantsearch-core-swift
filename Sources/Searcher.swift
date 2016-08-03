@@ -433,4 +433,18 @@ import Foundation
             addFacetRefinement(name, value: value)
         }
     }
+    
+    /// Remove all refinements for all facets.
+    ///
+    @objc public func clearFacetRefinements() {
+        refinements.removeAll()
+    }
+    
+    /// Remove all refinements for a given facet.
+    ///
+    /// - parameter name: The facet's name.
+    ///
+    @objc public func clearFacetRefinements(name: String) {
+        refinements.removeValueForKey(name)
+    }
 }
