@@ -191,7 +191,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private var receivedState: State!
     
     /// The last received results.
-    @objc public private(set) var results: SearchResults?
+    private var results: SearchResults?
     
     /// All currently ongoing requests.
     @objc public private(set) dynamic var pendingRequests: [NSOperation] = []
@@ -362,11 +362,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private func handleResults(content: [String: AnyObject]?, error: NSError?) {
         do {
             if let content = content {
-                if receivedState.page == receivedState.initialPage {
-                    try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
-                } else {
-                    self.results?.add(content)
-                }
+                try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
                 callResultHandlers(self.results, error: nil)
             } else {
                 callResultHandlers(nil, error: error)

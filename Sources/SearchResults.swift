@@ -149,15 +149,14 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 /// **Note:** Wraps the raw JSON returned by the API.
 ///
 @objc public class SearchResults: NSObject {
-    /// The last received JSON content.
-    /// Either that passed to the initializer, or that last passed to `add()`.
-    @objc public private(set) var lastContent: [String: AnyObject]
+    /// The received JSON content.
+    @objc public let content: [String: AnyObject]
     
     /// Facets that will be treated as disjunctive (`OR`). By default, facets are conjunctive (`AND`).
     @objc public let disjunctiveFacets: [String]
 
-    /// Hits for all the received pages.
-    @objc public private(set) var hits: [[String: AnyObject]]
+    /// Hits.
+    @objc public let hits: [[String: AnyObject]]
     
     /// Facets for the last results. Lazily computed; accessed through `facets()`.
     private var facets: [String: [FacetValue]] = [:]
@@ -166,13 +165,13 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public var nbHits: Int
 
     /// Last returned page.
-    @objc public var page: Int { return lastContent["page"] as? Int ?? 0 }
+    @objc public var page: Int { return content["page"] as? Int ?? 0 }
 
     /// Total number of pages.
-    @objc public var nbPages: Int { return lastContent["nbPages"] as? Int ?? 0 }
+    @objc public var nbPages: Int { return content["nbPages"] as? Int ?? 0 }
     
     /// Number of hits per page.
-    @objc public var hitsPerPage: Int { return lastContent["hitsPerPage"] as? Int ?? 0 }
+    @objc public var hitsPerPage: Int { return content["hitsPerPage"] as? Int ?? 0 }
     
     /// Processing time of the last query (in ms).
     @objc public var processingTimeMS: Int
@@ -187,18 +186,13 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public var params: Query
     
     /// Whether facet counts are exhaustive.
-    @objc public var exhaustiveFacetsCount: Bool { return lastContent["exhaustiveFacetsCount"] as? Bool ?? false }
+    @objc public var exhaustiveFacetsCount: Bool { return content["exhaustiveFacetsCount"] as? Bool ?? false }
     
-    /// Query corresponding to the last results.
-    /// WARNING: Do not modify it!
-    ///
-    @objc public private(set) var lastQuery: Query = Query()
-
     // MARK: - Initialization, termination
     
     /// Create search results from an initial response from the API.
-    internal init(content: [String: AnyObject], disjunctiveFacets: [String]) throws {
-        self.lastContent = content
+    @objc public init(content: [String: AnyObject], disjunctiveFacets: [String]) throws {
+        self.content = content
         self.disjunctiveFacets = disjunctiveFacets
         
         // Validate mandatory fields.
@@ -226,26 +220,6 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
             throw NSError(domain: ErrorDomain, code: StatusCode.InvalidResponse.rawValue, userInfo: [ NSLocalizedDescriptionKey: "Invalid response: expecting attribute `params` of type `String`" ])
         }
         self.params = Query.parse(params)
-        
-        super.init()
-        updateLastQuery(content)
-    }
-    
-    /// Add a new page to the results.
-    internal func add(content: [String: AnyObject]) {
-        if let hits = content["hits"] as? [[String: AnyObject]] {
-            self.hits.appendContentsOf(hits)
-        }
-        self.facets.removeAll() // TODO: Should we really parse facets from start again?
-        updateLastQuery(content)
-    }
-    
-    private func updateLastQuery(content: [String: AnyObject]) {
-        if let queryString = content["params"] as? String {
-            self.lastQuery = Query.parse(queryString)
-        } else {
-            // TODO: Suboptimal: should propagate error.
-        }
     }
     
     // MARK: - Accessors
@@ -264,7 +238,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
         // Otherwise lazily compute the values.
         else {
             let disjunctive = disjunctiveFacets.contains(name)
-            guard let returnedFacets = lastContent[disjunctive ? "disjunctiveFacets" : "facets"] as? [String: AnyObject] else { return nil }
+            guard let returnedFacets = content[disjunctive ? "disjunctiveFacets" : "facets"] as? [String: AnyObject] else { return nil }
             var values = [FacetValue]()
             let returnedValues = returnedFacets[name] as? [String: Int]
             if let returnedValues = returnedValues {
@@ -273,7 +247,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
                 }
             }
             // Make sure there is a value at least for the refined values.
-            let queryHelper = QueryHelper(query: lastQuery)
+            let queryHelper = QueryHelper(query: params)
             let facetRefinements = queryHelper.getFacetRefinements() { $0.name == name }
             for facetRefinement in facetRefinements {
                 if returnedValues?[facetRefinement.value] == nil {
