@@ -220,6 +220,21 @@ import Foundation
         self.resultHandlers.append(resultHandler)
     }
     
+    /// Reset the search state.
+    /// This resets the `query`, `disjunctiveFacets` and `refinements` properties. It also cancels any pending request.
+    ///
+    /// **Note:** It does *not* remove registered result handlers.
+    ///
+    @objc public func reset() {
+        query = Query()
+        disjunctiveFacets.removeAll()
+        refinements.removeAll()
+        for request in pendingRequests {
+            request.cancel()
+        }
+        pendingRequests.removeAll()
+    }
+    
     // MARK: - Search
     
     /// Search using the current settings.
