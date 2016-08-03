@@ -64,11 +64,23 @@ import Foundation
 // ------------------------------------------------------------------------
 
 
+/// Error domain used for errors raised by this module.
+/// + NOTE: This shortcut is provided for Objective-C bridging. See the top-level `ErrorDomain` constant.
+public let ErrorDomain = "AlgoliaSearchHelper"
+
+
 /// Manages search on an Algolia index.
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
 ///
 @objc public class Searcher: NSObject {
+    // MARK: Constants
+    
+    /// Error domain used for errors raised by this module.
+    @objc public static let ErrorDomain = AlgoliaSearchHelper.ErrorDomain
+    
+    // MARK: Types
+    
     /// Handler for search results.
     ///
     /// - parameter results: The results (in case of success).
@@ -120,6 +132,8 @@ import Foundation
             return "State#\(sequenceNumber){query=\(query), disjunctiveFacets=\(disjunctiveFacets), page=\(page)}"
         }
     }
+    
+    // MARK: -
 
     /// The index used by this search helper.
     ///
@@ -346,15 +360,19 @@ import Foundation
     
     /// Completion handler for search requests.
     private func handleResults(content: [String: AnyObject]?, error: NSError?) {
-        if let content = content {
-            if receivedState.page == receivedState.initialPage {
-                self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
+        do {
+            if let content = content {
+                if receivedState.page == receivedState.initialPage {
+                    try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
+                } else {
+                    self.results?.add(content)
+                }
+                callResultHandlers(self.results, error: nil)
             } else {
-                self.results?.add(content)
+                callResultHandlers(nil, error: error)
             }
-            callResultHandlers(self.results, error: nil)
-        } else {
-            callResultHandlers(nil, error: error)
+        } catch let e as NSError {
+            callResultHandlers(nil, error: e)
         }
     }
     

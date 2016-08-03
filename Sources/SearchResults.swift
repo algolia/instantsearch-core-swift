@@ -157,13 +157,13 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public let disjunctiveFacets: [String]
 
     /// Hits for all the received pages.
-    @objc public private(set) var hits: [[String: AnyObject]] = []
+    @objc public private(set) var hits: [[String: AnyObject]]
     
     /// Facets for the last results. Lazily computed; accessed through `facets()`.
     private var facets: [String: [FacetValue]] = [:]
 
     /// Total number of hits.
-    @objc public var nbHits: Int { return lastContent["nbHits"] as? Int ?? 0 }
+    @objc public var nbHits: Int
 
     /// Last returned page.
     @objc public var page: Int { return lastContent["page"] as? Int ?? 0 }
@@ -175,7 +175,16 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public var hitsPerPage: Int { return lastContent["hitsPerPage"] as? Int ?? 0 }
     
     /// Processing time of the last query (in ms).
-    @objc public var processingTimeMS: Int { return lastContent["processingTimeMS"] as? Int ?? 0 }
+    @objc public var processingTimeMS: Int
+    
+    /// Query text that produced these results.
+    ///
+    /// + NOTE: Should be identical to `params.query`.
+    ///
+    @objc public var query: String
+    
+    /// Query that produced these results.
+    @objc public var params: Query
     
     /// Whether facet counts are exhaustive.
     @objc public var exhaustiveFacetsCount: Bool { return lastContent["exhaustiveFacetsCount"] as? Bool ?? false }
@@ -188,10 +197,36 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     // MARK: - Initialization, termination
     
     /// Create search results from an initial response from the API.
-    internal init(content: [String: AnyObject], disjunctiveFacets: [String]) {
+    internal init(content: [String: AnyObject], disjunctiveFacets: [String]) throws {
         self.lastContent = content
         self.disjunctiveFacets = disjunctiveFacets
-        self.hits = content["hits"] as? [[String: AnyObject]] ?? [[String: AnyObject]]()
+        
+        // Validate mandatory fields.
+        guard let hits = content["hits"] as? [[String: AnyObject]] else {
+            throw NSError(domain: ErrorDomain, code: StatusCode.InvalidResponse.rawValue, userInfo: [ NSLocalizedDescriptionKey: "Invalid response: expecting attribute `hits` of type array of objects" ])
+        }
+        self.hits = hits
+        
+        guard let nbHits = content["nbHits"] as? Int else {
+            throw NSError(domain: ErrorDomain, code: StatusCode.InvalidResponse.rawValue, userInfo: [ NSLocalizedDescriptionKey: "Invalid response: expecting attribute `nbHits` of type `Int`" ])
+        }
+        self.nbHits = nbHits
+        
+        guard let processingTimeMS = content["processingTimeMS"] as? Int else {
+            throw NSError(domain: ErrorDomain, code: StatusCode.InvalidResponse.rawValue, userInfo: [ NSLocalizedDescriptionKey: "Invalid response: expecting attribute `processingTimeMS` of type `Int`" ])
+        }
+        self.processingTimeMS = processingTimeMS
+        
+        guard let query = content["query"] as? String else {
+            throw NSError(domain: ErrorDomain, code: StatusCode.InvalidResponse.rawValue, userInfo: [ NSLocalizedDescriptionKey: "Invalid response: expecting attribute `query` of type `String`" ])
+        }
+        self.query = query
+        
+        guard let params = content["params"] as? String else {
+            throw NSError(domain: ErrorDomain, code: StatusCode.InvalidResponse.rawValue, userInfo: [ NSLocalizedDescriptionKey: "Invalid response: expecting attribute `params` of type `String`" ])
+        }
+        self.params = Query.parse(params)
+        
         super.init()
         updateLastQuery(content)
     }
