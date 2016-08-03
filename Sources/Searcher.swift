@@ -122,7 +122,11 @@ import Foundation
     }
 
     /// The index used by this search helper.
-    @objc public let index: Index
+    ///
+    /// + NOTE: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
+    /// running. Depending on your use case, you might want to call `reset()` after changing the index.
+    ///
+    @objc public var index: Index
     
     /// User callbacks for handling results.
     /// There should be at least one, but multiple handlers may be registered if necessary.
