@@ -129,10 +129,9 @@ import Foundation
     ///
     private var resultHandlers: [ResultHandler] = []
     
-    // MARK: State management
-    // ----------------------
-    
     /// The query that will be used for the next search.
+    ///
+    /// **Warning:** The value of `facetFilters` will be discarded and overridden by the `refinements` property.
     @objc public var query: Query {
         get { return nextState.query }
         set { nextState.query = newValue }
@@ -143,6 +142,19 @@ import Foundation
         get { return nextState.disjunctiveFacets }
         set { nextState.disjunctiveFacets = newValue }
     }
+    
+    /// Facet refinements that will be used for the next search. Maps facet names to a list of refined values.
+    /// The format is the same as `Index.searchDisjunctiveFaceting()`.
+    ///
+    /// **Note:** You are encouraged to use the helper methods to manipulate this property. See `hasFacetRefinement()`,
+    /// `addFacetRefinement()`, `removeFacetRefinement()` and `toggleFacetRefinement()`.
+    ///
+    /// **Warning:** Any refinements specified here will override those manually specified in `query`.
+    ///
+    @objc public var refinements: [String: [String]] = [:]
+    
+    // MARK: State management
+    // ----------------------
     
     /// Sequence number for the next request.
     private var nextSequenceNumber: Int = 0
@@ -166,7 +178,7 @@ import Foundation
     /// All currently ongoing requests.
     @objc public private(set) dynamic var pendingRequests: [NSOperation] = []
 
-    // MARK: -
+    // MARK: - Initialization, termination
     
     /// Create a new searcher targeting the specified index.
     ///
@@ -201,9 +213,14 @@ import Foundation
     }
     
     /// Register a result handler with this searcher.
+    ///
+    /// **Note:** Because of the way closures are handled in Swift, the handler cannot be removed.
+    ///
     @objc public func addResultHandler(resultHandler: ResultHandler) {
         self.resultHandlers.append(resultHandler)
     }
+    
+    // MARK: - Search
     
     /// Search using the current settings.
     /// This uses the current value for `query` and `disjunctiveFacets`.
@@ -267,11 +284,19 @@ import Foundation
         }
         let query = Query(copy: state.query)
         query.page = state.page
+        query.facetFilters = [] // will be overridden below
         if state.disjunctiveFacets.isEmpty {
+            // All facets are conjunctive; build facet filters accordingly.
+            let queryHelper = QueryHelper(query: query)
+            for (facetName, values) in refinements {
+                for value in values {
+                    queryHelper.addConjunctiveFacetRefinement(FacetRefinement(name: facetName, value: value))
+                }
+            }
             operation = index.search(query, completionHandler: completionHandler)
         } else {
-            let queryHelper = QueryHelper(query: query)
-            operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: queryHelper.buildFacetRefinementsForDisjunctiveFaceting(), completionHandler: completionHandler)
+            // Facet filters are built directly by the disjunctive faceting search helper method.
+            operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
         }
         self.pendingRequests.append(operation)
     }
@@ -295,28 +320,74 @@ import Foundation
             resultHandler(results: results, error: error)
         }
     }
-
-    /// Toggle a facet refinement on/off, in a way suitable for high latency environments.
+    
+    // MARK: - Facets
+    
+    /// Set a given facet as disjunctive or conjunctive.
+    /// This is a convenience method to set the `disjunctiveFacets` property.
     ///
-    /// The trick here is that the toggle reads the *received* query state, but updates the *next* query. Why?
-    /// Because if search results are slow to come, the user will be acting on the received state. If you just toggle
-    /// the next query state, it might lead to inconsistent results.
+    /// - parameter name: The facet's name.
+    /// - parameter disjunctive: true to treat this facet as disjunctive (`OR`), false to treat it as conjunctive
+    ///   (`AND`, the default).
     ///
-    /// - parameter facetRefinement: The facet refinement to toggle.
-    ///
-    @objc public func toggleFacetRefinement(facetRefinement: FacetRefinement) {
-        let receivedQueryHelper = QueryHelper(query: receivedState.query)
-        var enabled = receivedQueryHelper.hasFacetRefinement(facetRefinement)
-        enabled = !enabled
-        let newQueryHelper = QueryHelper(query: nextState.query)
-        if enabled {
-            if receivedState.disjunctiveFacets.contains(facetRefinement.name) {
-                newQueryHelper.addDisjunctiveFacetRefinement(facetRefinement)
-            } else {
-                newQueryHelper.addConjunctiveFacetRefinement(facetRefinement)
+    @objc public func setFacet(name: String, disjunctive: Bool) {
+        if disjunctive {
+            if !disjunctiveFacets.contains(name) {
+                disjunctiveFacets.append(name)
             }
         } else {
-            newQueryHelper.removeFacetRefinement(facetRefinement)
+            if let index = disjunctiveFacets.indexOf(name) {
+                disjunctiveFacets.removeAtIndex(index)
+            }
+        }
+    }
+    
+    /// Add a refinement for a given facet.
+    /// The refinement will be treated as conjunctive (`AND`) or disjunctive (`OR`) based on the facet's own
+    /// disjunctive/conjunctive status.
+    ///
+    /// - parameter name: The facet's name.
+    /// - parameter value: The refined value to add.
+    ///
+    @objc public func addFacetRefinement(name: String, value: String) {
+        if refinements[name] == nil {
+            refinements[name] = []
+        }
+        refinements[name]!.append(value)
+    }
+    
+    /// Remove a refinement for a given facet.
+    ///
+    /// - parameter name: The facet's name.
+    /// - parameter value: The refined value to remove.
+    ///
+    @objc public func removeFacetRefinement(name: String, value: String) {
+        if let index = refinements[name]?.indexOf(value) {
+            refinements[name]?.removeAtIndex(index)
+        }
+    }
+    
+    /// Test whether a facet has a refinement for a given value.
+    ///
+    /// - parameter name: The facet's name.
+    /// - parameter value: The refined value to look for.
+    /// - returns: true if the refinement exists, false otherwise.
+    ///
+    @objc public func hasFacetRefinement(name: String, value: String) -> Bool {
+        return refinements[name]?.contains(value) ?? false
+    }
+    
+    /// Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
+    /// added.
+    ///
+    /// - parameter name: The facet's name.
+    /// - parameter value: The refined value to toggle.
+    ///
+    @objc public func toggleFacetRefinement(name: String, value: String) {
+        if hasFacetRefinement(name, value: value) {
+            removeFacetRefinement(name, value: value)
+        } else {
+            addFacetRefinement(name, value: value)
         }
     }
 }

@@ -26,7 +26,7 @@ import Foundation
 
 
 /// A refinement of a facet.
-@objc public class FacetRefinement: NSObject {
+@objc internal class FacetRefinement: NSObject {
     /// Name of the facet.
     @objc public var name: String
     
@@ -48,14 +48,14 @@ import Foundation
     }
 }
 
-public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
+internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     return lhs.name == rhs.name && lhs.value == rhs.value && lhs.inclusive == rhs.inclusive
 }
 
 
 /// Utilities to build and interpret `Query` instances.
 ///
-@objc public class QueryHelper: NSObject {
+@objc internal class QueryHelper: NSObject {
     /// The query wrapped by this helper.
     @objc public let query: Query
     
@@ -69,40 +69,7 @@ public func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
         self.query = query
     }
     
-    /// Build facet refinements suitable for use with `Index.searchDisjunctiveFaceting()`.
-    ///
-    /// - returns: A dictionary mapping each facet name to the corresponding list of values.
-    ///
-    @objc public func buildFacetRefinementsForDisjunctiveFaceting() -> [String: [String]] {
-        if let facetFilters = query.facetFilters {
-            return _buildFacetRefinementsForDisjunctiveFaceting(facetFilters)
-        } else {
-            return [:]
-        }
-    }
-    
-    private func _buildFacetRefinementsForDisjunctiveFaceting(facetFilters: [AnyObject]) -> [String: [String]] {
-        var refinements = [String: [String]]()
-        for facetFilter in facetFilters {
-            if let facetFilter = facetFilter as? String, facetRefinement = QueryHelper.parseFacetRefinement(facetFilter) {
-                if let facetRefinements = refinements[facetRefinement.name] {
-                    refinements[facetRefinement.name] = facetRefinements + [facetRefinement.value]
-                } else {
-                    refinements[facetRefinement.name] = [facetRefinement.value]
-                }
-            } else if let facetFilter = facetFilter as? [AnyObject] {
-                let additionalRefinements = _buildFacetRefinementsForDisjunctiveFaceting(facetFilter)
-                for (facetName, facetValues) in additionalRefinements {
-                    if let facetRefinements = refinements[facetName] {
-                        refinements[facetName] = facetRefinements + facetValues
-                    } else {
-                        refinements[facetName] = facetValues
-                    }
-                }
-            }
-        }
-        return refinements
-    }
+    // MARK: - Facets
     
     /// Test whether the query contains the specified facet refinement.
     /// The test looks for both conjunctive or disjunctive refinements.
