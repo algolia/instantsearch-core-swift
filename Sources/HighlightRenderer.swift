@@ -31,10 +31,10 @@ import Foundation
     @objc public var highlightAttrs: [String: AnyObject]
     
     /// Markup identifying the beginning of a highlight. Defaults to `<em>`.
-    @objc public var startTag: String = "<em>"
+    @objc public var preTag: String = "<em>"
 
     /// Markup identifying the end of a highlight. Defaults to `</em>`.
-    @objc public var endTag: String = "</em>"
+    @objc public var postTag: String = "</em>"
 
     /// Whether the markup is case sensitive. Defaults to false.
     @objc public var caseSensitive: Bool = false
@@ -59,11 +59,11 @@ import Foundation
         
         // Remove markup and identify ranges to highlight at the same time.
         while true {
-            let matchBegin = newText.rangeOfString(startTag, options: caseSensitive ? [] : [.CaseInsensitiveSearch])
+            let matchBegin = newText.rangeOfString(preTag, options: caseSensitive ? [] : [.CaseInsensitiveSearch])
             if matchBegin.location != NSNotFound {
                 newText.deleteCharactersInRange(matchBegin)
                 let range = NSRange(location: matchBegin.location, length: newText.length - matchBegin.location)
-                let matchEnd = newText.rangeOfString(endTag, options: .CaseInsensitiveSearch, range: range)
+                let matchEnd = newText.rangeOfString(postTag, options: .CaseInsensitiveSearch, range: range)
                 if matchEnd.location != NSNotFound {
                     newText.deleteCharactersInRange(matchEnd)
                     rangesToHighlight.append(NSRange(location: matchBegin.location, length: matchEnd.location - matchBegin.location))
