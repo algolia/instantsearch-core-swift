@@ -93,25 +93,25 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         /// Search query.
         /// NOTE: The page may be overridden when loading more content.
         ///
-        public var query: Query = Query()
+        var query: Query = Query()
         
         /// List of facets to be treated as disjunctive facets. Defaults to the empty list.
-        public var disjunctiveFacets: [String] = []
+        var disjunctiveFacets: [String] = []
         
         /// Initial page.
-        public var initialPage: Int { return query.page?.integerValue ?? 0 }
+        var initialPage: Int { return query.page?.integerValue ?? 0 }
         
         /// Current page.
-        public var page: Int = 0
+        var page: Int = 0
         
         /// Whether the current page is the initial page for this search state.
-        public var isInitialPage: Bool { return initialPage == page }
+        var isInitialPage: Bool { return initialPage == page }
         
         /// This state's sequence number.
-        public var sequenceNumber: Int = 0
+        var sequenceNumber: Int = 0
         
         /// Construct a default state.
-        public init() {
+        init() {
         }
 
         // WARNING: Although `State` is a value type, `Query` is not (because of Objective-C bridgeability).
@@ -121,14 +121,14 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         // operator or copy constructor). So I resort to explicitly constructing copies so far.
 
         /// Copy a state.
-        public init(copy: State) {
+        init(copy: State) {
             // WARNING: Query is not a value type (because of Objective-C bridgeability), so let's make sure to copy it.
             self.query = Query(copy: copy.query)
             self.disjunctiveFacets = copy.disjunctiveFacets
             self.page = copy.page
         }
         
-        public var description: String {
+        var description: String {
             return "State#\(sequenceNumber){query=\(query), disjunctiveFacets=\(disjunctiveFacets), page=\(page)}"
         }
     }
@@ -317,10 +317,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         var state = State(copy: requestedState)
         state.sequenceNumber = nextSequenceNumber
         nextSequenceNumber += 1
-        var requestCompleted = false
         let completionHandler: CompletionHandler = { (content: [String: AnyObject]?, error: NSError?) in
-            requestCompleted = true
-            
             // Remove request from list of pending requests.
             // Also cancel and remove all previous requests (as this one is deemed more recent).
             if let index = self.pendingRequests.indexOf(operation) {
