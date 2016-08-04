@@ -12,7 +12,11 @@ Pod::Spec.new do |s|
 
     # Build settings
     # --------------
+    # NOTE: Deployment targets should be kept in line with the API Client.
     s.ios.deployment_target = '8.0'
+    s.osx.deployment_target = '10.10'
+    s.tvos.deployment_target = '9.0'
+
     s.source_files = [
         'Sources/*.swift'
     ]

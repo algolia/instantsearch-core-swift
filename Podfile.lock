@@ -9,8 +9,8 @@ EXTERNAL SOURCES:
     :path: ~/devt/workspace/clients-master/algoliasearch-client-swift
 
 SPEC CHECKSUMS:
-  AlgoliaSearch-Client-Swift: ee9319749b53faff5168943945a14774b2b512ab
+  AlgoliaSearch-Client-Swift: 378e9c298e07360fe6cfb1e984ba34b33fcea03a
 
-PODFILE CHECKSUM: 7a76918f3c01a150f1a65fb02a8dd4de23e2bae9
+PODFILE CHECKSUM: 813df9b8b9010cbaf1bc0f48d67f180da8288526
 
 COCOAPODS: 1.0.1

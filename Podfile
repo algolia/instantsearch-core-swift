@@ -1,3 +1,5 @@
+# NOTE: This Podfile is used to draw dependencies when building the project independently (e.g. for unit tests).
+
 use_frameworks!
 
 def common_deps
@@ -5,10 +7,13 @@ def common_deps
 end
 
 target "AlgoliaSearchHelper-iOS" do
-	common_deps
+    common_deps
 end
 
 target "AlgoliaSearchHelper-macOS" do
-	common_deps
+    common_deps
 end
 
+target "AlgoliaSearchHelper-tvOS" do
+    common_deps
+end
