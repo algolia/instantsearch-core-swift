@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2125DBE0372AD6EA526E3CF1 /* Pods_AlgoliaSearchHelper_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3A47E7AAA2DAB4E26DB200 /* Pods_AlgoliaSearchHelper_tvOS.framework */; };
 		34AD0B3D542439817CEF859A /* Pods_AlgoliaSearchHelper_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */; };
-		88B828BFA2C21475EB6E51FA /* Pods_AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BFE7E583ABA49F07AC096C9 /* Pods_AlgoliaSearchHelper.framework */; };
 		BC3426351D460DB70055E0F2 /* AlgoliaSearchHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC34263C1D460DB70055E0F2 /* AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */; };
 		BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */; };
@@ -63,14 +62,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		09CB11432C5D58B1FF70BC97 /* Pods-InstantSearch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearch.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearch/Pods-InstantSearch.release.xcconfig"; sourceTree = "<group>"; };
-		10FC205FFE466D69D8DBDC30 /* Pods-AlgoliaSearchHelper.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper/Pods-AlgoliaSearchHelper.debug.xcconfig"; sourceTree = "<group>"; };
 		1B88191EB034B2884D2E46E4 /* Pods-AlgoliaSearchHelper-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-iOS/Pods-AlgoliaSearchHelper-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		2656E6104B6D9A6ED9190958 /* Pods-AlgoliaSearchHelper.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper/Pods-AlgoliaSearchHelper.release.xcconfig"; sourceTree = "<group>"; };
 		2F3A47E7AAA2DAB4E26DB200 /* Pods_AlgoliaSearchHelper_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		393ECFD6C95F004AE5B5B106 /* Pods-AlgoliaSearchHelper-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-macOS/Pods-AlgoliaSearchHelper-macOS.debug.xcconfig"; sourceTree = "<group>"; };
-		3BFE7E583ABA49F07AC096C9 /* Pods_AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		472B8E5B84BB572A5646A29A /* Pods-InstantSearch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearch.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearch/Pods-InstantSearch.debug.xcconfig"; sourceTree = "<group>"; };
 		5F48A2C888B2E9A93FBC8E41 /* Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-tvOS/Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		671D12F5AB371A98837D6759 /* Pods-AlgoliaSearchHelper-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-macOS/Pods-AlgoliaSearchHelper-macOS.release.xcconfig"; sourceTree = "<group>"; };
 		7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,7 +94,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88B828BFA2C21475EB6E51FA /* Pods_AlgoliaSearchHelper.framework in Frameworks */,
 				DDAC466BA154A5B6B3AB8238 /* Pods_AlgoliaSearchHelper_iOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +144,6 @@
 		00763CEB98C2374470027328 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3BFE7E583ABA49F07AC096C9 /* Pods_AlgoliaSearchHelper.framework */,
 				C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */,
 				7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */,
 				2F3A47E7AAA2DAB4E26DB200 /* Pods_AlgoliaSearchHelper_tvOS.framework */,
@@ -162,10 +154,6 @@
 		893DF7651F0DB5B712557823 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				472B8E5B84BB572A5646A29A /* Pods-InstantSearch.debug.xcconfig */,
-				09CB11432C5D58B1FF70BC97 /* Pods-InstantSearch.release.xcconfig */,
-				10FC205FFE466D69D8DBDC30 /* Pods-AlgoliaSearchHelper.debug.xcconfig */,
-				2656E6104B6D9A6ED9190958 /* Pods-AlgoliaSearchHelper.release.xcconfig */,
 				83D081CD46C32B0010292F40 /* Pods-AlgoliaSearchHelper-iOS.debug.xcconfig */,
 				1B88191EB034B2884D2E46E4 /* Pods-AlgoliaSearchHelper-iOS.release.xcconfig */,
 				393ECFD6C95F004AE5B5B106 /* Pods-AlgoliaSearchHelper-macOS.debug.xcconfig */,
