@@ -60,24 +60,27 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public let json: [String: AnyObject]
     
     /// Value of this highlight.
-    @objc public var value: String? { return json["value"] as? String }
+    @objc public var value: String
     
     /// Match level.
-    @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
+    @objc public var matchLevel: MatchLevel
     
     /// List of matched words.
-    @objc public var matchedWords: [String]? { return json["matchedWords"] as? [String] }
+    @objc public var matchedWords: [String]
     
-    private var matchLevel_: MatchLevel_? {
-        if let matchLevelString = json["matchLevel"] as? String {
-            return MatchLevel_(rawValue: matchLevelString)
-        } else {
+    internal init?(json: [String: AnyObject]) {
+        self.json = json
+        guard
+            let value = json["value"] as? String,
+            let matchLevelString = json["matchLevel"] as? String,
+            let matchLevel_ = MatchLevel_(rawValue: matchLevelString),
+            let matchedWords = json["matchedWords"] as? [String]
+        else {
             return nil
         }
-    }
-    
-    internal init(json: [String: AnyObject]) {
-        self.json = json
+        self.value = value
+        self.matchLevel = swift2Objc(matchLevel_)
+        self.matchedWords = matchedWords
     }
 }
 
@@ -90,21 +93,22 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public let json: [String: AnyObject]
     
     /// Value of this snippet.
-    @objc public var value: String? { return json["value"] as? String }
+    @objc public var value: String
     
     /// Match level.
-    @objc public var matchLevel: MatchLevel { return swift2Objc(matchLevel_) }
+    @objc public var matchLevel: MatchLevel
     
-    private var matchLevel_: MatchLevel_? {
-        if let matchLevelString = json["matchLevel"] as? String {
-            return MatchLevel_(rawValue: matchLevelString)
-        } else {
-            return nil
-        }
-    }
-
-    internal init(json: [String: AnyObject]) {
+    internal init?(json: [String: AnyObject]) {
         self.json = json
+        guard
+            let value = json["value"] as? String,
+            let matchLevelString = json["matchLevel"] as? String,
+            let matchLevel_ = MatchLevel_(rawValue: matchLevelString)
+            else {
+                return nil
+        }
+        self.value = value
+        self.matchLevel = swift2Objc(matchLevel_)
     }
 }
 
