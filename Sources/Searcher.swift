@@ -65,7 +65,6 @@ import Foundation
 
 
 /// Error domain used for errors raised by this module.
-/// + NOTE: This shortcut is provided for Objective-C bridging. See the top-level `ErrorDomain` constant.
 public let ErrorDomain = "AlgoliaSearchHelper"
 
 
@@ -74,9 +73,12 @@ public let ErrorDomain = "AlgoliaSearchHelper"
 /// The purpose of this class is to maintain a state between searches and handle pagination.
 ///
 @objc public class Searcher: NSObject {
-    // MARK: Constants
     
     /// Error domain used for errors raised by this module.
+    ///
+    /// + Note: This shortcut is provided for Objective-C bridging.
+    /// + SeeAlso: The top-level `ErrorDomain` constant.
+    ///
     @objc public static let ErrorDomain = AlgoliaSearchHelper.ErrorDomain
     
     // MARK: Types
@@ -91,7 +93,8 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
         /// Search query.
-        /// NOTE: The page may be overridden when loading more content.
+        ///
+        /// - Note: The page may be overridden when loading more content.
         ///
         var query: Query = Query()
         
@@ -133,11 +136,11 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         }
     }
     
-    // MARK: -
+    // MARK: Properties
 
     /// The index used by this search helper.
     ///
-    /// + NOTE: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
+    /// + Note: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
     /// running. Depending on your use case, you might want to call `reset()` after changing the index.
     ///
     @objc public var index: Index
@@ -164,15 +167,15 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Facet refinements that will be used for the next search. Maps facet names to a list of refined values.
     /// The format is the same as `Index.searchDisjunctiveFaceting()`.
     ///
-    /// **Note:** You are encouraged to use the helper methods to manipulate this property. See `hasFacetRefinement()`,
-    /// `addFacetRefinement()`, `removeFacetRefinement()` and `toggleFacetRefinement()`.
+    /// + Note: You are encouraged to use the helper methods to manipulate this property. See `hasFacetRefinement(_:value:)`,
+    /// `addFacetRefinement(_:value:)`, `removeFacetRefinement(_:value:)` and `toggleFacetRefinement(_:value:)`.
     ///
-    /// **Warning:** Any refinements specified here will override those manually specified in `query`.
+    /// + Warning: Any refinements specified here will override those manually specified in `query`.
     ///
     @objc public var refinements: [String: [String]] = [:]
     
-    // MARK: State management
-    // ----------------------
+    // State management
+    // ----------------
     
     /// Sequence number for the next request.
     private var nextSequenceNumber: Int = 0
@@ -183,11 +186,15 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private var nextState: State = State()
 
     /// The state corresponding to the last issued request.
-    /// WARNING: Only valid after the first call to `search()`.
+    ///
+    /// + Warning: Only valid after the first call to `search()`.
+    ///
     private var requestedState: State!
 
     /// The state corresponding to the last received results.
-    /// WARNING: Only valid after the first call to the result handler.
+    ///
+    /// + Warning: Only valid after the first call to the result handler.
+    ///
     private var receivedState: State!
     
     /// The last received results.
@@ -232,7 +239,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     
     /// Register a result handler with this searcher.
     ///
-    /// **Note:** Because of the way closures are handled in Swift, the handler cannot be removed.
+    /// + Note: Because of the way closures are handled in Swift, the handler cannot be removed.
     ///
     @objc public func addResultHandler(resultHandler: ResultHandler) {
         self.resultHandlers.append(resultHandler)
@@ -241,7 +248,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Reset the search state.
     /// This resets the `query`, `disjunctiveFacets` and `refinements` properties. It also cancels any pending request.
     ///
-    /// **Note:** It does *not* remove registered result handlers.
+    /// + Note: It does *not* remove registered result handlers.
     ///
     @objc public func reset() {
         query = Query()
@@ -256,7 +263,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     // MARK: - Search
     
     /// Search using the current settings.
-    /// This uses the current value for `query` and `disjunctiveFacets`.
+    /// This uses the current value for `query`, `disjunctiveFacets` and `refinements`.
     ///
     @objc public func search() {
         requestedState = State(copy: nextState)
@@ -286,7 +293,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Loading more requires that we have already received results (obviously) and also that another more recent
     /// request is not pending.
     ///
-    /// **Note:** It does indicate whether they are actually more results to load. For this, see `hasMore()`.
+    /// + Note: It does indicate whether they are actually more results to load. For this, see `hasMore()`.
     ///
     /// - returns: true if the current state allows loading more results, false otherwise.
     ///

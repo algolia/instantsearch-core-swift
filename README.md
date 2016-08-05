@@ -54,11 +54,8 @@ This module requires:
 ### Setup
 
 1. Add a dependency on "AlgoliaSearch-Helper-Swift":
-
     - CocoaPods: add `pod 'AlgoliaSearch-Helper-Swift', '~> 1.0'` to your `Podfile`.
-
     - Carthage: not supported so far.
-
 2. Add `import AlgoliaSearchHelper` to your source files.
 
 **Note:** If you wish to use the API Client's offline mode, use the subspec `AlgoliaSearch-Helper-Swift/Offline` instead.

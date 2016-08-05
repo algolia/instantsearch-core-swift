@@ -1,0 +1,8 @@
+# The Xcode project is not standalone: we need the Cocoapods-generated workspace to draw dependencies.
+xcodebuild_arguments:
+    - -workspace
+    - AlgoliaSearchHelper.xcworkspace
+    - -scheme
+    - AlgoliaSearchHelper-iOS
+output: build/doc
+hide_documentation_coverage: true

@@ -36,7 +36,7 @@ import Foundation
     /// Markup identifying the end of a highlight. Defaults to `</em>`.
     @objc public var postTag: String = "</em>"
 
-    /// Whether the markup is case sensitive. Defaults to false.
+    /// Whether the markup is case sensitive. Defaults to `false`.
     @objc public var caseSensitive: Bool = false
 
     /// Create a new highlighter with the specified text attributes for highlights.

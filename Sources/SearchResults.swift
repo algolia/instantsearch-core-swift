@@ -33,9 +33,15 @@ private enum MatchLevel_: String {
 }
 
 /// Match level of a highlight or snippet result.
+///
+/// + SeeAlso: `HighlightResult`, `SnippetResult`.
+///
 @objc public enum MatchLevel: Int {
+    /// All the query terms were found in the attribute.
     case Full = 2
+    /// Only some of the query terms were found in the attribute.
     case Partial = 1
+    /// None of the query terms were found in the attribute.
     case None = 0
 }
 
@@ -53,7 +59,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Highlight result for an attribute of a hit.
 ///
-/// **Note:** Wraps the raw JSON returned by the API.
+/// + Note: Wraps the raw JSON returned by the API.
 ///
 @objc public class HighlightResult: NSObject {
     /// The wrapped JSON object.
@@ -86,7 +92,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Snippet result for an attribute of a hit.
 ///
-/// **Note:** Wraps the raw JSON returned by the API.
+/// + Note: Wraps the raw JSON returned by the API.
 ///
 @objc public class SnippetResult: NSObject {
     /// The wrapped JSON object.
@@ -114,20 +120,45 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Ranking info for a hit.
 ///
-/// **Note:** Wraps the raw JSON returned by the API.
+/// + Note: Wraps the raw JSON returned by the API.
 ///
 @objc public class RankingInfo: NSObject {
     /// The wrapped JSON object.
     @objc public let json: [String: AnyObject]
     
+    /// Number of typos encountered when matching the record.
+    /// Corresponds to the `typos` ranking criterion in the ranking formula.
     @objc public var nbTypos: Int { return json["nbTypos"] as? Int ?? 0 }
+    
+    /// Position of the most important matched attribute in the attributes to index list.
+    /// Corresponds to the `attribute` ranking criterion in the ranking formula.
     @objc public var firstMatchedWord: Int { return json["firstMatchedWord"] as? Int ?? 0 }
+    
+    /// When the query contains more than one word, the sum of the distances between matched words.
+    /// Corresponds to the `proximity` criterion in the ranking formula.
     @objc public var proximityDistance: Int { return json["proximityDistance"] as? Int ?? 0 }
+    
+    /// Custom ranking for the object, expressed as a single numerical value.
+    /// Conceptually, it's what the position of the object would be in the list of all objects sorted by custom ranking.
+    /// Corresponds to the `custom` criterion in the ranking formula.
     @objc public var userScore: Int { return json["userScore"] as? Int ?? 0 }
+    
+    /// Distance between the geo location in the search query and the best matching geo location in the record, divided
+    /// by the geo precision.
     @objc public var geoDistance: Int { return json["geoDistance"] as? Int ?? 0 }
+    
+    /// Precision used when computed the geo distance, in meters.
+    /// All distances will be floored to a multiple of this precision.
     @objc public var geoPrecision: Int { return json["geoPrecision"] as? Int ?? 0 }
+    
+    /// Number of exactly matched words.
+    /// If `alternativeAsExact` is set, it may include plurals and/or synonyms.
     @objc public var nbExactWords: Int { return json["nbExactWords"] as? Int ?? 0 }
+    
+    /// Number of matched words, including prefixes and typos.
     @objc public var words: Int { return json["words"] as? Int ?? 0 }
+    
+    /// + Warning: *This field is reserved for advanced usage.* It will be zero in most cases.
     @objc public var filters: Int { return json["filters"] as? Int ?? 0 }
     
     internal init(json: [String: AnyObject]) {
@@ -138,7 +169,13 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 /// A value of a given facet, together with its number of occurrences.
 ///
 @objc public class FacetValue: NSObject {
+    /// Value of the facet.
     @objc public let value: String
+    
+    /// Number of occurrences of the value.
+    ///
+    /// + Note: If `SearchResults.exhaustiveFacetsCount` is `true`, it may be approximate.
+    ///
     @objc public let count: Int
     
     internal init(value: String, count: Int) {
@@ -148,7 +185,9 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 }
 
 /// Statistics for a numerical facet.
-/// + NOTE: Since values may either be integers or floats, they are typed as `NSNumber`.
+///
+/// + Note: Since values may either be integers or floats, they are typed as `NSNumber`.
+///
 @objc public class FacetStats: NSObject {
     /// The minimum value.
     @objc public let min: NSNumber
@@ -170,7 +209,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
 
 /// Search results.
 ///
-/// **Note:** Wraps the raw JSON returned by the API.
+/// + Note: Wraps the raw JSON returned by the API.
 ///
 @objc public class SearchResults: NSObject {
     /// The received JSON content.
@@ -184,7 +223,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Hits.
     @objc public let hits: [[String: AnyObject]]
     
-    /// Facets for the last results. Lazily computed; accessed through `facets()`.
+    /// Facets for the last results. Lazily computed; accessed through `facets(_:)`.
     private var facets: [String: [FacetValue]] = [:]
 
     /// Total number of hits.
@@ -204,11 +243,11 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     
     /// Query text that produced these results.
     ///
-    /// + NOTE: Should be identical to `params.query`.
+    /// + Note: Should be identical to `params.query`.
     ///
     @objc public var query: String
     
-    /// Query that produced these results.
+    /// Query parameters that produced these results.
     @objc public var params: Query
     
     /// Whether facet counts are exhaustive.
@@ -220,13 +259,13 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty
     /// result set. The removed parts are surrounded by `<em>` tags.
     ///
-    /// + NOTE: Only returned when `removeWordsIfNoResults` is set.
+    /// + Note: Only returned when `removeWordsIfNoResults` is set.
     ///
     @objc public var queryAfterRemoval: String? { return content["queryAfterRemoval"] as? String }
 
     /// The computed geo location.
     ///
-    /// + NOTE: Only returned when `aroundLatLngViaIP` is set.
+    /// + Note: Only returned when `aroundLatLngViaIP` is set.
     ///
     @objc public var aroundLatLng: LatLng? {
         // WARNING: For legacy reasons, this parameter is returned as a string and not an object.
@@ -244,7 +283,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     
     /// The automatically computed radius.
     ///
-    /// + NOTE: Only returned for geo queries without an explicitly specified radius (see `aroundRadius`).
+    /// + Note: Only returned for geo queries without an explicitly specified radius (see `aroundRadius`).
     ///
     @objc public var automaticRadius: Int {
         // WARNING: For legacy reasons, this parameter is returned as a string and not an integer.
@@ -259,32 +298,38 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Actual host name of the server that processed the request. (Our DNS supports automatic failover and load
     /// balancing, so this may differ from the host name used in the request.)
     ///
-    /// + NOTE: Only returned when `getRankingInfo` is true.
+    /// + Note: Only returned when `getRankingInfo` is true.
     ///
     @objc public var serverUsed: String? { return content["serverUsed"] as? String }
     
     /// The query string that will be searched, after normalization.
     ///
-    /// + NOTE: Only returned when `getRankingInfo` is true.
+    /// + Note: Only returned when `getRankingInfo` is true.
     ///
     @objc public var parsedQuery: String? { return content["parsedQuery"] as? String }
     
     /// Whether a timeout was hit when computing the facet counts. When true, the counts will be interpolated
     /// (i.e. approximate). See also `exhaustiveFacetsCount`.
     ///
-    /// + NOTE: Only returned when `getRankingInfo` is true.
+    /// + Note: Only returned when `getRankingInfo` is true.
     ///
     @objc public var timeoutCounts: Bool { return content["timeoutCounts"] as? Bool ?? false }
     
     /// Whether a timeout was hit when retrieving the hits. When true, some results may be missing.
     ///
-    /// + NOTE: Only returned when `getRankingInfo` is true.
+    /// + Note: Only returned when `getRankingInfo` is true.
     ///
     @objc public var timeoutHits: Bool { return content["timeoutHits"] as? Bool ?? false }
 
     // MARK: - Initialization, termination
     
     /// Create search results from an initial response from the API.
+    ///
+    /// - Warning: This initializer will validate mandatory fields and fail if they are absent or invalid.
+    ///
+    /// - parameter content: The JSON content returned by the API.
+    /// - parameter disjunctiveFacets: The list of facets to be treated as disjunctive.
+    ///
     @objc public init(content: [String: AnyObject], disjunctiveFacets: [String]) throws {
         self.content = content
         self.disjunctiveFacets = disjunctiveFacets
@@ -322,7 +367,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     /// - parameter name: Facet name.
     /// - parameter disjunctive: true if this is a disjunctive facet, false if it's a conjunctive facet (default).
-    /// - returns: The corresponding facet values.
+    /// - returns: The corresponding facet values (which may be empty), or `nil` if the facet was not requested.
     ///
     @objc public func facets(name: String) -> [FacetValue]? {
         // Use stored values if available.
@@ -361,7 +406,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Retrieve the statistics for a numerical facet.
     ///
     /// - parameter name: The facet's name.
-    /// - returns: The statistics for this facet, or nil if this facet does not exist or is not a numerical facet.
+    /// - returns: The statistics for this facet, or `nil` if this facet does not exist or is not a numerical facet, or if the response JSON is invalid.
     ///
     @objc public func facetStats(name: String) -> FacetStats? {
         guard let allStats = content["facets_stats"] as? [String: AnyObject] else { return nil }
@@ -378,21 +423,31 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     }
     
     /// Get the highlight result for an attribute of a hit.
+    ///
+    /// - parameter index: Index of the hit in the `hits` array.
+    /// - parameter path: Path of the attribute to retrieve, in dot notation.
+    /// - returns: The corresponding highlight, or `nil` if it was not returned, or if the JSON response is invalid.
+    ///
     @objc public func highlightResult(index: Int, path: String) -> HighlightResult? {
         return SearchResults.getHighlightResult(hits[index], path: path)
     }
 
     /// Get the snippet result for an attribute of a hit.
+    ///
+    /// - parameter index: Index of the hit in the `hits` array.
+    /// - parameter path: Path of the attribute to retrieve, in dot notation.
+    /// - returns: The corresponding snippet, or `nil` if it was not returned, or if the JSON response is invalid.
+    ///
     @objc public func snippetResult(index: Int, path: String) -> SnippetResult? {
         return SearchResults.getSnippetResult(hits[index], path: path)
     }
 
     /// Get the ranking information for a hit.
     ///
-    /// **Note:** Only available when `getRankingInfo` was set to true on the query.
+    /// + Note: Only available when `getRankingInfo` was set to true on the query.
     ///
     /// - parameter index: Index of the hit in the hits array.
-    /// - returns: The corresponding ranking information, or nil if no ranking information is available.
+    /// - returns: The corresponding ranking information, or `nil` if no ranking information is available, or if the JSON response is invalid.
     ///
     @objc public func rankingInfo(index: Int) -> RankingInfo? {
         if let rankingInfo = hits[index]["_rankingInfo"] as? [String: AnyObject] {
@@ -408,7 +463,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     /// - parameter hit: The JSON object for a hit.
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
-    /// - returns: The highlight result, or nil if not available.
+    /// - returns: The highlight result, or `nil` if not available, or if the JSON response is invalid.
     ///
     @objc public static func getHighlightResult(hit: [String: AnyObject], path: String) -> HighlightResult? {
         guard let highlights = hit["_highlightResult"] as? [String: AnyObject] else { return nil }
@@ -420,7 +475,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     /// - parameter hit: The JSON object for a hit.
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
-    /// - returns: The snippet result, or nil if not available.
+    /// - returns: The snippet result, or `nil` if not available, or if the JSON response is invalid.
     ///
     @objc public static func getSnippetResult(hit: [String: AnyObject], path: String) -> SnippetResult? {
         guard let snippets = hit["_snippetResult"] as? [String: AnyObject] else { return nil }
