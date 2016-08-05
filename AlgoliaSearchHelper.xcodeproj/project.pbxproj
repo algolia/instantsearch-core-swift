@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2125DBE0372AD6EA526E3CF1 /* Pods_AlgoliaSearchHelper_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3A47E7AAA2DAB4E26DB200 /* Pods_AlgoliaSearchHelper_tvOS.framework */; };
 		34AD0B3D542439817CEF859A /* Pods_AlgoliaSearchHelper_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */; };
-		BC3426351D460DB70055E0F2 /* AlgoliaSearchHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BC34263C1D460DB70055E0F2 /* AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */; };
 		BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */; };
 		BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */; };
@@ -71,7 +70,6 @@
 		83D081CD46C32B0010292F40 /* Pods-AlgoliaSearchHelper-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-iOS/Pods-AlgoliaSearchHelper-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		AEFA5749381C5804859C8DC1 /* Pods-AlgoliaSearchHelper-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-tvOS/Pods-AlgoliaSearchHelper-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlgoliaSearchHelper.h; sourceTree = "<group>"; };
 		BC3426361D460DB70055E0F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC34263B1D460DB70055E0F2 /* AlgoliaSearchHelper-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AlgoliaSearchHelper-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3426421D460DB70055E0F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				BC3426341D460DB70055E0F2 /* AlgoliaSearchHelper.h */,
 				BC3426361D460DB70055E0F2 /* Info.plist */,
 				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
 				BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */,
@@ -219,7 +216,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC3426351D460DB70055E0F2 /* AlgoliaSearchHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
