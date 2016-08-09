@@ -833,7 +833,7 @@ textarea {
 /* line 84, components/_header.scss */
 .ac-nav .ac-nav-brand-title {
   position: relative;
-  font-size: 1.2em;
+  font-size: 1em;
   font-weight: 400;
   vertical-align: middle;
   padding-left: 8px;
@@ -924,7 +924,7 @@ textarea {
   display: inline-block;
   width: 24px;
   height: 50px;
-  background: url("../img/icon-arrow-pipe.svg") no-repeat center center/20px 20px;
+  background: url("../img/icon-arrow-pipe.svg") no-repeat center center/12px 20px;
   vertical-align: middle;
   margin-top: -4px; }
 
@@ -1720,3 +1720,5 @@ html.dash {
     color: #008080; }
   .highlight .il {
     color: #009999; }
+
+/*# sourceMappingURL=site.css.map */
