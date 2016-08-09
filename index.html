@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <link href='#' rel='icon' type='image/x-icon'>
+    <meta content='#' name='description'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+    <!-- / Twitter card -->
+    <meta content='summary_large_image' name='twitter:card'>
+    <meta content='@Algolia' name='twitter:site'>
+    <meta content='@Algolia' name='twitter:creator'>
+    <meta content="Algolia Product" name="twitter:title">
+    <meta content="Algolia Product description" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OG meta -->
+    <meta content='#' property='og:url'>
+    <meta content='#' property='og:title'>
+    <meta content='#' property='og:image'>
+    <meta content='article' property='og:type'>
+    <meta content='#' property='og:description'>
+    <meta content='IMDb' property='og:site_name'>
+
+    <!-- JAZZY:BEGIN -->
+    <title>AlgoliaSearchHelper  Reference</title>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    <!-- JAZZY:END -->
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,600' rel='stylesheet' type='text/css'>
+    <link href="css/site.css" rel="stylesheet" />
+
+  </head>
+
+  <body class="index">
+
+    <div class='ac-nav'>
+      <div class='ac-nav-container'>
+        <div class='ac-nav-brand'>
+          <a class='ac-logo' href='https://community.algolia.com/' title='Algolia Community'>
+            <img alt='Algolia Community' class='ac-logo__lg' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg' width='150'>
+            <img alt='Algolia Community' class='ac-logo__sm' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg'>
+          </a>
+          <span class='ac-nav-brand-breadcrumb'></span>
+          <a class='ac-nav-brand-title' href='index.html' title='Home'>Swift Search Helper</a>
+          <span class='ac-nav-brand-breadcrumb'></span>
+          <a class='ac-nav-brand-title' href='#' title='AlgoliaSearchHelper '>AlgoliaSearchHelper </a>
+        </div>
+        <div class='ac-nav-menu'>
+            <!--
+          <div class='ac-nav-searchbox'>
+            <form class='searchbox' id='docsearch-form' novalidate='novalidate' onsubmit='return false;' style='visibility:hidden;height:0'>
+              <div class='searchbox__wrapper' role='search'>
+                <input autocomplete='off' class='searchbox__input' id='docsearch' name='search' placeholder='Search in the doc' required='required' type='search'>
+                  <button class='searchbox__submit' title='Submit your search query.' type='submit'>
+                    <svg aria-label='Search' role='img'>
+                      <use xlink:href='#sbx-icon-search-13' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+                    </svg>
+                  </button>
+                  <button class='searchbox__reset hide' title='Clear the search query.' type='reset'>
+                    <svg aria-label='Reset' role='img'>
+                      <use xlink:href='#sbx-icon-clear-3' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+                    </svg>
+                  </button>
+                </input>
+              </div>
+            </form>
+            <div class='svg-icons' style='height: 0; width: 0; position: absolute; visibility: hidden'>
+              <svg xmlns='http://www.w3.org/2000/svg'>
+                <symbol id="sbx-icon-clear-3" viewBox="0 0 40 40"><path d="M16.228 20L1.886 5.657 0 3.772 3.772 0l1.885 1.886L20 16.228 34.343 1.886 36.228 0 40 3.772l-1.886 1.885L23.772 20l14.342 14.343L40 36.228 36.228 40l-1.885-1.886L20 23.772 5.657 38.114 3.772 40 0 36.228l1.886-1.885L16.228 20z" fill-rule="evenodd"/></symbol>
+                <symbol id="sbx-icon-search-13" viewBox="0 0 12 12"><path d="M12 11.077c0-.245-.1-.483-.267-.65L9.26 7.955c.584-.843.894-1.853.894-2.877C10.154 2.272 7.882 0 5.077 0S0 2.272 0 5.077s2.272 5.077 5.077 5.077c1.024 0 2.034-.31 2.877-.894l2.474 2.466c.166.173.404.274.65.274.504 0 .922-.418.922-.923zm-3.692-6c0 1.78-1.45 3.23-3.23 3.23-1.782 0-3.232-1.45-3.232-3.23s1.45-3.23 3.23-3.23c1.782 0 3.232 1.45 3.232 3.23z" fill="#FFF" fill-rule="evenodd" opacity="0.85"/></symbol>
+              </svg>
+            </div>
+          </div>
+      -->
+          <ul class='ac-nav-menu-list'>
+            <li class='ac-nav-menu-list-item active'>
+              <a href='index.html' title='Documentation'>Documentation</a>
+            </li>
+            <li class='ac-nav-menu-list-icon'>
+              <a class='ac-icon' href='https://github.com/algolia/algoliasearch-helper-swift' title='GitHub repository'>
+                <span class='ac-icon ac-icon-github'></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <!-- JAZZY:BEGIN -->
+<!--            <div class="content-wrapper"> -->
+              <nav class="sidebar">
+                <ul class="nav-groups">
+                  <li class="nav-group-name">
+                    <a href="Searching.html">Searching</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="Classes/Searcher.html">Searcher</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/SearchResults.html">SearchResults</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/HighlightResult.html">HighlightResult</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/SnippetResult.html">SnippetResult</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/RankingInfo.html">RankingInfo</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/FacetStats.html">FacetStats</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/FacetValue.html">FacetValue</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="Miscellaneous.html">Miscellaneous</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="Classes/HighlightRenderer.html">HighlightRenderer</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="Classes/Debouncer.html">Debouncer</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="Other Global Variables.html">Other Global Variables</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="Other Global Variables.html#/s:v19AlgoliaSearchHelper11ErrorDomainSS">ErrorDomain</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="Other Enums.html">Other Enums</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="Enums/MatchLevel.html">MatchLevel</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <article class="main-content">
+                <section>
+                  <section class="section">
+                    
+                    <a href='#algolia-search-helper-for-swift' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='algolia-search-helper-for-swift'>Algolia Search Helper for Swift</h1>
+
+<p>This is the <strong>Algolia Search Helper</strong> library for Swift, built on top of Algolia&rsquo;s <a href="https://github.com/algolia/algoliasearch-client-swift">Swift API Client</a>, using Algolia&rsquo;s <a href="https://www.algolia.com/">Search API</a>.</p>
+
+<p><em>Table of Contents</em></p>
+
+<ol>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#quick-start">Quick Start</a></li>
+<li><a href="#searching">Searching</a></li>
+<li><a href="#highlighting">Highlighting</a></li>
+<li><a href="#miscellaneous">Miscellaneous</a></li>
+</ol>
+<a href='#overview' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='overview'>Overview</h2>
+<a href='#rationale' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='rationale'>Rationale</h3>
+
+<p>While the API Client covers the entire feature set of the Search API, it primarily aims at efficiency and simplicity. It does not provide much beyond raw search requests.</p>
+
+<p>However, when building a search UI, especially in an as-you-type setting, more work is usually required that just issuing requests. The Search Helper takes you one step further by focusing on <strong>search session</strong> management.</p>
+<a href='#features' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='features'>Features</h3>
+
+<p>The core of the Helper is the <code>Searcher</code> class, which manages searches on a given index. It takes care of properly <strong>sequencing</strong> received results (which may come out-of-order due to network unpredictability) and <strong>pagination</strong>. It also provides tools to manipulate <strong>facets and refinements</strong>.</p>
+
+<p>The <code>HighlightRenderer</code> class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.</p>
+
+<p>Other miscellaneous utilities are provided as well.</p>
+
+<p><strong>Note:</strong> <em>The Search Helper is UI-agnostic.</em> Although some features (such as highlight rendering) are only useful in the context of a user interface, the helper has no dependencies on a specific UI framework. For example, it can indiscriminately be used on iOS with UIKit or macOS with AppKit. It has no system dependencies beyond Foundation (see below).</p>
+<a href='#supported-platforms' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='supported-platforms'>Supported platforms</h3>
+
+<p>The library is written in Swift, but is fully compatible with Objective-C.</p>
+
+<p>It supports every platform that the <a href="https://github.com/algolia/algoliasearch-client-swift">API Client</a> supports (at the time of writing: iOS, macOS and tvOS).</p>
+<a href='#dependencies' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='dependencies'>Dependencies</h3>
+
+<p>This module requires:</p>
+
+<ul>
+<li>Algolia&rsquo;s <a href="https://github.com/algolia/algoliasearch-client-swift">Swift API Client</a>.</li>
+<li>Apple&rsquo;s Foundation framework.</li>
+</ul>
+<a href='#quick-start' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='quick-start'>Quick start</h2>
+<a href='#setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='setup'>Setup</h3>
+
+<ol>
+<li>Add a dependency on <q>AlgoliaSearch-Helper-Swift</q>:
+
+<ul>
+<li>CocoaPods: add <code>pod &#39;AlgoliaSearch-Helper-Swift&#39;, &#39;~&gt; 1.0&#39;</code> to your <code>Podfile</code>.</li>
+<li>Carthage: not supported so far.</li>
+</ul></li>
+<li>Add <code>import AlgoliaSearchHelper</code> to your source files.</li>
+</ol>
+
+<p><strong>Note:</strong> If you wish to use the API Client&rsquo;s offline mode, use the subspec <code>AlgoliaSearch-Helper-Swift/Offline</code> instead.</p>
+<a href='#examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='examples'>Examples</h3>
+
+<p>A good start is our <a href="https://github.com/algolia/algolia-swift-demo">Movie Search demo</a>, which makes extensive use of the Search Helper.</p>
+<a href='#searching' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='searching'>Searching</h2>
+<a href='#basics' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='basics'>Basics</h3>
+
+<p>First create a <code>Client</code> and an <code>Index</code> as you would do with the bare API Client:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">Client</span><span class="p">(</span><span class="nv">appID</span><span class="p">:</span> <span class="s">"YOUR_APP_ID"</span><span class="p">,</span> <span class="nv">apiKey</span><span class="p">:</span> <span class="s">"YOUR_API_KEY"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">getIndex</span><span class="p">(</span><span class="s">"index_name"</span><span class="p">)</span>
+</code></pre>
+
+<p>Then create a <code>Searcher</code> targeting the index; you typically specify a result handler during creation (although you can register more later):</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searcher</span> <span class="o">=</span> <span class="kt">Searcher</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">handleResults</span><span class="p">)</span>
+</code></pre>
+
+<p>A closure is accepted as well:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searcher</span> <span class="o">=</span> <span class="kt">Searcher</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt">SearchResults</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="k">in</span>
+    <span class="c1">// Your code goes here.</span>
+<span class="p">})</span>
+</code></pre>
+
+<p>The searcher will only launch a request when you call its <code>search()</code> method. Before you search, of course, you will want to modify the search query:</p>
+<pre class="highlight swift"><code><span class="n">searcher</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="s">"paris"</span>
+<span class="n">searcher</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">numericFilters</span> <span class="o">=</span> <span class="p">[</span><span class="s">"stars&gt;=4"</span><span class="p">]</span>
+<span class="n">searcher</span><span class="o">.</span><span class="nf">search</span><span class="p">()</span>
+</code></pre>
+<a href='#handling-results' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='handling-results'>Handling results</h3>
+
+<p>The searcher will call your result handler after each request, when the response is received, <em>unless the request has been cancelled</em> (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">handleResults</span><span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt">SearchResults</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">results</span> <span class="o">=</span> <span class="n">results</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">hits</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="nf">reloadData</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>The <code>SearchResults</code> class is a wrapper around the JSON response received from the API. You can always access the underlying JSON directly through the <code>content</code> property. However, the fields you will most likely are also exposed via typed properties, such as <code>hits</code> or <code>nbHits</code>. You also get convenience accessors for:</p>
+
+<ul>
+<li>facet values (<code>facets()</code>) and statistics (<code>facetStats()</code>);</li>
+<li>highlights (<code>highlightResult()</code>) and snippet results (<code>snippetResult()</code>)</li>
+<li>ranking information (<code>rankingInfo()</code>)</li>
+</ul>
+
+<p>Please note that not every piece of information may be present in the response; it depends on your request.</p>
+<a href='#continuous-scrolling' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='continuous-scrolling'>Continuous scrolling</h3>
+
+<p>The searcher facilitates the implementation of continuous scrolling through its <code>loadMore()</code> method. Fetching the next page of results is as easy as calling this method.</p>
+
+<p>Note that if you use continuous scrolling, then you must take care to <em>append</em> hits to your internal data structure instead of erasing them. Using the <code>page</code> property is usually sufficient:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">page</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">hits</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">hits</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">hits</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>When should you call <code>loadMore()</code>? Whenever your UI detects the need to fetch more data. Note that, in order to provide a smooth scrolling experience, it is wiser to pre-fetch data before it is required. A good indicator is when your table view or collection view data source is called for cells near the end of the currently available data. Alternatively, you can use the <code>UICollectionView</code> data source pre-fetching introduced in iOS 10.</p>
+
+<p>The <code>loadMore()</code> method is guarded against concurrent or inconsistent calls. If you try to call it while another request has already been issued, it will ignore the call.</p>
+<a href='#faceting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='faceting'>Faceting</h3>
+
+<p>The searcher maintains a list of refined values for every facet, in the <code>refinements</code> property. Typically, you don&rsquo;t manipulate this property directly; instead, you call the convenience methods <code>hasFacetRefinement()</code>, <code>addFacetRefinement()</code>, <code>removeFacetRefinement()</code> and <code>toggleFacetRefinement()</code>.</p>
+
+<p>The searcher also keeps track of which facets are disjunctive (<code>OR</code>) via the <code>disjunctiveFacets</code> property; all facets not listed in this property are considered to be conjunctive (<code>AND</code>).</p>
+
+<p>When a search is triggered, the searcher will build the <code>facetFilters</code> according to the refinements and the conjunctive/disjunctive state.</p>
+
+<p><strong>Note:</strong> <em>You need to specify the list of all facets via the search query&rsquo;s <code>facets</code> parameter.</em></p>
+
+<p><strong>Note:</strong> <em>The search query&rsquo;s <code>facetFilters</code> parameter will be overridden by the searcher; any manually specified value will be lost.</em></p>
+<a href='#highlighting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='highlighting'>Highlighting</h2>
+
+<p>The <code>HighlightRenderer</code> class is in charge of parsing highlight result values (as returned by the Search API in the <code>_highlightResults</code> attribute of every hit) and render them into a rich text string (an <code>NSAttributedString</code> instance).</p>
+
+<p>When you instantiate a highlight renderer, you specify a set of <strong>text attributes</strong> that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">renderer</span> <span class="o">=</span> <span class="kt">HighlightRenderer</span><span class="p">(</span><span class="nv">highlightAttrs</span><span class="p">:</span> <span class="p">[</span>
+    <span class="kt">NSForegroundColorAttributeName</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">redColor</span><span class="p">(),</span>
+    <span class="kt">NSBackgroundColorAttributeName</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">yellowColor</span><span class="p">(),</span>
+<span class="p">]</span>
+</code></pre>
+
+<p>By default, the renderer is set to recognized <code>&lt;em&gt;</code> tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value. <strong>Note:</strong> <em>In that case, make sure that it matches the values for <code>highlightPreTag</code> and <code>highlightPostTag</code> in your search query (or your index&rsquo;s default)!</em></p>
+<pre class="highlight swift"><code><span class="n">renderer</span><span class="o">.</span><span class="n">preTag</span> <span class="o">=</span> <span class="s">"&lt;mark&gt;"</span>
+<span class="n">renderer</span><span class="o">.</span><span class="n">postTag</span> <span class="o">=</span> <span class="s">"&lt;/mark&gt;"</span>
+</code></pre>
+
+<p>Once the renderer is set, rendering highlights is just a matter of calling <code>render()</code>. The real trick is to retrieve the highlighted value from the JSON&hellip; Fortunately, the <code>SearchResults</code> class makes it easy:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searchResults</span><span class="p">:</span> <span class="kt">SearchResults</span> <span class="o">=</span> <span class="o">...</span> <span class="c1">// whatever was received by the result handler</span>
+<span class="k">let</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">...</span> <span class="c1">// index of the hit you want to retrieve</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">highlightResult</span> <span class="o">=</span> <span class="n">searchResults</span><span class="o">.</span><span class="nf">highlightResult</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="s">"attribute_name"</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="k">let</span> <span class="nv">highlightValue</span> <span class="o">=</span> <span class="n">highlightResult</span><span class="o">.</span><span class="n">value</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">highlightedString</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="n">highlightValue</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<a href='#miscellaneous' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='miscellaneous'>Miscellaneous</h2>
+<a href='#debouncing' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='debouncing'>Debouncing</h3>
+
+<p><q>Debouncing</q> is the process of ignoring too frequent events, keeping only the last one in a series of adjacent events.</p>
+
+<p>The <code>Debouncer</code> class provides a generic way of debouncing calls. It can be useful to avoid triggering too many search requests, for example when a UI widget is continuously firing updates (e.g. a slider).</p>
+
+                  </section>
+                </section>
+              </article>
+<!--        </div> -->
+        <!-- JAZZY:END -->
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/algoliasearch-helper-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/algoliasearch-helper-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+  </body>
+  <script src="javascripts/all.js"></script>
+  <script src="javascripts/responsiveNavigation.js"></script>
+</html>

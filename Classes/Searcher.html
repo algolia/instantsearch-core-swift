@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+
+    <link href='#' rel='icon' type='image/x-icon'>
+    <meta content='#' name='description'>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'>
+    <!-- / Twitter card -->
+    <meta content='summary_large_image' name='twitter:card'>
+    <meta content='@Algolia' name='twitter:site'>
+    <meta content='@Algolia' name='twitter:creator'>
+    <meta content="Algolia Product" name="twitter:title">
+    <meta content="Algolia Product description" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OG meta -->
+    <meta content='#' property='og:url'>
+    <meta content='#' property='og:title'>
+    <meta content='#' property='og:image'>
+    <meta content='article' property='og:type'>
+    <meta content='#' property='og:description'>
+    <meta content='IMDb' property='og:site_name'>
+
+    <!-- JAZZY:BEGIN -->
+    <title>Searcher Class Reference</title>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    <!-- JAZZY:END -->
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,600' rel='stylesheet' type='text/css'>
+    <link href="../css/site.css" rel="stylesheet" />
+
+  </head>
+
+  <body class="index">
+
+    <div class='ac-nav'>
+      <div class='ac-nav-container'>
+        <div class='ac-nav-brand'>
+          <a class='ac-logo' href='https://community.algolia.com/' title='Algolia Community'>
+            <img alt='Algolia Community' class='ac-logo__lg' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg' width='150'>
+            <img alt='Algolia Community' class='ac-logo__sm' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg'>
+          </a>
+          <span class='ac-nav-brand-breadcrumb'></span>
+          <a class='ac-nav-brand-title' href='../index.html' title='Home'>Swift Search Helper</a>
+          <span class='ac-nav-brand-breadcrumb'></span>
+          <a class='ac-nav-brand-title' href='#' title='Searcher Class'>Searcher Class</a>
+        </div>
+        <div class='ac-nav-menu'>
+            <!--
+          <div class='ac-nav-searchbox'>
+            <form class='searchbox' id='docsearch-form' novalidate='novalidate' onsubmit='return false;' style='visibility:hidden;height:0'>
+              <div class='searchbox__wrapper' role='search'>
+                <input autocomplete='off' class='searchbox__input' id='docsearch' name='search' placeholder='Search in the doc' required='required' type='search'>
+                  <button class='searchbox__submit' title='Submit your search query.' type='submit'>
+                    <svg aria-label='Search' role='img'>
+                      <use xlink:href='#sbx-icon-search-13' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+                    </svg>
+                  </button>
+                  <button class='searchbox__reset hide' title='Clear the search query.' type='reset'>
+                    <svg aria-label='Reset' role='img'>
+                      <use xlink:href='#sbx-icon-clear-3' xmlns:xlink='http://www.w3.org/1999/xlink'></use>
+                    </svg>
+                  </button>
+                </input>
+              </div>
+            </form>
+            <div class='svg-icons' style='height: 0; width: 0; position: absolute; visibility: hidden'>
+              <svg xmlns='http://www.w3.org/2000/svg'>
+                <symbol id="sbx-icon-clear-3" viewBox="0 0 40 40"><path d="M16.228 20L1.886 5.657 0 3.772 3.772 0l1.885 1.886L20 16.228 34.343 1.886 36.228 0 40 3.772l-1.886 1.885L23.772 20l14.342 14.343L40 36.228 36.228 40l-1.885-1.886L20 23.772 5.657 38.114 3.772 40 0 36.228l1.886-1.885L16.228 20z" fill-rule="evenodd"/></symbol>
+                <symbol id="sbx-icon-search-13" viewBox="0 0 12 12"><path d="M12 11.077c0-.245-.1-.483-.267-.65L9.26 7.955c.584-.843.894-1.853.894-2.877C10.154 2.272 7.882 0 5.077 0S0 2.272 0 5.077s2.272 5.077 5.077 5.077c1.024 0 2.034-.31 2.877-.894l2.474 2.466c.166.173.404.274.65.274.504 0 .922-.418.922-.923zm-3.692-6c0 1.78-1.45 3.23-3.23 3.23-1.782 0-3.232-1.45-3.232-3.23s1.45-3.23 3.23-3.23c1.782 0 3.232 1.45 3.232 3.23z" fill="#FFF" fill-rule="evenodd" opacity="0.85"/></symbol>
+              </svg>
+            </div>
+          </div>
+      -->
+          <ul class='ac-nav-menu-list'>
+            <li class='ac-nav-menu-list-item active'>
+              <a href='../index.html' title='Documentation'>Documentation</a>
+            </li>
+            <li class='ac-nav-menu-list-icon'>
+              <a class='ac-icon' href='https://github.com/algolia/algoliasearch-helper-swift' title='GitHub repository'>
+                <span class='ac-icon ac-icon-github'></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+        <!-- JAZZY:BEGIN -->
+<!--            <div class="content-wrapper"> -->
+              <nav class="sidebar">
+                <ul class="nav-groups">
+                  <li class="nav-group-name">
+                    <a href="../Searching.html">Searching</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="../Classes/Searcher.html">Searcher</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/SearchResults.html">SearchResults</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/HighlightResult.html">HighlightResult</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/SnippetResult.html">SnippetResult</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/RankingInfo.html">RankingInfo</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/FacetStats.html">FacetStats</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/FacetValue.html">FacetValue</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="../Miscellaneous.html">Miscellaneous</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="../Classes/HighlightRenderer.html">HighlightRenderer</a>
+                      </li>
+                      <li class="nav-group-task">
+                        <a href="../Classes/Debouncer.html">Debouncer</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="../Other Global Variables.html">Other Global Variables</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="../Other Global Variables.html#/s:v19AlgoliaSearchHelper11ErrorDomainSS">ErrorDomain</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="../Other Enums.html">Other Enums</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="../Enums/MatchLevel.html">MatchLevel</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+              <article class="main-content">
+                <section>
+                  <section class="section">
+                    <h1>Searcher</h1>
+                      <div class="declaration">
+                        <div class="language">
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Searcher</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                        </div>
+                      </div>
+                    <p>Manages search on an Algolia index.</p>
+
+<p>The purpose of this class is to maintain a state between searches and handle pagination.</p>
+
+                  </section>
+                  <section class="section task-group-section">
+                    <div class="task-group">
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher11ErrorDomainSS"></a>
+                            <a name="//apple_ref/swift/Variable/ErrorDomain" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher11ErrorDomainSS">ErrorDomain</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Error domain used for errors raised by this module.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This shortcut is provided for Objective-C bridging.
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    The top-level <code>ErrorDomain</code> constant.
+
+</div>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ErrorDomain</span> <span class="o">=</span> <span class="kt">AlgoliaSearchHelper</span><span class="o">.</span><span class="kt">ErrorDomain</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:C19AlgoliaSearchHelper8Searcher13ResultHandler"></a>
+                            <a name="//apple_ref/swift/Alias/ResultHandler" class="dashAnchor"></a>
+                            <a class="token" href="#/s:C19AlgoliaSearchHelper8Searcher13ResultHandler">ResultHandler</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Handler for search results.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">ResultHandler</span> <span class="o">=</span> <span class="kd">@convention(block)</span> <span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt"><a href="../Classes/SearchResults.html">SearchResults</a></span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>results</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The results (in case of success).</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>error</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The error (in case of failure).</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Properties"></a>
+                        <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                        <a href="#/Properties">
+                          <h3 class="section-name">Properties</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper8Searcher5indexC13AlgoliaSearch5Index"></a>
+                            <a name="//apple_ref/swift/Property/index" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher5indexC13AlgoliaSearch5Index">index</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>The index used by this search helper.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Modifying the index doesn&rsquo;t alter the searcher&rsquo;s state. In particular, pending requests are left
+running. Depending on your use case, you might want to call <code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher5resetFT_T_">reset()</a></code> after changing the index.
+
+</div>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Index</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper8Searcher5queryC13AlgoliaSearch5Query"></a>
+                            <a name="//apple_ref/swift/Property/query" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher5queryC13AlgoliaSearch5Query">query</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>The query that will be used for the next search.</p>
+
+<p><strong>Warning:</strong> The value of <code>facetFilters</code> will be discarded and overridden by the <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher11refinementsGVs10DictionarySSGSaSS__">refinements</a></code> property.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">query</span><span class="p">:</span> <span class="kt">Query</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper8Searcher17disjunctiveFacetsGSaSS_"></a>
+                            <a name="//apple_ref/swift/Property/disjunctiveFacets" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher17disjunctiveFacetsGSaSS_">disjunctiveFacets</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>The disjunctive facets that will be used for the next search.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">disjunctiveFacets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper8Searcher11refinementsGVs10DictionarySSGSaSS__"></a>
+                            <a name="//apple_ref/swift/Property/refinements" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher11refinementsGVs10DictionarySSGSaSS__">refinements</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Facet refinements that will be used for the next search. Maps facet names to a list of refined values.
+The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>You are encouraged to use the helper methods to manipulate this property. See <code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher18hasFacetRefinementFTSS5valueSS_Sb">hasFacetRefinement(_:value:)</a></code>,
+<code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher18addFacetRefinementFTSS5valueSS_T_">addFacetRefinement(_:value:)</a></code>, <code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher21removeFacetRefinementFTSS5valueSS_T_">removeFacetRefinement(_:value:)</a></code> and <code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher21toggleFacetRefinementFTSS5valueSS_T_">toggleFacetRefinement(_:value:)</a></code>.</p>
+
+</div>
+
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    <p>Any refinements specified here will override those manually specified in <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher5queryC13AlgoliaSearch5Query">query</a></code>.</p>
+
+</div>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">refinements</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[:]</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper8Searcher15pendingRequestsGSaCSo11NSOperation_"></a>
+                            <a name="//apple_ref/swift/Property/pendingRequests" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher15pendingRequestsGSaCSo11NSOperation_">pendingRequests</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>All currently ongoing requests.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">dynamic</span> <span class="k">var</span> <span class="nv">pendingRequests</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSOperation</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Initialization,%20termination"></a>
+                        <a name="//apple_ref/swift/Section/Initialization, termination" class="dashAnchor"></a>
+                        <a href="#/Initialization,%20termination">
+                          <h3 class="section-name">Initialization, termination</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8SearchercFT5indexC13AlgoliaSearch5Index_S0_"></a>
+                            <a name="//apple_ref/swift/Method/init(index:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8SearchercFT5indexC13AlgoliaSearch5Index_S0_">init(index:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Create a new searcher targeting the specified index.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Index</span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>index</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The index to target when searching.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8SearchercFT5indexC13AlgoliaSearch5Index13resultHandlerbT7resultsGSqCS_13SearchResults_5errorGSqCSo7NSError__T__S0_"></a>
+                            <a name="//apple_ref/swift/Method/init(index:resultHandler:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8SearchercFT5indexC13AlgoliaSearch5Index13resultHandlerbT7resultsGSqCS_13SearchResults_5errorGSqCSo7NSError__T__S0_">init(index:resultHandler:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Create a new searcher targeting the specified index and register a result handler with it.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html#/s:C19AlgoliaSearchHelper8Searcher13ResultHandler">ResultHandler</a></span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>index</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The index to target when searching.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>resultHandler</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The result handler to register.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher16addResultHandlerFbT7resultsGSqCS_13SearchResults_5errorGSqCSo7NSError__T_T_"></a>
+                            <a name="//apple_ref/swift/Method/addResultHandler(_:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher16addResultHandlerFbT7resultsGSqCS_13SearchResults_5errorGSqCSo7NSError__T_T_">addResultHandler(_:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Register a result handler with this searcher.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Because of the way closures are handled in Swift, the handler cannot be removed.
+
+</div>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addResultHandler</span><span class="p">(</span><span class="nv">resultHandler</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html#/s:C19AlgoliaSearchHelper8Searcher13ResultHandler">ResultHandler</a></span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher5resetFT_T_"></a>
+                            <a name="//apple_ref/swift/Method/reset()" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher5resetFT_T_">reset()</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Reset the search state.
+This resets the <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher5queryC13AlgoliaSearch5Query">query</a></code>, <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher17disjunctiveFacetsGSaSS_">disjunctiveFacets</a></code> and <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher11refinementsGVs10DictionarySSGSaSS__">refinements</a></code> properties. It also cancels any pending request.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    It does <em>not</em> remove registered result handlers.
+
+</div>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">reset</span><span class="p">()</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Search"></a>
+                        <a name="//apple_ref/swift/Section/Search" class="dashAnchor"></a>
+                        <a href="#/Search">
+                          <h3 class="section-name">Search</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher6searchFT_T_"></a>
+                            <a name="//apple_ref/swift/Method/search()" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher6searchFT_T_">search()</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Search using the current settings.
+This uses the current value for <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher5queryC13AlgoliaSearch5Query">query</a></code>, <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher17disjunctiveFacetsGSaSS_">disjunctiveFacets</a></code> and <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher11refinementsGVs10DictionarySSGSaSS__">refinements</a></code>.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">search</span><span class="p">()</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher8loadMoreFT_T_"></a>
+                            <a name="//apple_ref/swift/Method/loadMore()" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher8loadMoreFT_T_">loadMore()</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Load more content, if possible.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">loadMore</span><span class="p">()</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Facets"></a>
+                        <a name="//apple_ref/swift/Section/Facets" class="dashAnchor"></a>
+                        <a href="#/Facets">
+                          <h3 class="section-name">Facets</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher8setFacetFTSS11disjunctiveSb_T_"></a>
+                            <a name="//apple_ref/swift/Method/setFacet(_:disjunctive:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher8setFacetFTSS11disjunctiveSb_T_">setFacet(_:disjunctive:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Set a given facet as disjunctive or conjunctive.
+This is a convenience method to set the <code><a href="../Classes/Searcher.html#/s:vC19AlgoliaSearchHelper8Searcher17disjunctiveFacetsGSaSS_">disjunctiveFacets</a></code> property.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">setFacet</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">disjunctive</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>name</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The facet&rsquo;s name.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>disjunctive</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>true to treat this facet as disjunctive (<code>OR</code>), false to treat it as conjunctive (<code>AND</code>, the default).</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher18addFacetRefinementFTSS5valueSS_T_"></a>
+                            <a name="//apple_ref/swift/Method/addFacetRefinement(_:value:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher18addFacetRefinementFTSS5valueSS_T_">addFacetRefinement(_:value:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Add a refinement for a given facet.
+The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the facet&rsquo;s own
+disjunctive/conjunctive status.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>name</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The facet&rsquo;s name.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>value</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The refined value to add.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher21removeFacetRefinementFTSS5valueSS_T_"></a>
+                            <a name="//apple_ref/swift/Method/removeFacetRefinement(_:value:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher21removeFacetRefinementFTSS5valueSS_T_">removeFacetRefinement(_:value:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Remove a refinement for a given facet.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>name</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The facet&rsquo;s name.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>value</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The refined value to remove.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher18hasFacetRefinementFTSS5valueSS_Sb"></a>
+                            <a name="//apple_ref/swift/Method/hasFacetRefinement(_:value:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher18hasFacetRefinementFTSS5valueSS_Sb">hasFacetRefinement(_:value:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Test whether a facet has a refinement for a given value.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>name</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The facet&rsquo;s name.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>value</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The refined value to look for.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                              <div>
+                                <h4>Return Value</h4>
+                                <p>true if the refinement exists, false otherwise.</p>
+
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher21toggleFacetRefinementFTSS5valueSS_T_"></a>
+                            <a name="//apple_ref/swift/Method/toggleFacetRefinement(_:value:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher21toggleFacetRefinementFTSS5valueSS_T_">toggleFacetRefinement(_:value:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
+added.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">toggleFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>name</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The facet&rsquo;s name.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>value</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The refined value to toggle.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher21clearFacetRefinementsFT_T_"></a>
+                            <a name="//apple_ref/swift/Method/clearFacetRefinements()" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher21clearFacetRefinementsFT_T_">clearFacetRefinements()</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Remove all refinements for all facets.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearFacetRefinements</span><span class="p">()</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher21clearFacetRefinementsFSST_"></a>
+                            <a name="//apple_ref/swift/Method/clearFacetRefinements(_:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher21clearFacetRefinementsFSST_">clearFacetRefinements(_:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Remove all refinements for a given facet.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearFacetRefinements</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Parameters</h4>
+                                <table class="graybox">
+                                  <tbody>
+                                    <tr>
+                                      <td>
+                                        <code>
+                                        <em>name</em>
+                                        </code>
+                                      </td>
+                                      <td>
+                                        <div>
+                                          <p>The facet&rsquo;s name.</p>
+
+                                        </div>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </section>
+                </section>
+              </article>
+<!--        </div> -->
+        <!-- JAZZY:END -->
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='../license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/algoliasearch-helper-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/algoliasearch-helper-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+  </body>
+  <script src="javascripts/all.js"></script>
+  <script src="javascripts/responsiveNavigation.js"></script>
+</html>
