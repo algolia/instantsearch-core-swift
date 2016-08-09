@@ -9,3 +9,20 @@ output: build/doc
 # WARNING: The path is relative to the output directory.
 docset_path: ../docset
 hide_documentation_coverage: true
+abstract:
+    - LICENSE
+custom_categories:
+    - name: Searching
+      children:
+        - Searcher
+        - SearchResults
+        - HighlightResult
+        - SnippetResult
+        - RankingInfo
+        - FacetStats
+        - FacetValue
+
+    - name: Miscellaneous
+      children:
+        - HighlightRenderer
+        - Debouncer
