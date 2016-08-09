@@ -32,7 +32,7 @@ Pod::Spec.new do |s|
     # "Sources" directory for this pod, making it unusable (bug observed with Cocoapods 1.0.1). A workaround is to
     # keep referencing the top-level pod and change the default subspec.
     #
-    s.default_subspec = 'Offline'
+    s.default_subspec = 'Online'
 
     s.subspec 'Online' do |online|
         online.dependency 'AlgoliaSearch-Client-Swift', '~> 3.3'
