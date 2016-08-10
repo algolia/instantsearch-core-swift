@@ -158,6 +158,7 @@ private func swift2Objc(matchLevel: MatchLevel_?) -> MatchLevel {
     /// Number of matched words, including prefixes and typos.
     @objc public var words: Int { return json["words"] as? Int ?? 0 }
     
+    /// Score from filters.
     /// + Warning: *This field is reserved for advanced usage.* It will be zero in most cases.
     @objc public var filters: Int { return json["filters"] as? Int ?? 0 }
     
