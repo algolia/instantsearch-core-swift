@@ -194,7 +194,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private var results: SearchResults?
     
     /// All currently ongoing requests.
-    @objc public private(set) dynamic var pendingRequests: [NSOperation] = []
+    private var pendingRequests: [NSOperation] = []
 
     // MARK: - Initialization, termination
     
@@ -247,10 +247,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         query = Query()
         disjunctiveFacets.removeAll()
         refinements.removeAll()
-        for request in pendingRequests {
-            request.cancel()
-        }
-        pendingRequests.removeAll()
+        cancelPendingRequests()
     }
     
     // MARK: - Search
@@ -468,6 +465,21 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     @objc public func clearFacetRefinements(name: String) {
         refinements.removeValueForKey(name)
+    }
+    
+    // MARK: - Managing requests
+    
+    /// Indicates whether there are any pending requests.
+    @objc public var hasPendingRequests: Bool {
+        return !pendingRequests.isEmpty
+    }
+
+    /// Cancel all pending requests.
+    @objc public func cancelPendingRequests() {
+        for request in pendingRequests {
+            request.cancel()
+        }
+        pendingRequests.removeAll()
     }
     
     // MARK: Notifications
