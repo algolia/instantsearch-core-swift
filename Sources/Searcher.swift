@@ -74,13 +74,6 @@ public let ErrorDomain = "AlgoliaSearchHelper"
 ///
 @objc public class Searcher: NSObject {
     
-    /// Error domain used for errors raised by this module.
-    ///
-    /// + Note: This shortcut is provided for Objective-C bridging.
-    /// + SeeAlso: The top-level `ErrorDomain` constant.
-    ///
-    @objc public static let ErrorDomain = AlgoliaSearchHelper.ErrorDomain
-    
     // MARK: Types
     
     /// Handler for search results.
@@ -360,6 +353,9 @@ public let ErrorDomain = "AlgoliaSearchHelper"
             operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
         }
         self.pendingRequests.append(operation)
+        
+        // Notify observers.
+        NSNotificationCenter.defaultCenter().postNotificationName(Searcher.SearchNotification, object: self)
     }
     
     /// Completion handler for search requests.
@@ -377,8 +373,16 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     }
     
     private func callResultHandlers(results: SearchResults?, error: NSError?) {
+        // Notify result handlers.
         for resultHandler in resultHandlers {
             resultHandler(results: results, error: error)
+        }
+        // Notify observers.
+        if let results = results {
+            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ResultNotification, object: self, userInfo: [Searcher.ResultNotificationResultsKey: results])
+        }
+        else if let error = error {
+            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ErrorNotification, object: self, userInfo: [Searcher.ErrorNotificationErrorKey: error])
         }
     }
     
@@ -465,4 +469,37 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     @objc public func clearFacetRefinements(name: String) {
         refinements.removeValueForKey(name)
     }
+    
+    // MARK: Notifications
+    
+    /// Notification sent when a request is sent through the API Client.
+    /// This can be either on `search()` or `loadMore()`.
+    ///
+    @objc public static let SearchNotification: String = "search"
+    
+    /// Notification sent when a successful response is received from the API Client.
+    @objc public static let ResultNotification: String = "result"
+    
+    /// Key containing the search results in a `ResultNotification`.
+    /// Type: `SearchResults`.
+    ///
+    @objc public static let ResultNotificationResultsKey: String = "results"
+
+    /// Notification sent when an erroneous response is received from the API Client.
+    @objc public static let ErrorNotification: String = "error"
+    
+    /// Key containing the error in an `ErrorNotification`.
+    /// Type: `NSError`.
+    ///
+    @objc public static let ErrorNotificationErrorKey: String = "error"
+
+    // MARK: Miscellaneous
+    
+    /// Error domain used for errors raised by this module.
+    ///
+    /// + Note: This shortcut is provided for Objective-C bridging.
+    /// + SeeAlso: The top-level `ErrorDomain` constant.
+    ///
+    @objc public static let ErrorDomain = AlgoliaSearchHelper.ErrorDomain
+    
 }

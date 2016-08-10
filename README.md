@@ -153,6 +153,16 @@ When a search is triggered, the searcher will build the `facetFilters` according
 **Note:** *The search query's `facetFilters` parameter will be overridden by the searcher; any manually specified value will be lost.*
 
 
+### Events
+
+The `Searcher` class emits notifications through `NSNotificationCenter` on various events of its lifecycle:
+
+- `Searcher.SearchNotification` when a new request is fired
+- `Searcher.ResultNotification` when a successful response is received
+- `Searcher.ErrorNotification` when an erroneous response is received
+
+You may subscribe to these notifications to react on different events without having to explicitly write a result handler.
+
 
 ## Highlighting
 
