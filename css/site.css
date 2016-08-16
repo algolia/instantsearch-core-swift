@@ -746,10 +746,22 @@ textarea {
   font-size: 0.85em;
   color: #63676D; }
 
+.warning-header {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 30px;
+  background-color: #fb366e;
+  color: white;
+  text-align: center;
+  line-height: 30px; }
+
 /* line 2, components/_header.scss */
 .ac-nav {
   position: fixed;
-  top: 0;
+  top: 30px;
   left: 0;
   width: 100%;
   height: 50px;
@@ -1258,7 +1270,10 @@ body {
 .container {
   width: 100%;
   height: 100%;
-  margin: 50px auto; }
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 36pt;
+  margin-top: 80px; }
 
 /* line 12, components/_home.scss */
 .welcome {
@@ -1284,7 +1299,7 @@ a {
   overflow-y: auto;
   overflow-x: hidden;
   position: fixed;
-  top: 50px;
+  top: 80px;
   bottom: 0;
   width: 230px;
   word-wrap: normal; }

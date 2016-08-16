@@ -37,6 +37,7 @@
 
   <body class="index">
 
+    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
     <div class='ac-nav'>
       <div class='ac-nav-container'>
         <div class='ac-nav-brand'>
@@ -167,46 +168,14 @@
                   </section>
                   <section class="section task-group-section">
                     <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Types"></a>
+                        <a name="//apple_ref/swift/Section/Types" class="dashAnchor"></a>
+                        <a href="#/Types">
+                          <h3 class="section-name">Types</h3>
+                        </a>
+                      </div>
                       <ul>
-                        <li class="item">
-                          <div>
-                            <code>
-                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher11ErrorDomainSS"></a>
-                            <a name="//apple_ref/swift/Variable/ErrorDomain" class="dashAnchor"></a>
-                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher11ErrorDomainSS">ErrorDomain</a>
-                            </code>
-                          </div>
-                          <div class="height-container">
-                            <div class="pointer-container"></div>
-                            <section class="section">
-                              <div class="pointer"></div>
-                              <div class="abstract">
-                                <p>Error domain used for errors raised by this module.</p>
-
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    This shortcut is provided for Objective-C bridging.
-
-</div>
-
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    The top-level <code>ErrorDomain</code> constant.
-
-</div>
-
-                              </div>
-                              <div class="declaration">
-                                <h4>Declaration</h4>
-                                <div class="language">
-                                  <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ErrorDomain</span> <span class="o">=</span> <span class="kt">AlgoliaSearchHelper</span><span class="o">.</span><span class="kt">ErrorDomain</span></code></pre>
-
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </li>
                         <li class="item">
                           <div>
                             <code>
@@ -403,33 +372,6 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
                                   <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">refinements</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[:]</span></code></pre>
-
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </li>
-                        <li class="item">
-                          <div>
-                            <code>
-                            <a name="/s:vC19AlgoliaSearchHelper8Searcher15pendingRequestsGSaCSo11NSOperation_"></a>
-                            <a name="//apple_ref/swift/Property/pendingRequests" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher15pendingRequestsGSaCSo11NSOperation_">pendingRequests</a>
-                            </code>
-                          </div>
-                          <div class="height-container">
-                            <div class="pointer-container"></div>
-                            <section class="section">
-                              <div class="pointer"></div>
-                              <div class="abstract">
-                                <p>All currently ongoing requests.</p>
-
-                              </div>
-                              <div class="declaration">
-                                <h4>Declaration</h4>
-                                <div class="language">
-                                  <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="kd">dynamic</span> <span class="k">var</span> <span class="nv">pendingRequests</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSOperation</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
 
                                 </div>
                               </div>
@@ -1077,6 +1019,270 @@ added.</p>
                                     </tr>
                                   </tbody>
                                 </table>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Managing%20requests"></a>
+                        <a name="//apple_ref/swift/Section/Managing requests" class="dashAnchor"></a>
+                        <a href="#/Managing%20requests">
+                          <h3 class="section-name">Managing requests</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper8Searcher18hasPendingRequestsSb"></a>
+                            <a name="//apple_ref/swift/Property/hasPendingRequests" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper8Searcher18hasPendingRequestsSb">hasPendingRequests</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Indicates whether there are any pending requests.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">hasPendingRequests</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper8Searcher21cancelPendingRequestsFT_T_"></a>
+                            <a name="//apple_ref/swift/Method/cancelPendingRequests()" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper8Searcher21cancelPendingRequestsFT_T_">cancelPendingRequests()</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Cancel all pending requests.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">cancelPendingRequests</span><span class="p">()</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Notifications"></a>
+                        <a name="//apple_ref/swift/Section/Notifications" class="dashAnchor"></a>
+                        <a href="#/Notifications">
+                          <h3 class="section-name">Notifications</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher18SearchNotificationSS"></a>
+                            <a name="//apple_ref/swift/Variable/SearchNotification" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher18SearchNotificationSS">SearchNotification</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Notification sent when a request is sent through the API Client.
+This can be either on <code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher6searchFT_T_">search()</a></code> or <code><a href="../Classes/Searcher.html#/s:FC19AlgoliaSearchHelper8Searcher8loadMoreFT_T_">loadMore()</a></code>.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">SearchNotification</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"search"</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher18ResultNotificationSS"></a>
+                            <a name="//apple_ref/swift/Variable/ResultNotification" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher18ResultNotificationSS">ResultNotification</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Notification sent when a successful response is received from the API Client.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ResultNotification</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"result"</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher28ResultNotificationResultsKeySS"></a>
+                            <a name="//apple_ref/swift/Variable/ResultNotificationResultsKey" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher28ResultNotificationResultsKeySS">ResultNotificationResultsKey</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Key containing the search results in a <code><a href="../Classes/Searcher.html#/s:ZvC19AlgoliaSearchHelper8Searcher18ResultNotificationSS">ResultNotification</a></code>.
+Type: <code><a href="../Classes/SearchResults.html">SearchResults</a></code>.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ResultNotificationResultsKey</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"results"</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher17ErrorNotificationSS"></a>
+                            <a name="//apple_ref/swift/Variable/ErrorNotification" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher17ErrorNotificationSS">ErrorNotification</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Notification sent when an erroneous response is received from the API Client.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ErrorNotification</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"error"</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher25ErrorNotificationErrorKeySS"></a>
+                            <a name="//apple_ref/swift/Variable/ErrorNotificationErrorKey" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher25ErrorNotificationErrorKeySS">ErrorNotificationErrorKey</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Key containing the error in an <code><a href="../Classes/Searcher.html#/s:ZvC19AlgoliaSearchHelper8Searcher17ErrorNotificationSS">ErrorNotification</a></code>.
+Type: <code>NSError</code>.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ErrorNotificationErrorKey</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"error"</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Miscellaneous"></a>
+                        <a name="//apple_ref/swift/Section/Miscellaneous" class="dashAnchor"></a>
+                        <a href="#/Miscellaneous">
+                          <h3 class="section-name">Miscellaneous</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:ZvC19AlgoliaSearchHelper8Searcher11ErrorDomainSS"></a>
+                            <a name="//apple_ref/swift/Variable/ErrorDomain" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZvC19AlgoliaSearchHelper8Searcher11ErrorDomainSS">ErrorDomain</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Error domain used for errors raised by this module.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    This shortcut is provided for Objective-C bridging.
+
+</div>
+
+<div class="aside aside-see-also">
+    <p class="aside-title">See also</p>
+    The top-level <code>ErrorDomain</code> constant.
+
+</div>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ErrorDomain</span> <span class="o">=</span> <span class="kt">AlgoliaSearchHelper</span><span class="o">.</span><span class="kt">ErrorDomain</span></code></pre>
+
+                                </div>
                               </div>
                             </section>
                           </div>

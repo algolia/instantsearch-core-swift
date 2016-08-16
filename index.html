@@ -37,6 +37,7 @@
 
   <body class="index">
 
+    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
     <div class='ac-nav'>
       <div class='ac-nav-container'>
         <div class='ac-nav-brand'>
@@ -155,6 +156,8 @@
                   <section class="section">
                     
                     <a href='#algolia-search-helper-for-swift' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='algolia-search-helper-for-swift'>Algolia Search Helper for Swift</h1>
+
+<p><strong>Warning:</strong> <em>Beta version. Until version 1.0 is released, incompatible changes may occur.</em></p>
 
 <p>This is the <strong>Algolia Search Helper</strong> library for Swift, built on top of Algolia&rsquo;s <a href="https://github.com/algolia/algoliasearch-client-swift">Swift API Client</a>, using Algolia&rsquo;s <a href="https://www.algolia.com/">Search API</a>.</p>
 
@@ -280,6 +283,17 @@
 <p><strong>Note:</strong> <em>You need to specify the list of all facets via the search query&rsquo;s <code>facets</code> parameter.</em></p>
 
 <p><strong>Note:</strong> <em>The search query&rsquo;s <code>facetFilters</code> parameter will be overridden by the searcher; any manually specified value will be lost.</em></p>
+<a href='#events' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='events'>Events</h3>
+
+<p>The <code>Searcher</code> class emits notifications through <code>NSNotificationCenter</code> on various events of its lifecycle:</p>
+
+<ul>
+<li><code>Searcher.SearchNotification</code> when a new request is fired</li>
+<li><code>Searcher.ResultNotification</code> when a successful response is received</li>
+<li><code>Searcher.ErrorNotification</code> when an erroneous response is received</li>
+</ul>
+
+<p>You may subscribe to these notifications to react on different events without having to explicitly write a result handler.</p>
 <a href='#highlighting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='highlighting'>Highlighting</h2>
 
 <p>The <code>HighlightRenderer</code> class is in charge of parsing highlight result values (as returned by the Search API in the <code>_highlightResults</code> attribute of every hit) and render them into a rich text string (an <code>NSAttributedString</code> instance).</p>
