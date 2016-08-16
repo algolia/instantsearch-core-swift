@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
     # Pod metadata
     # ------------
-    s.name = 'AlgoliaSearch-Helper-Swift'
+    s.name = 'AlgoliaSearch-Helper-Offline-Swift'
     s.module_name = 'AlgoliaSearchHelper'
     s.version = '0.1'
     s.license = 'MIT'
@@ -14,8 +14,6 @@ Pod::Spec.new do |s|
     # --------------
     # NOTE: Deployment targets should be kept in line with the API Client.
     s.ios.deployment_target = '8.0'
-    s.osx.deployment_target = '10.10'
-    s.tvos.deployment_target = '9.0'
 
     s.source_files = [
         'Sources/*.swift'
@@ -23,5 +21,5 @@ Pod::Spec.new do |s|
 
     # Dependencies
     # ------------
-    s.dependency 'AlgoliaSearch-Client-Swift', '~> 3.3'
+    s.dependency 'AlgoliaSearch-Offline-Swift', '~> 3.3'
 end
