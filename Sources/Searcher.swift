@@ -194,7 +194,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private var results: SearchResults?
     
     /// All currently ongoing requests.
-    private var pendingRequests: [NSOperation] = []
+    private var pendingRequests: [Int: NSOperation] = [:]
 
     // MARK: - Initialization, termination
     
@@ -310,32 +310,56 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     }
     
     private func _doNextRequest() {
-        var operation: NSOperation!
+        // Create a new request
+        // --------------------
         var state = State(copy: requestedState)
-        state.sequenceNumber = nextSequenceNumber
+        
+        // Increase sequence number.
+        let currentSeqNo = nextSequenceNumber
+        state.sequenceNumber = currentSeqNo
         nextSequenceNumber += 1
-        let completionHandler: CompletionHandler = { (content: [String: AnyObject]?, error: NSError?) in
-            // Remove request from list of pending requests.
-            // Also cancel and remove all previous requests (as this one is deemed more recent).
-            if let index = self.pendingRequests.indexOf(operation) {
-                for i in 0..<index {
-                    self.pendingRequests[i].cancel()
-                }
-                self.pendingRequests.removeRange(0...index)
+        
+        // Build query.
+        let query = Query(copy: state.query)
+        query.page = state.page
+        query.facetFilters = [] // NOTE: will be overridden below
+        
+        // User info for notifications.
+        let userInfo: [String: AnyObject] = [
+            Searcher.NotificationQueryKey: query,
+            Searcher.NotificationSeqNoKey: currentSeqNo
+        ]
+        
+        // Run request
+        // -----------
+        var operation: NSOperation!
+        let completionHandler: CompletionHandler = {
+            [weak self]
+            (content: [String: AnyObject]?, error: NSError?) in
+            // NOTE: We do not control the lifetime of the searcher. => Fail gracefully if already released.
+            guard let this = self else {
+                return
             }
+            // Cancel all previous requests (as this one is deemed more recent).
+            let previousRequests = this.pendingRequests.filter({ $0.0 < state.sequenceNumber })
+            for (seqNo, request) in previousRequests {
+                request.cancel()
+                this.pendingRequests.removeValueForKey(seqNo)
+                NSNotificationCenter.defaultCenter().postNotificationName(Searcher.CancelNotification, object: this, userInfo: userInfo)
+            }
+            // Remove the current request.
+            let currentRequest = this.pendingRequests[currentSeqNo]!
+            this.pendingRequests.removeValueForKey(currentSeqNo)
             
             // Obsolete requests should not happen since they have been cancelled by more recent requests (see above).
             // WARNING: Only works if the current queue is serial!
-            assert(self.receivedState == nil || self.receivedState!.sequenceNumber < state.sequenceNumber)
+            assert(this.receivedState == nil || this.receivedState!.sequenceNumber < state.sequenceNumber)
 
-            self.receivedState = state
+            this.receivedState = state
             
             // Call the result handler.
-            self.handleResults(content, error: error)
+            this.handleResults(content, error: error, userInfo: userInfo)
         }
-        let query = Query(copy: state.query)
-        query.page = state.page
-        query.facetFilters = [] // will be overridden below
         if state.disjunctiveFacets.isEmpty {
             // All facets are conjunctive; build facet filters accordingly.
             let queryHelper = QueryHelper(query: query)
@@ -349,37 +373,40 @@ public let ErrorDomain = "AlgoliaSearchHelper"
             // Facet filters are built directly by the disjunctive faceting search helper method.
             operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
         }
-        self.pendingRequests.append(operation)
+        self.pendingRequests[state.sequenceNumber] = operation
         
         // Notify observers.
-        NSNotificationCenter.defaultCenter().postNotificationName(Searcher.SearchNotification, object: self)
+        NSNotificationCenter.defaultCenter().postNotificationName(Searcher.SearchNotification, object: self, userInfo: userInfo)
     }
     
     /// Completion handler for search requests.
-    private func handleResults(content: [String: AnyObject]?, error: NSError?) {
+    private func handleResults(content: [String: AnyObject]?, error: NSError?, userInfo: [String: AnyObject]) {
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
-                callResultHandlers(self.results, error: nil)
+                callResultHandlers(self.results, error: nil, userInfo: userInfo)
             } else {
-                callResultHandlers(nil, error: error)
+                callResultHandlers(nil, error: error, userInfo: userInfo)
             }
         } catch let e as NSError {
-            callResultHandlers(nil, error: e)
+            callResultHandlers(nil, error: e, userInfo: userInfo)
         }
     }
     
-    private func callResultHandlers(results: SearchResults?, error: NSError?) {
+    private func callResultHandlers(results: SearchResults?, error: NSError?, userInfo: [String: AnyObject]) {
         // Notify result handlers.
         for resultHandler in resultHandlers {
             resultHandler(results: results, error: error)
         }
         // Notify observers.
+        var userInfo = userInfo
         if let results = results {
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ResultNotification, object: self, userInfo: [Searcher.ResultNotificationResultsKey: results])
+            userInfo[Searcher.ResultNotificationResultsKey] = results
+            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ResultNotification, object: self, userInfo: userInfo)
         }
         else if let error = error {
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ErrorNotification, object: self, userInfo: [Searcher.ErrorNotificationErrorKey: error])
+            userInfo[Searcher.ErrorNotificationErrorKey] = error
+            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ErrorNotification, object: self, userInfo: userInfo)
         }
     }
     
@@ -476,7 +503,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
 
     /// Cancel all pending requests.
     @objc public func cancelPendingRequests() {
-        for request in pendingRequests {
+        for request in pendingRequests.values {
             request.cancel()
         }
         pendingRequests.removeAll()
@@ -500,10 +527,28 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Notification sent when an erroneous response is received from the API Client.
     @objc public static let ErrorNotification: String = "error"
     
+    /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
+    /// or `CancelNotification`. The sequence number uniquely identifies the request within a given `Searcher` instance.
+    /// Type: `Int`.
+    ///
+    @objc public static let NotificationSeqNoKey: String = "seqNo"
+    
+    /// Key containing the search query in a `SearchNotification`, `ResultNotification`, `ErrorNotification` or
+    /// `CancelNotification`.
+    /// Type: `Query`.
+    ///
+    @objc public static let NotificationQueryKey: String = "query"
+    
     /// Key containing the error in an `ErrorNotification`.
     /// Type: `NSError`.
     ///
     @objc public static let ErrorNotificationErrorKey: String = "error"
+
+    /// Notification sent when a request is cancelled by the searcher.
+    /// The result handler will not be called for cancelled requests, nor will any `ResultNotification` or
+    /// `ErrorNotification` be posted, so this is your only chance of being informed of cancelled requests.
+    ///
+    @objc public static let CancelNotification: String = "cancel"
 
     // MARK: Miscellaneous
     
