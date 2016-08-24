@@ -343,9 +343,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
             // Cancel all previous requests (as this one is deemed more recent).
             let previousRequests = this.pendingRequests.filter({ $0.0 < state.sequenceNumber })
             for (seqNo, request) in previousRequests {
-                request.cancel()
-                this.pendingRequests.removeValueForKey(seqNo)
-                NSNotificationCenter.defaultCenter().postNotificationName(Searcher.CancelNotification, object: this, userInfo: userInfo)
+                this.cancelRequest(seqNo)
             }
             // Remove the current request.
             let currentRequest = this.pendingRequests[currentSeqNo]!
@@ -503,10 +501,24 @@ public let ErrorDomain = "AlgoliaSearchHelper"
 
     /// Cancel all pending requests.
     @objc public func cancelPendingRequests() {
-        for request in pendingRequests.values {
-            request.cancel()
+        for seqNo in pendingRequests.keys {
+            cancelRequest(seqNo)
         }
-        pendingRequests.removeAll()
+        assert(pendingRequests.isEmpty)
+    }
+    
+    /// Cancel a specific request.
+    ///
+    /// - parameter seqNo: The request's sequence number.
+    ///
+    @objc public func cancelRequest(seqNo: Int) {
+        if let request = pendingRequests[seqNo] {
+            request.cancel()
+            pendingRequests.removeValueForKey(seqNo)
+            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.CancelNotification, object: self, userInfo: [
+                Searcher.NotificationSeqNoKey: seqNo
+            ])
+        }
     }
     
     // MARK: Notifications
@@ -533,8 +545,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     @objc public static let NotificationSeqNoKey: String = "seqNo"
     
-    /// Key containing the search query in a `SearchNotification`, `ResultNotification`, `ErrorNotification` or
-    /// `CancelNotification`.
+    /// Key containing the search query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
     /// Type: `Query`.
     ///
     @objc public static let NotificationQueryKey: String = "query"
