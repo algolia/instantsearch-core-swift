@@ -101,6 +101,9 @@ import Foundation
         }
         didSet(oldValue) {
             if oldValue != strategy {
+                #if DEBUG
+                    NSLog("New strategy: \(strategy.rawValue)")
+                #endif
                 self.didChangeValueForKey("strategy")
             }
         }
@@ -123,8 +126,14 @@ import Foundation
         /// Whether the request is still running.
         var running: Bool { return stopDate == nil }
         
+        /// Whether the request was cancelled.
+        var cancelled: Bool = false
+        
+        /// Whether the request was completed.
+        var completed: Bool { return !running && !cancelled }
+        
         var description: String {
-            return "RequestStat{seqNo=\(seqNo), startDate=\(startDate), duration=\(duration), running=\(running)}"
+            return "RequestStat{seqNo=\(seqNo), startDate=\(startDate), duration=\(duration), running=\(running), cancelled=\(cancelled)}"
         }
     }
     
@@ -228,7 +237,7 @@ import Foundation
             #endif
             
             // Mark start time.
-            stats.append(RequestStat(seqNo: requestSeqNo, startDate: NSDate(), stopDate: nil))
+            stats.append(RequestStat(seqNo: requestSeqNo, startDate: NSDate(), stopDate: nil, cancelled: false))
             
             // Schedule to check the request after the various thresholds.
             // Why? If the request takes a long time, we want to react *before* the response is actually received
@@ -247,6 +256,12 @@ import Foundation
         case Searcher.ResultNotification, Searcher.ErrorNotification, Searcher.CancelNotification:
             guard let statIndex = stats.indexOf({ $0.seqNo == requestSeqNo }) else { return }
             stats[statIndex].stopDate = NSDate()
+            // Cancelled requests are tricky: we don't know what would have been their duration.
+            // We sometimes want to ignore them, sometimes not. => We store the cancelled status and let the
+            // algorithm decide.
+            if notification.name == Searcher.CancelNotification {
+                stats[statIndex].cancelled = true
+            }
             updateStrategy()
             break
             
@@ -257,29 +272,46 @@ import Foundation
     
     /// Update the strategy based on the current stats.
     private func updateStrategy() {
-        // Keep only last N stats.
-        stats.removeRange(Range(start: 0, end: max(0, stats.count - maxRequestsInHistory)))
-        
         // Remove old stats.
         let now = NSDate()
-        stats = stats.filter({ now.timeIntervalSinceDate($0.startDate) < amnesiaDelay })
+        stats = stats.filter({ $0.running || now.timeIntervalSinceDate($0.stopDate!) < amnesiaDelay })
 
-        // Compute average duration.
-        let averageDuration = stats.isEmpty ? 0.0 : stats.reduce(0.0) { $0 + $1.duration } / Double(stats.count)
+        // Compute average duration
+        // ------------------------
+        // We have a dilemma here:
+        // - Short non-completed requests (still running or cancelled) do not mean the response time is good...
+        // - ... but long non-completed requests do mean that the response time is bad!
+        //
+        // => We compute two values, (1) for completed requests and (2) for all requests, and take the worst one.
+        //
+        let overallStats = stats.suffix(maxRequestsInHistory)
+        let completedStats = stats.filter({ $0.completed }).suffix(maxRequestsInHistory)
+        func avg(slice: ArraySlice<RequestStat>) -> NSTimeInterval {
+            return slice.isEmpty ? 0.0 : slice.reduce(0.0) { $0 + $1.duration } / Double(slice.count)
+        }
+        let overallAverageDuration = avg(overallStats)
+        let completedAverageDuration = avg(completedStats)
+        let worstAverageDuration = max(overallAverageDuration, completedAverageDuration)
+        
         let lastDuration = stats.last?.duration ?? 0.0
+        let lastCompleted = stats.last?.completed ?? false
         #if DEBUG
             NSLog("Request history: \(stats)")
-            NSLog("AVG=\(averageDuration), LAST=\(lastDuration)")
+            NSLog("AVG: overall=\(overallAverageDuration), completed=\(completedAverageDuration); LAST: \(lastDuration)")
         #endif
         
-        // Choose the strategy:
+        // Choose the strategy.
+        //
         // NOTE: One last good duration is enough to consider that realtime conditions are back. This optimistic
         // algorithm allows to react immediately when good network is back.
-        if lastDuration < throttleThreshold || averageDuration < throttleThreshold {
+        //
+        // CAUTION: Non-completed requests do no count.
+        //
+        if (lastCompleted && lastDuration < throttleThreshold) || worstAverageDuration < throttleThreshold {
             strategy = .Realtime
         }
         // Otherwise, if average duration is within acceptable bounds, use throttled mode.
-        else if averageDuration < manualThreshold {
+        else if worstAverageDuration < manualThreshold {
             strategy = .Throttled
         }
         // Out of desperation, revert to manual mode.
