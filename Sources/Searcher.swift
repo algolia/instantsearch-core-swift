@@ -171,7 +171,9 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     // ----------------
     
     /// Sequence number for the next request.
-    private var nextSequenceNumber: Int = 0
+    private static var nextSequenceNumber: Int = 0
+    
+    private static let lockQueue = dispatch_queue_create("Searcher static lock", DISPATCH_QUEUE_SERIAL)
     
     /// The state that will be used for the next search.
     /// It can be modified at will. It is not taken into account until the `search()` method is called; then it is
@@ -315,9 +317,12 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         var state = State(copy: requestedState)
         
         // Increase sequence number.
-        let currentSeqNo = nextSequenceNumber
+        var currentSeqNo: Int!
+        dispatch_sync(Searcher.lockQueue) {
+            Searcher.nextSequenceNumber += 1
+            currentSeqNo = Searcher.nextSequenceNumber
+        }
         state.sequenceNumber = currentSeqNo
-        nextSequenceNumber += 1
         
         // Build query.
         let query = Query(copy: state.query)
@@ -540,7 +545,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     @objc public static let ErrorNotification: String = "error"
     
     /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
-    /// or `CancelNotification`. The sequence number uniquely identifies the request within a given `Searcher` instance.
+    /// or `CancelNotification`. The sequence number uniquely identifies the request across all `Searcher` instances.
     /// Type: `Int`.
     ///
     @objc public static let NotificationSeqNoKey: String = "seqNo"

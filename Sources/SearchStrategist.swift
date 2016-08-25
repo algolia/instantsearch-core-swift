@@ -254,7 +254,10 @@ import Foundation
             break
             
         case Searcher.ResultNotification, Searcher.ErrorNotification, Searcher.CancelNotification:
-            guard let statIndex = stats.indexOf({ $0.seqNo == requestSeqNo }) else { return }
+            guard let statIndex = stats.indexOf({ $0.seqNo == requestSeqNo }) else {
+                assert(false) // should never happen
+                return
+            }
             stats[statIndex].stopDate = NSDate()
             // Cancelled requests are tricky: we don't know what would have been their duration.
             // We sometimes want to ignore them, sometimes not. => We store the cancelled status and let the
