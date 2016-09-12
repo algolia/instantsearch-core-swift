@@ -91,10 +91,10 @@ import Foundation
         var disjunctiveFacets: [String] = []
         
         /// Initial page.
-        var initialPage: UInt { return query.page ?? 0 }
+        var initialPage: Int { return query.page != nil ? Int(query.page!) : 0 }
         
         /// Current page.
-        var page: UInt = 0
+        var page: Int = 0
         
         /// Whether the current page is the initial page for this search state.
         var isInitialPage: Bool { return initialPage == page }
@@ -317,7 +317,7 @@ import Foundation
         
         // Build query.
         let query = Query(copy: state.query)
-        query.page = state.page
+        query.page = UInt(state.page)
         query.facetFilters = [] // NOTE: will be overridden below
         
         // User info for notifications.

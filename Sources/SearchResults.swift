@@ -228,19 +228,19 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     private var facets: [String: [FacetValue]] = [:]
 
     /// Total number of hits.
-    @objc public var nbHits: UInt
+    @objc public var nbHits: Int
 
     /// Last returned page.
-    @objc public var page: UInt { return content["page"] as? UInt ?? 0 }
+    @objc public var page: Int { return content["page"] as? Int ?? 0 }
 
     /// Total number of pages.
-    @objc public var nbPages: UInt { return content["nbPages"] as? UInt ?? 0 }
+    @objc public var nbPages: Int { return content["nbPages"] as? Int ?? 0 }
     
     /// Number of hits per page.
-    @objc public var hitsPerPage: UInt { return content["hitsPerPage"] as? UInt ?? 0 }
+    @objc public var hitsPerPage: Int { return content["hitsPerPage"] as? Int ?? 0 }
     
     /// Processing time of the last query (in ms).
-    @objc public var processingTimeMS: UInt
+    @objc public var processingTimeMS: Int
     
     /// Query text that produced these results.
     ///
@@ -341,13 +341,13 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         }
         self.hits = hits
         
-        guard let nbHits = content["nbHits"] as? UInt else {
-            throw InvalidJSONError(description: "Expecting attribute `nbHits` of type `UInt`")
+        guard let nbHits = content["nbHits"] as? Int else {
+            throw InvalidJSONError(description: "Expecting attribute `nbHits` of type `Int`")
         }
         self.nbHits = nbHits
         
-        guard let processingTimeMS = content["processingTimeMS"] as? UInt else {
-            throw InvalidJSONError(description: "Expecting attribute `processingTimeMS` of type `UInt`")
+        guard let processingTimeMS = content["processingTimeMS"] as? Int else {
+            throw InvalidJSONError(description: "Expecting attribute `processingTimeMS` of type `Int`")
         }
         self.processingTimeMS = processingTimeMS
         
