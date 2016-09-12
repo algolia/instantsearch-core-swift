@@ -240,7 +240,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public var hitsPerPage: Int { return content["hitsPerPage"] as? Int ?? 0 }
     
     /// Processing time of the last query (in ms).
-    @objc public var processingTimeMS: Int
+    @objc public var processingTimeMS: Int { return content["processingTimeMS"] as? Int ?? 0 }
     
     /// Query text that produced these results.
     ///
@@ -345,11 +345,6 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
             throw InvalidJSONError(description: "Expecting attribute `nbHits` of type `Int`")
         }
         self.nbHits = nbHits
-        
-        guard let processingTimeMS = content["processingTimeMS"] as? Int else {
-            throw InvalidJSONError(description: "Expecting attribute `processingTimeMS` of type `Int`")
-        }
-        self.processingTimeMS = processingTimeMS
         
         guard let query = content["query"] as? String else {
             throw InvalidJSONError(description: "Expecting attribute `query` of type `String`")
