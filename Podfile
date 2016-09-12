@@ -10,7 +10,15 @@ target "AlgoliaSearchHelper-iOS" do
     common_deps
 end
 
+target "AlgoliaSearchHelper-iOS-Tests" do
+    common_deps
+end
+
 target "AlgoliaSearchHelper-macOS" do
+    common_deps
+end
+
+target "AlgoliaSearchHelper-macOS-Tests" do
     common_deps
 end
 
@@ -18,7 +26,10 @@ target "AlgoliaSearchHelper-tvOS" do
     common_deps
 end
 
-target "AlgoliaSearchHelper-watchOS" do
+target "AlgoliaSearchHelper-tvOS-Tests" do
     common_deps
 end
 
+target "AlgoliaSearchHelper-watchOS" do
+    common_deps
+end
