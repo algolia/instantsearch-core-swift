@@ -79,7 +79,7 @@
 		BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
 		BC34264D1D4613CB0055E0F2 /* Searcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Searcher.swift; sourceTree = "<group>"; };
 		BC34264E1D4613CB0055E0F2 /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
-		BC3426531D4615040055E0F2 /* QueryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryHelper.swift; sourceTree = "<group>"; };
+		BC3426531D4615040055E0F2 /* QueryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = QueryHelper.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultsTest.swift; sourceTree = "<group>"; };
 		BC4CB88A1D534B6E004618DD /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4CB8931D534B6E004618DD /* AlgoliaSearchHelper-macOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AlgoliaSearchHelper-macOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };

@@ -27,9 +27,9 @@ import Foundation
 
 /// Match level of a highlight or snippet result (internal version).
 private enum MatchLevel_: String {
-    case Full = "full"
-    case Partial = "partial"
-    case None = "none"
+    case full = "full"
+    case partial = "partial"
+    case none = "none"
 }
 
 /// Match level of a highlight or snippet result.
@@ -49,9 +49,9 @@ private enum MatchLevel_: String {
 private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     if let level = matchLevel {
         switch level {
-        case .Full: return .full
-        case .Partial: return .partial
-        case .None: return .none
+        case .full: return .full
+        case .partial: return .partial
+        case .none: return .none
         }
     }
     return .none
