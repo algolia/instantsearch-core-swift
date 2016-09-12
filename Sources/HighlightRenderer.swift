@@ -53,7 +53,8 @@ import Foundation
     /// - parameter text: The marked up text to render.
     /// - returns: An atributed string with highlights outlined.
     ///
-    @objc public func render(text: String) -> NSAttributedString {
+    @objc(renderText:)
+    public func render(text: String) -> NSAttributedString {
         let newText = NSMutableString(string: text)
         var rangesToHighlight = [NSRange]()
         
