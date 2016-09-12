@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 //
 
+import AlgoliaSearch
 import Foundation
 
 
@@ -37,10 +38,10 @@ internal class JSONHelper {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The corresponding value, or nil if it does not exist.
     ///
-    internal static func valueForKeyPath(json: [String: AnyObject], path: String) -> AnyObject? {
-        var value: AnyObject = json
-        for name in path.componentsSeparatedByString(".") {
-            if let newValue = (value as? [String: AnyObject])?[name] {
+    internal static func valueForKeyPath(_ json: JSONObject, path: String) -> Any? {
+        var value: Any = json
+        for name in path.components(separatedBy: ".") {
+            if let newValue = (value as? JSONObject)?[name] {
                 value = newValue
             } else {
                 return nil

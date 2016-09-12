@@ -64,10 +64,6 @@ import Foundation
 // ------------------------------------------------------------------------
 
 
-/// Error domain used for errors raised by this module.
-public let ErrorDomain = "AlgoliaSearchHelper"
-
-
 /// Manages search on an Algolia index.
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
@@ -81,7 +77,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter results: The results (in case of success).
     /// - parameter error: The error (in case of failure).
     ///
-    public typealias ResultHandler = @convention(block) (results: SearchResults?, error: NSError?) -> Void
+    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?) -> Void
 
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
@@ -95,10 +91,10 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         var disjunctiveFacets: [String] = []
         
         /// Initial page.
-        var initialPage: Int { return query.page?.integerValue ?? 0 }
+        var initialPage: UInt { return query.page ?? 0 }
         
         /// Current page.
-        var page: Int = 0
+        var page: UInt = 0
         
         /// Whether the current page is the initial page for this search state.
         var isInitialPage: Bool { return initialPage == page }
@@ -194,7 +190,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private var results: SearchResults?
     
     /// All currently ongoing requests.
-    private var pendingRequests: [Int: NSOperation] = [:]
+    private var pendingRequests: [Int: Operation] = [:]
 
     // MARK: - Initialization, termination
     
@@ -213,19 +209,19 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter index: The index to target when searching.
     /// - parameter resultHandler: The result handler to register.
     ///
-    @objc public convenience init(index: Index, resultHandler: ResultHandler) {
+    @objc public convenience init(index: Index, resultHandler: @escaping ResultHandler) {
         self.init(index: index)
         self.resultHandlers = [resultHandler]
     }
     
     /// Add the helper library's version to the client's user agents, if not already present.
     private func updateClientUserAgents() {
-        let bundleInfo = NSBundle(forClass: self.dynamicType).infoDictionary!
+        let bundleInfo = Bundle(for: type(of: self)).infoDictionary!
         let name = bundleInfo["CFBundleName"] as! String
         let version = bundleInfo["CFBundleShortVersionString"] as! String
         let libraryVersion = LibraryVersion(name: name, version: version)
         let client = index.client
-        if client.userAgents.indexOf({ $0 == libraryVersion }) == nil {
+        if client.userAgents.index(where: { $0 == libraryVersion }) == nil {
             client.userAgents.append(libraryVersion)
         }
     }
@@ -234,7 +230,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     /// + Note: Because of the way closures are handled in Swift, the handler cannot be removed.
     ///
-    @objc public func addResultHandler(resultHandler: ResultHandler) {
+    @objc public func addResultHandler(_ resultHandler: @escaping ResultHandler) {
         self.resultHandlers.append(resultHandler)
     }
     
@@ -305,7 +301,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     private func hasMore() -> Bool {
         // If no results have been received yet, there are obviously no additional pages.
-        guard let receivedState = receivedState, results = results else { return false }
+        guard let receivedState = receivedState, let results = results else { return false }
         return receivedState.page + 1 < results.nbPages
     }
     
@@ -325,29 +321,28 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         query.facetFilters = [] // NOTE: will be overridden below
         
         // User info for notifications.
-        let userInfo: [String: AnyObject] = [
+        let userInfo: [String: Any] = [
             Searcher.NotificationQueryKey: query,
             Searcher.NotificationSeqNoKey: currentSeqNo
         ]
         
         // Run request
         // -----------
-        var operation: NSOperation!
+        var operation: Operation!
         let completionHandler: CompletionHandler = {
             [weak self]
-            (content: [String: AnyObject]?, error: NSError?) in
+            (content, error) in
             // NOTE: We do not control the lifetime of the searcher. => Fail gracefully if already released.
             guard let this = self else {
                 return
             }
             // Cancel all previous requests (as this one is deemed more recent).
             let previousRequests = this.pendingRequests.filter({ $0.0 < state.sequenceNumber })
-            for (seqNo, request) in previousRequests {
+            for (seqNo, _) in previousRequests {
                 this.cancelRequest(seqNo)
             }
             // Remove the current request.
-            let currentRequest = this.pendingRequests[currentSeqNo]!
-            this.pendingRequests.removeValueForKey(currentSeqNo)
+            this.pendingRequests.removeValue(forKey: currentSeqNo)
             
             // Obsolete requests should not happen since they have been cancelled by more recent requests (see above).
             // WARNING: Only works if the current queue is serial!
@@ -374,11 +369,11 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         self.pendingRequests[state.sequenceNumber] = operation
         
         // Notify observers.
-        NSNotificationCenter.defaultCenter().postNotificationName(Searcher.SearchNotification, object: self, userInfo: userInfo)
+        NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: userInfo)
     }
     
     /// Completion handler for search requests.
-    private func handleResults(content: [String: AnyObject]?, error: NSError?, userInfo: [String: AnyObject]) {
+    private func handleResults(_ content: [String: Any]?, error: Error?, userInfo: [String: Any]) {
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
@@ -386,25 +381,25 @@ public let ErrorDomain = "AlgoliaSearchHelper"
             } else {
                 callResultHandlers(nil, error: error, userInfo: userInfo)
             }
-        } catch let e as NSError {
+        } catch let e {
             callResultHandlers(nil, error: e, userInfo: userInfo)
         }
     }
     
-    private func callResultHandlers(results: SearchResults?, error: NSError?, userInfo: [String: AnyObject]) {
+    private func callResultHandlers(_ results: SearchResults?, error: Error?, userInfo: [String: Any]) {
         // Notify result handlers.
         for resultHandler in resultHandlers {
-            resultHandler(results: results, error: error)
+            resultHandler(results, error)
         }
         // Notify observers.
         var userInfo = userInfo
         if let results = results {
             userInfo[Searcher.ResultNotificationResultsKey] = results
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ResultNotification, object: self, userInfo: userInfo)
+            NotificationCenter.default.post(name: Searcher.ResultNotification, object: self, userInfo: userInfo)
         }
         else if let error = error {
             userInfo[Searcher.ErrorNotificationErrorKey] = error
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ErrorNotification, object: self, userInfo: userInfo)
+            NotificationCenter.default.post(name: Searcher.ErrorNotification, object: self, userInfo: userInfo)
         }
     }
     
@@ -417,14 +412,14 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter disjunctive: true to treat this facet as disjunctive (`OR`), false to treat it as conjunctive
     ///   (`AND`, the default).
     ///
-    @objc public func setFacet(name: String, disjunctive: Bool) {
+    @objc public func setFacet(_ name: String, disjunctive: Bool) {
         if disjunctive {
             if !disjunctiveFacets.contains(name) {
                 disjunctiveFacets.append(name)
             }
         } else {
-            if let index = disjunctiveFacets.indexOf(name) {
-                disjunctiveFacets.removeAtIndex(index)
+            if let index = disjunctiveFacets.index(of: name) {
+                disjunctiveFacets.remove(at: index)
             }
         }
     }
@@ -436,7 +431,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter name: The facet's name.
     /// - parameter value: The refined value to add.
     ///
-    @objc public func addFacetRefinement(name: String, value: String) {
+    @objc public func addFacetRefinement(_ name: String, value: String) {
         if refinements[name] == nil {
             refinements[name] = []
         }
@@ -448,9 +443,9 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter name: The facet's name.
     /// - parameter value: The refined value to remove.
     ///
-    @objc public func removeFacetRefinement(name: String, value: String) {
-        if let index = refinements[name]?.indexOf(value) {
-            refinements[name]?.removeAtIndex(index)
+    @objc public func removeFacetRefinement(_ name: String, value: String) {
+        if let index = refinements[name]?.index(of: value) {
+            refinements[name]?.remove(at: index)
         }
     }
     
@@ -460,7 +455,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter value: The refined value to look for.
     /// - returns: true if the refinement exists, false otherwise.
     ///
-    @objc public func hasFacetRefinement(name: String, value: String) -> Bool {
+    @objc public func hasFacetRefinement(_ name: String, value: String) -> Bool {
         return refinements[name]?.contains(value) ?? false
     }
     
@@ -470,7 +465,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter name: The facet's name.
     /// - parameter value: The refined value to toggle.
     ///
-    @objc public func toggleFacetRefinement(name: String, value: String) {
+    @objc public func toggleFacetRefinement(_ name: String, value: String) {
         if hasFacetRefinement(name, value: value) {
             removeFacetRefinement(name, value: value)
         } else {
@@ -488,8 +483,8 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     /// - parameter name: The facet's name.
     ///
-    @objc public func clearFacetRefinements(name: String) {
-        refinements.removeValueForKey(name)
+    @objc public func clearFacetRefinements(_ name: String) {
+        refinements.removeValue(forKey: name)
     }
     
     // MARK: - Managing requests
@@ -511,11 +506,11 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     /// - parameter seqNo: The request's sequence number.
     ///
-    @objc public func cancelRequest(seqNo: Int) {
+    @objc public func cancelRequest(_ seqNo: Int) {
         if let request = pendingRequests[seqNo] {
             request.cancel()
-            pendingRequests.removeValueForKey(seqNo)
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.CancelNotification, object: self, userInfo: [
+            pendingRequests.removeValue(forKey: seqNo)
+            NotificationCenter.default.post(name: Searcher.CancelNotification, object: self, userInfo: [
                 Searcher.NotificationSeqNoKey: seqNo
             ])
         }
@@ -526,10 +521,10 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Notification sent when a request is sent through the API Client.
     /// This can be either on `search()` or `loadMore()`.
     ///
-    @objc public static let SearchNotification: String = "search"
+    @objc public static let SearchNotification = Notification.Name("search")
     
     /// Notification sent when a successful response is received from the API Client.
-    @objc public static let ResultNotification: String = "result"
+    @objc public static let ResultNotification = Notification.Name("result")
     
     /// Key containing the search results in a `ResultNotification`.
     /// Type: `SearchResults`.
@@ -537,7 +532,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     @objc public static let ResultNotificationResultsKey: String = "results"
 
     /// Notification sent when an erroneous response is received from the API Client.
-    @objc public static let ErrorNotification: String = "error"
+    @objc public static let ErrorNotification = Notification.Name("error")
     
     /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
     /// or `CancelNotification`. The sequence number uniquely identifies the request within a given `Searcher` instance.
@@ -551,7 +546,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     @objc public static let NotificationQueryKey: String = "query"
     
     /// Key containing the error in an `ErrorNotification`.
-    /// Type: `NSError`.
+    /// Type: `Error`.
     ///
     @objc public static let ErrorNotificationErrorKey: String = "error"
 
@@ -559,15 +554,5 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// The result handler will not be called for cancelled requests, nor will any `ResultNotification` or
     /// `ErrorNotification` be posted, so this is your only chance of being informed of cancelled requests.
     ///
-    @objc public static let CancelNotification: String = "cancel"
-
-    // MARK: Miscellaneous
-    
-    /// Error domain used for errors raised by this module.
-    ///
-    /// + Note: This shortcut is provided for Objective-C bridging.
-    /// + SeeAlso: The top-level `ErrorDomain` constant.
-    ///
-    @objc public static let ErrorDomain = AlgoliaSearchHelper.ErrorDomain
-    
+    @objc public static let CancelNotification = Notification.Name("cancel")
 }

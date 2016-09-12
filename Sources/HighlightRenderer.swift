@@ -53,19 +53,19 @@ import Foundation
     /// - parameter text: The marked up text to render.
     /// - returns: An atributed string with highlights outlined.
     ///
-    @objc public func render(text: String) -> NSAttributedString {
+    @objc public func render(_ text: String) -> NSAttributedString {
         let newText = NSMutableString(string: text)
         var rangesToHighlight = [NSRange]()
         
         // Remove markup and identify ranges to highlight at the same time.
         while true {
-            let matchBegin = newText.rangeOfString(preTag, options: caseSensitive ? [] : [.CaseInsensitiveSearch])
+            let matchBegin = newText.range(of: preTag, options: caseSensitive ? [] : [.caseInsensitive])
             if matchBegin.location != NSNotFound {
-                newText.deleteCharactersInRange(matchBegin)
+                newText.deleteCharacters(in: matchBegin)
                 let range = NSRange(location: matchBegin.location, length: newText.length - matchBegin.location)
-                let matchEnd = newText.rangeOfString(postTag, options: .CaseInsensitiveSearch, range: range)
+                let matchEnd = newText.range(of: postTag, options: .caseInsensitive, range: range)
                 if matchEnd.location != NSNotFound {
-                    newText.deleteCharactersInRange(matchEnd)
+                    newText.deleteCharacters(in: matchEnd)
                     rangesToHighlight.append(NSRange(location: matchBegin.location, length: matchEnd.location - matchBegin.location))
                 }
             } else {

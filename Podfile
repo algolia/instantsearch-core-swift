@@ -17,3 +17,8 @@ end
 target "AlgoliaSearchHelper-tvOS" do
     common_deps
 end
+
+target "AlgoliaSearchHelper-watchOS" do
+    common_deps
+end
+

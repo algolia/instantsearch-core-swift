@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2125DBE0372AD6EA526E3CF1 /* Pods_AlgoliaSearchHelper_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F3A47E7AAA2DAB4E26DB200 /* Pods_AlgoliaSearchHelper_tvOS.framework */; };
 		34AD0B3D542439817CEF859A /* Pods_AlgoliaSearchHelper_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */; };
+		584CDC531533E19DAA08EED7 /* Pods_AlgoliaSearchHelper_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */; };
 		BC34263C1D460DB70055E0F2 /* AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */; };
 		BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */; };
 		BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */; };
@@ -66,6 +67,7 @@
 		393ECFD6C95F004AE5B5B106 /* Pods-AlgoliaSearchHelper-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-macOS/Pods-AlgoliaSearchHelper-macOS.debug.xcconfig"; sourceTree = "<group>"; };
 		5F48A2C888B2E9A93FBC8E41 /* Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-tvOS/Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		671D12F5AB371A98837D6759 /* Pods-AlgoliaSearchHelper-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-macOS/Pods-AlgoliaSearchHelper-macOS.release.xcconfig"; sourceTree = "<group>"; };
+		689FE9D55628062C60369847 /* Pods-AlgoliaSearchHelper-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-watchOS/Pods-AlgoliaSearchHelper-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		83D081CD46C32B0010292F40 /* Pods-AlgoliaSearchHelper-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-iOS/Pods-AlgoliaSearchHelper-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		AEFA5749381C5804859C8DC1 /* Pods-AlgoliaSearchHelper-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-tvOS/Pods-AlgoliaSearchHelper-tvOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,7 +86,10 @@
 		BC4CB8AD1D535AB3004618DD /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC4CB8B61D535AB3004618DD /* AlgoliaSearchHelper-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AlgoliaSearchHelper-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC58264F1D4BB3DE0047D27F /* Debouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
+		BC5DC11B1D8688C10066D705 /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6D38DC529AB4589B21E8C22 /* Pods-AlgoliaSearchHelper-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-watchOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-watchOS/Pods-AlgoliaSearchHelper-watchOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +141,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC5DC1171D8688C10066D705 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				584CDC531533E19DAA08EED7 /* Pods_AlgoliaSearchHelper_watchOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -145,6 +158,7 @@
 				C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */,
 				7FDEA8E0DC5E29EAC9A5B077 /* Pods_AlgoliaSearchHelper_macOS.framework */,
 				2F3A47E7AAA2DAB4E26DB200 /* Pods_AlgoliaSearchHelper_tvOS.framework */,
+				EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -158,6 +172,8 @@
 				671D12F5AB371A98837D6759 /* Pods-AlgoliaSearchHelper-macOS.release.xcconfig */,
 				5F48A2C888B2E9A93FBC8E41 /* Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig */,
 				AEFA5749381C5804859C8DC1 /* Pods-AlgoliaSearchHelper-tvOS.release.xcconfig */,
+				689FE9D55628062C60369847 /* Pods-AlgoliaSearchHelper-watchOS.debug.xcconfig */,
+				F6D38DC529AB4589B21E8C22 /* Pods-AlgoliaSearchHelper-watchOS.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -182,6 +198,7 @@
 				BC4CB8931D534B6E004618DD /* AlgoliaSearchHelper-macOSTests.xctest */,
 				BC4CB8AD1D535AB3004618DD /* AlgoliaSearchHelper.framework */,
 				BC4CB8B61D535AB3004618DD /* AlgoliaSearchHelper-tvOSTests.xctest */,
+				BC5DC11B1D8688C10066D705 /* AlgoliaSearchHelper.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -227,6 +244,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		BC4CB8AA1D535AB3004618DD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC5DC1181D8688C10066D705 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,6 +374,26 @@
 			productReference = BC4CB8B61D535AB3004618DD /* AlgoliaSearchHelper-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		BC5DC11A1D8688C10066D705 /* AlgoliaSearchHelper-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC5DC1221D8688C10066D705 /* Build configuration list for PBXNativeTarget "AlgoliaSearchHelper-watchOS" */;
+			buildPhases = (
+				6FF94A758C979572A68584D6 /* [CP] Check Pods Manifest.lock */,
+				BC5DC1161D8688C10066D705 /* Sources */,
+				BC5DC1171D8688C10066D705 /* Frameworks */,
+				BC5DC1181D8688C10066D705 /* Headers */,
+				BC5DC1191D8688C10066D705 /* Resources */,
+				497CF1711429D303D385ED4E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AlgoliaSearchHelper-watchOS";
+			productName = AlgoliaSearchHelper;
+			productReference = BC5DC11B1D8688C10066D705 /* AlgoliaSearchHelper.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -357,14 +401,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Algolia;
 				TargetAttributes = {
 					BC3426301D460DB70055E0F2 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					BC34263A1D460DB70055E0F2 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					BC4CB8891D534B6E004618DD = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -377,6 +423,11 @@
 					};
 					BC4CB8B51D535AB3004618DD = {
 						CreatedOnToolsVersion = 7.3.1;
+					};
+					BC5DC11A1D8688C10066D705 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 5RDFJYUV23;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -398,6 +449,7 @@
 				BC4CB8921D534B6E004618DD /* AlgoliaSearchHelper-macOSTests */,
 				BC4CB8AC1D535AB3004618DD /* AlgoliaSearchHelper-tvOS */,
 				BC4CB8B51D535AB3004618DD /* AlgoliaSearchHelper-tvOSTests */,
+				BC5DC11A1D8688C10066D705 /* AlgoliaSearchHelper-watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -445,9 +497,46 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC5DC1191D8688C10066D705 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		497CF1711429D303D385ED4E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AlgoliaSearchHelper-watchOS/Pods-AlgoliaSearchHelper-watchOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6FF94A758C979572A68584D6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		83A0ED875C6D4FBB55DC4D3E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -460,7 +549,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		84F88FCFD0587161CD5ECB82 /* [CP] Check Pods Manifest.lock */ = {
@@ -475,7 +564,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A449DD89C32175B54547480E /* [CP] Copy Pods Resources */ = {
@@ -520,7 +609,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		FD325EF805DDB75FE00FA54F /* [CP] Copy Pods Resources */ = {
@@ -604,6 +693,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BC5DC1161D8688C10066D705 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -639,8 +735,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -668,6 +766,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -688,8 +787,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -709,6 +810,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -721,6 +824,7 @@
 			baseConfigurationReference = 83D081CD46C32B0010292F40 /* Pods-AlgoliaSearchHelper-iOS.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -740,6 +844,7 @@
 			baseConfigurationReference = 1B88191EB034B2884D2E46E4 /* Pods-AlgoliaSearchHelper-iOS.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -762,6 +867,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -773,6 +879,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -780,7 +887,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 393ECFD6C95F004AE5B5B106 /* Pods-AlgoliaSearchHelper-macOS.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -802,7 +909,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 671D12F5AB371A98837D6759 /* Pods-AlgoliaSearchHelper-macOS.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -852,6 +959,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5F48A2C888B2E9A93FBC8E41 /* Pods-AlgoliaSearchHelper-tvOS.debug.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -872,6 +980,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = AEFA5749381C5804859C8DC1 /* Pods-AlgoliaSearchHelper-tvOS.release.xcconfig */;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -909,6 +1018,59 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
+			};
+			name = Release;
+		};
+		BC5DC1201D8688C10066D705 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 689FE9D55628062C60369847 /* Pods-AlgoliaSearchHelper-watchOS.debug.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5RDFJYUV23;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelper;
+				PRODUCT_NAME = AlgoliaSearchHelper;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
+			};
+			name = Debug;
+		};
+		BC5DC1211D8688C10066D705 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F6D38DC529AB4589B21E8C22 /* Pods-AlgoliaSearchHelper-watchOS.release.xcconfig */;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 5RDFJYUV23;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Sources/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelper;
+				PRODUCT_NAME = AlgoliaSearchHelper;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
@@ -974,6 +1136,15 @@
 			buildConfigurations = (
 				BC4CB8C01D535AB4004618DD /* Debug */,
 				BC4CB8C11D535AB4004618DD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC5DC1221D8688C10066D705 /* Build configuration list for PBXNativeTarget "AlgoliaSearchHelper-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC5DC1201D8688C10066D705 /* Debug */,
+				BC5DC1211D8688C10066D705 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

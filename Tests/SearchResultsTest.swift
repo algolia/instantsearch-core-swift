@@ -49,11 +49,11 @@ class SearchResultsTest: XCTestCase {
 
     func testHits() {
         // Missing value.
-        json.removeValueForKey("hits")
+        json.removeValue(forKey: "hits")
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Missing value.
-        json["hits"] = 123
+        json["hits"] = 123 as AnyObject?
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Nominal case:
@@ -70,15 +70,15 @@ class SearchResultsTest: XCTestCase {
     
     func testNbHits() {
         // Missing value.
-        json.removeValueForKey("nbHits")
+        json.removeValue(forKey: "nbHits")
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Mistyped value.
-        json["nbHits"] = "XXX"
+        json["nbHits"] = "XXX" as AnyObject?
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Nominal case:
-        json["nbHits"] = 666
+        json["nbHits"] = 666 as AnyObject?
         guard let results = try? SearchResults(content: json, disjunctiveFacets: []) else {
             XCTFail("Failed to construct results")
             return
@@ -88,15 +88,15 @@ class SearchResultsTest: XCTestCase {
 
     func testProcessingTimeMS() {
         // Missing value.
-        json.removeValueForKey("processingTimeMS")
+        json.removeValue(forKey: "processingTimeMS")
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Mistyped value.
-        json["processingTimeMS"] = "XXX"
+        json["processingTimeMS"] = "XXX" as AnyObject?
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Nominal case:
-        json["processingTimeMS"] = 666
+        json["processingTimeMS"] = 666 as AnyObject?
         guard let results = try? SearchResults(content: json, disjunctiveFacets: []) else {
             XCTFail("Failed to construct results")
             return
@@ -106,15 +106,15 @@ class SearchResultsTest: XCTestCase {
     
     func testQuery() {
         // Missing value.
-        json.removeValueForKey("query")
+        json.removeValue(forKey: "query")
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Mistyped value.
-        json["query"] = 666
+        json["query"] = 666 as AnyObject?
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Nominal case:
-        json["query"] = "some text"
+        json["query"] = "some text" as AnyObject?
         guard let results = try? SearchResults(content: json, disjunctiveFacets: []) else {
             XCTFail("Failed to construct results")
             return
@@ -124,15 +124,15 @@ class SearchResultsTest: XCTestCase {
 
     func testParams() {
         // Missing value.
-        json.removeValueForKey("params")
+        json.removeValue(forKey: "params")
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Mistyped value.
-        json["params"] = 666
+        json["params"] = 666 as AnyObject?
         XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
         
         // Nominal case:
-        json["params"] = "query=some%20text&facets=%5B%22abc%22,%22def%22%5D"
+        json["params"] = "query=some%20text&facets=%5B%22abc%22,%22def%22%5D" as AnyObject?
         guard let results = try? SearchResults(content: json, disjunctiveFacets: []) else {
             XCTFail("Failed to construct results")
             return
@@ -153,7 +153,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["page"] = "XXX"
+        json["page"] = "XXX" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(0, results.page)
         } else {
@@ -161,7 +161,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["page"] = 666
+        json["page"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(666, results.page)
         } else {
@@ -178,7 +178,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["nbPages"] = "XXX"
+        json["nbPages"] = "XXX" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(0, results.nbPages)
         } else {
@@ -186,7 +186,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["nbPages"] = 666
+        json["nbPages"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(666, results.nbPages)
         } else {
@@ -203,7 +203,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["hitsPerPage"] = "XXX"
+        json["hitsPerPage"] = "XXX" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(0, results.hitsPerPage)
         } else {
@@ -211,7 +211,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["hitsPerPage"] = 666
+        json["hitsPerPage"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(666, results.hitsPerPage)
         } else {
@@ -228,7 +228,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["exhaustiveFacetsCount"] = "XXX"
+        json["exhaustiveFacetsCount"] = "XXX" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(false, results.exhaustiveFacetsCount)
         } else {
@@ -236,7 +236,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["exhaustiveFacetsCount"] = true
+        json["exhaustiveFacetsCount"] = true as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(true, results.exhaustiveFacetsCount)
         } else {
@@ -253,7 +253,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["message"] = 666
+        json["message"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.message)
         } else {
@@ -261,7 +261,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["message"] = "You've been warned"
+        json["message"] = "You've been warned" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual("You've been warned", results.message)
         } else {
@@ -278,7 +278,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["queryAfterRemoval"] = 666
+        json["queryAfterRemoval"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.queryAfterRemoval)
         } else {
@@ -286,7 +286,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["queryAfterRemoval"] = "some text"
+        json["queryAfterRemoval"] = "some text" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual("some text", results.queryAfterRemoval)
         } else {
@@ -303,7 +303,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["aroundLatLng"] = 666
+        json["aroundLatLng"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.aroundLatLng)
         } else {
@@ -311,7 +311,7 @@ class SearchResultsTest: XCTestCase {
         }
 
         // Ill-formatted value.
-        json["aroundLatLng"] = "123.456XYZ"
+        json["aroundLatLng"] = "123.456XYZ" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.aroundLatLng)
         } else {
@@ -319,7 +319,7 @@ class SearchResultsTest: XCTestCase {
         }
 
         // Nominal case:
-        json["aroundLatLng"] = "12.34,45.67"
+        json["aroundLatLng"] = "12.34,45.67" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(LatLng(lat: 12.34, lng: 45.67), results.aroundLatLng)
         } else {
@@ -337,7 +337,7 @@ class SearchResultsTest: XCTestCase {
         
         // Mistyped value.
         // WARNING: This field is returned as a string by the API!
-        json["automaticRadius"] = 666
+        json["automaticRadius"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(0, results.automaticRadius)
         } else {
@@ -346,7 +346,7 @@ class SearchResultsTest: XCTestCase {
         
         // Nominal case:
         // WARNING: This field is returned as a string by the API!
-        json["automaticRadius"] = "666"
+        json["automaticRadius"] = "666" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(666, results.automaticRadius)
         } else {
@@ -363,7 +363,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["serverUsed"] = 666
+        json["serverUsed"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.serverUsed)
         } else {
@@ -371,7 +371,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["serverUsed"] = "host.com"
+        json["serverUsed"] = "host.com" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual("host.com", results.serverUsed)
         } else {
@@ -389,7 +389,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["parsedQuery"] = 666
+        json["parsedQuery"] = 666 as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.parsedQuery)
         } else {
@@ -397,7 +397,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["parsedQuery"] = "some text"
+        json["parsedQuery"] = "some text" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual("some text", results.parsedQuery)
         } else {
@@ -414,7 +414,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["timeoutCounts"] = "XXX"
+        json["timeoutCounts"] = "XXX" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(false, results.timeoutCounts)
         } else {
@@ -422,7 +422,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["timeoutCounts"] = true
+        json["timeoutCounts"] = true as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(true, results.timeoutCounts)
         } else {
@@ -439,7 +439,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Mistyped value.
-        json["timeoutHits"] = "XXX"
+        json["timeoutHits"] = "XXX" as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(false, results.timeoutHits)
         } else {
@@ -447,7 +447,7 @@ class SearchResultsTest: XCTestCase {
         }
         
         // Nominal case:
-        json["timeoutHits"] = true
+        json["timeoutHits"] = true as AnyObject?
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertEqual(true, results.timeoutHits)
         } else {
@@ -456,7 +456,7 @@ class SearchResultsTest: XCTestCase {
     }
     
     func testFacets() {
-        json["params"] = "facets=%5B%22abc%22,%22def%22,%22jkl%22%5D"
+        json["params"] = "facets=%5B%22abc%22,%22def%22,%22jkl%22%5D" as AnyObject?
         json["facets"] = [
             "abc": 666,
             "def": [
@@ -499,7 +499,7 @@ class SearchResultsTest: XCTestCase {
     }
 
     func testFacetStats() {
-        json["params"] = "facets=%5B%22abc%22,%22def%22,%22jkl%22%5D"
+        json["params"] = "facets=%5B%22abc%22,%22def%22,%22jkl%22%5D" as AnyObject?
         json["facets_stats"] = [
             "abc": [
                 "min": 1,
