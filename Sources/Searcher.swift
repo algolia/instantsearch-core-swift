@@ -339,7 +339,7 @@ import Foundation
             // Cancel all previous requests (as this one is deemed more recent).
             let previousRequests = this.pendingRequests.filter({ $0.0 < state.sequenceNumber })
             for (seqNo, _) in previousRequests {
-                this.cancelRequest(seqNo)
+                this.cancelRequest(seqNo: seqNo)
             }
             // Remove the current request.
             this.pendingRequests.removeValue(forKey: currentSeqNo)
@@ -351,7 +351,7 @@ import Foundation
             this.receivedState = state
             
             // Call the result handler.
-            this.handleResults(content, error: error, userInfo: userInfo)
+            this.handleResults(content: content, error: error, userInfo: userInfo)
         }
         if state.disjunctiveFacets.isEmpty {
             // All facets are conjunctive; build facet filters accordingly.
@@ -373,20 +373,20 @@ import Foundation
     }
     
     /// Completion handler for search requests.
-    private func handleResults(_ content: [String: Any]?, error: Error?, userInfo: [String: Any]) {
+    private func handleResults(content: JSONObject?, error: Error?, userInfo: [String: Any]) {
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
-                callResultHandlers(self.results, error: nil, userInfo: userInfo)
+                callResultHandlers(results: self.results, error: nil, userInfo: userInfo)
             } else {
-                callResultHandlers(nil, error: error, userInfo: userInfo)
+                callResultHandlers(results: nil, error: error, userInfo: userInfo)
             }
         } catch let e {
-            callResultHandlers(nil, error: e, userInfo: userInfo)
+            callResultHandlers(results: nil, error: e, userInfo: userInfo)
         }
     }
     
-    private func callResultHandlers(_ results: SearchResults?, error: Error?, userInfo: [String: Any]) {
+    private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
         // Notify result handlers.
         for resultHandler in resultHandlers {
             resultHandler(results, error)
@@ -412,7 +412,7 @@ import Foundation
     /// - parameter disjunctive: true to treat this facet as disjunctive (`OR`), false to treat it as conjunctive
     ///   (`AND`, the default).
     ///
-    @objc public func setFacet(_ name: String, disjunctive: Bool) {
+    @objc public func setFacet(withName name: String, disjunctive: Bool) {
         if disjunctive {
             if !disjunctiveFacets.contains(name) {
                 disjunctiveFacets.append(name)
@@ -431,7 +431,7 @@ import Foundation
     /// - parameter name: The facet's name.
     /// - parameter value: The refined value to add.
     ///
-    @objc public func addFacetRefinement(_ name: String, value: String) {
+    @objc public func addFacetRefinement(name: String, value: String) {
         if refinements[name] == nil {
             refinements[name] = []
         }
@@ -443,7 +443,7 @@ import Foundation
     /// - parameter name: The facet's name.
     /// - parameter value: The refined value to remove.
     ///
-    @objc public func removeFacetRefinement(_ name: String, value: String) {
+    @objc public func removeFacetRefinement(name: String, value: String) {
         if let index = refinements[name]?.index(of: value) {
             refinements[name]?.remove(at: index)
         }
@@ -455,7 +455,7 @@ import Foundation
     /// - parameter value: The refined value to look for.
     /// - returns: true if the refinement exists, false otherwise.
     ///
-    @objc public func hasFacetRefinement(_ name: String, value: String) -> Bool {
+    @objc public func hasFacetRefinement(name: String, value: String) -> Bool {
         return refinements[name]?.contains(value) ?? false
     }
     
@@ -465,11 +465,11 @@ import Foundation
     /// - parameter name: The facet's name.
     /// - parameter value: The refined value to toggle.
     ///
-    @objc public func toggleFacetRefinement(_ name: String, value: String) {
-        if hasFacetRefinement(name, value: value) {
-            removeFacetRefinement(name, value: value)
+    @objc public func toggleFacetRefinement(name: String, value: String) {
+        if hasFacetRefinement(name: name, value: value) {
+            removeFacetRefinement(name: name, value: value)
         } else {
-            addFacetRefinement(name, value: value)
+            addFacetRefinement(name: name, value: value)
         }
     }
     
@@ -483,7 +483,7 @@ import Foundation
     ///
     /// - parameter name: The facet's name.
     ///
-    @objc public func clearFacetRefinements(_ name: String) {
+    @objc public func clearFacetRefinements(name: String) {
         refinements.removeValue(forKey: name)
     }
     
@@ -497,7 +497,7 @@ import Foundation
     /// Cancel all pending requests.
     @objc public func cancelPendingRequests() {
         for seqNo in pendingRequests.keys {
-            cancelRequest(seqNo)
+            cancelRequest(seqNo: seqNo)
         }
         assert(pendingRequests.isEmpty)
     }
@@ -506,7 +506,7 @@ import Foundation
     ///
     /// - parameter seqNo: The request's sequence number.
     ///
-    @objc public func cancelRequest(_ seqNo: Int) {
+    @objc public func cancelRequest(seqNo: Int) {
         if let request = pendingRequests[seqNo] {
             request.cancel()
             pendingRequests.removeValue(forKey: seqNo)

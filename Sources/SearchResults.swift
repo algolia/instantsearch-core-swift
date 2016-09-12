@@ -370,7 +370,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter disjunctive: true if this is a disjunctive facet, false if it's a conjunctive facet (default).
     /// - returns: The corresponding facet values (which may be empty), or `nil` if the facet was not requested.
     ///
-    @objc public func facets(_ name: String) -> [FacetValue]? {
+    @objc public func facets(name: String) -> [FacetValue]? {
         // Use stored values if available.
         if let values = facets[name] {
             return values
@@ -392,7 +392,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
             }
             // Make sure there is a value at least for the refined values.
             let queryHelper = QueryHelper(query: params)
-            let facetRefinements = queryHelper.getFacetRefinements() { $0.name == name }
+            let facetRefinements = queryHelper.facetRefinements(matching: { $0.name == name })
             for facetRefinement in facetRefinements {
                 if returnedValues?[facetRefinement.value] == nil {
                     values.append(FacetValue(value: facetRefinement.value, count: 0))
@@ -409,7 +409,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter name: The facet's name.
     /// - returns: The statistics for this facet, or `nil` if this facet does not exist or is not a numerical facet, or if the response JSON is invalid.
     ///
-    @objc public func facetStats(_ name: String) -> FacetStats? {
+    @objc public func facetStats(name: String) -> FacetStats? {
         guard let allStats = content["facets_stats"] as? JSONObject else { return nil }
         guard let facetStats = allStats[name] as? JSONObject else { return nil }
         guard
@@ -429,8 +429,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The corresponding highlight, or `nil` if it was not returned, or if the JSON response is invalid.
     ///
-    @objc public func highlightResult(_ index: Int, path: String) -> HighlightResult? {
-        return SearchResults.getHighlightResult(hits[index], path: path)
+    @objc public func highlightResult(at index: Int, path: String) -> HighlightResult? {
+        return SearchResults.highlightResult(hit: hits[index], path: path)
     }
 
     /// Get the snippet result for an attribute of a hit.
@@ -439,8 +439,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The corresponding snippet, or `nil` if it was not returned, or if the JSON response is invalid.
     ///
-    @objc public func snippetResult(_ index: Int, path: String) -> SnippetResult? {
-        return SearchResults.getSnippetResult(hits[index], path: path)
+    @objc public func snippetResult(at index: Int, path: String) -> SnippetResult? {
+        return SearchResults.snippetResult(hit: hits[index], path: path)
     }
 
     /// Get the ranking information for a hit.
@@ -450,7 +450,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter index: Index of the hit in the hits array.
     /// - returns: The corresponding ranking information, or `nil` if no ranking information is available, or if the JSON response is invalid.
     ///
-    @objc public func rankingInfo(_ index: Int) -> RankingInfo? {
+    @objc public func rankingInfo(at index: Int) -> RankingInfo? {
         if let rankingInfo = hits[index]["_rankingInfo"] as? JSONObject {
             return RankingInfo(json: rankingInfo)
         } else {
@@ -466,9 +466,9 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The highlight result, or `nil` if not available, or if the JSON response is invalid.
     ///
-    @objc public static func getHighlightResult(_ hit: JSONObject, path: String) -> HighlightResult? {
+    @objc public static func highlightResult(hit: JSONObject, path: String) -> HighlightResult? {
         guard let highlights = hit["_highlightResult"] as? JSONObject else { return nil }
-        guard let attribute = JSONHelper.valueForKeyPath(highlights, path: path) as? JSONObject else { return nil }
+        guard let attribute = JSONHelper.valueForKeyPath(json: highlights, path: path) as? JSONObject else { return nil }
         return HighlightResult(json: attribute)
     }
     
@@ -478,9 +478,9 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The snippet result, or `nil` if not available, or if the JSON response is invalid.
     ///
-    @objc public static func getSnippetResult(_ hit: JSONObject, path: String) -> SnippetResult? {
+    @objc public static func snippetResult(hit: JSONObject, path: String) -> SnippetResult? {
         guard let snippets = hit["_snippetResult"] as? JSONObject else { return nil }
-        guard let attribute = JSONHelper.valueForKeyPath(snippets, path: path) as? JSONObject else { return nil }
+        guard let attribute = JSONHelper.valueForKeyPath(json: snippets, path: path) as? JSONObject else { return nil }
         return SnippetResult(json: attribute)
     }
 }

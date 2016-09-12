@@ -75,7 +75,7 @@ internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     /// The test looks for both conjunctive or disjunctive refinements.
     ///
     @objc func hasFacetRefinement(_ facetRefinement: FacetRefinement) -> Bool {
-        return findFacetRefinement({ $0 == facetRefinement }) != nil
+        return indexOfFacetRefinement(matching: { $0 == facetRefinement }) != nil
     }
     
     /// Add a conjunctive facet refinement (`AND`).
@@ -107,7 +107,7 @@ internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     @objc func addDisjunctiveFacetRefinement(_ facetRefinement: FacetRefinement) {
         let newValue = facetRefinement.buildFacetFilter()
         // If the facet already has refined values, add them to this list.
-        if let indices = findFacetRefinement({ $0.name == facetRefinement.name }) {
+        if let indices = indexOfFacetRefinement(matching: { $0.name == facetRefinement.name }) {
             let filters = query.facetFilters![indices[0]]
             // If it's already an array, add to it.
             if var array = filters as? [Any] {
@@ -149,7 +149,7 @@ internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     /// - parameter facetRefinement: The facet refinement to remove.
     ///
     @objc func removeFacetRefinement(_ facetRefinement: FacetRefinement) {
-        if let indices = findFacetRefinement({ $0 == facetRefinement }) {
+        if let indices = indexOfFacetRefinement(matching: { $0 == facetRefinement }) {
             assert(indices.count == 1 || indices.count == 2)
             if indices.count == 1 {
                 query.facetFilters?.remove(at: indices[0])
@@ -170,23 +170,23 @@ internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     /// - parameter matching: A predicate indicating which refinements should match.
     /// - returns: The list of matching refinements.
     ///
-    @objc func getFacetRefinements(_ matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
+    @objc func facetRefinements(matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
         if let facetFilters = query.facetFilters {
-            return _getFacetRefinements(facetFilters, matching: matching)
+            return _getFacetRefinements(from: facetFilters, matching: matching)
         } else {
             return []
         }
     }
     
-    private func _getFacetRefinements(_ facetFilters: [Any], matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
+    private func _getFacetRefinements(from facetFilters: [Any], matching: (FacetRefinement) -> Bool) -> [FacetRefinement] {
         var results = [FacetRefinement]()
         for value in facetFilters {
-            if let stringFilter = value as? String, let refinement = QueryHelper.parseFacetRefinement(stringFilter) {
+            if let stringFilter = value as? String, let refinement = QueryHelper.parseFacetRefinement(from: stringFilter) {
                 if matching(refinement) {
                     results.append(refinement)
                 }
             } else if let facetFilters = value as? [Any] {
-                let subresults = _getFacetRefinements(facetFilters, matching: matching)
+                let subresults = _getFacetRefinements(from: facetFilters, matching: matching)
                 results.append(contentsOf: subresults)
             }
         }
@@ -194,23 +194,23 @@ internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     }
 
     /// Find the location of the first refinement matching a predicate.
-    private func findFacetRefinement(_ matching: (FacetRefinement) -> Bool) -> [Int]? {
+    private func indexOfFacetRefinement(matching: (FacetRefinement) -> Bool) -> [Int]? {
         if let facetFilters = query.facetFilters {
-            return _findFacetRefinement(facetFilters, matching: matching)
+            return _findFacetRefinement(in: facetFilters, matching: matching)
         } else {
             return nil
         }
     }
 
     /// Auxiliary recursive function to find a facet refinement.
-    private func _findFacetRefinement(_ facetFilters: [Any], matching: (FacetRefinement) -> Bool) -> [Int]? {
+    private func _findFacetRefinement(in facetFilters: [Any], matching: (FacetRefinement) -> Bool) -> [Int]? {
         for (index, value) in facetFilters.enumerated() {
-            if let stringFilter = value as? String, let refinement = QueryHelper.parseFacetRefinement(stringFilter) {
+            if let stringFilter = value as? String, let refinement = QueryHelper.parseFacetRefinement(from: stringFilter) {
                 if matching(refinement) {
                     return [index]
                 }
             } else if let facetFilters = value as? [Any] {
-                if let subindices = _findFacetRefinement(facetFilters, matching: matching) {
+                if let subindices = _findFacetRefinement(in: facetFilters, matching: matching) {
                     return [index] + subindices
                 }
             }
@@ -223,7 +223,7 @@ internal func ==(lhs: FacetRefinement, rhs: FacetRefinement) -> Bool {
     /// - parameter facetFilter: A string representation of a facet filter, as used by `Query`.
     /// - returns: The corresponding facet refinement, or nil if the string is invalid.
     ///
-    private static func parseFacetRefinement(_ facetFilter: String) -> FacetRefinement? {
+    private static func parseFacetRefinement(from facetFilter: String) -> FacetRefinement? {
         let components = facetFilter.characters.split(separator: ":", maxSplits: 1, omittingEmptySubsequences: false)
         if components.count == 2 {
             let facetName = String(components[0])
