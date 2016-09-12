@@ -55,8 +55,11 @@ This module requires:
 ### Setup
 
 1. Add a dependency on "AlgoliaSearch-Helper-Swift":
+
     - CocoaPods: add `pod 'AlgoliaSearch-Helper-Swift', '~> 1.0'` to your `Podfile`.
-    - Carthage: not supported so far.
+
+    - Carthage is not supported. [Wondering why?](#why-is-carthage-not-supported)
+
 2. Add `import AlgoliaSearchHelper` to your source files.
 
 **Note:** If you wish to use the API Client's offline mode, use the subspec `AlgoliaSearch-Helper-Swift/Offline` instead.
@@ -206,3 +209,7 @@ if let highlightResult = searchResults.highlightResult(index, path: "attribute_n
 "Debouncing" is the process of ignoring too frequent events, keeping only the last one in a series of adjacent events.
 
 The `Debouncer` class provides a generic way of debouncing calls. It can be useful to avoid triggering too many search requests, for example when a UI widget is continuously firing updates (e.g. a slider).
+
+### Why is Carthage not supported?
+
+The Algolia Search Helper module has an external dependency (on the Algolia Search API Client). A package manager is therefore required to draw that dependency. Cocoapods works by adding special build phases to the Xcode project (in addition to creating a Pods project and an Xcode workspace referencing both). Because of this, it is technically impossible to support both Cocoapods and Carthage on the same project when it has external dependencies. Because Cocoapods has a wider audience than Carthage, we chose the former.
