@@ -34,6 +34,10 @@
 		BC4CB8C91D535CA4004618DD /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264E1D4613CB0055E0F2 /* SearchResults.swift */; };
 		BC4CB8CA1D535CA7004618DD /* SearchResultsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */; };
 		BC5826501D4BB3DE0047D27F /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC58264F1D4BB3DE0047D27F /* Debouncer.swift */; };
+		BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1241D8697F50066D705 /* SearchProgressController.swift */; };
+		BC5DC1261D8697F50066D705 /* SearchProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1241D8697F50066D705 /* SearchProgressController.swift */; };
+		BC5DC1271D8697F50066D705 /* SearchProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1241D8697F50066D705 /* SearchProgressController.swift */; };
+		BC5DC1281D8697F50066D705 /* SearchProgressController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1241D8697F50066D705 /* SearchProgressController.swift */; };
 		DDAC466BA154A5B6B3AB8238 /* Pods_AlgoliaSearchHelper_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +91,7 @@
 		BC4CB8B61D535AB3004618DD /* AlgoliaSearchHelper-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AlgoliaSearchHelper-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC58264F1D4BB3DE0047D27F /* Debouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		BC5DC11B1D8688C10066D705 /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC5DC1241D8697F50066D705 /* SearchProgressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProgressController.swift; sourceTree = "<group>"; };
 		C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6D38DC529AB4589B21E8C22 /* Pods-AlgoliaSearchHelper-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-watchOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-watchOS/Pods-AlgoliaSearchHelper-watchOS.release.xcconfig"; sourceTree = "<group>"; };
@@ -212,6 +217,7 @@
 				BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */,
 				BC3426531D4615040055E0F2 /* QueryHelper.swift */,
 				BC34264D1D4613CB0055E0F2 /* Searcher.swift */,
+				BC5DC1241D8697F50066D705 /* SearchProgressController.swift */,
 				BC34264E1D4613CB0055E0F2 /* SearchResults.swift */,
 			);
 			path = Sources;
@@ -637,6 +643,7 @@
 				BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */,
 				BC3426541D4615040055E0F2 /* QueryHelper.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
+				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BC3426521D4613CB0055E0F2 /* SearchResults.swift in Sources */,
 				BC3426511D4613CB0055E0F2 /* Searcher.swift in Sources */,
 				BC5826501D4BB3DE0047D27F /* Debouncer.swift in Sources */,
@@ -658,6 +665,7 @@
 				BC4CB8A51D534C20004618DD /* Searcher.swift in Sources */,
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
+				BC5DC1261D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BC4CB8A41D534C20004618DD /* QueryHelper.swift in Sources */,
 				BC4CB8A61D534C20004618DD /* SearchResults.swift in Sources */,
 				BC4CB8A21D534C20004618DD /* HighlightRenderer.swift in Sources */,
@@ -679,6 +687,7 @@
 				BC4CB8C81D535CA4004618DD /* Searcher.swift in Sources */,
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
+				BC5DC1271D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BC4CB8C71D535CA4004618DD /* QueryHelper.swift in Sources */,
 				BC4CB8C91D535CA4004618DD /* SearchResults.swift in Sources */,
 				BC4CB8C51D535CA4004618DD /* HighlightRenderer.swift in Sources */,
@@ -697,6 +706,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC5DC1281D8697F50066D705 /* SearchProgressController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

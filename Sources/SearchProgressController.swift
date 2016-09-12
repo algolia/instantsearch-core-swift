@@ -28,10 +28,10 @@ import Foundation
 ///
 @objc public protocol SearchProgressDelegate {
     /// Fired when progress should start being reported.
-    @objc func searchDidStart(searchProgressController: SearchProgressController)
+    @objc func searchDidStart(_ searchProgressController: SearchProgressController)
     
     /// Fired when progress should stop being reported.
-    @objc func searchDidStop(searchProgressController: SearchProgressController)
+    @objc func searchDidStop(_ searchProgressController: SearchProgressController)
 }
 
 
@@ -52,7 +52,7 @@ import Foundation
     
     /// Delay before which search requests are not reported. Default: 0, meaning requests are reported immediately.
     /// When this is non-zero, fast enough requests do not trigger any event.
-    @objc public var graceDelay: NSTimeInterval = 0
+    @objc public var graceDelay: TimeInterval = 0
     
     /// Whether a search is currently advertised as running.
     @objc public private(set) var running: Bool = false {
@@ -66,21 +66,21 @@ import Foundation
     }
     
     /// Timer used to start the activity indicator after a delay.
-    private var activityIndicatorTimer: NSTimer?
+    private var activityIndicatorTimer: Timer?
     
     // MARK: - Initialization
     
     @objc public init(searcher: Searcher) {
         self.searcher = searcher
         super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateRunning), name: Searcher.SearchNotification, object: searcher)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateRunning), name: Searcher.ResultNotification, object: searcher)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateRunning), name: Searcher.ErrorNotification, object: searcher)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.updateRunning), name: Searcher.CancelNotification, object: searcher)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.SearchNotification, object: searcher)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.ResultNotification, object: searcher)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.ErrorNotification, object: searcher)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.CancelNotification, object: searcher)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     /// Update the running state.
@@ -98,7 +98,7 @@ import Foundation
                 // Start delayed.
                 else {
                     if activityIndicatorTimer == nil {
-                        activityIndicatorTimer = NSTimer.scheduledTimerWithTimeInterval(graceDelay, target: self, selector: #selector(self.setRunning), userInfo: nil, repeats: false)
+                        activityIndicatorTimer = Timer.scheduledTimer(timeInterval: graceDelay, target: self, selector: #selector(self.setRunning), userInfo: nil, repeats: false)
                     }
                 }
             }
