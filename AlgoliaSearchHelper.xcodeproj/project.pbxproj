@@ -46,6 +46,9 @@
 		BC5DC12D1D86BD1A0066D705 /* HighlightRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */; };
 		BC5DC12E1D86BD1C0066D705 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC58264F1D4BB3DE0047D27F /* Debouncer.swift */; };
 		BC5DC12F1D86BD280066D705 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264E1D4613CB0055E0F2 /* SearchResults.swift */; };
+		BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */; };
+		BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */; };
+		BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */; };
 		DDAC466BA154A5B6B3AB8238 /* Pods_AlgoliaSearchHelper_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */; };
 		E69CFB9612084EB06FE3F284 /* Pods_AlgoliaSearchHelper_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FECD2DCE0C17861D678903B /* Pods_AlgoliaSearchHelper_tvOS_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -108,6 +111,8 @@
 		BC58264F1D4BB3DE0047D27F /* Debouncer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		BC5DC11B1D8688C10066D705 /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC5DC1241D8697F50066D705 /* SearchProgressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProgressController.swift; sourceTree = "<group>"; };
+		BC5DC1301D86BDB00066D705 /* AlgoliaSearchHelper-Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AlgoliaSearchHelper-Tests-Bridging-Header.h"; sourceTree = "<group>"; };
+		BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcBridgingTest.m; sourceTree = "<group>"; };
 		BD4077FBF04D2C49085B0EAC /* Pods_AlgoliaSearchHelper_macOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_macOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,6 +263,8 @@
 			children = (
 				BC3426421D460DB70055E0F2 /* Info.plist */,
 				BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */,
+				BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */,
+				BC5DC1301D86BDB00066D705 /* AlgoliaSearchHelper-Tests-Bridging-Header.h */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -462,12 +469,14 @@
 					};
 					BC4CB8921D534B6E004618DD = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					BC4CB8AC1D535AB3004618DD = {
 						CreatedOnToolsVersion = 7.3.1;
 					};
 					BC4CB8B51D535AB3004618DD = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 					};
 					BC5DC11A1D8688C10066D705 = {
 						CreatedOnToolsVersion = 8.0;
@@ -830,6 +839,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC4CB8841D5349B6004618DD /* SearchResultsTest.swift in Sources */,
+				BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +862,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC4CB8A71D534C27004618DD /* SearchResultsTest.swift in Sources */,
+				BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -874,6 +885,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC4CB8CA1D535CA7004618DD /* SearchResultsTest.swift in Sources */,
+				BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1058,6 +1070,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AlgoliaSearchHelper-Tests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -1072,6 +1085,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelperTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AlgoliaSearchHelper-Tests-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -1124,6 +1138,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2F01EA1DC308EE716D8DF5F5 /* Pods-AlgoliaSearchHelper-macOS-Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
@@ -1132,6 +1147,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.algolia.AlgoliaSearchHelper-macOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AlgoliaSearchHelper-Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -1139,6 +1157,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F39C3593833C0DC9DF953DBC /* Pods-AlgoliaSearchHelper-macOS-Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
@@ -1147,6 +1166,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.algolia.AlgoliaSearchHelper-macOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AlgoliaSearchHelper-Tests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -1196,11 +1217,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2A9DA660399A45868826A662 /* Pods-AlgoliaSearchHelper-tvOS-Tests.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AlgoliaSearchHelper-Tests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Debug;
@@ -1209,11 +1234,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 541531DC04E5EDC420F85943 /* Pods-AlgoliaSearchHelper-tvOS-Tests.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.AlgoliaSearchHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/AlgoliaSearchHelper-Tests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 			};
 			name = Release;
