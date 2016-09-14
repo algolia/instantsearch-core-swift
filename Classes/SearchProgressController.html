@@ -25,7 +25,7 @@
     <meta content='Algolia Community' property='og:site_name'>
 
     <!-- JAZZY:BEGIN -->
-    <title>FacetValue Class Reference</title>
+    <title>SearchProgressController Class Reference</title>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     <!-- JAZZY:END -->
@@ -48,7 +48,7 @@
           <span class='ac-nav-brand-breadcrumb'></span>
           <a class='ac-nav-brand-title' href='../index.html' title='Home'>Swift Search Helper</a>
           <span class='ac-nav-brand-breadcrumb'></span>
-          <a class='ac-nav-brand-title' href='#' title='FacetValue Class'>FacetValue Class</a>
+          <a class='ac-nav-brand-title' href='#' title='SearchProgressController Class'>SearchProgressController Class</a>
         </div>
         <div class='ac-nav-menu'>
             <!--
@@ -157,14 +157,20 @@
               <article class="main-content">
                 <section>
                   <section class="section">
-                    <h1>FacetValue</h1>
+                    <h1>SearchProgressController</h1>
                       <div class="declaration">
                         <div class="language">
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">FacetValue</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">SearchProgressController</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
                       </div>
-                    <p>A value of a given facet, together with its number of occurrences.</p>
+                    <p>Tracks progress of a <code><a href="../Classes/Searcher.html">Searcher</a></code>.</p>
+
+<p>This class has a delegate (<code><a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a></code>) that will be informed of progress events; it does not update
+any widget directly. As a consequence, it is toolkit-agnostic (e.g. can work with both UIKit or AppKit).</p>
+
+<p>By default, search requests are notified immediately. However, you may introduce a <strong>grace delay</strong> through the
+<code>graceDelay</code> property: any request returning in less than this delay will not cause start/stop events to be fired.</p>
 
                   </section>
                   <section class="section task-group-section">
@@ -180,9 +186,9 @@
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:vC19AlgoliaSearchHelper10FacetValue5valueSS"></a>
-                            <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper10FacetValue5valueSS">value</a>
+                            <a name="/s:vC19AlgoliaSearchHelper24SearchProgressController8searcherCS_8Searcher"></a>
+                            <a name="//apple_ref/swift/Property/searcher" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper24SearchProgressController8searcherCS_8Searcher">searcher</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -190,14 +196,14 @@
                             <section class="section">
                               <div class="pointer"></div>
                               <div class="abstract">
-                                <p>Value of the facet.</p>
+                                <p>Searcher monitored by this progress controller.</p>
 
                               </div>
                               <div class="declaration">
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">searcher</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html">Searcher</a></span></code></pre>
 
                                 </div>
                               </div>
@@ -207,9 +213,9 @@
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:vC19AlgoliaSearchHelper10FacetValue5countSi"></a>
-                            <a name="//apple_ref/swift/Property/count" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper10FacetValue5countSi">count</a>
+                            <a name="/s:vC19AlgoliaSearchHelper24SearchProgressController8delegateXwGSqPS_22SearchProgressDelegate__"></a>
+                            <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper24SearchProgressController8delegateXwGSqPS_22SearchProgressDelegate__">delegate</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -217,20 +223,107 @@
                             <section class="section">
                               <div class="pointer"></div>
                               <div class="abstract">
-                                <p>Number of occurrences of the value.</p>
-
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If <code><a href="../Classes/SearchResults.html#/s:vC19AlgoliaSearchHelper13SearchResults21exhaustiveFacetsCountSb">SearchResults.exhaustiveFacetsCount</a></code> is <code>true</code>, it may be approximate.
-
-</div>
+                                <p>Delegate to this progress controller.</p>
 
                               </div>
                               <div class="declaration">
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a></span><span class="p">?</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper24SearchProgressController10graceDelaySd"></a>
+                            <a name="//apple_ref/swift/Property/graceDelay" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper24SearchProgressController10graceDelaySd">graceDelay</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Delay before which search requests are not reported. Default: 0, meaning requests are reported immediately.
+When this is non-zero, fast enough requests do not trigger any event.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">graceDelay</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:vC19AlgoliaSearchHelper24SearchProgressController7runningSb"></a>
+                            <a name="//apple_ref/swift/Property/running" class="dashAnchor"></a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper24SearchProgressController7runningSb">running</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Whether a search is currently advertised as running.</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Initialization"></a>
+                        <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                        <a href="#/Initialization">
+                          <h3 class="section-name">Initialization</h3>
+                        </a>
+                      </div>
+                      <ul>
+                        <li class="item">
+                          <div>
+                            <code>
+                            <a name="/s:FC19AlgoliaSearchHelper24SearchProgressControllercFT8searcherCS_8Searcher_S0_"></a>
+                            <a name="//apple_ref/swift/Method/init(searcher:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper24SearchProgressControllercFT8searcherCS_8Searcher_S0_">init(searcher:)</a>
+                            </code>
+                          </div>
+                          <div class="height-container">
+                            <div class="pointer-container"></div>
+                            <section class="section">
+                              <div class="pointer"></div>
+                              <div class="abstract">
+                                <p>Undocumented</p>
+
+                              </div>
+                              <div class="declaration">
+                                <h4>Declaration</h4>
+                                <div class="language">
+                                  <p class="aside-title">Swift</p>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">SearchProgressController</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                                 </div>
                               </div>

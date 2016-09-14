@@ -123,7 +123,7 @@
                     </ul>
                   </li>
                   <li class="nav-group-name">
-                    <a href="Miscellaneous.html">Miscellaneous</a>
+                    <a href="Utilities.html">Utilities</a>
                     <ul class="nav-group-tasks">
                       <li class="nav-group-task">
                         <a href="Classes/HighlightRenderer.html">HighlightRenderer</a>
@@ -131,13 +131,8 @@
                       <li class="nav-group-task">
                         <a href="Classes/Debouncer.html">Debouncer</a>
                       </li>
-                    </ul>
-                  </li>
-                  <li class="nav-group-name">
-                    <a href="Other Global Variables.html">Other Global Variables</a>
-                    <ul class="nav-group-tasks">
                       <li class="nav-group-task">
-                        <a href="Other Global Variables.html#/s:v19AlgoliaSearchHelper11ErrorDomainSS">ErrorDomain</a>
+                        <a href="Classes/SearchProgressController.html">SearchProgressController</a>
                       </li>
                     </ul>
                   </li>
@@ -146,6 +141,14 @@
                     <ul class="nav-group-tasks">
                       <li class="nav-group-task">
                         <a href="Enums/MatchLevel.html">MatchLevel</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="Other Protocols.html">Other Protocols</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
                       </li>
                     </ul>
                   </li>
@@ -201,15 +204,15 @@
 <a href='#quick-start' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='quick-start'>Quick start</h2>
 <a href='#setup' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='setup'>Setup</h3>
 
-<ol>
-<li>Add a dependency on <q>AlgoliaSearch-Helper-Swift</q>:
+<ul>
+<li><p>Add a dependency on <q>AlgoliaSearch-Helper-Swift</q>:</p>
 
 <ul>
 <li>CocoaPods: add <code>pod &#39;AlgoliaSearch-Helper-Swift&#39;, &#39;~&gt; 1.0&#39;</code> to your <code>Podfile</code>.</li>
-<li>Carthage: not supported so far.</li>
+<li>Carthage is not supported. <a href="#why-is-carthage-not-supported">Wondering why?</a></li>
 </ul></li>
-<li>Add <code>import AlgoliaSearchHelper</code> to your source files.</li>
-</ol>
+<li><p>Add <code>import AlgoliaSearchHelper</code> to your source files.</p></li>
+</ul>
 
 <p><strong>Note:</strong> If you wish to use the API Client&rsquo;s offline mode, use the subspec <code>AlgoliaSearch-Helper-Swift/Offline</code> instead.</p>
 <a href='#examples' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='examples'>Examples</h3>
@@ -220,15 +223,15 @@
 
 <p>First create a <code>Client</code> and an <code>Index</code> as you would do with the bare API Client:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">client</span> <span class="o">=</span> <span class="kt">Client</span><span class="p">(</span><span class="nv">appID</span><span class="p">:</span> <span class="s">"YOUR_APP_ID"</span><span class="p">,</span> <span class="nv">apiKey</span><span class="p">:</span> <span class="s">"YOUR_API_KEY"</span><span class="p">)</span>
-<span class="k">let</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">getIndex</span><span class="p">(</span><span class="s">"index_name"</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">index</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="nf">index</span><span class="p">(</span><span class="nv">withName</span><span class="p">:</span> <span class="s">"index_name"</span><span class="p">)</span>
 </code></pre>
 
 <p>Then create a <code>Searcher</code> targeting the index; you typically specify a result handler during creation (although you can register more later):</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searcher</span> <span class="o">=</span> <span class="kt">Searcher</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">handleResults</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searcher</span> <span class="o">=</span> <span class="kt">Searcher</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="k">self</span><span class="o">.</span><span class="n">handleResults</span><span class="p">)</span>
 </code></pre>
 
 <p>A closure is accepted as well:</p>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searcher</span> <span class="o">=</span> <span class="kt">Searcher</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt">SearchResults</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="k">in</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searcher</span> <span class="o">=</span> <span class="kt">Searcher</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt">SearchResults</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="k">in</span>
     <span class="c1">// Your code goes here.</span>
 <span class="p">})</span>
 </code></pre>
@@ -241,7 +244,7 @@
 <a href='#handling-results' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='handling-results'>Handling results</h3>
 
 <p>The searcher will call your result handler after each request, when the response is received, <em>unless the request has been cancelled</em> (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:</p>
-<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">handleResults</span><span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt">SearchResults</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">NSError</span><span class="p">?)</span> <span class="p">{</span>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">handleResults</span><span class="p">(</span><span class="nv">results</span><span class="p">:</span> <span class="kt">SearchResults</span><span class="p">?,</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?)</span> <span class="p">{</span>
     <span class="k">guard</span> <span class="k">let</span> <span class="nv">results</span> <span class="o">=</span> <span class="n">results</span> <span class="k">else</span> <span class="p">{</span> <span class="k">return</span> <span class="p">}</span>
     <span class="k">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">hits</span>
     <span class="k">self</span><span class="o">.</span><span class="n">tableView</span><span class="o">.</span><span class="nf">reloadData</span><span class="p">()</span>
@@ -251,9 +254,9 @@
 <p>The <code>SearchResults</code> class is a wrapper around the JSON response received from the API. You can always access the underlying JSON directly through the <code>content</code> property. However, the fields you will most likely are also exposed via typed properties, such as <code>hits</code> or <code>nbHits</code>. You also get convenience accessors for:</p>
 
 <ul>
-<li>facet values (<code>facets()</code>) and statistics (<code>facetStats()</code>);</li>
-<li>highlights (<code>highlightResult()</code>) and snippet results (<code>snippetResult()</code>)</li>
-<li>ranking information (<code>rankingInfo()</code>)</li>
+<li>facet values (<code>facets(name:)</code>) and statistics (<code>facetStats(name:)</code>);</li>
+<li>highlights (<code>highlightResult(at:path:)</code>) and snippet results (<code>snippetResult(at:path:)</code>)</li>
+<li>ranking information (<code>rankingInfo(at:)</code>)</li>
 </ul>
 
 <p>Please note that not every piece of information may be present in the response; it depends on your request.</p>
@@ -265,7 +268,7 @@
 <pre class="highlight swift"><code><span class="k">if</span> <span class="n">results</span><span class="o">.</span><span class="n">page</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
     <span class="k">self</span><span class="o">.</span><span class="n">hits</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">hits</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="k">self</span><span class="o">.</span><span class="n">hits</span><span class="o">.</span><span class="nf">appendContentsOf</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">hits</span><span class="p">)</span>
+    <span class="k">self</span><span class="o">.</span><span class="n">hits</span><span class="o">.</span><span class="nf">append</span><span class="p">(</span><span class="nv">contentsOf</span><span class="p">:</span> <span class="n">results</span><span class="o">.</span><span class="n">hits</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -274,7 +277,7 @@
 <p>The <code>loadMore()</code> method is guarded against concurrent or inconsistent calls. If you try to call it while another request has already been issued, it will ignore the call.</p>
 <a href='#faceting' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='faceting'>Faceting</h3>
 
-<p>The searcher maintains a list of refined values for every facet, in the <code>refinements</code> property. Typically, you don&rsquo;t manipulate this property directly; instead, you call the convenience methods <code>hasFacetRefinement()</code>, <code>addFacetRefinement()</code>, <code>removeFacetRefinement()</code> and <code>toggleFacetRefinement()</code>.</p>
+<p>The searcher maintains a list of refined values for every facet, in the <code>refinements</code> property. Typically, you don&rsquo;t manipulate this property directly; instead, you call the convenience methods <code>hasFacetRefinement(name:value:)</code>, <code>addFacetRefinement(name:value:)</code>, <code>removeFacetRefinement(name:value:)</code> and <code>toggleFacetRefinement(name:value:)</code>.</p>
 
 <p>The searcher also keeps track of which facets are disjunctive (<code>OR</code>) via the <code>disjunctiveFacets</code> property; all facets not listed in this property are considered to be conjunctive (<code>AND</code>).</p>
 
@@ -300,8 +303,8 @@
 
 <p>When you instantiate a highlight renderer, you specify a set of <strong>text attributes</strong> that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">renderer</span> <span class="o">=</span> <span class="kt">HighlightRenderer</span><span class="p">(</span><span class="nv">highlightAttrs</span><span class="p">:</span> <span class="p">[</span>
-    <span class="kt">NSForegroundColorAttributeName</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">redColor</span><span class="p">(),</span>
-    <span class="kt">NSBackgroundColorAttributeName</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">.</span><span class="nf">yellowColor</span><span class="p">(),</span>
+    <span class="kt">NSForegroundColorAttributeName</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">.</span><span class="n">red</span><span class="p">,</span>
+    <span class="kt">NSBackgroundColorAttributeName</span><span class="p">:</span> <span class="kt">UIColor</span><span class="o">.</span><span class="n">yellow</span><span class="p">,</span>
 <span class="p">]</span>
 </code></pre>
 
@@ -310,12 +313,12 @@
 <span class="n">renderer</span><span class="o">.</span><span class="n">postTag</span> <span class="o">=</span> <span class="s">"&lt;/mark&gt;"</span>
 </code></pre>
 
-<p>Once the renderer is set, rendering highlights is just a matter of calling <code>render()</code>. The real trick is to retrieve the highlighted value from the JSON&hellip; Fortunately, the <code>SearchResults</code> class makes it easy:</p>
+<p>Once the renderer is set, rendering highlights is just a matter of calling <code>render(text:)</code>. The real trick is to retrieve the highlighted value from the JSON&hellip; Fortunately, the <code>SearchResults</code> class makes it easy:</p>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">searchResults</span><span class="p">:</span> <span class="kt">SearchResults</span> <span class="o">=</span> <span class="o">...</span> <span class="c1">// whatever was received by the result handler</span>
 <span class="k">let</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="o">...</span> <span class="c1">// index of the hit you want to retrieve</span>
-<span class="k">if</span> <span class="k">let</span> <span class="nv">highlightResult</span> <span class="o">=</span> <span class="n">searchResults</span><span class="o">.</span><span class="nf">highlightResult</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="s">"attribute_name"</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="k">let</span> <span class="nv">highlightResult</span> <span class="o">=</span> <span class="n">searchResults</span><span class="o">.</span><span class="nf">highlightResult</span><span class="p">(</span><span class="nv">at</span><span class="p">:</span> <span class="n">index</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="s">"attribute_name"</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="k">let</span> <span class="nv">highlightValue</span> <span class="o">=</span> <span class="n">highlightResult</span><span class="o">.</span><span class="n">value</span> <span class="p">{</span>
-        <span class="k">let</span> <span class="nv">highlightedString</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="n">highlightValue</span><span class="p">)</span>
+        <span class="k">let</span> <span class="nv">highlightedString</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="nf">render</span><span class="p">(</span><span class="nv">text</span><span class="p">:</span> <span class="n">highlightValue</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -325,6 +328,9 @@
 <p><q>Debouncing</q> is the process of ignoring too frequent events, keeping only the last one in a series of adjacent events.</p>
 
 <p>The <code>Debouncer</code> class provides a generic way of debouncing calls. It can be useful to avoid triggering too many search requests, for example when a UI widget is continuously firing updates (e.g. a slider).</p>
+<a href='#why-is-carthage-not-supported' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='why-is-carthage-not-supported'>Why is Carthage not supported?</h3>
+
+<p>The Algolia Search Helper module has an external dependency (on the Algolia Search API Client). A package manager is therefore required to draw that dependency. Cocoapods works by adding special build phases to the Xcode project (in addition to creating a Pods project and an Xcode workspace referencing both). Because of this, it is technically impossible to support both Cocoapods and Carthage on the same project when it has external dependencies. Because Cocoapods has a wider audience than Carthage, we chose the former.</p>
 
                   </section>
                 </section>

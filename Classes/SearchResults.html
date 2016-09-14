@@ -123,7 +123,7 @@
                     </ul>
                   </li>
                   <li class="nav-group-name">
-                    <a href="../Miscellaneous.html">Miscellaneous</a>
+                    <a href="../Utilities.html">Utilities</a>
                     <ul class="nav-group-tasks">
                       <li class="nav-group-task">
                         <a href="../Classes/HighlightRenderer.html">HighlightRenderer</a>
@@ -131,13 +131,8 @@
                       <li class="nav-group-task">
                         <a href="../Classes/Debouncer.html">Debouncer</a>
                       </li>
-                    </ul>
-                  </li>
-                  <li class="nav-group-name">
-                    <a href="../Other Global Variables.html">Other Global Variables</a>
-                    <ul class="nav-group-tasks">
                       <li class="nav-group-task">
-                        <a href="../Other Global Variables.html#/s:v19AlgoliaSearchHelper11ErrorDomainSS">ErrorDomain</a>
+                        <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
                       </li>
                     </ul>
                   </li>
@@ -146,6 +141,14 @@
                     <ul class="nav-group-tasks">
                       <li class="nav-group-task">
                         <a href="../Enums/MatchLevel.html">MatchLevel</a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-group-name">
+                    <a href="../Other Protocols.html">Other Protocols</a>
+                    <ul class="nav-group-tasks">
+                      <li class="nav-group-task">
+                        <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
                       </li>
                     </ul>
                   </li>
@@ -172,13 +175,20 @@
                   </section>
                   <section class="section task-group-section">
                     <div class="task-group">
+                      <div class="task-name-container">
+                        <a name="/Low-level%20properties"></a>
+                        <a name="//apple_ref/swift/Section/Low-level properties" class="dashAnchor"></a>
+                        <a href="#/Low-level%20properties">
+                          <h3 class="section-name">Low-level properties</h3>
+                        </a>
+                      </div>
                       <ul>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:vC19AlgoliaSearchHelper13SearchResults7contentGVs10DictionarySSPs9AnyObject__"></a>
+                            <a name="/s:vC19AlgoliaSearchHelper13SearchResults7contentGVs10DictionarySSP__"></a>
                             <a name="//apple_ref/swift/Property/content" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper13SearchResults7contentGVs10DictionarySSPs9AnyObject__">content</a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper13SearchResults7contentGVs10DictionarySSP__">content</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -193,7 +203,7 @@
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">content</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">]</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">content</span><span class="p">:</span> <span class="kt">JSONObject</span></code></pre>
 
                                 </div>
                               </div>
@@ -231,19 +241,19 @@
                     </div>
                     <div class="task-group">
                       <div class="task-name-container">
-                        <a name="/Fields"></a>
-                        <a name="//apple_ref/swift/Section/Fields" class="dashAnchor"></a>
-                        <a href="#/Fields">
-                          <h3 class="section-name">Fields</h3>
+                        <a name="/General%20properties"></a>
+                        <a name="//apple_ref/swift/Section/General properties" class="dashAnchor"></a>
+                        <a href="#/General%20properties">
+                          <h3 class="section-name">General properties</h3>
                         </a>
                       </div>
                       <ul>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:vC19AlgoliaSearchHelper13SearchResults4hitsGSaGVs10DictionarySSPs9AnyObject___"></a>
+                            <a name="/s:vC19AlgoliaSearchHelper13SearchResults4hitsGSaGVs10DictionarySSP___"></a>
                             <a name="//apple_ref/swift/Property/hits" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper13SearchResults4hitsGSaGVs10DictionarySSPs9AnyObject___">hits</a>
+                            <a class="token" href="#/s:vC19AlgoliaSearchHelper13SearchResults4hitsGSaGVs10DictionarySSP___">hits</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -258,7 +268,7 @@
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">hits</span><span class="p">:</span> <span class="p">[[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">]]</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">hits</span><span class="p">:</span> <span class="p">[</span><span class="kt">JSONObject</span><span class="p">]</span></code></pre>
 
                                 </div>
                               </div>
@@ -773,9 +783,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:FC19AlgoliaSearchHelper13SearchResultscFzT7contentGVs10DictionarySSPs9AnyObject__17disjunctiveFacetsGSaSS__S0_"></a>
+                            <a name="/s:FC19AlgoliaSearchHelper13SearchResultscFzT7contentGVs10DictionarySSP__17disjunctiveFacetsGSaSS__S0_"></a>
                             <a name="//apple_ref/swift/Method/init(content:disjunctiveFacets:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResultscFzT7contentGVs10DictionarySSPs9AnyObject__17disjunctiveFacetsGSaSS__S0_">init(content:disjunctiveFacets:)</a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResultscFzT7contentGVs10DictionarySSP__17disjunctiveFacetsGSaSS__S0_">init(content:disjunctiveFacets:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -796,7 +806,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">content</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">],</span> <span class="nv">disjunctiveFacets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="k">throws</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">content</span><span class="p">:</span> <span class="kt">JSONObject</span><span class="p">,</span> <span class="nv">disjunctiveFacets</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span> <span class="k">throws</span></code></pre>
 
                                 </div>
                               </div>
@@ -850,9 +860,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults6facetsFSSGSqGSaCS_10FacetValue__"></a>
-                            <a name="//apple_ref/swift/Method/facets(_:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults6facetsFSSGSqGSaCS_10FacetValue__">facets(_:)</a>
+                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults6facetsFT4nameSS_GSqGSaCS_10FacetValue__"></a>
+                            <a name="//apple_ref/swift/Method/facets(name:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults6facetsFT4nameSS_GSqGSaCS_10FacetValue__">facets(name:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -896,7 +906,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                       </td>
                                       <td>
                                         <div>
-                                          <p>true if this is a disjunctive facet, false if it&rsquo;s a conjunctive facet (default).</p>
+                                          <p>true if this is a disjunctive facet, false if it’s a conjunctive facet (default).</p>
 
                                         </div>
                                       </td>
@@ -915,9 +925,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults10facetStatsFSSGSqCS_10FacetStats_"></a>
-                            <a name="//apple_ref/swift/Method/facetStats(_:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults10facetStatsFSSGSqCS_10FacetStats_">facetStats(_:)</a>
+                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults10facetStatsFT4nameSS_GSqCS_10FacetStats_"></a>
+                            <a name="//apple_ref/swift/Method/facetStats(name:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults10facetStatsFT4nameSS_GSqCS_10FacetStats_">facetStats(name:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -948,7 +958,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                       </td>
                                       <td>
                                         <div>
-                                          <p>The facet&rsquo;s name.</p>
+                                          <p>The facet’s name.</p>
 
                                         </div>
                                       </td>
@@ -967,9 +977,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults15highlightResultFTSi4pathSS_GSqCS_15HighlightResult_"></a>
-                            <a name="//apple_ref/swift/Method/highlightResult(_:path:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults15highlightResultFTSi4pathSS_GSqCS_15HighlightResult_">highlightResult(_:path:)</a>
+                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults15highlightResultFT2atSi4pathSS_GSqCS_15HighlightResult_"></a>
+                            <a name="//apple_ref/swift/Method/highlightResult(at:path:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults15highlightResultFT2atSi4pathSS_GSqCS_15HighlightResult_">highlightResult(at:path:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -984,7 +994,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">highlightResult</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/HighlightResult.html">HighlightResult</a></span><span class="p">?</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">highlightResult</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/HighlightResult.html">HighlightResult</a></span><span class="p">?</span></code></pre>
 
                                 </div>
                               </div>
@@ -1032,9 +1042,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults13snippetResultFTSi4pathSS_GSqCS_13SnippetResult_"></a>
-                            <a name="//apple_ref/swift/Method/snippetResult(_:path:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults13snippetResultFTSi4pathSS_GSqCS_13SnippetResult_">snippetResult(_:path:)</a>
+                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults13snippetResultFT2atSi4pathSS_GSqCS_13SnippetResult_"></a>
+                            <a name="//apple_ref/swift/Method/snippetResult(at:path:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults13snippetResultFT2atSi4pathSS_GSqCS_13SnippetResult_">snippetResult(at:path:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -1049,7 +1059,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">snippetResult</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SnippetResult.html">SnippetResult</a></span><span class="p">?</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">snippetResult</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SnippetResult.html">SnippetResult</a></span><span class="p">?</span></code></pre>
 
                                 </div>
                               </div>
@@ -1097,9 +1107,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults11rankingInfoFSiGSqCS_11RankingInfo_"></a>
-                            <a name="//apple_ref/swift/Method/rankingInfo(_:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults11rankingInfoFSiGSqCS_11RankingInfo_">rankingInfo(_:)</a>
+                            <a name="/s:FC19AlgoliaSearchHelper13SearchResults11rankingInfoFT2atSi_GSqCS_11RankingInfo_"></a>
+                            <a name="//apple_ref/swift/Method/rankingInfo(at:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FC19AlgoliaSearchHelper13SearchResults11rankingInfoFT2atSi_GSqCS_11RankingInfo_">rankingInfo(at:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -1120,7 +1130,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">rankingInfo</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/RankingInfo.html">RankingInfo</a></span><span class="p">?</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">rankingInfo</span><span class="p">(</span><span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/RankingInfo.html">RankingInfo</a></span><span class="p">?</span></code></pre>
 
                                 </div>
                               </div>
@@ -1166,9 +1176,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:ZFC19AlgoliaSearchHelper13SearchResults18getHighlightResultFTGVs10DictionarySSPs9AnyObject__4pathSS_GSqCS_15HighlightResult_"></a>
-                            <a name="//apple_ref/swift/Method/getHighlightResult(_:path:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:ZFC19AlgoliaSearchHelper13SearchResults18getHighlightResultFTGVs10DictionarySSPs9AnyObject__4pathSS_GSqCS_15HighlightResult_">getHighlightResult(_:path:)</a>
+                            <a name="/s:ZFC19AlgoliaSearchHelper13SearchResults15highlightResultFT3hitGVs10DictionarySSP__4pathSS_GSqCS_15HighlightResult_"></a>
+                            <a name="//apple_ref/swift/Method/highlightResult(hit:path:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZFC19AlgoliaSearchHelper13SearchResults15highlightResultFT3hitGVs10DictionarySSP__4pathSS_GSqCS_15HighlightResult_">highlightResult(hit:path:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -1183,7 +1193,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">getHighlightResult</span><span class="p">(</span><span class="nv">hit</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">],</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/HighlightResult.html">HighlightResult</a></span><span class="p">?</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">highlightResult</span><span class="p">(</span><span class="nv">hit</span><span class="p">:</span> <span class="kt">JSONObject</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/HighlightResult.html">HighlightResult</a></span><span class="p">?</span></code></pre>
 
                                 </div>
                               </div>
@@ -1231,9 +1241,9 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:ZFC19AlgoliaSearchHelper13SearchResults16getSnippetResultFTGVs10DictionarySSPs9AnyObject__4pathSS_GSqCS_13SnippetResult_"></a>
-                            <a name="//apple_ref/swift/Method/getSnippetResult(_:path:)" class="dashAnchor"></a>
-                            <a class="token" href="#/s:ZFC19AlgoliaSearchHelper13SearchResults16getSnippetResultFTGVs10DictionarySSPs9AnyObject__4pathSS_GSqCS_13SnippetResult_">getSnippetResult(_:path:)</a>
+                            <a name="/s:ZFC19AlgoliaSearchHelper13SearchResults13snippetResultFT3hitGVs10DictionarySSP__4pathSS_GSqCS_13SnippetResult_"></a>
+                            <a name="//apple_ref/swift/Method/snippetResult(hit:path:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:ZFC19AlgoliaSearchHelper13SearchResults13snippetResultFT3hitGVs10DictionarySSP__4pathSS_GSqCS_13SnippetResult_">snippetResult(hit:path:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -1248,7 +1258,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">getSnippetResult</span><span class="p">(</span><span class="nv">hit</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">],</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SnippetResult.html">SnippetResult</a></span><span class="p">?</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">snippetResult</span><span class="p">(</span><span class="nv">hit</span><span class="p">:</span> <span class="kt">JSONObject</span><span class="p">,</span> <span class="nv">path</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/SnippetResult.html">SnippetResult</a></span><span class="p">?</span></code></pre>
 
                                 </div>
                               </div>

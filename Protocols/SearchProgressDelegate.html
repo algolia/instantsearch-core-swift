@@ -25,7 +25,7 @@
     <meta content='Algolia Community' property='og:site_name'>
 
     <!-- JAZZY:BEGIN -->
-    <title>FacetValue Class Reference</title>
+    <title>SearchProgressDelegate Protocol Reference</title>
     <script src="../js/jquery.min.js" defer></script>
     <script src="../js/jazzy.js" defer></script>
     <!-- JAZZY:END -->
@@ -48,7 +48,7 @@
           <span class='ac-nav-brand-breadcrumb'></span>
           <a class='ac-nav-brand-title' href='../index.html' title='Home'>Swift Search Helper</a>
           <span class='ac-nav-brand-breadcrumb'></span>
-          <a class='ac-nav-brand-title' href='#' title='FacetValue Class'>FacetValue Class</a>
+          <a class='ac-nav-brand-title' href='#' title='SearchProgressDelegate Protocol'>SearchProgressDelegate Protocol</a>
         </div>
         <div class='ac-nav-menu'>
             <!--
@@ -157,32 +157,25 @@
               <article class="main-content">
                 <section>
                   <section class="section">
-                    <h1>FacetValue</h1>
+                    <h1>SearchProgressDelegate</h1>
                       <div class="declaration">
                         <div class="language">
-                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">FacetValue</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">SearchProgressDelegate</span></code></pre>
 
                         </div>
                       </div>
-                    <p>A value of a given facet, together with its number of occurrences.</p>
+                    <p>Delegate to a <code><a href="../Classes/SearchProgressController.html">SearchProgressController</a></code>.</p>
 
                   </section>
                   <section class="section task-group-section">
                     <div class="task-group">
-                      <div class="task-name-container">
-                        <a name="/Properties"></a>
-                        <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
-                        <a href="#/Properties">
-                          <h3 class="section-name">Properties</h3>
-                        </a>
-                      </div>
                       <ul>
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:vC19AlgoliaSearchHelper10FacetValue5valueSS"></a>
-                            <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper10FacetValue5valueSS">value</a>
+                            <a name="/s:FP19AlgoliaSearchHelper22SearchProgressDelegate14searchDidStartFCS_24SearchProgressControllerT_"></a>
+                            <a name="//apple_ref/swift/Method/searchDidStart(_:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FP19AlgoliaSearchHelper22SearchProgressDelegate14searchDidStartFCS_24SearchProgressControllerT_">searchDidStart(_:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -190,14 +183,14 @@
                             <section class="section">
                               <div class="pointer"></div>
                               <div class="abstract">
-                                <p>Value of the facet.</p>
+                                <p>Fired when progress should start being reported.</p>
 
                               </div>
                               <div class="declaration">
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">searchDidStart</span><span class="p">(</span><span class="n">_</span> <span class="nv">searchProgressController</span><span class="p">:</span> <span class="kt"><a href="../Classes/SearchProgressController.html">SearchProgressController</a></span><span class="p">)</span></code></pre>
 
                                 </div>
                               </div>
@@ -207,9 +200,9 @@
                         <li class="item">
                           <div>
                             <code>
-                            <a name="/s:vC19AlgoliaSearchHelper10FacetValue5countSi"></a>
-                            <a name="//apple_ref/swift/Property/count" class="dashAnchor"></a>
-                            <a class="token" href="#/s:vC19AlgoliaSearchHelper10FacetValue5countSi">count</a>
+                            <a name="/s:FP19AlgoliaSearchHelper22SearchProgressDelegate13searchDidStopFCS_24SearchProgressControllerT_"></a>
+                            <a name="//apple_ref/swift/Method/searchDidStop(_:)" class="dashAnchor"></a>
+                            <a class="token" href="#/s:FP19AlgoliaSearchHelper22SearchProgressDelegate13searchDidStopFCS_24SearchProgressControllerT_">searchDidStop(_:)</a>
                             </code>
                           </div>
                           <div class="height-container">
@@ -217,20 +210,14 @@
                             <section class="section">
                               <div class="pointer"></div>
                               <div class="abstract">
-                                <p>Number of occurrences of the value.</p>
-
-<div class="aside aside-note">
-    <p class="aside-title">Note</p>
-    If <code><a href="../Classes/SearchResults.html#/s:vC19AlgoliaSearchHelper13SearchResults21exhaustiveFacetsCountSb">SearchResults.exhaustiveFacetsCount</a></code> is <code>true</code>, it may be approximate.
-
-</div>
+                                <p>Fired when progress should stop being reported.</p>
 
                               </div>
                               <div class="declaration">
                                 <h4>Declaration</h4>
                                 <div class="language">
                                   <p class="aside-title">Swift</p>
-                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                                  <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">searchDidStop</span><span class="p">(</span><span class="n">_</span> <span class="nv">searchProgressController</span><span class="p">:</span> <span class="kt"><a href="../Classes/SearchProgressController.html">SearchProgressController</a></span><span class="p">)</span></code></pre>
 
                                 </div>
                               </div>
