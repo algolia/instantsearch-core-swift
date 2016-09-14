@@ -27,7 +27,7 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
     - `Source/Info.plist` (or via Xcode, in the project settings)
 
-- Update the **change log** (`ChangeLod.md`)
+- Update the **change log** (`ChangeLog.md`)
 
 - **Dry-run the pod spec**: `pod lib lint` to check that everything's fine.
 
