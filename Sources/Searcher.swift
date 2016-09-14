@@ -322,8 +322,8 @@ import Foundation
         
         // User info for notifications.
         let userInfo: [String: Any] = [
-            Searcher.NotificationQueryKey: query,
-            Searcher.NotificationSeqNoKey: currentSeqNo
+            Searcher.notificationQueryKey: query,
+            Searcher.notificationSeqNoKey: currentSeqNo
         ]
         
         // Run request
@@ -394,11 +394,11 @@ import Foundation
         // Notify observers.
         var userInfo = userInfo
         if let results = results {
-            userInfo[Searcher.ResultNotificationResultsKey] = results
+            userInfo[Searcher.resultNotificationResultsKey] = results
             NotificationCenter.default.post(name: Searcher.ResultNotification, object: self, userInfo: userInfo)
         }
         else if let error = error {
-            userInfo[Searcher.ErrorNotificationErrorKey] = error
+            userInfo[Searcher.errorNotificationErrorKey] = error
             NotificationCenter.default.post(name: Searcher.ErrorNotification, object: self, userInfo: userInfo)
         }
     }
@@ -511,7 +511,7 @@ import Foundation
             request.cancel()
             pendingRequests.removeValue(forKey: seqNo)
             NotificationCenter.default.post(name: Searcher.CancelNotification, object: self, userInfo: [
-                Searcher.NotificationSeqNoKey: seqNo
+                Searcher.notificationSeqNoKey: seqNo
             ])
         }
     }
@@ -529,7 +529,7 @@ import Foundation
     /// Key containing the search results in a `ResultNotification`.
     /// Type: `SearchResults`.
     ///
-    @objc public static let ResultNotificationResultsKey: String = "results"
+    @objc public static let resultNotificationResultsKey: String = "results"
 
     /// Notification sent when an erroneous response is received from the API Client.
     @objc public static let ErrorNotification = Notification.Name("error")
@@ -538,17 +538,17 @@ import Foundation
     /// or `CancelNotification`. The sequence number uniquely identifies the request within a given `Searcher` instance.
     /// Type: `Int`.
     ///
-    @objc public static let NotificationSeqNoKey: String = "seqNo"
+    @objc public static let notificationSeqNoKey: String = "seqNo"
     
     /// Key containing the search query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
     /// Type: `Query`.
     ///
-    @objc public static let NotificationQueryKey: String = "query"
+    @objc public static let notificationQueryKey: String = "query"
     
     /// Key containing the error in an `ErrorNotification`.
     /// Type: `Error`.
     ///
-    @objc public static let ErrorNotificationErrorKey: String = "error"
+    @objc public static let errorNotificationErrorKey: String = "error"
 
     /// Notification sent when a request is cancelled by the searcher.
     /// The result handler will not be called for cancelled requests, nor will any `ResultNotification` or
