@@ -3,7 +3,7 @@
 use_frameworks!
 
 def common_deps
-    pod 'AlgoliaSearch-Client-Swift', :path => '~/devt/workspace/clients-master/algoliasearch-client-swift'
+    pod 'AlgoliaSearch-Client-Swift', '~> 4.0'
 end
 
 target "AlgoliaSearchHelper-iOS" do

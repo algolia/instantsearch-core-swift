@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     # ------------
     s.name = 'AlgoliaSearch-Helper-Swift'
     s.module_name = 'AlgoliaSearchHelper'
-    s.version = '0.1'
+    s.version = '0.2'
     s.license = 'MIT'
     s.summary = 'Helper for the Swift Algolia Search API client'
     s.homepage = 'https://github.com/algolia/algoliasearch-helper-swift'
@@ -23,5 +23,5 @@ Pod::Spec.new do |s|
 
     # Dependencies
     # ------------
-    s.dependency 'AlgoliaSearch-Client-Swift', '~> 3.3'
+    s.dependency 'AlgoliaSearch-Client-Swift', '~> 4.0'
 end
