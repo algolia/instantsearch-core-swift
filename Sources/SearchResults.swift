@@ -65,6 +65,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// The wrapped JSON object.
     @objc public let json: JSONObject
     
+    // MARK: Properties
+    
     /// Value of this highlight.
     @objc public var value: String
     
@@ -98,6 +100,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// The wrapped JSON object.
     @objc public let json: JSONObject
     
+    // MARK: Properties
+    
     /// Value of this snippet.
     @objc public var value: String
     
@@ -125,6 +129,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 @objc public class RankingInfo: NSObject {
     /// The wrapped JSON object.
     @objc public let json: JSONObject
+    
+    // MARK: Properties
     
     /// Number of typos encountered when matching the record.
     /// Corresponds to the `typos` ranking criterion in the ranking formula.
@@ -170,6 +176,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 /// A value of a given facet, together with its number of occurrences.
 ///
 @objc public class FacetValue: NSObject {
+    // MARK: Properties
+    
     /// Value of the facet.
     @objc public let value: String
     
@@ -190,6 +198,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 /// + Note: Since values may either be integers or floats, they are typed as `NSNumber`.
 ///
 @objc public class FacetStats: NSObject {
+    // MARK: Properties
+
     /// The minimum value.
     @objc public let min: NSNumber
     /// The maximum value.
@@ -213,13 +223,15 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 /// + Note: Wraps the raw JSON returned by the API.
 ///
 @objc public class SearchResults: NSObject {
+    // MARK: - Low-level properties
+    
     /// The received JSON content.
     @objc public let content: JSONObject
     
     /// Facets that will be treated as disjunctive (`OR`). By default, facets are conjunctive (`AND`).
     @objc public let disjunctiveFacets: [String]
     
-    // MARK: - Fields
+    // MARK: - General properties
 
     /// Hits.
     @objc public let hits: [JSONObject]

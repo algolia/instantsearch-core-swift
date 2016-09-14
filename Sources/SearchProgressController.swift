@@ -44,6 +44,8 @@ import Foundation
 /// `graceDelay` property: any request returning in less than this delay will not cause start/stop events to be fired.
 ///
 @objc public class SearchProgressController: NSObject {
+    // MARK: Properties
+    
     /// Searcher monitored by this progress controller.
     @objc public let searcher: Searcher
     

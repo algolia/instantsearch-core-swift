@@ -22,7 +22,8 @@ custom_categories:
         - FacetStats
         - FacetValue
 
-    - name: Miscellaneous
+    - name: Utilities
       children:
         - HighlightRenderer
         - Debouncer
+        - SearchProgressController

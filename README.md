@@ -54,13 +54,13 @@ This module requires:
 
 ### Setup
 
-1. Add a dependency on "AlgoliaSearch-Helper-Swift":
+- Add a dependency on "AlgoliaSearch-Helper-Swift":
 
     - CocoaPods: add `pod 'AlgoliaSearch-Helper-Swift', '~> 1.0'` to your `Podfile`.
 
     - Carthage is not supported. [Wondering why?](#why-is-carthage-not-supported)
 
-2. Add `import AlgoliaSearchHelper` to your source files.
+- Add `import AlgoliaSearchHelper` to your source files.
 
 **Note:** If you wish to use the API Client's offline mode, use the subspec `AlgoliaSearch-Helper-Swift/Offline` instead.
 
@@ -79,19 +79,19 @@ First create a `Client` and an `Index` as you would do with the bare API Client:
 
 ```swift
 let client = Client(appID: "YOUR_APP_ID", apiKey: "YOUR_API_KEY")
-let index = client.getIndex("index_name")
+let index = client.index(withName: "index_name")
 ```
 
 Then create a `Searcher` targeting the index; you typically specify a result handler during creation (although you can register more later):
 
 ```swift
-let searcher = Searcher(index, resultHandler: self.handleResults)
+let searcher = Searcher(index: index, resultHandler: self.handleResults)
 ```
 
 A closure is accepted as well:
 
 ```swift
-let searcher = Searcher(index, resultHandler: { (results: SearchResults?, error: NSError?) in
+let searcher = Searcher(index: index, resultHandler: { (results: SearchResults?, error: NSError?) in
     // Your code goes here.
 })
 ```
@@ -109,7 +109,7 @@ searcher.search()
 The searcher will call your result handler after each request, when the response is received, *unless the request has been cancelled* (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:
 
 ```swift
-func handleResults(results: SearchResults?, error: NSError?) {
+func handleResults(results: SearchResults?, error: Error?) {
     guard let results = results else { return }
     self.hits = results.hits
     self.tableView.reloadData()
@@ -118,9 +118,9 @@ func handleResults(results: SearchResults?, error: NSError?) {
 
 The `SearchResults` class is a wrapper around the JSON response received from the API. You can always access the underlying JSON directly through the `content` property. However, the fields you will most likely are also exposed via typed properties, such as `hits` or `nbHits`. You also get convenience accessors for:
 
-- facet values (`facets()`) and statistics (`facetStats()`);
-- highlights (`highlightResult()`) and snippet results (`snippetResult()`)
-- ranking information (`rankingInfo()`)
+- facet values (`facets(name:)`) and statistics (`facetStats(name:)`);
+- highlights (`highlightResult(at:path:)`) and snippet results (`snippetResult(at:path:)`)
+- ranking information (`rankingInfo(at:)`)
 
 Please note that not every piece of information may be present in the response; it depends on your request.
 
@@ -135,7 +135,7 @@ Note that if you use continuous scrolling, then you must take care to *append* h
 if results.page == 0 {
     self.hits = results.hits
 } else {
-    self.hits.appendContentsOf(results.hits)
+    self.hits.append(contentsOf: results.hits)
 }
 ```
 
@@ -146,7 +146,7 @@ The `loadMore()` method is guarded against concurrent or inconsistent calls. If 
 
 ### Faceting
 
-The searcher maintains a list of refined values for every facet, in the `refinements` property. Typically, you don't manipulate this property directly; instead, you call the convenience methods `hasFacetRefinement()`, `addFacetRefinement()`, `removeFacetRefinement()` and `toggleFacetRefinement()`.
+The searcher maintains a list of refined values for every facet, in the `refinements` property. Typically, you don't manipulate this property directly; instead, you call the convenience methods `hasFacetRefinement(name:value:)`, `addFacetRefinement(name:value:)`, `removeFacetRefinement(name:value:)` and `toggleFacetRefinement(name:value:)`.
 
 The searcher also keeps track of which facets are disjunctive (`OR`) via the `disjunctiveFacets` property; all facets not listed in this property are considered to be conjunctive (`AND`).
 
@@ -176,8 +176,8 @@ When you instantiate a highlight renderer, you specify a set of **text attribute
 
 ```swift
 let renderer = HighlightRenderer(highlightAttrs: [
-    NSForegroundColorAttributeName: UIColor.redColor(),
-    NSBackgroundColorAttributeName: UIColor.yellowColor(),
+    NSForegroundColorAttributeName: UIColor.red,
+    NSBackgroundColorAttributeName: UIColor.yellow,
 ]
 ```
 
@@ -188,14 +188,14 @@ renderer.preTag = "<mark>"
 renderer.postTag = "</mark>"
 ```
 
-Once the renderer is set, rendering highlights is just a matter of calling `render()`. The real trick is to retrieve the highlighted value from the JSON... Fortunately, the `SearchResults` class makes it easy:
+Once the renderer is set, rendering highlights is just a matter of calling `render(text:)`. The real trick is to retrieve the highlighted value from the JSON... Fortunately, the `SearchResults` class makes it easy:
 
 ```swift
 let searchResults: SearchResults = ... // whatever was received by the result handler
 let index: Int = ... // index of the hit you want to retrieve
-if let highlightResult = searchResults.highlightResult(index, path: "attribute_name") {
+if let highlightResult = searchResults.highlightResult(at: index, path: "attribute_name") {
     if let highlightValue = highlightResult.value {
-        let highlightedString = renderer.render(highlightValue)
+        let highlightedString = renderer.render(text: highlightValue)
     }
 }
 ```

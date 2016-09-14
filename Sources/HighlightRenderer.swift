@@ -27,6 +27,8 @@ import Foundation
 /// Renders marked up text into attributed strings with markup removed and the visual attributes applied to highlights.
 ///
 @objc public class HighlightRenderer: NSObject {
+    // MARK: Properties
+    
     /// Visual attributes to apply to the highlights.
     @objc public var highlightAttrs: [String: AnyObject]
     
@@ -39,6 +41,8 @@ import Foundation
     /// Whether the markup is case sensitive. Defaults to `false`.
     @objc public var caseSensitive: Bool = false
 
+    // MARK: Initialization
+
     /// Create a new highlighter with the specified text attributes for highlights.
     ///
     /// - parameter highlightAttrs: Text attributes to apply to highlights. The content must be suitable for use within
@@ -47,6 +51,8 @@ import Foundation
     @objc public init(highlightAttrs: [String: AnyObject]) {
         self.highlightAttrs = highlightAttrs
     }
+
+    // MARK: Rendering
 
     /// Render the specified text.
     ///
