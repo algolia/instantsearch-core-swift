@@ -64,6 +64,22 @@ import Foundation
 // ------------------------------------------------------------------------
 
 
+/// Anything that can be searched.
+/// Typically an `Index` instance. This protocol exists mainly for testing purposes (allows mocking).
+///
+@objc public protocol Searchable {
+    /// See `Index.search(...)`.
+    @discardableResult func search(_ query: Query, completionHandler: @escaping CompletionHandler) -> Operation
+    
+    /// See `Index.searchDisjunctiveFaceting(...)`.
+    @discardableResult func searchDisjunctiveFaceting(_ query: Query, disjunctiveFacets: [String], refinements: [String: [String]], completionHandler: @escaping CompletionHandler) -> Operation
+}
+
+/// Declare the conformance of `Index` to `Searchable`.
+extension Index: Searchable {
+}
+
+
 /// Manages search on an Algolia index.
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
@@ -132,7 +148,7 @@ import Foundation
     /// + Note: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
     /// running. Depending on your use case, you might want to call `reset()` after changing the index.
     ///
-    @objc public var index: Index
+    @objc public var index: Searchable
     
     /// User callbacks for handling results.
     /// There should be at least one, but multiple handlers may be registered if necessary.
@@ -201,7 +217,7 @@ import Foundation
     @objc public init(index: Index) {
         self.index = index
         super.init()
-        updateClientUserAgents()
+        updateClientUserAgents(index: index)
     }
     
     /// Create a new searcher targeting the specified index and register a result handler with it.
@@ -215,7 +231,7 @@ import Foundation
     }
     
     /// Add the helper library's version to the client's user agents, if not already present.
-    private func updateClientUserAgents() {
+    private func updateClientUserAgents(index: Index) {
         let bundleInfo = Bundle(for: type(of: self)).infoDictionary!
         let name = bundleInfo["CFBundleName"] as! String
         let version = bundleInfo["CFBundleShortVersionString"] as! String
