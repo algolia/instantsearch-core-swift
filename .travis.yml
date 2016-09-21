@@ -14,4 +14,4 @@ before_script:
     - gem install xcpretty -N
 script:
     - set -o pipefail
-    - xcodebuild -workspace AlgoliaSearchHelper.xcworkspace -scheme "AlgoliaSearchHelper-${PLATFORM}" -sdk "${SDK}" -destination "${DESTINATION}" test
+    - travis_retry xcodebuild -workspace AlgoliaSearchHelper.xcworkspace -scheme "AlgoliaSearchHelper-${PLATFORM}" -sdk "${SDK}" -destination "${DESTINATION}" test
