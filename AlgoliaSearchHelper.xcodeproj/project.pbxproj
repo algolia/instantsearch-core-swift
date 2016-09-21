@@ -12,6 +12,9 @@
 		46DE934525664E8B13CE7DB8 /* Pods_AlgoliaSearchHelper_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D60844AD75E2450D0FE2508 /* Pods_AlgoliaSearchHelper_iOS_Tests.framework */; };
 		481577CF5ABD78C269AAC1BF /* Pods_AlgoliaSearchHelper_macOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BD4077FBF04D2C49085B0EAC /* Pods_AlgoliaSearchHelper_macOS_Tests.framework */; };
 		584CDC531533E19DAA08EED7 /* Pods_AlgoliaSearchHelper_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */; };
+		BC154A831D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlightRendererTest.swift */; };
+		BC154A841D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlightRendererTest.swift */; };
+		BC154A851D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlightRendererTest.swift */; };
 		BC34263C1D460DB70055E0F2 /* AlgoliaSearchHelper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */; };
 		BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */; };
 		BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */; };
@@ -94,6 +97,7 @@
 		83D081CD46C32B0010292F40 /* Pods-AlgoliaSearchHelper-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-iOS/Pods-AlgoliaSearchHelper-iOS.debug.xcconfig"; sourceTree = "<group>"; };
 		92867AE4834072C064949FA1 /* Pods-AlgoliaSearchHelper-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-iOS-Tests/Pods-AlgoliaSearchHelper-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		AEFA5749381C5804859C8DC1 /* Pods-AlgoliaSearchHelper-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlgoliaSearchHelper-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-AlgoliaSearchHelper-tvOS/Pods-AlgoliaSearchHelper-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		BC154A821D92B5FD00DE764C /* HighlightRendererTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlightRendererTest.swift; sourceTree = "<group>"; };
 		BC3426311D460DB70055E0F2 /* AlgoliaSearchHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AlgoliaSearchHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3426361D460DB70055E0F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC34263B1D460DB70055E0F2 /* AlgoliaSearchHelper-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AlgoliaSearchHelper-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -262,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				BC3426421D460DB70055E0F2 /* Info.plist */,
+				BC154A821D92B5FD00DE764C /* HighlightRendererTest.swift */,
 				BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */,
 				BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */,
 				BC5DC1301D86BDB00066D705 /* AlgoliaSearchHelper-Tests-Bridging-Header.h */,
@@ -839,6 +844,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC4CB8841D5349B6004618DD /* SearchResultsTest.swift in Sources */,
+				BC154A831D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */,
 				BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -862,6 +868,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC4CB8A71D534C27004618DD /* SearchResultsTest.swift in Sources */,
+				BC154A841D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */,
 				BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -885,6 +892,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC4CB8CA1D535CA7004618DD /* SearchResultsTest.swift in Sources */,
+				BC154A851D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */,
 				BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
