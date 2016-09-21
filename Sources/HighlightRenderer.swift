@@ -30,7 +30,7 @@ import Foundation
     // MARK: Properties
     
     /// Visual attributes to apply to the highlights.
-    @objc public var highlightAttrs: [String: AnyObject]
+    @objc public var highlightAttrs: [String: Any]
     
     /// Markup identifying the beginning of a highlight. Defaults to `<em>`.
     @objc public var preTag: String = "<em>"
@@ -48,7 +48,7 @@ import Foundation
     /// - parameter highlightAttrs: Text attributes to apply to highlights. The content must be suitable for use within
     ///   an `NSAttributedString`.
     ///
-    @objc public init(highlightAttrs: [String: AnyObject]) {
+    @objc public init(highlightAttrs: [String: Any]) {
         self.highlightAttrs = highlightAttrs
     }
 
