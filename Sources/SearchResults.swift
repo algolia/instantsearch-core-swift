@@ -174,6 +174,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 }
 
 /// A value of a given facet, together with its number of occurrences.
+/// This class is mainly useful when an ordered list of facet values has to be presented to the user.
 ///
 @objc public class FacetValue: NSObject {
     // MARK: Properties
@@ -190,6 +191,26 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     internal init(value: String, count: Int) {
         self.value = value
         self.count = count
+    }
+    
+    /// Convert unordered facet counts into an ordered list of facet values, supplementing any missing counts
+    /// for refined values.
+    @objc public static func listFrom(facetCounts: [String: Int]?, refinements: [String]?) -> [FacetValue] {
+        var values = [FacetValue]()
+        if let facetCounts = facetCounts {
+            for (value, count) in facetCounts {
+                values.append(FacetValue(value: value, count: count))
+            }
+        }
+        // Make sure there is a value at least for the refined values.
+        if let refinements = refinements {
+            for refinement in refinements {
+                if facetCounts?[refinement] == nil {
+                    values.append(FacetValue(value: refinement, count: 0))
+                }
+            }
+        }
+        return values
     }
 }
 
@@ -217,7 +238,6 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     }
 }
 
-
 /// Search results.
 ///
 /// + Note: Wraps the raw JSON returned by the API.
@@ -236,9 +256,6 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// Hits.
     @objc public let hits: [JSONObject]
     
-    /// Facets for the last results. Lazily computed; accessed through `facets(_:)`.
-    private var facets: [String: [FacetValue]] = [:]
-
     /// Total number of hits.
     @objc public var nbHits: Int
 
@@ -258,10 +275,10 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     /// + Note: Should be identical to `params.query`.
     ///
-    @objc public var query: String
+    @objc public var query: String? { return content["query"] as? String }
     
     /// Query parameters that produced these results.
-    @objc public var params: Query
+    @objc public var params: Query?
     
     /// Whether facet counts are exhaustive.
     @objc public var exhaustiveFacetsCount: Bool { return content["exhaustiveFacetsCount"] as? Bool ?? false }
@@ -346,7 +363,11 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public init(content: JSONObject, disjunctiveFacets: [String]) throws {
         self.content = content
         self.disjunctiveFacets = disjunctiveFacets
-        
+
+        if let params = content["params"] as? String {
+            self.params = Query.parse(params)
+        }
+
         // Validate mandatory fields.
         guard let hits = content["hits"] as? [JSONObject] else {
             throw InvalidJSONError(description: "Expecting attribute `hits` of type array of objects")
@@ -357,16 +378,6 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
             throw InvalidJSONError(description: "Expecting attribute `nbHits` of type `Int`")
         }
         self.nbHits = nbHits
-        
-        guard let query = content["query"] as? String else {
-            throw InvalidJSONError(description: "Expecting attribute `query` of type `String`")
-        }
-        self.query = query
-        
-        guard let params = content["params"] as? String else {
-            throw InvalidJSONError(description: "Expecting attribute `params` of type `String`")
-        }
-        self.params = Query.parse(params)
     }
     
     // MARK: - Accessors
@@ -374,41 +385,12 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// Retrieve the facet values for a given facet.
     ///
     /// - parameter name: Facet name.
-    /// - parameter disjunctive: true if this is a disjunctive facet, false if it's a conjunctive facet (default).
-    /// - returns: The corresponding facet values (which may be empty), or `nil` if the facet was not requested.
+    /// - returns: The corresponding facet values (which may be empty), or `nil` if no values are available for this facet.
     ///
-    @objc public func facets(name: String) -> [FacetValue]? {
-        // Use stored values if available.
-        if let values = facets[name] {
-            return values
-        }
-        // If the facet was not requested, return nil.
-        else if !(params.facets?.contains(name) ?? false) {
-            return nil
-        }
-        // Otherwise lazily compute the values.
-        else {
-            let disjunctive = disjunctiveFacets.contains(name)
-            guard let returnedFacets = content[disjunctive ? "disjunctiveFacets" : "facets"] as? JSONObject else { return nil }
-            var values = [FacetValue]()
-            let returnedValues = returnedFacets[name] as? [String: Int]
-            if let returnedValues = returnedValues {
-                for (value, count) in returnedValues {
-                    values.append(FacetValue(value: value, count: count))
-                }
-            }
-            // Make sure there is a value at least for the refined values.
-            let queryHelper = QueryHelper(query: params)
-            let facetRefinements = queryHelper.facetRefinements(matching: { $0.name == name })
-            for facetRefinement in facetRefinements {
-                if returnedValues?[facetRefinement.value] == nil {
-                    values.append(FacetValue(value: facetRefinement.value, count: 0))
-                }
-            }
-            // Remember values for later use.
-            self.facets[name] = values
-            return values
-        }
+    @objc public func facets(name: String) -> [String: Int]? {
+        let disjunctive = disjunctiveFacets.contains(name)
+        guard let returnedFacets = content[disjunctive ? "disjunctiveFacets" : "facets"] as? JSONObject else { return nil }
+        return returnedFacets[name] as? [String: Int]
     }
     
     /// Retrieve the statistics for a numerical facet.

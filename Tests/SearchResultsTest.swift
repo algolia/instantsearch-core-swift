@@ -115,39 +115,55 @@ class SearchResultsTest: XCTestCase {
     func testQuery() {
         // Missing value.
         json.removeValue(forKey: "query")
-        XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
+        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
+            XCTAssertNil(results.query)
+        } else {
+            XCTFail("Failed to construct results")
+        }
         
         // Mistyped value.
         json["query"] = 666
-        XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
+        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
+            XCTAssertNil(results.query)
+        } else {
+            XCTFail("Failed to construct results")
+        }
         
         // Nominal case:
         json["query"] = "some text"
-        guard let results = try? SearchResults(content: json, disjunctiveFacets: []) else {
+        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
+            XCTAssertEqual("some text", results.query)
+        } else {
             XCTFail("Failed to construct results")
-            return
         }
-        XCTAssertEqual("some text", results.query)
     }
 
     func testParams() {
         // Missing value.
         json.removeValue(forKey: "params")
-        XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
+        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
+            XCTAssertNil(results.params)
+        } else {
+            XCTFail("Failed to construct results")
+        }
         
         // Mistyped value.
         json["params"] = 666
-        XCTAssertNil(try? SearchResults(content: json, disjunctiveFacets: []))
+        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
+            XCTAssertNil(results.params)
+        } else {
+            XCTFail("Failed to construct results")
+        }
         
         // Nominal case:
         json["params"] = "query=some%20text&facets=%5B%22abc%22,%22def%22%5D"
-        guard let results = try? SearchResults(content: json, disjunctiveFacets: []) else {
+        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
+            XCTAssertEqual("some text", results.params?.query)
+            XCTAssertNotNil(results.params?.facets)
+            XCTAssertEqual(["abc", "def"], results.params!.facets!)
+        } else {
             XCTFail("Failed to construct results")
-            return
         }
-        XCTAssertEqual("some text", results.params.query)
-        XCTAssertNotNil(results.params.facets)
-        XCTAssertEqual(["abc", "def"], results.params.facets!)
     }
     
     // MARK: - Optional fields
@@ -473,27 +489,20 @@ class SearchResultsTest: XCTestCase {
             ]
         ]
         
-        // Mistyped value, but listed in query: should return an empty array.
+        // Mistyped value should return nil.
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
-            XCTAssertEqual([], results.facets(name: "abc")!)
+            XCTAssertNil(results.facets(name: "abc"))
         } else {
             XCTFail("Invalid optional value should not cause an error")
         }
         
-        // Missing value: optional.
+        // Missing value should return nil.
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             XCTAssertNil(results.facets(name: "xyz"))
         } else {
             XCTFail("Absent optional value should not cause an error")
         }
 
-        // Missing facet in results, but listed in query: should return an empty array.
-        if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
-            XCTAssertEqual([], results.facets(name: "jkl")!)
-        } else {
-            XCTFail("Invalid optional value should not cause an error")
-        }
-        
         // Nominal case:
         if let results = try? SearchResults(content: json, disjunctiveFacets: []) {
             if let facetValues = results.facets(name: "def") {
@@ -504,6 +513,40 @@ class SearchResultsTest: XCTestCase {
         } else {
             XCTFail("Failed to construct results")
         }
+    }
+    
+    func testFacetValues() {
+        // Missing input values should produce empty array.
+        let values1 = FacetValue.listFrom(facetCounts: nil, refinements: nil)
+        XCTAssertEqual(0, values1.count)
+        
+        let facetCounts = [
+            "abc": 666
+        ]
+        let values2 = FacetValue.listFrom(facetCounts: facetCounts, refinements: ["abc", "def"])
+        // Value present in counts.
+        if let index = values2.index(where: { $0.value == "abc" }) {
+            XCTAssertEqual(666, values2[index].count)
+        } else {
+            XCTFail("Missing value")
+        }
+        // Missing value in counts, but refined: should be 0.
+        if let index = values2.index(where: { $0.value == "def" }) {
+            XCTAssertEqual(0, values2[index].count)
+        } else {
+            XCTFail("Missing value")
+        }
+        XCTAssertNil(values2.index(where: { $0.value == "xyz" }))
+
+        let values3 = FacetValue.listFrom(facetCounts: facetCounts, refinements: nil)
+        // Value present in counts.
+        if let index = values3.index(where: { $0.value == "abc" }) {
+            XCTAssertEqual(666, values3[index].count)
+        } else {
+            XCTFail("Missing value")
+        }
+        XCTAssertNil(values3.index(where: { $0.value == "def" }))
+        XCTAssertNil(values3.index(where: { $0.value == "xyz" }))
     }
 
     func testFacetStats() {
