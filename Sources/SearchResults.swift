@@ -440,11 +440,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - returns: The corresponding ranking information, or `nil` if no ranking information is available, or if the JSON response is invalid.
     ///
     @objc public func rankingInfo(at index: Int) -> RankingInfo? {
-        if let rankingInfo = hits[index]["_rankingInfo"] as? JSONObject {
-            return RankingInfo(json: rankingInfo)
-        } else {
-            return nil
-        }
+        return SearchResults.rankingInfo(hit: hits[index])
     }
     
     // MARK: - Utils
@@ -471,5 +467,18 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         guard let snippets = hit["_snippetResult"] as? JSONObject else { return nil }
         guard let attribute = JSONHelper.valueForKeyPath(json: snippets, path: path) as? JSONObject else { return nil }
         return SnippetResult(json: attribute)
+    }
+    
+    /// Retrieve the ranking information of a hit.
+    ///
+    /// - parameter hit: The JSON object for a hit.
+    /// - returns: The ranking information, or `nil` if not available, or if the JSON response is invalid.
+    ///
+    @objc public static func rankingInfo(hit: JSONObject) -> RankingInfo? {
+        if let rankingInfo = hit["_rankingInfo"] as? JSONObject {
+            return RankingInfo(json: rankingInfo)
+        } else {
+            return nil
+        }
     }
 }
