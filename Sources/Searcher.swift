@@ -459,6 +459,19 @@ import Foundation
         return refinements[name]?.contains(value) ?? false
     }
     
+    /// Test whether a facet has any refinement(s).
+    ///
+    /// - parameter name: The facet's name.
+    /// - returns: true if the facet has at least one refinment, false if it has none.
+    ///
+    @objc public func hasFacetRefinement(name: String) -> Bool {
+        if let facetRefinements = refinements[name] {
+            return !facetRefinements.isEmpty
+        } else {
+            return false
+        }
+    }
+    
     /// Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
     /// added.
     ///
