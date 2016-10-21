@@ -54,7 +54,6 @@
     [searcher addResultHandler:^(SearchResults* results, NSError* error) {
         // Nothing to do.
     }];
-    searcher.disjunctiveFacets = @[ @"foo", @"bar" ];
     [searcher setFacetWithName:@"bar" disjunctive:YES];
     [searcher addFacetRefinementWithName:@"foo" value:@"xyz"];
     XCTAssertTrue([searcher hasFacetRefinementWithName:@"foo" value:@"xyz"]);
@@ -127,6 +126,12 @@
     XCTAssertNil([results rankingInfoAt:0]);
     XCTAssertNil([SearchResults highlightResultWithHit:JSON[@"hits"][0] path:@"foo"]);
     XCTAssertNil([SearchResults snippetResultWithHit:JSON[@"hits"][0] path:@"foo"]);
+}
+
+- (void)testQueryFilters {
+    QueryFilters* queryFilters = [[QueryFilters alloc] init];
+    [queryFilters clear];
+    // TODO
 }
 
 @end

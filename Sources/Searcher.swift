@@ -87,8 +87,11 @@ import Foundation
         ///
         var query: Query = Query()
         
+        /// Filters.
+        var filters: QueryFilters = QueryFilters()
+        
         /// List of facets to be treated as disjunctive facets. Defaults to the empty list.
-        var disjunctiveFacets: [String] = []
+        var disjunctiveFacets: [String] { return Array(filters.disjunctiveFacets) }
         
         /// Initial page.
         var initialPage: Int { return query.page != nil ? Int(query.page!) : 0 }
@@ -116,7 +119,7 @@ import Foundation
         init(copy: State) {
             // WARNING: Query is not a value type (because of Objective-C bridgeability), so let's make sure to copy it.
             self.query = Query(copy: copy.query)
-            self.disjunctiveFacets = copy.disjunctiveFacets
+            self.filters = QueryFilters(copy: copy.filters)
             self.page = copy.page
         }
         
@@ -141,27 +144,17 @@ import Foundation
     
     /// The query that will be used for the next search.
     ///
-    /// **Warning:** The value of `facetFilters` will be discarded and overridden by the `refinements` property.
+    /// **Warning:** The value of `filters` will be discarded and overridden by the facet refinements.
     @objc public var query: Query {
         get { return nextState.query }
         set { nextState.query = newValue }
     }
-    
+
+    /// Filters for the next query.
+    @objc public var filters: QueryFilters { return nextState.filters }
+
     /// The disjunctive facets that will be used for the next search.
-    @objc public var disjunctiveFacets: [String] {
-        get { return nextState.disjunctiveFacets }
-        set { nextState.disjunctiveFacets = newValue }
-    }
-    
-    /// Facet refinements that will be used for the next search. Maps facet names to a list of refined values.
-    /// The format is the same as `Index.searchDisjunctiveFaceting()`.
-    ///
-    /// + Note: You are encouraged to use the helper methods to manipulate this property. See `hasFacetRefinement(_:value:)`,
-    /// `addFacetRefinement(_:value:)`, `removeFacetRefinement(_:value:)` and `toggleFacetRefinement(_:value:)`.
-    ///
-    /// + Warning: Any refinements specified here will override those manually specified in `query`.
-    ///
-    @objc public var refinements: [String: [String]] = [:]
+    @objc public var disjunctiveFacets: [String] { return Array(filters.disjunctiveFacets) }
     
     // State management
     // ----------------
@@ -235,14 +228,13 @@ import Foundation
     }
     
     /// Reset the search state.
-    /// This resets the `query`, `disjunctiveFacets` and `refinements` properties. It also cancels any pending request.
+    /// This resets the `query`, `disjunctiveFacets` and `filters` properties. It also cancels any pending request.
     ///
     /// + Note: It does *not* remove registered result handlers.
     ///
     @objc public func reset() {
         query = Query()
-        disjunctiveFacets.removeAll()
-        refinements.removeAll()
+        filters.clear()
         cancelPendingRequests()
     }
     
@@ -355,15 +347,11 @@ import Foundation
         }
         if state.disjunctiveFacets.isEmpty {
             // All facets are conjunctive; build facet filters accordingly.
-            let queryHelper = QueryHelper(query: query)
-            for (facetName, values) in refinements {
-                for value in values {
-                    queryHelper.addConjunctiveFacetRefinement(FacetRefinement(name: facetName, value: value))
-                }
-            }
+            query.facetFilters = filters.buildFacetFilters()
             operation = index.search(query, completionHandler: completionHandler)
         } else {
             // Facet filters are built directly by the disjunctive faceting search helper method.
+            let refinements = filters.buildFacetRefinements()
             operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
         }
         self.pendingRequests[state.sequenceNumber] = operation
@@ -413,15 +401,7 @@ import Foundation
     ///   (`AND`, the default).
     ///
     @objc public func setFacet(withName name: String, disjunctive: Bool) {
-        if disjunctive {
-            if !disjunctiveFacets.contains(name) {
-                disjunctiveFacets.append(name)
-            }
-        } else {
-            if let index = disjunctiveFacets.index(of: name) {
-                disjunctiveFacets.remove(at: index)
-            }
-        }
+        filters.setFacet(withName: name, disjunctive: disjunctive)
     }
     
     /// Add a refinement for a given facet.
@@ -432,10 +412,7 @@ import Foundation
     /// - parameter value: The refined value to add.
     ///
     @objc public func addFacetRefinement(name: String, value: String) {
-        if refinements[name] == nil {
-            refinements[name] = []
-        }
-        refinements[name]!.append(value)
+        filters.addFacetRefinement(name: name, value: value)
     }
     
     /// Remove a refinement for a given facet.
@@ -444,9 +421,7 @@ import Foundation
     /// - parameter value: The refined value to remove.
     ///
     @objc public func removeFacetRefinement(name: String, value: String) {
-        if let index = refinements[name]?.index(of: value) {
-            refinements[name]?.remove(at: index)
-        }
+        filters.removeFacetRefinement(name: name, value: value)
     }
     
     /// Test whether a facet has a refinement for a given value.
@@ -456,7 +431,7 @@ import Foundation
     /// - returns: true if the refinement exists, false otherwise.
     ///
     @objc public func hasFacetRefinement(name: String, value: String) -> Bool {
-        return refinements[name]?.contains(value) ?? false
+        return filters.hasFacetRefinement(name: name, value: value)
     }
     
     /// Test whether a facet has any refinement(s).
@@ -465,11 +440,7 @@ import Foundation
     /// - returns: true if the facet has at least one refinment, false if it has none.
     ///
     @objc public func hasFacetRefinement(name: String) -> Bool {
-        if let facetRefinements = refinements[name] {
-            return !facetRefinements.isEmpty
-        } else {
-            return false
-        }
+        return filters.hasFacetRefinement(name: name)
     }
     
     /// Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
@@ -479,17 +450,13 @@ import Foundation
     /// - parameter value: The refined value to toggle.
     ///
     @objc public func toggleFacetRefinement(name: String, value: String) {
-        if hasFacetRefinement(name: name, value: value) {
-            removeFacetRefinement(name: name, value: value)
-        } else {
-            addFacetRefinement(name: name, value: value)
-        }
+        filters.toggleFacetRefinement(name: name, value: value)
     }
     
     /// Remove all refinements for all facets.
     ///
     @objc public func clearFacetRefinements() {
-        refinements.removeAll()
+        filters.clearFacetRefinements()
     }
     
     /// Remove all refinements for a given facet.
@@ -497,7 +464,7 @@ import Foundation
     /// - parameter name: The facet's name.
     ///
     @objc public func clearFacetRefinements(name: String) {
-        refinements.removeValue(forKey: name)
+        filters.clearFacetRefinements(name: name)
     }
     
     // MARK: - Managing requests
