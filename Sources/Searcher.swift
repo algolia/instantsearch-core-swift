@@ -153,9 +153,6 @@ import Foundation
     /// Filters for the next query.
     @objc public var filters: QueryFilters { return nextState.filters }
 
-    /// The disjunctive facets that will be used for the next search.
-    @objc public var disjunctiveFacets: [String] { return Array(filters.disjunctiveFacets) }
-    
     // State management
     // ----------------
     
