@@ -130,8 +130,27 @@
 
 - (void)testQueryFilters {
     QueryFilters* queryFilters = [[QueryFilters alloc] init];
+
     [queryFilters clear];
-    // TODO
+    
+    [queryFilters setFacetWithName:@"name" disjunctive:YES];
+    [queryFilters isDisjunctiveFacetWithName:@"name"];
+    [queryFilters addFacetRefinementWithName:@"name" value:@"value" inclusive:YES];
+    [queryFilters removeFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters hasFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters hasFacetRefinementsWithName:@"name"];
+    [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters clearFacetRefinements];
+    [queryFilters clearFacetRefinementsWithName:@"name"];
+    
+    [queryFilters setNumericWithName:@"name" disjunctive:YES];
+    [queryFilters isDisjunctiveNumericWithName:@"name"];
+    [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan value:@3 inclusive:YES];
+    [queryFilters removeNumericRefinementWithName:@"name" op:OperatorGreaterThanOrEqual value:@123.456 inclusive:NO];
+    [queryFilters hasNumericRefinementsWithName:@"name"];
+    [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters clearNumericRefinements];
+    [queryFilters clearNumericRefinementsWithName:@"name"];
 }
 
 @end
