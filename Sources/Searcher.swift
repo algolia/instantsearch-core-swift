@@ -439,8 +439,8 @@ import Foundation
     /// - parameter name: The facet's name.
     /// - returns: true if the facet has at least one refinment, false if it has none.
     ///
-    @objc public func hasFacetRefinement(name: String) -> Bool {
-        return filters.hasFacetRefinement(name: name)
+    @objc public func hasFacetRefinements(name: String) -> Bool {
+        return filters.hasFacetRefinements(name: name)
     }
     
     /// Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
