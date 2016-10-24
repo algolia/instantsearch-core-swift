@@ -144,13 +144,18 @@ import Foundation
     
     /// The query that will be used for the next search.
     ///
-    /// **Warning:** The value of `filters` will be discarded and overridden by the facet refinements.
+    /// + Warning: The value of the various filters will be discarded and overridden by those defined in the `filters`
+    ///            property.
+    ///
     @objc public var query: Query {
         get { return nextState.query }
         set { nextState.query = newValue }
     }
 
     /// Filters for the next query.
+    ///
+    /// + Warning: Will override any filters manually defined on `query`.
+    ///
     @objc public var filters: QueryFilters { return nextState.filters }
 
     // State management
