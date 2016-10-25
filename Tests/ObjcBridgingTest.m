@@ -39,7 +39,7 @@
 }
 
 - (void)testHighlightRenderer {
-    HighlightRenderer* renderer = [[HighlightRenderer alloc] initWithHighlightAttrs:@{ @"foo": @"bar" }];
+    Highlighter* renderer = [[Highlighter alloc] initWithHighlightAttrs:@{ @"foo": @"bar" }];
     renderer.preTag = @"<mark>";
     renderer.postTag = @"</mark>";
     renderer.caseSensitive = false;
@@ -54,14 +54,6 @@
     [searcher addResultHandler:^(SearchResults* results, NSError* error) {
         // Nothing to do.
     }];
-    [searcher setFacetWithName:@"bar" disjunctive:YES];
-    [searcher addFacetRefinementWithName:@"foo" value:@"xyz"];
-    XCTAssertTrue([searcher hasFacetRefinementWithName:@"foo" value:@"xyz"]);
-    [searcher removeFacetRefinementWithName:@"foo" value:@"xyz"];
-    XCTAssertFalse([searcher hasFacetRefinementWithName:@"foo" value:@"xyz"]);
-    [searcher toggleFacetRefinementWithName:@"foo" value:@"xyz"];
-    [searcher clearFacetRefinementsWithName:@"foo"];
-    [searcher clearFacetRefinements];
     searcher.params.query = @"text";
     [searcher search];
     XCTAssertTrue(searcher.hasPendingRequests);
