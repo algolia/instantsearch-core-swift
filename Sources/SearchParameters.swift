@@ -21,6 +21,7 @@
 //  THE SOFTWARE.
 //
 
+import AlgoliaSearch
 import Foundation
 
 
@@ -218,7 +219,7 @@ import Foundation
 ///
 /// + Note: Tags are not handled. Please use facets instead, as they are more powerful.
 ///
-@objc public class QueryFilters: NSObject {
+@objc public class SearchParameters: Query {
     // MARK: - Properties
     
     /// Facets that will be treated as disjunctive.
@@ -237,20 +238,21 @@ import Foundation
 
     // MARK: - Initialization
     
-    /// Create new, empty query filters.
+    /// Create new, empty search parameters.
     ///
     @objc public override init() {
         self.disjunctiveFacets = Set<String>()
         self.disjunctiveNumerics = Set<String>()
         self.facetRefinements = [:]
         self.numericRefinements = [:]
+        super.init()
     }
 
-    /// Create a copy of given query filters.
+    /// Create a copy of given search parameters.
     ///
-    /// - parameter copy: The filters to copy from.
+    /// - parameter copy: The parameters to copy from.
     ///
-    @objc public init(copy: QueryFilters) {
+    @objc public init(from copy: SearchParameters) {
         self.disjunctiveFacets = copy.disjunctiveFacets
         self.disjunctiveNumerics = copy.disjunctiveNumerics
         // Deep copy the facet refinements.
@@ -274,17 +276,34 @@ import Foundation
             newNumericFilters[attributeName] = newFilters
         }
         self.numericRefinements = newNumericFilters
+        super.init(copy: copy)
+    }
+    
+    /// Support for `NSCopying`.
+    ///
+    /// + Note: Primarily intended for Objective-C use. Swift coders should use `init(from:)`.
+    ///
+    @objc override open func copy(with zone: NSZone?) -> Any {
+        // NOTE: As per the docs, the zone argument is ignored.
+        return SearchParameters(from: self)
     }
     
     // MARK: - Global state management
     
     /// Reset to an empty state.
     ///
-    @objc public func clear() {
+    @objc override open func clear() {
+        super.clear()
+        clearRefinements()
+    }
+
+    /// Clear all facet and numeric refinements.
+    ///
+    @objc public func clearRefinements() {
         clearFacetRefinements()
         clearNumericRefinements()
     }
-    
+
     /// Test whether at least one refinement (facet or numeric) is defined.
     ///
     /// - returns: true if at least one facet or one numeric refinement is defined, false otherwise.
@@ -296,7 +315,10 @@ import Foundation
     // MARK: - Equatable
     
     override public func isEqual(_ object: Any?) -> Bool {
-        guard let rhs = object as? QueryFilters else {
+        guard let rhs = object as? SearchParameters else {
+            return false
+        }
+        if !super.isEqual(object) {
             return false
         }
         if self.disjunctiveFacets != rhs.disjunctiveFacets || self.disjunctiveNumerics != rhs.disjunctiveNumerics {
@@ -329,12 +351,22 @@ import Foundation
 
     // MARK: - Generate filters
     
+    @objc override open func build() -> String {
+        // Override the `filters` parameter with the current refinements.
+        var parameters = self.parameters
+        parameters["filters"] = buildFilters()
+        return Query.build(parameters: parameters)
+    }
+    
     /// Generate a filter expression from the current filters.
     ///
-    /// - returns: An expression suitable for use with `Query.filters`. The expression may be empty if no refinements
+    /// - returns: An expression suitable for use with `Query.filters`. The expression may be nil if no refinements
     ///            are being used.
     ///
-    @objc public func buildFilters() -> String {
+    @objc public func buildFilters() -> String? {
+        if !hasRefinements() {
+            return nil
+        }
         // NOTE: We sort attribute names to get predictable output.
         // Facet filters.
         let facetExpression = facetRefinements.keys.sorted().flatMap({ (facetName: String) -> String? in

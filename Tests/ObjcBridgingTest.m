@@ -62,7 +62,7 @@
     [searcher toggleFacetRefinementWithName:@"foo" value:@"xyz"];
     [searcher clearFacetRefinementsWithName:@"foo"];
     [searcher clearFacetRefinements];
-    searcher.query = [[Query alloc] initWithQuery:@"text"];
+    searcher.params.query = @"text";
     [searcher search];
     XCTAssertTrue(searcher.hasPendingRequests);
     [searcher loadMore];
@@ -128,8 +128,8 @@
     XCTAssertNil([SearchResults snippetResultWithHit:JSON[@"hits"][0] path:@"foo"]);
 }
 
-- (void)testQueryFilters {
-    QueryFilters* queryFilters = [[QueryFilters alloc] init];
+- (void)testSearchParameters {
+    SearchParameters* queryFilters = [[SearchParameters alloc] init];
 
     [queryFilters clear];
     

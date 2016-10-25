@@ -48,13 +48,13 @@
 		BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */; };
 		BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */; };
 		BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */; };
-		BC6B05471DBA5C2E00AD2069 /* QueryFiltersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B05461DBA5C2E00AD2069 /* QueryFiltersTest.swift */; };
-		BC6B05481DBA5C2E00AD2069 /* QueryFiltersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B05461DBA5C2E00AD2069 /* QueryFiltersTest.swift */; };
-		BC6B05491DBA5C2E00AD2069 /* QueryFiltersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B05461DBA5C2E00AD2069 /* QueryFiltersTest.swift */; };
-		BCB7040F1DBA521F00A2803E /* QueryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* QueryFilters.swift */; };
-		BCB704101DBA521F00A2803E /* QueryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* QueryFilters.swift */; };
-		BCB704111DBA521F00A2803E /* QueryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* QueryFilters.swift */; };
-		BCB704121DBA521F00A2803E /* QueryFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* QueryFilters.swift */; };
+		BC6B05471DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */; };
+		BC6B05481DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */; };
+		BC6B05491DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */; };
+		BCB7040F1DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
+		BCB704101DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
+		BCB704111DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
+		BCB704121DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
 		DDAC466BA154A5B6B3AB8238 /* Pods_AlgoliaSearchHelper_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */; };
 		E69CFB9612084EB06FE3F284 /* Pods_AlgoliaSearchHelper_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FECD2DCE0C17861D678903B /* Pods_AlgoliaSearchHelper_tvOS_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -119,8 +119,8 @@
 		BC5DC1241D8697F50066D705 /* SearchProgressController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchProgressController.swift; sourceTree = "<group>"; };
 		BC5DC1301D86BDB00066D705 /* AlgoliaSearchHelper-Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AlgoliaSearchHelper-Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcBridgingTest.m; sourceTree = "<group>"; };
-		BC6B05461DBA5C2E00AD2069 /* QueryFiltersTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryFiltersTest.swift; sourceTree = "<group>"; };
-		BCB7040E1DBA521F00A2803E /* QueryFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryFilters.swift; sourceTree = "<group>"; };
+		BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParametersTest.swift; sourceTree = "<group>"; };
+		BCB7040E1DBA521F00A2803E /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
 		BD4077FBF04D2C49085B0EAC /* Pods_AlgoliaSearchHelper_macOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_macOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C600C2ED50D64CFB19024726 /* Pods_AlgoliaSearchHelper_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EBAD1C14829E68729E545DDB /* Pods_AlgoliaSearchHelper_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlgoliaSearchHelper_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -258,8 +258,8 @@
 				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
 				BC34264B1D4613CB0055E0F2 /* HighlightRenderer.swift */,
 				BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */,
-				BCB7040E1DBA521F00A2803E /* QueryFilters.swift */,
 				BC34264D1D4613CB0055E0F2 /* Searcher.swift */,
+				BCB7040E1DBA521F00A2803E /* SearchParameters.swift */,
 				BC5DC1241D8697F50066D705 /* SearchProgressController.swift */,
 				BC34264E1D4613CB0055E0F2 /* SearchResults.swift */,
 			);
@@ -271,7 +271,7 @@
 			children = (
 				BC3426421D460DB70055E0F2 /* Info.plist */,
 				BC154A821D92B5FD00DE764C /* HighlightRendererTest.swift */,
-				BC6B05461DBA5C2E00AD2069 /* QueryFiltersTest.swift */,
+				BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */,
 				BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */,
 				BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */,
 				BC5DC1301D86BDB00066D705 /* AlgoliaSearchHelper-Tests-Bridging-Header.h */,
@@ -837,7 +837,7 @@
 				BC34264F1D4613CB0055E0F2 /* HighlightRenderer.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
 				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
-				BCB7040F1DBA521F00A2803E /* QueryFilters.swift in Sources */,
+				BCB7040F1DBA521F00A2803E /* SearchParameters.swift in Sources */,
 				BC3426521D4613CB0055E0F2 /* SearchResults.swift in Sources */,
 				BC3426511D4613CB0055E0F2 /* Searcher.swift in Sources */,
 				BC5826501D4BB3DE0047D27F /* Debouncer.swift in Sources */,
@@ -848,7 +848,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6B05471DBA5C2E00AD2069 /* QueryFiltersTest.swift in Sources */,
+				BC6B05471DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8841D5349B6004618DD /* SearchResultsTest.swift in Sources */,
 				BC154A831D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */,
 				BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
@@ -863,7 +863,7 @@
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
 				BC5DC1261D8697F50066D705 /* SearchProgressController.swift in Sources */,
-				BCB704101DBA521F00A2803E /* QueryFilters.swift in Sources */,
+				BCB704101DBA521F00A2803E /* SearchParameters.swift in Sources */,
 				BC4CB8A61D534C20004618DD /* SearchResults.swift in Sources */,
 				BC4CB8A21D534C20004618DD /* HighlightRenderer.swift in Sources */,
 			);
@@ -873,7 +873,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6B05481DBA5C2E00AD2069 /* QueryFiltersTest.swift in Sources */,
+				BC6B05481DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8A71D534C27004618DD /* SearchResultsTest.swift in Sources */,
 				BC154A841D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */,
 				BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
@@ -888,7 +888,7 @@
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
 				BC5DC1271D8697F50066D705 /* SearchProgressController.swift in Sources */,
-				BCB704111DBA521F00A2803E /* QueryFilters.swift in Sources */,
+				BCB704111DBA521F00A2803E /* SearchParameters.swift in Sources */,
 				BC4CB8C91D535CA4004618DD /* SearchResults.swift in Sources */,
 				BC4CB8C51D535CA4004618DD /* HighlightRenderer.swift in Sources */,
 			);
@@ -898,7 +898,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC6B05491DBA5C2E00AD2069 /* QueryFiltersTest.swift in Sources */,
+				BC6B05491DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8CA1D535CA7004618DD /* SearchResultsTest.swift in Sources */,
 				BC154A851D92B5FD00DE764C /* HighlightRendererTest.swift in Sources */,
 				BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
@@ -912,7 +912,7 @@
 				BC5DC12A1D86BD110066D705 /* Searcher.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* HighlightRenderer.swift in Sources */,
 				BC5DC12C1D86BD170066D705 /* JSONHelper.swift in Sources */,
-				BCB704121DBA521F00A2803E /* QueryFilters.swift in Sources */,
+				BCB704121DBA521F00A2803E /* SearchParameters.swift in Sources */,
 				BC5DC12F1D86BD280066D705 /* SearchResults.swift in Sources */,
 				BC5DC1281D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BC5DC12E1D86BD1C0066D705 /* Debouncer.swift in Sources */,
