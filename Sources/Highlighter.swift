@@ -26,7 +26,7 @@ import Foundation
 
 /// Renders marked up text into attributed strings with markup removed and the visual attributes applied to highlights.
 ///
-@objc public class HighlightRenderer: NSObject {
+@objc public class Highlighter: NSObject {
     // MARK: Properties
     
     /// Visual attributes to apply to the highlights.
