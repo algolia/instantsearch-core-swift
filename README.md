@@ -27,7 +27,7 @@ However, when building a search UI, especially in an as-you-type setting, more w
 
 The core of the Helper is the `Searcher` class, which manages searches on a given index. It takes care of properly **sequencing** received results (which may come out-of-order due to network unpredictability) and **pagination**. It also provides tools to manipulate **facets and refinements**.
 
-The `HighlightRenderer` class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.
+The `Highlighter` class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.
 
 Other miscellaneous utilities are provided as well.
 
@@ -170,12 +170,12 @@ You may subscribe to these notifications to react on different events without ha
 
 ## Highlighting
 
-The `HighlightRenderer` class is in charge of parsing highlight result values (as returned by the Search API in the `_highlightResults` attribute of every hit) and render them into a rich text string (an `NSAttributedString` instance).
+The `Highlighter` class is in charge of parsing highlight result values (as returned by the Search API in the `_highlightResults` attribute of every hit) and render them into a rich text string (an `NSAttributedString` instance).
 
 When you instantiate a highlight renderer, you specify a set of **text attributes** that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:
 
 ```swift
-let renderer = HighlightRenderer(highlightAttrs: [
+let renderer = Highlighter(highlightAttrs: [
     NSForegroundColorAttributeName: UIColor.red,
     NSBackgroundColorAttributeName: UIColor.yellow,
 ]

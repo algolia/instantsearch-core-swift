@@ -15,6 +15,9 @@ custom_categories:
     - name: Searching
       children:
         - Searcher
+        - SearchParameters
+        - FacetRefinement
+        - NumericRefinement
         - SearchResults
         - HighlightResult
         - SnippetResult
@@ -24,6 +27,6 @@ custom_categories:
 
     - name: Utilities
       children:
-        - HighlightRenderer
+        - Highlighter
         - Debouncer
         - SearchProgressController
