@@ -25,9 +25,9 @@ However, when building a search UI, especially in an as-you-type setting, more w
 
 ### Features
 
-The core of the Helper is the `Searcher` class, which manages searches on a given index. It takes care of properly **sequencing** received results (which may come out-of-order due to network unpredictability) and **pagination**. It also provides tools to manipulate **facets and refinements**.
+The core of the Helper is the `Searcher` class, which manages searches on a given index. It takes care of properly **sequencing** received results (which may come out-of-order due to network unpredictability) and **pagination**. It also provides tools to manipulate **facet filters** and **numeric filters**.
 
-The `HighlightRenderer` class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.
+The `Highlighter` class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.
 
 Other miscellaneous utilities are provided as well.
 
@@ -96,11 +96,11 @@ let searcher = Searcher(index: index, resultHandler: { (results: SearchResults?,
 })
 ```
 
-The searcher will only launch a request when you call its `search()` method. Before you search, of course, you will want to modify the search query:
+The searcher will only launch a request when you call its `search()` method. Before you search, of course, you will want to modify the **search parameters** via the `params` property (a `SearchParameters` instance):
 
 ```swift
-searcher.query.query = "paris"
-searcher.query.numericFilters = ["stars>=4"]
+searcher.params.query = "hotel"
+searcher.params.aroundLatLngViaIP = true
 searcher.search()
 ```
 
@@ -144,17 +144,35 @@ When should you call `loadMore()`? Whenever your UI detects the need to fetch mo
 The `loadMore()` method is guarded against concurrent or inconsistent calls. If you try to call it while another request has already been issued, it will ignore the call.
 
 
-### Faceting
+### Filtering
 
-The searcher maintains a list of refined values for every facet, in the `refinements` property. Typically, you don't manipulate this property directly; instead, you call the convenience methods `hasFacetRefinement(name:value:)`, `addFacetRefinement(name:value:)`, `removeFacetRefinement(name:value:)` and `toggleFacetRefinement(name:value:)`.
+#### Facets
 
-The searcher also keeps track of which facets are disjunctive (`OR`) via the `disjunctiveFacets` property; all facets not listed in this property are considered to be conjunctive (`AND`).
+The search parameters maintain a list of refined values for every facet, called **facet refinements**. A facet refinement is the combination of an attribute name and a value. Optionally, the refinement can be negated (i.e. treated as exclusive rather than inclusive).
 
-When a search is triggered, the searcher will build the `facetFilters` according to the refinements and the conjunctive/disjunctive state.
+To edit the refinements, use the facet refinement handling methods, like `addFacetRefinement(name:value:)`, `removeFacetRefinement(name:value:)` and `toggleFacetRefinement(name:value:)`.
 
-**Note:** *You need to specify the list of all facets via the search query's `facets` parameter.*
+A given facet can be treated as either **conjunctive** (the default---refinements combined with an `AND` operator) or **disjunctive** (refinements combined with an `OR`). You can modify the conjunctive/disjunctive status of a facet by calling `setFacet(withName:disjunctive:)`.
 
-**Note:** *The search query's `facetFilters` parameter will be overridden by the searcher; any manually specified value will be lost.*
+When a search is triggered, the searcher will build the facet filters according to the refinements and the
+conjunctive/disjunctive state of each facet.
+
+**Note:** *You still need to specify the list of all facets via the `facets` search parameter.*
+
+**Note:** *The `filters` and `facetFilters` search parameters will be overridden by the facet refinements; any manually specified value will be lost.*
+
+
+#### Numeric filters
+
+The search parameters also provide tools to easily manipulate numeric filters, through the notion of **numeric refinements**. A numeric refinement is basically made of an attribute name (the left operand), a comparison operator and a value (right operand). Optionally, the expression can be negated.
+
+The numeric refinement handling methods work in a very similar fashion to the facet refinements (see above):
+
+- A given numeric attribute can be treated as either conjunctive (the default) or disjunctive. The conjunctive/disjunctive status is modified via `setNumeric(withName:disjunctive:)`.
+
+- Numeric refinements are edited via `addNumericRefinement(...)` and `removeNumericRefinement(...)`.
+
+**Note:** *The `filters` and `numericFilters` search parameters will be overridden by the numeric refinements; any manually specified value will be lost.*
 
 
 ### Events
@@ -170,18 +188,20 @@ You may subscribe to these notifications to react on different events without ha
 
 ## Highlighting
 
-The `HighlightRenderer` class is in charge of parsing highlight result values (as returned by the Search API in the `_highlightResults` attribute of every hit) and render them into a rich text string (an `NSAttributedString` instance).
+The `Highlighter` class is in charge of parsing highlight result values (as returned by the Search API in the `_highlightResults` attribute of every hit) and render them into a rich text string (an `NSAttributedString` instance).
 
 When you instantiate a highlight renderer, you specify a set of **text attributes** that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:
 
 ```swift
-let renderer = HighlightRenderer(highlightAttrs: [
+let renderer = Highlighter(highlightAttrs: [
     NSForegroundColorAttributeName: UIColor.red,
     NSBackgroundColorAttributeName: UIColor.yellow,
 ]
 ```
 
-By default, the renderer is set to recognized `<em>` tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value. **Note:** *In that case, make sure that it matches the values for `highlightPreTag` and `highlightPostTag` in your search query (or your index's default)!*
+By default, the renderer is set to recognized `<em>` tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value.
+
+**Note:** *In that case, make sure that it matches the values for `highlightPreTag` and `highlightPostTag` in your search query (or your index's default)!*
 
 ```swift
 renderer.preTag = "<mark>"

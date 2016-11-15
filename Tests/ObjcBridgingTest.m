@@ -39,7 +39,7 @@
 }
 
 - (void)testHighlightRenderer {
-    HighlightRenderer* renderer = [[HighlightRenderer alloc] initWithHighlightAttrs:@{ @"foo": @"bar" }];
+    Highlighter* renderer = [[Highlighter alloc] initWithHighlightAttrs:@{ @"foo": @"bar" }];
     renderer.preTag = @"<mark>";
     renderer.postTag = @"</mark>";
     renderer.caseSensitive = false;
@@ -54,16 +54,7 @@
     [searcher addResultHandler:^(SearchResults* results, NSError* error) {
         // Nothing to do.
     }];
-    searcher.disjunctiveFacets = @[ @"foo", @"bar" ];
-    [searcher setFacetWithName:@"bar" disjunctive:YES];
-    [searcher addFacetRefinementWithName:@"foo" value:@"xyz"];
-    XCTAssertTrue([searcher hasFacetRefinementWithName:@"foo" value:@"xyz"]);
-    [searcher removeFacetRefinementWithName:@"foo" value:@"xyz"];
-    XCTAssertFalse([searcher hasFacetRefinementWithName:@"foo" value:@"xyz"]);
-    [searcher toggleFacetRefinementWithName:@"foo" value:@"xyz"];
-    [searcher clearFacetRefinementsWithName:@"foo"];
-    [searcher clearFacetRefinements];
-    searcher.query = [[Query alloc] initWithQuery:@"text"];
+    searcher.params.query = @"text";
     [searcher search];
     XCTAssertTrue(searcher.hasPendingRequests);
     [searcher loadMore];
@@ -127,6 +118,31 @@
     XCTAssertNil([results rankingInfoAt:0]);
     XCTAssertNil([SearchResults highlightResultWithHit:JSON[@"hits"][0] path:@"foo"]);
     XCTAssertNil([SearchResults snippetResultWithHit:JSON[@"hits"][0] path:@"foo"]);
+}
+
+- (void)testSearchParameters {
+    SearchParameters* queryFilters = [[SearchParameters alloc] init];
+
+    [queryFilters clear];
+    
+    [queryFilters setFacetWithName:@"name" disjunctive:YES];
+    [queryFilters isDisjunctiveFacetWithName:@"name"];
+    [queryFilters addFacetRefinementWithName:@"name" value:@"value" inclusive:YES];
+    [queryFilters removeFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters hasFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters hasFacetRefinementsWithName:@"name"];
+    [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters clearFacetRefinements];
+    [queryFilters clearFacetRefinementsWithName:@"name"];
+    
+    [queryFilters setNumericWithName:@"name" disjunctive:YES];
+    [queryFilters isDisjunctiveNumericWithName:@"name"];
+    [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan value:@3 inclusive:YES];
+    [queryFilters removeNumericRefinementWithName:@"name" op:OperatorGreaterThanOrEqual value:@123.456 inclusive:NO];
+    [queryFilters hasNumericRefinementsWithName:@"name"];
+    [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
+    [queryFilters clearNumericRefinements];
+    [queryFilters clearNumericRefinementsWithName:@"name"];
 }
 
 @end

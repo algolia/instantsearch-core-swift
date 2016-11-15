@@ -35,7 +35,7 @@ public func ==(lhs: NSRange, rhs: NSRange) -> Bool {
 }
 
 
-class HighlightRendererTest: XCTestCase {
+class HighlighterTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -60,7 +60,7 @@ class HighlightRendererTest: XCTestCase {
     
     func testRender() {
         let attributes = ["foo": "bar"]
-        let renderer = HighlightRenderer(highlightAttrs: attributes)
+        let renderer = Highlighter(highlightAttrs: attributes)
         let result = renderer.render(text: "Woodstock is <em>Snoopy</em>'s friend")
         checkRanges(string: result, ranges: [
             NSMakeRange(0, 13): [:],
@@ -71,7 +71,7 @@ class HighlightRendererTest: XCTestCase {
     
     func testCustomMarkers() {
         let attributes = ["foo": "bar"]
-        let renderer = HighlightRenderer(highlightAttrs: attributes)
+        let renderer = Highlighter(highlightAttrs: attributes)
         renderer.preTag = "<mark>"
         renderer.postTag = "</mark>"
         let result = renderer.render(text: "Woodstock is <mark>Snoopy</mark>'s friend")
@@ -84,7 +84,7 @@ class HighlightRendererTest: XCTestCase {
 
     func testCaseSensitivity() {
         let attributes = ["foo": "bar"]
-        let renderer = HighlightRenderer(highlightAttrs: attributes)
+        let renderer = Highlighter(highlightAttrs: attributes)
         renderer.caseSensitive = true
         let result = renderer.render(text: "Woodstock is <EM>Snoopy</EM>'s <em>friend</em>")
         checkRanges(string: result, ranges: [

@@ -81,17 +81,14 @@ import Foundation
 
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
-        /// Search query.
-        ///
-        /// - Note: The page may be overridden when loading more content.
-        ///
-        var query: Query = Query()
+        /// Filters.
+        var params: SearchParameters = SearchParameters()
         
         /// List of facets to be treated as disjunctive facets. Defaults to the empty list.
-        var disjunctiveFacets: [String] = []
+        var disjunctiveFacets: [String] { return Array(params.disjunctiveFacets) }
         
         /// Initial page.
-        var initialPage: Int { return query.page != nil ? Int(query.page!) : 0 }
+        var initialPage: Int { return params.page != nil ? Int(params.page!) : 0 }
         
         /// Current page.
         var page: Int = 0
@@ -114,14 +111,14 @@ import Foundation
 
         /// Copy a state.
         init(copy: State) {
-            // WARNING: Query is not a value type (because of Objective-C bridgeability), so let's make sure to copy it.
-            self.query = Query(copy: copy.query)
-            self.disjunctiveFacets = copy.disjunctiveFacets
+            // WARNING: `SearchParameters` is not a value type (because of Objective-C bridgeability), so let's make
+            // sure to copy it.
+            self.params = SearchParameters(from: copy.params)
             self.page = copy.page
         }
         
         var description: String {
-            return "State#\(sequenceNumber){query=\(query), disjunctiveFacets=\(disjunctiveFacets), page=\(page)}"
+            return "State#\(sequenceNumber){params=\(params), disjunctiveFacets=\(disjunctiveFacets), page=\(page)}"
         }
     }
     
@@ -139,30 +136,10 @@ import Foundation
     ///
     private var resultHandlers: [ResultHandler] = []
     
-    /// The query that will be used for the next search.
+    /// Search parameters for the next query.
     ///
-    /// **Warning:** The value of `facetFilters` will be discarded and overridden by the `refinements` property.
-    @objc public var query: Query {
-        get { return nextState.query }
-        set { nextState.query = newValue }
-    }
-    
-    /// The disjunctive facets that will be used for the next search.
-    @objc public var disjunctiveFacets: [String] {
-        get { return nextState.disjunctiveFacets }
-        set { nextState.disjunctiveFacets = newValue }
-    }
-    
-    /// Facet refinements that will be used for the next search. Maps facet names to a list of refined values.
-    /// The format is the same as `Index.searchDisjunctiveFaceting()`.
-    ///
-    /// + Note: You are encouraged to use the helper methods to manipulate this property. See `hasFacetRefinement(_:value:)`,
-    /// `addFacetRefinement(_:value:)`, `removeFacetRefinement(_:value:)` and `toggleFacetRefinement(_:value:)`.
-    ///
-    /// + Warning: Any refinements specified here will override those manually specified in `query`.
-    ///
-    @objc public var refinements: [String: [String]] = [:]
-    
+    @objc public var params: SearchParameters { return nextState.params }
+
     // State management
     // ----------------
     
@@ -235,14 +212,12 @@ import Foundation
     }
     
     /// Reset the search state.
-    /// This resets the `query`, `disjunctiveFacets` and `refinements` properties. It also cancels any pending request.
+    /// This resets the `query`, `disjunctiveFacets` and `filters` properties. It also cancels any pending request.
     ///
     /// + Note: It does *not* remove registered result handlers.
     ///
     @objc public func reset() {
-        query = Query()
-        disjunctiveFacets.removeAll()
-        refinements.removeAll()
+        params.clear()
         cancelPendingRequests()
     }
     
@@ -289,7 +264,7 @@ import Foundation
             return false
         }
         // Must not load more if the results are outdated with respect to the currently on-going search.
-        if requestedState.query != receivedState.query {
+        if requestedState.params != receivedState.params {
             return false
         }
         return true
@@ -316,13 +291,13 @@ import Foundation
         nextSequenceNumber += 1
         
         // Build query.
-        let query = Query(copy: state.query)
-        query.page = UInt(state.page)
-        query.facetFilters = [] // NOTE: will be overridden below
+        let params = SearchParameters(from: state.params)
+        params.page = UInt(state.page)
+        params.facetFilters = [] // NOTE: will be overridden below
         
         // User info for notifications.
         let userInfo: [String: Any] = [
-            Searcher.notificationQueryKey: query,
+            Searcher.notificationParamsKey: params,
             Searcher.notificationSeqNoKey: currentSeqNo
         ]
         
@@ -355,16 +330,13 @@ import Foundation
         }
         if state.disjunctiveFacets.isEmpty {
             // All facets are conjunctive; build facet filters accordingly.
-            let queryHelper = QueryHelper(query: query)
-            for (facetName, values) in refinements {
-                for value in values {
-                    queryHelper.addConjunctiveFacetRefinement(FacetRefinement(name: facetName, value: value))
-                }
-            }
-            operation = index.search(query, completionHandler: completionHandler)
+            // TODO: Automate this?
+            params.facetFilters = params.buildFacetFilters()
+            operation = index.search(params, completionHandler: completionHandler)
         } else {
             // Facet filters are built directly by the disjunctive faceting search helper method.
-            operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
+            let refinements = params.buildFacetRefinements()
+            operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
         }
         self.pendingRequests[state.sequenceNumber] = operation
         
@@ -401,103 +373,6 @@ import Foundation
             userInfo[Searcher.errorNotificationErrorKey] = error
             NotificationCenter.default.post(name: Searcher.ErrorNotification, object: self, userInfo: userInfo)
         }
-    }
-    
-    // MARK: - Facets
-    
-    /// Set a given facet as disjunctive or conjunctive.
-    /// This is a convenience method to set the `disjunctiveFacets` property.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter disjunctive: true to treat this facet as disjunctive (`OR`), false to treat it as conjunctive
-    ///   (`AND`, the default).
-    ///
-    @objc public func setFacet(withName name: String, disjunctive: Bool) {
-        if disjunctive {
-            if !disjunctiveFacets.contains(name) {
-                disjunctiveFacets.append(name)
-            }
-        } else {
-            if let index = disjunctiveFacets.index(of: name) {
-                disjunctiveFacets.remove(at: index)
-            }
-        }
-    }
-    
-    /// Add a refinement for a given facet.
-    /// The refinement will be treated as conjunctive (`AND`) or disjunctive (`OR`) based on the facet's own
-    /// disjunctive/conjunctive status.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to add.
-    ///
-    @objc public func addFacetRefinement(name: String, value: String) {
-        if refinements[name] == nil {
-            refinements[name] = []
-        }
-        refinements[name]!.append(value)
-    }
-    
-    /// Remove a refinement for a given facet.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to remove.
-    ///
-    @objc public func removeFacetRefinement(name: String, value: String) {
-        if let index = refinements[name]?.index(of: value) {
-            refinements[name]?.remove(at: index)
-        }
-    }
-    
-    /// Test whether a facet has a refinement for a given value.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to look for.
-    /// - returns: true if the refinement exists, false otherwise.
-    ///
-    @objc public func hasFacetRefinement(name: String, value: String) -> Bool {
-        return refinements[name]?.contains(value) ?? false
-    }
-    
-    /// Test whether a facet has any refinement(s).
-    ///
-    /// - parameter name: The facet's name.
-    /// - returns: true if the facet has at least one refinment, false if it has none.
-    ///
-    @objc public func hasFacetRefinement(name: String) -> Bool {
-        if let facetRefinements = refinements[name] {
-            return !facetRefinements.isEmpty
-        } else {
-            return false
-        }
-    }
-    
-    /// Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
-    /// added.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to toggle.
-    ///
-    @objc public func toggleFacetRefinement(name: String, value: String) {
-        if hasFacetRefinement(name: name, value: value) {
-            removeFacetRefinement(name: name, value: value)
-        } else {
-            addFacetRefinement(name: name, value: value)
-        }
-    }
-    
-    /// Remove all refinements for all facets.
-    ///
-    @objc public func clearFacetRefinements() {
-        refinements.removeAll()
-    }
-    
-    /// Remove all refinements for a given facet.
-    ///
-    /// - parameter name: The facet's name.
-    ///
-    @objc public func clearFacetRefinements(name: String) {
-        refinements.removeValue(forKey: name)
     }
     
     // MARK: - Managing requests
@@ -554,9 +429,9 @@ import Foundation
     @objc public static let notificationSeqNoKey: String = "seqNo"
     
     /// Key containing the search query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
-    /// Type: `Query`.
+    /// Type: `SearchParameters`.
     ///
-    @objc public static let notificationQueryKey: String = "query"
+    @objc public static let notificationParamsKey: String = "params"
     
     /// Key containing the error in an `ErrorNotification`.
     /// Type: `Error`.
