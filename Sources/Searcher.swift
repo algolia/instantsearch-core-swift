@@ -64,9 +64,40 @@ import Foundation
 // ------------------------------------------------------------------------
 
 
+/// Delegate to a `Searcher`.
+///
+@objc public protocol SearcherDelegate {
+    /// Called when a response to a request has been received by a searcher.
+    /// Can be a success or an error, depending on which of `results` or `error` is non-nil.
+    ///
+    /// - parameter searcher: The `Searcher` instance that received a response.
+    /// - parameter results: The request's results, or `nil` in case of error.
+    /// - parameter error: The error that was encountered, or `nil` in case of success.
+    /// - parameter params: The search parameters of the request corresponding to the present response.
+    ///
+    @objc(searcher:didReceiveResults:error:forParams:)
+    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, params: SearchParameters)
+}
+
+
 /// Manages search on an Algolia index.
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
+///
+/// ### Handling results
+///
+/// There are three ways to handle responses to search requests issued by a `Searcher`. From the highest level to the
+/// lowest level, they are:
+///
+/// 1. Register a **result handler** block. It will be called each time a response is received, providing either the
+///    results (in case of success) or the error (in case of failure). You may register as many result handlers as
+///    necessary.
+///
+/// 2. Register a **delegate**. It provides additional information, such as the `Searcher` instance that received the
+///    response, and the search parameters that were used for the request. You may register at most one delegate.
+///
+/// 3. Listen for **notifications** issued by this searcher (using `NotificationCenter`). Notifications give you
+///    extra information, such as request sequence numbers, or whether requests are cancelled by the searcher.
 ///
 @objc public class Searcher: NSObject {
     
@@ -124,12 +155,19 @@ import Foundation
     
     // MARK: Properties
 
-    /// The index used by this search helper.
+    /// The index used by this searcher.
     ///
     /// + Note: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
     /// running. Depending on your use case, you might want to call `reset()` after changing the index.
     ///
     @objc public var index: Index
+    
+    /// The delegate to this searcher.
+    ///
+    /// + Warning: The delegate is not retained. It is the caller's responsibility to ensure that it remains valid for
+    ///            the lifetime of the searcher.
+    ///
+    public var delegate: SearcherDelegate?
     
     /// User callbacks for handling results.
     /// There should be at least one, but multiple handlers may be registered if necessary.
@@ -359,6 +397,8 @@ import Foundation
     }
     
     private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
+        // Notify delegate.
+        delegate?.searcher(self, didReceive: results, error: error, params: userInfo[Searcher.notificationParamsKey] as! SearchParameters)
         // Notify result handlers.
         for resultHandler in resultHandlers {
             resultHandler(results, error)
