@@ -276,7 +276,7 @@ import Foundation
             newNumericFilters[attributeName] = newFilters
         }
         self.numericRefinements = newNumericFilters
-        super.init(copy: copy)
+        super.init(parameters: copy.parameters)
     }
     
     /// Support for `NSCopying`.
@@ -355,7 +355,7 @@ import Foundation
         // Override the `filters` parameter with the current refinements.
         var parameters = self.parameters
         parameters["filters"] = buildFilters()
-        return Query.build(parameters: parameters)
+        return AbstractQuery.build(parameters: parameters)
     }
     
     /// Generate a filter expression from the current filters.
