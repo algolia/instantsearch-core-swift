@@ -28,6 +28,7 @@ var siteBuild = Metalsmith(__dirname)
         title: "AlgoliaSearch Helper for Swift",
         url: BASE_URL,
         version: "0.3",
+        github_url: "https://github.com/algolia/algoliasearch-helper-swift",
         time: new Date().getTime()
     })
     .source("src")
