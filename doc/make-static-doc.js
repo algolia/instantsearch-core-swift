@@ -24,7 +24,7 @@ var child_process = require("child_process");
 const BASE_URL = "https://community.algolia.com/algoliasearch-helper-swift";
 
 const VERSION = child_process.execSync(
-    "grep -E \"version\\s*=\\s*'[0-9.]+'\" ../AlgoliaSearch-Helper-Swift.podspec",
+    "grep -E \"version\\s*=\\s*'[0-9.]+'\" " + __dirname + "/../AlgoliaSearch-Helper-Swift.podspec",
     {
         "encoding": "UTF-8"
     }
