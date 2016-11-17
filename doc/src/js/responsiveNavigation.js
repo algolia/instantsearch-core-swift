@@ -1,25 +1,27 @@
+'use strict';
+
 function responsiveNavigation() {
-    let navigation = document.querySelector('.ac-nav');
-    let links = navigation.querySelectorAll('a');
-    let navigationAsSelect = document.createElement('select');
+  var navigation = document.querySelector('.ac-nav');
+  var links = navigation.querySelectorAll('li a');
+  var navigationAsSelect = document.createElement('select');
 
-    if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-      navigationAsSelect.classList.add('display-on-small', 'device');
-    } else {
-      navigationAsSelect.classList.add('display-on-small');
-    }
+  if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)) {
+    navigationAsSelect.classList.add('display-on-small', 'device');
+  } else {
+    navigationAsSelect.classList.add('display-on-small');
+  }
 
-    for( let i = 0; i<links.length; i++ ) {
-      let option = document.createElement('option');
-        option.text = links[i].title;
-        option.value = links[i].href;
-        option.selected = true;
-        navigationAsSelect.appendChild(option);
-    }
+  for (var i = 0; i < links.length; i++) {
+    var option = document.createElement('option');
+    option.text = links[i].title;
+    option.value = links[i].href;
+    option.selected = links[i].parentNode.classList.contains('active');
+    navigationAsSelect.appendChild(option);
+  }
 
-    navigation.appendChild(navigationAsSelect);
-    navigation.addEventListener('change', () => {
-        return window.location = e.target.value;
-    });
+  navigation.appendChild(navigationAsSelect);
+  navigation.addEventListener('change', function (e) {
+    return window.location = e.target.value;
+  });
 }
 responsiveNavigation();
