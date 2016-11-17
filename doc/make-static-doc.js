@@ -7,7 +7,7 @@ var layouts     = require('metalsmith-layouts');
 var rootPath    = require('metalsmith-rootpath');
 var serve       = require('metalsmith-serve');
 var watch       = require('metalsmith-watch');
-// var metallic    = require('metalsmith-metallic');
+var metallic    = require('metalsmith-metallic');
 var sitemap     = require('metalsmith-mapsite');
 var asset       = require('metalsmith-static');
 // var helpers     = require('metalsmith-register-helpers');
@@ -55,6 +55,8 @@ var siteBuild = Metalsmith(__dirname)
     //     src: './node_modules/foundation-sites/dist',
     //     dest: './deps/foundation-sites'
     // }))
+    // Syntax highlight code fragments.
+    .use(metallic())
     // Parse Markdown.
     .use(markdown())
     // // Register custom handlebars helpers.
