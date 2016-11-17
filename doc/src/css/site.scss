@@ -1458,9 +1458,8 @@ $aside_warning_border: 5px solid $brand-danger;
 // Main Content
 ////////////////////////////////
 .main-content {
-    // TODO: Use variables.
-    padding-left: 250px;
-    padding-right: 50px;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 .main-content {
     background-color: $white_color;
