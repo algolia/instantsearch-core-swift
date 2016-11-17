@@ -14,6 +14,7 @@ var asset       = require('metalsmith-static');
 var headingsid  = require('metalsmith-headings-identifier');
 // var file        = require('./plugins/file/index.js');
 var imagemin    = require('metalsmith-imagemin');
+var child_process = require("child_process");
 
 
 // var sassPaths = [
@@ -22,13 +23,20 @@ var imagemin    = require('metalsmith-imagemin');
 
 const BASE_URL = "https://community.algolia.com/algoliasearch-helper-swift";
 
+const VERSION = child_process.execSync(
+    "grep -E \"version\\s*=\\s*'[0-9.]+'\" ../AlgoliaSearch-Helper-Swift.podspec",
+    {
+        "encoding": "UTF-8"
+    }
+).split("'")[1];
+
 var siteBuild = Metalsmith(__dirname)
     // Allow for relative url generation.
     .metadata({
         title: "AlgoliaSearch Helper for Swift",
         url: BASE_URL,
-        version: "0.3",
         github_url: "https://github.com/algolia/algoliasearch-helper-swift",
+        version: VERSION,
         time: new Date().getTime()
     })
     .source("src")
