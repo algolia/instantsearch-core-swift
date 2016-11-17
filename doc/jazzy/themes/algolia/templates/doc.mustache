@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    {{> head}}
+
+    <!-- JAZZY:BEGIN -->
+    <title>{{name}} {{kind}} Reference</title>
+    <script src="{{path_to_root}}../js/jquery.min.js" defer></script>
+    <script src="{{path_to_root}}../js/jazzy.js" defer></script>
+    <!-- JAZZY:END -->
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,500,600' rel='stylesheet' type='text/css'>
+
+    <link href="{{path_to_root}}../css/site.css" rel="stylesheet" />
+</head>
+
+<body class="index">
+
+    {{> body-header}}
+
+    <div class="container">
+        {{>nav}}
+        <article class="main-content">
+            <section>
+                <section class="section">
+                    {{^hide_name}}<h1>{{name}}</h1>{{/hide_name}}
+                    {{#declaration}}
+                    <div class="declaration">
+                        <div class="language">
+                            {{{declaration}}}
+                        </div>
+                    </div>
+                    {{/declaration}}
+                    {{{overview}}}
+                </section>
+            {{> tasks}}
+            </section>
+        </article>
+    </div>
+
+    {{> body-footer}}
+
+</body>
+
+{{> scripts}}
+
+</html>

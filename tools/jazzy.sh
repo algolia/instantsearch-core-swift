@@ -21,6 +21,6 @@ github_url=$(get_podspec_field "homepage")
 module_version=$(get_podspec_field "version")
 
 cd "$MODULE_ROOT" && jazzy \
-    --theme "doc/themes/algolia" \
+    --theme "doc/jazzy/themes/algolia" \
     --module-version=$module_version \
     --github_url=$github_url
