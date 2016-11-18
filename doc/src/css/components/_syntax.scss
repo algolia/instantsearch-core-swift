@@ -70,4 +70,7 @@ $color-syntax-variable: darken(#13C4A5, 10%);
     .hljs-string {
         color: $color-syntax-literal-string;
     }
+    .hljs-literal {
+        color: $color-syntax-literal-number;
+    }
 }
