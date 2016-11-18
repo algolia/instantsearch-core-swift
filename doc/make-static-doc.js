@@ -44,7 +44,8 @@ var siteBuild = Metalsmith(__dirname)
     // Compile Sass stylesheets
     .use(sass({
         // includePaths: "css",
-        outputDir: "css/"
+        outputDir: "css/",
+        outputStyle: "expanded",
     }))
     // // Copy vendor assets to the build.
     // .use(asset({
