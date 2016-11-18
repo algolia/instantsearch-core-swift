@@ -5,10 +5,6 @@ layout: guide.mustache
 
 # Guide
 
-**Warning:** *Beta version. Until version 1.0 is released, incompatible changes may occur.*
-
-This is the **Algolia Search Helper** library for Swift, built on top of Algolia's [Swift API Client](https://github.com/algolia/algoliasearch-client-swift), using Algolia's [Search API](https://www.algolia.com/).
-
 *Table of Contents*
 
 1. [Overview](#overview)
