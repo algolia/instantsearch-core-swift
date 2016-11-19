@@ -13,6 +13,11 @@ $color-main-light: #F89C1D;
     padding: 12pt 24pt;
     h1 {
         font-size: 36pt;
+        text-shadow: 0em 0em 0.2em rgba(0, 0, 0, 0.2);
+        small {
+            color: mix(white, $color-main-light, 70%);
+            font-size: 70%;
+        }
     }
 }
 .homepage {
