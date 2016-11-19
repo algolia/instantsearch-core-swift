@@ -11,4 +11,4 @@ This is the **Algolia Search Helper** library for Swift, a companion to Algolia'
 
 ## Mobile-ready
 
-The Helper works out of the box on iOS. Of course, macOS, tvOS and watchOS are supported as well!
+The Helper works out of the box on **iOS**. Of course, **macOS**, **tvOS** and **watchOS** are supported as well!
