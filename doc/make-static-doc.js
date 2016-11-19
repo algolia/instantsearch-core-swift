@@ -29,7 +29,7 @@ const VERSION = child_process.execSync(
 var siteBuild = Metalsmith(__dirname)
     // Allow for relative url generation.
     .metadata({
-        title: "AlgoliaSearch Helper for Swift",
+        module_name: "AlgoliaSearch Helper for Swift",
         url: BASE_URL,
         github_url: "https://github.com/algolia/algoliasearch-helper-swift",
         version: VERSION,
