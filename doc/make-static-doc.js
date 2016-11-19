@@ -10,19 +10,14 @@ var watch       = require('metalsmith-watch');
 var metallic    = require('metalsmith-metallic');
 var sitemap     = require('metalsmith-mapsite');
 var asset       = require('metalsmith-static');
-// var helpers     = require('metalsmith-register-helpers');
 var headingsid  = require('metalsmith-headings-identifier');
-// var file        = require('./plugins/file/index.js');
 var imagemin    = require('metalsmith-imagemin');
 var child_process = require("child_process");
 
 
-// var sassPaths = [
-//     'node_modules/foundation-sites/scss'
-// ];
-
 const BASE_URL = "https://community.algolia.com/algoliasearch-helper-swift";
 
+// Retrieve version number from Podspec.
 const VERSION = child_process.execSync(
     "grep -E \"version\\s*=\\s*'[0-9.]+'\" " + __dirname + "/../AlgoliaSearch-Helper-Swift.podspec",
     {
@@ -30,6 +25,7 @@ const VERSION = child_process.execSync(
     }
 ).split("'")[1];
 
+// Configure Metalsmith.
 var siteBuild = Metalsmith(__dirname)
     // Allow for relative url generation.
     .metadata({
@@ -41,30 +37,16 @@ var siteBuild = Metalsmith(__dirname)
     })
     .source("src")
     .destination("build")
-    // Compile Sass stylesheets
+    // Compile Sass stylesheets.
     .use(sass({
-        // includePaths: "css",
         outputDir: "css/",
         outputStyle: "expanded",
     }))
-    // // Copy vendor assets to the build.
-    // .use(asset({
-    //     src: './node_modules/jquery/dist',
-    //     dest: './deps/jquery'
-    // }))
-    // .use(asset({
-    //     src: './node_modules/foundation-sites/dist',
-    //     dest: './deps/foundation-sites'
-    // }))
     // Syntax highlight code fragments.
     .use(metallic())
     // Parse Markdown.
     .use(markdown())
-    // // Register custom handlebars helpers.
-    // .use(helpers({
-    //     directory: 'helpers'
-    // }))
-    // TODO: What is it?
+    // Generate anchor IDs for headings.
     .use(headingsid())
     // Inject rootPath in every file metadata to be able to make all urls relative.
     // Allows to deploy the website in a directory.
