@@ -25,7 +25,7 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
     - `InstantSearch-Core-Offline-Swift.podspec`
 
-    - `Source/Info.plist` (or via Xcode, in the project settings)
+    - `Sources/Info.plist` (or via Xcode, in the project settings)
 
 - Update the **change log** (`ChangeLog.md`)
 
