@@ -1,12 +1,12 @@
 PODS:
-  - AlgoliaSearch-Client-Swift (4.0)
+  - AlgoliaSearch-Client-Swift (4.4)
 
 DEPENDENCIES:
-  - AlgoliaSearch-Client-Swift (~> 4.0)
+  - AlgoliaSearch-Client-Swift (~> 4.4)
 
 SPEC CHECKSUMS:
-  AlgoliaSearch-Client-Swift: ef8ae01f8c546d788777b107d79fe641c11a31ab
+  AlgoliaSearch-Client-Swift: 4ce299bf353d1d5b6a4b57db2a8bcbafc46f9fa7
 
-PODFILE CHECKSUM: 6b3bd661f3afb5e58850d55d80ab549c9609c0fa
+PODFILE CHECKSUM: e20142a65ab3752c84688594fafc14f9763e320c
 
-COCOAPODS: 1.1.0.rc.2
+COCOAPODS: 1.2.0.beta.1

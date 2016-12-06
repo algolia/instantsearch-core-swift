@@ -22,7 +22,7 @@
 //
 
 import AlgoliaSearch
-@testable import AlgoliaSearchHelper
+@testable import InstantSearchCore
 import XCTest
 
 class SearchResultsTest: XCTestCase {

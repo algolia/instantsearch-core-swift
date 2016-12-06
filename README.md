@@ -1,9 +1,9 @@
-Algolia Search Helper for Swift
-===============================
+InstantSearch Core for Swift
+============================
 
 **Warning:** *Beta version. Until version 1.0 is released, incompatible changes may occur.*
 
-This is the **Algolia Search Helper** library for Swift, built on top of Algolia's [Swift API Client](https://github.com/algolia/algoliasearch-client-swift), using Algolia's [Search API](https://www.algolia.com/).
+This is the **InstantSearch Core** library for Swift and Objective-C, built on top of Algolia's [Swift API Client](https://github.com/algolia/algoliasearch-client-swift), using Algolia's [Search API](https://www.algolia.com/). It works on macOS, iOS, tvOS and watchOS.
 
 *Table of Contents*
 
@@ -20,18 +20,18 @@ This is the **Algolia Search Helper** library for Swift, built on top of Algolia
 
 While the API Client covers the entire feature set of the Search API, it primarily aims at efficiency and simplicity. It does not provide much beyond raw search requests.
 
-However, when building a search UI, especially in an as-you-type setting, more work is usually required that just issuing requests. The Search Helper takes you one step further by focusing on **search session** management.
+However, when building a search UI, especially in an as-you-type setting, more work is usually required that just issuing requests. InstantSearch takes you one step further by focusing on **search session** management.
 
 
 ### Features
 
-The core of the Helper is the `Searcher` class, which manages searches on a given index. It takes care of properly **sequencing** received results (which may come out-of-order due to network unpredictability) and **pagination**. It also provides tools to manipulate **facet filters** and **numeric filters**.
+The central point of InstantSearch Core is the `Searcher` class, which manages searches on a given index. It takes care of properly **sequencing** received results (which may come out-of-order due to network unpredictability) and **pagination**. It also provides tools to manipulate **facet filters** and **numeric filters**.
 
 The `Highlighter` class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.
 
 Other miscellaneous utilities are provided as well.
 
-**Note:** *The Search Helper is UI-agnostic.* Although some features (such as highlight rendering) are only useful in the context of a user interface, the helper has no dependencies on a specific UI framework. For example, it can indiscriminately be used on iOS with UIKit or macOS with AppKit. It has no system dependencies beyond Foundation (see below).
+**Note:** *InstantSearch Core is UI-agnostic.* Although some features (such as highlight rendering) are only useful in the context of a user interface, the library itself has no dependencies on a specific UI framework. For example, it can indiscriminately be used on iOS with UIKit or macOS with AppKit. It has no system dependencies beyond Foundation (see below).
 
 
 ### Supported platforms
@@ -54,20 +54,20 @@ This module requires:
 
 ### Setup
 
-- Add a dependency on "AlgoliaSearch-Helper-Swift":
+- Add a dependency on "InstantSearch-Core-Swift":
 
-    - CocoaPods: add `pod 'AlgoliaSearch-Helper-Swift', '~> 1.0'` to your `Podfile`.
+    - CocoaPods: add `pod 'InstantSearch-Core-Swift', '~> 1.0'` to your `Podfile`.
 
     - Carthage is not supported. [Wondering why?](#why-is-carthage-not-supported)
 
-- Add `import AlgoliaSearchHelper` to your source files.
+- Add `import InstantSearchCore` to your source files.
 
-**Note:** If you wish to use the API Client's offline mode, use the subspec `AlgoliaSearch-Helper-Swift/Offline` instead.
+**Note:** If you wish to use the API Client's offline mode, use the subspec `InstantSearch-Core-Offline-Swift` instead.
 
 
 ### Examples
 
-A good start is our [Movie Search demo](https://github.com/algolia/algolia-swift-demo), which makes extensive use of the Search Helper.
+A good start is our [Movie Search demo](https://github.com/algolia/algolia-swift-demo), which makes extensive use of the InstantSearch.
 
 
 
@@ -232,4 +232,4 @@ The `Debouncer` class provides a generic way of debouncing calls. It can be usef
 
 ### Why is Carthage not supported?
 
-The Algolia Search Helper module has an external dependency (on the Algolia Search API Client). A package manager is therefore required to draw that dependency. Cocoapods works by adding special build phases to the Xcode project (in addition to creating a Pods project and an Xcode workspace referencing both). Because of this, it is technically impossible to support both Cocoapods and Carthage on the same project when it has external dependencies. Because Cocoapods has a wider audience than Carthage, we chose the former.
+InstantSearch Core has an external dependency (on the Algolia Search API Client). A package manager is therefore required to draw that dependency. Cocoapods works by adding special build phases to the Xcode project (in addition to creating a Pods project and an Xcode workspace referencing both). Because of this, it is technically impossible to support both Cocoapods and Carthage on the same project when it has external dependencies. Because Cocoapods has a wider audience than Carthage, we chose the former.

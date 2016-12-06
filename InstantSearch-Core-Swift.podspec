@@ -1,14 +1,14 @@
 Pod::Spec.new do |s|
     # Pod metadata
     # ------------
-    s.name = 'AlgoliaSearch-Helper-Swift'
-    s.module_name = 'AlgoliaSearchHelper'
+    s.name = 'InstantSearch-Core-Swift'
+    s.module_name = 'InstantSearchCore'
     s.version = '0.2'
     s.license = 'MIT'
-    s.summary = 'Helper for the Swift Algolia Search API client'
-    s.homepage = 'https://github.com/algolia/algoliasearch-helper-swift'
+    s.summary = 'Instant Search library for Swift by Algolia'
+    s.homepage = 'https://github.com/algolia/instantsearch-core-swift'
     s.author   = { 'Algolia' => 'contact@algolia.com' }
-    s.source = { :git => 'https://github.com/algolia/algoliasearch-helper-swift.git', :tag => s.version }
+    s.source = { :git => 'https://github.com/algolia/instantsearch-core-swift.git', :tag => s.version }
 
     # Build settings
     # --------------

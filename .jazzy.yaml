@@ -1,9 +1,9 @@
 # The Xcode project is not standalone: we need the Cocoapods-generated workspace to draw dependencies.
 xcodebuild_arguments:
     - -workspace
-    - AlgoliaSearchHelper.xcworkspace
+    - InstantSearchCore.xcworkspace
     - -scheme
-    - AlgoliaSearchHelper-iOS
+    - InstantSearchCore-iOS
 output: build/doc
 # Avoid putting the DocSet within the HTML docs.
 # WARNING: The path is relative to the output directory.

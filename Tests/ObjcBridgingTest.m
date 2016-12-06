@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 @import AlgoliaSearch;
-@import AlgoliaSearchHelper;
+@import InstantSearchCore;
 
 
 /// Check Objective-C bridging.

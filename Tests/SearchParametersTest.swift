@@ -21,7 +21,7 @@
 //  THE SOFTWARE.
 //
 
-@testable import AlgoliaSearchHelper
+@testable import InstantSearchCore
 import Foundation
 import XCTest
 
