@@ -1,6 +1,7 @@
 @import "../../components/colors";
 @import "../../components/default";
 @import "../../components/header-custom";
+@import "../../components/sidebar";
 @import "../../vendors/base";
 
 ////////////////////////////////
@@ -14,9 +15,7 @@ $link_color: #0088cc;
 $white_color: #fff;
 $light_gray_bg_color: #f2f2f2;
 $declaration_bg_color: #f9f9f9;
-$sidebar_bg_color: #f9f9f9;
 $declaration_title_language_color: #4b8afb;
-$sidebar_width: 230px;
 $content_wrapper_width: 980px;
 $content_top_offset: 70px;
 $content_body_margin: 16px;
@@ -42,15 +41,6 @@ $aside_warning_border: 5px solid $brand-danger;
 // ----------------------------------------------------------------------
 
 .sidebar {
-    background-color: $sidebar_bg_color;
-    border: $gray_border;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: fixed;
-    top: $header-height;
-    bottom: 0;
-    width: $sidebar_width;
-    word-wrap: normal;
     ul {
         padding: 0;
         padding-left: 12pt;
@@ -88,11 +78,6 @@ $aside_warning_border: 5px solid $brand-danger;
 // Main Content
 ////////////////////////////////
 $color-main-text-fg: #4A4A4C;
-.main-content {
-    padding-left: 12pt;
-    padding-right: 12pt;
-    min-height: 700px; // to avoid the footer to be too close to the top if the content is very short
-}
 .main-content {
     background-color: $white_color;
     color: $color-main-text-fg;
