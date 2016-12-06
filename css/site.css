@@ -804,6 +804,7 @@ a {
   color: #fff;
   background: #0a1724;
   font-weight: 400;
+  overflow: hidden;
 }
 
 .ac-nav a {
@@ -1460,7 +1461,7 @@ body {
   width: 50px;
   height: 3px;
   background-color: #ED5038;
-  top: 1.5em;
+  top: calc(100% + 6pt);
   left: 0;
   right: 0;
   margin: auto;

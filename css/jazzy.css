@@ -91,7 +91,7 @@ a {
   }
 }
 
-.sidebar-toggle:hover, .sidebar-toggle:active, .sidebar-toggle:focus {
+.sidebar-toggle:hover, .sidebar-toggle:active {
   background-color: #fb366e;
 }
 
