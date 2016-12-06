@@ -31,10 +31,10 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
 - **Dry-run the pod spec**: `pod lib lint` to check that everything's fine.
 
-- Check-out the `gh-pages` branch into the `build/doc` directory:
+- Check-out the `gh-pages` branch into the `doc/build` directory:
 
     ```
-    git clone git@github.com:algolia/instantsearch-core-swift -b gh-pages --single-branch build/doc
+    git clone git@github.com:algolia/instantsearch-core-swift -b gh-pages --single-branch doc/build
     ```
 
 - Generate the **documentation**: `tools/make-doc.sh`
@@ -63,7 +63,7 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
 - Edit the **release notes**: in GitHub, edit the tag and copy-paste the Change Log section for this release.
 
-- **Publish the reference documentation** to GitHub pages: `cd build/doc && git push`
+- **Publish the documentation** to GitHub pages: `cd doc/build && git push`
 
 - Update the **external documentation** if necessary:
 
