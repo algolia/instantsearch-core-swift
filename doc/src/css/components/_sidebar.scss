@@ -44,7 +44,7 @@ $sidebar_width: 230px;
     }
     color: white;
     background-color: #E0E0E0;
-    &:hover, &:active, &:focus {
+    &:hover, &:active {
         background-color: $red-pink;
     }
     transition-property: "background-color";

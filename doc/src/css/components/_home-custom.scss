@@ -49,7 +49,7 @@ $color-main-light: #F89C1D;
             width: 50px;
             height: 3px;
             background-color: $color-main-dark;
-            top: 1.5em;
+            top: calc(100% + 6pt);
             left: 0;
             right: 0;
             margin: auto;
