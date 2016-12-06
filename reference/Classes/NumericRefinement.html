@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>NumericRefinement Class Reference</title>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <link href="#" rel="icon" type="image/x-icon">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
+    <!-- Twitter card -->
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="@Algolia" name="twitter:site">
+    <meta content="@Algolia" name="twitter:creator">
+    <meta content="InstantSearch Core for Swift" name="twitter:title">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OpenGraph -->
+    <meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
+    <meta content="InstantSearch Core for Swift" property="og:title">
+    <meta content="#" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
+    <meta content="Algolia Community" property="og:site_name">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../css/site.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+
+</head>
+
+<body class="index">
+
+    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
+    <div class="ac-nav">
+        <div class="ac-nav-container">
+            <div class="ac-nav-brand">
+                <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
+                    <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
+                    <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
+                </a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="#" title="NumericRefinement Class">NumericRefinement Class</a>
+            </div>
+            <div class="ac-nav-menu">
+                <ul class="ac-nav-menu-list">
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../guide/index.html" title="Guide">Guide</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item active">
+                        <a href="../../reference/index.html" title="Reference">Reference</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../examples/index.html" title="Examples">Examples</a>
+                    </li>
+                    <li class="ac-nav-menu-list-icon">
+                        <a class="ac-icon" href="https://github.com/algolia/instantsearch-core-swift" title="GitHub repository">
+                            <span class="ac-icon ac-icon-github"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="sidebar">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="../Searching.html">Searching</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Searcher.html">Searcher</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchParameters.html">SearchParameters</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetRefinement.html">FacetRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement.html">NumericRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement/Operator.html">– Operator</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchResults.html">SearchResults</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/HighlightResult.html">HighlightResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SnippetResult.html">SnippetResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/RankingInfo.html">RankingInfo</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetStats.html">FacetStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetValue.html">FacetValue</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Utilities.html">Utilities</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Highlighter.html">Highlighter</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/Debouncer.html">Debouncer</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Enums.html">Other Enums</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Enums/MatchLevel.html">MatchLevel</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Protocols.html">Other Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearcherDelegate.html">SearcherDelegate</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+        <article class="main-content">
+            <section>
+                <section class="section">
+                    <h1>NumericRefinement</h1>
+                    <div class="declaration">
+                        <div class="language">
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">NumericRefinement</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                        </div>
+                    </div>
+                    <p>A refinement on a numeric attribute.</p>
+
+                </section>
+            <section class="section task-group-section">
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Types"></a>
+                  <a name="//apple_ref/swift/Section/Types" class="dashAnchor"></a>
+                  <a href="#/Types">
+                    <h3 class="section-name">Types</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:OC17InstantSearchCore17NumericRefinement8Operator"></a>
+                      <a name="//apple_ref/swift/Enum/Operator" class="dashAnchor"></a>
+                      <a class="token" href="#/s:OC17InstantSearchCore17NumericRefinement8Operator">Operator</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Comparison operator that can be applied to a numeric.</p>
+
+                          <a href="../Classes/NumericRefinement/Operator.html" class="slightly-smaller">See more</a>
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Properties"></a>
+                  <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                  <a href="#/Properties">
+                    <h3 class="section-name">Properties</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore17NumericRefinement4nameSS"></a>
+                      <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement4nameSS">name</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Name of the attribute to filter.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore17NumericRefinement2opOS0_8Operator"></a>
+                      <a name="//apple_ref/swift/Property/op" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement2opOS0_8Operator">op</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Operator to apply on the attribute.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement/Operator.html">Operator</a></span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore17NumericRefinement5valueCSo8NSNumber"></a>
+                      <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement5valueCSo8NSNumber">value</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Value to compare the attribute to.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore17NumericRefinement9inclusiveSb"></a>
+                      <a name="//apple_ref/swift/Property/inclusive" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement9inclusiveSb">inclusive</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Whether the filter is inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Initialization"></a>
+                  <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                  <a href="#/Initialization">
+                    <h3 class="section-name">Initialization</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorCSo8NSNumber9inclusiveSb_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(_:_:_:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorCSo8NSNumber9inclusiveSb_S0_">init(_:_:_:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Create a numeric refinement with the specified operator and operands.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement/Operator.html">Operator</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Name of the attribute to filter (first operand).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>op</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Comparison operator to apply.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Value to compare the attribute to (second operand).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>inclusive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Whether the filter is inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore17NumericRefinementcFT4copyS0__S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(copy:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinementcFT4copyS0__S0_">init(copy:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Create a copy of a numeric refinement.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">copy</span><span class="p">:</span> <span class="kt">NumericRefinement</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>copy</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Numeric refinement to copy.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Debug"></a>
+                  <a name="//apple_ref/swift/Section/Debug" class="dashAnchor"></a>
+                  <a href="#/Debug">
+                    <h3 class="section-name">Debug</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore17NumericRefinement11descriptionSS"></a>
+                      <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement11descriptionSS">description</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Undocumented</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">NumericRefinement</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Equatable"></a>
+                  <a name="//apple_ref/swift/Section/Equatable" class="dashAnchor"></a>
+                  <a href="#/Equatable">
+                    <h3 class="section-name">Equatable</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore17NumericRefinement7isEqualFGSqP__Sb"></a>
+                      <a name="//apple_ref/swift/Method/isEqual(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinement7isEqualFGSqP__Sb">isEqual(_:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Undocumented</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">NumericRefinement</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Methods"></a>
+                  <a name="//apple_ref/swift/Section/Methods" class="dashAnchor"></a>
+                  <a href="#/Methods">
+                    <h3 class="section-name">Methods</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore17NumericRefinement18buildNumericFilterFT_SS"></a>
+                      <a name="//apple_ref/swift/Method/buildNumericFilter()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinement18buildNumericFilterFT_SS">buildNumericFilter()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Build a numeric filter corresponding to this refinement.</p>
+
+<ul>
+<li><p>Deprecated: Please use <code><a href="../Classes/NumericRefinement.html#/s:FC17InstantSearchCore17NumericRefinement11buildFilterFT_SS">buildFilter()</a></code> instead.</p></li>
+</ul>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildNumericFilter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>A string suitable for use in <code>Query.numericFilters</code>.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore17NumericRefinement11buildFilterFT_SS"></a>
+                      <a name="//apple_ref/swift/Method/buildFilter()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinement11buildFilterFT_SS">buildFilter()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Build a filter corresponding to this refinement.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFilter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>An expression suitable for use in <code>Query.filters</code>.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+            </section>
+        </article>
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+</body>
+
+<script src="../../js/all.js"></script>
+<script src="../../js/responsiveNavigation.js" ></script>
+<script src="../../js/jquery.min.js" defer></script>
+<script src="../../js/jazzy.js" defer></script>
+<script src="../../js/sidebar.js" defer></script>
+
+</html>

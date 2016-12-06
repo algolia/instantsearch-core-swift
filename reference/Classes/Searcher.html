@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Searcher Class Reference</title>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <link href="#" rel="icon" type="image/x-icon">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
+    <!-- Twitter card -->
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="@Algolia" name="twitter:site">
+    <meta content="@Algolia" name="twitter:creator">
+    <meta content="InstantSearch Core for Swift" name="twitter:title">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OpenGraph -->
+    <meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
+    <meta content="InstantSearch Core for Swift" property="og:title">
+    <meta content="#" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
+    <meta content="Algolia Community" property="og:site_name">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../css/site.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+
+</head>
+
+<body class="index">
+
+    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
+    <div class="ac-nav">
+        <div class="ac-nav-container">
+            <div class="ac-nav-brand">
+                <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
+                    <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
+                    <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
+                </a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="#" title="Searcher Class">Searcher Class</a>
+            </div>
+            <div class="ac-nav-menu">
+                <ul class="ac-nav-menu-list">
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../guide/index.html" title="Guide">Guide</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item active">
+                        <a href="../../reference/index.html" title="Reference">Reference</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../examples/index.html" title="Examples">Examples</a>
+                    </li>
+                    <li class="ac-nav-menu-list-icon">
+                        <a class="ac-icon" href="https://github.com/algolia/instantsearch-core-swift" title="GitHub repository">
+                            <span class="ac-icon ac-icon-github"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="sidebar">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="../Searching.html">Searching</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Searcher.html">Searcher</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchParameters.html">SearchParameters</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetRefinement.html">FacetRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement.html">NumericRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement/Operator.html">– Operator</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchResults.html">SearchResults</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/HighlightResult.html">HighlightResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SnippetResult.html">SnippetResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/RankingInfo.html">RankingInfo</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetStats.html">FacetStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetValue.html">FacetValue</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Utilities.html">Utilities</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Highlighter.html">Highlighter</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/Debouncer.html">Debouncer</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Enums.html">Other Enums</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Enums/MatchLevel.html">MatchLevel</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Protocols.html">Other Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearcherDelegate.html">SearcherDelegate</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+        <article class="main-content">
+            <section>
+                <section class="section">
+                    <h1>Searcher</h1>
+                    <div class="declaration">
+                        <div class="language">
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Searcher</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                        </div>
+                    </div>
+                    <p>Manages search on an Algolia index.</p>
+
+<p>The purpose of this class is to maintain a state between searches and handle pagination.</p>
+
+<p><a href='#handling-results' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='handling-results'>Handling results</h3></p>
+
+<p>There are three ways to handle responses to search requests issued by a <code>Searcher</code>. From the highest level to the
+lowest level, they are:</p>
+
+<ol>
+<li><p>Register a <strong>result handler</strong> block. It will be called each time a response is received, providing either the
+results (in case of success) or the error (in case of failure). You may register as many result handlers as
+necessary.</p></li>
+<li><p>Register a <strong>delegate</strong>. It provides additional information, such as the <code>Searcher</code> instance that received the
+response, and the search parameters that were used for the request. You may register at most one delegate.</p></li>
+<li><p>Listen for <strong>notifications</strong> issued by this searcher (using <code>NotificationCenter</code>). Notifications give you
+extra information, such as request sequence numbers, or whether requests are cancelled by the searcher.</p></li>
+</ol>
+
+                </section>
+            <section class="section task-group-section">
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Types"></a>
+                  <a name="//apple_ref/swift/Section/Types" class="dashAnchor"></a>
+                  <a href="#/Types">
+                    <h3 class="section-name">Types</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:C17InstantSearchCore8Searcher13ResultHandler"></a>
+                      <a name="//apple_ref/swift/Alias/ResultHandler" class="dashAnchor"></a>
+                      <a class="token" href="#/s:C17InstantSearchCore8Searcher13ResultHandler">ResultHandler</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Handler for search results.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">ResultHandler</span> <span class="o">=</span> <span class="kd">@convention(block)</span> <span class="p">(</span><span class="n">_</span> <span class="nv">results</span><span class="p">:</span> <span class="kt"><a href="../Classes/SearchResults.html">SearchResults</a></span><span class="p">?,</span> <span class="n">_</span> <span class="nv">error</span><span class="p">:</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>results</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The results (in case of success).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>error</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The error (in case of failure).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Properties"></a>
+                  <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                  <a href="#/Properties">
+                    <h3 class="section-name">Properties</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore8Searcher5indexC13AlgoliaSearch5Index"></a>
+                      <a name="//apple_ref/swift/Property/index" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore8Searcher5indexC13AlgoliaSearch5Index">index</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>The index used by this searcher.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Modifying the index doesn&rsquo;t alter the searcher&rsquo;s state. In particular, pending requests are left
+running. Depending on your use case, you might want to call <code><a href="../Classes/Searcher.html#/s:FC17InstantSearchCore8Searcher5resetFT_T_">reset()</a></code> after changing the index.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Index</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore8Searcher8delegateGSqPS_16SearcherDelegate__"></a>
+                      <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore8Searcher8delegateGSqPS_16SearcherDelegate__">delegate</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>The delegate to this searcher.</p>
+
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    The delegate is not retained. It is the caller&rsquo;s responsibility to ensure that it remains valid for
+       the lifetime of the searcher.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/SearcherDelegate.html">SearcherDelegate</a></span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore8Searcher6paramsCS_16SearchParameters"></a>
+                      <a name="//apple_ref/swift/Property/params" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore8Searcher6paramsCS_16SearchParameters">params</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Search parameters for the next query.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">params</span><span class="p">:</span> <span class="kt"><a href="../Classes/SearchParameters.html">SearchParameters</a></span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Initialization,%20termination"></a>
+                  <a name="//apple_ref/swift/Section/Initialization, termination" class="dashAnchor"></a>
+                  <a href="#/Initialization,%20termination">
+                    <h3 class="section-name">Initialization, termination</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8SearchercFT5indexC13AlgoliaSearch5Index_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(index:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8SearchercFT5indexC13AlgoliaSearch5Index_S0_">init(index:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Create a new searcher targeting the specified index.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Index</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>index</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The index to target when searching.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8SearchercFT5indexC13AlgoliaSearch5Index13resultHandlerbTGSqCS_13SearchResults_GSqPs5Error___T__S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(index:resultHandler:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8SearchercFT5indexC13AlgoliaSearch5Index13resultHandlerbTGSqCS_13SearchResults_GSqPs5Error___T__S0_">init(index:resultHandler:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Create a new searcher targeting the specified index and register a result handler with it.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">Index</span><span class="p">,</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Classes/Searcher.html#/s:C17InstantSearchCore8Searcher13ResultHandler">ResultHandler</a></span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>index</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The index to target when searching.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>resultHandler</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The result handler to register.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher16addResultHandlerFbTGSqCS_13SearchResults_GSqPs5Error___T_T_"></a>
+                      <a name="//apple_ref/swift/Method/addResultHandler(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher16addResultHandlerFbTGSqCS_13SearchResults_GSqPs5Error___T_T_">addResultHandler(_:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Register a result handler with this searcher.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Because of the way closures are handled in Swift, the handler cannot be removed.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addResultHandler</span><span class="p">(</span><span class="n">_</span> <span class="nv">resultHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Classes/Searcher.html#/s:C17InstantSearchCore8Searcher13ResultHandler">ResultHandler</a></span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher5resetFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/reset()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher5resetFT_T_">reset()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Reset the search state.
+This resets the <code>query</code>, <code>disjunctiveFacets</code> and <code>filters</code> properties. It also cancels any pending request.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    It does <em>not</em> remove registered result handlers.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">reset</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Search"></a>
+                  <a name="//apple_ref/swift/Section/Search" class="dashAnchor"></a>
+                  <a href="#/Search">
+                    <h3 class="section-name">Search</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher6searchFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/search()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher6searchFT_T_">search()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Search using the current settings.
+This uses the current value for <code>query</code>, <code>disjunctiveFacets</code> and <code>refinements</code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">search</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher8loadMoreFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/loadMore()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher8loadMoreFT_T_">loadMore()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Load more content, if possible.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">loadMore</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Managing%20requests"></a>
+                  <a name="//apple_ref/swift/Section/Managing requests" class="dashAnchor"></a>
+                  <a href="#/Managing%20requests">
+                    <h3 class="section-name">Managing requests</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore8Searcher18hasPendingRequestsSb"></a>
+                      <a name="//apple_ref/swift/Property/hasPendingRequests" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore8Searcher18hasPendingRequestsSb">hasPendingRequests</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Indicates whether there are any pending requests.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">hasPendingRequests</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher21cancelPendingRequestsFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/cancelPendingRequests()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher21cancelPendingRequestsFT_T_">cancelPendingRequests()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Cancel all pending requests.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">cancelPendingRequests</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher13cancelRequestFT5seqNoSi_T_"></a>
+                      <a name="//apple_ref/swift/Method/cancelRequest(seqNo:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher13cancelRequestFT5seqNoSi_T_">cancelRequest(seqNo:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Cancel a specific request.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">cancelRequest</span><span class="p">(</span><span class="nv">seqNo</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>seqNo</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The request’s sequence number.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Notifications"></a>
+                  <a name="//apple_ref/swift/Section/Notifications" class="dashAnchor"></a>
+                  <a href="#/Notifications">
+                    <h3 class="section-name">Notifications</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher18SearchNotificationVCSo14NSNotification4Name"></a>
+                      <a name="//apple_ref/swift/Variable/SearchNotification" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher18SearchNotificationVCSo14NSNotification4Name">SearchNotification</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Notification sent when a request is sent through the API Client.
+This can be either on <code><a href="../Classes/Searcher.html#/s:FC17InstantSearchCore8Searcher6searchFT_T_">search()</a></code> or <code><a href="../Classes/Searcher.html#/s:FC17InstantSearchCore8Searcher8loadMoreFT_T_">loadMore()</a></code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">SearchNotification</span> <span class="o">=</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="p">(</span><span class="s">"search"</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher18ResultNotificationVCSo14NSNotification4Name"></a>
+                      <a name="//apple_ref/swift/Variable/ResultNotification" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher18ResultNotificationVCSo14NSNotification4Name">ResultNotification</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Notification sent when a successful response is received from the API Client.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ResultNotification</span> <span class="o">=</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="p">(</span><span class="s">"result"</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher28resultNotificationResultsKeySS"></a>
+                      <a name="//apple_ref/swift/Variable/resultNotificationResultsKey" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher28resultNotificationResultsKeySS">resultNotificationResultsKey</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Key containing the search results in a <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18ResultNotificationVCSo14NSNotification4Name">ResultNotification</a></code>.
+Type: <code><a href="../Classes/SearchResults.html">SearchResults</a></code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">resultNotificationResultsKey</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"results"</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher17ErrorNotificationVCSo14NSNotification4Name"></a>
+                      <a name="//apple_ref/swift/Variable/ErrorNotification" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher17ErrorNotificationVCSo14NSNotification4Name">ErrorNotification</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Notification sent when an erroneous response is received from the API Client.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">ErrorNotification</span> <span class="o">=</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="p">(</span><span class="s">"error"</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher20notificationSeqNoKeySS"></a>
+                      <a name="//apple_ref/swift/Variable/notificationSeqNoKey" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher20notificationSeqNoKeySS">notificationSeqNoKey</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Key containing the request sequence number in a <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18SearchNotificationVCSo14NSNotification4Name">SearchNotification</a></code>, <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18ResultNotificationVCSo14NSNotification4Name">ResultNotification</a></code>, <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher17ErrorNotificationVCSo14NSNotification4Name">ErrorNotification</a></code>
+or <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18CancelNotificationVCSo14NSNotification4Name">CancelNotification</a></code>. The sequence number uniquely identifies the request within a given <code>Searcher</code> instance.
+Type: <code>Int</code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">notificationSeqNoKey</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"seqNo"</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher21notificationParamsKeySS"></a>
+                      <a name="//apple_ref/swift/Variable/notificationParamsKey" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher21notificationParamsKeySS">notificationParamsKey</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Key containing the search query in a <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18SearchNotificationVCSo14NSNotification4Name">SearchNotification</a></code>, <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18ResultNotificationVCSo14NSNotification4Name">ResultNotification</a></code> or <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher17ErrorNotificationVCSo14NSNotification4Name">ErrorNotification</a></code>.
+Type: <code><a href="../Classes/SearchParameters.html">SearchParameters</a></code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">notificationParamsKey</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"params"</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher25errorNotificationErrorKeySS"></a>
+                      <a name="//apple_ref/swift/Variable/errorNotificationErrorKey" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher25errorNotificationErrorKeySS">errorNotificationErrorKey</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Key containing the error in an <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher17ErrorNotificationVCSo14NSNotification4Name">ErrorNotification</a></code>.
+Type: <code>Error</code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">errorNotificationErrorKey</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"error"</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:ZvC17InstantSearchCore8Searcher18CancelNotificationVCSo14NSNotification4Name"></a>
+                      <a name="//apple_ref/swift/Variable/CancelNotification" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore8Searcher18CancelNotificationVCSo14NSNotification4Name">CancelNotification</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Notification sent when a request is cancelled by the searcher.
+The result handler will not be called for cancelled requests, nor will any <code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher18ResultNotificationVCSo14NSNotification4Name">ResultNotification</a></code> or
+<code><a href="../Classes/Searcher.html#/s:ZvC17InstantSearchCore8Searcher17ErrorNotificationVCSo14NSNotification4Name">ErrorNotification</a></code> be posted, so this is your only chance of being informed of cancelled requests.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">CancelNotification</span> <span class="o">=</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="p">(</span><span class="s">"cancel"</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+            </section>
+        </article>
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+</body>
+
+<script src="../../js/all.js"></script>
+<script src="../../js/responsiveNavigation.js" ></script>
+<script src="../../js/jquery.min.js" defer></script>
+<script src="../../js/jazzy.js" defer></script>
+<script src="../../js/sidebar.js" defer></script>
+
+</html>

@@ -1,0 +1,103 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 44,
+      "symbol": "FacetRefinement.init(name:value:inclusive:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 50,
+      "symbol": "FacetRefinement.init(copy:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 58,
+      "symbol": "FacetRefinement.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 64,
+      "symbol": "FacetRefinement.isEqual(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 113,
+      "symbol": "NumericRefinement.Operator.lessThan",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 114,
+      "symbol": "NumericRefinement.Operator.lessThanOrEqual",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 115,
+      "symbol": "NumericRefinement.Operator.equal",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 116,
+      "symbol": "NumericRefinement.Operator.notEqual",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 117,
+      "symbol": "NumericRefinement.Operator.greaterThanOrEqual",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 118,
+      "symbol": "NumericRefinement.Operator.greaterThan",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 175,
+      "symbol": "NumericRefinement.description",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 181,
+      "symbol": "NumericRefinement.isEqual(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
+      "line": 317,
+      "symbol": "SearchParameters.isEqual(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchProgressController.swift",
+      "line": 75,
+      "symbol": "SearchProgressController.init(searcher:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift"
+}

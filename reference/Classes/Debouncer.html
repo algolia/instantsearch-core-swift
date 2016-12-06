@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Debouncer Class Reference</title>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <link href="#" rel="icon" type="image/x-icon">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
+    <!-- Twitter card -->
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="@Algolia" name="twitter:site">
+    <meta content="@Algolia" name="twitter:creator">
+    <meta content="InstantSearch Core for Swift" name="twitter:title">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OpenGraph -->
+    <meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
+    <meta content="InstantSearch Core for Swift" property="og:title">
+    <meta content="#" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
+    <meta content="Algolia Community" property="og:site_name">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../css/site.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+
+</head>
+
+<body class="index">
+
+    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
+    <div class="ac-nav">
+        <div class="ac-nav-container">
+            <div class="ac-nav-brand">
+                <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
+                    <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
+                    <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
+                </a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="#" title="Debouncer Class">Debouncer Class</a>
+            </div>
+            <div class="ac-nav-menu">
+                <ul class="ac-nav-menu-list">
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../guide/index.html" title="Guide">Guide</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item active">
+                        <a href="../../reference/index.html" title="Reference">Reference</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../examples/index.html" title="Examples">Examples</a>
+                    </li>
+                    <li class="ac-nav-menu-list-icon">
+                        <a class="ac-icon" href="https://github.com/algolia/instantsearch-core-swift" title="GitHub repository">
+                            <span class="ac-icon ac-icon-github"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="sidebar">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="../Searching.html">Searching</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Searcher.html">Searcher</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchParameters.html">SearchParameters</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetRefinement.html">FacetRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement.html">NumericRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement/Operator.html">– Operator</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchResults.html">SearchResults</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/HighlightResult.html">HighlightResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SnippetResult.html">SnippetResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/RankingInfo.html">RankingInfo</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetStats.html">FacetStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetValue.html">FacetValue</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Utilities.html">Utilities</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Highlighter.html">Highlighter</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/Debouncer.html">Debouncer</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Enums.html">Other Enums</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Enums/MatchLevel.html">MatchLevel</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Protocols.html">Other Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearcherDelegate.html">SearcherDelegate</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+        <article class="main-content">
+            <section>
+                <section class="section">
+                    <h1>Debouncer</h1>
+                    <div class="declaration">
+                        <div class="language">
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Debouncer</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+
+                        </div>
+                    </div>
+                    <p>Merges multiple calls into a single one.</p>
+
+<p>The debouncer works by delaying every call by a given delay; if another call happens before the delay is expired,
+the timer is reset and the first call is ignored. When the delay expires, the last call is fired.</p>
+
+                </section>
+            <section class="section task-group-section">
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Types"></a>
+                  <a name="//apple_ref/swift/Section/Types" class="dashAnchor"></a>
+                  <a href="#/Types">
+                    <h3 class="section-name">Types</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:C17InstantSearchCore9Debouncer13DebouncedCall"></a>
+                      <a name="//apple_ref/swift/Alias/DebouncedCall" class="dashAnchor"></a>
+                      <a class="token" href="#/s:C17InstantSearchCore9Debouncer13DebouncedCall">DebouncedCall</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Signature of calls passed to a <code>Debouncer</code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">DebouncedCall</span> <span class="o">=</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Properties"></a>
+                  <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                  <a href="#/Properties">
+                    <h3 class="section-name">Properties</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore9Debouncer5delaySd"></a>
+                      <a name="//apple_ref/swift/Property/delay" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore9Debouncer5delaySd">delay</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Amount of time by which calls will be delayed before being fired.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">delay</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Initialization"></a>
+                  <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                  <a href="#/Initialization">
+                    <h3 class="section-name">Initialization</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore9DebouncercFT5delaySd_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(delay:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore9DebouncercFT5delaySd_S0_">init(delay:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Init a debouncer with a given delay.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">delay</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>delay</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The delay by which to debounce calls.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Methods"></a>
+                  <a name="//apple_ref/swift/Section/Methods" class="dashAnchor"></a>
+                  <a href="#/Methods">
+                    <h3 class="section-name">Methods</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore9Debouncer4callFFT_T_T_"></a>
+                      <a name="//apple_ref/swift/Method/call(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore9Debouncer4callFFT_T_T_">call(_:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Register another call.
+It will be fired after the delay has expired, unless another call has been made before that.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">call</span><span class="p">(</span><span class="n">_</span> <span class="nv">block</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Classes/Debouncer.html#/s:C17InstantSearchCore9Debouncer13DebouncedCall">DebouncedCall</a></span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>block</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The call to debounce.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+            </section>
+        </article>
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+</body>
+
+<script src="../../js/all.js"></script>
+<script src="../../js/responsiveNavigation.js" ></script>
+<script src="../../js/jquery.min.js" defer></script>
+<script src="../../js/jazzy.js" defer></script>
+<script src="../../js/sidebar.js" defer></script>
+
+</html>

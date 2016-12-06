@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>SearchParameters Class Reference</title>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <link href="#" rel="icon" type="image/x-icon">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
+    <!-- Twitter card -->
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="@Algolia" name="twitter:site">
+    <meta content="@Algolia" name="twitter:creator">
+    <meta content="InstantSearch Core for Swift" name="twitter:title">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OpenGraph -->
+    <meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
+    <meta content="InstantSearch Core for Swift" property="og:title">
+    <meta content="#" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
+    <meta content="Algolia Community" property="og:site_name">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../css/site.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
+
+</head>
+
+<body class="index">
+
+    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
+    <div class="ac-nav">
+        <div class="ac-nav-container">
+            <div class="ac-nav-brand">
+                <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
+                    <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
+                    <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
+                </a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="#" title="SearchParameters Class">SearchParameters Class</a>
+            </div>
+            <div class="ac-nav-menu">
+                <ul class="ac-nav-menu-list">
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../guide/index.html" title="Guide">Guide</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item active">
+                        <a href="../../reference/index.html" title="Reference">Reference</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../../examples/index.html" title="Examples">Examples</a>
+                    </li>
+                    <li class="ac-nav-menu-list-icon">
+                        <a class="ac-icon" href="https://github.com/algolia/instantsearch-core-swift" title="GitHub repository">
+                            <span class="ac-icon ac-icon-github"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="sidebar">
+          <ul class="nav-groups">
+            <li class="nav-group-name">
+              <a href="../Searching.html">Searching</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Searcher.html">Searcher</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchParameters.html">SearchParameters</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetRefinement.html">FacetRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement.html">NumericRefinement</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/NumericRefinement/Operator.html">– Operator</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchResults.html">SearchResults</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/HighlightResult.html">HighlightResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SnippetResult.html">SnippetResult</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/RankingInfo.html">RankingInfo</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetStats.html">FacetStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetValue.html">FacetValue</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Utilities.html">Utilities</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/Highlighter.html">Highlighter</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/Debouncer.html">Debouncer</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Enums.html">Other Enums</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Enums/MatchLevel.html">MatchLevel</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Protocols.html">Other Protocols</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Protocols/SearcherDelegate.html">SearcherDelegate</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+        <article class="main-content">
+            <section>
+                <section class="section">
+                    <h1>SearchParameters</h1>
+                    <div class="declaration">
+                        <div class="language">
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">SearchParameters</span><span class="p">:</span> <span class="kt">Query</span></code></pre>
+
+                        </div>
+                    </div>
+                    <p>A high-level representation of a query&rsquo;s filter.</p>
+
+<p>This class allows manipulating facet and numeric filters individually, then combining them into a string
+suitable for use in <code>Query.filters</code>.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Tags are not handled. Please use facets instead, as they are more powerful.
+
+</div>
+
+                </section>
+            <section class="section task-group-section">
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Properties"></a>
+                  <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                  <a href="#/Properties">
+                    <h3 class="section-name">Properties</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore16SearchParameters17disjunctiveFacetsGVs3SetSS_"></a>
+                      <a name="//apple_ref/swift/Property/disjunctiveFacets" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore16SearchParameters17disjunctiveFacetsGVs3SetSS_">disjunctiveFacets</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Facets that will be treated as disjunctive.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">disjunctiveFacets</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore16SearchParameters16facetRefinementsGVs10DictionarySSGSaCS_15FacetRefinement__"></a>
+                      <a name="//apple_ref/swift/Property/facetRefinements" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore16SearchParameters16facetRefinementsGVs10DictionarySSGSaCS_15FacetRefinement__">facetRefinements</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Facet refinements. Maps facet names to a list of refined values.
+The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">facetRefinements</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/FacetRefinement.html">FacetRefinement</a></span><span class="p">]]</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore16SearchParameters19disjunctiveNumericsGVs3SetSS_"></a>
+                      <a name="//apple_ref/swift/Property/disjunctiveNumerics" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore16SearchParameters19disjunctiveNumericsGVs3SetSS_">disjunctiveNumerics</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Numeric attributes that will be treated as disjunctive.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">disjunctiveNumerics</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore16SearchParameters18numericRefinementsGVs10DictionarySSGSaCS_17NumericRefinement__"></a>
+                      <a name="//apple_ref/swift/Property/numericRefinements" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore16SearchParameters18numericRefinementsGVs10DictionarySSGSaCS_17NumericRefinement__">numericRefinements</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Numeric filters. Maps attribute names to a list of filters.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">numericRefinements</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="p">]]</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Initialization"></a>
+                  <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                  <a href="#/Initialization">
+                    <h3 class="section-name">Initialization</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameterscFT_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameterscFT_S0_">init()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Create new, empty search parameters.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameterscFT4fromS0__S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(from:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameterscFT4fromS0__S0_">init(from:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Create a copy of given search parameters.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">from</span> <span class="nv">copy</span><span class="p">:</span> <span class="kt">SearchParameters</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>copy</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The parameters to copy from.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters4copyFT4withGSqV10ObjectiveC6NSZone__P_"></a>
+                      <a name="//apple_ref/swift/Method/copy(with:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters4copyFT4withGSqV10ObjectiveC6NSZone__P_">copy(with:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Support for <code>NSCopying</code>.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Primarily intended for Objective-C use. Swift coders should use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameterscFT4fromS0__S0_">init(from:)</a></code>.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="k">override</span> <span class="n">open</span> <span class="kd">func</span> <span class="nf">copy</span><span class="p">(</span><span class="n">with</span> <span class="nv">zone</span><span class="p">:</span> <span class="kt">NSZone</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Any</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Global%20state%20management"></a>
+                  <a name="//apple_ref/swift/Section/Global state management" class="dashAnchor"></a>
+                  <a href="#/Global%20state%20management">
+                    <h3 class="section-name">Global state management</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters5clearFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/clear()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters5clearFT_T_">clear()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Reset to an empty state.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="k">override</span> <span class="n">open</span> <span class="kd">func</span> <span class="nf">clear</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters16clearRefinementsFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/clearRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters16clearRefinementsFT_T_">clearRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Clear all facet and numeric refinements.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearRefinements</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters14hasRefinementsFT_Sb"></a>
+                      <a name="//apple_ref/swift/Method/hasRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters14hasRefinementsFT_Sb">hasRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether at least one refinement (facet or numeric) is defined.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasRefinements</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if at least one facet or one numeric refinement is defined, false otherwise.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Equatable"></a>
+                  <a name="//apple_ref/swift/Section/Equatable" class="dashAnchor"></a>
+                  <a href="#/Equatable">
+                    <h3 class="section-name">Equatable</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters7isEqualFGSqP__Sb"></a>
+                      <a name="//apple_ref/swift/Method/isEqual(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters7isEqualFGSqP__Sb">isEqual(_:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Undocumented</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">SearchParameters</span><span class="p">:</span> <span class="kt">Query</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Generate%20filters"></a>
+                  <a name="//apple_ref/swift/Section/Generate filters" class="dashAnchor"></a>
+                  <a href="#/Generate%20filters">
+                    <h3 class="section-name">Generate filters</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters5buildFT_SS"></a>
+                      <a name="//apple_ref/swift/Method/build()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters5buildFT_SS">build()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="k">override</span> <span class="n">open</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters12buildFiltersFT_GSqSS_"></a>
+                      <a name="//apple_ref/swift/Method/buildFilters()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters12buildFiltersFT_GSqSS_">buildFilters()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Generate a filter expression from the current filters.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFilters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be nil if no refinements are being used.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21buildFacetRefinementsFT_GVs10DictionarySSGSaSS__"></a>
+                      <a name="//apple_ref/swift/Method/buildFacetRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21buildFacetRefinementsFT_GVs10DictionarySSGSaSS__">buildFacetRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Generate facet refinements from the current filters.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFacetRefinements</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]]</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>Facet refinements suitable for use with <code>Index.searchDisjunctiveFaceting(...)</code>.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters17buildFacetFiltersFT_GSaP__"></a>
+                      <a name="//apple_ref/swift/Method/buildFacetFilters()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters17buildFacetFiltersFT_GSaP__">buildFacetFilters()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Generate facet filters from the current filters.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFacetFilters</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>An expression suitable for use with <code>Query.facetFilters</code>.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Facets"></a>
+                  <a name="//apple_ref/swift/Section/Facets" class="dashAnchor"></a>
+                  <a href="#/Facets">
+                    <h3 class="section-name">Facets</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters8setFacetFT8withNameSS11disjunctiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/setFacet(withName:disjunctive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters8setFacetFT8withNameSS11disjunctiveSb_T_">setFacet(withName:disjunctive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Set a given facet as disjunctive or conjunctive.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">setFacet</span><span class="p">(</span><span class="n">withName</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">disjunctive</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>disjunctive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>true to treat this facet as disjunctive (<code>OR</code>), false to treat it as conjunctive (<code>AND</code>, the default).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters18isDisjunctiveFacetFT4nameSS_Sb"></a>
+                      <a name="//apple_ref/swift/Method/isDisjunctiveFacet(name:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters18isDisjunctiveFacetFT4nameSS_Sb">isDisjunctiveFacet(name:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether a given facet is disjunctive or conjunctive.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">isDisjunctiveFacet</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if this facet is disjunctive (<code>OR</code>), false if it’s conjunctive (<code>AND</code>).</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters18addFacetRefinementFT4nameSS5valueSS9inclusiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/addFacetRefinement(name:value:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters18addFacetRefinementFT4nameSS5valueSS9inclusiveSb_T_">addFacetRefinement(name:value:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Add a refinement for a given facet.
+The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the facet&rsquo;s own
+disjunctive/conjunctive status.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The refined value to add.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21removeFacetRefinementFT4nameSS5valueSS_T_"></a>
+                      <a name="//apple_ref/swift/Method/removeFacetRefinement(name:value:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21removeFacetRefinementFT4nameSS5valueSS_T_">removeFacetRefinement(name:value:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove a refinement for a given facet.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The refined value to remove.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters18hasFacetRefinementFT4nameSS5valueSS_Sb"></a>
+                      <a name="//apple_ref/swift/Method/hasFacetRefinement(name:value:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters18hasFacetRefinementFT4nameSS5valueSS_Sb">hasFacetRefinement(name:value:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether a facet has a refinement for a given value.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The refined value to look for.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if the refinement exists, false otherwise.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters19hasFacetRefinementsFT4nameSS_Sb"></a>
+                      <a name="//apple_ref/swift/Method/hasFacetRefinements(name:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters19hasFacetRefinementsFT4nameSS_Sb">hasFacetRefinements(name:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether a facet has any refinement(s).</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasFacetRefinements</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if the facet has at least one refinment, false if it has none.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters19hasFacetRefinementsFT_Sb"></a>
+                      <a name="//apple_ref/swift/Method/hasFacetRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters19hasFacetRefinementsFT_Sb">hasFacetRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether at least one facet refinement is defined.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasFacetRefinements</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if at least one refinement is defined for at least one facet, false otherwise.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21toggleFacetRefinementFT4nameSS5valueSS_T_"></a>
+                      <a name="//apple_ref/swift/Method/toggleFacetRefinement(name:value:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21toggleFacetRefinementFT4nameSS5valueSS_T_">toggleFacetRefinement(name:value:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
+added.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">toggleFacetRefinement</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The refined value to toggle.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21clearFacetRefinementsFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/clearFacetRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21clearFacetRefinementsFT_T_">clearFacetRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove all refinements for all facets.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearFacetRefinements</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21clearFacetRefinementsFT4nameSS_T_"></a>
+                      <a name="//apple_ref/swift/Method/clearFacetRefinements(name:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21clearFacetRefinementsFT4nameSS_T_">clearFacetRefinements(name:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove all refinements for a given facet.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearFacetRefinements</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The facet’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Numerics"></a>
+                  <a name="//apple_ref/swift/Section/Numerics" class="dashAnchor"></a>
+                  <a href="#/Numerics">
+                    <h3 class="section-name">Numerics</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters10setNumericFT8withNameSS11disjunctiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/setNumeric(withName:disjunctive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters10setNumericFT8withNameSS11disjunctiveSb_T_">setNumeric(withName:disjunctive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Set a given numeric as disjunctive or conjunctive.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">setNumeric</span><span class="p">(</span><span class="n">withName</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">disjunctive</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>disjunctive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>true to treat this numeric as disjunctive (<code>OR</code>), false to treat it as conjunctive (<code>AND</code>, the default).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters20isDisjunctiveNumericFT4nameSS_Sb"></a>
+                      <a name="//apple_ref/swift/Method/isDisjunctiveNumeric(name:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters20isDisjunctiveNumericFT4nameSS_Sb">isDisjunctiveNumeric(name:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether a given numeric is disjunctive or conjunctive.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">isDisjunctiveNumeric</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if this numeric is disjunctive (<code>OR</code>), false if it’s conjunctive (<code>AND</code>).</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFTSSOCS_17NumericRefinement8OperatorCSo8NSNumber9inclusiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/addNumericRefinement(_:_:_:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFTSSOCS_17NumericRefinement8OperatorCSo8NSNumber9inclusiveSb_T_">addNumericRefinement(_:_:_:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Add a refinement for a given numeric.
+The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
+disjunctive/conjunctive status.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a></code>.</p>
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="o">.</span><span class="kt">Operator</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name (first operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>op</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The comparison operator to apply.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The value to compare the numeric to (second operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>inclusive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_"></a>
+                      <a name="//apple_ref/swift/Method/addNumericRefinement(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Add a refinement for a given numeric.
+The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
+disjunctive/conjunctive status.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">refinement</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>refinement</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The refinement to add.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters23removeNumericRefinementFTSSOCS_17NumericRefinement8OperatorCSo8NSNumber9inclusiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/removeNumericRefinement(_:_:_:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters23removeNumericRefinementFTSSOCS_17NumericRefinement8OperatorCSo8NSNumber9inclusiveSb_T_">removeNumericRefinement(_:_:_:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove a refinement for a given numeric.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters23removeNumericRefinementFCS_17NumericRefinementT_">removeNumericRefinement(_:)</a></code>.</p>
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="o">.</span><span class="kt">Operator</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name (first operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>op</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The comparison operator to apply.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The value to compare the numeric to (second operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>inclusive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters23removeNumericRefinementFCS_17NumericRefinementT_"></a>
+                      <a name="//apple_ref/swift/Method/removeNumericRefinement(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters23removeNumericRefinementFCS_17NumericRefinementT_">removeNumericRefinement(_:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove a refinement for a given numeric.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">refinement</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>refinement</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The refinement to remove.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21hasNumericRefinementsFT4nameSS_Sb"></a>
+                      <a name="//apple_ref/swift/Method/hasNumericRefinements(name:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21hasNumericRefinementsFT4nameSS_Sb">hasNumericRefinements(name:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether a numeric has any refinement(s).</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasNumericRefinements</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if the numeric has at least one refinment, false if it has none.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters21hasNumericRefinementsFT_Sb"></a>
+                      <a name="//apple_ref/swift/Method/hasNumericRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters21hasNumericRefinementsFT_Sb">hasNumericRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Test whether at least one numeric refinement is defined.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">hasNumericRefinements</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>true if at least one refinement is defined for at least one numeric, false otherwise.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters23clearNumericRefinementsFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/clearNumericRefinements()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters23clearNumericRefinementsFT_T_">clearNumericRefinements()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove all refinements for all numeric.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearNumericRefinements</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters23clearNumericRefinementsFT4nameSS_T_"></a>
+                      <a name="//apple_ref/swift/Method/clearNumericRefinements(name:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters23clearNumericRefinementsFT4nameSS_T_">clearNumericRefinements(name:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove all refinements for a given numeric.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearNumericRefinements</span><span class="p">(</span><span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+            </section>
+        </article>
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+</body>
+
+<script src="../../js/all.js"></script>
+<script src="../../js/responsiveNavigation.js" ></script>
+<script src="../../js/jquery.min.js" defer></script>
+<script src="../../js/jazzy.js" defer></script>
+<script src="../../js/sidebar.js" defer></script>
+
+</html>
