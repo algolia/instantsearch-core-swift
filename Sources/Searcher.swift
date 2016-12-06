@@ -30,7 +30,7 @@ import Foundation
 // ------------------------------------------------------------------------
 // # Sequencing logic
 //
-// An important part of the search helper is to manage the proper sequencing
+// An important part of the `Searcher` is to manage the proper sequencing
 // of search requests and responses.
 //
 // Conceptually, a search session can be seen as a sequence of *queries*,
@@ -229,7 +229,7 @@ import Foundation
         self.resultHandlers = [resultHandler]
     }
     
-    /// Add the helper library's version to the client's user agents, if not already present.
+    /// Add the library's version to the client's user agents, if not already present.
     private func updateClientUserAgents() {
         let bundleInfo = Bundle(for: type(of: self)).infoDictionary!
         let name = bundleInfo["CFBundleName"] as! String

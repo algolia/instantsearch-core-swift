@@ -8,7 +8,8 @@ SELF_ROOT=$(cd $(dirname "$0") && pwd)
 
 MODULE_ROOT=$(cd "$SELF_ROOT/.." && pwd)
 
-PODSPEC_FILE="$MODULE_ROOT/AlgoliaSearch-Helper-Swift.podspec"
+POD_NAME="InstantSearch-Core-Swift"
+PODSPEC_FILE="$MODULE_ROOT/$POD_NAME.podspec"
 
 # Extract a given field from the podspec.
 get_podspec_field() {
@@ -21,6 +22,6 @@ github_url=$(get_podspec_field "homepage")
 module_version=$(get_podspec_field "version")
 
 cd "$MODULE_ROOT" && jazzy \
-    --theme "doc/themes/algolia" \
+    --theme "doc/jazzy/themes/algolia" \
     --module-version=$module_version \
     --github_url=$github_url
