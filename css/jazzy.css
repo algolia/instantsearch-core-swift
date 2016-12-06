@@ -25,6 +25,7 @@ a {
 
 .warning-header {
   position: fixed;
+  z-index: 1;
   display: block;
   top: 0;
   left: 0;

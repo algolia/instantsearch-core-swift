@@ -777,6 +777,7 @@ a {
 
 .warning-header {
   position: fixed;
+  z-index: 1;
   display: block;
   top: 0;
   left: 0;
@@ -1240,8 +1241,8 @@ a {
   }
   .ac-footer .ac-footer-actions .ac-footer-btn,
   .ac-footer .ac-footer-actions a:nth-child(2) {
-    width: calc(100% - 32px);
-    max-width: calc(100% - 32px);
+    width: calc(100% - 100px);
+    max-width: calc(100% - 100px);
     margin: 0 auto;
     margin-bottom: 8px;
     float: none;
@@ -1476,6 +1477,8 @@ body {
   /* Casablanca yellow */
   /* Carnation red */
   /* White smoke */
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .main-content .highlight {
