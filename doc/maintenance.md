@@ -55,9 +55,9 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
 - **Publish the pod:**
 
-    - `pod trunk push --allow-warnings InstantSearch-Core-Swift.podspec`
+    - `pod trunk push InstantSearch-Core-Swift.podspec`
 
-    - `pod trunk push --allow-warnings InstantSearch-Core-Offline-Swift.podspec`
+    - `pod trunk push InstantSearch-Core-Offline-Swift.podspec`
 
     *Note: so far, there are warnings that we cannot avoid. The reason is the same as for the [API Client](https://github.com/algolia/algoliasearch-client-swift/).*
 
