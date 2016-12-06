@@ -19,7 +19,23 @@ $color-main-light: #F89C1D;
             font-size: 70%;
         }
     }
+    position: relative; // establish context for `:after` pseudo-element
+    &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        right: 12pt;
+        top: 24pt;
+        width: 100pt;
+        height: 100pt;
+        background-image: url(../images/algolia-mark-white.svg);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;;
+        opacity: 0.3;
+    }
 }
+
 .homepage {
     font-size: 14pt;
     h2 {
