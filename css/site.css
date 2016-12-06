@@ -1414,6 +1414,7 @@ body {
   background-image: linear-gradient(140deg, #F89C1D 10%, #ED5038 90%);
   color: white;
   padding: 12pt 24pt;
+  position: relative;
 }
 
 .headline h1 {
@@ -1424,6 +1425,21 @@ body {
 .headline h1 small {
   color: #fde1bb;
   font-size: 70%;
+}
+
+.headline:after {
+  content: "";
+  position: absolute;
+  display: block;
+  right: 12pt;
+  top: 24pt;
+  width: 100pt;
+  height: 100pt;
+  background-image: url(../images/algolia-mark-white.svg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  opacity: 0.3;
 }
 
 .homepage {
