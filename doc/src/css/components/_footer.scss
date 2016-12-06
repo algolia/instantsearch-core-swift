@@ -259,8 +259,8 @@
 
       .ac-footer-btn,
       a:nth-child(2) {
-        width: calc(100% - 32px);
-        max-width: calc(100% - 32px);
+        width: calc(100% - 100px); // 32px * 2 (padding) + 1px * 2 (border) + some margin // CUSTOMIZED
+        max-width: calc(100% - 100px); // CUSTOMIZED
         margin: 0 auto;
         margin-bottom: 8px;
         float: none;
