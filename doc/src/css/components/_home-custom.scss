@@ -40,6 +40,9 @@ $color-main-light: #F89C1D;
     font-size: 14pt;
     h2 {
         font-size: 24pt;
+        &::not(:first-child) {
+            margin-top: 2em;
+        }
         margin-bottom: 1.5em;
         position: relative;
         text-align: center;
