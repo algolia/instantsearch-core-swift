@@ -12,3 +12,7 @@ This is the **InstantSearch Core** library for Swift and Objective-C, a companio
 ## Mobile-ready
 
 InstantSearch Core works out of the box on **iOS**. Of course, **macOS**, **tvOS** and **watchOS** are supported as well!
+
+## Member of a larger family
+
+Looking for something similar on Android? or for the web? Have a look at [InstantSearch Android](https://github.com/algolia/instantsearch-android) or [instantsearch.js](https://community.algolia.com/instantsearch.js/).
