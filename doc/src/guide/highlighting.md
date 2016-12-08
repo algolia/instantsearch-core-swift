@@ -1,5 +1,5 @@
 ---
-title: Quick Highlighting
+title: Highlighting
 layout: guide.mustache
 ---
 
