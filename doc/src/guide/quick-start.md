@@ -15,7 +15,7 @@ layout: guide.mustache
 
 - Add `import InstantSearchCore` to your source files.
 
-**Note:** If you wish to use the API Client's offline mode, use the subspec `InstantSearch-Core-Swift/Offline` instead.
+**Note:** If you wish to use the API Client's offline mode, use the spec `InstantSearch-Core-Offline-Swift` instead.
 
 
 ## Examples
