@@ -12,6 +12,8 @@ var sitemap     = require('metalsmith-mapsite');
 var asset       = require('metalsmith-static');
 var headingsid  = require('metalsmith-headings-identifier');
 var imagemin    = require('metalsmith-imagemin');
+var helpers     = require("metalsmith-register-helpers");
+var paths       = require("metalsmith-paths");
 var child_process = require("child_process");
 
 const GIT_NAME = "instantsearch-core-swift";
@@ -29,6 +31,10 @@ const VERSION = child_process.execSync(
 
 // Configure Metalsmith.
 var siteBuild = Metalsmith(__dirname)
+    // Register custom handlebars helpers.
+    .use(helpers({
+        directory: "helpers"
+    }))
     // Allow for relative url generation.
     .metadata({
         module_name: "InstantSearch Core for Swift",
@@ -47,14 +53,20 @@ var siteBuild = Metalsmith(__dirname)
     // Syntax highlight code fragments.
     .use(metallic())
     // Parse Markdown.
-    .use(markdown())
+    .use(markdown({
+        smartypants: true
+    }))
+    // Include file path in metadata.
+    .use(paths({
+        property: "path"
+    }))
     // Generate anchor IDs for headings.
     .use(headingsid())
     // Inject rootPath in every file metadata to be able to make all urls relative.
     // Allows to deploy the website in a directory.
     .use(rootPath())
     .use(layouts({
-        engine: "mustache",
+        engine: "handlebars",
         partials: "partials"
     }))
     // Generate a `sitemap.xml`.
