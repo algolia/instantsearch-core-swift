@@ -11,7 +11,7 @@ layout: guide.mustache
 
     - CocoaPods: add `pod 'InstantSearch-Core-Swift', '~> 1.0'` to your `Podfile`.
 
-    - Carthage is not supported. [Wondering why?](#why-is-carthage-not-supported)
+    - Carthage is not supported. [Wondering why?](./miscellaneous.html#why-is-carthage-not-supported)
 
 - Add `import InstantSearchCore` to your source files.
 
