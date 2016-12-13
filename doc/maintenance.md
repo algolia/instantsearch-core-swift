@@ -59,8 +59,6 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
     - `pod trunk push InstantSearch-Core-Offline-Swift.podspec`
 
-    *Note: so far, there are warnings that we cannot avoid. The reason is the same as for the [API Client](https://github.com/algolia/algoliasearch-client-swift/).*
-
 - Edit the **release notes**: in GitHub, edit the tag and copy-paste the Change Log section for this release.
 
 - **Publish the documentation** to GitHub pages: `cd doc/build && git push`
