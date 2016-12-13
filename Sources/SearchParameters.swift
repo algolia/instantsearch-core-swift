@@ -376,38 +376,53 @@ import Foundation
 
     // MARK: - Generate filters
     
+    /// Build a URL query string from the current parameters, including numeric and facet refinements.
+    ///
+    /// - returns: A URL query string.
+    ///
     @objc override open func build() -> String {
-        // Override the `filters` parameter with the current refinements.
         var parameters = self.parameters
         parameters["filters"] = buildFilters()
         return AbstractQuery.build(parameters: parameters)
     }
     
-    /// Generate a filter expression from the current filters.
+    /// Generate a filter expression from the current refinements.
+    /// This will combine numeric refinements and facet refinements into the same expression.
     ///
-    /// - returns: An expression suitable for use with `Query.filters`. The expression may be nil if no refinements
-    ///            are being used.
+    /// - returns: An expression suitable for use with `Query.filters`. The expression may be `nil` if no refinements
+    ///            are currently set.
     ///
     @objc public func buildFilters() -> String? {
         if !hasRefinements() {
             return nil
         }
-        // NOTE: We sort attribute names to get predictable output.
-        // Facet filters.
-        let facetExpression = facetRefinements.keys.sorted().flatMap({ (facetName: String) -> String? in
-            let refinements = self.facetRefinements[facetName]!
-            if refinements.isEmpty {
-                return nil
-            }
-            if self.isDisjunctiveFacet(name: facetName) {
-                let innerFilters = refinements.map({ return $0.buildFilter() }).joined(separator: " OR ")
-                return "(\(innerFilters))"
+        let facetExpression = buildFiltersFromFacets()
+        let numericExpression = buildFiltersFromNumerics()
+        if let facetExpression = facetExpression {
+            if let numericExpression = numericExpression {
+                return facetExpression + " AND " + numericExpression
             } else {
-                return refinements.map({ return $0.buildFilter() }).joined(separator: " AND ")
+                return facetExpression
             }
-        }).joined(separator: " AND ")
-        // Numeric filters.
-        let numericExpression = numericRefinements.keys.sorted().flatMap({ (attributeName: String) -> String? in
+        } else if let numericExpression = numericExpression {
+            return numericExpression
+        } else {
+            assert(false) // should not happen, as per above
+            return nil
+        }
+    }
+    
+    /// Generate a filter expression from the current numeric refinements.
+    ///
+    /// - returns: An expression suitable for use with `Query.filters`. The expression may be `nil` if no numeric
+    ///            refinements are currently set.
+    ///
+    @objc public func buildFiltersFromNumerics() -> String? {
+        if (!hasNumericRefinements()) {
+            return nil
+        }
+        // NOTE: We sort attribute names to get predictable output.
+        let expression = numericRefinements.keys.sorted().flatMap({ (attributeName: String) -> String? in
             let filters = self.numericRefinements[attributeName]!
             if filters.isEmpty {
                 return nil
@@ -419,18 +434,40 @@ import Foundation
                 return filters.map({ return $0.buildFilter() }).joined(separator: " AND ")
             }
         }).joined(separator: " AND ")
-        // Combine everything together.
-        var expression = facetExpression
-        if !numericExpression.isEmpty {
-            if !facetExpression.isEmpty {
-                expression += " AND "
-            }
-            expression += numericExpression
+        assert(!expression.isEmpty)
+        return expression
+    }
+
+    /// Generate a filter expression from the current facet refinements.
+    ///
+    /// - returns: An expression suitable for use with `Query.filters`. The expression may be `nil` if no facet
+    ///            refinements are currently set.
+    ///
+    @objc public func buildFiltersFromFacets() -> String? {
+        if (!hasFacetRefinements()) {
+            return nil
         }
+        // NOTE: We sort attribute names to get predictable output.
+        let expression = facetRefinements.keys.sorted().flatMap({ (facetName: String) -> String? in
+            let refinements = self.facetRefinements[facetName]!
+            if refinements.isEmpty {
+                return nil
+            }
+            if self.isDisjunctiveFacet(name: facetName) {
+                let innerFilters = refinements.map({ return $0.buildFilter() }).joined(separator: " OR ")
+                return "(\(innerFilters))"
+            } else {
+                return refinements.map({ return $0.buildFilter() }).joined(separator: " AND ")
+            }
+        }).joined(separator: " AND ")
+        assert(!expression.isEmpty)
         return expression
     }
     
     /// Generate facet refinements from the current filters.
+    ///
+    /// + Note: Those are intended for use with `Index.searchDisjunctiveFaceting(...)`. In the general case, please
+    ///   use `buildFilters()` instead.
     ///
     /// - returns: Facet refinements suitable for use with `Index.searchDisjunctiveFaceting(...)`.
     ///
@@ -443,6 +480,9 @@ import Foundation
     }
     
     /// Generate facet filters from the current filters.
+    ///
+    /// + Note: Those are intended for use with `Query.facetFilters`. In the general case, please use
+    ///   `buildFiltersFromNumerics()` instead.
     ///
     /// - returns: An expression suitable for use with `Query.facetFilters`.
     ///
@@ -463,7 +503,33 @@ import Foundation
         }
         return facetFilters
     }
+    
+    // MARK: - Update filters in place
 
+    /// Update the parameters from the current refinements.
+    ///
+    /// + Warning: This will override the `filters` parameter.
+    ///
+    @objc public func update() {
+        self["filters"] = buildFilters()
+    }
+    
+    /// Update the parameters from the current *facet* refinements. Numeric refinements are ignored.
+    ///
+    /// + Warning: This will override the `filters` parameter.
+    ///
+    @objc public func updateFromFacets() {
+        self["filters"] = buildFiltersFromFacets()
+    }
+    
+    /// Update the parameters from the current *numeric* refinements. Facet refinements are ignored.
+    ///
+    /// + Warning: This will override the `filters` parameter.
+    ///
+    @objc public func updateFromNumerics() {
+        self["filters"] = buildFiltersFromNumerics()
+    }
+    
     // MARK: - Facets
     
     /// Set a given facet as disjunctive or conjunctive.
