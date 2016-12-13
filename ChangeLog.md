@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+
+## 0.3.1 (2016-12-13)
+
+### Bug fixes
+
+- Fix handling of numeric refinements when disjunctive faceting is used
+
+
 ## 0.3 (2016-12-06)
 
 - [refact] Rebrand as "InstantSearch Core for Swift". **Breaking change:** Names of Git repository, module and pod have changed.
