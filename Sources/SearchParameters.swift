@@ -152,11 +152,36 @@ import Foundation
     /// - parameter value: Value to compare the attribute to (second operand).
     /// - parameter inclusive: Whether the filter is inclusive (the default) or exclusive (negated with a `NOT`).
     ///
-    @objc public init(_ name: String, _ op: Operator, _ value: NSNumber, inclusive: Bool = true) {
+    @objc(initWithName:operator:numberValue:inclusive:)
+    public init(_ name: String, _ op: Operator, _ value: NSNumber, inclusive: Bool = true) {
         self.name = name
         self.op = op
         self.value = value
         self.inclusive = inclusive
+    }
+    
+    /// Create a numeric refinement with the specified operator and operands.
+    ///
+    /// - parameter name: Name of the attribute to filter (first operand).
+    /// - parameter op: Comparison operator to apply.
+    /// - parameter value: Value to compare the attribute to (second operand).
+    /// - parameter inclusive: Whether the filter is inclusive (the default) or exclusive (negated with a `NOT`).
+    ///
+    @objc(initWithName:operator:intValue:inclusive:)
+    public convenience init(_ name: String, _ op: Operator, _ value: Int, inclusive: Bool = true) {
+        self.init(name, op, NSNumber(value: value), inclusive: inclusive)
+    }
+    
+    /// Create a numeric refinement with the specified operator and operands.
+    ///
+    /// - parameter name: Name of the attribute to filter (first operand).
+    /// - parameter op: Comparison operator to apply.
+    /// - parameter value: Value to compare the attribute to (second operand).
+    /// - parameter inclusive: Whether the filter is inclusive (the default) or exclusive (negated with a `NOT`).
+    ///
+    @objc(initWithName:operator:doubleValue:inclusive:)
+    public convenience init(_ name: String, _ op: Operator, _ value: Double, inclusive: Bool = true) {
+        self.init(name, op, NSNumber(value: value), inclusive: inclusive)
     }
     
     /// Create a copy of a numeric refinement.
@@ -588,8 +613,42 @@ import Foundation
     /// - parameter inclusive: Whether the refinement is treated as inclusive (the default) or exclusive
     ///                        (negated with a `NOT`).
     ///
-    @objc(addNumericRefinementWithName:op:value:inclusive:)
+    @objc(addNumericRefinementWithName:op:numberValue:inclusive:)
     public func addNumericRefinement(_ name: String, _ op: NumericRefinement.Operator, _ value: NSNumber, inclusive: Bool = true) {
+        addNumericRefinement(NumericRefinement(name, op, value, inclusive: inclusive))
+    }
+
+    /// Add a refinement for a given numeric.
+    /// The refinement will be treated as conjunctive (`AND`) or disjunctive (`OR`) based on the numeric's own
+    /// disjunctive/conjunctive status.
+    ///
+    /// + Note: This is a convenience shortcut for `addNumericRefinement(_:)`.
+    ///
+    /// - parameter name: The numeric's name (first operand to the operator).
+    /// - parameter op: The comparison operator to apply.
+    /// - parameter value: The value to compare the numeric to (second operand to the operator).
+    /// - parameter inclusive: Whether the refinement is treated as inclusive (the default) or exclusive
+    ///                        (negated with a `NOT`).
+    ///
+    @objc(addNumericRefinementWithName:op:intValue:inclusive:)
+    public func addNumericRefinement(_ name: String, _ op: NumericRefinement.Operator, _ value: Int, inclusive: Bool = true) {
+        addNumericRefinement(NumericRefinement(name, op, value, inclusive: inclusive))
+    }
+
+    /// Add a refinement for a given numeric.
+    /// The refinement will be treated as conjunctive (`AND`) or disjunctive (`OR`) based on the numeric's own
+    /// disjunctive/conjunctive status.
+    ///
+    /// + Note: This is a convenience shortcut for `addNumericRefinement(_:)`.
+    ///
+    /// - parameter name: The numeric's name (first operand to the operator).
+    /// - parameter op: The comparison operator to apply.
+    /// - parameter value: The value to compare the numeric to (second operand to the operator).
+    /// - parameter inclusive: Whether the refinement is treated as inclusive (the default) or exclusive
+    ///                        (negated with a `NOT`).
+    ///
+    @objc(addNumericRefinementWithName:op:doubleValue:inclusive:)
+    public func addNumericRefinement(_ name: String, _ op: NumericRefinement.Operator, _ value: Double, inclusive: Bool = true) {
         addNumericRefinement(NumericRefinement(name, op, value, inclusive: inclusive))
     }
     
