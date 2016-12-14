@@ -207,6 +207,12 @@ import Foundation
     /// All currently ongoing requests.
     private var pendingRequests: [Int: Operation] = [:]
 
+    /// Maximum number of pending requests allowed.
+    /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
+    /// This helps to avoid filling up the request queue when the network is slow.
+    ///
+    @objc public var maxPendingRequests: Int = 3
+    
     // MARK: - Initialization, termination
     
     /// Create a new searcher targeting the specified index.
@@ -339,6 +345,12 @@ import Foundation
             Searcher.notificationSeqNoKey: currentSeqNo
         ]
         
+        // Cancel too old requests.
+        let tooOldRequests = pendingRequests.filter({ $0.0 <= currentSeqNo - maxPendingRequests })
+        for (seqNo, _) in tooOldRequests {
+            cancelRequest(seqNo: seqNo)
+        }
+
         // Run request
         // -----------
         var operation: Operation!
