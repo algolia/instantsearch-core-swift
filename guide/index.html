@@ -3,260 +3,144 @@
 <html lang="en">
 
 <head>
-    <title>Guide &mdash; InstantSearch Core for Swift</title>
+    <title>Overview &mdash; InstantSearch Core for Swift</title>
 
-<meta content="IE=edge" http-equiv="X-UA-Compatible">
-<meta charset="utf-8">
-<meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
-<link href="#" rel="icon" type="image/x-icon">
-<meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
-<!-- Twitter card -->
-<meta content="summary_large_image" name="twitter:card">
-<meta content="@Algolia" name="twitter:site">
-<meta content="@Algolia" name="twitter:creator">
-<meta content="InstantSearch Core for Swift" name="twitter:title">
-<meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
-<meta content="Algolia Product image" name="twitter:image">
-<!-- / OpenGraph -->
-<meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
-<meta content="InstantSearch Core for Swift" property="og:title">
-<meta content="#" property="og:image">
-<meta content="article" property="og:type">
-<meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
-<meta content="Algolia Community" property="og:site_name">
-
-<link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" type="text/css" href="..&#x2F;css/site.css" />
-<link rel="stylesheet" type="text/css" href="..&#x2F;css/guide.css" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <link href="#" rel="icon" type="image/x-icon">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
+    <!-- Twitter card -->
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="@Algolia" name="twitter:site">
+    <meta content="@Algolia" name="twitter:creator">
+    <meta content="InstantSearch Core for Swift" name="twitter:title">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OpenGraph -->
+    <meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
+    <meta content="InstantSearch Core for Swift" property="og:title">
+    <meta content="#" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
+    <meta content="Algolia Community" property="og:site_name">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../css/site.css" />
+    <link rel="stylesheet" type="text/css" href="../css/guide.css" />
 </head>
 
 <body class="index">
 
-<div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
-<div class="ac-nav">
-    <div class="ac-nav-container">
-        <div class="ac-nav-brand">
-            <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
-                <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
-                <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
-            </a>
-            <span class="ac-nav-brand-breadcrumb"></span>
-            <a class="ac-nav-brand-title" href="..&#x2F;index.html" title="Home">InstantSearch Core for Swift</a>
-            <span class="ac-nav-brand-breadcrumb"></span>
-            <a class="ac-nav-brand-title" href="#" title="Guide">Guide</a>
-        </div>
-        <div class="ac-nav-menu">
-            <ul class="ac-nav-menu-list">
-                <li class="ac-nav-menu-list-item active">
-                    <a href="..&#x2F;guide/index.html" title="Guide">Guide</a>
-                </li>
-                <li class="ac-nav-menu-list-item">
-                    <a href="..&#x2F;reference/index.html" title="Reference">Reference</a>
-                </li>
-                <li class="ac-nav-menu-list-item">
-                    <a href="..&#x2F;examples/index.html" title="Examples">Examples</a>
-                </li>
-                <li class="ac-nav-menu-list-icon">
-                    <a class="ac-icon" href="https:&#x2F;&#x2F;github.com&#x2F;algolia&#x2F;instantsearch-core-swift" title="GitHub repository">
-                        <span class="ac-icon ac-icon-github"></span>
-                    </a>
-                </li>
-            </ul>
+    <div class="ac-nav">
+        <div class="ac-nav-container">
+            <div class="ac-nav-brand">
+                <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
+                    <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
+                    <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
+                </a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="../index.html" title="Home">InstantSearch Core for Swift</a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="#" title="Overview">Overview</a>
+            </div>
+            <div class="ac-nav-menu">
+                <ul class="ac-nav-menu-list">
+                    <li class="ac-nav-menu-list-item active">
+                        <a href="../guide/index.html" title="Guide">Guide</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../reference/index.html" title="Reference">Reference</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../examples/index.html" title="Examples">Examples</a>
+                    </li>
+                    <li class="ac-nav-menu-list-icon">
+                        <a class="ac-icon" href="https://github.com/algolia/instantsearch-core-swift" title="GitHub repository">
+                            <span class="ac-icon ac-icon-github"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li class="currentPage"><a href="../guide/index.html">Overview</a></li>
+                <li ><a href="../guide/quick-start.html">Quick Start</a></li>
+                <li ><a href="../guide/search.html">Search</a></li>
+                <li ><a href="../guide/highlighting.html">Highlighting</a></li>
+                <li ><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
+            </ul>
+        </nav>
+        <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+
         <article class="main-content">
-            <h1 id="guide"><a class="heading-anchor" href="#guide"><span></span></a>Guide</h1>
-<p><em>Table of Contents</em></p>
-<ol>
-<li><a href="#overview">Overview</a></li>
-<li><a href="#quick-start">Quick Start</a></li>
-<li><a href="#searching">Searching</a></li>
-<li><a href="#highlighting">Highlighting</a></li>
-<li><a href="#miscellaneous">Miscellaneous</a></li>
-</ol>
-<h2 id="overview"><a class="heading-anchor" href="#overview"><span></span></a>Overview</h2>
-<h3 id="rationale"><a class="heading-anchor" href="#rationale"><span></span></a>Rationale</h3>
+            <h1 id="overview"><a class="heading-anchor" href="#overview"><span></span></a>Overview</h1>
+<h2 id="rationale"><a class="heading-anchor" href="#rationale"><span></span></a>Rationale</h2>
 <p>While the API Client covers the entire feature set of the Search API, it primarily aims at efficiency and simplicity. It does not provide much beyond raw search requests.</p>
 <p>However, when building a search UI, especially in an as-you-type setting, more work is usually required that just issuing requests. InstantSearch takes you one step further by focusing on <strong>search session</strong> management.</p>
-<h3 id="features"><a class="heading-anchor" href="#features"><span></span></a>Features</h3>
+<h2 id="features"><a class="heading-anchor" href="#features"><span></span></a>Features</h2>
 <p>The central class of InstantSearch is the <code>Searcher</code> class, which manages searches on a given index. It takes care of properly <strong>sequencing</strong> received results (which may come out-of-order due to network unpredictability) and <strong>pagination</strong>. It also provides tools to manipulate <strong>facet filters</strong> and <strong>numeric filters</strong>.</p>
 <p>The <code>Highlighter</code> class takes care of transforming marked up text such as found in search result highlights into attributed text suitable for display.</p>
 <p>Other miscellaneous utilities are provided as well.</p>
 <p><strong>Note:</strong> <em>InstantSearch Core is UI-agnostic.</em> Although some features (such as highlight rendering) are only useful in the context of a user interface, the library has no dependencies on a specific UI framework. For example, it can indiscriminately be used on iOS with UIKit or macOS with AppKit. It has no system dependencies beyond Foundation (see below).</p>
-<h3 id="supported-platforms"><a class="heading-anchor" href="#supported-platforms"><span></span></a>Supported platforms</h3>
+<h2 id="supported-platforms"><a class="heading-anchor" href="#supported-platforms"><span></span></a>Supported platforms</h2>
 <p>The library is written in Swift, but is fully compatible with Objective-C.</p>
 <p>It supports every platform that the <a href="https://github.com/algolia/algoliasearch-client-swift">API Client</a> supports (at the time of writing: iOS, macOS and tvOS).</p>
-<h3 id="dependencies"><a class="heading-anchor" href="#dependencies"><span></span></a>Dependencies</h3>
+<h2 id="dependencies"><a class="heading-anchor" href="#dependencies"><span></span></a>Dependencies</h2>
 <p>This module requires:</p>
 <ul>
-<li>Algolia&apos;s <a href="https://github.com/algolia/algoliasearch-client-swift">Swift API Client</a>.</li>
-<li>Apple&apos;s Foundation framework.</li>
+<li>Algolia&#x2019;s <a href="https://github.com/algolia/algoliasearch-client-swift">Swift API Client</a>.</li>
+<li>Apple&#x2019;s Foundation framework.</li>
 </ul>
-<h2 id="quick-start"><a class="heading-anchor" href="#quick-start"><span></span></a>Quick start</h2>
-<h3 id="setup"><a class="heading-anchor" href="#setup"><span></span></a>Setup</h3>
-<ul>
-<li><p>Add a dependency on &quot;InstantSearch-Core-Swift&quot;:</p>
-<ul>
-<li><p>CocoaPods: add <code>pod &apos;InstantSearch-Core-Swift&apos;, &apos;~&gt; 1.0&apos;</code> to your <code>Podfile</code>.</p>
-</li>
-<li><p>Carthage is not supported. <a href="#why-is-carthage-not-supported">Wondering why?</a></p>
-</li>
-</ul>
-</li>
-<li><p>Add <code>import InstantSearchCore</code> to your source files.</p>
-</li>
-</ul>
-<p><strong>Note:</strong> If you wish to use the API Client&apos;s offline mode, use the subspec <code>InstantSearch-Core-Swift/Offline</code> instead.</p>
-<h3 id="examples"><a class="heading-anchor" href="#examples"><span></span></a>Examples</h3>
-<p>A good start is our <a href="https://github.com/algolia/algolia-swift-demo">Movie Search demo</a>, which makes extensive use of the InstantSearch.</p>
-<h2 id="searching"><a class="heading-anchor" href="#searching"><span></span></a>Searching</h2>
-<h3 id="basics"><a class="heading-anchor" href="#basics"><span></span></a>Basics</h3>
-<p>First create a <code>Client</code> and an <code>Index</code> as you would do with the bare API Client:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> client = <span class="hljs-type">Client</span>(appID: <span class="hljs-string">&quot;YOUR_APP_ID&quot;</span>, apiKey: <span class="hljs-string">&quot;YOUR_API_KEY&quot;</span>)
-<span class="hljs-keyword">let</span> index = client.index(withName: <span class="hljs-string">&quot;index_name&quot;</span>)</code></pre>
-
-<p>Then create a <code>Searcher</code> targeting the index; you typically specify a result handler during creation (although you can register more later):</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: <span class="hljs-keyword">self</span>.handleResults)</code></pre>
-
-<p>A closure is accepted as well:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: { (results: <span class="hljs-type">SearchResults</span>?, error: <span class="hljs-type">NSError</span>?) <span class="hljs-keyword">in</span>
-    <span class="hljs-comment">// Your code goes here.</span>
-})</code></pre>
-
-<p>The searcher will only launch a request when you call its <code>search()</code> method. Before you search, of course, you will want to modify the <strong>search parameters</strong> via the <code>params</code> property (a <code>SearchParameters</code> instance):</p>
-<pre><code class="hljs swift">searcher.params.query = <span class="hljs-string">&quot;hotel&quot;</span>
-searcher.params.aroundLatLngViaIP = <span class="hljs-literal">true</span>
-searcher.search()</code></pre>
-
-<h3 id="handling-results"><a class="heading-anchor" href="#handling-results"><span></span></a>Handling results</h3>
-<p>The searcher will call your result handler after each request, when the response is received, <em>unless the request has been cancelled</em> (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:</p>
-<pre><code class="hljs swift"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">handleResults</span><span class="hljs-params">(results: SearchResults?, error: Error?)</span></span> {
-    <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> results = results <span class="hljs-keyword">else</span> { <span class="hljs-keyword">return</span> }
-    <span class="hljs-keyword">self</span>.hits = results.hits
-    <span class="hljs-keyword">self</span>.tableView.reloadData()
-}</code></pre>
-
-<p>The <code>SearchResults</code> class is a wrapper around the JSON response received from the API. You can always access the underlying JSON directly through the <code>content</code> property. However, the fields you will most likely are also exposed via typed properties, such as <code>hits</code> or <code>nbHits</code>. You also get convenience accessors for:</p>
-<ul>
-<li>facet values (<code>facets(name:)</code>) and statistics (<code>facetStats(name:)</code>);</li>
-<li>highlights (<code>highlightResult(at:path:)</code>) and snippet results (<code>snippetResult(at:path:)</code>)</li>
-<li>ranking information (<code>rankingInfo(at:)</code>)</li>
-</ul>
-<p>Please note that not every piece of information may be present in the response; it depends on your request.</p>
-<h3 id="continuous-scrolling"><a class="heading-anchor" href="#continuous-scrolling"><span></span></a>Continuous scrolling</h3>
-<p>The searcher facilitates the implementation of continuous scrolling through its <code>loadMore()</code> method. Fetching the next page of results is as easy as calling this method.</p>
-<p>Note that if you use continuous scrolling, then you must take care to <em>append</em> hits to your internal data structure instead of erasing them. Using the <code>page</code> property is usually sufficient:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">if</span> results.page == <span class="hljs-number">0</span> {
-    <span class="hljs-keyword">self</span>.hits = results.hits
-} <span class="hljs-keyword">else</span> {
-    <span class="hljs-keyword">self</span>.hits.append(contentsOf: results.hits)
-}</code></pre>
-
-<p>When should you call <code>loadMore()</code>? Whenever your UI detects the need to fetch more data. Note that, in order to provide a smooth scrolling experience, it is wiser to pre-fetch data before it is required. A good indicator is when your table view or collection view data source is called for cells near the end of the currently available data. Alternatively, you can use the <code>UICollectionView</code> data source pre-fetching introduced in iOS 10.</p>
-<p>The <code>loadMore()</code> method is guarded against concurrent or inconsistent calls. If you try to call it while another request has already been issued, it will ignore the call.</p>
-<h3 id="filtering"><a class="heading-anchor" href="#filtering"><span></span></a>Filtering</h3>
-<h4 id="facets"><a class="heading-anchor" href="#facets"><span></span></a>Facets</h4>
-<p>The search parameters maintain a list of refined values for every facet, called <strong>facet refinements</strong>. A facet refinement is the combination of an attribute name and a value. Optionally, the refinement can be negated (i.e. treated as exclusive rather than inclusive).</p>
-<p>To edit the refinements, use the facet refinement handling methods, like <code>addFacetRefinement(name:value:)</code>, <code>removeFacetRefinement(name:value:)</code> and <code>toggleFacetRefinement(name:value:)</code>.</p>
-<p>A given facet can be treated as either <strong>conjunctive</strong> (the default---refinements combined with an <code>AND</code> operator) or <strong>disjunctive</strong> (refinements combined with an <code>OR</code>). You can modify the conjunctive/disjunctive status of a facet by calling <code>setFacet(withName:disjunctive:)</code>.</p>
-<p>When a search is triggered, the searcher will build the facet filters according to the refinements and the
-conjunctive/disjunctive state of each facet.</p>
-<p><strong>Note:</strong> <em>You still need to specify the list of all facets via the <code>facets</code> search parameter.</em></p>
-<p><strong>Note:</strong> <em>The <code>filters</code> and <code>facetFilters</code> search parameters will be overridden by the facet refinements; any manually specified value will be lost.</em></p>
-<h4 id="numeric-filters"><a class="heading-anchor" href="#numeric-filters"><span></span></a>Numeric filters</h4>
-<p>The search parameters also provide tools to easily manipulate numeric filters, through the notion of <strong>numeric refinements</strong>. A numeric refinement is basically made of an attribute name (the left operand), a comparison operator and a value (right operand). Optionally, the expression can be negated.</p>
-<p>The numeric refinement handling methods work in a very similar fashion to the facet refinements (see above):</p>
-<ul>
-<li><p>A given numeric attribute can be treated as either conjunctive (the default) or disjunctive. The conjunctive/disjunctive status is modified via <code>setNumeric(withName:disjunctive:)</code>.</p>
-</li>
-<li><p>Numeric refinements are edited via <code>addNumericRefinement(...)</code> and <code>removeNumericRefinement(...)</code>.</p>
-</li>
-</ul>
-<p><strong>Note:</strong> <em>The <code>filters</code> and <code>numericFilters</code> search parameters will be overridden by the numeric refinements; any manually specified value will be lost.</em></p>
-<h3 id="events"><a class="heading-anchor" href="#events"><span></span></a>Events</h3>
-<p>The <code>Searcher</code> class emits notifications through <code>NSNotificationCenter</code> on various events of its lifecycle:</p>
-<ul>
-<li><code>Searcher.SearchNotification</code> when a new request is fired</li>
-<li><code>Searcher.ResultNotification</code> when a successful response is received</li>
-<li><code>Searcher.ErrorNotification</code> when an erroneous response is received</li>
-</ul>
-<p>You may subscribe to these notifications to react on different events without having to explicitly write a result handler.</p>
-<h2 id="highlighting"><a class="heading-anchor" href="#highlighting"><span></span></a>Highlighting</h2>
-<p>The <code>Highlighter</code> class is in charge of parsing highlight result values (as returned by the Search API in the <code>_highlightResults</code> attribute of every hit) and render them into a rich text string (an <code>NSAttributedString</code> instance).</p>
-<p>When you instantiate a highlight renderer, you specify a set of <strong>text attributes</strong> that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> renderer = <span class="hljs-type">Highlighter</span>(highlightAttrs: [
-    <span class="hljs-type">NSForegroundColorAttributeName</span>: <span class="hljs-type">UIColor</span>.red,
-    <span class="hljs-type">NSBackgroundColorAttributeName</span>: <span class="hljs-type">UIColor</span>.yellow,
-]</code></pre>
-
-<p>By default, the renderer is set to recognized <code>&lt;em&gt;</code> tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value.</p>
-<p><strong>Note:</strong> <em>In that case, make sure that it matches the values for <code>highlightPreTag</code> and <code>highlightPostTag</code> in your search query (or your index&apos;s default)!</em></p>
-<pre><code class="hljs swift">renderer.preTag = <span class="hljs-string">&quot;&lt;mark&gt;&quot;</span>
-renderer.postTag = <span class="hljs-string">&quot;&lt;/mark&gt;&quot;</span></code></pre>
-
-<p>Once the renderer is set, rendering highlights is just a matter of calling <code>render(text:)</code>. The real trick is to retrieve the highlighted value from the JSON... Fortunately, the <code>SearchResults</code> class makes it easy:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searchResults: <span class="hljs-type">SearchResults</span> = ... <span class="hljs-comment">// whatever was received by the result handler</span>
-<span class="hljs-keyword">let</span> index: <span class="hljs-type">Int</span> = ... <span class="hljs-comment">// index of the hit you want to retrieve</span>
-<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> highlightResult = searchResults.highlightResult(at: index, path: <span class="hljs-string">&quot;attribute_name&quot;</span>) {
-    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> highlightValue = highlightResult.value {
-        <span class="hljs-keyword">let</span> highlightedString = renderer.render(text: highlightValue)
-    }
-}</code></pre>
-
-
-
-<h2 id="miscellaneous"><a class="heading-anchor" href="#miscellaneous"><span></span></a>Miscellaneous</h2>
-<h3 id="debouncing"><a class="heading-anchor" href="#debouncing"><span></span></a>Debouncing</h3>
-<p>&quot;Debouncing&quot; is the process of ignoring too frequent events, keeping only the last one in a series of adjacent events.</p>
-<p>The <code>Debouncer</code> class provides a generic way of debouncing calls. It can be useful to avoid triggering too many search requests, for example when a UI widget is continuously firing updates (e.g. a slider).</p>
-<h3 id="why-is-carthage-not-supported-"><a class="heading-anchor" href="#why-is-carthage-not-supported-"><span></span></a>Why is Carthage not supported?</h3>
-<p>InstantSearch Core has an external dependency (on the Algolia Search API Client). A package manager is therefore required to draw that dependency. Cocoapods works by adding special build phases to the Xcode project (in addition to creating a Pods project and an Xcode workspace referencing both). Because of this, it is technically impossible to support both Cocoapods and Carthage on the same project when it has external dependencies. Because Cocoapods has a wider audience than Carthage, we chose the former.</p>
 
         </article>
     </div>
 
-<section class='ac-footer'>
-  <div class='ac-footer-container'>
-    <p class='ac-footer-links'>
-      Code licensed under
-      <a class='ac-footer-link-item' href='..&#x2F;license.html'>MIT</a>
-      <br>
-      <a class='ac-footer-link-item' href='https:&#x2F;&#x2F;github.com&#x2F;algolia&#x2F;instantsearch-core-swift'>Github</a>
-      <a class='ac-footer-link-item' href='https:&#x2F;&#x2F;github.com&#x2F;algolia&#x2F;instantsearch-core-swift/issues'>Issues</a>
-      <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
-    </p>
-  </div>
-  <div class='ac-footer-container ac-footer-brand'>
-    <p>This project is part of</p>
-    <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
-    <figure>
-      <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
-      <figcaption>Algolia Community</figcaption>
-    </figure>
-    <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
-    <span class='ac-icon ac-icon-love-dark'></span>
-  </div>
-  <!-- FIXME: Version not available in Jazzy.
-  <p class='ac-footer-version'>Latest version: </p>
-  -->
-  <div class='ac-footer-actions'>
-    <div class='footer-container'>
-      <p>Build unique search experiences with Algolia</p>
-      <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
-        See Why
-        <span class='ac-icon-triangle'></span>
-      </a>
-      <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
-    </div>
-  </div>
-</section>
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='../license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
 
 </body>
 
-<script src="..&#x2F;js/all.js"></script>
-<script src="..&#x2F;js/responsiveNavigation.js"></script>
+<script src="../js/all.js"></script>
+<script src="../js/responsiveNavigation.js"></script>
+<script src="../js/jquery.min.js" defer></script>
+<script src="..//js/sidebar.js" defer></script>
 
 </html>

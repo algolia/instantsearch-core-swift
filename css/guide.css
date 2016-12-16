@@ -1,3 +1,8 @@
 .main-content {
-  padding: 12pt 12pt;
+  padding-top: 12pt;
+  padding-bottom: 12pt;
+}
+
+.currentPage {
+  font-weight: bold;
 }

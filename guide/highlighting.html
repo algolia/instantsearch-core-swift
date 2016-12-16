@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>InstantSearchCore  Reference</title>
+    <title>Highlighting &mdash; InstantSearch Core for Swift</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -27,13 +27,12 @@
     
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../css/site.css" />
-    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
-
+    <link rel="stylesheet" type="text/css" href="../css/guide.css" />
 </head>
 
 <body class="index">
 
-        <div class="ac-nav">
+    <div class="ac-nav">
         <div class="ac-nav-container">
             <div class="ac-nav-brand">
                 <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
@@ -43,14 +42,14 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="InstantSearchCore ">InstantSearchCore </a>
+                <a class="ac-nav-brand-title" href="#" title="Highlighting">Highlighting</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
-                    <li class="ac-nav-menu-list-item">
+                    <li class="ac-nav-menu-list-item active">
                         <a href="../guide/index.html" title="Guide">Guide</a>
                     </li>
-                    <li class="ac-nav-menu-list-item active">
+                    <li class="ac-nav-menu-list-item">
                         <a href="../reference/index.html" title="Reference">Reference</a>
                     </li>
                     <li class="ac-nav-menu-list-item">
@@ -68,96 +67,38 @@
 
     <div class="container">
         <nav class="sidebar">
-          <ul class="nav-groups">
-            <li class="nav-group-name">
-              <a href="Searching.html">Searching</a>
-              <ul class="nav-group-tasks">
-                <li class="nav-group-task">
-                  <a href="Classes/Searcher.html">Searcher</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/SearchParameters.html">SearchParameters</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/FacetRefinement.html">FacetRefinement</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/NumericRefinement.html">NumericRefinement</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/NumericRefinement/Operator.html">– Operator</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/SearchResults.html">SearchResults</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/HighlightResult.html">HighlightResult</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/SnippetResult.html">SnippetResult</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/RankingInfo.html">RankingInfo</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/FacetStats.html">FacetStats</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/FacetValue.html">FacetValue</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-group-name">
-              <a href="Utilities.html">Utilities</a>
-              <ul class="nav-group-tasks">
-                <li class="nav-group-task">
-                  <a href="Classes/Highlighter.html">Highlighter</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/Debouncer.html">Debouncer</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Classes/SearchProgressController.html">SearchProgressController</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-group-name">
-              <a href="Other Enums.html">Other Enums</a>
-              <ul class="nav-group-tasks">
-                <li class="nav-group-task">
-                  <a href="Enums/MatchLevel.html">MatchLevel</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-group-name">
-              <a href="Other Protocols.html">Other Protocols</a>
-              <ul class="nav-group-tasks">
-                <li class="nav-group-task">
-                  <a href="Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
-                </li>
-                <li class="nav-group-task">
-                  <a href="Protocols/SearcherDelegate.html">SearcherDelegate</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
+            <ul>
+                <li ><a href="../guide/index.html">Overview</a></li>
+                <li ><a href="../guide/quick-start.html">Quick Start</a></li>
+                <li ><a href="../guide/search.html">Search</a></li>
+                <li class="currentPage"><a href="../guide/highlighting.html">Highlighting</a></li>
+                <li ><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
+            </ul>
         </nav>
         <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+
         <article class="main-content">
-            <section>
-                <section class="section">
-                    
-                    <a href='#reference' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h1 id='reference'>Reference</h1>
+            <h1 id="highlighting"><a class="heading-anchor" href="#highlighting"><span></span></a>Highlighting</h1>
+<p>The <code>Highlighter</code> class is in charge of parsing highlight result values (as returned by the Search API in the <code>_highlightResults</code> attribute of every hit) and render them into a rich text string (an <code>NSAttributedString</code> instance).</p>
+<p>When you instantiate a highlight renderer, you specify a set of <strong>text attributes</strong> that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> renderer = <span class="hljs-type">Highlighter</span>(highlightAttrs: [
+    <span class="hljs-type">NSForegroundColorAttributeName</span>: <span class="hljs-type">UIColor</span>.red,
+    <span class="hljs-type">NSBackgroundColorAttributeName</span>: <span class="hljs-type">UIColor</span>.yellow,
+]</code></pre>
 
-<p>This is the reference documentation for the <strong>InstantSearch Core for Swift</strong> library.</p>
+<p>By default, the renderer is set to recognized <code>&lt;em&gt;</code> tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value.</p>
+<p><strong>Note:</strong> <em>In that case, make sure that it matches the values for <code>highlightPreTag</code> and <code>highlightPostTag</code> in your search query (or your index&#x2019;s default)!</em></p>
+<pre><code class="hljs swift">renderer.preTag = <span class="hljs-string">&quot;&lt;mark&gt;&quot;</span>
+renderer.postTag = <span class="hljs-string">&quot;&lt;/mark&gt;&quot;</span></code></pre>
 
-<p>It has been automatically generated from the sources. You can always browse the latest official version <a href="https://community.algolia.com/instantsearch-core-swift">online</a>.</p>
-<a href='#objective-c' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h2 id='objective-c'>Objective-C</h2>
-
-<p>Although the library is written in Swift, it is fully usable from Objective-C. Unfortunately, <a href="https://github.com/realm/jazzy">Jazzy</a> (the tool we use to generate this documentation) does not yet support generating Objective-C documentation from Swift code, so you will have to guess the selector names (but Xcode&rsquo;s autocompletion should be your friend).</p>
-
-                </section>
-            </section>
+<p>Once the renderer is set, rendering highlights is just a matter of calling <code>render(text:)</code>. The real trick is to retrieve the highlighted value from the JSON&#x2026; Fortunately, the <code>SearchResults</code> class makes it easy:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searchResults: <span class="hljs-type">SearchResults</span> = ... <span class="hljs-comment">// whatever was received by the result handler</span>
+<span class="hljs-keyword">let</span> index: <span class="hljs-type">Int</span> = ... <span class="hljs-comment">// index of the hit you want to retrieve</span>
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> highlightResult = searchResults.highlightResult(at: index, path: <span class="hljs-string">&quot;attribute_name&quot;</span>) {
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> highlightValue = highlightResult.value {
+        <span class="hljs-keyword">let</span> highlightedString = renderer.render(text: highlightValue)
+    }
+}</code></pre>
         </article>
     </div>
 
@@ -165,7 +106,7 @@
       <div class='ac-footer-container'>
         <p class='ac-footer-links'>
           Code licensed under
-          <a class='ac-footer-link-item' href='license.html'>MIT</a>
+          <a class='ac-footer-link-item' href='../license.html'>MIT</a>
           <br>
           <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
           <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
@@ -200,9 +141,8 @@
 </body>
 
 <script src="../js/all.js"></script>
-<script src="../js/responsiveNavigation.js" ></script>
+<script src="../js/responsiveNavigation.js"></script>
 <script src="../js/jquery.min.js" defer></script>
-<script src="../js/jazzy.js" defer></script>
-<script src="../js/sidebar.js" defer></script>
+<script src="..//js/sidebar.js" defer></script>
 
 </html>

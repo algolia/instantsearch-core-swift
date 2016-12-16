@@ -33,8 +33,7 @@
 
 <body class="index">
 
-    <div class="warning-header"><strong>Warning:</strong> Beta version. Until version 1.0 is released, incompatible changes may occur.</div>
-    <div class="ac-nav">
+        <div class="ac-nav">
         <div class="ac-nav-container">
             <div class="ac-nav-brand">
                 <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
@@ -562,7 +561,8 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          
+                          <p>Build a URL query string from the current parameters, including numeric and facet refinements.</p>
+
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
@@ -571,6 +571,11 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                             <pre class="highlight"><code><span class="kd">@objc</span> <span class="k">override</span> <span class="n">open</span> <span class="kd">func</span> <span class="nf">build</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
 
                           </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>A URL query string.</p>
+
                         </div>
                       </section>
                     </div>
@@ -588,7 +593,8 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Generate a filter expression from the current filters.</p>
+                          <p>Generate a filter expression from the current refinements.
+This will combine numeric refinements and facet refinements into the same expression.</p>
 
                         </div>
                         <div class="declaration">
@@ -601,7 +607,71 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                         </div>
                         <div>
                           <h4>Return Value</h4>
-                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be nil if no refinements are being used.</p>
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no refinements are currently set.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters24buildFiltersFromNumericsFT_GSqSS_"></a>
+                      <a name="//apple_ref/swift/Method/buildFiltersFromNumerics()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters24buildFiltersFromNumericsFT_GSqSS_">buildFiltersFromNumerics()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Generate a filter expression from the current numeric refinements.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFiltersFromNumerics</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no numeric refinements are currently set.</p>
+
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters22buildFiltersFromFacetsFT_GSqSS_"></a>
+                      <a name="//apple_ref/swift/Method/buildFiltersFromFacets()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters22buildFiltersFromFacetsFT_GSqSS_">buildFiltersFromFacets()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Generate a filter expression from the current facet refinements.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFiltersFromFacets</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span><span class="p">?</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no facet refinements are currently set.</p>
 
                         </div>
                       </section>
@@ -621,6 +691,13 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Generate facet refinements from the current filters.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Those are intended for use with <code>Index.searchDisjunctiveFaceting(...)</code>. In the general case, please
+use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters12buildFiltersFT_GSqSS_">buildFilters()</a></code> instead.</p>
+
+</div>
 
                         </div>
                         <div class="declaration">
@@ -654,6 +731,13 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                         <div class="abstract">
                           <p>Generate facet filters from the current filters.</p>
 
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>Those are intended for use with <code>Query.facetFilters</code>. In the general case, please use
+<code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters24buildFiltersFromNumericsFT_GSqSS_">buildFiltersFromNumerics()</a></code> instead.</p>
+
+</div>
+
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
@@ -667,6 +751,116 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                           <h4>Return Value</h4>
                           <p>An expression suitable for use with <code>Query.facetFilters</code>.</p>
 
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Update%20filters%20in%20place"></a>
+                  <a name="//apple_ref/swift/Section/Update filters in place" class="dashAnchor"></a>
+                  <a href="#/Update%20filters%20in%20place">
+                    <h3 class="section-name">Update filters in place</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters6updateFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/update()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters6updateFT_T_">update()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Update the parameters from the current refinements.</p>
+
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    This will override the <code>filters</code> parameter.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">update</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters16updateFromFacetsFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/updateFromFacets()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters16updateFromFacetsFT_T_">updateFromFacets()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Update the parameters from the current <em>facet</em> refinements. Numeric refinements are ignored.</p>
+
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    This will override the <code>filters</code> parameter.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateFromFacets</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters18updateFromNumericsFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/updateFromNumerics()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters18updateFromNumericsFT_T_">updateFromNumerics()</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Update the parameters from the current <em>numeric</em> refinements. Facet refinements are ignored.</p>
+
+<div class="aside aside-warning">
+    <p class="aside-title">Warning</p>
+    This will override the <code>filters</code> parameter.
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateFromNumerics</span><span class="p">()</span></code></pre>
+
+                          </div>
                         </div>
                       </section>
                     </div>
@@ -1352,6 +1546,194 @@ disjunctive/conjunctive status.</p>
                           <div class="language">
                             <p class="aside-title">Swift</p>
                             <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="o">.</span><span class="kt">Operator</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name (first operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>op</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The comparison operator to apply.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The value to compare the numeric to (second operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>inclusive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFTSSOCS_17NumericRefinement8OperatorSi9inclusiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/addNumericRefinement(_:_:_:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFTSSOCS_17NumericRefinement8OperatorSi9inclusiveSb_T_">addNumericRefinement(_:_:_:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Add a refinement for a given numeric.
+The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
+disjunctive/conjunctive status.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a></code>.</p>
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="o">.</span><span class="kt">Operator</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric’s name (first operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>op</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The comparison operator to apply.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The value to compare the numeric to (second operand to the operator).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>inclusive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFTSSOCS_17NumericRefinement8OperatorSd9inclusiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/addNumericRefinement(_:_:_:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFTSSOCS_17NumericRefinement8OperatorSd9inclusiveSb_T_">addNumericRefinement(_:_:_:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Add a refinement for a given numeric.
+The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
+disjunctive/conjunctive status.</p>
+
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a></code>.</p>
+
+</div>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="o">.</span><span class="kt">Operator</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                           </div>
                         </div>

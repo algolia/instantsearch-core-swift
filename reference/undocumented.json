@@ -72,21 +72,21 @@
     },
     {
       "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
-      "line": 175,
+      "line": 200,
       "symbol": "NumericRefinement.description",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
-      "line": 181,
+      "line": 206,
       "symbol": "NumericRefinement.isEqual(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/clementlp/devt/workspace/libs-master/instantsearch-core-swift/Sources/SearchParameters.swift",
-      "line": 317,
+      "line": 342,
       "symbol": "SearchParameters.isEqual(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

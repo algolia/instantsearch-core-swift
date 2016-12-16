@@ -55,7 +55,7 @@ a {
   overflow-y: auto;
   overflow-x: hidden;
   position: fixed;
-  top: 80px;
+  top: 50px;
   bottom: 0;
   left: 0;
   width: 230px;
@@ -69,10 +69,21 @@ a {
   }
 }
 
+.sidebar ul li {
+  list-style-type: none;
+  font-size: 12pt;
+  white-space: nowrap;
+  margin-bottom: 0.3em;
+}
+
+.sidebar ul li a {
+  color: #888;
+}
+
 .sidebar-toggle {
   position: fixed;
   right: 12pt;
-  top: 96px;
+  top: 66px;
   padding: 1pt 5pt 3pt 5pt;
   border-radius: 5pt;
   font-size: 16pt;

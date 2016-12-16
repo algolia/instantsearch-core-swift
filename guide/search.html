@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Search &mdash; InstantSearch Core for Swift</title>
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta charset="utf-8">
+    <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+    <link href="#" rel="icon" type="image/x-icon">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="description">
+    <!-- Twitter card -->
+    <meta content="summary_large_image" name="twitter:card">
+    <meta content="@Algolia" name="twitter:site">
+    <meta content="@Algolia" name="twitter:creator">
+    <meta content="InstantSearch Core for Swift" name="twitter:title">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" name="twitter:description">
+    <meta content="Algolia Product image" name="twitter:image">
+    <!-- / OpenGraph -->
+    <meta content="https://community.algolia.com/instantsearch-core-swift/" property="og:url">
+    <meta content="InstantSearch Core for Swift" property="og:title">
+    <meta content="#" property="og:image">
+    <meta content="article" property="og:type">
+    <meta content="InstantSearch Core for Swift is the toolbox to create advanced search experiences" property="og:description">
+    <meta content="Algolia Community" property="og:site_name">
+    
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,600" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../css/site.css" />
+    <link rel="stylesheet" type="text/css" href="../css/guide.css" />
+</head>
+
+<body class="index">
+
+    <div class="ac-nav">
+        <div class="ac-nav-container">
+            <div class="ac-nav-brand">
+                <a class="ac-logo" href="https://community.algolia.com/" title="Algolia Community">
+                    <img alt="Algolia Community" class="ac-logo__lg" src="https://res.cloudinary.com/hilnmyskv/image/upload/logo-community-inline-dark.svg" width="150">
+                    <img alt="Algolia Community" class="ac-logo__sm" src="https://res.cloudinary.com/hilnmyskv/image/upload/v1461180081/logo-community-sm.svg">
+                </a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="../index.html" title="Home">InstantSearch Core for Swift</a>
+                <span class="ac-nav-brand-breadcrumb"></span>
+                <a class="ac-nav-brand-title" href="#" title="Search">Search</a>
+            </div>
+            <div class="ac-nav-menu">
+                <ul class="ac-nav-menu-list">
+                    <li class="ac-nav-menu-list-item active">
+                        <a href="../guide/index.html" title="Guide">Guide</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../reference/index.html" title="Reference">Reference</a>
+                    </li>
+                    <li class="ac-nav-menu-list-item">
+                        <a href="../examples/index.html" title="Examples">Examples</a>
+                    </li>
+                    <li class="ac-nav-menu-list-icon">
+                        <a class="ac-icon" href="https://github.com/algolia/instantsearch-core-swift" title="GitHub repository">
+                            <span class="ac-icon ac-icon-github"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li ><a href="../guide/index.html">Overview</a></li>
+                <li ><a href="../guide/quick-start.html">Quick Start</a></li>
+                <li class="currentPage"><a href="../guide/search.html">Search</a></li>
+                <li ><a href="../guide/highlighting.html">Highlighting</a></li>
+                <li ><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
+            </ul>
+        </nav>
+        <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
+
+        <article class="main-content">
+            <h1 id="search"><a class="heading-anchor" href="#search"><span></span></a>Search</h1>
+<h2 id="basics"><a class="heading-anchor" href="#basics"><span></span></a>Basics</h2>
+<p>First create a <code>Client</code> and an <code>Index</code> as you would do with the bare API Client:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> client = <span class="hljs-type">Client</span>(appID: <span class="hljs-string">&quot;YOUR_APP_ID&quot;</span>, apiKey: <span class="hljs-string">&quot;YOUR_API_KEY&quot;</span>)
+<span class="hljs-keyword">let</span> index = client.index(withName: <span class="hljs-string">&quot;index_name&quot;</span>)</code></pre>
+
+<p>Then create a <code>Searcher</code> targeting the index; you typically specify a result handler during creation (although you can register more later):</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: <span class="hljs-keyword">self</span>.handleResults)</code></pre>
+
+<p>A closure is accepted as well:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: { (results: <span class="hljs-type">SearchResults</span>?, error: <span class="hljs-type">NSError</span>?) <span class="hljs-keyword">in</span>
+    <span class="hljs-comment">// Your code goes here.</span>
+})</code></pre>
+
+<p>The searcher will only launch a request when you call its <code>search()</code> method. Before you search, of course, you will want to modify the <strong>search parameters</strong> via the <code>params</code> property (a <code>SearchParameters</code> instance):</p>
+<pre><code class="hljs swift">searcher.params.query = <span class="hljs-string">&quot;hotel&quot;</span>
+searcher.params.aroundLatLngViaIP = <span class="hljs-literal">true</span>
+searcher.search()</code></pre>
+
+<h2 id="handling-results"><a class="heading-anchor" href="#handling-results"><span></span></a>Handling results</h2>
+<p>The searcher will call your result handler after each request, when the response is received, <em>unless the request has been cancelled</em> (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:</p>
+<pre><code class="hljs swift"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">handleResults</span><span class="hljs-params">(results: SearchResults?, error: Error?)</span></span> {
+    <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> results = results <span class="hljs-keyword">else</span> { <span class="hljs-keyword">return</span> }
+    <span class="hljs-keyword">self</span>.hits = results.hits
+    <span class="hljs-keyword">self</span>.tableView.reloadData()
+}</code></pre>
+
+<p>The <code>SearchResults</code> class is a wrapper around the JSON response received from the API. You can always access the underlying JSON directly through the <code>content</code> property. However, the fields you will most likely are also exposed via typed properties, such as <code>hits</code> or <code>nbHits</code>. You also get convenience accessors for:</p>
+<ul>
+<li>facet values (<code>facets(name:)</code>) and statistics (<code>facetStats(name:)</code>);</li>
+<li>highlights (<code>highlightResult(at:path:)</code>) and snippet results (<code>snippetResult(at:path:)</code>)</li>
+<li>ranking information (<code>rankingInfo(at:)</code>)</li>
+</ul>
+<p>Please note that not every piece of information may be present in the response; it depends on your request.</p>
+<h2 id="continuous-scrolling"><a class="heading-anchor" href="#continuous-scrolling"><span></span></a>Continuous scrolling</h2>
+<p>The searcher facilitates the implementation of continuous scrolling through its <code>loadMore()</code> method. Fetching the next page of results is as easy as calling this method.</p>
+<p>Note that if you use continuous scrolling, then you must take care to <em>append</em> hits to your internal data structure instead of erasing them. Using the <code>page</code> property is usually sufficient:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">if</span> results.page == <span class="hljs-number">0</span> {
+    <span class="hljs-keyword">self</span>.hits = results.hits
+} <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">self</span>.hits.append(contentsOf: results.hits)
+}</code></pre>
+
+<p>When should you call <code>loadMore()</code>? Whenever your UI detects the need to fetch more data. Note that, in order to provide a smooth scrolling experience, it is wiser to pre-fetch data before it is required. A good indicator is when your table view or collection view data source is called for cells near the end of the currently available data. Alternatively, you can use the <code>UICollectionView</code> data source pre-fetching introduced in iOS 10.</p>
+<p>The <code>loadMore()</code> method is guarded against concurrent or inconsistent calls. If you try to call it while another request has already been issued, it will ignore the call.</p>
+<h2 id="filtering"><a class="heading-anchor" href="#filtering"><span></span></a>Filtering</h2>
+<h3 id="facets"><a class="heading-anchor" href="#facets"><span></span></a>Facets</h3>
+<p>The search parameters maintain a list of refined values for every facet, called <strong>facet refinements</strong>. A facet refinement is the combination of an attribute name and a value. Optionally, the refinement can be negated (i.e. treated as exclusive rather than inclusive).</p>
+<p>To edit the refinements, use the facet refinement handling methods, like <code>addFacetRefinement(name:value:)</code>, <code>removeFacetRefinement(name:value:)</code> and <code>toggleFacetRefinement(name:value:)</code>.</p>
+<p>A given facet can be treated as either <strong>conjunctive</strong> (the default&#x2014;refinements combined with an <code>AND</code> operator) or <strong>disjunctive</strong> (refinements combined with an <code>OR</code>). You can modify the conjunctive/disjunctive status of a facet by calling <code>setFacet(withName:disjunctive:)</code>.</p>
+<p>When a search is triggered, the searcher will build the facet filters according to the refinements and the
+conjunctive/disjunctive state of each facet.</p>
+<p><strong>Note:</strong> <em>You still need to specify the list of all facets via the <code>facets</code> search parameter.</em></p>
+<p><strong>Note:</strong> <em>The <code>filters</code> and <code>facetFilters</code> search parameters will be overridden by the facet refinements; any manually specified value will be lost.</em></p>
+<h3 id="numeric-filters"><a class="heading-anchor" href="#numeric-filters"><span></span></a>Numeric filters</h3>
+<p>The search parameters also provide tools to easily manipulate numeric filters, through the notion of <strong>numeric refinements</strong>. A numeric refinement is basically made of an attribute name (the left operand), a comparison operator and a value (right operand). Optionally, the expression can be negated.</p>
+<p>The numeric refinement handling methods work in a very similar fashion to the facet refinements (see above):</p>
+<ul>
+<li><p>A given numeric attribute can be treated as either conjunctive (the default) or disjunctive. The conjunctive/disjunctive status is modified via <code>setNumeric(withName:disjunctive:)</code>.</p>
+</li>
+<li><p>Numeric refinements are edited via <code>addNumericRefinement(...)</code> and <code>removeNumericRefinement(...)</code>.</p>
+</li>
+</ul>
+<p><strong>Note:</strong> <em>The <code>filters</code> and <code>numericFilters</code> search parameters will be overridden by the numeric refinements; any manually specified value will be lost.</em></p>
+<h2 id="events"><a class="heading-anchor" href="#events"><span></span></a>Events</h2>
+<p>The <code>Searcher</code> class emits notifications through <code>NSNotificationCenter</code> on various events of its lifecycle:</p>
+<ul>
+<li><code>Searcher.SearchNotification</code> when a new request is fired</li>
+<li><code>Searcher.ResultNotification</code> when a successful response is received</li>
+<li><code>Searcher.ErrorNotification</code> when an erroneous response is received</li>
+</ul>
+<p>You may subscribe to these notifications to react on different events without having to explicitly write a result handler.</p>
+
+        </article>
+    </div>
+
+    <section class='ac-footer'>
+      <div class='ac-footer-container'>
+        <p class='ac-footer-links'>
+          Code licensed under
+          <a class='ac-footer-link-item' href='../license.html'>MIT</a>
+          <br>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift'>Github</a>
+          <a class='ac-footer-link-item' href='https://github.com/algolia/instantsearch-core-swift/issues'>Issues</a>
+          <a class='ac-footer-link-item' href='https://www.algolia.com/policies/privacy'>Privacy policy</a>
+        </p>
+      </div>
+      <div class='ac-footer-container ac-footer-brand'>
+        <p>This project is part of</p>
+        <img class='ac-footer-brand-icon' src='https://res.cloudinary.com/hilnmyskv/image/upload/logo-community.svg'>
+        <figure>
+          <img class='ac-footer-brand-logo' src='https://res.cloudinary.com/hilnmyskv/image/upload/v1463417234/algolia-community_n6tixd.svg'>
+          <figcaption>Algolia Community</figcaption>
+        </figure>
+        <a class='ac-footer-btn ac-footer-btn-cta' href='https://community.algolia.com/'>See More</a>
+        <span class='ac-icon ac-icon-love-dark'></span>
+      </div>
+      <!-- FIXME: Version not available in Jazzy.
+      <p class='ac-footer-version'>Latest version: </p>
+      -->
+      <div class='ac-footer-actions'>
+        <div class='footer-container'>
+          <p>Build unique search experiences with Algolia</p>
+          <a class='ac-footer-btn ac-footer-btn-ghost-grey' href='https://www.algolia.com/why?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=why'>
+            See Why
+            <span class='ac-icon-triangle'></span>
+          </a>
+          <a class='ac-footer-btn ac-footer-btn-ghost-pink' href='https://www.algolia.com/users/sign_up?utm_medium=social-owned&amp;utm_source=places%20website&amp;utm_campaign=homepage&amp;utm_term=get_started'>Get Started For Free</a>
+        </div>
+      </div>
+    </section>
+
+</body>
+
+<script src="../js/all.js"></script>
+<script src="../js/responsiveNavigation.js"></script>
+<script src="../js/jquery.min.js" defer></script>
+<script src="..//js/sidebar.js" defer></script>
+
+</html>

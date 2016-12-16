@@ -791,7 +791,7 @@ a {
 
 .ac-nav {
   position: fixed;
-  top: 30px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 50px;
@@ -1389,6 +1389,75 @@ a {
   color: #fff;
 }
 
+.main-content {
+  min-height: 700px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+@media (min-width: 960px) {
+  .main-content {
+    padding-left: 250px;
+  }
+}
+
+.sidebar {
+  background-color: #f9f9f9;
+  border: 1px solid #e2e2e2;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: fixed;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  width: 230px;
+  word-wrap: normal;
+  display: block;
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.sidebar ul li {
+  list-style-type: none;
+  font-size: 12pt;
+  white-space: nowrap;
+  margin-bottom: 0.3em;
+}
+
+.sidebar ul li a {
+  color: #888;
+}
+
+.sidebar-toggle {
+  position: fixed;
+  right: 12pt;
+  top: 66px;
+  padding: 1pt 5pt 3pt 5pt;
+  border-radius: 5pt;
+  font-size: 16pt;
+  display: none;
+  color: white;
+  background-color: #E0E0E0;
+  transition-property: "background-color";
+  transition-duration: 300ms;
+  box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+@media (max-width: 960px) {
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+.sidebar-toggle:hover, .sidebar-toggle:active {
+  background-color: #fb366e;
+}
+
 body {
   font-family: "Raleway", Helvetica Neue, helvetica;
 }
@@ -1399,7 +1468,7 @@ body {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 36pt;
-  margin-top: 80px;
+  margin-top: 50px;
 }
 
 .welcome {
@@ -1455,6 +1524,10 @@ body {
   text-align: center;
 }
 
+.homepage h2:not(:first-child) {
+  margin-top: 2em;
+}
+
 .homepage h2::after {
   content: "";
   position: absolute;
@@ -1465,6 +1538,10 @@ body {
   left: 0;
   right: 0;
   margin: auto;
+}
+
+.homepage .main-content {
+  padding: 12pt;
 }
 
 .main-content {
