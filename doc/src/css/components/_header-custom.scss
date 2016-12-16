@@ -1,5 +1,7 @@
 @import "../vendors/base";
 
+// NOTE: Warning header not used, but kept in case it's needed again in the future.
+
 $warning-header-height: 30px;
 
 .warning-header {
@@ -17,4 +19,4 @@ $warning-header-height: 30px;
 }
 
 $nav-height: 50px;
-$header-height: $nav-height + $warning-header-height;
+$header-height: $nav-height;
