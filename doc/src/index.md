@@ -15,4 +15,4 @@ InstantSearch Core works out of the box on **iOS**. Of course, **macOS**, **tvOS
 
 ## Member of a larger family
 
-Looking for something similar on Android? or for the web? Have a look at [InstantSearch Android](https://github.com/algolia/instantsearch-android) or [instantsearch.js](https://community.algolia.com/instantsearch.js/).
+Looking for something similar on Android? or the web? Have a look at [InstantSearch Android](https://github.com/algolia/instantsearch-android) or [instantsearch.js](https://community.algolia.com/instantsearch.js/).
