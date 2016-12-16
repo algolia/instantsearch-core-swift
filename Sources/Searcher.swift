@@ -416,6 +416,37 @@ import Foundation
         }
     }
     
+    // MARK: - Search for facet values
+    
+    /// Search for values of a given facet.
+    ///
+    /// This is a convenience shortcut for Algolia Search's `Index.searchForFacetValues(...)` method that will
+    /// automatically use the current search `params` as the refining query, also taking into account the
+    /// conjunctive/disjunctive status of the targeted facet (i.e. refinements for the targeted facet will be discarded
+    /// when the facet is disjunctive).
+    ///
+    /// Unlike a regular `search()`:
+    ///
+    /// - The searched text has to be passed as an argument to the method, as it differs in purpose from `params.query`.
+    /// - Result handlers or the delegate are not called; instead, the provided completion handler is called.
+    ///   Notifications are not issued either.
+    ///
+    /// - parameter facetName: Name of the facet to search. It must have been declared in the index's
+    ///       `attributesForFaceting` setting with the `searchable()` modifier.
+    /// - parameter text: Text to search for in the facet's values.
+    /// - parameter completionHandler: Completion handler to be notified of the request's outcome.
+    /// - returns: A cancellable operation.
+    ///
+    @objc @discardableResult
+    public func searchForFacetValues(of facetName: String, matching text: String, completionHandler: @escaping CompletionHandler) -> Operation {
+        let facetSearchParams = SearchParameters(from: self.params)
+        // If the searched facet is disjunctive, clear any refinements that it may have.
+        if facetSearchParams.isDisjunctiveFacet(name: facetName) {
+            facetSearchParams.clearFacetRefinements(name: facetName)
+        }
+        return index.searchForFacetValues(of: facetName, matching: text, query: facetSearchParams, completionHandler: completionHandler)
+    }
+    
     // MARK: - Managing requests
     
     /// Indicates whether there are any pending requests.
