@@ -349,6 +349,35 @@ running. Depending on your use case, you might want to call <code><a href="../Cl
                       </section>
                     </div>
                   </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore8Searcher18maxPendingRequestsSi"></a>
+                      <a name="//apple_ref/swift/Property/maxPendingRequests" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore8Searcher18maxPendingRequestsSi">maxPendingRequests</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Maximum number of pending requests allowed.
+If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
+This helps to avoid filling up the request queue when the network is slow.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">maxPendingRequests</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">3</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
                 </ul>
               </div>
               <div class="task-group">
@@ -596,6 +625,108 @@ This uses the current value for <code>query</code>, <code>disjunctiveFacets</cod
                             <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">loadMore</span><span class="p">()</span></code></pre>
 
                           </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Search%20for%20facet%20values"></a>
+                  <a name="//apple_ref/swift/Section/Search for facet values" class="dashAnchor"></a>
+                  <a href="#/Search%20for%20facet%20values">
+                    <h3 class="section-name">Search for facet values</h3>
+                  </a>
+                </div>
+                <ul>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore8Searcher20searchForFacetValuesFT2ofSS8matchingSS17completionHandlerFTGSqGVs10DictionarySSP___GSqPs5Error___T__CSo9Operation"></a>
+                      <a name="//apple_ref/swift/Method/searchForFacetValues(of:matching:completionHandler:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore8Searcher20searchForFacetValuesFT2ofSS8matchingSS17completionHandlerFTGSqGVs10DictionarySSP___GSqPs5Error___T__CSo9Operation">searchForFacetValues(of:matching:completionHandler:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Search for values of a given facet.</p>
+
+<p>This is a convenience shortcut for Algolia Search&rsquo;s <code>Index.searchForFacetValues(...)</code> method that will
+automatically use the current search <code><a href="../Classes/Searcher.html#/s:vC17InstantSearchCore8Searcher6paramsCS_16SearchParameters">params</a></code> as the refining query, also taking into account the
+conjunctive/disjunctive status of the targeted facet (i.e. refinements for the targeted facet will be discarded
+when the facet is disjunctive).</p>
+
+<p>Unlike a regular <code><a href="../Classes/Searcher.html#/s:FC17InstantSearchCore8Searcher6searchFT_T_">search()</a></code>:</p>
+
+<ul>
+<li>The searched text has to be passed as an argument to the method, as it differs in purpose from <code>params.query</code>.</li>
+<li><p>Result handlers or the delegate are not called; instead, the provided completion handler is called.
+Notifications are not issued either.</p></li>
+</ul>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">searchForFacetValues</span><span class="p">(</span><span class="n">of</span> <span class="nv">facetName</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">matching</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">completionHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">CompletionHandler</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Operation</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>facetName</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Name of the facet to search. It must have been declared in the index’s <code>attributesForFaceting</code> setting with the <code>searchable()</code> modifier.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>text</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Text to search for in the facet’s values.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>completionHandler</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Completion handler to be notified of the request’s outcome.</p>
+
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div>
+                          <h4>Return Value</h4>
+                          <p>A cancellable operation.</p>
+
                         </div>
                       </section>
                     </div>
