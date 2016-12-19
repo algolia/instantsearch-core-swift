@@ -2,6 +2,19 @@ Change Log
 ==========
 
 
+## 1.0 (2016-12-19)
+
+**First official release!** 🎉 Merry Christmas to everyone! 🎄⛄️🎁
+
+### New features
+
+- Leverage the new **search for facet values** feature of the Swift API Client. `Searcher.searchForFacetValues(...)` works like the equivalent method on `Index`, but automatically takes facet and numeric refinements into account, as well as the conjunctive/disjunctive state of facets.
+
+### Bug fixes
+
+- Limit number of pending requests per `Searcher` instance. This is to avoid stalling the request queue if response times are long. The limit can be adjusted via `Searcher.maxPendingRequests`.
+
+
 ## 0.3.1 (2016-12-13)
 
 ### Bug fixes
