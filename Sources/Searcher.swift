@@ -158,9 +158,9 @@ import Foundation
     /// The index used by this searcher.
     ///
     /// + Note: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
-    /// running. Depending on your use case, you might want to call `reset()` after changing the index.
+    ///   running. Depending on your use case, you might want to call `reset()` after changing the index.
     ///
-    @objc public var index: Index
+    @objc public var index: Searchable
     
     /// The delegate to this searcher.
     ///
@@ -219,10 +219,10 @@ import Foundation
     ///
     /// - parameter index: The index to target when searching.
     ///
-    @objc public init(index: Index) {
+    @objc public init(index: Searchable) {
         self.index = index
         super.init()
-        updateClientUserAgents()
+        Searcher._updateClientUserAgents
     }
     
     /// Create a new searcher targeting the specified index and register a result handler with it.
@@ -230,22 +230,19 @@ import Foundation
     /// - parameter index: The index to target when searching.
     /// - parameter resultHandler: The result handler to register.
     ///
-    @objc public convenience init(index: Index, resultHandler: @escaping ResultHandler) {
+    @objc public convenience init(index: Searchable, resultHandler: @escaping ResultHandler) {
         self.init(index: index)
         self.resultHandlers = [resultHandler]
     }
     
     /// Add the library's version to the client's user agents, if not already present.
-    private func updateClientUserAgents() {
-        let bundleInfo = Bundle(for: type(of: self)).infoDictionary!
+    private static let _updateClientUserAgents: Void = {
+        let bundleInfo = Bundle(for: Searcher.self).infoDictionary!
         let name = bundleInfo["CFBundleName"] as! String
         let version = bundleInfo["CFBundleShortVersionString"] as! String
         let libraryVersion = LibraryVersion(name: name, version: version)
-        let client = index.client
-        if client.userAgents.index(where: { $0 == libraryVersion }) == nil {
-            client.userAgents.append(libraryVersion)
-        }
-    }
+        Client.addUserAgent(libraryVersion)
+    }()
     
     /// Register a result handler with this searcher.
     ///
