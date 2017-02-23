@@ -1,16 +1,12 @@
 PODS:
-  - AlgoliaSearch-Client-Swift (3.6)
+  - AlgoliaSearch-Client-Swift (4.4)
 
 DEPENDENCIES:
-  - AlgoliaSearch-Client-Swift (from `~/devt/workspace/clients-master/algoliasearch-client-swift`)
-
-EXTERNAL SOURCES:
-  AlgoliaSearch-Client-Swift:
-    :path: ~/devt/workspace/clients-master/algoliasearch-client-swift
+  - AlgoliaSearch-Client-Swift (~> 4.4)
 
 SPEC CHECKSUMS:
-  AlgoliaSearch-Client-Swift: 7d28fce88570a3f130658c2ce6d67b30f5fd884b
+  AlgoliaSearch-Client-Swift: 4ce299bf353d1d5b6a4b57db2a8bcbafc46f9fa7
 
-PODFILE CHECKSUM: 813df9b8b9010cbaf1bc0f48d67f180da8288526
+PODFILE CHECKSUM: e20142a65ab3752c84688594fafc14f9763e320c
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.2.0.beta.1

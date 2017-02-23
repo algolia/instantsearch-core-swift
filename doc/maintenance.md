@@ -21,23 +21,23 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
 - Update the **version number** in:
 
-    - `AlgoliaSearch-Helper-Swift.podspec`
+    - `InstantSearch-Core-Swift.podspec`
 
-    - `AlgoliaSearch-Helper-Offline-Swift.podspec`
+    - `InstantSearch-Core-Offline-Swift.podspec`
 
-    - `Source/Info.plist` (or via Xcode, in the project settings)
+    - `Sources/Info.plist` (or via Xcode, in the project settings)
 
-- Update the **change log** (`ChangeLod.md`)
+- Update the **change log** (`ChangeLog.md`)
 
 - **Dry-run the pod spec**: `pod lib lint` to check that everything's fine.
 
-- Check-out the `gh-pages` branch into the `build/doc` directory:
+- Check-out the `gh-pages` branch into the `doc/build` directory:
 
     ```
-    git clone git@github.com:algolia/algoliasearch-helper-swift -b gh-pages --single-branch build/doc
+    git clone git@github.com:algolia/instantsearch-core-swift -b gh-pages --single-branch doc/build
     ```
 
-- Generate the **reference documentation**: `tools/jazzy.sh`
+- Generate the **documentation**: `tools/make-doc.sh`
 
     *Note: requires [Jazzy](https://github.com/realm/jazzy).*
 
@@ -55,15 +55,13 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
 - **Publish the pod:**
 
-    - `pod trunk push --allow-warnings AlgoliaSearch-Helper-Swift.podspec`
+    - `pod trunk push InstantSearch-Core-Swift.podspec`
 
-    - `pod trunk push --allow-warnings AlgoliaSearch-Helper-Offline-Swift.podspec`
-
-    *Note: so far, there are warnings that we cannot avoid. The reason is the same as for the [API Client](https://github.com/algolia/algoliasearch-client-swift/).*
+    - `pod trunk push InstantSearch-Core-Offline-Swift.podspec`
 
 - Edit the **release notes**: in GitHub, edit the tag and copy-paste the Change Log section for this release.
 
-- **Publish the reference documentation** to GitHub pages: `cd build/doc && git push`
+- **Publish the documentation** to GitHub pages: `cd doc/build && git push`
 
 - Update the **external documentation** if necessary:
 

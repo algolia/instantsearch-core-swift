@@ -30,7 +30,7 @@ import Foundation
 // ------------------------------------------------------------------------
 // # Sequencing logic
 //
-// An important part of the search helper is to manage the proper sequencing
+// An important part of the `Searcher` is to manage the proper sequencing
 // of search requests and responses.
 //
 // Conceptually, a search session can be seen as a sequence of *queries*,
@@ -64,13 +64,40 @@ import Foundation
 // ------------------------------------------------------------------------
 
 
-/// Error domain used for errors raised by this module.
-public let ErrorDomain = "AlgoliaSearchHelper"
+/// Delegate to a `Searcher`.
+///
+@objc public protocol SearcherDelegate {
+    /// Called when a response to a request has been received by a searcher.
+    /// Can be a success or an error, depending on which of `results` or `error` is non-nil.
+    ///
+    /// - parameter searcher: The `Searcher` instance that received a response.
+    /// - parameter results: The request's results, or `nil` in case of error.
+    /// - parameter error: The error that was encountered, or `nil` in case of success.
+    /// - parameter params: The search parameters of the request corresponding to the present response.
+    ///
+    @objc(searcher:didReceiveResults:error:forParams:)
+    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, params: SearchParameters)
+}
 
 
 /// Manages search on an Algolia index.
 ///
 /// The purpose of this class is to maintain a state between searches and handle pagination.
+///
+/// ### Handling results
+///
+/// There are three ways to handle responses to search requests issued by a `Searcher`. From the highest level to the
+/// lowest level, they are:
+///
+/// 1. Register a **result handler** block. It will be called each time a response is received, providing either the
+///    results (in case of success) or the error (in case of failure). You may register as many result handlers as
+///    necessary.
+///
+/// 2. Register a **delegate**. It provides additional information, such as the `Searcher` instance that received the
+///    response, and the search parameters that were used for the request. You may register at most one delegate.
+///
+/// 3. Listen for **notifications** issued by this searcher (using `NotificationCenter`). Notifications give you
+///    extra information, such as request sequence numbers, or whether requests are cancelled by the searcher.
 ///
 @objc public class Searcher: NSObject {
     
@@ -81,21 +108,18 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter results: The results (in case of success).
     /// - parameter error: The error (in case of failure).
     ///
-    public typealias ResultHandler = @convention(block) (results: SearchResults?, error: NSError?) -> Void
+    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?) -> Void
 
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
-        /// Search query.
-        ///
-        /// - Note: The page may be overridden when loading more content.
-        ///
-        var query: Query = Query()
+        /// Filters.
+        var params: SearchParameters = SearchParameters()
         
         /// List of facets to be treated as disjunctive facets. Defaults to the empty list.
-        var disjunctiveFacets: [String] = []
+        var disjunctiveFacets: [String] { return Array(params.disjunctiveFacets) }
         
         /// Initial page.
-        var initialPage: Int { return query.page?.integerValue ?? 0 }
+        var initialPage: Int { return params.page != nil ? Int(params.page!) : 0 }
         
         /// Current page.
         var page: Int = 0
@@ -118,55 +142,42 @@ public let ErrorDomain = "AlgoliaSearchHelper"
 
         /// Copy a state.
         init(copy: State) {
-            // WARNING: Query is not a value type (because of Objective-C bridgeability), so let's make sure to copy it.
-            self.query = Query(copy: copy.query)
-            self.disjunctiveFacets = copy.disjunctiveFacets
+            // WARNING: `SearchParameters` is not a value type (because of Objective-C bridgeability), so let's make
+            // sure to copy it.
+            self.params = SearchParameters(from: copy.params)
             self.page = copy.page
         }
         
         var description: String {
-            return "State#\(sequenceNumber){query=\(query), disjunctiveFacets=\(disjunctiveFacets), page=\(page)}"
+            return "State#\(sequenceNumber){params=\(params), disjunctiveFacets=\(disjunctiveFacets), page=\(page)}"
         }
     }
     
     // MARK: Properties
 
-    /// The index used by this search helper.
+    /// The index used by this searcher.
     ///
     /// + Note: Modifying the index doesn't alter the searcher's state. In particular, pending requests are left
     /// running. Depending on your use case, you might want to call `reset()` after changing the index.
     ///
     @objc public var index: Index
     
+    /// The delegate to this searcher.
+    ///
+    /// + Warning: The delegate is not retained. It is the caller's responsibility to ensure that it remains valid for
+    ///            the lifetime of the searcher.
+    ///
+    public var delegate: SearcherDelegate?
+    
     /// User callbacks for handling results.
     /// There should be at least one, but multiple handlers may be registered if necessary.
     ///
     private var resultHandlers: [ResultHandler] = []
     
-    /// The query that will be used for the next search.
+    /// Search parameters for the next query.
     ///
-    /// **Warning:** The value of `facetFilters` will be discarded and overridden by the `refinements` property.
-    @objc public var query: Query {
-        get { return nextState.query }
-        set { nextState.query = newValue }
-    }
-    
-    /// The disjunctive facets that will be used for the next search.
-    @objc public var disjunctiveFacets: [String] {
-        get { return nextState.disjunctiveFacets }
-        set { nextState.disjunctiveFacets = newValue }
-    }
-    
-    /// Facet refinements that will be used for the next search. Maps facet names to a list of refined values.
-    /// The format is the same as `Index.searchDisjunctiveFaceting()`.
-    ///
-    /// + Note: You are encouraged to use the helper methods to manipulate this property. See `hasFacetRefinement(_:value:)`,
-    /// `addFacetRefinement(_:value:)`, `removeFacetRefinement(_:value:)` and `toggleFacetRefinement(_:value:)`.
-    ///
-    /// + Warning: Any refinements specified here will override those manually specified in `query`.
-    ///
-    @objc public var refinements: [String: [String]] = [:]
-    
+    @objc public var params: SearchParameters { return nextState.params }
+
     // State management
     // ----------------
     
@@ -196,8 +207,14 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     private var results: SearchResults?
     
     /// All currently ongoing requests.
-    private var pendingRequests: [Int: NSOperation] = [:]
+    private var pendingRequests: [Int: Operation] = [:]
 
+    /// Maximum number of pending requests allowed.
+    /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
+    /// This helps to avoid filling up the request queue when the network is slow.
+    ///
+    @objc public var maxPendingRequests: Int = 3
+    
     // MARK: - Initialization, termination
     
     /// Create a new searcher targeting the specified index.
@@ -215,19 +232,19 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// - parameter index: The index to target when searching.
     /// - parameter resultHandler: The result handler to register.
     ///
-    @objc public convenience init(index: Index, resultHandler: ResultHandler) {
+    @objc public convenience init(index: Index, resultHandler: @escaping ResultHandler) {
         self.init(index: index)
         self.resultHandlers = [resultHandler]
     }
     
-    /// Add the helper library's version to the client's user agents, if not already present.
+    /// Add the library's version to the client's user agents, if not already present.
     private func updateClientUserAgents() {
-        let bundleInfo = NSBundle(forClass: self.dynamicType).infoDictionary!
+        let bundleInfo = Bundle(for: type(of: self)).infoDictionary!
         let name = bundleInfo["CFBundleName"] as! String
         let version = bundleInfo["CFBundleShortVersionString"] as! String
         let libraryVersion = LibraryVersion(name: name, version: version)
         let client = index.client
-        if client.userAgents.indexOf({ $0 == libraryVersion }) == nil {
+        if client.userAgents.index(where: { $0 == libraryVersion }) == nil {
             client.userAgents.append(libraryVersion)
         }
     }
@@ -236,19 +253,17 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     /// + Note: Because of the way closures are handled in Swift, the handler cannot be removed.
     ///
-    @objc public func addResultHandler(resultHandler: ResultHandler) {
+    @objc public func addResultHandler(_ resultHandler: @escaping ResultHandler) {
         self.resultHandlers.append(resultHandler)
     }
     
     /// Reset the search state.
-    /// This resets the `query`, `disjunctiveFacets` and `refinements` properties. It also cancels any pending request.
+    /// This resets the `query`, `disjunctiveFacets` and `filters` properties. It also cancels any pending request.
     ///
     /// + Note: It does *not* remove registered result handlers.
     ///
     @objc public func reset() {
-        query = Query()
-        disjunctiveFacets.removeAll()
-        refinements.removeAll()
+        params.clear()
         cancelPendingRequests()
     }
     
@@ -295,7 +310,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
             return false
         }
         // Must not load more if the results are outdated with respect to the currently on-going search.
-        if requestedState.query != receivedState.query {
+        if requestedState.params != receivedState.params {
             return false
         }
         return true
@@ -307,7 +322,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     ///
     private func hasMore() -> Bool {
         // If no results have been received yet, there are obviously no additional pages.
-        guard let receivedState = receivedState, results = results else { return false }
+        guard let receivedState = receivedState, let results = results else { return false }
         return receivedState.page + 1 < results.nbPages
     }
     
@@ -325,34 +340,39 @@ public let ErrorDomain = "AlgoliaSearchHelper"
         state.sequenceNumber = currentSeqNo
         
         // Build query.
-        let query = Query(copy: state.query)
-        query.page = state.page
-        query.facetFilters = [] // NOTE: will be overridden below
+        let params = SearchParameters(from: state.params)
+        params.page = UInt(state.page)
+        params.facetFilters = [] // NOTE: will be overridden below
         
         // User info for notifications.
-        let userInfo: [String: AnyObject] = [
-            Searcher.NotificationQueryKey: query,
-            Searcher.NotificationSeqNoKey: currentSeqNo
+        let userInfo: [String: Any] = [
+            Searcher.notificationParamsKey: params,
+            Searcher.notificationSeqNoKey: currentSeqNo
         ]
         
+        // Cancel too old requests.
+        let tooOldRequests = pendingRequests.filter({ $0.0 <= currentSeqNo - maxPendingRequests })
+        for (seqNo, _) in tooOldRequests {
+            cancelRequest(seqNo: seqNo)
+        }
+
         // Run request
         // -----------
-        var operation: NSOperation!
+        var operation: Operation!
         let completionHandler: CompletionHandler = {
             [weak self]
-            (content: [String: AnyObject]?, error: NSError?) in
+            (content, error) in
             // NOTE: We do not control the lifetime of the searcher. => Fail gracefully if already released.
             guard let this = self else {
                 return
             }
             // Cancel all previous requests (as this one is deemed more recent).
             let previousRequests = this.pendingRequests.filter({ $0.0 < state.sequenceNumber })
-            for (seqNo, request) in previousRequests {
-                this.cancelRequest(seqNo)
+            for (seqNo, _) in previousRequests {
+                this.cancelRequest(seqNo: seqNo)
             }
             // Remove the current request.
-            let currentRequest = this.pendingRequests[currentSeqNo]!
-            this.pendingRequests.removeValueForKey(currentSeqNo)
+            this.pendingRequests.removeValue(forKey: currentSeqNo)
             
             // Obsolete requests should not happen since they have been cancelled by more recent requests (see above).
             // WARNING: Only works if the current queue is serial!
@@ -361,140 +381,87 @@ public let ErrorDomain = "AlgoliaSearchHelper"
             this.receivedState = state
             
             // Call the result handler.
-            this.handleResults(content, error: error, userInfo: userInfo)
+            this.handleResults(content: content, error: error, userInfo: userInfo)
         }
         if state.disjunctiveFacets.isEmpty {
-            // All facets are conjunctive; build facet filters accordingly.
-            let queryHelper = QueryHelper(query: query)
-            for (facetName, values) in refinements {
-                for value in values {
-                    queryHelper.addConjunctiveFacetRefinement(FacetRefinement(name: facetName, value: value))
-                }
-            }
-            operation = index.search(query, completionHandler: completionHandler)
+            // All facets are conjunctive; build regular filters combining numeric and facet refinements.
+            // NOTE: Not strictly necessary since `Index.search(...)` calls `Query.build()`, but let's not rely on that.
+            params.update()
+            operation = index.search(params, completionHandler: completionHandler)
         } else {
             // Facet filters are built directly by the disjunctive faceting search helper method.
-            operation = index.searchDisjunctiveFaceting(query, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
+            params.updateFromNumerics() // this is really necessary (in contrast to the above)
+            let refinements = params.buildFacetRefinements()
+            operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
         }
         self.pendingRequests[state.sequenceNumber] = operation
         
         // Notify observers.
-        NSNotificationCenter.defaultCenter().postNotificationName(Searcher.SearchNotification, object: self, userInfo: userInfo)
+        NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: userInfo)
     }
     
     /// Completion handler for search requests.
-    private func handleResults(content: [String: AnyObject]?, error: NSError?, userInfo: [String: AnyObject]) {
+    private func handleResults(content: JSONObject?, error: Error?, userInfo: [String: Any]) {
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
-                callResultHandlers(self.results, error: nil, userInfo: userInfo)
+                callResultHandlers(results: self.results, error: nil, userInfo: userInfo)
             } else {
-                callResultHandlers(nil, error: error, userInfo: userInfo)
+                callResultHandlers(results: nil, error: error, userInfo: userInfo)
             }
-        } catch let e as NSError {
-            callResultHandlers(nil, error: e, userInfo: userInfo)
+        } catch let e {
+            callResultHandlers(results: nil, error: e, userInfo: userInfo)
         }
     }
     
-    private func callResultHandlers(results: SearchResults?, error: NSError?, userInfo: [String: AnyObject]) {
+    private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
+        // Notify delegate.
+        delegate?.searcher(self, didReceive: results, error: error, params: userInfo[Searcher.notificationParamsKey] as! SearchParameters)
         // Notify result handlers.
         for resultHandler in resultHandlers {
-            resultHandler(results: results, error: error)
+            resultHandler(results, error)
         }
         // Notify observers.
         var userInfo = userInfo
         if let results = results {
-            userInfo[Searcher.ResultNotificationResultsKey] = results
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ResultNotification, object: self, userInfo: userInfo)
+            userInfo[Searcher.resultNotificationResultsKey] = results
+            NotificationCenter.default.post(name: Searcher.ResultNotification, object: self, userInfo: userInfo)
         }
         else if let error = error {
-            userInfo[Searcher.ErrorNotificationErrorKey] = error
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.ErrorNotification, object: self, userInfo: userInfo)
+            userInfo[Searcher.errorNotificationErrorKey] = error
+            NotificationCenter.default.post(name: Searcher.ErrorNotification, object: self, userInfo: userInfo)
         }
     }
     
-    // MARK: - Facets
+    // MARK: - Search for facet values
     
-    /// Set a given facet as disjunctive or conjunctive.
-    /// This is a convenience method to set the `disjunctiveFacets` property.
+    /// Search for values of a given facet.
     ///
-    /// - parameter name: The facet's name.
-    /// - parameter disjunctive: true to treat this facet as disjunctive (`OR`), false to treat it as conjunctive
-    ///   (`AND`, the default).
+    /// This is a convenience shortcut for Algolia Search's `Index.searchForFacetValues(...)` method that will
+    /// automatically use the current search `params` as the refining query, also taking into account the
+    /// conjunctive/disjunctive status of the targeted facet (i.e. refinements for the targeted facet will be discarded
+    /// when the facet is disjunctive).
     ///
-    @objc public func setFacet(name: String, disjunctive: Bool) {
-        if disjunctive {
-            if !disjunctiveFacets.contains(name) {
-                disjunctiveFacets.append(name)
-            }
-        } else {
-            if let index = disjunctiveFacets.indexOf(name) {
-                disjunctiveFacets.removeAtIndex(index)
-            }
+    /// Unlike a regular `search()`:
+    ///
+    /// - The searched text has to be passed as an argument to the method, as it differs in purpose from `params.query`.
+    /// - Result handlers or the delegate are not called; instead, the provided completion handler is called.
+    ///   Notifications are not issued either.
+    ///
+    /// - parameter facetName: Name of the facet to search. It must have been declared in the index's
+    ///       `attributesForFaceting` setting with the `searchable()` modifier.
+    /// - parameter text: Text to search for in the facet's values.
+    /// - parameter completionHandler: Completion handler to be notified of the request's outcome.
+    /// - returns: A cancellable operation.
+    ///
+    @objc @discardableResult
+    public func searchForFacetValues(of facetName: String, matching text: String, completionHandler: @escaping CompletionHandler) -> Operation {
+        let facetSearchParams = SearchParameters(from: self.params)
+        // If the searched facet is disjunctive, clear any refinements that it may have.
+        if facetSearchParams.isDisjunctiveFacet(name: facetName) {
+            facetSearchParams.clearFacetRefinements(name: facetName)
         }
-    }
-    
-    /// Add a refinement for a given facet.
-    /// The refinement will be treated as conjunctive (`AND`) or disjunctive (`OR`) based on the facet's own
-    /// disjunctive/conjunctive status.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to add.
-    ///
-    @objc public func addFacetRefinement(name: String, value: String) {
-        if refinements[name] == nil {
-            refinements[name] = []
-        }
-        refinements[name]!.append(value)
-    }
-    
-    /// Remove a refinement for a given facet.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to remove.
-    ///
-    @objc public func removeFacetRefinement(name: String, value: String) {
-        if let index = refinements[name]?.indexOf(value) {
-            refinements[name]?.removeAtIndex(index)
-        }
-    }
-    
-    /// Test whether a facet has a refinement for a given value.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to look for.
-    /// - returns: true if the refinement exists, false otherwise.
-    ///
-    @objc public func hasFacetRefinement(name: String, value: String) -> Bool {
-        return refinements[name]?.contains(value) ?? false
-    }
-    
-    /// Add or remove a facet refinement, based on its current state: if it exists, it is removed; otherwise it is
-    /// added.
-    ///
-    /// - parameter name: The facet's name.
-    /// - parameter value: The refined value to toggle.
-    ///
-    @objc public func toggleFacetRefinement(name: String, value: String) {
-        if hasFacetRefinement(name, value: value) {
-            removeFacetRefinement(name, value: value)
-        } else {
-            addFacetRefinement(name, value: value)
-        }
-    }
-    
-    /// Remove all refinements for all facets.
-    ///
-    @objc public func clearFacetRefinements() {
-        refinements.removeAll()
-    }
-    
-    /// Remove all refinements for a given facet.
-    ///
-    /// - parameter name: The facet's name.
-    ///
-    @objc public func clearFacetRefinements(name: String) {
-        refinements.removeValueForKey(name)
+        return index.searchForFacetValues(of: facetName, matching: text, query: facetSearchParams, completionHandler: completionHandler)
     }
     
     // MARK: - Managing requests
@@ -507,7 +474,7 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Cancel all pending requests.
     @objc public func cancelPendingRequests() {
         for seqNo in pendingRequests.keys {
-            cancelRequest(seqNo)
+            cancelRequest(seqNo: seqNo)
         }
         assert(pendingRequests.isEmpty)
     }
@@ -519,9 +486,9 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     @objc public func cancelRequest(seqNo: Int) {
         if let request = pendingRequests[seqNo] {
             request.cancel()
-            pendingRequests.removeValueForKey(seqNo)
-            NSNotificationCenter.defaultCenter().postNotificationName(Searcher.CancelNotification, object: self, userInfo: [
-                Searcher.NotificationSeqNoKey: seqNo
+            pendingRequests.removeValue(forKey: seqNo)
+            NotificationCenter.default.post(name: Searcher.CancelNotification, object: self, userInfo: [
+                Searcher.notificationSeqNoKey: seqNo
             ])
         }
     }
@@ -531,48 +498,38 @@ public let ErrorDomain = "AlgoliaSearchHelper"
     /// Notification sent when a request is sent through the API Client.
     /// This can be either on `search()` or `loadMore()`.
     ///
-    @objc public static let SearchNotification: String = "search"
+    @objc public static let SearchNotification = Notification.Name("search")
     
     /// Notification sent when a successful response is received from the API Client.
-    @objc public static let ResultNotification: String = "result"
+    @objc public static let ResultNotification = Notification.Name("result")
     
     /// Key containing the search results in a `ResultNotification`.
     /// Type: `SearchResults`.
     ///
-    @objc public static let ResultNotificationResultsKey: String = "results"
+    @objc public static let resultNotificationResultsKey: String = "results"
 
     /// Notification sent when an erroneous response is received from the API Client.
-    @objc public static let ErrorNotification: String = "error"
+    @objc public static let ErrorNotification = Notification.Name("error")
     
     /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
     /// or `CancelNotification`. The sequence number uniquely identifies the request across all `Searcher` instances.
     /// Type: `Int`.
     ///
-    @objc public static let NotificationSeqNoKey: String = "seqNo"
+    @objc public static let notificationSeqNoKey: String = "seqNo"
     
     /// Key containing the search query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
-    /// Type: `Query`.
+    /// Type: `SearchParameters`.
     ///
-    @objc public static let NotificationQueryKey: String = "query"
+    @objc public static let notificationParamsKey: String = "params"
     
     /// Key containing the error in an `ErrorNotification`.
-    /// Type: `NSError`.
+    /// Type: `Error`.
     ///
-    @objc public static let ErrorNotificationErrorKey: String = "error"
+    @objc public static let errorNotificationErrorKey: String = "error"
 
     /// Notification sent when a request is cancelled by the searcher.
     /// The result handler will not be called for cancelled requests, nor will any `ResultNotification` or
     /// `ErrorNotification` be posted, so this is your only chance of being informed of cancelled requests.
     ///
-    @objc public static let CancelNotification: String = "cancel"
-
-    // MARK: Miscellaneous
-    
-    /// Error domain used for errors raised by this module.
-    ///
-    /// + Note: This shortcut is provided for Objective-C bridging.
-    /// + SeeAlso: The top-level `ErrorDomain` constant.
-    ///
-    @objc public static let ErrorDomain = AlgoliaSearchHelper.ErrorDomain
-    
+    @objc public static let CancelNotification = Notification.Name("cancel")
 }

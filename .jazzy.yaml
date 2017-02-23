@@ -1,20 +1,24 @@
 # The Xcode project is not standalone: we need the Cocoapods-generated workspace to draw dependencies.
 xcodebuild_arguments:
     - -workspace
-    - AlgoliaSearchHelper.xcworkspace
+    - InstantSearchCore.xcworkspace
     - -scheme
-    - AlgoliaSearchHelper-iOS
-output: build/doc
+    - InstantSearchCore-iOS
+output: doc/build/reference
 # Avoid putting the DocSet within the HTML docs.
 # WARNING: The path is relative to the output directory.
-docset_path: ../docset
+docset_path: ../../../build/docset
 hide_documentation_coverage: true
 abstract:
     - LICENSE
+readme: doc/jazzy/index.md
 custom_categories:
     - name: Searching
       children:
         - Searcher
+        - SearchParameters
+        - FacetRefinement
+        - NumericRefinement
         - SearchResults
         - HighlightResult
         - SnippetResult
@@ -22,7 +26,8 @@ custom_categories:
         - FacetStats
         - FacetValue
 
-    - name: Miscellaneous
+    - name: Utilities
       children:
-        - HighlightRenderer
+        - Highlighter
         - Debouncer
+        - SearchProgressController

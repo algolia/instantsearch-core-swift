@@ -3,17 +3,33 @@
 use_frameworks!
 
 def common_deps
-    pod 'AlgoliaSearch-Client-Swift', :path => '~/devt/workspace/clients-master/algoliasearch-client-swift'
+    pod 'AlgoliaSearch-Client-Swift', '~> 4.4'
 end
 
-target "AlgoliaSearchHelper-iOS" do
+target "InstantSearchCore-iOS" do
     common_deps
 end
 
-target "AlgoliaSearchHelper-macOS" do
+target "InstantSearchCore-iOS-Tests" do
     common_deps
 end
 
-target "AlgoliaSearchHelper-tvOS" do
+target "InstantSearchCore-macOS" do
+    common_deps
+end
+
+target "InstantSearchCore-macOS-Tests" do
+    common_deps
+end
+
+target "InstantSearchCore-tvOS" do
+    common_deps
+end
+
+target "InstantSearchCore-tvOS-Tests" do
+    common_deps
+end
+
+target "InstantSearchCore-watchOS" do
     common_deps
 end
