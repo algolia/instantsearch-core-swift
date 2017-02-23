@@ -17,6 +17,10 @@
 		BC272EC51E5F0C86009F1FFD /* SearchStrategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* SearchStrategist.swift */; };
 		BC272EC61E5F0C86009F1FFD /* SearchStrategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* SearchStrategist.swift */; };
 		BC272EC71E5F0C86009F1FFD /* SearchStrategist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* SearchStrategist.swift */; };
+		BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
+		BC272ECC1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
+		BC272ECD1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
+		BC272ECE1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
 		BC34263C1D460DB70055E0F2 /* InstantSearchCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC3426311D460DB70055E0F2 /* InstantSearchCore.framework */; };
 		BC34264F1D4613CB0055E0F2 /* Highlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264B1D4613CB0055E0F2 /* Highlighter.swift */; };
 		BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */; };
@@ -103,6 +107,7 @@
 		BBCFDA6842A3CD7059850CE1 /* Pods-InstantSearchCore-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS/Pods-InstantSearchCore-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BC154A821D92B5FD00DE764C /* HighlighterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlighterTest.swift; sourceTree = "<group>"; };
 		BC272EC31E5F0C86009F1FFD /* SearchStrategist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchStrategist.swift; sourceTree = "<group>"; };
+		BC272ECA1E5F26BD009F1FFD /* Throttler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
 		BC3426311D460DB70055E0F2 /* InstantSearchCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InstantSearchCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC3426361D460DB70055E0F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC34263B1D460DB70055E0F2 /* InstantSearchCore-iOS-Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "InstantSearchCore-iOS-Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,6 +273,7 @@
 				BC5DC1241D8697F50066D705 /* SearchProgressController.swift */,
 				BC34264E1D4613CB0055E0F2 /* SearchResults.swift */,
 				BC272EC31E5F0C86009F1FFD /* SearchStrategist.swift */,
+				BC272ECA1E5F26BD009F1FFD /* Throttler.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -842,6 +848,7 @@
 			files = (
 				BC34264F1D4613CB0055E0F2 /* Highlighter.swift in Sources */,
 				BC272EC41E5F0C86009F1FFD /* SearchStrategist.swift in Sources */,
+				BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
 				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BCB7040F1DBA521F00A2803E /* SearchParameters.swift in Sources */,
@@ -868,6 +875,7 @@
 			files = (
 				BC4CB8A51D534C20004618DD /* Searcher.swift in Sources */,
 				BC272EC51E5F0C86009F1FFD /* SearchStrategist.swift in Sources */,
+				BC272ECC1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
 				BC5DC1261D8697F50066D705 /* SearchProgressController.swift in Sources */,
@@ -894,6 +902,7 @@
 			files = (
 				BC4CB8C81D535CA4004618DD /* Searcher.swift in Sources */,
 				BC272EC61E5F0C86009F1FFD /* SearchStrategist.swift in Sources */,
+				BC272ECD1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
 				BC5DC1271D8697F50066D705 /* SearchProgressController.swift in Sources */,
@@ -920,6 +929,7 @@
 			files = (
 				BC5DC12A1D86BD110066D705 /* Searcher.swift in Sources */,
 				BC272EC71E5F0C86009F1FFD /* SearchStrategist.swift in Sources */,
+				BC272ECE1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
 				BC5DC12C1D86BD170066D705 /* JSONHelper.swift in Sources */,
 				BCB704121DBA521F00A2803E /* SearchParameters.swift in Sources */,
