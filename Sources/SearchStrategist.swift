@@ -65,19 +65,19 @@ import Foundation
     @objc public let debouncer = Debouncer(delay: 0.5)
     
     /// Requests older than this delay will be discarded from the statistics.
-    @objc public var amnesiaDelay: NSTimeInterval = 20
+    @objc public var amnesiaDelay: TimeInterval = 20
     
     /// Maximum number of requests that will be considered for the statistics. Always the N most recent ones are used.
     @objc public var maxRequestsInHistory: Int = 3
 
     /// Threshold beyond which throttled mode is activated.
-    @objc public var throttleThreshold: NSTimeInterval = 0.5
+    @objc public var throttleThreshold: TimeInterval = 0.5
     
     /// Threshold beyond which manual mode is activated.
-    @objc public var manualThreshold: NSTimeInterval = 3.0
+    @objc public var manualThreshold: TimeInterval = 3.0
     
     /// Possible search strategies.
-    @objc public enum Strategy: Int {
+    @objc(RequestStrategy) public enum Strategy: Int {
         /// As-you-type search in realtime: every keystroke immediately triggers a request.
         case Realtime = 1
         
@@ -96,7 +96,7 @@ import Foundation
     @objc public private(set) var strategy: Strategy = .Realtime {
         willSet(newValue) {
             if newValue != strategy {
-                self.willChangeValueForKey("strategy")
+                self.willChangeValue(forKey: "strategy")
             }
         }
         didSet(oldValue) {
@@ -104,7 +104,7 @@ import Foundation
                 #if DEBUG
                     NSLog("New strategy: \(strategy.rawValue)")
                 #endif
-                self.didChangeValueForKey("strategy")
+                self.didChangeValue(forKey: "strategy")
             }
         }
     }
@@ -115,13 +115,13 @@ import Foundation
         let seqNo: Int
         
         /// The request's start date.
-        let startDate: NSDate
+        let startDate: Date
         
         /// The request's stop date, or `nil` if the request is still running.
-        var stopDate: NSDate? = nil
+        var stopDate: Date? = nil
         
         /// The request's duration.
-        var duration: NSTimeInterval { return (stopDate ?? NSDate()).timeIntervalSinceDate(startDate) }
+        var duration: TimeInterval { return (stopDate ?? Date()).timeIntervalSince(startDate) }
         
         /// Whether the request is still running.
         var running: Bool { return stopDate == nil }
@@ -159,16 +159,16 @@ import Foundation
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     /// Add a new searcher to this strategist.
     ///
     /// - parameter searcher: The searcher to add.
     ///
-    @objc public func addSearcher(searcher: Searcher) {
+    @objc public func addSearcher(_ searcher: Searcher) {
         searchers.append(searcher)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.searchEvent), name: nil, object: searcher)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.searchEvent), name: nil, object: searcher)
     }
     
     /// Remove a searcher from this strategist.
@@ -176,9 +176,9 @@ import Foundation
     /// - parameter searcher: The searcher to remove.
     ///
     @objc public func removeSearcher(searcher: Searcher) {
-        if let index = searchers.indexOf(searcher) {
-            searchers.removeAtIndex(index)
-            NSNotificationCenter.defaultCenter().removeObserver(self, name: nil, object: searcher)
+        if let index = searchers.index(of: searcher) {
+            searchers.remove(at: index)
+            NotificationCenter.default.removeObserver(self, name: nil, object: searcher)
         }
     }
     
@@ -211,7 +211,7 @@ import Foundation
                 break
             case .Manual:
                 // Inform observers that a request has been dropped.
-                NSNotificationCenter.defaultCenter().postNotificationName(SearchStrategist.DropNotification, object: self, userInfo: nil)
+                NotificationCenter.default.post(name: SearchStrategist.DropNotification, object: self, userInfo: nil)
                 break
             }
         }
@@ -226,7 +226,7 @@ import Foundation
     // MARK: - Events
     
     @objc private func searchEvent(notification: NSNotification) {
-        guard let requestSeqNo = notification.userInfo?[Searcher.NotificationSeqNoKey] as? Int else { return }
+        guard let requestSeqNo = notification.userInfo?[Searcher.notificationSeqNoKey] as? Int else { return }
 
         switch notification.name {
         case Searcher.SearchNotification:
@@ -237,7 +237,7 @@ import Foundation
             #endif
             
             // Mark start time.
-            stats.append(RequestStat(seqNo: requestSeqNo, startDate: NSDate(), stopDate: nil, cancelled: false))
+            stats.append(RequestStat(seqNo: requestSeqNo, startDate: Date(), stopDate: nil, cancelled: false))
             
             // Schedule to check the request after the various thresholds.
             // Why? If the request takes a long time, we want to react *before* the response is actually received
@@ -249,16 +249,16 @@ import Foundation
                     this.updateStrategy()
                 }
             }
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(throttleThreshold * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), checkPendingRequestsBlock)
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(manualThreshold * Double(NSEC_PER_SEC))), dispatch_get_main_queue(), checkPendingRequestsBlock)
+            DispatchQueue.main.asyncAfter(deadline: .now() + throttleThreshold, execute: checkPendingRequestsBlock)
+            DispatchQueue.main.asyncAfter(deadline: .now() + manualThreshold, execute: checkPendingRequestsBlock)
             break
             
         case Searcher.ResultNotification, Searcher.ErrorNotification, Searcher.CancelNotification:
-            guard let statIndex = stats.indexOf({ $0.seqNo == requestSeqNo }) else {
+            guard let statIndex = stats.index(where: { $0.seqNo == requestSeqNo }) else {
                 assert(false) // should never happen
                 return
             }
-            stats[statIndex].stopDate = NSDate()
+            stats[statIndex].stopDate = Date()
             // Cancelled requests are tricky: we don't know what would have been their duration.
             // We sometimes want to ignore them, sometimes not. => We store the cancelled status and let the
             // algorithm decide.
@@ -277,7 +277,7 @@ import Foundation
     private func updateStrategy() {
         // Remove old stats.
         let now = NSDate()
-        stats = stats.filter({ $0.running || now.timeIntervalSinceDate($0.stopDate!) < amnesiaDelay })
+        stats = stats.filter({ $0.running || now.timeIntervalSince($0.stopDate!) < amnesiaDelay })
 
         // Compute average duration
         // ------------------------
@@ -289,7 +289,7 @@ import Foundation
         //
         let overallStats = stats.suffix(maxRequestsInHistory)
         let completedStats = stats.filter({ $0.completed }).suffix(maxRequestsInHistory)
-        func avg(slice: ArraySlice<RequestStat>) -> NSTimeInterval {
+        func avg(_ slice: ArraySlice<RequestStat>) -> TimeInterval {
             return slice.isEmpty ? 0.0 : slice.reduce(0.0) { $0 + $1.duration } / Double(slice.count)
         }
         let overallAverageDuration = avg(overallStats)
@@ -326,5 +326,5 @@ import Foundation
     // MARK: - Notifications
     
     /// Notification posted when a request is dropped (only occurs in `Manual` strategy).
-    @objc public static let DropNotification: String = "drop"
+    @objc public static let DropNotification = Notification.Name("drop")
 }

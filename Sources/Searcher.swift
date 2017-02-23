@@ -183,8 +183,9 @@ import Foundation
     
     /// Sequence number for the next request.
     private static var nextSequenceNumber: Int = 0
-    
-    private static let lockQueue = dispatch_queue_create("Searcher static lock", DISPATCH_QUEUE_SERIAL)
+
+    /// Queue to serialize accesses to `nextSequenceB=Number`.
+    private static let lockQueue = DispatchQueue(label: "Searcher.class.lock")
     
     /// The state that will be used for the next search.
     /// It can be modified at will. It is not taken into account until the `search()` method is called; then it is
@@ -332,10 +333,9 @@ import Foundation
         var state = State(copy: requestedState)
         
         // Increase sequence number.
-        var currentSeqNo: Int!
-        dispatch_sync(Searcher.lockQueue) {
+        let currentSeqNo: Int = Searcher.lockQueue.sync {
             Searcher.nextSequenceNumber += 1
-            currentSeqNo = Searcher.nextSequenceNumber
+            return Searcher.nextSequenceNumber
         }
         state.sequenceNumber = currentSeqNo
         
