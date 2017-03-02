@@ -156,6 +156,7 @@
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan intValue:3 inclusive:YES];
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan doubleValue:3.0 inclusive:YES];
     [queryFilters removeNumericRefinementWithName:@"name" op:OperatorGreaterThanOrEqual value:@123.456 inclusive:NO];
+    [queryFilters updateNumericRefinementWithName:@"name" op:OperatorLessThan value:@3 inclusive:YES];
     [queryFilters hasNumericRefinementsWithName:@"name"];
     [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
     [queryFilters clearNumericRefinements];
