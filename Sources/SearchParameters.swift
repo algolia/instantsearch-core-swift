@@ -758,6 +758,43 @@ import Foundation
             }
         }
     }
+    
+    /// Remove a refinement for a given refinement condition
+    ///
+    /// - parameter condition: the condition to evaluate
+    ///
+    @objc public func removeNumericRefinements(where condition: (NumericRefinement) -> Bool) {
+        let oldRefinements = numericRefinements
+        oldRefinements.forEach { (name: String, refinements: [NumericRefinement]) in
+            let newRefinements = refinements.filter({ !condition($0) })
+            numericRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+        }
+    }
+    
+    /// Updates a refinement for a given metric
+    ///
+    /// - parameter name: The numeric's name (first operand to the operator).
+    /// - parameter op: The comparison operator to apply.
+    /// - parameter value: The value to compare the numeric to (second operand to the operator).
+    /// - parameter inclusive: Whether the refinement is treated as inclusive (the default) or exclusive
+    ///                        (negated with a `NOT`).
+    ///
+    @objc(updateNumericRefinementWithName:op:value:inclusive:)
+    public func updateNumericRefinement(_ name: String, _ op: NumericRefinement.Operator, _ value: NSNumber, inclusive: Bool = true) {
+        self.removeNumericRefinements(where: { $0.name == name && $0.op == op && $0.inclusive == inclusive })
+        self.addNumericRefinement(name, op, value, inclusive: inclusive)
+    }
+    
+    /// Updates a refinement for a given metric
+    ///
+    /// - parameter refinement: The refinement to update.
+    /// - parameter value: The new value to update for the given refinement
+    ///
+    @objc(updateNumericRefinementWithRefinement:value:)
+    public func updateNumericRefinement(_ refinement: NumericRefinement, newValue value: NSNumber) {
+        self.removeNumericRefinement(refinement)
+        self.addNumericRefinement(refinement.name, refinement.op, value, inclusive: refinement.inclusive)
+    }
 
     /// Test whether a numeric has any refinement(s).
     ///
