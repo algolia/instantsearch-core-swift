@@ -134,12 +134,18 @@ class SearchParametersTest: XCTestCase {
         XCTAssertNil(params.buildFiltersFromNumerics())
         
         // One conjunctive numeric with one refinement.
-        params.addNumericRefinement("foo", .greaterThanOrEqual, 3)
-        XCTAssertEqual(params.buildFilters(), "\"foo\" >= 3")
+        params.addNumericRefinement("foo", .greaterThanOrEqual, 2)
+        XCTAssertEqual(params.buildFilters(), "\"foo\" >= 2")
         XCTAssertEqual(params.buildFilters(), params.buildFiltersFromNumerics())
 
         // One conjunctive numeric with two refinements.
-        params.addNumericRefinement("foo", .lessThan, 4.0)
+        params.addNumericRefinement("foo", .lessThan, 3.0)
+        XCTAssertEqual(params.buildFilters(), "\"foo\" >= 2 AND \"foo\" < 3")
+        XCTAssertEqual(params.buildFilters(), params.buildFiltersFromNumerics())
+        
+        // Update One conjunctive numeric with 2 refinements.
+        params.updateNumericRefinement("foo", .greaterThanOrEqual, 3)
+        params.updateNumericRefinement("foo", .lessThan, 4.0)
         XCTAssertEqual(params.buildFilters(), "\"foo\" >= 3 AND \"foo\" < 4")
         XCTAssertEqual(params.buildFilters(), params.buildFiltersFromNumerics())
         
@@ -201,7 +207,16 @@ class SearchParametersTest: XCTestCase {
         XCTAssertTrue(params.hasNumericRefinements(name: "foo"))
         XCTAssertFalse(params.hasNumericRefinements(name: "bar"))
         
-        params.removeNumericRefinement("foo", .greaterThan, -1)
+        params.updateNumericRefinement("foo", .greaterThan, 5)
+        params.updateNumericRefinement("baz", .greaterThan, 3)
+        XCTAssertTrue(params.hasRefinements())
+        XCTAssertTrue(params.hasNumericRefinements())
+        XCTAssertTrue(params.hasNumericRefinements(name: "foo"))
+        XCTAssertTrue(params.hasNumericRefinements(name: "baz"))
+        XCTAssertFalse(params.hasNumericRefinements(name: "bar"))
+        
+        params.removeNumericRefinement("foo", .greaterThan, 5)
+        params.removeNumericRefinements(where: { $0.name == "baz" })
         XCTAssertFalse(params.hasRefinements())
         XCTAssertFalse(params.hasNumericRefinements())
         XCTAssertFalse(params.hasNumericRefinements())
