@@ -367,8 +367,8 @@ import Foundation
         states[seqNo] = nil
 
         let userInfo: [String: Any] = [
-            Searcher.notificationSeqNoKey: seqNo
-            // TODO: Add search parameters?
+            Searcher.notificationSeqNoKey: seqNo,
+            Searcher.notificationParamsKey: receivedState.params
         ]
         do {
             if let content = content {
