@@ -76,7 +76,7 @@ import Foundation
     /// - parameter userInfo: Extra information such as the search parameters of the request corresponding to the present response.
     ///
     @objc(searcher:didReceiveResults:error:userInfo:)
-    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, userInfo: [String: Any])
+    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, userInfo: JSONObject)
 }
 
 
@@ -110,7 +110,7 @@ import Foundation
     /// - parameter userInfo: Extra information such as the search parameters.
     ///
 
-    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?, _ userInfo: [String: Any]) -> Void
+    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?, _ userInfo: JSONObject) -> Void
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
         /// Filters.
@@ -341,7 +341,7 @@ import Foundation
         params.facetFilters = [] // NOTE: will be overridden below
         
         // User info
-        let userInfo: [String: Any] = [
+        let userInfo: JSONObject = [
             Searcher.notificationParamsKey: params,
             Searcher.notificationSeqNoKey: currentSeqNo
         ]
@@ -397,7 +397,7 @@ import Foundation
     }
     
     /// Completion handler for search requests.
-    private func handleResults(content: JSONObject?, error: Error?, userInfo: [String: Any]) {
+    private func handleResults(content: JSONObject?, error: Error?, userInfo: JSONObject) {
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState.disjunctiveFacets)
@@ -410,7 +410,7 @@ import Foundation
         }
     }
     
-    private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
+    private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: JSONObject) {
         // Notify delegate.
         delegate?.searcher(self, didReceive: results, error: error, userInfo: userInfo)
         // Notify result handlers.
