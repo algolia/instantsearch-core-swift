@@ -66,7 +66,7 @@
     Client* client = [[Client alloc] initWithAppID:@"APPID" apiKey:@"APIKEY"];
     Index* index = [client indexWithName:@"INDEX_NAME"];
     Searcher* searcher = [[Searcher alloc] initWithIndex:index];
-    [searcher addResultHandler:^(SearchResults* results, NSError* error) {
+    [searcher addResultHandler:^(SearchResults* results, NSError* error, NSDictionary* userInfo) {
         // Nothing to do.
     }];
     searcher.params.query = @"text";
