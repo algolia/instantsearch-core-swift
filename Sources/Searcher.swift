@@ -73,10 +73,10 @@ import Foundation
     /// - parameter searcher: The `Searcher` instance that received a response.
     /// - parameter results: The request's results, or `nil` in case of error.
     /// - parameter error: The error that was encountered, or `nil` in case of success.
-    /// - parameter params: The search parameters of the request corresponding to the present response.
+    /// - parameter userInfo: Extra information such as the search parameters of the request corresponding to the present response.
     ///
-    @objc(searcher:didReceiveResults:error:forParams:)
-    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, params: SearchParameters)
+    @objc(searcher:didReceiveResults:error:userInfo:)
+    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, userInfo: [String: Any])
 }
 
 
@@ -89,15 +89,15 @@ import Foundation
 /// There are three ways to handle responses to search requests issued by a `Searcher`. From the highest level to the
 /// lowest level, they are:
 ///
-/// 1. Register a **result handler** block. It will be called each time a response is received, providing either the
-///    results (in case of success) or the error (in case of failure). You may register as many result handlers as
-///    necessary.
+/// 1. Register a **result handler** block. It will be called each time a response is received, providing the
+///    results (in case of success), the error (in case of failure) and extra information such as the search parameters
+///    of the request corresponding to the present response. You may register as many result handlers as necessary.
 ///
-/// 2. Register a **delegate**. It provides additional information, such as the `Searcher` instance that received the
-///    response, and the search parameters that were used for the request. You may register at most one delegate.
+/// 2. Register a **delegate**. It provides one additional information, which is the `Searcher` instance that received the
+///    response. You may register at most one delegate.
 ///
 /// 3. Listen for **notifications** issued by this searcher (using `NotificationCenter`). Notifications give you
-///    extra information, such as request sequence numbers, or whether requests are cancelled by the searcher.
+///    extra information, such as whether requests are cancelled by the searcher.
 ///
 @objc public class Searcher: NSObject {
     
@@ -107,9 +107,10 @@ import Foundation
     ///
     /// - parameter results: The results (in case of success).
     /// - parameter error: The error (in case of failure).
+    /// - parameter userInfo: Extra information such as the search parameters.
     ///
-    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?) -> Void
 
+    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?, _ userInfo: [String: Any]) -> Void
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
         /// Filters.
@@ -339,7 +340,7 @@ import Foundation
         params.page = UInt(state.page)
         params.facetFilters = [] // NOTE: will be overridden below
         
-        // User info for notifications.
+        // User info
         let userInfo: [String: Any] = [
             Searcher.notificationParamsKey: params,
             Searcher.notificationSeqNoKey: currentSeqNo
@@ -411,10 +412,10 @@ import Foundation
     
     private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
         // Notify delegate.
-        delegate?.searcher(self, didReceive: results, error: error, params: userInfo[Searcher.notificationParamsKey] as! SearchParameters)
+        delegate?.searcher(self, didReceive: results, error: error, userInfo: userInfo)
         // Notify result handlers.
         for resultHandler in resultHandlers {
-            resultHandler(results, error)
+            resultHandler(results, error, userInfo)
         }
         // Notify observers.
         var userInfo = userInfo
