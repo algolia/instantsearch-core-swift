@@ -199,7 +199,10 @@ import Foundation
     private var receivedState: State!
     
     /// The last received results.
-    private var results: SearchResults?
+    @objc public var results: SearchResults?
+    
+    /// The hits for all pages requested of the latest query
+    @objc public var hits: [JSONObject]?
     
     /// Maximum number of pending requests allowed.
     /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
@@ -351,7 +354,8 @@ import Foundation
         // Notify observers.
         let userInfo: [String: Any] = [
             Searcher.notificationParamsKey: params,
-            Searcher.notificationSeqNoKey: seqNo
+            Searcher.notificationSeqNoKey: seqNo,
+            Searcher.notificationIsLoadingMoreKey: state.page != 0
         ]
         NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: userInfo)
 
@@ -366,19 +370,39 @@ import Foundation
         receivedState = states[seqNo]
         states[seqNo] = nil
 
-        let userInfo: [String: Any] = [
+        var userInfo: [String: Any] = [
             Searcher.notificationSeqNoKey: seqNo,
             Searcher.notificationParamsKey: receivedState.params
         ]
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
+                
+                let isLoadingMore = self.results!.page != 0
+                updateHits(with: self.results!.hits, isLoadingMore: isLoadingMore)
+                userInfo[Searcher.notificationIsLoadingMoreKey] = isLoadingMore
+                
                 callResultHandlers(results: self.results, error: nil, userInfo: userInfo)
             } else {
                 callResultHandlers(results: nil, error: error, userInfo: userInfo)
             }
         } catch let e {
             callResultHandlers(results: nil, error: e, userInfo: userInfo)
+        }
+    }
+    
+    /// Update the hits.
+    /// If we are loadingMore results, then we append the fetched hits to the existing hits.
+    /// If we are not loading more, then we initialise the hits param with the fetched hits.
+    ///
+    /// - parameter newHits: the new hits to add to the existing hits
+    /// - parameter isLoadingMore: true if the new hits come from the same query than the previous ones.
+    private func updateHits(with newHits: [JSONObject], isLoadingMore: Bool) {
+        if isLoadingMore {
+            self.hits?.append(contentsOf: newHits)
+        }
+        else {
+            self.hits = newHits
         }
     }
     
@@ -488,6 +512,11 @@ import Foundation
     /// Type: `SearchParameters`.
     ///
     @objc public static let notificationParamsKey: String = "params"
+    
+    /// Key containing the isLoadingMore query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
+    /// Type: `Bool`.
+    ///
+    @objc public static let notificationIsLoadingMoreKey: String = "isLoadingMore"
     
     /// Key containing the error in an `ErrorNotification`.
     /// Type: `Error`.
