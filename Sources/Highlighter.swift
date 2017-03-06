@@ -87,4 +87,34 @@ import Foundation
         }
         return attributedString
     }
+    
+    /// Reverse highlights in a text.
+    /// The highlighted parts lose highlighting, and the not highlighted parts become highlighted.
+    ///
+    /// - parameter text: Text to reverse highlight in.
+    /// - returns: Text with reversed highlights.
+    ///
+    @objc(reverseHighlightsInText:)
+    public func reverseHighlights(in text: String) -> String {
+        assert(preTag != postTag)
+        var result = ""
+        var flushIndex = text.startIndex
+        while let preRange = text.range(of: preTag, options: [], range: flushIndex ..< text.endIndex) {
+            // If the closing tag is not found, assume the end of the string to be the end of the markup.
+            let postRange = text.range(of: postTag, options: [], range: preRange.upperBound ..< text.endIndex) ?? text.endIndex ..< text.endIndex
+            if flushIndex < preRange.lowerBound {
+                result += preTag
+                result += text.substring(with: flushIndex ..< preRange.lowerBound)
+                result += postTag
+            }
+            result += text.substring(with: preRange.upperBound ..< postRange.lowerBound)
+            flushIndex = postRange.upperBound
+        }
+        if flushIndex < text.endIndex {
+            result += preTag
+            result += text.substring(with: flushIndex ..< text.endIndex)
+            result += postTag
+        }
+        return result
+    }
 }
