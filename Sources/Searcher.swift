@@ -502,6 +502,15 @@ import Foundation
     /// Notification sent when an erroneous response is received from the API Client.
     @objc public static let ErrorNotification = Notification.Name("error")
     
+    /// Notification sent when a numeric or facet refinement has been added, removed or updated.
+    @objc public static let RefinementChangeNotification = Notification.Name("refinementChange")
+    
+    /// Key containing all the numeric refinements in a `RefinementChangeNotification`.
+    @objc public static let notificationNumericRefinementChangeKey = "numericRefinementChange"
+    
+    /// Key containing all the facet refinements in a `RefinementChangeNotification`.
+    @objc public static let notificationFacetRefinementChangeKey = "facetRefinementChange"
+    
     /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
     /// or `CancelNotification`. The sequence number uniquely identifies the request within a given `Searcher` instance.
     /// Type: `Int`.
