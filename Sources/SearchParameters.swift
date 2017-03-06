@@ -253,13 +253,21 @@ import Foundation
     /// Facet refinements. Maps facet names to a list of refined values.
     /// The format is the same as `Index.searchDisjunctiveFaceting()`.
     ///
-    @objc public private(set) var facetRefinements: [String: [FacetRefinement]]
+    @objc public private(set) var facetRefinements: [String: [FacetRefinement]] {
+        didSet {
+            notifyRefinementChanges()
+        }
+    }
     
     /// Numeric attributes that will be treated as disjunctive.
     @objc public private(set) var disjunctiveNumerics: Set<String>
     
     /// Numeric filters. Maps attribute names to a list of filters.
-    @objc public private(set) var numericRefinements: [String: [NumericRefinement]]
+    @objc public private(set) var numericRefinements: [String: [NumericRefinement]] {
+        didSet {
+            notifyRefinementChanges()
+        }
+    }
 
     // MARK: - Initialization
     
@@ -822,5 +830,14 @@ import Foundation
     ///
     @objc public func clearNumericRefinements(name: String) {
         numericRefinements.removeValue(forKey: name)
+    }
+    
+    // MARK: - Notifications
+    
+    private func notifyRefinementChanges() {
+        var userInfo: [String: Any] = [:]
+        userInfo[Searcher.notificationNumericRefinementChangeKey] = numericRefinements
+        userInfo[Searcher.notificationFacetRefinementChangeKey] = facetRefinements
+        NotificationCenter.default.post(name: Searcher.RefinementChangeNotification, object: self, userInfo: userInfo)
     }
 }
