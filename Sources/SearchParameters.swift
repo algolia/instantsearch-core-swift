@@ -564,9 +564,10 @@ import Foundation
     ///
     @objc public func addFacetRefinement(name: String, value: String, inclusive: Bool = true) {
         if facetRefinements[name] == nil {
-            facetRefinements[name] = []
+            facetRefinements[name] = [FacetRefinement(name: name, value: value, inclusive: inclusive)]
+        } else {
+            facetRefinements[name]!.append(FacetRefinement(name: name, value: value, inclusive: inclusive))
         }
-        facetRefinements[name]!.append(FacetRefinement(name: name, value: value, inclusive: inclusive))
     }
     
     /// Remove a refinement for a given facet.
@@ -726,9 +727,10 @@ import Foundation
     ///
     @objc public func addNumericRefinement(_ refinement: NumericRefinement) {
         if numericRefinements[refinement.name] == nil {
-            numericRefinements[refinement.name] = []
+            numericRefinements[refinement.name] = [refinement]
+        } else {
+            numericRefinements[refinement.name]!.append(refinement)
         }
-        numericRefinements[refinement.name]!.append(refinement)
     }
     
     /// Remove a refinement for a given numeric.
@@ -767,7 +769,9 @@ import Foundation
         let oldRefinements = numericRefinements
         oldRefinements.forEach { (name: String, refinements: [NumericRefinement]) in
             let newRefinements = refinements.filter({ !condition($0) })
-            numericRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+            if newRefinements.count != refinements.count {
+                numericRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+            }
         }
     }
     
