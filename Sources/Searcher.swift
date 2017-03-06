@@ -76,7 +76,7 @@ import Foundation
     /// - parameter userInfo: Extra information such as the search parameters of the request corresponding to the present response.
     ///
     @objc(searcher:didReceiveResults:error:userInfo:)
-    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, userInfo: JSONObject)
+    func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, userInfo: [String: Any])
 }
 
 
@@ -110,7 +110,7 @@ import Foundation
     /// - parameter userInfo: Extra information such as the search parameters.
     ///
 
-    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?, _ userInfo: JSONObject) -> Void
+    public typealias ResultHandler = @convention(block) (_ results: SearchResults?, _ error: Error?, _ userInfo: [String: Any]) -> Void
     /// Pluggable state representation.
     private struct State: CustomStringConvertible {
         /// Filters.
@@ -202,7 +202,7 @@ import Foundation
     @objc public var results: SearchResults?
     
     /// The hits for all pages requested of the latest query
-    @objc public var hits: [JSONObject]?
+    @objc public var hits: [[String: Any]]?
     
     /// Maximum number of pending requests allowed.
     /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
@@ -365,7 +365,7 @@ import Foundation
         return operation
     }
     
-    func handleResponse(seqNo: Int, content: JSONObject?, error: Error?) {
+    func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?) {
         // Memorize state and clean up map.
         receivedState = states[seqNo]
         states[seqNo] = nil
@@ -397,7 +397,7 @@ import Foundation
     ///
     /// - parameter newHits: the new hits to add to the existing hits
     /// - parameter isLoadingMore: true if the new hits come from the same query than the previous ones.
-    private func updateHits(with newHits: [JSONObject], isLoadingMore: Bool) {
+    private func updateHits(with newHits: [[String: Any]], isLoadingMore: Bool) {
         if isLoadingMore {
             self.hits?.append(contentsOf: newHits)
         }
@@ -414,7 +414,7 @@ import Foundation
         states[seqNo] = nil
     }
 
-    private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: JSONObject) {
+    private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
         // Notify delegate.
         delegate?.searcher(self, didReceive: results, error: error, userInfo: userInfo)
         // Notify result handlers.
