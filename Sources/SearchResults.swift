@@ -214,17 +214,27 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     }
 }
 
-@objc public class FacetRecord: NSObject {
+/// Search for facet value results.
+///
+/// + Note: Wraps the raw JSON returned by the API.
+///
+@objc public class FacetResults: NSObject {
     private var json: JSONObject
     
-    init(json: JSONObject) {
+    @objc public init(json: JSONObject) {
         self.json = json
     }
     
+    /// Value of the facet.
     @objc public var value: String? { return json["value"] as? String }
     
+    /// Number of occurrences of the value.
+    ///
+    /// + Note: If `SearchResults.exhaustiveFacetsCount` is `true`, it may be approximate.
+    ///
     @objc public var count: Int { return json["count"] as? Int ?? 0 }
     
+    /// Highlighted string
     @objc public var highlighted: String? { return json["highlighted"] as? String }
 }
 
