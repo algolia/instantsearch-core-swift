@@ -88,14 +88,14 @@ import Foundation
         return attributedString
     }
     
-    /// Reverse highlights in a text.
+    /// Inverse highlights in a text.
     /// The highlighted parts lose highlighting, and the not highlighted parts become highlighted.
     ///
-    /// - parameter text: Text to reverse highlight in.
-    /// - returns: Text with reversed highlights.
+    /// - parameter text: Text to inverse highlight in.
+    /// - returns: Text with inversed highlights.
     ///
-    @objc(reverseHighlightsInText:)
-    public func reverseHighlights(in text: String) -> String {
+    @objc(inverseHighlightsInText:)
+    public func inverseHighlights(in text: String) -> String {
         assert(preTag != postTag)
         var result = ""
         var flushIndex = text.startIndex
