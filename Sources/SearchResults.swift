@@ -214,6 +214,20 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     }
 }
 
+@objc public class FacetRecord: NSObject {
+    private var json: JSONObject
+    
+    init(json: JSONObject) {
+        self.json = json
+    }
+    
+    @objc public var value: String? { return json["value"] as? String }
+    
+    @objc public var count: Int { return json["count"] as? Int ?? 0 }
+    
+    @objc public var highlighted: String? { return json["highlighted"] as? String }
+}
+
 /// Statistics for a numerical facet.
 ///
 /// + Note: Since values may either be integers or floats, they are typed as `NSNumber`.
