@@ -1,5 +1,5 @@
 //
-//  Copyright (c) 2016 Algolia
+//  Copyright (c) 2016-2017 Algolia
 //  http://www.algolia.com/
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -24,22 +24,26 @@
 import Foundation
 
 
-/// An abstract request strategy.
+/// Pluggable request strategy.
+/// A strategy acts as an optional delegate to one or more `Searcher` instances and decides how to transform logical
+/// search intents (i.e. calls to `Searcher.search(...)`) into actual search requests.
 ///
-@objc public class RequestStrategy: NSObject {
-    /// The searchers used by this strategy.
-    @objc public var searchers: [Searcher] = []
+/// ## Implementation notes
+///
+/// A strategy should be able to work with multiple searchers. It is the case for strategies provided by this library.
+/// When implementing your own strategy, either follow this rule... or restrain from passing the same strategy to
+/// multiple searchers.
+///
+@objc public protocol RequestStrategy: class {
 
-    @objc public init(searchers: [Searcher]) {
-        self.searchers = searchers
-    }
-
-    /// Ask the strategy to perform as search.
+    /// Ask the strategy to perform a search.
     /// Whether the search will be performed or not, immediately or not, is at the discretion of the strategy.
     ///
-    /// - parameter force: When true, the strategy should run the search immediately, no matter its current state.
+    /// - parameter searcher: Searcher asking for the search.
+    /// - parameter userInfo: Search metadata, as passed to `Searcher.search(...)`. May influence the strategy.
+    /// - parameter callback: Block to be called by the strategy if and when it decides to search.
+    ///                       The argument is typically the `userInfo` parameter, although it may be altered by the
+    ///                       strategy as it sees fit.
     ///
-    @objc public func search(force: Bool = false) {
-        assert(false, "To be implemented by subclasses")
-    }
+    @objc func performSearch(from searcher: Searcher, userInfo: [String: Any], with callback: @escaping ([String: Any]) -> Void)
 }

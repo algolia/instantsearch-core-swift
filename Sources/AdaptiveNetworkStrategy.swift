@@ -25,7 +25,7 @@ import AlgoliaSearch
 import Foundation
 
 
-/// Default request strategy.
+/// Request strategy that adapts to the current network conditions.
 ///
 /// This strategies switches between three modes, depending on reponse time statistics:
 ///
@@ -45,7 +45,7 @@ import Foundation
 /// response time goes above either of them, the corresponding mode will be activated. Of course, you should ensure
 /// that `throttleThreshold` is less than `manualThreshold`.
 ///
-@objc public class DefaultRequestStrategy: RequestStrategy {
+@objc public class AdaptiveNetworkStrategy: NSObject, RequestStrategy {
 
     // MARK: Types
     
@@ -67,8 +67,19 @@ import Foundation
     // MARK: - Properties
     // ----------------------------------------------------------------------
 
-    /// Throttler used in throttled mode.
-    @objc public let throttler = Throttler(delay: 0.5)
+    @objc public var throttleDelay: TimeInterval = 0.5 {
+        didSet {
+            for throttler in throttlers.objectEnumerator()!.allObjects as! [Throttler] {
+                throttler.delay = throttleDelay
+            }
+        }
+    }
+    
+    /// Throttlers used in throttled mode.
+    /// There must be one throttler per searcher, otherwise results of throttling will be inconsistent.
+    /// The keys are defined as weak to prevent memory cycles.
+    ///
+    private var throttlers: NSMapTable<Searcher, Throttler> = NSMapTable<Searcher, Throttler>(keyOptions: .weakMemory, valueOptions: .strongMemory)
     
     /// Maximum number of requests from the statistics that will be considered.
     @objc public var windowSize: Int = 5
@@ -103,13 +114,13 @@ import Foundation
                     NSLog("New strategy: \(mode.rawValue)")
                 #endif
                 self.didChangeValue(forKey: "mode")
-                NotificationCenter.default.post(name: DefaultRequestStrategy.ModeSwitchNotification, object: self)
+                NotificationCenter.default.post(name: AdaptiveNetworkStrategy.ModeSwitchNotification, object: self)
             }
         }
     }
     
     /// Response time statistics used to decide between strategies.
-    private let stats = ResponseTimeStats()
+    @objc public let stats: ResponseTimeStats
     
     // ----------------------------------------------------------------------
     // MARK: - Initialization
@@ -117,12 +128,10 @@ import Foundation
     
     /// Construct a new strategy.
     ///
-    @objc public override init(searchers: [Searcher]) {
-        super.init(searchers: searchers)
+    @objc public init(stats: ResponseTimeStats) {
+        self.stats = stats
+        super.init()
         updateTriggers()
-        for searcher in searchers {
-            stats.addSearcher(searcher)
-        }
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateStrategy), name:ResponseTimeStats.UpdateNotification, object: stats)
     }
     
@@ -146,31 +155,36 @@ import Foundation
     ///   strategy. When `false`, will disregard the strategy and launch a request anyway. Use this for example when
     ///   the user hits the "Search" button, or refines a facet; or for programmatic (non-user initiated) searches.
     ///
-    @objc public override func search(force: Bool = false) {
-        if force {
-            _search()
+    @objc public func performSearch(from searcher: Searcher, userInfo: [String: Any], with callback: @escaping ([String: Any]) -> Void) {
+        let isFinal = userInfo[Searcher.notificationIsFinalKey] as? Bool ?? false
+        if isFinal {
+            callback(userInfo)
         } else {
             updateStrategy()
             switch mode {
             case .Realtime:
-                _search()
+                callback(userInfo)
                 break
             case .Throttled:
-                throttler.call({
-                    self._search()
+                throttler(for: searcher).call({
+                    callback(userInfo)
                 })
                 break
             case .Manual:
                 // Inform observers that a request has been dropped.
-                NotificationCenter.default.post(name: DefaultRequestStrategy.DropNotification, object: self, userInfo: nil)
+                NotificationCenter.default.post(name: AdaptiveNetworkStrategy.DropNotification, object: self, userInfo: nil)
                 break
             }
         }
     }
     
-    private func _search() {
-        for searcher in searchers {
-            searcher.search()
+    private func throttler(for searcher: Searcher) -> Throttler {
+        if let throttler = throttlers.object(forKey: searcher) {
+            return throttler
+        } else {
+            let throttler = Throttler(delay: throttleDelay)
+            throttlers.setObject(throttler, forKey: searcher)
+            return throttler
         }
     }
     
@@ -219,7 +233,7 @@ import Foundation
         // Otherwise, if average duration is within acceptable bounds, use throttled mode.
         else if worstAverageDuration < manualThreshold {
             mode = .Throttled
-            throttler.delay = max(completedAverageDuration, throttleThreshold)
+            throttleDelay = max(completedAverageDuration, throttleThreshold)
         }
         // Out of desperation, revert to manual mode.
         else {

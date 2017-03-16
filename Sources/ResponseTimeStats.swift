@@ -80,9 +80,6 @@ import Foundation
     /// These delays are used to detect long-running queries before they return.
     @objc public var triggerDelays: [TimeInterval] = []
     
-    /// The searchers monitored by this observer.
-    @objc public private(set) var searchers: [Searcher] = []
-    
     /// Current request statistics.
     @objc public private(set) var requestStats: [RequestStat] = []
     
@@ -110,10 +107,11 @@ import Foundation
     
     /// Add a new searcher to these statistics.
     ///
+    /// + Note: The searcher is not retained.
+    ///
     /// - parameter searcher: The searcher to add.
     ///
     @objc public func addSearcher(_ searcher: Searcher) {
-        searchers.append(searcher)
         NotificationCenter.default.addObserver(self, selector: #selector(self.searchEvent), name: nil, object: searcher)
     }
     
@@ -122,10 +120,7 @@ import Foundation
     /// - parameter searcher: The searcher to remove.
     ///
     @objc public func removeSearcher(searcher: Searcher) {
-        if let index = searchers.index(of: searcher) {
-            searchers.remove(at: index)
-            NotificationCenter.default.removeObserver(self, name: nil, object: searcher)
-        }
+        NotificationCenter.default.removeObserver(self, name: nil, object: searcher)
     }
     
     /// Clear the request history.

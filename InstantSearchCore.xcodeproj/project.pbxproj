@@ -13,10 +13,10 @@
 		BC154A831D92B5FD00DE764C /* HighlighterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlighterTest.swift */; };
 		BC154A841D92B5FD00DE764C /* HighlighterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlighterTest.swift */; };
 		BC154A851D92B5FD00DE764C /* HighlighterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlighterTest.swift */; };
-		BC272EC41E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* DefaultRequestStrategy.swift */; };
-		BC272EC51E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* DefaultRequestStrategy.swift */; };
-		BC272EC61E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* DefaultRequestStrategy.swift */; };
-		BC272EC71E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* DefaultRequestStrategy.swift */; };
+		BC272EC41E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */; };
+		BC272EC51E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */; };
+		BC272EC61E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */; };
+		BC272EC71E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */; };
 		BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
 		BC272ECC1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
 		BC272ECD1E5F26BD009F1FFD /* Throttler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC272ECA1E5F26BD009F1FFD /* Throttler.swift */; };
@@ -121,7 +121,7 @@
 		B30A5823FA6FAA56115C41AE /* Pods-InstantSearchCore-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS/Pods-InstantSearchCore-macOS.debug.xcconfig"; sourceTree = "<group>"; };
 		BBCFDA6842A3CD7059850CE1 /* Pods-InstantSearchCore-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS/Pods-InstantSearchCore-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BC154A821D92B5FD00DE764C /* HighlighterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlighterTest.swift; sourceTree = "<group>"; };
-		BC272EC31E5F0C86009F1FFD /* DefaultRequestStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultRequestStrategy.swift; sourceTree = "<group>"; };
+		BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptiveNetworkStrategy.swift; sourceTree = "<group>"; };
 		BC272ECA1E5F26BD009F1FFD /* Throttler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
 		BC272ECF1E5F2745009F1FFD /* ResponseTimeStats.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseTimeStats.swift; sourceTree = "<group>"; };
 		BC272ED41E5F2DF2009F1FFD /* RequestStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestStrategy.swift; sourceTree = "<group>"; };
@@ -284,8 +284,8 @@
 			isa = PBXGroup;
 			children = (
 				BC3426361D460DB70055E0F2 /* Info.plist */,
+				BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */,
 				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
-				BC272EC31E5F0C86009F1FFD /* DefaultRequestStrategy.swift */,
 				BC34264B1D4613CB0055E0F2 /* Highlighter.swift */,
 				BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */,
 				BC272ED41E5F2DF2009F1FFD /* RequestStrategy.swift */,
@@ -871,7 +871,7 @@
 			files = (
 				BC34264F1D4613CB0055E0F2 /* Highlighter.swift in Sources */,
 				BC272ED01E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
-				BC272EC41E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */,
+				BC272EC41E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
 				BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
 				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
@@ -902,7 +902,7 @@
 			files = (
 				BC4CB8A51D534C20004618DD /* Searcher.swift in Sources */,
 				BC272ED11E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
-				BC272EC51E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */,
+				BC272EC51E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
 				BC272ECC1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
@@ -933,7 +933,7 @@
 			files = (
 				BC4CB8C81D535CA4004618DD /* Searcher.swift in Sources */,
 				BC272ED21E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
-				BC272EC61E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */,
+				BC272EC61E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
 				BC272ECD1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
@@ -964,7 +964,7 @@
 			files = (
 				BC5DC12A1D86BD110066D705 /* Searcher.swift in Sources */,
 				BC272ED31E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
-				BC272EC71E5F0C86009F1FFD /* DefaultRequestStrategy.swift in Sources */,
+				BC272EC71E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
 				BC272ECE1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
 				BC5DC12C1D86BD170066D705 /* JSONHelper.swift in Sources */,

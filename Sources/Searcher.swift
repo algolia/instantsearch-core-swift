@@ -119,6 +119,9 @@ import Foundation
         /// List of facets to be treated as disjunctive facets. Defaults to the empty list.
         var disjunctiveFacets: [String] { return Array(params.disjunctiveFacets) }
         
+        /// Search metadata.
+        var userInfo: [String: Any] = [:]
+
         /// Convenience accessor to the requested page.
         var page: UInt {
             get { return params.page ?? 0 }
@@ -140,6 +143,7 @@ import Foundation
             // WARNING: `SearchParameters` is not a value type (because of Objective-C bridgeability), so let's make
             // sure to copy it.
             self.params = SearchParameters(from: copy.params)
+            self.userInfo = copy.userInfo
         }
         
         var description: String {
@@ -161,7 +165,15 @@ import Foundation
     /// + Warning: The delegate is not retained. It is the caller's responsibility to ensure that it remains valid for
     ///            the lifetime of the searcher.
     ///
-    public var delegate: SearcherDelegate?
+    @objc public var delegate: SearcherDelegate?
+    
+    /// Strategy used by this searcher.
+    /// If `nil`, all searches are fired immediately. Otherwise, the strategy decides if and when searches are
+    ///
+    /// + Note: The searcher only keeps a weak reference to its strategy. It is the caller's responsibility to
+    ///         make sure the strategy's lifetime exceeds that of the searcher.
+    ///
+    @objc public weak var strategy: RequestStrategy?
     
     /// Request sequencer used to guarantee the order of responses.
     private var sequencer: Sequencer!
@@ -268,12 +280,35 @@ import Foundation
     
     // MARK: - Search
     
+    /// Search using the current settings, with empty search metadata.
+    ///
+    @objc public func search() {
+        search(userInfo: [:])
+    }
+    
     /// Search using the current settings.
     /// This uses the current value for `query`, `disjunctiveFacets` and `refinements`.
     ///
-    @objc public func search() {
+    /// If `strategy` is not `nil`, the strategy delegate will decide if, when and how the search will be performed.
+    ///
+    /// - parameter userInfo: Search metadata.
+    ///
+    @objc public func search(userInfo: [String: Any]) {
+        if let strategy = strategy {
+            strategy.performSearch(from: self, userInfo: userInfo, with: self._search)
+        } else {
+            _search(userInfo: userInfo)
+        }
+    }
+
+    /// Effectively trigger a search.
+    ///
+    /// - parameter userInfo: Search metadata.
+    ///
+    private func _search(userInfo: [String: Any]) {
         // Take the next state as is...
         requestedState = State(copy: nextState)
+        requestedState.userInfo = userInfo
         // ... and launch the search.
         sequencer.next()
     }
@@ -352,12 +387,14 @@ import Foundation
         }
         
         // Notify observers.
-        let userInfo: [String: Any] = [
-            Searcher.notificationParamsKey: params,
-            Searcher.notificationSeqNoKey: seqNo,
-            Searcher.notificationIsLoadingMoreKey: state.page != 0
-        ]
-        NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: userInfo)
+        state.userInfo[Searcher.notificationParamsKey] = params
+        state.userInfo[Searcher.notificationSeqNoKey] = seqNo
+        state.userInfo[Searcher.notificationIsLoadingMoreKey] = state.page != 0 // FIXME: This should come from the `loadMore()` method itself
+
+        // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
+        }
 
         // Memorize state.
         states[seqNo] = state
@@ -522,7 +559,13 @@ import Foundation
     /// Type: `Error`.
     ///
     @objc public static let errorNotificationErrorKey: String = "error"
-
+    
+    /// User info key indicating whether the search is final (as opposed to an as-you-type search).
+    /// Typically, keystrokes in a search bar are as-you-type, whereas a tap on the "Search" button is final.
+    /// Type: `Bool`.
+    ///
+    @objc public static let notificationIsFinalKey: String = "isFinal"
+    
     /// Notification sent when a request is cancelled by the searcher.
     /// The result handler will not be called for cancelled requests, nor will any `ResultNotification` or
     /// `ErrorNotification` be posted, so this is your only chance of being informed of cancelled requests.
