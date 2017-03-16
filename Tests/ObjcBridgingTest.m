@@ -66,7 +66,7 @@
     Client* client = [[Client alloc] initWithAppID:@"APPID" apiKey:@"APIKEY"];
     Index* index = [client indexWithName:@"INDEX_NAME"];
     Searcher* searcher = [[Searcher alloc] initWithIndex:index];
-    [searcher addResultHandler:^(SearchResults* results, NSError* error) {
+    [searcher addResultHandler:^(SearchResults* results, NSError* error, NSDictionary* userInfo) {
         // Nothing to do.
     }];
     searcher.params.query = @"text";
@@ -141,22 +141,23 @@
     [queryFilters clear];
 
     [queryFilters setFacetWithName:@"name" disjunctive:YES];
-    [queryFilters isDisjunctiveFacetWithName:@"name"];
+    XCTAssertTrue([queryFilters isDisjunctiveFacetWithName:@"name"]);
     [queryFilters addFacetRefinementWithName:@"name" value:@"value" inclusive:YES];
     [queryFilters removeFacetRefinementWithName:@"name" value:@"value"];
-    [queryFilters hasFacetRefinementWithName:@"name" value:@"value"];
-    [queryFilters hasFacetRefinementsWithName:@"name"];
+    XCTAssertFalse([queryFilters hasFacetRefinementWithName:@"name" value:@"value"]);
+    XCTAssertFalse([queryFilters hasFacetRefinementsWithName:@"name"]);
     [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
     [queryFilters clearFacetRefinements];
     [queryFilters clearFacetRefinementsWithName:@"name"];
 
     [queryFilters setNumericWithName:@"name" disjunctive:YES];
-    [queryFilters isDisjunctiveNumericWithName:@"name"];
+    XCTAssertTrue([queryFilters isDisjunctiveNumericWithName:@"name"]);
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan numberValue:@3 inclusive:YES];
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan intValue:3 inclusive:YES];
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan doubleValue:3.0 inclusive:YES];
     [queryFilters removeNumericRefinementWithName:@"name" op:OperatorGreaterThanOrEqual value:@123.456 inclusive:NO];
-    [queryFilters hasNumericRefinementsWithName:@"name"];
+    [queryFilters updateNumericRefinementWithName:@"name" op:OperatorLessThan value:@3 inclusive:YES];
+    XCTAssertTrue([queryFilters hasNumericRefinementsWithName:@"name"]);
     [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
     [queryFilters clearNumericRefinements];
     [queryFilters clearNumericRefinementsWithName:@"name"];
