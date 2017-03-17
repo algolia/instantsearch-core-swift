@@ -27,11 +27,7 @@ import Foundation
 /// Ensures a maximum throughput on a stream of calls.
 /// The throughput is expressed as a minimum delay between calls, via the `delay` property.
 ///
-@objc public class Throttler: NSObject {
-    // MARK: Types
-    
-    /// Signature of calls passed to a `Throttler`.
-    public typealias Call = () -> ()
+@objc public class Throttler: NSObject, Caller {
     
     // ----------------------------------------------------------------------
     // MARK: - Properties
@@ -56,7 +52,7 @@ import Foundation
     @objc public var fireInitialCall: Bool = true
     
     /// The next call to fire.
-    private var pendingCall: Call!
+    private var pendingCall: Caller.Call!
     
     /// Timer used to fire the calls.
     /// For performance reasons, it is only activated when and as long as necessary.
@@ -107,7 +103,7 @@ import Foundation
     ///
     /// - parameter block: The call to throttle.
     ///
-    @objc public func call(_ block: @escaping Call) {
+    @objc public func call(_ block: @escaping Caller.Call) {
         let isInitialCall = self.pendingCall == nil && self.timer == nil
 
         // Start a series if needed.

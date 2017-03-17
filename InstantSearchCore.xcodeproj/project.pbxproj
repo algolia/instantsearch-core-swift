@@ -79,6 +79,10 @@
 		BCCEA7881E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
 		BCCEA7891E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
 		BCCEA78A1E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
+		BCCEA7951E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
+		BCCEA7961E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
+		BCCEA7971E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
+		BCCEA7981E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
 		C2EA74B5CA612EBF605862E6 /* Pods_InstantSearchCore_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64ECB2DCAE81F76F07C5FB7 /* Pods_InstantSearchCore_watchOS.framework */; };
 		C51C5CFD15740EF14BC78B8E /* Pods_InstantSearchCore_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A45586B3A3CB1A82F3A717C /* Pods_InstantSearchCore_tvOS_Tests.framework */; };
 		E5CD8B35D40F6F5BEC7AE1F7 /* Pods_InstantSearchCore_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306A0D20B7675EB69FBC6C11 /* Pods_InstantSearchCore_iOS_Tests.framework */; };
@@ -151,6 +155,7 @@
 		BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParametersTest.swift; sourceTree = "<group>"; };
 		BCB7040E1DBA521F00A2803E /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
 		BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThrottlerTest.swift; sourceTree = "<group>"; };
+		BCCEA7941E7BDFB200F3D44C /* Caller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
 		D105CCCBCA77A84DFCDD7F6D /* Pods-InstantSearchCore-tvOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS-Tests/Pods-InstantSearchCore-tvOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D22A830E14D435F910B7016B /* Pods_InstantSearchCore_macOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_macOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2ABC140FFD26A4D7C40072B /* Pods_InstantSearchCore_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -289,6 +294,7 @@
 			children = (
 				BC3426361D460DB70055E0F2 /* Info.plist */,
 				BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */,
+				BCCEA7941E7BDFB200F3D44C /* Caller.swift */,
 				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
 				BC34264B1D4613CB0055E0F2 /* Highlighter.swift */,
 				BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */,
@@ -877,6 +883,7 @@
 				BC34264F1D4613CB0055E0F2 /* Highlighter.swift in Sources */,
 				BC272ED01E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
 				BC272EC41E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
+				BCCEA7951E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
 				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
@@ -909,6 +916,7 @@
 				BC4CB8A51D534C20004618DD /* Searcher.swift in Sources */,
 				BC272ED11E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
 				BC272EC51E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
+				BCCEA7961E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECC1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
@@ -941,6 +949,7 @@
 				BC4CB8C81D535CA4004618DD /* Searcher.swift in Sources */,
 				BC272ED21E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
 				BC272EC61E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
+				BCCEA7971E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECD1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
@@ -973,6 +982,7 @@
 				BC5DC12A1D86BD110066D705 /* Searcher.swift in Sources */,
 				BC272ED31E5F2745009F1FFD /* ResponseTimeStats.swift in Sources */,
 				BC272EC71E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
+				BCCEA7981E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECE1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
 				BC5DC12C1D86BD170066D705 /* JSONHelper.swift in Sources */,
