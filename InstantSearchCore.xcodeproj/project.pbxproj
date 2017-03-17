@@ -76,6 +76,9 @@
 		BCB704101DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
 		BCB704111DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
 		BCB704121DBA521F00A2803E /* SearchParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB7040E1DBA521F00A2803E /* SearchParameters.swift */; };
+		BCCEA7881E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
+		BCCEA7891E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
+		BCCEA78A1E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
 		C2EA74B5CA612EBF605862E6 /* Pods_InstantSearchCore_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64ECB2DCAE81F76F07C5FB7 /* Pods_InstantSearchCore_watchOS.framework */; };
 		C51C5CFD15740EF14BC78B8E /* Pods_InstantSearchCore_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A45586B3A3CB1A82F3A717C /* Pods_InstantSearchCore_tvOS_Tests.framework */; };
 		E5CD8B35D40F6F5BEC7AE1F7 /* Pods_InstantSearchCore_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306A0D20B7675EB69FBC6C11 /* Pods_InstantSearchCore_iOS_Tests.framework */; };
@@ -147,6 +150,7 @@
 		BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcBridgingTest.m; sourceTree = "<group>"; };
 		BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParametersTest.swift; sourceTree = "<group>"; };
 		BCB7040E1DBA521F00A2803E /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
+		BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThrottlerTest.swift; sourceTree = "<group>"; };
 		D105CCCBCA77A84DFCDD7F6D /* Pods-InstantSearchCore-tvOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS-Tests/Pods-InstantSearchCore-tvOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D22A830E14D435F910B7016B /* Pods_InstantSearchCore_macOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_macOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2ABC140FFD26A4D7C40072B /* Pods_InstantSearchCore_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,6 +314,7 @@
 				BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */,
 				BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */,
 				BC28C4D01E5B2EE700EFC4A0 /* SequencerTest.swift */,
+				BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -890,6 +895,7 @@
 			files = (
 				BC6B05471DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8841D5349B6004618DD /* SearchResultsTest.swift in Sources */,
+				BCCEA7881E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
 				BC154A831D92B5FD00DE764C /* HighlighterTest.swift in Sources */,
 				BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 				BC28C4D11E5B2EE700EFC4A0 /* SequencerTest.swift in Sources */,
@@ -921,6 +927,7 @@
 			files = (
 				BC6B05481DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8A71D534C27004618DD /* SearchResultsTest.swift in Sources */,
+				BCCEA7891E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
 				BC154A841D92B5FD00DE764C /* HighlighterTest.swift in Sources */,
 				BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 				BC28C4D21E5B2EE700EFC4A0 /* SequencerTest.swift in Sources */,
@@ -952,6 +959,7 @@
 			files = (
 				BC6B05491DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8CA1D535CA7004618DD /* SearchResultsTest.swift in Sources */,
+				BCCEA78A1E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
 				BC154A851D92B5FD00DE764C /* HighlighterTest.swift in Sources */,
 				BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
 				BC28C4D31E5B2EE700EFC4A0 /* SequencerTest.swift in Sources */,
