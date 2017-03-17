@@ -163,4 +163,11 @@
     [queryFilters clearNumericRefinementsWithName:@"name"];
 }
 
+- (void)testThrottler {
+    Throttler* throttler = [[Throttler alloc] initWithDelay:0.1];
+    [throttler call:^{
+        // Nothing to do.
+    }];
+}
+
 @end
