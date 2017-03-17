@@ -308,8 +308,9 @@ import Foundation
     private func _search(userInfo: [String: Any]) {
         // Take the next state as is...
         requestedState = State(copy: nextState)
+        // ... and override the metadata entirely.
         requestedState.userInfo = userInfo
-        // ... and launch the search.
+        // Launch the search.
         sequencer.next()
     }
     
@@ -328,7 +329,11 @@ import Foundation
             return
         }
         // OK, everything's fine; let's go!
+        // Just alter the previous state by overriding the page...
         requestedState.page = nextPage
+        // ... and the `isLoadingMore` flags.
+        requestedState.userInfo[Searcher.notificationIsLoadingMoreKey] = true
+        // Launch the search.
         sequencer.next()
     }
     
@@ -389,8 +394,6 @@ import Foundation
         // Notify observers.
         state.userInfo[Searcher.notificationParamsKey] = params
         state.userInfo[Searcher.notificationSeqNoKey] = seqNo
-        state.userInfo[Searcher.notificationIsLoadingMoreKey] = state.page != 0 // FIXME: This should come from the `loadMore()` method itself
-
         // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
@@ -407,40 +410,26 @@ import Foundation
         receivedState = states[seqNo]
         states[seqNo] = nil
 
-        var userInfo: [String: Any] = [
-            Searcher.notificationSeqNoKey: seqNo,
-            Searcher.notificationParamsKey: receivedState.params
-        ]
+        var finalError = error
         do {
             if let content = content {
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
                 
-                let isLoadingMore = self.results!.page != 0
-                updateHits(with: self.results!.hits, isLoadingMore: isLoadingMore)
-                userInfo[Searcher.notificationIsLoadingMoreKey] = isLoadingMore
-                
-                callResultHandlers(results: self.results, error: nil, userInfo: userInfo)
-            } else {
-                callResultHandlers(results: nil, error: error, userInfo: userInfo)
+                // Update hits.
+                let isLoadingMore = receivedState.userInfo[Searcher.notificationIsLoadingMoreKey] as? Bool ?? false
+                if isLoadingMore {
+                    self.hits?.append(contentsOf: self.results!.hits)
+                } else {
+                    self.hits = self.results!.hits
+                }
+
+                callResultHandlers(results: self.results, error: nil, userInfo: receivedState.userInfo)
+                return
             }
         } catch let e {
-            callResultHandlers(results: nil, error: e, userInfo: userInfo)
+            finalError = e
         }
-    }
-    
-    /// Update the hits.
-    /// If we are loadingMore results, then we append the fetched hits to the existing hits.
-    /// If we are not loading more, then we initialise the hits param with the fetched hits.
-    ///
-    /// - parameter newHits: the new hits to add to the existing hits
-    /// - parameter isLoadingMore: true if the new hits come from the same query than the previous ones.
-    private func updateHits(with newHits: [[String: Any]], isLoadingMore: Bool) {
-        if isLoadingMore {
-            self.hits?.append(contentsOf: newHits)
-        }
-        else {
-            self.hits = newHits
-        }
+        callResultHandlers(results: nil, error: finalError, userInfo: receivedState.userInfo)
     }
     
     func requestWasCancelled(seqNo: Int) {
@@ -451,15 +440,24 @@ import Foundation
         states[seqNo] = nil
     }
 
+    /// Call the various types of result handlers.
+    /// This dispatches the same information to the delegate, the block handlers and via notifications.
+    ///
+    /// - parameter results: The search results (in case of success).
+    /// - parameter error: The error (in case of failure).
+    /// - parameter userInfo: Search metadata.
+    ///
     private func callResultHandlers(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
         // Notify delegate.
         delegate?.searcher(self, didReceive: results, error: error, userInfo: userInfo)
+
         // Notify result handlers.
         for resultHandler in resultHandlers {
             resultHandler(results, error, userInfo)
         }
+
         // Notify observers.
-        var userInfo = userInfo
+        var userInfo = userInfo // need to add results or error
         if let results = results {
             userInfo[Searcher.resultNotificationResultsKey] = results
             NotificationCenter.default.post(name: Searcher.ResultNotification, object: self, userInfo: userInfo)
@@ -521,7 +519,7 @@ import Foundation
         sequencer.cancelRequest(seqNo: seqNo)
     }
     
-    // MARK: Notifications
+    // MARK: - Notifications
     
     /// Notification sent when a request is sent through the API Client.
     /// This can be either on `search()` or `loadMore()`.
