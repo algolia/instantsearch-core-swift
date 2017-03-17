@@ -79,10 +79,16 @@
 		BCCEA7881E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
 		BCCEA7891E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
 		BCCEA78A1E7BD84200F3D44C /* ThrottlerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */; };
+		BCCEA78C1E7BDDF700F3D44C /* CallerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA78B1E7BDDF700F3D44C /* CallerTest.swift */; };
+		BCCEA78D1E7BDDF700F3D44C /* CallerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA78B1E7BDDF700F3D44C /* CallerTest.swift */; };
+		BCCEA78E1E7BDDF700F3D44C /* CallerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA78B1E7BDDF700F3D44C /* CallerTest.swift */; };
 		BCCEA7951E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
 		BCCEA7961E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
 		BCCEA7971E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
 		BCCEA7981E7BDFB200F3D44C /* Caller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7941E7BDFB200F3D44C /* Caller.swift */; };
+		BCCEA79A1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
+		BCCEA79B1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
+		BCCEA79C1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
 		C2EA74B5CA612EBF605862E6 /* Pods_InstantSearchCore_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64ECB2DCAE81F76F07C5FB7 /* Pods_InstantSearchCore_watchOS.framework */; };
 		C51C5CFD15740EF14BC78B8E /* Pods_InstantSearchCore_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A45586B3A3CB1A82F3A717C /* Pods_InstantSearchCore_tvOS_Tests.framework */; };
 		E5CD8B35D40F6F5BEC7AE1F7 /* Pods_InstantSearchCore_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306A0D20B7675EB69FBC6C11 /* Pods_InstantSearchCore_iOS_Tests.framework */; };
@@ -155,7 +161,9 @@
 		BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParametersTest.swift; sourceTree = "<group>"; };
 		BCB7040E1DBA521F00A2803E /* SearchParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchParameters.swift; sourceTree = "<group>"; };
 		BCCEA7871E7BD84200F3D44C /* ThrottlerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThrottlerTest.swift; sourceTree = "<group>"; };
+		BCCEA78B1E7BDDF700F3D44C /* CallerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallerTest.swift; sourceTree = "<group>"; };
 		BCCEA7941E7BDFB200F3D44C /* Caller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
+		BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebouncerTest.swift; sourceTree = "<group>"; };
 		D105CCCBCA77A84DFCDD7F6D /* Pods-InstantSearchCore-tvOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS-Tests/Pods-InstantSearchCore-tvOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D22A830E14D435F910B7016B /* Pods_InstantSearchCore_macOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_macOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2ABC140FFD26A4D7C40072B /* Pods_InstantSearchCore_tvOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_tvOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -313,6 +321,8 @@
 		BC34263F1D460DB70055E0F2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BCCEA78B1E7BDDF700F3D44C /* CallerTest.swift */,
+				BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */,
 				BC154A821D92B5FD00DE764C /* HighlighterTest.swift */,
 				BC3426421D460DB70055E0F2 /* Info.plist */,
 				BC5DC1301D86BDB00066D705 /* InstantSearchCore-Tests-Bridging-Header.h */,
@@ -905,7 +915,9 @@
 				BCCEA7881E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
 				BC154A831D92B5FD00DE764C /* HighlighterTest.swift in Sources */,
 				BC5DC1341D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
+				BCCEA79A1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */,
 				BC28C4D11E5B2EE700EFC4A0 /* SequencerTest.swift in Sources */,
+				BCCEA78C1E7BDDF700F3D44C /* CallerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -938,7 +950,9 @@
 				BCCEA7891E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
 				BC154A841D92B5FD00DE764C /* HighlighterTest.swift in Sources */,
 				BC5DC1351D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
+				BCCEA79B1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */,
 				BC28C4D21E5B2EE700EFC4A0 /* SequencerTest.swift in Sources */,
+				BCCEA78D1E7BDDF700F3D44C /* CallerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,7 +985,9 @@
 				BCCEA78A1E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
 				BC154A851D92B5FD00DE764C /* HighlighterTest.swift in Sources */,
 				BC5DC1361D86BDB00066D705 /* ObjcBridgingTest.m in Sources */,
+				BCCEA79C1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */,
 				BC28C4D31E5B2EE700EFC4A0 /* SequencerTest.swift in Sources */,
+				BCCEA78E1E7BDDF700F3D44C /* CallerTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
