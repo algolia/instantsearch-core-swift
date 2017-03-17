@@ -54,10 +54,14 @@ import Foundation
         self.debouncer = Debouncer(delay: self.delay)
         super.init()
         NotificationCenter.default.addObserver(forName: Searcher.SearchNotification, object: searcher, queue: nil) { (notification) in
-            // TODO: Handle final searches via metadata.
-            self.debouncer.call {
-                guard let params = notification.userInfo?[Searcher.notificationParamsKey] as? SearchParameters else { return }
+            guard let params = notification.userInfo?[Searcher.notificationParamsKey] as? SearchParameters else { return }
+            let searchIsFinal = notification.userInfo?[Searcher.notificationIsFinalKey] as? Bool ?? false
+            if searchIsFinal { // final searches go straight into the history
                 self.history.add(query: params)
+            } else { // as-you-type searches are debounced
+                self.debouncer.call {
+                    self.history.add(query: params)
+                }
             }
         }
     }
