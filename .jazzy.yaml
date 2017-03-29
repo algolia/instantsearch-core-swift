@@ -26,6 +26,14 @@ custom_categories:
         - FacetStats
         - FacetValue
 
+    - name: History management
+      children:
+        - History
+        - HistoryRecorder
+        - HistorySearchOptions
+        - HistoryHit
+        - LocalHistory
+
     - name: Utilities
       children:
         - Highlighter

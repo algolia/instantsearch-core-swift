@@ -43,13 +43,13 @@ class LocalHistoryTest: XCTestCase {
 
         // Lowercase.
         params.query = "MiXed CaSE"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["mixed case"])
         history.clear()
 
         // Whitespace trimming.
         params.query = "\t white    space \n\r"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["white space"])
     }
 
@@ -57,15 +57,15 @@ class LocalHistoryTest: XCTestCase {
         let params = SearchParameters()
         
         params.query = "first"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["first"])
         
         params.query = "second"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["second", "first"])
 
         params.query = "first"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["first", "second"])
     }
 
@@ -74,72 +74,91 @@ class LocalHistoryTest: XCTestCase {
         let params = SearchParameters()
         
         params.query = "one"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["one"])
         
         params.query = "two"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["two", "one"])
         
         params.query = "three"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["three", "two", "one"])
 
         params.query = "four"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["four", "three", "two"])
     }
     
     func testEliminateRedundancy() {
         let params = SearchParameters()
         
-        params.query = "prefix"
-        history.add(query: params)
-        XCTAssertEqual(history.contents, ["prefix"])
+        params.query = "star"
+        history.add(params)
+        XCTAssertEqual(history.contents, ["star"])
         
-        params.query = "pref"
-        history.add(query: params)
-        XCTAssertEqual(history.contents, ["prefix"])
+        // Prefix should be rejected.
+        params.query = "st"
+        history.add(params)
+        XCTAssertEqual(history.contents, ["star"])
 
-        params.query = "pref change"
-        history.add(query: params)
-        XCTAssertEqual(history.contents, ["pref change", "prefix"])
+        // Non-prefix should be added.
+        params.query = "alien"
+        history.add(params)
+        XCTAssertEqual(history.contents, ["alien", "star"])
         
-        params.query = "prefixed"
-        history.add(query: params)
-        XCTAssertEqual(history.contents, ["prefixed", "pref change"])
+        // Suffix ending on word boundary should be added.
+        params.query = "star wars"
+        history.add(params)
+        XCTAssertEqual(history.contents, ["star wars", "alien", "star"])
+    
+        // Suffix should replace existing entry.
+        params.query = "stars"
+        history.add(params)
+        XCTAssertEqual(history.contents, ["stars", "star wars", "alien"])
     }
 
     func testSearch() {
         let params = SearchParameters()
         
         params.query = "Star Wars"
-        history.add(query: params)
+        history.add(params)
         params.query = "War Games"
-        history.add(query: params)
+        history.add(params)
         params.query = "Thwart the Unaware Awards" // contains "war", but not as word prefix
-        history.add(query: params)
+        history.add(params)
         
         params.query = "war"
         var hits = history.search(query: params)
         XCTAssertEqual(hits.count, 2)
-        XCTAssertEqual(hits[0].query, "war games")
-        XCTAssertEqual(hits[1].query, "star wars")
+        XCTAssertEqual(hits[0].params.query, "war games")
+        XCTAssertEqual(hits[0].highlightedText, "<em>war</em> games")
+        XCTAssertEqual(hits[1].params.query, "star wars")
+        XCTAssertEqual(hits[1].highlightedText, "star <em>war</em>s")
         
         let options = HistorySearchOptions()
-        options.highlighted = true
 
         hits = history.search(query: params, options: options)
         XCTAssertEqual(hits.count, 2)
-        XCTAssertEqual(hits[0].query, "<em>war</em> games")
-        XCTAssertEqual(hits[1].query, "star <em>war</em>s")
+        XCTAssertEqual(hits[0].params.query, "war games")
+        XCTAssertEqual(hits[0].highlightedText, "<em>war</em> games")
+        XCTAssertEqual(hits[1].params.query, "star wars")
+        XCTAssertEqual(hits[1].highlightedText, "star <em>war</em>s")
 
         options.highlightPreTag = "<mark>"
         options.highlightPostTag = "</mark>"
         hits = history.search(query: params, options: options)
         XCTAssertEqual(hits.count, 2)
-        XCTAssertEqual(hits[0].query, "<mark>war</mark> games")
-        XCTAssertEqual(hits[1].query, "star <mark>war</mark>s")
+        XCTAssertEqual(hits[0].params.query, "war games")
+        XCTAssertEqual(hits[0].highlightedText, "<mark>war</mark> games")
+        XCTAssertEqual(hits[1].params.query, "star wars")
+        XCTAssertEqual(hits[1].highlightedText, "star <mark>war</mark>s")
+
+        options.maxHits = 1
+        hits = history.search(query: params, options: options)
+        XCTAssertEqual(hits.count, 1)
+        XCTAssertEqual(hits[0].params.query, "war games")
+        XCTAssertEqual(hits[0].highlightedText, "<mark>war</mark> games")
     }
     
     func testPersistence() {
@@ -147,9 +166,9 @@ class LocalHistoryTest: XCTestCase {
         let params = SearchParameters()
         
         params.query = "xyz"
-        history.add(query: params)
+        history.add(params)
         params.query = "abc def"
-        history.add(query: params)
+        history.add(params)
         XCTAssertEqual(history.contents, ["abc def", "xyz"])
         history.filePath = filePath
         history.save()

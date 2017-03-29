@@ -28,12 +28,16 @@ import Foundation
 /// Records a history of searches.
 ///
 @objc public class HistoryRecorder: NSObject {
+    // MARK: Properties
+
     /// The searcher being observed.
     @objc public let searcher: Searcher
     
     /// The history being fed.
     @objc public let history: History
     
+    /// Delay by which to debounce searches before recording them.
+    /// This is to avoid making too many requests to the history, especially when it is remote.
     @objc public var delay: TimeInterval = 1.0 {
         didSet {
             debouncer.delay = self.delay
@@ -43,6 +47,8 @@ import Foundation
     /// Debouncer used to avoid updating the history after each keystroke.
     private let debouncer: Debouncer
 
+    // MARK: Initialization
+    
     /// Create a new recorder observing a searcher and feeding a history.
     ///
     /// - parameter searcher: The searcher to observer.
@@ -57,10 +63,10 @@ import Foundation
             guard let params = notification.userInfo?[Searcher.notificationParamsKey] as? SearchParameters else { return }
             let searchIsFinal = notification.userInfo?[Searcher.notificationIsFinalKey] as? Bool ?? false
             if searchIsFinal { // final searches go straight into the history
-                self.history.add(query: params)
+                self.history.add(params)
             } else { // as-you-type searches are debounced
                 self.debouncer.call {
-                    self.history.add(query: params)
+                    self.history.add(params)
                 }
             }
         }
@@ -72,9 +78,9 @@ import Foundation
 @objc public protocol History {
     /// Add a new query to the history.
     ///
-    /// - parameter query: The query to add.
+    /// - parameter params: The search parameters of the query to add.
     ///
-    @objc func add(query: SearchParameters)
+    @objc func add(_ params: SearchParameters)
     
     /// Search the history.
     ///
@@ -82,23 +88,45 @@ import Foundation
     /// - parameter options: Search options.
     /// - returns: A list of matching queries in the history.
     ///
-    @objc func search(query: SearchParameters, options: HistorySearchOptions) -> [SearchParameters]
+    @objc func search(query: SearchParameters, options: HistorySearchOptions) -> [HistoryHit]
 }
 
 /// Options when searching a `History`.
 ///
 @objc public class HistorySearchOptions: NSObject {
-    /// Whether hits should be highlighted.
-    public var highlighted: Bool = false
-    
     /// Tag prepended to highlights.
-    public var highlightPreTag: String = "<em>"
+    @objc public var highlightPreTag: String = "<em>"
     
     /// Tag appended to highlights.
-    public var highlightPostTag: String = "</em>"
+    @objc public var highlightPostTag: String = "</em>"
+
+    /// Maximum number of hits to return.
+    @objc public var maxHits: Int = 10
 }
 
-/// A history that sits in the local device.
+/// A hit from the history.
+///
+@objc public class HistoryHit: NSObject {
+    // MARK: Properties
+
+    /// Search parameters corresponding to this hit.
+    @objc public let params: SearchParameters
+    
+    /// An highlighted text representation of the hit.
+    /// Usually contains the `params.query` parameter, highlighted to show which part matched the searched string.
+    @objc public let highlightedText: String
+
+    // MARK: Initialization
+
+    /// Create a new hit.
+    @objc public init(params: SearchParameters, highlightedText: String) {
+        self.params = params
+        self.highlightedText = highlightedText
+    }
+}
+
+/// A history that sits on the local device.
+///
 /// By default, the history sits purely in memory. If `filePath` is set, it is also persisted on disk.
 ///
 @objc public class LocalHistory: NSObject, History {
@@ -107,27 +135,27 @@ import Foundation
     /// The in-memory cache of the history's content.
     private var queries: NSMutableOrderedSet = NSMutableOrderedSet()
 
-    /// The history's content.
+    /// The history's content, ordered by recency (read-only).
     @objc public var contents: [String] {
         return queries.array as! [String]
     }
     
     /// Maximum number of entries allowed in this history. Default = 10.
-    public var maxCount: Int = 10 {
+    @objc public var maxCount: Int = 10 {
         didSet {
             purge()
         }
     }
     
-    /// Whether each query added automatically trigges a save. Default = true.
+    /// Whether each query added automatically trigges a save. Default = `true`.
     ///
     /// + Note: The save will be performed asynchronously for better performance.
     ///
-    public var autosave: Bool = true
+    @objc public var autosave: Bool = true
     
     /// File path to the history on disk.
-    /// If nil (default), the history will sit purely in memory.
-    public var filePath: String?
+    /// If `nil` (default), the history will sit purely in memory.
+    @objc public var filePath: String?
     
     // MARK: Initialization
     
@@ -136,6 +164,9 @@ import Foundation
     }
     
     /// Create a new history that is persisted on disk.
+    ///
+    /// - parameter filePath: Path to the history file on disk.
+    ///
     public init(filePath: String) {
         self.filePath = filePath
         super.init()
@@ -149,39 +180,63 @@ import Foundation
     /// + Complexity: O(n): grows linearly with the size of the history.
     ///   This should remain acceptable if the history is small (a few tens of entries).
     ///
-    @objc public func search(query: SearchParameters, options: HistorySearchOptions = HistorySearchOptions()) -> [SearchParameters] {
-        guard let text = query.query else {
-            return []
-        }
+    /// - parameter query: The searched query. By convention, an empty search matches the entire history
+    ///                    (up to `options.maxHits`).
+    /// - parameter options: Search options.
+    /// - returns: A list of matching hits in the history. They are ordered by recency (most recent first).
+    ///
+    @objc public func search(query: SearchParameters, options: HistorySearchOptions = HistorySearchOptions()) -> [HistoryHit] {
+        var hits: [HistoryHit] = []
+        let text = query.query ?? ""
         let searchedText = normalize(text)
-        if searchedText.isEmpty {
-            return []
-        }
         // Only search for the text at the beginning of a word.
         let searchedPattern = "\\b" + searchedText
-        var hits: [SearchParameters] = []
+
         for query in queries {
+            // Stop when `maxHits` is reached.
+            if hits.count >= options.maxHits {
+                break
+            }
             let queryString = query as! String
-            // TODO: Implement anchoring on words.
-            if let foundRange = queryString.range(of: searchedPattern, options: .regularExpression) {
-                var hit: String
-                if options.highlighted {
+            
+            var highlightedText: String
+            if searchedText.isEmpty { // empty search: everything matches, no highlighting necessary
+                highlightedText = queryString
+            } else { // non-empty search
+                if let foundRange = queryString.range(of: searchedPattern, options: .regularExpression) {
                     // NOTE: We don't handle multiple occurrences as they are assumed to be rare.
                     // Also, highlighting would be weird in a suggestion context.
-                    hit = queryString.substring(to: foundRange.lowerBound) + options.highlightPreTag + queryString.substring(with: foundRange) + options.highlightPostTag + queryString.substring(from: foundRange.upperBound)
+                    highlightedText = queryString.substring(to: foundRange.lowerBound) + options.highlightPreTag + queryString.substring(with: foundRange) + options.highlightPostTag + queryString.substring(from: foundRange.upperBound)
                 } else {
-                    hit = queryString
+                    continue
                 }
-                let query = SearchParameters()
-                query.query = hit
-                hits.append(query)
             }
+            // Add hit.
+            let params = SearchParameters()
+            params.query = queryString
+            hits.append(HistoryHit(params: params, highlightedText: highlightedText))
         }
         return hits
     }
     
-    @objc public func add(query: SearchParameters) {
-        guard var newText = query.query else { return }
+    /// Add a new query to the history.
+    ///
+    /// Deduplication will occur:
+    ///
+    /// 1. If the new query is a prefix of an existing query not stopping at a word boundary, it is discarded.
+    ///   For example, if the history contains "star wars", "star war" will not be added, but "star" will be.
+    /// 2. If an existing query is a prefix of the new query not stopping at a word boundary, the existing query is
+    ///   replaced by the new one. For example, if the history contains "star war", "star wars" will replace it,
+    ///   but "star war fan" will add a new entry.
+    /// 3. If the same query already exists, it is updated.
+    ///
+    /// When the new query does make it into the history, it automatically becomes the most recent entry, possibly
+    /// evicting the less recent entry (LRU principle).
+    ///
+    /// - parameter params: The search parameters of the query to add.
+    ///
+    @objc public func add(_ params: SearchParameters) {
+        guard var newText = params.query else { return }
         
         // Normalize query string.
         newText = normalize(newText)
@@ -229,6 +284,8 @@ import Foundation
         saveIfNeeded()
     }
     
+    /// Remove all entries from the history.
+    ///
     @objc public func clear() {
         queries.removeAllObjects()
         saveIfNeeded()
@@ -262,6 +319,8 @@ import Foundation
     }
 
     /// Save the history to disk (asynchronously).
+    ///
+    /// + Note: No completion handler is provided, as the history is not considered to be mission-critical.
     ///
     @objc public func saveAsync() {
         guard let filePath = filePath else { return }
