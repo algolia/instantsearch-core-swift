@@ -35,7 +35,10 @@ import Foundation
     // MARK: Properties
 
     /// Amount of time by which calls will be delayed before being fired.
-    @objc public let delay: TimeInterval
+    ///
+    /// + Note: Modifying the delay while the debouncer is active will only take affect after the next call.
+    ///
+    @objc public var delay: TimeInterval
     
     /// The next call to fire.
     private var block: Caller.Call!
