@@ -24,7 +24,36 @@
 import Foundation
 
 
-/// Gathers response times statistics from one or more searchers.
+/// Gathers response time statistics from one or more searchers.
+///
+/// ## Usage
+///
+/// You first need to register one or more `Searcher` instances to record response times from. This is achieved through
+/// the `add(:)` method (or just supplying a searcher at init time).
+///
+/// Once searchers are registered, the statistics of every recorded request can be obtained at any time via the
+/// `requestStats` property. The statistics keep automatically updating, posting update notifications
+/// (`UpdateNotification`) when they change.
+///
+/// ## Configuration
+///
+/// Response time statistics only make sense when they are recent. This is why this class has an **amnesia delay**
+/// (configurable via the `amnesiaDelay` property): any request that is older than this delay will be discarded.
+///
+/// There is an upper limit to the number of requests that are kept in the statistics at any time (configurable via
+/// `maxRequestsInHistory`). If it goes over this limit, the less recent requests will be discarded. This avoids
+/// flooding the memory if many requests are made within a short time frame.
+///
+/// ## Long-running requests
+///
+/// By default, the statistics are updated when a request is fired and when the corresponding response is received.
+/// This does not allow detecting long-running requests, which may be necessary in some use cases, e.g. to adapt to
+/// suddenly degraded network conditions.
+///
+/// To address this concern, a set of **triggers** can be defined via the `triggerDelays` property: every time a
+/// request's elapsed time passes one of these thresholds, statistics are updated again (and a notification is posted),
+/// although the response has not been received yet. This allows observers to detect long-running requests and react
+/// accordingly. For example, the `AdaptiveNetworkStrategy` class makes extensive use of this.
 ///
 @objc public class ResponseTimeStats: NSObject {
     // MARK: - Types
@@ -32,34 +61,34 @@ import Foundation
     /// Statistics about a single request.
     @objc public class RequestStat: NSObject {
         /// The request's sequence number.
-        public let seqNo: Int
+        @objc public let seqNo: Int
         
         /// The request's start date.
-        public let startDate: Date
+        @objc public let startDate: Date
         
         /// The request's stop date, or `nil` if the request is still running.
-        public fileprivate(set) var stopDate: Date? = nil
+        @objc public fileprivate(set) var stopDate: Date? = nil
         
         /// Whether the request was cancelled.
-        public fileprivate(set) var cancelled: Bool = false
+        @objc public fileprivate(set) var cancelled: Bool = false
         
         // Dynamic properties
         // ------------------
         
         /// The request's duration.
-        public var duration: TimeInterval { return (stopDate ?? Date()).timeIntervalSince(startDate) }
+        @objc public var duration: TimeInterval { return (stopDate ?? Date()).timeIntervalSince(startDate) }
         
         /// Whether the request is still running.
-        public var running: Bool { return stopDate == nil }
+        @objc public var running: Bool { return stopDate == nil }
         
-        /// Whether the request was completed.
-        public var completed: Bool { return !running && !cancelled }
+        /// Whether the request has completed, i.e. returned a response.
+        @objc public var completed: Bool { return !running && !cancelled }
         
         public override var description: String {
             return "RequestStat{seqNo=\(seqNo), startDate=\(startDate), duration=\(duration), running=\(running), cancelled=\(cancelled)}"
         }
         
-        init(seqNo: Int, startDate: Date) {
+        @objc internal init(seqNo: Int, startDate: Date) {
             self.seqNo = seqNo
             self.startDate = startDate
         }

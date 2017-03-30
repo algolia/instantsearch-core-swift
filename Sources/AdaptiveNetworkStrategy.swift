@@ -30,16 +30,16 @@ import Foundation
 /// This strategies switches between three modes, depending on reponse time statistics:
 ///
 /// - **Realtime**: all requests are fired immediately.
-/// - **Throttled**: requests are throttled to avoid firing too many. The throttling rate is adjusted to the current
-///   response time.
-/// - **Manual**: all non-forced searches are discarded.
+/// - **Throttled**: requests are throttled to avoid firing too many. The throttling rate is dynamically adjusted to
+///   the current response time.
+/// - **Manual**: all non-final searches are discarded.
 ///
-/// + Warning: The manual mode requires user feedback: typically, the application will display a message like
-///   "Press 'Search' to see results". When the user presses the "Search" button, then the application will fire a
-///   forced search.
+/// A **final** search is a call to the `search(...)` method with the final flag set to `true` in the `userInfo`
+/// (see `Searcher.notificationIsFinalKey`). This will bypass the strategy altogether and fire the request immediately.
 ///
-/// A **forced** search is a call to the `search(...)` method with the `force` parameter set to `true`. This will
-/// bypass the strategy altogether and fire the request immediately.
+/// + Warning: The manual mode requires user feedback: typically, the application should display a message like
+///   "Press 'Search' to see results". Then, when the user presses the "Search" button, the application should fire a
+///   final search.
 ///
 /// To decide between modes, the strategy relies on two thresholds: `throttleThreshold` and `manualThreshold`. If the
 /// response time goes above either of them, the corresponding mode will be activated. Of course, you should ensure
@@ -67,7 +67,8 @@ import Foundation
     // MARK: - Properties
     // ----------------------------------------------------------------------
 
-    @objc public var throttleDelay: TimeInterval = 0.5 {
+    /// Current throttle delay. This is dynamically adjusted from the observed response time.
+    @objc public private(set) var throttleDelay: TimeInterval = 0.5 {
         didSet {
             for throttler in throttlers.objectEnumerator()!.allObjects as! [Throttler] {
                 throttler.delay = throttleDelay
@@ -126,7 +127,7 @@ import Foundation
     // MARK: - Initialization
     // ----------------------------------------------------------------------
     
-    /// Construct a new strategy.
+    /// Construct a new strategy using the specified statistics.
     ///
     @objc public init(stats: ResponseTimeStats) {
         self.stats = stats
@@ -149,11 +150,12 @@ import Foundation
     // MARK: - Search
     // ----------------------------------------------------------------------
     
-    /// Launch a search.
+    /// Perform a search on behalf of a searcher.
     ///
-    /// - parameter asYouType: If `true`, will be considered an as-you-type search and eligible for the current
-    ///   strategy. When `false`, will disregard the strategy and launch a request anyway. Use this for example when
-    ///   the user hits the "Search" button, or refines a facet; or for programmatic (non-user initiated) searches.
+    /// - parameter searcher: Searcher asking for the search.
+    /// - parameter userInfo: Search metadata, as passed to `Searcher.search(...)`. This strategy only uses the
+    ///                       final flag.
+    /// - parameter callback: Block to be called to perform the search.
     ///
     @objc public func performSearch(from searcher: Searcher, userInfo: [String: Any], with callback: @escaping ([String: Any]) -> Void) {
         let isFinal = userInfo[Searcher.notificationIsFinalKey] as? Bool ?? false
