@@ -5,7 +5,7 @@ layout: guide.mustache
 
 # Search
 
-## Basics
+## Setup
 
 First create a `Client` and an `Index` as you would do with the bare API Client:
 
@@ -28,6 +28,8 @@ let searcher = Searcher(index: index, resultHandler: { (results: SearchResults?,
 })
 ```
 
+## Searching
+
 The searcher will only launch a request when you call its `search()` method. Before you search, of course, you will want to modify the **search parameters** via the `params` property (a `SearchParameters` instance):
 
 ```swift
@@ -35,6 +37,12 @@ searcher.params.query = "hotel"
 searcher.params.aroundLatLngViaIP = true
 searcher.search()
 ```
+
+### Metadata
+
+The `search(...)` method takes an optional `userInfo` argument, which contains search **metadata**. This metadata will be propagated (and possibly enriched or altered) throughout the lifetime of the request, up to the observers.
+
+The contents of the metadata can be anything you want. Some **well-known keys** are provided by the `Searcher` class: see the `*Key` constants.
 
 ## Handling results
 
