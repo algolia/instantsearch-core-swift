@@ -119,7 +119,7 @@ import Foundation
     ///
     /// - parameter searcher: The searcher to remove.
     ///
-    @objc public func removeSearcher(searcher: Searcher) {
+    @objc public func removeSearcher(_ searcher: Searcher) {
         NotificationCenter.default.removeObserver(self, name: nil, object: searcher)
     }
     
