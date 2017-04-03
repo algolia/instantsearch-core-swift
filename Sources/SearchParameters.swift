@@ -253,13 +253,21 @@ import Foundation
     /// Facet refinements. Maps facet names to a list of refined values.
     /// The format is the same as `Index.searchDisjunctiveFaceting()`.
     ///
-    @objc public private(set) var facetRefinements: [String: [FacetRefinement]]
+    @objc public private(set) var facetRefinements: [String: [FacetRefinement]] {
+        didSet {
+            notifyRefinementChanges()
+        }
+    }
     
     /// Numeric attributes that will be treated as disjunctive.
     @objc public private(set) var disjunctiveNumerics: Set<String>
     
     /// Numeric filters. Maps attribute names to a list of filters.
-    @objc public private(set) var numericRefinements: [String: [NumericRefinement]]
+    @objc public private(set) var numericRefinements: [String: [NumericRefinement]] {
+        didSet {
+            notifyRefinementChanges()
+        }
+    }
 
     // MARK: - Initialization
     
@@ -564,9 +572,10 @@ import Foundation
     ///
     @objc public func addFacetRefinement(name: String, value: String, inclusive: Bool = true) {
         if facetRefinements[name] == nil {
-            facetRefinements[name] = []
+            facetRefinements[name] = [FacetRefinement(name: name, value: value, inclusive: inclusive)]
+        } else {
+            facetRefinements[name]!.append(FacetRefinement(name: name, value: value, inclusive: inclusive))
         }
-        facetRefinements[name]!.append(FacetRefinement(name: name, value: value, inclusive: inclusive))
     }
     
     /// Remove a refinement for a given facet.
@@ -726,9 +735,10 @@ import Foundation
     ///
     @objc public func addNumericRefinement(_ refinement: NumericRefinement) {
         if numericRefinements[refinement.name] == nil {
-            numericRefinements[refinement.name] = []
+            numericRefinements[refinement.name] = [refinement]
+        } else {
+            numericRefinements[refinement.name]!.append(refinement)
         }
-        numericRefinements[refinement.name]!.append(refinement)
     }
     
     /// Remove a refinement for a given numeric.
@@ -767,7 +777,9 @@ import Foundation
         let oldRefinements = numericRefinements
         oldRefinements.forEach { (name: String, refinements: [NumericRefinement]) in
             let newRefinements = refinements.filter({ !condition($0) })
-            numericRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+            if newRefinements.count != refinements.count {
+                numericRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+            }
         }
     }
     
@@ -818,5 +830,14 @@ import Foundation
     ///
     @objc public func clearNumericRefinements(name: String) {
         numericRefinements.removeValue(forKey: name)
+    }
+    
+    // MARK: - Notifications
+    
+    private func notifyRefinementChanges() {
+        var userInfo: [String: Any] = [:]
+        userInfo[Searcher.notificationNumericRefinementChangeKey] = numericRefinements
+        userInfo[Searcher.notificationFacetRefinementChangeKey] = facetRefinements
+        NotificationCenter.default.post(name: Searcher.RefinementChangeNotification, object: self, userInfo: userInfo)
     }
 }

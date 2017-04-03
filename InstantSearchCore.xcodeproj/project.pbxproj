@@ -91,6 +91,7 @@
 		BCCEA79C1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
 		C2EA74B5CA612EBF605862E6 /* Pods_InstantSearchCore_watchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64ECB2DCAE81F76F07C5FB7 /* Pods_InstantSearchCore_watchOS.framework */; };
 		C51C5CFD15740EF14BC78B8E /* Pods_InstantSearchCore_tvOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A45586B3A3CB1A82F3A717C /* Pods_InstantSearchCore_tvOS_Tests.framework */; };
+		E22212D91E6EF4FE00C16B31 /* RefinementListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22212D81E6EF4FE00C16B31 /* RefinementListHelper.swift */; };
 		E5CD8B35D40F6F5BEC7AE1F7 /* Pods_InstantSearchCore_iOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 306A0D20B7675EB69FBC6C11 /* Pods_InstantSearchCore_iOS_Tests.framework */; };
 		F586EDC8F498C60E298107BF /* Pods_InstantSearchCore_macOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D22A830E14D435F910B7016B /* Pods_InstantSearchCore_macOS_Tests.framework */; };
 /* End PBXBuildFile section */
@@ -170,6 +171,7 @@
 		D64ECB2DCAE81F76F07C5FB7 /* Pods_InstantSearchCore_watchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_watchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D98A6CE6B1CD0D95779BA084 /* Pods_InstantSearchCore_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFB4E0B953B14690EFF76474 /* Pods-InstantSearchCore-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS/Pods-InstantSearchCore-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		E22212D81E6EF4FE00C16B31 /* RefinementListHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefinementListHelper.swift; sourceTree = "<group>"; };
 		E4307CDB303392A0DCED4687 /* Pods-InstantSearchCore-watchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-watchOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-watchOS/Pods-InstantSearchCore-watchOS.release.xcconfig"; sourceTree = "<group>"; };
 		EC355E02CDFD83F80F448FFD /* Pods-InstantSearchCore-macOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS-Tests/Pods-InstantSearchCore-macOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -311,6 +313,7 @@
 				BC34264D1D4613CB0055E0F2 /* Searcher.swift */,
 				BCB7040E1DBA521F00A2803E /* SearchParameters.swift */,
 				BC5DC1241D8697F50066D705 /* SearchProgressController.swift */,
+				E22212D81E6EF4FE00C16B31 /* RefinementListHelper.swift */,
 				BC34264E1D4613CB0055E0F2 /* SearchResults.swift */,
 				BC28C4CB1E5B2D1000EFC4A0 /* Sequencer.swift */,
 				BC272ECA1E5F26BD009F1FFD /* Throttler.swift */,
@@ -895,6 +898,7 @@
 				BC272EC41E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift in Sources */,
 				BCCEA7951E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */,
+				E22212D91E6EF4FE00C16B31 /* RefinementListHelper.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
 				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BC272ED51E5F2DF2009F1FFD /* RequestStrategy.swift in Sources */,
