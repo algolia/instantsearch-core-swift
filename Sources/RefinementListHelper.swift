@@ -28,6 +28,16 @@ import Foundation
     case countDesc
     case nameAsc
     case nameDsc
+    
+    public init(named transformName: String) {
+        switch transformName.lowercased() {
+        case "countasc": self = .countAsc
+        case "countdesc": self = .countDesc
+        case "nameasc": self = .nameAsc
+        case "nameDsc": self = .nameDsc
+        default: self = .countDesc
+        }
+    }
 }
 
 extension Searcher {
