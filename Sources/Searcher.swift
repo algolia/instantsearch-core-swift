@@ -241,10 +241,7 @@ import Foundation
         let name = bundleInfo["CFBundleName"] as! String
         let version = bundleInfo["CFBundleShortVersionString"] as! String
         let libraryVersion = LibraryVersion(name: name, version: version)
-        let client = index.client
-        if client.userAgents.index(where: { $0 == libraryVersion }) == nil {
-            client.userAgents.append(libraryVersion)
-        }
+        Client.addUserAgent(libraryVersion)
     }
     
     /// Register a result handler with this searcher.
