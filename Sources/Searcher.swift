@@ -211,10 +211,10 @@ import Foundation
     private var receivedState: State!
     
     /// The last received results.
-    @objc public var results: SearchResults?
+    @objc public private(set) var results: SearchResults?
     
     /// The hits for all pages requested of the latest query
-    @objc public var hits: [[String: Any]]?
+    @objc public private(set) var hits: [[String: Any]] = []
     
     /// Maximum number of pending requests allowed.
     /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
@@ -410,14 +410,15 @@ import Foundation
         var finalError = error
         do {
             if let content = content {
-                try self.results = SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
+                let searchResults = try SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
+                self.results = searchResults
                 
                 // Update hits.
                 let isLoadingMore = receivedState.userInfo[Searcher.userInfoIsLoadingMoreKey] as? Bool ?? false
                 if isLoadingMore {
-                    self.hits?.append(contentsOf: self.results!.hits)
+                    self.hits.append(contentsOf: searchResults.hits)
                 } else {
-                    self.hits = self.results!.hits
+                    self.hits = searchResults.hits
                 }
 
                 callResultHandlers(results: self.results, error: nil, userInfo: receivedState.userInfo)
