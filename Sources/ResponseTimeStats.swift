@@ -163,7 +163,7 @@ import Foundation
     
     /// Called on `Searcher` notifications.
     @objc private func searchEvent(notification: NSNotification) {
-        guard let requestSeqNo = notification.userInfo?[Searcher.notificationSeqNoKey] as? Int else { return }
+        guard let requestSeqNo = notification.userInfo?[Searcher.userInfoSeqNoKey] as? Int else { return }
         
         switch notification.name {
         case Searcher.SearchNotification:

@@ -158,7 +158,7 @@ import Foundation
     /// - parameter callback: Block to be called to perform the search.
     ///
     @objc public func performSearch(from searcher: Searcher, userInfo: [String: Any], with callback: @escaping ([String: Any]) -> Void) {
-        let isFinal = userInfo[Searcher.notificationIsFinalKey] as? Bool ?? false
+        let isFinal = userInfo[Searcher.userInfoIsFinalKey] as? Bool ?? false
         if isFinal {
             callback(userInfo)
         } else {

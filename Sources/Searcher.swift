@@ -329,7 +329,7 @@ import Foundation
         // Just alter the previous state by overriding the page...
         requestedState.page = nextPage
         // ... and the `isLoadingMore` flags.
-        requestedState.userInfo[Searcher.notificationIsLoadingMoreKey] = true
+        requestedState.userInfo[Searcher.userInfoIsLoadingMoreKey] = true
         // Launch the search.
         sequencer.next()
     }
@@ -389,8 +389,8 @@ import Foundation
         }
         
         // Notify observers.
-        state.userInfo[Searcher.notificationParamsKey] = params
-        state.userInfo[Searcher.notificationSeqNoKey] = seqNo
+        state.userInfo[Searcher.userInfoParamsKey] = params
+        state.userInfo[Searcher.userInfoSeqNoKey] = seqNo
         // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
@@ -413,7 +413,7 @@ import Foundation
                 try self.results = SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
                 
                 // Update hits.
-                let isLoadingMore = receivedState.userInfo[Searcher.notificationIsLoadingMoreKey] as? Bool ?? false
+                let isLoadingMore = receivedState.userInfo[Searcher.userInfoIsLoadingMoreKey] as? Bool ?? false
                 if isLoadingMore {
                     self.hits?.append(contentsOf: self.results!.hits)
                 } else {
@@ -431,7 +431,7 @@ import Foundation
     
     func requestWasCancelled(seqNo: Int) {
         NotificationCenter.default.post(name: Searcher.CancelNotification, object: self, userInfo: [
-            Searcher.notificationSeqNoKey: seqNo
+            Searcher.userInfoSeqNoKey: seqNo
         ])
         // Clean up state.
         states[seqNo] = nil
@@ -530,49 +530,49 @@ import Foundation
     /// Type: `SearchResults`.
     ///
     @objc public static let resultNotificationResultsKey: String = "results"
-
-    /// Notification sent when an erroneous response is received from the API Client.
-    @objc public static let ErrorNotification = Notification.Name("error")
-    
-    /// Notification sent when a numeric or facet refinement has been added, removed or updated.
-    @objc public static let RefinementChangeNotification = Notification.Name("refinementChange")
-    
-    /// Key containing all the numeric refinements in a `RefinementChangeNotification`.
-    @objc public static let notificationNumericRefinementChangeKey = "numericRefinementChange"
-    
-    /// Key containing all the facet refinements in a `RefinementChangeNotification`.
-    @objc public static let notificationFacetRefinementChangeKey = "facetRefinementChange"
-    
-    /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
-    /// or `CancelNotification`. The sequence number uniquely identifies the request across all `Searcher` instances.
-    /// Type: `Int`.
-    ///
-    @objc public static let notificationSeqNoKey: String = "seqNo"
-    
-    /// Key containing the search query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
-    /// Type: `SearchParameters`.
-    ///
-    @objc public static let notificationParamsKey: String = "params"
-    
-    /// Key containing the isLoadingMore query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
-    /// Type: `Bool`.
-    ///
-    @objc public static let notificationIsLoadingMoreKey: String = "isLoadingMore"
-    
-    /// Key containing the error in an `ErrorNotification`.
-    /// Type: `Error`.
-    ///
-    @objc public static let errorNotificationErrorKey: String = "error"
-    
-    /// User info key indicating whether the search is final (as opposed to an as-you-type search).
-    /// Typically, keystrokes in a search bar are as-you-type, whereas a tap on the "Search" button is final.
-    /// Type: `Bool`.
-    ///
-    @objc public static let notificationIsFinalKey: String = "isFinal"
     
     /// Notification sent when a request is cancelled by the searcher.
     /// The result handler will not be called for cancelled requests, nor will any `ResultNotification` or
     /// `ErrorNotification` be posted, so this is your only chance of being informed of cancelled requests.
     ///
     @objc public static let CancelNotification = Notification.Name("cancel")
+
+    /// Notification sent when an erroneous response is received from the API Client.
+    @objc public static let ErrorNotification = Notification.Name("error")
+    
+    /// Key containing the error in an `ErrorNotification`.
+    /// Type: `Error`.
+    ///
+    @objc public static let errorNotificationErrorKey: String = "error"
+    
+    /// Notification sent when a numeric or facet refinement has been added, removed or updated.
+    @objc public static let RefinementChangeNotification = Notification.Name("refinementChange")
+    
+    /// Key containing all the numeric refinements in a `RefinementChangeNotification`.
+    @objc public static let userInfoNumericRefinementChangeKey = "numericRefinementChange"
+    
+    /// Key containing all the facet refinements in a `RefinementChangeNotification`.
+    @objc public static let userInfoFacetRefinementChangeKey = "facetRefinementChange"
+    
+    /// Key containing the request sequence number in a `SearchNotification`, `ResultNotification`, `ErrorNotification`
+    /// or `CancelNotification`. The sequence number uniquely identifies the request across all `Searcher` instances.
+    /// Type: `Int`.
+    ///
+    @objc public static let userInfoSeqNoKey: String = "seqNo"
+    
+    /// Key containing the search query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
+    /// Type: `SearchParameters`.
+    ///
+    @objc public static let userInfoParamsKey: String = "params"
+    
+    /// Key containing the isLoadingMore query in a `SearchNotification`, `ResultNotification` or `ErrorNotification`.
+    /// Type: `Bool`.
+    ///
+    @objc public static let userInfoIsLoadingMoreKey: String = "isLoadingMore"
+    
+    /// User info key indicating whether the search is final (as opposed to an as-you-type search).
+    /// Typically, keystrokes in a search bar are as-you-type, whereas a tap on the "Search" button is final.
+    /// Type: `Bool`.
+    ///
+    @objc public static let userInfoIsFinalKey: String = "isFinal"
 }

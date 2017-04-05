@@ -836,8 +836,8 @@ import Foundation
     
     private func notifyRefinementChanges() {
         var userInfo: [String: Any] = [:]
-        userInfo[Searcher.notificationNumericRefinementChangeKey] = numericRefinements
-        userInfo[Searcher.notificationFacetRefinementChangeKey] = facetRefinements
+        userInfo[Searcher.userInfoNumericRefinementChangeKey] = numericRefinements
+        userInfo[Searcher.userInfoFacetRefinementChangeKey] = facetRefinements
         NotificationCenter.default.post(name: Searcher.RefinementChangeNotification, object: self, userInfo: userInfo)
     }
 }
