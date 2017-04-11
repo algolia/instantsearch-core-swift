@@ -273,6 +273,8 @@ import Foundation
     @objc public func reset() {
         params.clear()
         cancelPendingRequests()
+        results = nil
+        hits = []
     }
     
     // MARK: - Search
