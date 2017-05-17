@@ -212,6 +212,17 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         }
         return values
     }
+    
+    // MARK: Equatable
+    
+    override open func isEqual(_ object: Any?) -> Bool {
+        guard let rhs = object as? FacetValue else {
+            return false
+        }
+        
+        return self.count == rhs.count && self.value == rhs.value
+    }
+    
 }
 
 /// Search for facet value results.
