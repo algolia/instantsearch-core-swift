@@ -2,6 +2,13 @@ Change Log
 ==========
 
 
+## 1.0.1 (2017-04-03)
+
+### Bug fixes
+
+- Upgrade to version 4.8 of the Swift API Client (fixes compilation issue)
+
+
 ## 1.0 (2016-12-19)
 
 **First official release!** 🎉 Merry Christmas to everyone! 🎄⛄️🎁

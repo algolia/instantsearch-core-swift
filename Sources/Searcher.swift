@@ -256,7 +256,7 @@ import Foundation
         let libraryVersion = LibraryVersion(name: name, version: version)
         Client.addUserAgent(libraryVersion)
     }()
-    
+  
     /// Register a result handler with this searcher.
     ///
     /// + Note: Because of the way closures are handled in Swift, the handler cannot be removed.
