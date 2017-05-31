@@ -66,7 +66,7 @@
     Client* client = [[Client alloc] initWithAppID:@"APPID" apiKey:@"APIKEY"];
     Index* index = [client indexWithName:@"INDEX_NAME"];
     Searcher* searcher = [[Searcher alloc] initWithIndex:index];
-    [searcher addResultHandler:^(SearchResults* results, NSError* error) {
+    [searcher addResultHandler:^(SearchResults* results, NSError* error, NSDictionary* userInfo) {
         // Nothing to do.
     }];
     searcher.params.query = @"text";
@@ -156,10 +156,19 @@
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan intValue:3 inclusive:YES];
     [queryFilters addNumericRefinementWithName:@"name" op:OperatorLessThan doubleValue:3.0 inclusive:YES];
     [queryFilters removeNumericRefinementWithName:@"name" op:OperatorGreaterThanOrEqual value:@123.456 inclusive:NO];
+    [queryFilters updateNumericRefinementWithName:@"name" op:OperatorLessThan value:@3 inclusive:YES];
+  
     XCTAssertTrue([queryFilters hasNumericRefinementsWithName:@"name"]);
     [queryFilters toggleFacetRefinementWithName:@"name" value:@"value"];
     [queryFilters clearNumericRefinements];
     [queryFilters clearNumericRefinementsWithName:@"name"];
+}
+
+- (void)testThrottler {
+    Throttler* throttler = [[Throttler alloc] initWithDelay:0.1];
+    [throttler call:^{
+        // Nothing to do.
+    }];
 }
 
 @end

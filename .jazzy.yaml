@@ -26,8 +26,15 @@ custom_categories:
         - FacetStats
         - FacetValue
 
+    - name: Request strategy
+      children:
+        - RequestStrategy
+        - AdaptiveNetworkStrategy
+        - ResponseTimeStats
+
     - name: Utilities
       children:
         - Highlighter
         - Debouncer
+        - Throttler
         - SearchProgressController

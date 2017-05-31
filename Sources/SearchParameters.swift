@@ -253,13 +253,21 @@ import Foundation
     /// Facet refinements. Maps facet names to a list of refined values.
     /// The format is the same as `Index.searchDisjunctiveFaceting()`.
     ///
-    @objc public private(set) var facetRefinements: [String: [FacetRefinement]]
+    @objc public private(set) var facetRefinements: [String: [FacetRefinement]] {
+        didSet {
+            notifyRefinementChanges()
+        }
+    }
     
     /// Numeric attributes that will be treated as disjunctive.
     @objc public private(set) var disjunctiveNumerics: Set<String>
     
     /// Numeric filters. Maps attribute names to a list of filters.
-    @objc public private(set) var numericRefinements: [String: [NumericRefinement]]
+    @objc public private(set) var numericRefinements: [String: [NumericRefinement]] {
+        didSet {
+            notifyRefinementChanges()
+        }
+    }
 
     // MARK: - Initialization
     
@@ -564,9 +572,10 @@ import Foundation
     ///
     @objc public func addFacetRefinement(name: String, value: String, inclusive: Bool = true) {
         if facetRefinements[name] == nil {
-            facetRefinements[name] = []
+            facetRefinements[name] = [FacetRefinement(name: name, value: value, inclusive: inclusive)]
+        } else {
+            facetRefinements[name]!.append(FacetRefinement(name: name, value: value, inclusive: inclusive))
         }
-        facetRefinements[name]!.append(FacetRefinement(name: name, value: value, inclusive: inclusive))
     }
     
     /// Remove a refinement for a given facet.
@@ -726,9 +735,10 @@ import Foundation
     ///
     @objc public func addNumericRefinement(_ refinement: NumericRefinement) {
         if numericRefinements[refinement.name] == nil {
-            numericRefinements[refinement.name] = []
+            numericRefinements[refinement.name] = [refinement]
+        } else {
+            numericRefinements[refinement.name]!.append(refinement)
         }
-        numericRefinements[refinement.name]!.append(refinement)
     }
     
     /// Remove a refinement for a given numeric.
@@ -757,6 +767,34 @@ import Foundation
                 numericRefinements.removeValue(forKey: refinement.name)
             }
         }
+    }
+    
+    /// Remove a refinement for a given refinement condition.
+    ///
+    /// - parameter condition: the condition to evaluate.
+    ///
+    @objc public func removeNumericRefinements(where condition: (NumericRefinement) -> Bool) {
+        let oldRefinements = numericRefinements
+        oldRefinements.forEach { (name: String, refinements: [NumericRefinement]) in
+            let newRefinements = refinements.filter({ !condition($0) })
+            if newRefinements.count != refinements.count {
+                numericRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+            }
+        }
+    }
+    
+    /// Update a refinement for a given numeric.
+    ///
+    /// - parameter name: The numeric's name (first operand to the operator).
+    /// - parameter op: The comparison operator to apply.
+    /// - parameter value: The value to compare the numeric to (second operand to the operator).
+    /// - parameter inclusive: Whether the refinement is treated as inclusive (the default) or exclusive
+    ///                        (negated with a `NOT`).
+    ///
+    @objc(updateNumericRefinementWithName:op:value:inclusive:)
+    public func updateNumericRefinement(_ name: String, _ op: NumericRefinement.Operator, _ value: NSNumber, inclusive: Bool = true) {
+        self.removeNumericRefinements(where: { $0.name == name && $0.op == op && $0.inclusive == inclusive })
+        self.addNumericRefinement(name, op, value, inclusive: inclusive)
     }
 
     /// Test whether a numeric has any refinement(s).
@@ -792,5 +830,14 @@ import Foundation
     ///
     @objc public func clearNumericRefinements(name: String) {
         numericRefinements.removeValue(forKey: name)
+    }
+    
+    // MARK: - Notifications
+    
+    private func notifyRefinementChanges() {
+        var userInfo: [String: Any] = [:]
+        userInfo[Searcher.userInfoNumericRefinementChangeKey] = numericRefinements
+        userInfo[Searcher.userInfoFacetRefinementChangeKey] = facetRefinements
+        NotificationCenter.default.post(name: Searcher.RefinementChangeNotification, object: self, userInfo: userInfo)
     }
 }

@@ -212,6 +212,41 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         }
         return values
     }
+    
+    // MARK: Equatable
+    
+    override open func isEqual(_ object: Any?) -> Bool {
+        guard let rhs = object as? FacetValue else {
+            return false
+        }
+        
+        return self.count == rhs.count && self.value == rhs.value
+    }
+    
+}
+
+/// Search for facet value results.
+///
+/// + Note: Wraps the raw JSON returned by the API.
+///
+@objc public class FacetResults: NSObject {
+    private var json: JSONObject
+    
+    @objc public init(json: JSONObject) {
+        self.json = json
+    }
+    
+    /// Value of the facet.
+    @objc public var value: String? { return json["value"] as? String }
+    
+    /// Number of occurrences of the value.
+    ///
+    /// + Note: If `SearchResults.exhaustiveFacetsCount` is `true`, it may be approximate.
+    ///
+    @objc public var count: Int { return json["count"] as? Int ?? 0 }
+    
+    /// Highlighted string
+    @objc public var highlighted: String? { return json["highlighted"] as? String }
 }
 
 /// Statistics for a numerical facet.

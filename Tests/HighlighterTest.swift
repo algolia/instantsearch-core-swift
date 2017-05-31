@@ -92,4 +92,17 @@ class HighlighterTest: XCTestCase {
             NSMakeRange(31, 6): attributes
         ])
     }
+    
+    func testInverse() {
+        let renderer = Highlighter(highlightAttrs: [:])
+        XCTAssertEqual(renderer.inverseHighlights(in: ""), "")
+        XCTAssertEqual(renderer.inverseHighlights(in: "<em>everything</em>"), "everything")
+        XCTAssertEqual(renderer.inverseHighlights(in: "nothing"), "<em>nothing</em>")
+        XCTAssertEqual(renderer.inverseHighlights(in: "prefix <em>highlight</em>"), "<em>prefix </em>highlight")
+        XCTAssertEqual(renderer.inverseHighlights(in: "<em>highlight</em> suffix"), "highlight<em> suffix</em>")
+        XCTAssertEqual(renderer.inverseHighlights(in: "prefix <em>highlight</em> suffix"), "<em>prefix </em>highlight<em> suffix</em>")
+        
+        // Edge cases:
+        XCTAssertEqual(renderer.inverseHighlights(in: "abc<em>xxx"), "<em>abc</em>xxx") // unmatched tag -> up to end of string
+    }
 }
