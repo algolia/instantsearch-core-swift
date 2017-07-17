@@ -1,6 +1,20 @@
 Change Log
 ==========
 
+## 2.0.0 (2017-07-17)
+
+This new major release has been made to adapt this core library to the needs of the [InstantSearch iOS library](https://github.com/algolia/instantsearch-ios). 
+
+### New Features
+
+- Add more extensibility to the Searcher result handler methods. This brings changes in the signature of the `SearcherDelegate` method and the `searcher.resultHandlers`:
+  - For the `SearcherDelegate`: From `searcher(_:didReceive:error:params:)` to `searcher(_:didReceive:error:userInfo:)`
+  - For the `searcher.resultHandlers`: From `(results:error:)` to `(results:error:userInfo:)`
+- Notifications sent when refinement changes through the `RefinementChangeNotification` notification name. You can use the `userInfoNumericRefinementChangeKey` and `userInfoFacetRefinementChangeKey` to listen to numeric and facet refinement changes.
+- FacetResults class added that can be used for searchForFacetValues
+- The Searcher now keeps the latest `hits` and `results` in its state
+- Add helper to reverse highlights in a text
+- Library's deployment iOS target moved from 9.3 to 8.0.
 
 ## 1.0.1 (2017-04-03)
 

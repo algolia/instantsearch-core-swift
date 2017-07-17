@@ -27,7 +27,7 @@ Because we must guarantee that every feature is usable from Objective-C, and bec
 
     - `Sources/Info.plist` (or via Xcode, in the project settings)
 
-- Update the **change log** (`ChangeLog.md`)
+- Update the **change log** (`ChangeLog.md`) and [draft a new release](https://github.com/algolia/instantsearch-core-swift/releases).
 
 - **Dry-run the pod spec**: `pod lib lint` to check that everything's fine.
 
