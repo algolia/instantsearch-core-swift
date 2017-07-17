@@ -23,7 +23,7 @@ let searcher = Searcher(index: index, resultHandler: self.handleResults)
 A closure is accepted as well:
 
 ```swift
-let searcher = Searcher(index: index, resultHandler: { (results: SearchResults?, error: NSError?) in
+let searcher = Searcher(index: index, resultHandler: { (results: SearchResults?, error: Error?, userInfo: [String: Any]) in
     // Your code goes here.
 })
 ```
@@ -49,7 +49,7 @@ The contents of the metadata can be anything you want. Some **well-known keys** 
 The searcher will call your result handler after each request, when the response is received, *unless the request has been cancelled* (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:
 
 ```swift
-func handleResults(results: SearchResults?, error: Error?) {
+func handleResults(results: SearchResults?, error: Error?, userInfo: [String: Any]) {
     guard let results = results else { return }
     self.hits = results.hits
     self.tableView.reloadData()
@@ -122,5 +122,6 @@ The `Searcher` class emits notifications through `NSNotificationCenter` on vario
 - `Searcher.SearchNotification` when a new request is fired
 - `Searcher.ResultNotification` when a successful response is received
 - `Searcher.ErrorNotification` when an erroneous response is received
+- `SearcherRefinementChangeNotification` when numeric and facet refinements are changed
 
 You may subscribe to these notifications to react on different events without having to explicitly write a result handler.
