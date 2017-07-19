@@ -9,7 +9,7 @@ layout: guide.mustache
 
 - Add a dependency on "InstantSearch-Core-Swift":
 
-    - CocoaPods: add `pod 'InstantSearch-Core-Swift', '~> 1.0'` to your `Podfile`.
+    - CocoaPods: add `pod 'InstantSearch-Core-Swift', '~> 2.0'` to your `Podfile`.
 
     - Carthage is not supported. [Wondering why?](./miscellaneous.html#why-is-carthage-not-supported)
 
