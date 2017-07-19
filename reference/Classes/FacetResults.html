@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>MatchLevel Enum Reference</title>
+    <title>FacetResults Class Reference</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="MatchLevel Enum">MatchLevel Enum</a>
+                <a class="ac-nav-brand-title" href="#" title="FacetResults Class">FacetResults Class</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -180,17 +180,17 @@
         <article class="main-content">
             <section>
                 <section class="section">
-                    <h1>MatchLevel</h1>
+                    <h1>FacetResults</h1>
                     <div class="declaration">
                         <div class="language">
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MatchLevel</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">FacetResults</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
                     </div>
-                    <p>Match level of a highlight or snippet result.</p>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <code><a href="../Classes/HighlightResult.html">HighlightResult</a></code>, <code><a href="../Classes/SnippetResult.html">SnippetResult</a></code>.
+                    <p>Search for facet value results.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Wraps the raw JSON returned by the API.
 
 </div>
 
@@ -201,9 +201,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/full" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_">full</a>
+                      <a name="/s:FC17InstantSearchCore12FacetResultscFT4jsonGVs10DictionarySSP___S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(json:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore12FacetResultscFT4jsonGVs10DictionarySSP___S0_">init(json:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -211,30 +211,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>All the query terms were found in the attribute.</p>
+                          <p>Undocumented</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">full</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">FacetResults</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/partial" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_">partial</a>
+                      <a name="/s:vC17InstantSearchCore12FacetResults5valueGSqSS_"></a>
+                      <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore12FacetResults5valueGSqSS_">value</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -242,30 +238,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Only some of the query terms were found in the attribute.</p>
+                          <p>Value of the facet.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">partial</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/none" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_">none</a>
+                      <a name="/s:vC17InstantSearchCore12FacetResults5countSi"></a>
+                      <a name="//apple_ref/swift/Property/count" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore12FacetResults5countSi">count</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -273,14 +265,46 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>None of the query terms were found in the attribute.</p>
+                          <p>Number of occurrences of the value.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    If <code><a href="../Classes/SearchResults.html#/s:vC17InstantSearchCore13SearchResults21exhaustiveFacetsCountSb">SearchResults.exhaustiveFacetsCount</a></code> is <code>true</code>, it may be approximate.
+
+</div>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="k">none</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore12FacetResults11highlightedGSqSS_"></a>
+                      <a name="//apple_ref/swift/Property/highlighted" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore12FacetResults11highlightedGSqSS_">highlighted</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Highlighted string</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">highlighted</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span></code></pre>
 
                           </div>
                         </div>

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>MatchLevel Enum Reference</title>
+    <title>Caller Protocol Reference</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="MatchLevel Enum">MatchLevel Enum</a>
+                <a class="ac-nav-brand-title" href="#" title="Caller Protocol">Caller Protocol</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -180,17 +180,17 @@
         <article class="main-content">
             <section>
                 <section class="section">
-                    <h1>MatchLevel</h1>
+                    <h1>Caller</h1>
                     <div class="declaration">
                         <div class="language">
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MatchLevel</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Caller</span><span class="p">:</span> <span class="kd">class</span></code></pre>
 
                         </div>
                     </div>
-                    <p>Match level of a highlight or snippet result.</p>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <code><a href="../Classes/HighlightResult.html">HighlightResult</a></code>, <code><a href="../Classes/SnippetResult.html">SnippetResult</a></code>.
+                    <p>Abstract protocol for scheduling calls (blocks of code).</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Mainly useful for genericity of code, especially in unit tests.
 
 </div>
 
@@ -201,9 +201,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/full" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_">full</a>
+                      <a name="/s:P17InstantSearchCore6Caller4Call"></a>
+                      <a name="//apple_ref/swift/Alias/Call" class="dashAnchor"></a>
+                      <a class="token" href="#/s:P17InstantSearchCore6Caller4Call">Call</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -211,30 +211,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>All the query terms were found in the attribute.</p>
+                          <p>Signature of calls scheduled by a <code>Caller</code>.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">full</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">typealias</span> <span class="kt">Call</span> <span class="o">=</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">()</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/partial" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_">partial</a>
+                      <a name="/s:FP17InstantSearchCore6Caller4callFFT_T_T_"></a>
+                      <a name="//apple_ref/swift/Method/call(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FP17InstantSearchCore6Caller4callFFT_T_T_">call(_:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -242,45 +238,18 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Only some of the query terms were found in the attribute.</p>
+                          <p>Schedule a call for execution.</p>
+
+<ul>
+<li>paremeter block: The block of code to execute.</li>
+</ul>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">partial</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
-
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
-                  <li class="item">
-                    <div>
-                      <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/none" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_">none</a>
-                      </code>
-                    </div>
-                    <div class="height-container">
-                      <div class="pointer-container"></div>
-                      <section class="section">
-                        <div class="pointer"></div>
-                        <div class="abstract">
-                          <p>None of the query terms were found in the attribute.</p>
-
-                        </div>
-                        <div class="declaration">
-                          <h4>Declaration</h4>
-                          <div class="language">
-                            <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="k">none</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">call</span><span class="p">(</span><span class="n">_</span> <span class="nv">block</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Protocols/Caller.html#/s:P17InstantSearchCore6Caller4Call">Call</a></span><span class="p">)</span></code></pre>
 
                           </div>
                         </div>

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Miscellaneous &mdash; InstantSearch Core for Swift</title>
+    <title>Request strategy &mdash; InstantSearch Core for Swift</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -42,7 +42,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="Miscellaneous">Miscellaneous</a>
+                <a class="ac-nav-brand-title" href="#" title="Request strategy">Request strategy</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -72,22 +72,34 @@
                 <li ><a href="../guide/quick-start.html">Quick Start</a></li>
                 <li ><a href="../guide/search.html">Search</a></li>
                 <li ><a href="../guide/highlighting.html">Highlighting</a></li>
-                <li ><a href="../guide/strategy.html">Request strategy</a></li>
-                <li class="currentPage"><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
+                <li class="currentPage"><a href="../guide/strategy.html">Request strategy</a></li>
+                <li ><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
             </ul>
         </nav>
         <nav class="sidebar-toggle" onclick="sidebarToggle()">&#x2630;</nav>
 
         <article class="main-content">
-            <h1 id="miscellaneous"><a class="heading-anchor" href="#miscellaneous"><span></span></a>Miscellaneous</h1>
-<h2 id="debouncing"><a class="heading-anchor" href="#debouncing"><span></span></a>Debouncing</h2>
-<p>&#x201C;Debouncing&#x201D; is the process of ignoring too frequent events, keeping only the last one in a series of adjacent events.</p>
-<p>The <code>Debouncer</code> class provides a generic way of debouncing calls. It can be useful to avoid triggering too many search requests, for example when a UI widget is continuously firing updates (e.g. a slider).</p>
-<h2 id="throttling"><a class="heading-anchor" href="#throttling"><span></span></a>Throttling</h2>
-<p>Throttling works in a similar fashion as debouncing, except it ensures a constant throughput. When throttling, calls are delayed no more than a given amount of time before being fired. In other words, at regular intervals, the throttler will fire the latest call. This way, no matter how many calls are made, exactly one per interval is fired.</p>
-<p>Throttling is achieved via the <code>Throttler</code> class.</p>
-<h2 id="why-is-carthage-not-supported-"><a class="heading-anchor" href="#why-is-carthage-not-supported-"><span></span></a>Why is Carthage not supported?</h2>
-<p>InstantSearch Core has an external dependency (on the Algolia Search API Client). A package manager is therefore required to draw that dependency. Cocoapods works by adding special build phases to the Xcode project (in addition to creating a Pods project and an Xcode workspace referencing both). Because of this, it is technically impossible to support both Cocoapods and Carthage on the same project when it has external dependencies. Because Cocoapods has a wider audience than Carthage, we chose the former.</p>
+            <h1 id="request-strategy"><a class="heading-anchor" href="#request-strategy"><span></span></a>Request strategy</h1>
+<h2 id="overview"><a class="heading-anchor" href="#overview"><span></span></a>Overview</h2>
+<p>By default, a <code>Searcher</code> will launch a request every time you call <code>search(...)</code>. That&#x2019;s what you want, right?</p>
+<p>Well, not always. When network conditions are bad, for example (high latency, poor bandwidth, packet loss&#x2026;), the network may not be able to cope with as-you-type search, which could lead to a poor user experience.</p>
+<p>That&#x2019;s why the <code>Searcher</code> class accepts an optional <strong>strategy delegate</strong> that, when provided, will take care of deciding how to perform searches. This delegate can decide to drop requests, to throttle them, or even alter their metadata.</p>
+<h2 id="adaptive-network"><a class="heading-anchor" href="#adaptive-network"><span></span></a>Adaptive network</h2>
+<h3 id="rationale"><a class="heading-anchor" href="#rationale"><span></span></a>Rationale</h3>
+<p>The library provides one request strategy implementation: <code>AdaptiveNetworkStrategy</code>. This strategy monitors the response time of every request, and based on the observed response times, switches between various modes: <strong>realtime</strong>, <strong>throttled</strong> and <strong>manual</strong>.</p>
+<p>In <strong>realtime mode</strong>, which is the default, all requests are fired immediately. This is typically what you want in an as-you-type search context, and provides the optimal user experience when the network conditions are good.</p>
+<p>As soon as the network starts to degrade, however, things get more complicated: not only may the requests take too long to complete, but if the bandwidth is not sufficient, the response time may even get slower and slower, as requests stack up inside the pipeline. To fight this effect, the <strong>throttled mode</strong> delays requests, dropping them along the way, to ensure a maximum throughput. Furthermore, the throttling delay is dynamically adjusted so that the search throughput more or less matches the current network&#x2019;s capabilities.</p>
+<p>If the network is very bad, though, as-you-type search stops being the right option altogether. Instead of having users stare at a spinning wheel forever, it&#x2019;s better to disable as-you-type, and inform the users that they need to explicitly submit their searches. That&#x2019;s what the <strong>manual mode</strong> does: all non-final searches are dropped.</p>
+<h3 id="usage"><a class="heading-anchor" href="#usage"><span></span></a>Usage</h3>
+<p>Using the adaptive network strategy first requires monitoring response times using a <code>ResponseTimeStats</code>. Then, you create a new <code>AdaptiveNetworkStrategy</code> using those statistics, and assigning it to a <code>Searcher</code>:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-comment">/* your searcher */</span>
+<span class="hljs-keyword">let</span> stats = <span class="hljs-type">ResponseTimeStats</span>(searcher: searcher)
+<span class="hljs-keyword">let</span> strategy = <span class="hljs-type">AdaptiveNetworkStrategy</span>(stats: stats)
+searcher.strategy = strategy</code></pre>
+
+<p><strong>Note:</strong> <em>As is customary for delegates, a <code>Searcher</code> does not retain its strategy. You must therefore ensure that its lifetime exceeds that of the searcher.</em></p>
+<h2 id="writing-your-own-strategy"><a class="heading-anchor" href="#writing-your-own-strategy"><span></span></a>Writing your own strategy</h2>
+<p>Implementing your own strategy is just a matter of implementing the <code>RequestStrategy</code> protocol, which contains only one method: <code>performSearch(from:userInfo:with:)</code>. The <code>Searcher</code> calls the strategy when the <code>search(...)</code> method is invoked, providing the search metadata via the <code>userInfo</code> parameter, and a block that the strategy should call when it decides to perform the search.</p>
 
         </article>
     </div>

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Operator Enum Reference</title>
+    <title>RequestStat Class Reference</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../../../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="Operator Enum">Operator Enum</a>
+                <a class="ac-nav-brand-title" href="#" title="RequestStat Class">RequestStat Class</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -180,14 +180,14 @@
         <article class="main-content">
             <section>
                 <section class="section">
-                    <h1>Operator</h1>
+                    <h1>RequestStat</h1>
                     <div class="declaration">
                         <div class="language">
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">RequestStat</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
                     </div>
-                    <p>Comparison operator that can be applied to a numeric.</p>
+                    <p>Statistics about a single request.</p>
 
                 </section>
             <section class="section task-group-section">
@@ -196,9 +196,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FOC17InstantSearchCore17NumericRefinement8Operator8lessThanFMS1_S1_"></a>
-                      <a name="//apple_ref/swift/Element/lessThan" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FOC17InstantSearchCore17NumericRefinement8Operator8lessThanFMS1_S1_">lessThan</a>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat5seqNoSi"></a>
+                      <a name="//apple_ref/swift/Property/seqNo" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat5seqNoSi">seqNo</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -206,30 +206,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Undocumented</p>
+                          <p>The request&rsquo;s sequence number.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">seqNo</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FOC17InstantSearchCore17NumericRefinement8Operator15lessThanOrEqualFMS1_S1_"></a>
-                      <a name="//apple_ref/swift/Element/lessThanOrEqual" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FOC17InstantSearchCore17NumericRefinement8Operator15lessThanOrEqualFMS1_S1_">lessThanOrEqual</a>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat9startDateV10Foundation4Date"></a>
+                      <a name="//apple_ref/swift/Property/startDate" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat9startDateV10Foundation4Date">startDate</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -237,30 +233,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Undocumented</p>
+                          <p>The request&rsquo;s start date.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">let</span> <span class="nv">startDate</span><span class="p">:</span> <span class="kt">Date</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FOC17InstantSearchCore17NumericRefinement8Operator5equalFMS1_S1_"></a>
-                      <a name="//apple_ref/swift/Element/equal" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FOC17InstantSearchCore17NumericRefinement8Operator5equalFMS1_S1_">equal</a>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat8stopDateGSqV10Foundation4Date_"></a>
+                      <a name="//apple_ref/swift/Property/stopDate" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat8stopDateGSqV10Foundation4Date_">stopDate</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -268,30 +260,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Undocumented</p>
+                          <p>The request&rsquo;s stop date, or <code>nil</code> if the request is still running.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">fileprivate</span><span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">stopDate</span><span class="p">:</span> <span class="kt">Date</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FOC17InstantSearchCore17NumericRefinement8Operator8notEqualFMS1_S1_"></a>
-                      <a name="//apple_ref/swift/Element/notEqual" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FOC17InstantSearchCore17NumericRefinement8Operator8notEqualFMS1_S1_">notEqual</a>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat9cancelledSb"></a>
+                      <a name="//apple_ref/swift/Property/cancelled" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat9cancelledSb">cancelled</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -299,30 +287,26 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Undocumented</p>
+                          <p>Whether the request was cancelled.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">fileprivate</span><span class="p">(</span><span class="k">set</span><span class="p">)</span> <span class="k">var</span> <span class="nv">cancelled</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FOC17InstantSearchCore17NumericRefinement8Operator18greaterThanOrEqualFMS1_S1_"></a>
-                      <a name="//apple_ref/swift/Element/greaterThanOrEqual" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FOC17InstantSearchCore17NumericRefinement8Operator18greaterThanOrEqualFMS1_S1_">greaterThanOrEqual</a>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat8durationSd"></a>
+                      <a name="//apple_ref/swift/Property/duration" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat8durationSd">duration</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -330,30 +314,80 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Undocumented</p>
+                          <p>The request&rsquo;s duration.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">duration</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
 
                           </div>
                         </div>
                       </section>
                     </div>
                   </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FOC17InstantSearchCore17NumericRefinement8Operator11greaterThanFMS1_S1_"></a>
-                      <a name="//apple_ref/swift/Element/greaterThan" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FOC17InstantSearchCore17NumericRefinement8Operator11greaterThanFMS1_S1_">greaterThan</a>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat7runningSb"></a>
+                      <a name="//apple_ref/swift/Property/running" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat7runningSb">running</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Whether the request is still running.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">running</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat9completedSb"></a>
+                      <a name="//apple_ref/swift/Property/completed" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat9completedSb">completed</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Whether the request has completed, i.e. returned a response.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">completed</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat11descriptionSS"></a>
+                      <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vCC17InstantSearchCore17ResponseTimeStats11RequestStat11descriptionSS">description</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -368,7 +402,7 @@
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">RequestStat</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                           </div>
                         </div>

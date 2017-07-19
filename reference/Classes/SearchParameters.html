@@ -108,6 +108,26 @@
               </ul>
             </li>
             <li class="nav-group-name">
+              <a href="../Request strategy.html">Request strategy</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/RequestStrategy.html">RequestStrategy</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/AdaptiveNetworkStrategy.html">AdaptiveNetworkStrategy</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/AdaptiveNetworkStrategy/Mode.html">– Mode</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/ResponseTimeStats.html">ResponseTimeStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/ResponseTimeStats/RequestStat.html">– RequestStat</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
               <a href="../Utilities.html">Utilities</a>
               <ul class="nav-group-tasks">
                 <li class="nav-group-task">
@@ -117,7 +137,18 @@
                   <a href="../Classes/Debouncer.html">Debouncer</a>
                 </li>
                 <li class="nav-group-task">
+                  <a href="../Classes/Throttler.html">Throttler</a>
+                </li>
+                <li class="nav-group-task">
                   <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Classes.html">Other Classes</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetResults.html">FacetResults</a>
                 </li>
               </ul>
             </li>
@@ -132,6 +163,9 @@
             <li class="nav-group-name">
               <a href="../Other Protocols.html">Other Protocols</a>
               <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/Caller.html">Caller</a>
+                </li>
                 <li class="nav-group-task">
                   <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
                 </li>
@@ -157,7 +191,6 @@
 
 <p>This class allows manipulating facet and numeric filters individually, then combining them into a string
 suitable for use in <code>Query.filters</code>.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Tags are not handled. Please use facets instead, as they are more powerful.
@@ -359,7 +392,6 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                                 <td>
                                   <div>
                                     <p>The parameters to copy from.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -383,7 +415,6 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Support for <code>NSCopying</code>.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Primarily intended for Objective-C use. Swift coders should use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameterscFT4fromS0__S0_">init(from:)</a></code>.
@@ -494,7 +525,6 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>true if at least one facet or one numeric refinement is defined, false otherwise.</p>
-
                         </div>
                       </section>
                     </div>
@@ -575,7 +605,6 @@ The format is the same as <code>Index.searchDisjunctiveFaceting()</code>.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>A URL query string.</p>
-
                         </div>
                       </section>
                     </div>
@@ -607,8 +636,8 @@ This will combine numeric refinements and facet refinements into the same expres
                         </div>
                         <div>
                           <h4>Return Value</h4>
-                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no refinements are currently set.</p>
-
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no refinements
+       are currently set.</p>
                         </div>
                       </section>
                     </div>
@@ -639,8 +668,8 @@ This will combine numeric refinements and facet refinements into the same expres
                         </div>
                         <div>
                           <h4>Return Value</h4>
-                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no numeric refinements are currently set.</p>
-
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no numeric
+       refinements are currently set.</p>
                         </div>
                       </section>
                     </div>
@@ -671,8 +700,8 @@ This will combine numeric refinements and facet refinements into the same expres
                         </div>
                         <div>
                           <h4>Return Value</h4>
-                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no facet refinements are currently set.</p>
-
+                          <p>An expression suitable for use with <code>Query.filters</code>. The expression may be <code>nil</code> if no facet
+       refinements are currently set.</p>
                         </div>
                       </section>
                     </div>
@@ -691,7 +720,6 @@ This will combine numeric refinements and facet refinements into the same expres
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Generate facet refinements from the current filters.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Those are intended for use with <code>Index.searchDisjunctiveFaceting(...)</code>. In the general case, please
@@ -711,7 +739,6 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         <div>
                           <h4>Return Value</h4>
                           <p>Facet refinements suitable for use with <code>Index.searchDisjunctiveFaceting(...)</code>.</p>
-
                         </div>
                       </section>
                     </div>
@@ -730,7 +757,6 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Generate facet filters from the current filters.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Those are intended for use with <code>Query.facetFilters</code>. In the general case, please use
@@ -750,7 +776,6 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         <div>
                           <h4>Return Value</h4>
                           <p>An expression suitable for use with <code>Query.facetFilters</code>.</p>
-
                         </div>
                       </section>
                     </div>
@@ -780,7 +805,6 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Update the parameters from the current refinements.</p>
-
 <div class="aside aside-warning">
     <p class="aside-title">Warning</p>
     This will override the <code>filters</code> parameter.
@@ -813,7 +837,6 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Update the parameters from the current <em>facet</em> refinements. Numeric refinements are ignored.</p>
-
 <div class="aside aside-warning">
     <p class="aside-title">Warning</p>
     This will override the <code>filters</code> parameter.
@@ -846,7 +869,6 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Update the parameters from the current <em>numeric</em> refinements. Facet refinements are ignored.</p>
-
 <div class="aside aside-warning">
     <p class="aside-title">Warning</p>
     This will override the <code>filters</code> parameter.
@@ -912,8 +934,7 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -925,8 +946,8 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                                 </td>
                                 <td>
                                   <div>
-                                    <p>true to treat this facet as disjunctive (<code>OR</code>), false to treat it as conjunctive (<code>AND</code>, the default).</p>
-
+                                    <p>true to treat this facet as disjunctive (<code>OR</code>), false to treat it as conjunctive
+(<code>AND</code>, the default).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -972,8 +993,7 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -982,8 +1002,7 @@ use <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16Se
                         </div>
                         <div>
                           <h4>Return Value</h4>
-                          <p>true if this facet is disjunctive (<code>OR</code>), false if it’s conjunctive (<code>AND</code>).</p>
-
+                          <p>true if this facet is disjunctive (<code>OR</code>), false if it&rsquo;s conjunctive (<code>AND</code>).</p>
                         </div>
                       </section>
                     </div>
@@ -1026,8 +1045,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1040,7 +1058,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The refined value to add.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1086,8 +1103,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1100,7 +1116,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The refined value to remove.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1146,8 +1161,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1160,7 +1174,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The refined value to look for.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1170,7 +1183,6 @@ disjunctive/conjunctive status.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>true if the refinement exists, false otherwise.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1211,8 +1223,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1222,7 +1233,6 @@ disjunctive/conjunctive status.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>true if the facet has at least one refinment, false if it has none.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1254,7 +1264,6 @@ disjunctive/conjunctive status.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>true if at least one refinement is defined for at least one facet, false otherwise.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1296,8 +1305,7 @@ added.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1310,7 +1318,6 @@ added.</p>
                                 <td>
                                   <div>
                                     <p>The refined value to toggle.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1383,8 +1390,7 @@ added.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1441,8 +1447,7 @@ added.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name.</p>
-
+                                    <p>The numeric&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1454,8 +1459,8 @@ added.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>true to treat this numeric as disjunctive (<code>OR</code>), false to treat it as conjunctive (<code>AND</code>, the default).</p>
-
+                                    <p>true to treat this numeric as disjunctive (<code>OR</code>), false to treat it as conjunctive
+(<code>AND</code>, the default).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1501,8 +1506,7 @@ added.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name.</p>
-
+                                    <p>The numeric&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1511,8 +1515,7 @@ added.</p>
                         </div>
                         <div>
                           <h4>Return Value</h4>
-                          <p>true if this numeric is disjunctive (<code>OR</code>), false if it’s conjunctive (<code>AND</code>).</p>
-
+                          <p>true if this numeric is disjunctive (<code>OR</code>), false if it&rsquo;s conjunctive (<code>AND</code>).</p>
                         </div>
                       </section>
                     </div>
@@ -1533,7 +1536,6 @@ added.</p>
                           <p>Add a refinement for a given numeric.
 The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
 disjunctive/conjunctive status.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a></code>.</p>
@@ -1561,8 +1563,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name (first operand to the operator).</p>
-
+                                    <p>The numeric&rsquo;s name (first operand to the operator).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1575,7 +1576,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The comparison operator to apply.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1588,7 +1588,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The value to compare the numeric to (second operand to the operator).</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1600,8 +1599,8 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
-
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive
+                   (negated with a <code>NOT</code>).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1627,7 +1626,6 @@ disjunctive/conjunctive status.</p>
                           <p>Add a refinement for a given numeric.
 The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
 disjunctive/conjunctive status.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a></code>.</p>
@@ -1655,8 +1653,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name (first operand to the operator).</p>
-
+                                    <p>The numeric&rsquo;s name (first operand to the operator).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1669,7 +1666,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The comparison operator to apply.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1682,7 +1678,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The value to compare the numeric to (second operand to the operator).</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1694,8 +1689,8 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
-
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive
+                   (negated with a <code>NOT</code>).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1721,7 +1716,6 @@ disjunctive/conjunctive status.</p>
                           <p>Add a refinement for a given numeric.
 The refinement will be treated as conjunctive (<code>AND</code>) or disjunctive (<code>OR</code>) based on the numeric&rsquo;s own
 disjunctive/conjunctive status.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters20addNumericRefinementFCS_17NumericRefinementT_">addNumericRefinement(_:)</a></code>.</p>
@@ -1749,8 +1743,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name (first operand to the operator).</p>
-
+                                    <p>The numeric&rsquo;s name (first operand to the operator).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1763,7 +1756,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The comparison operator to apply.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1776,7 +1768,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The value to compare the numeric to (second operand to the operator).</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1788,8 +1779,8 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
-
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive
+                   (negated with a <code>NOT</code>).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1838,7 +1829,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The refinement to add.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1862,7 +1852,6 @@ disjunctive/conjunctive status.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Remove a refinement for a given numeric.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>This is a convenience shortcut for <code><a href="../Classes/SearchParameters.html#/s:FC17InstantSearchCore16SearchParameters23removeNumericRefinementFCS_17NumericRefinementT_">removeNumericRefinement(_:)</a></code>.</p>
@@ -1890,8 +1879,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name (first operand to the operator).</p>
-
+                                    <p>The numeric&rsquo;s name (first operand to the operator).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1904,7 +1892,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The comparison operator to apply.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1917,7 +1904,6 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The value to compare the numeric to (second operand to the operator).</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1929,8 +1915,8 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
-
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive
+                   (negated with a <code>NOT</code>).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -1977,7 +1963,135 @@ disjunctive/conjunctive status.</p>
                                 <td>
                                   <div>
                                     <p>The refinement to remove.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters24removeNumericRefinementsFT5whereFCS_17NumericRefinementSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/removeNumericRefinements(where:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters24removeNumericRefinementsFT5whereFCS_17NumericRefinementSb_T_">removeNumericRefinements(where:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Remove a refinement for a given refinement condition.</p>
 
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeNumericRefinements</span><span class="p">(</span><span class="k">where</span> <span class="nv">condition</span><span class="p">:</span> <span class="p">(</span><span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>condition</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>the condition to evaluate.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore16SearchParameters23updateNumericRefinementFTSSOCS_17NumericRefinement8OperatorCSo8NSNumber9inclusiveSb_T_"></a>
+                      <a name="//apple_ref/swift/Method/updateNumericRefinement(_:_:_:inclusive:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore16SearchParameters23updateNumericRefinementFTSSOCS_17NumericRefinement8OperatorCSo8NSNumber9inclusiveSb_T_">updateNumericRefinement(_:_:_:inclusive:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Update a refinement for a given numeric.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">updateNumericRefinement</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement.html">NumericRefinement</a></span><span class="o">.</span><span class="kt">Operator</span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+
+                          </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>name</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The numeric&rsquo;s name (first operand to the operator).</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>op</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The comparison operator to apply.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>value</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The value to compare the numeric to (second operand to the operator).</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>inclusive</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Whether the refinement is treated as inclusive (the default) or exclusive
+                   (negated with a <code>NOT</code>).</p>
                                   </div>
                                 </td>
                               </tr>
@@ -2023,8 +2137,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name.</p>
-
+                                    <p>The numeric&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -2034,7 +2147,6 @@ disjunctive/conjunctive status.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>true if the numeric has at least one refinment, false if it has none.</p>
-
                         </div>
                       </section>
                     </div>
@@ -2066,7 +2178,6 @@ disjunctive/conjunctive status.</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>true if at least one refinement is defined for at least one numeric, false otherwise.</p>
-
                         </div>
                       </section>
                     </div>
@@ -2134,8 +2245,7 @@ disjunctive/conjunctive status.</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The numeric’s name.</p>
-
+                                    <p>The numeric&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>MatchLevel Enum Reference</title>
+    <title>RequestStrategy Protocol Reference</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="MatchLevel Enum">MatchLevel Enum</a>
+                <a class="ac-nav-brand-title" href="#" title="RequestStrategy Protocol">RequestStrategy Protocol</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -180,19 +180,21 @@
         <article class="main-content">
             <section>
                 <section class="section">
-                    <h1>MatchLevel</h1>
+                    <h1>RequestStrategy</h1>
                     <div class="declaration">
                         <div class="language">
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MatchLevel</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">RequestStrategy</span><span class="p">:</span> <span class="kd">class</span></code></pre>
 
                         </div>
                     </div>
-                    <p>Match level of a highlight or snippet result.</p>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <code><a href="../Classes/HighlightResult.html">HighlightResult</a></code>, <code><a href="../Classes/SnippetResult.html">SnippetResult</a></code>.
+                    <p>Pluggable request strategy.
+A strategy acts as an optional delegate to one or more <code><a href="../Classes/Searcher.html">Searcher</a></code> instances and decides how to transform logical
+search intents (i.e. calls to <code><a href="../Classes/Searcher.html#/s:FC17InstantSearchCore8Searcher6searchFT_T_">Searcher.search(...)</a></code>) into actual search requests.</p>
+<h2 id='implementation-notes' class='heading'>Implementation notes</h2>
 
-</div>
+<p>A strategy should be able to work with multiple searchers. It is the case for strategies provided by this library.
+When implementing your own strategy, either follow this rule&hellip; or restrain from passing the same strategy to
+multiple searchers.</p>
 
                 </section>
             <section class="section task-group-section">
@@ -201,9 +203,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/full" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_">full</a>
+                      <a name="/s:FP17InstantSearchCore15RequestStrategy13performSearchFT4fromCS_8Searcher8userInfoGVs10DictionarySSP__4withFGS2_SSP__T__T_"></a>
+                      <a name="//apple_ref/swift/Method/performSearch(from:userInfo:with:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FP17InstantSearchCore15RequestStrategy13performSearchFT4fromCS_8Searcher8userInfoGVs10DictionarySSP__4withFGS2_SSP__T__T_">performSearch(from:userInfo:with:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -211,78 +213,62 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>All the query terms were found in the attribute.</p>
+                          <p>Ask the strategy to perform a search.
+Whether the search will be performed or not, immediately or not, is at the discretion of the strategy.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">full</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">func</span> <span class="nf">performSearch</span><span class="p">(</span><span class="n">from</span> <span class="nv">searcher</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html">Searcher</a></span><span class="p">,</span> <span class="nv">userInfo</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">],</span> <span class="n">with</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">([</span><span class="kt">String</span><span class="p">:</span> <span class="kt">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span></code></pre>
 
                           </div>
                         </div>
-                      </section>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
-                  <li class="item">
-                    <div>
-                      <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/partial" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_">partial</a>
-                      </code>
-                    </div>
-                    <div class="height-container">
-                      <div class="pointer-container"></div>
-                      <section class="section">
-                        <div class="pointer"></div>
-                        <div class="abstract">
-                          <p>Only some of the query terms were found in the attribute.</p>
-
-                        </div>
-                        <div class="declaration">
-                          <h4>Declaration</h4>
-                          <div class="language">
-                            <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">partial</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
-
-                          </div>
-                        </div>
-                      </section>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <ul>
-                  <li class="item">
-                    <div>
-                      <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/none" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_">none</a>
-                      </code>
-                    </div>
-                    <div class="height-container">
-                      <div class="pointer-container"></div>
-                      <section class="section">
-                        <div class="pointer"></div>
-                        <div class="abstract">
-                          <p>None of the query terms were found in the attribute.</p>
-
-                        </div>
-                        <div class="declaration">
-                          <h4>Declaration</h4>
-                          <div class="language">
-                            <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="k">none</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
-
-                          </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>searcher</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Searcher asking for the search.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>userInfo</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Search metadata, as passed to <code>Searcher.search(...)</code>. May influence the strategy.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>callback</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>Block to be called by the strategy if and when it decides to search.
+                  The argument is typically the <code>userInfo</code> parameter, although it may be altered by the
+                  strategy as it sees fit.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </section>
                     </div>

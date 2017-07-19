@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>MatchLevel Enum Reference</title>
+    <title>Throttler Class Reference</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="MatchLevel Enum">MatchLevel Enum</a>
+                <a class="ac-nav-brand-title" href="#" title="Throttler Class">Throttler Class</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -180,30 +180,33 @@
         <article class="main-content">
             <section>
                 <section class="section">
-                    <h1>MatchLevel</h1>
+                    <h1>Throttler</h1>
                     <div class="declaration">
                         <div class="language">
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">MatchLevel</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Throttler</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt"><a href="../Protocols/Caller.html">Caller</a></span></code></pre>
 
                         </div>
                     </div>
-                    <p>Match level of a highlight or snippet result.</p>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <code><a href="../Classes/HighlightResult.html">HighlightResult</a></code>, <code><a href="../Classes/SnippetResult.html">SnippetResult</a></code>.
-
-</div>
+                    <p>Ensures a maximum throughput on a stream of calls.
+The throughput is expressed as a minimum delay between calls, via the <code>delay</code> property.</p>
 
                 </section>
             <section class="section task-group-section">
               <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Properties"></a>
+                  <a name="//apple_ref/swift/Section/Properties" class="dashAnchor"></a>
+                  <a href="#/Properties">
+                    <h3 class="section-name">Properties</h3>
+                  </a>
+                </div>
                 <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/full" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4fullFMS0_S0_">full</a>
+                      <a name="/s:vC17InstantSearchCore9Throttler5delaySd"></a>
+                      <a name="//apple_ref/swift/Property/delay" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore9Throttler5delaySd">delay</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -211,14 +214,45 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>All the query terms were found in the attribute.</p>
+                          <p>Minimum delay between two calls.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">full</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">delay</span><span class="p">:</span> <span class="kt">TimeInterval</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:vC17InstantSearchCore9Throttler15fireInitialCallSb"></a>
+                      <a name="//apple_ref/swift/Property/fireInitialCall" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore9Throttler15fireInitialCallSb">fireInitialCall</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Whether to fire immediately the initial call in a series. Default = <code>true</code>.</p>
+
+<p>A series begins when a call is enqueued, and ends when the <code><a href="../Classes/Throttler.html#/s:vC17InstantSearchCore9Throttler5delaySd">delay</a></code> expires without any call being fired.
+When this property is true, the initial call in a series will be fired immediately; subsequent calls will be
+enqueued for deferred firing. When it is false, all calls are enqueued, including the initial call.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">fireInitialCall</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
 
                           </div>
                         </div>
@@ -228,13 +262,20 @@
                 </ul>
               </div>
               <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Initialization"></a>
+                  <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                  <a href="#/Initialization">
+                    <h3 class="section-name">Initialization</h3>
+                  </a>
+                </div>
                 <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/partial" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel7partialFMS0_S0_">partial</a>
+                      <a name="/s:FC17InstantSearchCore9ThrottlercFT5delaySd_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(delay:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore9ThrottlercFT5delaySd_S0_">init(delay:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -242,16 +283,35 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Only some of the query terms were found in the attribute.</p>
+                          <p>Init a throttler with a given delay.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="n">partial</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">delay</span><span class="p">:</span> <span class="kt">TimeInterval</span><span class="p">)</span></code></pre>
 
                           </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>delay</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The minimum delay between two calls.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </section>
                     </div>
@@ -259,13 +319,20 @@
                 </ul>
               </div>
               <div class="task-group">
+                <div class="task-name-container">
+                  <a name="/Scheduling%20calls"></a>
+                  <a name="//apple_ref/swift/Section/Scheduling calls" class="dashAnchor"></a>
+                  <a href="#/Scheduling%20calls">
+                    <h3 class="section-name">Scheduling calls</h3>
+                  </a>
+                </div>
                 <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_"></a>
-                      <a name="//apple_ref/swift/Element/none" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FO17InstantSearchCore10MatchLevel4noneFMS0_S0_">none</a>
+                      <a name="/s:FC17InstantSearchCore9Throttler4callFFT_T_T_"></a>
+                      <a name="//apple_ref/swift/Method/call(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore9Throttler4callFFT_T_T_">call(_:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -273,16 +340,36 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>None of the query terms were found in the attribute.</p>
+                          <p>Register another call.
+It may be eventually fired or not, depending on the throttler&rsquo;s policy and current state.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="k">case</span> <span class="k">none</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">call</span><span class="p">(</span><span class="n">_</span> <span class="nv">block</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt"><a href="../Protocols/Caller.html">Caller</a></span><span class="o">.</span><span class="kt">Call</span><span class="p">)</span></code></pre>
 
                           </div>
+                        </div>
+                        <div>
+                          <h4>Parameters</h4>
+                          <table class="graybox">
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <code>
+                                  <em>block</em>
+                                  </code>
+                                </td>
+                                <td>
+                                  <div>
+                                    <p>The call to throttle.</p>
+                                  </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </section>
                     </div>

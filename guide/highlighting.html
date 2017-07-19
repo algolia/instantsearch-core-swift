@@ -72,6 +72,7 @@
                 <li ><a href="../guide/quick-start.html">Quick Start</a></li>
                 <li ><a href="../guide/search.html">Search</a></li>
                 <li class="currentPage"><a href="../guide/highlighting.html">Highlighting</a></li>
+                <li ><a href="../guide/strategy.html">Request strategy</a></li>
                 <li ><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
             </ul>
         </nav>
@@ -80,25 +81,47 @@
         <article class="main-content">
             <h1 id="highlighting"><a class="heading-anchor" href="#highlighting"><span></span></a>Highlighting</h1>
 <p>The <code>Highlighter</code> class is in charge of parsing highlight result values (as returned by the Search API in the <code>_highlightResults</code> attribute of every hit) and render them into a rich text string (an <code>NSAttributedString</code> instance).</p>
-<p>When you instantiate a highlight renderer, you specify a set of <strong>text attributes</strong> that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> renderer = <span class="hljs-type">Highlighter</span>(highlightAttrs: [
+<h2 id="configuration"><a class="heading-anchor" href="#configuration"><span></span></a>Configuration</h2>
+<h3 id="styles"><a class="heading-anchor" href="#styles"><span></span></a>Styles</h3>
+<p>When you instantiate a highlighter, you specify a set of <strong>text attributes</strong> that will be applied to highlighted portions. For example, the following code will give you truly ugly red-on-yellow highlights:</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> highlighter = <span class="hljs-type">Highlighter</span>(highlightAttrs: [
     <span class="hljs-type">NSForegroundColorAttributeName</span>: <span class="hljs-type">UIColor</span>.red,
     <span class="hljs-type">NSBackgroundColorAttributeName</span>: <span class="hljs-type">UIColor</span>.yellow,
 ]</code></pre>
 
-<p>By default, the renderer is set to recognized <code>&lt;em&gt;</code> tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value.</p>
+<h3 id="tags"><a class="heading-anchor" href="#tags"><span></span></a>Tags</h3>
+<p>By default, the highlighter is set to recognized <code>&lt;em&gt;</code> tags, which are the default tags used by the Search API to mark up highlights. However, you can easily override that to a custom value.</p>
 <p><strong>Note:</strong> <em>In that case, make sure that it matches the values for <code>highlightPreTag</code> and <code>highlightPostTag</code> in your search query (or your index&#x2019;s default)!</em></p>
-<pre><code class="hljs swift">renderer.preTag = <span class="hljs-string">&quot;&lt;mark&gt;&quot;</span>
-renderer.postTag = <span class="hljs-string">&quot;&lt;/mark&gt;&quot;</span></code></pre>
+<pre><code class="hljs swift">highlighter.preTag = <span class="hljs-string">&quot;&lt;mark&gt;&quot;</span>
+highlighter.postTag = <span class="hljs-string">&quot;&lt;/mark&gt;&quot;</span></code></pre>
 
-<p>Once the renderer is set, rendering highlights is just a matter of calling <code>render(text:)</code>. The real trick is to retrieve the highlighted value from the JSON&#x2026; Fortunately, the <code>SearchResults</code> class makes it easy:</p>
+<h2 id="rendering"><a class="heading-anchor" href="#rendering"><span></span></a>Rendering</h2>
+<p>Once the highlighter is configured, rendering highlights is just a matter of calling <code>render(text:)</code>. The real trick is to retrieve the highlighted value from the JSON&#x2026; Fortunately, the <code>SearchResults</code> class makes it easy:</p>
 <pre><code class="hljs swift"><span class="hljs-keyword">let</span> searchResults: <span class="hljs-type">SearchResults</span> = ... <span class="hljs-comment">// whatever was received by the result handler</span>
 <span class="hljs-keyword">let</span> index: <span class="hljs-type">Int</span> = ... <span class="hljs-comment">// index of the hit you want to retrieve</span>
 <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> highlightResult = searchResults.highlightResult(at: index, path: <span class="hljs-string">&quot;attribute_name&quot;</span>) {
     <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> highlightValue = highlightResult.value {
-        <span class="hljs-keyword">let</span> highlightedString = renderer.render(text: highlightValue)
+        <span class="hljs-keyword">let</span> highlightedString = highlighter.render(text: highlightValue)
     }
 }</code></pre>
+
+<h2 id="inverse-highlighting"><a class="heading-anchor" href="#inverse-highlighting"><span></span></a>Inverse highlighting</h2>
+<p>In most cases, you want to highlight parts of the text that matched the search query, to show users why the results are relevant to their search. There may be cases, however, where <strong>inverse highlighting</strong> is more adapted.</p>
+<p>Let&#x2019;s consider <strong>query suggestions</strong>: as the user types, you are suggesting queries that contain the text already entered. In that case, highlighting the matched text does not bring any useful information, as it is the same for all suggestions. What is much more relevant is to highlight <em>the remaining parts</em>, i.e. the additional text supplied by each suggestion.</p>
+<p>For example, when searching for &#x201C;star&#x201D;, instead of displaying:</p>
+<ul>
+<li><strong>star</strong> wars</li>
+<li><strong>star</strong> trek</li>
+</ul>
+<p>&#x2026; you could display:</p>
+<ul>
+<li>star <strong>wars</strong></li>
+<li>star <strong>trek</strong></li>
+</ul>
+<p>This is the goal of the <code>inverseHighlights(in:)</code> function. Just supply a string with regular highlights, and it will convert highlighted parts into non-highlighted parts and vice versa.</p>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> highlighter = <span class="hljs-comment">/* your highlighter */</span>
+<span class="hljs-built_in">print</span>(highlighter.inverseHighlights(<span class="hljs-keyword">in</span>: <span class="hljs-string">&quot;&lt;em&gt;star&lt;/em&gt; wars&quot;</span>))
+<span class="hljs-comment">// ... will print `star&lt;em&gt; wars&lt;/em&gt;`</span></code></pre>
         </article>
     </div>
 

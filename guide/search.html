@@ -72,6 +72,7 @@
                 <li ><a href="../guide/quick-start.html">Quick Start</a></li>
                 <li class="currentPage"><a href="../guide/search.html">Search</a></li>
                 <li ><a href="../guide/highlighting.html">Highlighting</a></li>
+                <li ><a href="../guide/strategy.html">Request strategy</a></li>
                 <li ><a href="../guide/miscellaneous.html">Miscellaneous</a></li>
             </ul>
         </nav>
@@ -79,7 +80,7 @@
 
         <article class="main-content">
             <h1 id="search"><a class="heading-anchor" href="#search"><span></span></a>Search</h1>
-<h2 id="basics"><a class="heading-anchor" href="#basics"><span></span></a>Basics</h2>
+<h2 id="setup"><a class="heading-anchor" href="#setup"><span></span></a>Setup</h2>
 <p>First create a <code>Client</code> and an <code>Index</code> as you would do with the bare API Client:</p>
 <pre><code class="hljs swift"><span class="hljs-keyword">let</span> client = <span class="hljs-type">Client</span>(appID: <span class="hljs-string">&quot;YOUR_APP_ID&quot;</span>, apiKey: <span class="hljs-string">&quot;YOUR_API_KEY&quot;</span>)
 <span class="hljs-keyword">let</span> index = client.index(withName: <span class="hljs-string">&quot;index_name&quot;</span>)</code></pre>
@@ -88,18 +89,22 @@
 <pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: <span class="hljs-keyword">self</span>.handleResults)</code></pre>
 
 <p>A closure is accepted as well:</p>
-<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: { (results: <span class="hljs-type">SearchResults</span>?, error: <span class="hljs-type">NSError</span>?) <span class="hljs-keyword">in</span>
+<pre><code class="hljs swift"><span class="hljs-keyword">let</span> searcher = <span class="hljs-type">Searcher</span>(index: index, resultHandler: { (results: <span class="hljs-type">SearchResults</span>?, error: <span class="hljs-type">Error</span>?, userInfo: [<span class="hljs-type">String</span>: <span class="hljs-type">Any</span>]) <span class="hljs-keyword">in</span>
     <span class="hljs-comment">// Your code goes here.</span>
 })</code></pre>
 
+<h2 id="searching"><a class="heading-anchor" href="#searching"><span></span></a>Searching</h2>
 <p>The searcher will only launch a request when you call its <code>search()</code> method. Before you search, of course, you will want to modify the <strong>search parameters</strong> via the <code>params</code> property (a <code>SearchParameters</code> instance):</p>
 <pre><code class="hljs swift">searcher.params.query = <span class="hljs-string">&quot;hotel&quot;</span>
 searcher.params.aroundLatLngViaIP = <span class="hljs-literal">true</span>
 searcher.search()</code></pre>
 
+<h3 id="metadata"><a class="heading-anchor" href="#metadata"><span></span></a>Metadata</h3>
+<p>The <code>search(...)</code> method takes an optional <code>userInfo</code> argument, which contains search <strong>metadata</strong>. This metadata will be propagated (and possibly enriched or altered) throughout the lifetime of the request, up to the observers.</p>
+<p>The contents of the metadata can be anything you want. Some <strong>well-known keys</strong> are provided by the <code>Searcher</code> class: see the <code>*Key</code> constants.</p>
 <h2 id="handling-results"><a class="heading-anchor" href="#handling-results"><span></span></a>Handling results</h2>
 <p>The searcher will call your result handler after each request, when the response is received, <em>unless the request has been cancelled</em> (e.g. because newer results have already been received). Typically, your result handler will check for errors, store the hits in some data structure, then reload your UI:</p>
-<pre><code class="hljs swift"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">handleResults</span><span class="hljs-params">(results: SearchResults?, error: Error?)</span></span> {
+<pre><code class="hljs swift"><span class="hljs-func"><span class="hljs-keyword">func</span> <span class="hljs-title">handleResults</span><span class="hljs-params">(results: SearchResults?, error: Error?, userInfo: [String: Any])</span></span> {
     <span class="hljs-keyword">guard</span> <span class="hljs-keyword">let</span> results = results <span class="hljs-keyword">else</span> { <span class="hljs-keyword">return</span> }
     <span class="hljs-keyword">self</span>.hits = results.hits
     <span class="hljs-keyword">self</span>.tableView.reloadData()
@@ -148,6 +153,7 @@ conjunctive/disjunctive state of each facet.</p>
 <li><code>Searcher.SearchNotification</code> when a new request is fired</li>
 <li><code>Searcher.ResultNotification</code> when a successful response is received</li>
 <li><code>Searcher.ErrorNotification</code> when an erroneous response is received</li>
+<li><code>SearcherRefinementChangeNotification</code> when numeric and facet refinements are changed</li>
 </ul>
 <p>You may subscribe to these notifications to react on different events without having to explicitly write a result handler.</p>
 

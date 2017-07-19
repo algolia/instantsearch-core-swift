@@ -108,6 +108,26 @@
               </ul>
             </li>
             <li class="nav-group-name">
+              <a href="Request strategy.html">Request strategy</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Protocols/RequestStrategy.html">RequestStrategy</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/AdaptiveNetworkStrategy.html">AdaptiveNetworkStrategy</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/AdaptiveNetworkStrategy/Mode.html">– Mode</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/ResponseTimeStats.html">ResponseTimeStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="Classes/ResponseTimeStats/RequestStat.html">– RequestStat</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
               <a href="Utilities.html">Utilities</a>
               <ul class="nav-group-tasks">
                 <li class="nav-group-task">
@@ -117,7 +137,18 @@
                   <a href="Classes/Debouncer.html">Debouncer</a>
                 </li>
                 <li class="nav-group-task">
+                  <a href="Classes/Throttler.html">Throttler</a>
+                </li>
+                <li class="nav-group-task">
                   <a href="Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="Other Classes.html">Other Classes</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Classes/FacetResults.html">FacetResults</a>
                 </li>
               </ul>
             </li>
@@ -132,6 +163,9 @@
             <li class="nav-group-name">
               <a href="Other Protocols.html">Other Protocols</a>
               <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="Protocols/Caller.html">Caller</a>
+                </li>
                 <li class="nav-group-task">
                   <a href="Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
                 </li>
@@ -168,20 +202,19 @@
                           <p>Manages search on an Algolia index.</p>
 
 <p>The purpose of this class is to maintain a state between searches and handle pagination.</p>
-
-<p><a href='#handling-results' class='anchor' aria-hidden=true><span class="header-anchor"></span></a><h3 id='handling-results'>Handling results</h3></p>
+<h3 id='handling-results' class='heading'>Handling results</h3>
 
 <p>There are three ways to handle responses to search requests issued by a <code>Searcher</code>. From the highest level to the
 lowest level, they are:</p>
 
 <ol>
-<li><p>Register a <strong>result handler</strong> block. It will be called each time a response is received, providing either the
-results (in case of success) or the error (in case of failure). You may register as many result handlers as
-necessary.</p></li>
-<li><p>Register a <strong>delegate</strong>. It provides additional information, such as the <code>Searcher</code> instance that received the
-response, and the search parameters that were used for the request. You may register at most one delegate.</p></li>
+<li><p>Register a <strong>result handler</strong> block. It will be called each time a response is received, providing the
+results (in case of success), the error (in case of failure) and extra information such as the search parameters
+of the request corresponding to the present response. You may register as many result handlers as necessary.</p></li>
+<li><p>Register a <strong>delegate</strong>. It provides one additional information, which is the <code>Searcher</code> instance that received the
+response. You may register at most one delegate.</p></li>
 <li><p>Listen for <strong>notifications</strong> issued by this searcher (using <code>NotificationCenter</code>). Notifications give you
-extra information, such as request sequence numbers, or whether requests are cancelled by the searcher.</p></li>
+extra information, such as whether requests are cancelled by the searcher.</p></li>
 </ol>
 
                           <a href="Classes/Searcher.html" class="slightly-smaller">See more</a>
@@ -190,7 +223,7 @@ extra information, such as request sequence numbers, or whether requests are can
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Searcher</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">Searcher</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">SequencerDelegate</span></code></pre>
 
                           </div>
                         </div>
@@ -218,7 +251,6 @@ extra information, such as request sequence numbers, or whether requests are can
 
 <p>This class allows manipulating facet and numeric filters individually, then combining them into a string
 suitable for use in <code>Query.filters</code>.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Tags are not handled. Please use facets instead, as they are more powerful.
@@ -312,7 +344,6 @@ suitable for use in <code>Query.filters</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Search results.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Wraps the raw JSON returned by the API.
@@ -346,7 +377,6 @@ suitable for use in <code>Query.filters</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Highlight result for an attribute of a hit.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Wraps the raw JSON returned by the API.
@@ -380,7 +410,6 @@ suitable for use in <code>Query.filters</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Snippet result for an attribute of a hit.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Wraps the raw JSON returned by the API.
@@ -414,7 +443,6 @@ suitable for use in <code>Query.filters</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Ranking info for a hit.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Wraps the raw JSON returned by the API.
@@ -448,7 +476,6 @@ suitable for use in <code>Query.filters</code>.</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Statistics for a numerical facet.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Since values may either be integers or floats, they are typed as <code>NSNumber</code>.

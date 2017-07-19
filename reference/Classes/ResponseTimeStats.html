@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>NumericRefinement Class Reference</title>
+    <title>ResponseTimeStats Class Reference</title>
 
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta charset="utf-8">
@@ -43,7 +43,7 @@
                 <span class="ac-nav-brand-breadcrumb"></span>
                 <a class="ac-nav-brand-title" href="../../index.html" title="Home">InstantSearch Core for Swift</a>
                 <span class="ac-nav-brand-breadcrumb"></span>
-                <a class="ac-nav-brand-title" href="#" title="NumericRefinement Class">NumericRefinement Class</a>
+                <a class="ac-nav-brand-title" href="#" title="ResponseTimeStats Class">ResponseTimeStats Class</a>
             </div>
             <div class="ac-nav-menu">
                 <ul class="ac-nav-menu-list">
@@ -180,14 +180,40 @@
         <article class="main-content">
             <section>
                 <section class="section">
-                    <h1>NumericRefinement</h1>
+                    <h1>ResponseTimeStats</h1>
                     <div class="declaration">
                         <div class="language">
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">NumericRefinement</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">ResponseTimeStats</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                         </div>
                     </div>
-                    <p>A refinement on a numeric attribute.</p>
+                    <p>Gathers response time statistics from one or more searchers.</p>
+<h2 id='usage' class='heading'>Usage</h2>
+
+<p>You first need to register one or more <code><a href="../Classes/Searcher.html">Searcher</a></code> instances to record response times from. This is achieved through
+the <code>add(:)</code> method (or just supplying a searcher at init time).</p>
+
+<p>Once searchers are registered, the statistics of every recorded request can be obtained at any time via the
+<code>requestStats</code> property. The statistics keep automatically updating, posting update notifications
+(<code>UpdateNotification</code>) when they change.</p>
+<h2 id='configuration' class='heading'>Configuration</h2>
+
+<p>Response time statistics only make sense when they are recent. This is why this class has an <strong>amnesia delay</strong>
+(configurable via the <code>amnesiaDelay</code> property): any request that is older than this delay will be discarded.</p>
+
+<p>There is an upper limit to the number of requests that are kept in the statistics at any time (configurable via
+<code>maxRequestsInHistory</code>). If it goes over this limit, the less recent requests will be discarded. This avoids
+flooding the memory if many requests are made within a short time frame.</p>
+<h2 id='long-running-requests' class='heading'>Long-running requests</h2>
+
+<p>By default, the statistics are updated when a request is fired and when the corresponding response is received.
+This does not allow detecting long-running requests, which may be necessary in some use cases, e.g. to adapt to
+suddenly degraded network conditions.</p>
+
+<p>To address this concern, a set of <strong>triggers</strong> can be defined via the <code>triggerDelays</code> property: every time a
+request&rsquo;s elapsed time passes one of these thresholds, statistics are updated again (and a notification is posted),
+although the response has not been received yet. This allows observers to detect long-running requests and react
+accordingly. For example, the <code><a href="../Classes/AdaptiveNetworkStrategy.html">AdaptiveNetworkStrategy</a></code> class makes extensive use of this.</p>
 
                 </section>
             <section class="section task-group-section">
@@ -203,9 +229,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:OC17InstantSearchCore17NumericRefinement8Operator"></a>
-                      <a name="//apple_ref/swift/Enum/Operator" class="dashAnchor"></a>
-                      <a class="token" href="#/s:OC17InstantSearchCore17NumericRefinement8Operator">Operator</a>
+                      <a name="/s:CC17InstantSearchCore17ResponseTimeStats11RequestStat"></a>
+                      <a name="//apple_ref/swift/Class/RequestStat" class="dashAnchor"></a>
+                      <a class="token" href="#/s:CC17InstantSearchCore17ResponseTimeStats11RequestStat">RequestStat</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -213,15 +239,15 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Comparison operator that can be applied to a numeric.</p>
+                          <p>Statistics about a single request.</p>
 
-                          <a href="../Classes/NumericRefinement/Operator.html" class="slightly-smaller">See more</a>
+                          <a href="../Classes/ResponseTimeStats/RequestStat.html" class="slightly-smaller">See more</a>
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Operator</span><span class="p">:</span> <span class="kt">Int</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">RequestStat</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
 
                           </div>
                         </div>
@@ -242,9 +268,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:vC17InstantSearchCore17NumericRefinement4nameSS"></a>
-                      <a name="//apple_ref/swift/Property/name" class="dashAnchor"></a>
-                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement4nameSS">name</a>
+                      <a name="/s:vC17InstantSearchCore17ResponseTimeStats12amnesiaDelaySd"></a>
+                      <a name="//apple_ref/swift/Property/amnesiaDelay" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17ResponseTimeStats12amnesiaDelaySd">amnesiaDelay</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -252,14 +278,14 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Name of the attribute to filter.</p>
+                          <p>Requests older than this delay will be discarded from the statistics. Default = 20 seconds.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">amnesiaDelay</span><span class="p">:</span> <span class="kt">TimeInterval</span> <span class="o">=</span> <span class="mi">20</span></code></pre>
 
                           </div>
                         </div>
@@ -269,9 +295,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:vC17InstantSearchCore17NumericRefinement2opOS0_8Operator"></a>
-                      <a name="//apple_ref/swift/Property/op" class="dashAnchor"></a>
-                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement2opOS0_8Operator">op</a>
+                      <a name="/s:vC17InstantSearchCore17ResponseTimeStats20maxRequestsInHistorySi"></a>
+                      <a name="//apple_ref/swift/Property/maxRequestsInHistory" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17ResponseTimeStats20maxRequestsInHistorySi">maxRequestsInHistory</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -279,14 +305,15 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Operator to apply on the attribute.</p>
+                          <p>Maximum number of requests that will be considered for the statistics. Always the N most recent ones are used.
+Default = 100.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement/Operator.html">Operator</a></span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">maxRequestsInHistory</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">100</span></code></pre>
 
                           </div>
                         </div>
@@ -296,9 +323,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:vC17InstantSearchCore17NumericRefinement5valueCSo8NSNumber"></a>
-                      <a name="//apple_ref/swift/Property/value" class="dashAnchor"></a>
-                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement5valueCSo8NSNumber">value</a>
+                      <a name="/s:vC17InstantSearchCore17ResponseTimeStats13triggerDelaysGSaSd_"></a>
+                      <a name="//apple_ref/swift/Property/triggerDelays" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17ResponseTimeStats13triggerDelaysGSaSd_">triggerDelays</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -306,14 +333,15 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Value to compare the attribute to.</p>
+                          <p>Delays triggering a stats update.
+These delays are used to detect long-running queries before they return.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">triggerDelays</span><span class="p">:</span> <span class="p">[</span><span class="kt">TimeInterval</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
 
                           </div>
                         </div>
@@ -323,9 +351,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:vC17InstantSearchCore17NumericRefinement9inclusiveSb"></a>
-                      <a name="//apple_ref/swift/Property/inclusive" class="dashAnchor"></a>
-                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement9inclusiveSb">inclusive</a>
+                      <a name="/s:vC17InstantSearchCore17ResponseTimeStats12requestStatsGSaCS0_11RequestStat_"></a>
+                      <a name="//apple_ref/swift/Property/requestStats" class="dashAnchor"></a>
+                      <a class="token" href="#/s:vC17InstantSearchCore17ResponseTimeStats12requestStatsGSaCS0_11RequestStat_">requestStats</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -333,14 +361,14 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Whether the filter is inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+                          <p>Current request statistics.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">requestStats</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/ResponseTimeStats/RequestStat.html">RequestStat</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
 
                           </div>
                         </div>
@@ -361,9 +389,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorCSo8NSNumber9inclusiveSb_S0_"></a>
-                      <a name="//apple_ref/swift/Method/init(_:_:_:inclusive:)" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorCSo8NSNumber9inclusiveSb_S0_">init(_:_:_:inclusive:)</a>
+                      <a name="/s:FC17InstantSearchCore17ResponseTimeStatscFT_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17ResponseTimeStatscFT_S0_">init()</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -371,14 +399,41 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Create a numeric refinement with the specified operator and operands.</p>
+                          <p>Construct new statistics.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement/Operator.html">Operator</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">NSNumber</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                          </div>
+                        </div>
+                      </section>
+                    </div>
+                  </li>
+                  <li class="item">
+                    <div>
+                      <code>
+                      <a name="/s:FC17InstantSearchCore17ResponseTimeStatscFT8searcherCS_8Searcher_S0_"></a>
+                      <a name="//apple_ref/swift/Method/init(searcher:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17ResponseTimeStatscFT8searcherCS_8Searcher_S0_">init(searcher:)</a>
+                      </code>
+                    </div>
+                    <div class="height-container">
+                      <div class="pointer-container"></div>
+                      <section class="section">
+                        <div class="pointer"></div>
+                        <div class="abstract">
+                          <p>Construct new statistics, observing the specified searcher.</p>
+
+                        </div>
+                        <div class="declaration">
+                          <h4>Declaration</h4>
+                          <div class="language">
+                            <p class="aside-title">Swift</p>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">searcher</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html">Searcher</a></span><span class="p">)</span></code></pre>
 
                           </div>
                         </div>
@@ -389,48 +444,12 @@
                               <tr>
                                 <td>
                                   <code>
-                                  <em>name</em>
+                                  <em>searcher</em>
                                   </code>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Name of the attribute to filter (first operand).</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>op</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Comparison operator to apply.</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>value</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Value to compare the attribute to (second operand).</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>inclusive</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Whether the filter is inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+                                    <p>Searcher to be observed.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -443,9 +462,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorSi9inclusiveSb_S0_"></a>
-                      <a name="//apple_ref/swift/Method/init(_:_:_:inclusive:)" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorSi9inclusiveSb_S0_">init(_:_:_:inclusive:)</a>
+                      <a name="/s:FC17InstantSearchCore17ResponseTimeStats11addSearcherFCS_8SearcherT_"></a>
+                      <a name="//apple_ref/swift/Method/addSearcher(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17ResponseTimeStats11addSearcherFCS_8SearcherT_">addSearcher(_:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -453,14 +472,19 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Create a numeric refinement with the specified operator and operands.</p>
+                          <p>Add a new searcher to these statistics.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>The searcher is not retained.</p>
+
+</div>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement/Operator.html">Operator</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addSearcher</span><span class="p">(</span><span class="n">_</span> <span class="nv">searcher</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html">Searcher</a></span><span class="p">)</span></code></pre>
 
                           </div>
                         </div>
@@ -471,48 +495,12 @@
                               <tr>
                                 <td>
                                   <code>
-                                  <em>name</em>
+                                  <em>searcher</em>
                                   </code>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Name of the attribute to filter (first operand).</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>op</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Comparison operator to apply.</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>value</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Value to compare the attribute to (second operand).</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>inclusive</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Whether the filter is inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+                                    <p>The searcher to add.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -525,9 +513,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorSd9inclusiveSb_S0_"></a>
-                      <a name="//apple_ref/swift/Method/init(_:_:_:inclusive:)" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinementcFTSSOS0_8OperatorSd9inclusiveSb_S0_">init(_:_:_:inclusive:)</a>
+                      <a name="/s:FC17InstantSearchCore17ResponseTimeStats14removeSearcherFCS_8SearcherT_"></a>
+                      <a name="//apple_ref/swift/Method/removeSearcher(_:)" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17ResponseTimeStats14removeSearcherFCS_8SearcherT_">removeSearcher(_:)</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -535,14 +523,14 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Create a numeric refinement with the specified operator and operands.</p>
+                          <p>Remove a searcher from these statistics.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">_</span> <span class="nv">op</span><span class="p">:</span> <span class="kt"><a href="../Classes/NumericRefinement/Operator.html">Operator</a></span><span class="p">,</span> <span class="n">_</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">inclusive</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">removeSearcher</span><span class="p">(</span><span class="n">_</span> <span class="nv">searcher</span><span class="p">:</span> <span class="kt"><a href="../Classes/Searcher.html">Searcher</a></span><span class="p">)</span></code></pre>
 
                           </div>
                         </div>
@@ -553,48 +541,12 @@
                               <tr>
                                 <td>
                                   <code>
-                                  <em>name</em>
+                                  <em>searcher</em>
                                   </code>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>Name of the attribute to filter (first operand).</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>op</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Comparison operator to apply.</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>value</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Value to compare the attribute to (second operand).</p>
-                                  </div>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>inclusive</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Whether the filter is inclusive (the default) or exclusive (negated with a <code>NOT</code>).</p>
+                                    <p>The searcher to remove.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -607,9 +559,9 @@
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinementcFT4copyS0__S0_"></a>
-                      <a name="//apple_ref/swift/Method/init(copy:)" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinementcFT4copyS0__S0_">init(copy:)</a>
+                      <a name="/s:FC17InstantSearchCore17ResponseTimeStats12clearHistoryFT_T_"></a>
+                      <a name="//apple_ref/swift/Method/clearHistory()" class="dashAnchor"></a>
+                      <a class="token" href="#/s:FC17InstantSearchCore17ResponseTimeStats12clearHistoryFT_T_">clearHistory()</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -617,71 +569,14 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Create a copy of a numeric refinement.</p>
+                          <p>Clear the request history.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">copy</span><span class="p">:</span> <span class="kt">NumericRefinement</span><span class="p">)</span></code></pre>
-
-                          </div>
-                        </div>
-                        <div>
-                          <h4>Parameters</h4>
-                          <table class="graybox">
-                            <tbody>
-                              <tr>
-                                <td>
-                                  <code>
-                                  <em>copy</em>
-                                  </code>
-                                </td>
-                                <td>
-                                  <div>
-                                    <p>Numeric refinement to copy.</p>
-                                  </div>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </section>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <div class="task-name-container">
-                  <a name="/Debug"></a>
-                  <a name="//apple_ref/swift/Section/Debug" class="dashAnchor"></a>
-                  <a href="#/Debug">
-                    <h3 class="section-name">Debug</h3>
-                  </a>
-                </div>
-                <ul>
-                  <li class="item">
-                    <div>
-                      <code>
-                      <a name="/s:vC17InstantSearchCore17NumericRefinement11descriptionSS"></a>
-                      <a name="//apple_ref/swift/Property/description" class="dashAnchor"></a>
-                      <a class="token" href="#/s:vC17InstantSearchCore17NumericRefinement11descriptionSS">description</a>
-                      </code>
-                    </div>
-                    <div class="height-container">
-                      <div class="pointer-container"></div>
-                      <section class="section">
-                        <div class="pointer"></div>
-                        <div class="abstract">
-                          <p>Undocumented</p>
-
-                        </div>
-                        <div class="declaration">
-                          <h4>Declaration</h4>
-                          <div class="language">
-                            <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">NumericRefinement</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">clearHistory</span><span class="p">()</span></code></pre>
 
                           </div>
                         </div>
@@ -692,19 +587,19 @@
               </div>
               <div class="task-group">
                 <div class="task-name-container">
-                  <a name="/Equatable"></a>
-                  <a name="//apple_ref/swift/Section/Equatable" class="dashAnchor"></a>
-                  <a href="#/Equatable">
-                    <h3 class="section-name">Equatable</h3>
+                  <a name="/Notifications"></a>
+                  <a name="//apple_ref/swift/Section/Notifications" class="dashAnchor"></a>
+                  <a href="#/Notifications">
+                    <h3 class="section-name">Notifications</h3>
                   </a>
                 </div>
                 <ul>
                   <li class="item">
                     <div>
                       <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinement7isEqualFGSqP__Sb"></a>
-                      <a name="//apple_ref/swift/Method/isEqual(_:)" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinement7isEqualFGSqP__Sb">isEqual(_:)</a>
+                      <a name="/s:ZvC17InstantSearchCore17ResponseTimeStats18UpdateNotificationVCSo14NSNotification4Name"></a>
+                      <a name="//apple_ref/swift/Variable/UpdateNotification" class="dashAnchor"></a>
+                      <a class="token" href="#/s:ZvC17InstantSearchCore17ResponseTimeStats18UpdateNotificationVCSo14NSNotification4Name">UpdateNotification</a>
                       </code>
                     </div>
                     <div class="height-container">
@@ -712,93 +607,16 @@
                       <section class="section">
                         <div class="pointer"></div>
                         <div class="abstract">
-                          <p>Undocumented</p>
+                          <p>Notification posted when the statistics have been updated.</p>
 
                         </div>
                         <div class="declaration">
                           <h4>Declaration</h4>
                           <div class="language">
                             <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">class</span> <span class="kt">NumericRefinement</span><span class="p">:</span> <span class="kt">NSObject</span></code></pre>
+                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">static</span> <span class="k">let</span> <span class="nv">UpdateNotification</span> <span class="o">=</span> <span class="kt">Notification</span><span class="o">.</span><span class="kt">Name</span><span class="p">(</span><span class="s">"update"</span><span class="p">)</span></code></pre>
 
                           </div>
-                        </div>
-                      </section>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <div class="task-group">
-                <div class="task-name-container">
-                  <a name="/Methods"></a>
-                  <a name="//apple_ref/swift/Section/Methods" class="dashAnchor"></a>
-                  <a href="#/Methods">
-                    <h3 class="section-name">Methods</h3>
-                  </a>
-                </div>
-                <ul>
-                  <li class="item">
-                    <div>
-                      <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinement18buildNumericFilterFT_SS"></a>
-                      <a name="//apple_ref/swift/Method/buildNumericFilter()" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinement18buildNumericFilterFT_SS">buildNumericFilter()</a>
-                      </code>
-                    </div>
-                    <div class="height-container">
-                      <div class="pointer-container"></div>
-                      <section class="section">
-                        <div class="pointer"></div>
-                        <div class="abstract">
-                          <p>Build a numeric filter corresponding to this refinement.</p>
-
-<ul>
-<li><p>Deprecated: Please use <code><a href="../Classes/NumericRefinement.html#/s:FC17InstantSearchCore17NumericRefinement11buildFilterFT_SS">buildFilter()</a></code> instead.</p></li>
-</ul>
-
-                        </div>
-                        <div class="declaration">
-                          <h4>Declaration</h4>
-                          <div class="language">
-                            <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildNumericFilter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
-
-                          </div>
-                        </div>
-                        <div>
-                          <h4>Return Value</h4>
-                          <p>A string suitable for use in <code>Query.numericFilters</code>.</p>
-                        </div>
-                      </section>
-                    </div>
-                  </li>
-                  <li class="item">
-                    <div>
-                      <code>
-                      <a name="/s:FC17InstantSearchCore17NumericRefinement11buildFilterFT_SS"></a>
-                      <a name="//apple_ref/swift/Method/buildFilter()" class="dashAnchor"></a>
-                      <a class="token" href="#/s:FC17InstantSearchCore17NumericRefinement11buildFilterFT_SS">buildFilter()</a>
-                      </code>
-                    </div>
-                    <div class="height-container">
-                      <div class="pointer-container"></div>
-                      <section class="section">
-                        <div class="pointer"></div>
-                        <div class="abstract">
-                          <p>Build a filter corresponding to this refinement.</p>
-
-                        </div>
-                        <div class="declaration">
-                          <h4>Declaration</h4>
-                          <div class="language">
-                            <p class="aside-title">Swift</p>
-                            <pre class="highlight"><code><span class="kd">@objc</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">buildFilter</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">String</span></code></pre>
-
-                          </div>
-                        </div>
-                        <div>
-                          <h4>Return Value</h4>
-                          <p>An expression suitable for use in <code>Query.filters</code>.</p>
                         </div>
                       </section>
                     </div>

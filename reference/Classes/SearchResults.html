@@ -108,6 +108,26 @@
               </ul>
             </li>
             <li class="nav-group-name">
+              <a href="../Request strategy.html">Request strategy</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/RequestStrategy.html">RequestStrategy</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/AdaptiveNetworkStrategy.html">AdaptiveNetworkStrategy</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/AdaptiveNetworkStrategy/Mode.html">– Mode</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/ResponseTimeStats.html">ResponseTimeStats</a>
+                </li>
+                <li class="nav-group-task">
+                  <a href="../Classes/ResponseTimeStats/RequestStat.html">– RequestStat</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
               <a href="../Utilities.html">Utilities</a>
               <ul class="nav-group-tasks">
                 <li class="nav-group-task">
@@ -117,7 +137,18 @@
                   <a href="../Classes/Debouncer.html">Debouncer</a>
                 </li>
                 <li class="nav-group-task">
+                  <a href="../Classes/Throttler.html">Throttler</a>
+                </li>
+                <li class="nav-group-task">
                   <a href="../Classes/SearchProgressController.html">SearchProgressController</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-group-name">
+              <a href="../Other Classes.html">Other Classes</a>
+              <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Classes/FacetResults.html">FacetResults</a>
                 </li>
               </ul>
             </li>
@@ -132,6 +163,9 @@
             <li class="nav-group-name">
               <a href="../Other Protocols.html">Other Protocols</a>
               <ul class="nav-group-tasks">
+                <li class="nav-group-task">
+                  <a href="../Protocols/Caller.html">Caller</a>
+                </li>
                 <li class="nav-group-task">
                   <a href="../Protocols/SearchProgressDelegate.html">SearchProgressDelegate</a>
                 </li>
@@ -154,7 +188,6 @@
                         </div>
                     </div>
                     <p>Search results.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Wraps the raw JSON returned by the API.
@@ -413,7 +446,6 @@
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Query text that produced these results.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Should be identical to <code>params.query</code>.
@@ -528,7 +560,6 @@
                         <div class="abstract">
                           <p>A markup text indicating which parts of the original query have been removed in order to retrieve a non-empty
 result set. The removed parts are surrounded by <code>&lt;em&gt;</code> tags.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned when <code>removeWordsIfNoResults</code> is set.
@@ -561,7 +592,6 @@ result set. The removed parts are surrounded by <code>&lt;em&gt;</code> tags.</p
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>The computed geo location.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned when <code>aroundLatLngViaIP</code> is set.
@@ -594,7 +624,6 @@ result set. The removed parts are surrounded by <code>&lt;em&gt;</code> tags.</p
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>The automatically computed radius.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned for geo queries without an explicitly specified radius (see <code>aroundRadius</code>).
@@ -639,7 +668,6 @@ result set. The removed parts are surrounded by <code>&lt;em&gt;</code> tags.</p
                         <div class="abstract">
                           <p>Actual host name of the server that processed the request. (Our DNS supports automatic failover and load
 balancing, so this may differ from the host name used in the request.)</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned when <code>getRankingInfo</code> is true.
@@ -672,7 +700,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>The query string that will be searched, after normalization.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned when <code>getRankingInfo</code> is true.
@@ -706,7 +733,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div class="abstract">
                           <p>Whether a timeout was hit when computing the facet counts. When true, the counts will be interpolated
 (i.e. approximate). See also <code><a href="../Classes/SearchResults.html#/s:vC17InstantSearchCore13SearchResults21exhaustiveFacetsCountSb">exhaustiveFacetsCount</a></code>.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned when <code>getRankingInfo</code> is true.
@@ -739,7 +765,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Whether a timeout was hit when retrieving the hits. When true, some results may be missing.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Only returned when <code>getRankingInfo</code> is true.
@@ -783,7 +808,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Create search results from an initial response from the API.</p>
-
 <div class="aside aside-warning">
     <p class="aside-title">Warning</p>
     <p>This initializer will validate mandatory fields and fail if they are absent or invalid.</p>
@@ -812,7 +836,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>The JSON content returned by the API.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -825,7 +848,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>The list of facets to be treated as disjunctive.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -883,7 +905,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Facet name.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -893,7 +914,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The corresponding facet values (which may be empty), or <code>nil</code> if no values are available for this facet.</p>
-
                         </div>
                       </section>
                     </div>
@@ -934,8 +954,7 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 </td>
                                 <td>
                                   <div>
-                                    <p>The facet’s name.</p>
-
+                                    <p>The facet&rsquo;s name.</p>
                                   </div>
                                 </td>
                               </tr>
@@ -945,7 +964,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The statistics for this facet, or <code>nil</code> if this facet does not exist or is not a numerical facet, or if the response JSON is invalid.</p>
-
                         </div>
                       </section>
                     </div>
@@ -987,7 +1005,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Index of the hit in the <code>hits</code> array.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1000,7 +1017,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Path of the attribute to retrieve, in dot notation.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1010,7 +1026,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The corresponding highlight, or <code>nil</code> if it was not returned, or if the JSON response is invalid.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1052,7 +1067,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Index of the hit in the <code>hits</code> array.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1065,7 +1079,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Path of the attribute to retrieve, in dot notation.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1075,7 +1088,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The corresponding snippet, or <code>nil</code> if it was not returned, or if the JSON response is invalid.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1094,7 +1106,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div class="pointer"></div>
                         <div class="abstract">
                           <p>Get the ranking information for a hit.</p>
-
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     <p>Only available when <code>getRankingInfo</code> was set to true on the query.</p>
@@ -1123,7 +1134,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Index of the hit in the hits array.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1133,7 +1143,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The corresponding ranking information, or <code>nil</code> if no ranking information is available, or if the JSON response is invalid.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1186,7 +1195,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>The JSON object for a hit.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1199,7 +1207,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Path of the attribute to retrieve, in dot notation.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1209,7 +1216,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The highlight result, or <code>nil</code> if not available, or if the JSON response is invalid.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1251,7 +1257,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>The JSON object for a hit.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1264,7 +1269,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>Path of the attribute to retrieve, in dot notation.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1274,7 +1278,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The snippet result, or <code>nil</code> if not available, or if the JSON response is invalid.</p>
-
                         </div>
                       </section>
                     </div>
@@ -1316,7 +1319,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                                 <td>
                                   <div>
                                     <p>The JSON object for a hit.</p>
-
                                   </div>
                                 </td>
                               </tr>
@@ -1326,7 +1328,6 @@ balancing, so this may differ from the host name used in the request.)</p>
                         <div>
                           <h4>Return Value</h4>
                           <p>The ranking information, or <code>nil</code> if not available, or if the JSON response is invalid.</p>
-
                         </div>
                       </section>
                     </div>
