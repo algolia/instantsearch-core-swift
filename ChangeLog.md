@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+## 2.0.1 (2017-07-31)
+
+### Dependency Managers
+
+- Add support for Carthage
+
 ## 2.0.0 (2017-07-17)
 
 This new major release has been made to adapt this core library to the needs of the [InstantSearch iOS library](https://github.com/algolia/instantsearch-ios). 
