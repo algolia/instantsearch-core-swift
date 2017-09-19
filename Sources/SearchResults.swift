@@ -188,7 +188,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     @objc public let count: Int
     
-    internal init(value: String, count: Int) {
+    public init(value: String, count: Int) {
         self.value = value
         self.count = count
     }
