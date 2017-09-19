@@ -30,7 +30,7 @@ import Foundation
     // MARK: Properties
     
     /// Visual attributes to apply to the highlights.
-    @objc public var highlightAttrs: [String: Any]
+    @objc public var highlightAttrs: [NSAttributedStringKey: Any]
     
     /// Markup identifying the beginning of a highlight. Defaults to `<em>`.
     @objc public var preTag: String = "<em>"
@@ -48,7 +48,7 @@ import Foundation
     /// - parameter highlightAttrs: Text attributes to apply to highlights. The content must be suitable for use within
     ///   an `NSAttributedString`.
     ///
-    @objc public init(highlightAttrs: [String: Any]) {
+    @objc public init(highlightAttrs: [NSAttributedStringKey: Any]) {
         self.highlightAttrs = highlightAttrs
     }
 
@@ -104,15 +104,15 @@ import Foundation
             let postRange = text.range(of: postTag, options: [], range: preRange.upperBound ..< text.endIndex) ?? text.endIndex ..< text.endIndex
             if flushIndex < preRange.lowerBound {
                 result += preTag
-                result += text.substring(with: flushIndex ..< preRange.lowerBound)
+                result += text[flushIndex ..< preRange.lowerBound]
                 result += postTag
             }
-            result += text.substring(with: preRange.upperBound ..< postRange.lowerBound)
+            result += text[preRange.upperBound ..< postRange.lowerBound]
             flushIndex = postRange.upperBound
         }
         if flushIndex < text.endIndex {
             result += preTag
-            result += text.substring(with: flushIndex ..< text.endIndex)
+            result += text[flushIndex ..< text.endIndex]
             result += postTag
         }
         return result
