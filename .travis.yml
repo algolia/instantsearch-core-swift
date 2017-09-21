@@ -8,9 +8,6 @@ env:
          - PLATFORM="OSX"    SDK="macosx10.13"
          - PLATFORM="iOS"    SDK="iphonesimulator11.0"    DESTINATION="OS=11.0,name=iPhone 6"
          - PLATFORM="tvOS"   SDK="appletvsimulator11.0"   DESTINATION="OS=11.0,name=Apple TV 1080p"
-before_install:
-    - brew update
-    - brew upgrade carthage 
 
 install:
     - travis_wait 30 carthage update
