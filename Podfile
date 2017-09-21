@@ -3,7 +3,7 @@
 use_frameworks!
 
 def common_deps
-    pod 'AlgoliaSearch-Client-Swift', '~> 4.8'
+    pod 'AlgoliaSearch-Client-Swift', :git => "https://github.com/algolia/algoliasearch-client-swift.git", :branch => "swift-4”
 end
 
 target "InstantSearchCore-iOS" do
