@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
 
     # Dependencies
     # ------------
-    s.dependency 'AlgoliaSearch-Offline-Swift', '~> 4.0'
+    s.dependency 'AlgoliaSearch-Offline-Swift', '~> 5.0'
 end
