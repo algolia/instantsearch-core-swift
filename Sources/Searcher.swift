@@ -382,12 +382,12 @@ import Foundation
             // All facets are conjunctive; build regular filters combining numeric and facet refinements.
             // NOTE: Not strictly necessary since `Index.search(...)` calls `Query.build()`, but let's not rely on that.
             params.update()
-            operation = index.search(params, completionHandler: completionHandler)
+            operation = index.search(params, requestOptions: nil, completionHandler: completionHandler)
         } else {
             // Facet filters are built directly by the disjunctive faceting search helper method.
             params.updateFromNumerics() // this is really necessary (in contrast to the above)
             let refinements = params.buildFacetRefinements()
-            operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, completionHandler: completionHandler)
+            operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, requestOptions: nil, completionHandler: completionHandler)
         }
         
         // Notify observers.
@@ -496,7 +496,7 @@ import Foundation
         if facetSearchParams.isDisjunctiveFacet(name: facetName) {
             facetSearchParams.clearFacetRefinements(name: facetName)
         }
-        return index.searchForFacetValues(of: facetName, matching: text, query: facetSearchParams, completionHandler: completionHandler)
+        return index.searchForFacetValues(of: facetName, matching: text, query: facetSearchParams, requestOptions: nil, completionHandler: completionHandler)
     }
     
     // MARK: - Manage requests
