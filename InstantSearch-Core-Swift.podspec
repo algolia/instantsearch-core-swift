@@ -23,5 +23,5 @@ Pod::Spec.new do |s|
 
     # Dependencies
     # ------------
-    s.dependency 'AlgoliaSearch-Client-Swift', '~> 4.0'
+    s.dependency 'AlgoliaSearch-Client-Swift', '~> 5.0'
 end
