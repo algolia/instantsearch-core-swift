@@ -69,3 +69,17 @@ fastlane/test_output
 # -------
 node_modules
 
+
+# fastlane specific
+fastlane/report.xml
+
+# deliver temporary files
+fastlane/Preview.html
+
+# snapshot generated screenshots
+fastlane/screenshots
+
+# scan temporary files
+fastlane/test_output
+fastlane/README.md
+fastlane/report.xml

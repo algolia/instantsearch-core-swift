@@ -74,7 +74,7 @@ lane :deploy do |options|
 
 	#puts changelog_from_git_commits
 	git_commit(
-		path: ["InstantSearch-Core-Swift.podspec", "InstantSearch-Core-Offline-Swift.podspec", "Source/Info.plist" ,"Tests/Info.plist"], 
+		path: ["InstantSearch-Core-Swift.podspec", "InstantSearch-Core-Offline-Swift.podspec", "Sources/Info.plist" ,"Tests/Info.plist"], 
 		message: "Version #{new_build_number}"
 	)
 	add_git_tag(
@@ -89,6 +89,14 @@ lane :deploy do |options|
 	pod_push(
 		path: "InstantSearch-Core-Offline-Swift.podspec"
 	)
+end
+
+desc "Upgrade Swift Version in .swift-version"
+# Force cocoapods to compile with 'swift-version'
+lane :upgrade_swift do |options|
+	version = options[:version]
+	sh("echo #{version} > ../.swift-version")
+	puts "\e[31m\e[5mDon't forget to update the swift version in the dependecies: .podspecs & cartfile'\e[0m"
 end
 
 def prepare_git(branch)
