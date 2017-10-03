@@ -7,6 +7,10 @@ Change Log
 
 - Add support for Swift 4
 
+### Backward incompatibility
+
+ `Highlighter` class: the `init` method changed from `init(highlightAttrs: [String: Any])` to `init(highlightAttrs: [NSAttributedStringKey: Any])`.
+
 ## 2.0.1 (2017-07-31)
 
 ### Dependency Managers
