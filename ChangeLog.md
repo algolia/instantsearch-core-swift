@@ -7,10 +7,6 @@ Change Log
 
 - Add support for Swift 4
 
-### Dependency Managers
-
-- Add support for Carthage
-
 ## 2.0.1 (2017-07-31)
 
 ### Dependency Managers
