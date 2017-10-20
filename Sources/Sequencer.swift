@@ -42,7 +42,7 @@ internal protocol SequencerDelegate: class {
     /// - parameter content: The response's content (in case of success).
     /// - parameter error: The error (in case of failure).
     ///
-    func handleResponse(seqNo: Int, content: JSONObject?, error: Error?)
+    func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?)
     
     /// Handle a request cancellation.
     ///

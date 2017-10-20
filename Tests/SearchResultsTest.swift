@@ -27,7 +27,7 @@ import XCTest
 
 class SearchResultsTest: XCTestCase {
     
-    var json: JSONObject!
+    var json: [String: Any]!
 
     override func setUp() {
         // Pre-fill JSON with mandatory fields.

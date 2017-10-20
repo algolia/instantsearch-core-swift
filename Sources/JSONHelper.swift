@@ -38,10 +38,10 @@ internal class JSONHelper {
     /// - parameter path: Path of the attribute to retrieve, in dot notation.
     /// - returns: The corresponding value, or nil if it does not exist.
     ///
-    internal static func valueForKeyPath(json: JSONObject, path: String) -> Any? {
+    internal static func valueForKeyPath(json: [String: Any], path: String) -> Any? {
         var value: Any = json
         for name in path.components(separatedBy: ".") {
-            if let newValue = (value as? JSONObject)?[name] {
+            if let newValue = (value as? [String: Any])?[name] {
                 value = newValue
             } else {
                 return nil

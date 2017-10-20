@@ -96,7 +96,7 @@ class SequencerTest: XCTestCase {
                 return operation
             }
             
-            func handleResponse(seqNo: Int, content: JSONObject?, error: Error?) {
+            func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?) {
                 NSLog("Operation #\(seqNo) COMPLETED")
 
                 // Check that no callback was called for this operation.
