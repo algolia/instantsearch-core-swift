@@ -60,8 +60,8 @@ import Foundation
         self.debouncer = Debouncer(delay: self.delay)
         super.init()
         NotificationCenter.default.addObserver(forName: Searcher.SearchNotification, object: searcher, queue: nil) { (notification) in
-            guard let params = notification.userInfo?[Searcher.notificationParamsKey] as? SearchParameters else { return }
-            let searchIsFinal = notification.userInfo?[Searcher.notificationIsFinalKey] as? Bool ?? false
+            guard let params = notification.userInfo?[Searcher.userInfoParamsKey] as? SearchParameters else { return }
+            let searchIsFinal = notification.userInfo?[Searcher.userInfoIsFinalKey] as? Bool ?? false
             if searchIsFinal { // final searches go straight into the history
                 self.history.add(params)
             } else { // as-you-type searches are debounced
@@ -206,7 +206,7 @@ import Foundation
                 if let foundRange = queryString.range(of: searchedPattern, options: .regularExpression) {
                     // NOTE: We don't handle multiple occurrences as they are assumed to be rare.
                     // Also, highlighting would be weird in a suggestion context.
-                    highlightedText = queryString.substring(to: foundRange.lowerBound) + options.highlightPreTag + queryString.substring(with: foundRange) + options.highlightPostTag + queryString.substring(from: foundRange.upperBound)
+                  highlightedText = String(queryString[..<foundRange.lowerBound]) + options.highlightPreTag + String(queryString[foundRange]) + options.highlightPostTag + String(queryString[foundRange.upperBound...])
                 } else {
                     continue
                 }
