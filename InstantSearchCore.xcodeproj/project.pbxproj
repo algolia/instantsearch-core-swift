@@ -10,6 +10,16 @@
 		1D26AD0F1F716ED500E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */; };
 		1D26AD111F716FA400E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */; };
 		1D26AD131F71701900E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */; };
+		0F863780022BC192781A8C4B /* Pods_InstantSearchCore_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51805CF9D37D4C65AB765D24 /* Pods_InstantSearchCore_macOS.framework */; };
+		A3D47A2276D60557CA25EBC3 /* Pods_InstantSearchCore_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ABC140FFD26A4D7C40072B /* Pods_InstantSearchCore_tvOS.framework */; };
+		AA67B619DF8BB5AF88C1360C /* Pods_InstantSearchCore_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98A6CE6B1CD0D95779BA084 /* Pods_InstantSearchCore_iOS.framework */; };
+		BC0844251E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
+		BC0844261E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
+		BC0844271E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
+		BC0844281E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
+		BC08442A1E6DA4B600329B40 /* LocalHistoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844291E6DA4B600329B40 /* LocalHistoryTest.swift */; };
+		BC08442B1E6DA4B600329B40 /* LocalHistoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844291E6DA4B600329B40 /* LocalHistoryTest.swift */; };
+		BC08442C1E6DA4B600329B40 /* LocalHistoryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844291E6DA4B600329B40 /* LocalHistoryTest.swift */; };
 		BC154A831D92B5FD00DE764C /* HighlighterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlighterTest.swift */; };
 		BC154A841D92B5FD00DE764C /* HighlighterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlighterTest.swift */; };
 		BC154A851D92B5FD00DE764C /* HighlighterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC154A821D92B5FD00DE764C /* HighlighterTest.swift */; };
@@ -120,6 +130,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02BFC43A68DDD56B52D9661F /* Pods-InstantSearchCore-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS/Pods-InstantSearchCore-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		09D8441DD8CD15AB87BDC794 /* Pods-InstantSearchCore-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-watchOS/Pods-InstantSearchCore-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
+		0B2003ADCEEB406ABF775F61 /* Pods-InstantSearchCore-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS/Pods-InstantSearchCore-macOS.release.xcconfig"; sourceTree = "<group>"; };
+		1A45586B3A3CB1A82F3A717C /* Pods_InstantSearchCore_tvOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_tvOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		306A0D20B7675EB69FBC6C11 /* Pods_InstantSearchCore_iOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_iOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D2CE747DE021B0989855A2A /* Pods-InstantSearchCore-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS-Tests/Pods-InstantSearchCore-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
+		51805CF9D37D4C65AB765D24 /* Pods_InstantSearchCore_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		56154D3693AB2C03A1E13346 /* Pods-InstantSearchCore-tvOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS-Tests/Pods-InstantSearchCore-tvOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		75C0699016AD2C2FBF7CC74E /* Pods-InstantSearchCore-macOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS-Tests/Pods-InstantSearchCore-macOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		7C89E0C2C58633293D0102C2 /* Pods-InstantSearchCore-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS-Tests/Pods-InstantSearchCore-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B2020FB27F0B903D1E237A22 /* Pods-InstantSearchCore-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS/Pods-InstantSearchCore-iOS.release.xcconfig"; sourceTree = "<group>"; };
+		B30A5823FA6FAA56115C41AE /* Pods-InstantSearchCore-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS/Pods-InstantSearchCore-macOS.debug.xcconfig"; sourceTree = "<group>"; };
+		BBCFDA6842A3CD7059850CE1 /* Pods-InstantSearchCore-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS/Pods-InstantSearchCore-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		BC0844241E6DA49900329B40 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
+		BC0844291E6DA4B600329B40 /* LocalHistoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalHistoryTest.swift; sourceTree = "<group>"; };
 		BC154A821D92B5FD00DE764C /* HighlighterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlighterTest.swift; sourceTree = "<group>"; };
 		BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdaptiveNetworkStrategy.swift; sourceTree = "<group>"; };
 		BC272ECA1E5F26BD009F1FFD /* Throttler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Throttler.swift; sourceTree = "<group>"; };
@@ -252,6 +277,7 @@
 				BCCEA7941E7BDFB200F3D44C /* Caller.swift */,
 				BC58264F1D4BB3DE0047D27F /* Debouncer.swift */,
 				BC34264B1D4613CB0055E0F2 /* Highlighter.swift */,
+				BC0844241E6DA49900329B40 /* History.swift */,
 				BC34264C1D4613CB0055E0F2 /* JSONHelper.swift */,
 				BC272ED41E5F2DF2009F1FFD /* RequestStrategy.swift */,
 				BC272ECF1E5F2745009F1FFD /* ResponseTimeStats.swift */,
@@ -273,6 +299,7 @@
 				BC154A821D92B5FD00DE764C /* HighlighterTest.swift */,
 				BC3426421D460DB70055E0F2 /* Info.plist */,
 				BC5DC1301D86BDB00066D705 /* InstantSearchCore-Tests-Bridging-Header.h */,
+				BC0844291E6DA4B600329B40 /* LocalHistoryTest.swift */,
 				BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */,
 				BC6B05461DBA5C2E00AD2069 /* SearchParametersTest.swift */,
 				BC4CB8831D5349B6004618DD /* SearchResultsTest.swift */,
@@ -632,6 +659,7 @@
 				BCCEA7951E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECB1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC3426501D4613CB0055E0F2 /* JSONHelper.swift in Sources */,
+				BC0844251E6DA49900329B40 /* History.swift in Sources */,
 				BC5DC1251D8697F50066D705 /* SearchProgressController.swift in Sources */,
 				BC272ED51E5F2DF2009F1FFD /* RequestStrategy.swift in Sources */,
 				BCB7040F1DBA521F00A2803E /* SearchParameters.swift in Sources */,
@@ -646,6 +674,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC08442A1E6DA4B600329B40 /* LocalHistoryTest.swift in Sources */,
 				BC6B05471DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8841D5349B6004618DD /* SearchResultsTest.swift in Sources */,
 				BCCEA7881E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
@@ -667,6 +696,7 @@
 				BCCEA7961E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECC1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
+				BC0844261E6DA49900329B40 /* History.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
 				BC272ED61E5F2DF2009F1FFD /* RequestStrategy.swift in Sources */,
 				BC5DC1261D8697F50066D705 /* SearchProgressController.swift in Sources */,
@@ -681,6 +711,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC08442B1E6DA4B600329B40 /* LocalHistoryTest.swift in Sources */,
 				BC6B05481DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8A71D534C27004618DD /* SearchResultsTest.swift in Sources */,
 				BCCEA7891E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
@@ -702,6 +733,7 @@
 				BCCEA7971E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECD1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
+				BC0844271E6DA49900329B40 /* History.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
 				BC272ED71E5F2DF2009F1FFD /* RequestStrategy.swift in Sources */,
 				BC5DC1271D8697F50066D705 /* SearchProgressController.swift in Sources */,
@@ -716,6 +748,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC08442C1E6DA4B600329B40 /* LocalHistoryTest.swift in Sources */,
 				BC6B05491DBA5C2E00AD2069 /* SearchParametersTest.swift in Sources */,
 				BC4CB8CA1D535CA7004618DD /* SearchResultsTest.swift in Sources */,
 				BCCEA78A1E7BD84200F3D44C /* ThrottlerTest.swift in Sources */,
@@ -737,6 +770,7 @@
 				BCCEA7981E7BDFB200F3D44C /* Caller.swift in Sources */,
 				BC272ECE1E5F26BD009F1FFD /* Throttler.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
+				BC0844281E6DA49900329B40 /* History.swift in Sources */,
 				BC5DC12C1D86BD170066D705 /* JSONHelper.swift in Sources */,
 				BC272ED81E5F2DF2009F1FFD /* RequestStrategy.swift in Sources */,
 				BCB704121DBA521F00A2803E /* SearchParameters.swift in Sources */,
