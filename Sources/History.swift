@@ -59,17 +59,21 @@ import Foundation
         self.history = history
         self.debouncer = Debouncer(delay: self.delay)
         super.init()
-        NotificationCenter.default.addObserver(forName: Searcher.SearchNotification, object: searcher, queue: nil) { (notification) in
-            guard let params = notification.userInfo?[Searcher.userInfoParamsKey] as? SearchParameters else { return }
-            let searchIsFinal = notification.userInfo?[Searcher.userInfoIsFinalKey] as? Bool ?? false
-            if searchIsFinal { // final searches go straight into the history
-                self.history.add(params)
-            } else { // as-you-type searches are debounced
-                self.debouncer.call {
-                    self.history.add(params)
-                }
-            }
+        observeSearchNotifications()
+    }
+  
+    private func observeSearchNotifications() {
+      NotificationCenter.default.addObserver(forName: Searcher.SearchNotification, object: searcher, queue: nil) { (notification) in
+        guard let params = notification.userInfo?[Searcher.userInfoParamsKey] as? SearchParameters else { return }
+        let searchIsFinal = notification.userInfo?[Searcher.userInfoIsFinalKey] as? Bool ?? false
+        if searchIsFinal { // final searches go straight into the history
+          self.history.add(params)
+        } else { // as-you-type searches are debounced
+          self.debouncer.call {
+            self.history.add(params)
+          }
         }
+      }
     }
 }
 
