@@ -216,6 +216,9 @@ import Foundation
     /// The hits for all pages requested of the latest query
     @objc public private(set) var hits: [[String: Any]] = []
     
+    /// id to differentiate between searchers that target the same index
+    public var id: String = ""
+    
     /// Maximum number of pending requests allowed.
     /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
     /// This helps to avoid filling up the request queue when the network is slow.
