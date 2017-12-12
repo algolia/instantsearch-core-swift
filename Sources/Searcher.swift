@@ -216,11 +216,11 @@ import Foundation
     /// The hits for all pages requested of the latest query.
     @objc public private(set) var hits: [[String: Any]] = []
     
-    /// Id to differentiate between searchers that target the same index.
-    public var indexId: String = ""
-    
     // Name of the index that the Searcher targets.
     public var indexName: String = ""
+    
+    /// variant to differentiate between searchers that target the same index.
+    public var variant: String = ""
     
     /// Maximum number of pending requests allowed.
     /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
