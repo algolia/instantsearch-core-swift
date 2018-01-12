@@ -249,6 +249,9 @@ import Foundation
     
     /// Facets that will be treated as disjunctive.
     @objc public private(set) var disjunctiveFacets: Set<String>
+    
+    /// Facets that will be treated as hierarchical.
+    @objc public private(set) var hierarchicalFacets: [String: [String]] = [:]
 
     /// Facet refinements. Maps facet names to a list of refined values.
     /// The format is the same as `Index.searchDisjunctiveFaceting()`.
@@ -551,6 +554,18 @@ import Foundation
             disjunctiveFacets.insert(name)
         } else {
             disjunctiveFacets.remove(name)
+        }
+    }
+    
+    /// Set a given facet as hierarchical.
+    ///
+    /// - parameter name: The facet's name.
+    /// - parameter attributes: Attribute names for different levels.
+    ///
+    @objc public func setHierarchicalFacet(withName name: String, attributes: [String]) {
+        hierarchicalFacets[name] = attributes
+        attributes.forEach {
+            setFacet(withName: $0, disjunctive: true)
         }
     }
     

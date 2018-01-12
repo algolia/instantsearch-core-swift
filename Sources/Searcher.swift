@@ -418,7 +418,7 @@ import Foundation
         var finalError = error
         do {
             if let content = content {
-                let searchResults = try SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
+                let searchResults = try SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets, hierarchicalFacets: params.hierarchicalFacets)
                 self.results = searchResults
                 
                 // Update hits.
