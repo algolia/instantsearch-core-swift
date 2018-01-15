@@ -308,7 +308,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     @objc public let disjunctiveFacets: [String]
     
     /// Hierarchical facets
-    @objc public let hierarchicalFacets: [String: [String]]
+    @objc public var hierarchicalFacets: [String: [String]] = [:]
     
     // MARK: - General properties
 
@@ -419,10 +419,9 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter content: The JSON content returned by the API.
     /// - parameter disjunctiveFacets: The list of facets to be treated as disjunctive.
     ///
-    @objc public init(content: [String: Any], disjunctiveFacets: [String], hierarchicalFacets: [String: [String]]) throws {
+    @objc public init(content: [String: Any], disjunctiveFacets: [String]) throws {
         self.content = content
         self.disjunctiveFacets = disjunctiveFacets
-        self.hierarchicalFacets = hierarchicalFacets
 
         if let params = content["params"] as? String {
             self.params = Query.parse(params)
@@ -438,6 +437,19 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
             throw InvalidJSONError(description: "Expecting attribute `nbHits` of type `Int`")
         }
         self.nbHits = nbHits
+    }
+    
+    /// Create search results from an initial response from the API.
+    ///
+    /// - Warning: This initializer will validate mandatory fields and fail if they are absent or invalid.
+    ///
+    /// - parameter content: The JSON content returned by the API.
+    /// - parameter disjunctiveFacets: The list of facets to be treated as disjunctive.
+    /// - parameter hierarchicalFacets: The list of facets to be retrieved as hierarchical facets.
+    ///
+    @objc public convenience init(content: [String: Any], disjunctiveFacets: [String], hierarchicalFacets: [String: [String]]) throws {
+        try self.init(content: content, disjunctiveFacets: disjunctiveFacets)
+        self.hierarchicalFacets = hierarchicalFacets
     }
     
     // MARK: - Accessors
@@ -463,16 +475,15 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         guard let attributes = hierarchicalFacets[name], !attributes.isEmpty else { return [] }
         let values = attributes.map { facets(name: $0) ?? [:] }
         let rootLevel = values.first?.map { HierarchicalFacet(value: $0.key, count: $0.value) } ?? []
-        if values.count > 1 {
-            var parentLevel = rootLevel
-            for level in 1..<values.count {
-                parentLevel.forEach { parent in
-                    parent.children = values[level]
-                        .filter { $0.key.components(separatedBy: separator)[level - 1] == parent.value }
-                        .map { HierarchicalFacet(value: $0.key.components(separatedBy: separator)[level], count: $0.value) }
-                }
-                parentLevel = parentLevel.map { $0.children }.flatMap { $0 }
+        guard values.count > 1 else { return rootLevel }
+        var parentLevel = rootLevel
+        for level in 1..<values.count {
+            parentLevel.forEach { parent in
+                parent.children = values[level]
+                    .filter { $0.key.components(separatedBy: separator)[level - 1] == parent.value }
+                    .map { HierarchicalFacet(value: $0.key.components(separatedBy: separator)[level], count: $0.value) }
             }
+            parentLevel = parentLevel.map { $0.children }.flatMap { $0 }
         }
         return rootLevel
     }
