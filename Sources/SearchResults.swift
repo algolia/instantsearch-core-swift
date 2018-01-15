@@ -276,20 +276,22 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 /// Hierarchical facet containing its children.
 @objc public class HierarchicalFacet: NSObject {
     public let value: String
+    public let displayValue: String
     public let count: Int
     public var children: [HierarchicalFacet]
     
-    public required init(value: String, count: Int, children: [HierarchicalFacet] = []) {
+    public required init(value: String, displayValue: String, count: Int, children: [HierarchicalFacet] = []) {
         self.value = value
+        self.displayValue = displayValue
         self.count = count
         self.children = children
     }
     
     public override var description: String {
-        if children.count > 0 {
-            return value + ": \(children)"
+        if !children.isEmpty {
+            return displayValue + ": \(children)"
         } else {
-            return value
+            return displayValue
         }
     }
 }
@@ -474,14 +476,14 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         let separator = " > "
         guard let attributes = hierarchicalFacets[name], !attributes.isEmpty else { return [] }
         let values = attributes.map { facets(name: $0) ?? [:] }
-        let rootLevel = values.first?.map { HierarchicalFacet(value: $0.key, count: $0.value) } ?? []
+        let rootLevel = values.first?.map { HierarchicalFacet(value: $0.key, displayValue: $0.key, count: $0.value) } ?? []
         guard values.count > 1 else { return rootLevel }
         var parentLevel = rootLevel
         for level in 1..<values.count {
             parentLevel.forEach { parent in
                 parent.children = values[level]
-                    .filter { $0.key.components(separatedBy: separator)[level - 1] == parent.value }
-                    .map { HierarchicalFacet(value: $0.key.components(separatedBy: separator)[level], count: $0.value) }
+                    .filter { $0.key.components(separatedBy: separator)[level - 1] == parent.displayValue }
+                    .map { HierarchicalFacet(value: $0.key, displayValue: $0.key.components(separatedBy: separator)[level], count: $0.value) }
             }
             parentLevel = parentLevel.map { $0.children }.flatMap { $0 }
         }
