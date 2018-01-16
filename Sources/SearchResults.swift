@@ -472,8 +472,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter name: Facet name.
     /// - returns: The corresponding hierarchical facet values (which may be empty).
     ///
-    @objc public func hierarchicalFacetValues(name: String) -> [HierarchicalFacet] {
-        let separator = " > "
+    @objc public func hierarchicalFacetValues(name: String, separator: String = " > ") -> [HierarchicalFacet] {
         guard let attributes = hierarchicalFacets[name], !attributes.isEmpty else { return [] }
         let values = attributes.map { facets(name: $0) ?? [:] }
         let rootLevel = values.first?.map { HierarchicalFacet(value: $0.key, displayValue: $0.key, count: $0.value) } ?? []
