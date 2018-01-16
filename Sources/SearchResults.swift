@@ -273,6 +273,29 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     }
 }
 
+/// Hierarchical facet containing its children.
+@objc public class HierarchicalFacet: NSObject {
+    public let value: String
+    public let displayValue: String
+    public let count: Int
+    public var children: [HierarchicalFacet]
+    
+    public required init(value: String, displayValue: String, count: Int, children: [HierarchicalFacet] = []) {
+        self.value = value
+        self.displayValue = displayValue
+        self.count = count
+        self.children = children
+    }
+    
+    public override var description: String {
+        if !children.isEmpty {
+            return displayValue + ": \(children)"
+        } else {
+            return displayValue
+        }
+    }
+}
+
 /// Search results.
 ///
 /// + Note: Wraps the raw JSON returned by the API.
@@ -285,6 +308,9 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     
     /// Facets that will be treated as disjunctive (`OR`). By default, facets are conjunctive (`AND`).
     @objc public let disjunctiveFacets: [String]
+    
+    /// Hierarchical facets
+    @objc public var hierarchicalFacets: [String: [String]] = [:]
     
     // MARK: - General properties
 
@@ -415,6 +441,19 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         self.nbHits = nbHits
     }
     
+    /// Create search results from an initial response from the API.
+    ///
+    /// - Warning: This initializer will validate mandatory fields and fail if they are absent or invalid.
+    ///
+    /// - parameter content: The JSON content returned by the API.
+    /// - parameter disjunctiveFacets: The list of facets to be treated as disjunctive.
+    /// - parameter hierarchicalFacets: The list of facets to be retrieved as hierarchical facets.
+    ///
+    @objc public convenience init(content: [String: Any], disjunctiveFacets: [String], hierarchicalFacets: [String: [String]]) throws {
+        try self.init(content: content, disjunctiveFacets: disjunctiveFacets)
+        self.hierarchicalFacets = hierarchicalFacets
+    }
+    
     // MARK: - Accessors
     
     /// Retrieve the facet values for a given facet.
@@ -426,6 +465,28 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         let disjunctive = disjunctiveFacets.contains(name)
         guard let returnedFacets = content[disjunctive ? "disjunctiveFacets" : "facets"] as? [String: Any] else { return nil }
         return returnedFacets[name] as? [String: Int]
+    }
+    
+    /// Retrieve the hierarchical facet values for a given facet.
+    ///
+    /// - parameter name: Facet name.
+    /// - returns: The corresponding hierarchical facet values (which may be empty).
+    ///
+    @objc public func hierarchicalFacetValues(name: String, separator: String = " > ") -> [HierarchicalFacet] {
+        guard let attributes = hierarchicalFacets[name], !attributes.isEmpty else { return [] }
+        let values = attributes.map { facets(name: $0) ?? [:] }
+        let rootLevel = values.first?.map { HierarchicalFacet(value: $0.key, displayValue: $0.key, count: $0.value) } ?? []
+        guard values.count > 1 else { return rootLevel }
+        var parentLevel = rootLevel
+        for level in 1..<values.count {
+            parentLevel.forEach { parent in
+                parent.children = values[level]
+                    .filter { $0.key.components(separatedBy: separator)[level - 1] == parent.displayValue }
+                    .map { HierarchicalFacet(value: $0.key, displayValue: $0.key.components(separatedBy: separator)[level], count: $0.value) }
+            }
+            parentLevel = parentLevel.map { $0.children }.flatMap { $0 }
+        }
+        return rootLevel
     }
     
     /// Retrieve the statistics for a numerical facet.

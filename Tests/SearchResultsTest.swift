@@ -581,4 +581,39 @@ class SearchResultsTest: XCTestCase {
             XCTFail("Failed to construct results")
         }
     }
+    
+    func testHierarchicalFacets() {
+        json["disjunctiveFacets"] = [
+            "number.lvl0": [
+                "one": 11,
+                "two": 5,
+                "three": 5
+            ],
+            "number.lvl1": [
+                "one > ten": 4,
+                "one > eleven": 1,
+                "three > thirty": 3,
+                "three > thirty one": 2
+            ],
+            "number.lvl2": [
+                "one > ten > hundred": 6
+            ]
+        ]
+        let attributes = ["number.lvl0", "number.lvl1", "number.lvl2"]
+        if let results = try? SearchResults(content: json, disjunctiveFacets: attributes, hierarchicalFacets: ["number": attributes]) {
+            let menu = results.hierarchicalFacetValues(name: "number")
+            print(menu)
+            let one = menu.filter { $0.displayValue == "one" }.first
+            XCTAssertNotNil(one, "Cannot find lvl0 facet display value 'one'")
+            let ten = one!.children.filter { $0.displayValue == "ten" }.first
+            XCTAssertNotNil(ten, "Cannot find lvl1 facet display value 'ten'")
+            XCTAssertEqual("one > ten", ten?.value)
+            let hundred = ten!.children.first
+            XCTAssertEqual("hundred", hundred?.displayValue)
+            XCTAssertEqual("one > ten > hundred", hundred?.value)
+        } else {
+            XCTFail("Failed to construct results")
+        }
+    }
+    
 }
