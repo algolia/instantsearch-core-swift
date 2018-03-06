@@ -9,6 +9,7 @@ end
 
 platform :ios do
 	lane :test do
+		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
 		carthage(
 			command: "update",
 			platform: "iOS",
@@ -25,6 +26,7 @@ end
 
 platform :mac do
 	lane :test do
+		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
 		carthage(
 			command: "update",
 			platform: "Mac",
@@ -41,6 +43,7 @@ end
 
 platform :tv do
 	lane :test do
+		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
 		carthage(
 			command: "update",
 			platform: "tvOS",
@@ -89,6 +92,15 @@ lane :deploy do |options|
 	pod_push(
 		path: "InstantSearch-Core-Offline-Swift.podspec"
 	)
+end
+
+def update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client()
+	if ENV['GIT_DEPENDENT_COMMIT_HASH']
+		File.write("../Cartfile", "github \"algolia/algoliasearch-client-swift\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
+		puts "Changed Cartfile to refer to algolia/algoliasearch-client-swift with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
+	else 
+		puts "No specific dependencies to test, proceeding with latest release of dependent library"
+	end
 end
 
 desc "Upgrade Swift Version in .swift-version"
