@@ -411,8 +411,11 @@ import Foundation
     }
     
     func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?) {
-        // Memorize state and clean up map.
-        receivedState = states[seqNo]
+        
+        // Memorize state and clean up map. Fail gracefully in case the request was cancelled
+        guard let receivedStateOrNil = states[seqNo] else { return }
+        receivedState = receivedStateOrNil
+        
         states[seqNo] = nil
 
         var finalError = error
