@@ -99,7 +99,7 @@ import Foundation
 /// 3. Listen for **notifications** issued by this searcher (using `NotificationCenter`). Notifications give you
 ///    extra information, such as whether requests are cancelled by the searcher.
 ///
-@objc public class Searcher: NSObject, SequencerDelegate {
+@objcMembers public class Searcher: NSObject, SequencerDelegate {
     
     // MARK: Types
     
@@ -211,8 +211,8 @@ import Foundation
     private var receivedState: State!
     
     /// The last received results.
-    @objc public private(set) var results: SearchResults?
-    
+    @objc public dynamic private(set) var results: SearchResults?
+  
     /// The hits for all pages requested of the latest query.
     @objc public private(set) var hits: [[String: Any]] = []
     
@@ -421,16 +421,12 @@ import Foundation
         var finalError = error
         do {
             if let content = content {
-                let searchResults = try SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets)
+              // Update hits.
+              let isLoadingMore = receivedState.userInfo[Searcher.userInfoIsLoadingMoreKey] as? Bool ?? false
+              
+              let searchResults = try SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets, previousHits: isLoadingMore ? self.hits : [])
                 self.results = searchResults
-                
-                // Update hits.
-                let isLoadingMore = receivedState.userInfo[Searcher.userInfoIsLoadingMoreKey] as? Bool ?? false
-                if isLoadingMore {
-                    self.hits.append(contentsOf: searchResults.hits)
-                } else {
-                    self.hits = searchResults.hits
-                }
+                self.hits = searchResults.allHits
 
                 callResultHandlers(results: self.results, error: nil, userInfo: receivedState.userInfo)
                 return

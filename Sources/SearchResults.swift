@@ -288,8 +288,19 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     
     // MARK: - General properties
 
-    /// Hits.
-    @objc public let hits: [[String: Any]]
+    /// Latest hits received from the latest query.
+    @available(*, deprecated: 3.2, message: "User latestHits instead")
+    @objc public var hits: [[String: Any]] {
+      get {
+        return latestHits
+      }
+    }
+  
+    /// Latest hits received from the latest query
+    @objc public let latestHits: [[String: Any]]
+  
+    /// The hits for all pages requested of the latest query.
+    @objc public var allHits: [[String: Any]]
     
     /// Total number of hits.
     @objc public var nbHits: Int
@@ -395,7 +406,22 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter content: The JSON content returned by the API.
     /// - parameter disjunctiveFacets: The list of facets to be treated as disjunctive.
     ///
-    @objc public init(content: [String: Any], disjunctiveFacets: [String]) throws {
+  
+    @objc convenience public init(content: [String: Any], disjunctiveFacets: [String]) throws {
+      try self.init(content: content, disjunctiveFacets: disjunctiveFacets, previousHits: [])
+    }
+  
+    // MARK: - Initialization, termination
+  
+    /// Create search results from an initial response from the API.
+    ///
+    /// - Warning: This initializer will validate mandatory fields and fail if they are absent or invalid.
+    ///
+    /// - parameter content: The JSON content returned by the API.
+    /// - parameter disjunctiveFacets: The list of facets to be treated as disjunctive.
+    /// - parameter previousHits: The list of previous hits.
+    ///
+    @objc public init(content: [String: Any], disjunctiveFacets: [String], previousHits: [[String: Any]]) throws {
         self.content = content
         self.disjunctiveFacets = disjunctiveFacets
 
@@ -407,7 +433,9 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         guard let hits = content["hits"] as? [[String: Any]] else {
             throw InvalidJSONError(description: "Expecting attribute `hits` of type array of objects")
         }
-        self.hits = hits
+    
+        self.allHits = previousHits + hits
+        self.latestHits = hits
         
         guard let nbHits = content["nbHits"] as? Int else {
             throw InvalidJSONError(description: "Expecting attribute `nbHits` of type `Int`")
