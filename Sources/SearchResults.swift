@@ -415,6 +415,18 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         self.nbHits = nbHits
     }
     
+    /// Create search results from any backend.
+    ///
+    /// - parameter nbHits: total number of hits.
+    /// - parameter hits: the hits
+    ///
+    @objc public init(nbHits: Int, hits: [[String: Any]], extraContent: [String: Any] = [:], disjunctiveFacets: [String] = []) {
+        self.nbHits = nbHits
+        self.hits = hits
+        self.content = extraContent
+        self.disjunctiveFacets = disjunctiveFacets
+    }
+    
     // MARK: - Accessors
     
     /// Retrieve the facet values for a given facet.
