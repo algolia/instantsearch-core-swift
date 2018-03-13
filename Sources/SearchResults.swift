@@ -448,9 +448,10 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - parameter nbHits: total number of hits.
     /// - parameter hits: the hits
     ///
-    @objc public init(nbHits: Int, hits: [[String: Any]], extraContent: [String: Any] = [:], disjunctiveFacets: [String] = []) {
+    @objc public init(nbHits: Int, hits: [[String: Any]], extraContent: [String: Any] = [:], disjunctiveFacets: [String] = [], previousHits: [[String: Any]] = [[:]]) {
         self.nbHits = nbHits
-        self.hits = hits
+        self.allHits = previousHits + hits
+        self.latestHits = hits
         self.content = extraContent
         self.disjunctiveFacets = disjunctiveFacets
     }
