@@ -289,7 +289,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     // MARK: - General properties
 
     /// Latest hits received from the latest query.
-    @available(*, deprecated: 3.2, message: "User latestHits instead")
+    @available(*, deprecated: 3.2, message: "Use latestHits instead")
     @objc public var hits: [[String: Any]] {
       get {
         return latestHits

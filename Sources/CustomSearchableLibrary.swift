@@ -68,7 +68,7 @@ open class SearchTransformer<Parameters, Results>: SearchableAndTransformable {
                 
                 // potentially, instead of th Query class, we can use the SearchResults class and avoid doing this conversion.
                 var content = searchResults.content
-                content["hits"] = searchResults.hits
+                content["hits"] = searchResults.latestHits
                 content["nbHits"] = searchResults.nbHits
                 
                 completionHandler(content, nil)
@@ -127,7 +127,7 @@ public class CustomSearchable: Searchable {
                 
                 // potentially, instead of th Query class, we can use the SearchResults class and avoid doing this conversion.
                 var content = searchResults.content
-                content["hits"] = searchResults.hits
+                content["hits"] = searchResults.latestHits
                 content["nbHits"] = searchResults.nbHits
                 
                 completionHandler(content, nil)

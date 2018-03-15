@@ -64,6 +64,7 @@ public class CustomSearchableImplementation: SearchTransformer<CustomSearchParam
                     // IMPORTANT: Need to call the searchResultHandler when done, this is the responsibility of the 3rd party dev
                     searchResultsHandler(customSearchResults, nil)
                 } catch let error {
+                    searchResultsHandler(nil, error)
                     print(error.localizedDescription)
                 }
                 
@@ -117,6 +118,7 @@ public class CustomSearchTransformerImplementation: SearchTransformable {
                     // IMPORTANT: Need to call the searchResultHandler when done, this is the responsibility of the 3rd party dev
                     searchResultsHandler(jsonObj, nil)
                 } catch let error {
+                    searchResultsHandler(nil, error)
                     print(error.localizedDescription)
                 }
                 
