@@ -258,7 +258,6 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				E2CAC0D12056DD52002BB9CA /* Transformer.swift */,
 				BC3426361D460DB70055E0F2 /* Info.plist */,
 				BC272EC31E5F0C86009F1FFD /* AdaptiveNetworkStrategy.swift */,
 				BCCEA7941E7BDFB200F3D44C /* Caller.swift */,
@@ -274,6 +273,7 @@
 				BC34264E1D4613CB0055E0F2 /* SearchResults.swift */,
 				BC28C4CB1E5B2D1000EFC4A0 /* Sequencer.swift */,
 				BC272ECA1E5F26BD009F1FFD /* Throttler.swift */,
+				E2CAC0D12056DD52002BB9CA /* Transformer.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
