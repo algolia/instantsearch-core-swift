@@ -48,7 +48,7 @@ public protocol Transformable {
     func map(query: Query, disjunctiveFacets: [String], refinements: [String : [String]]) -> IParameters
     
     
-    // Disjunctive Search operation
+    // Search for facet value operation
     func searchForFacetValues(_ query: IParameters, searchResultsHandler: @escaping SearchResultsHandler)
     
     // Transforms the Algolia facet value params to custom backend params.
