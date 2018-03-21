@@ -37,16 +37,11 @@ public protocol Transformable {
     // Transforms the Algolia params to custom backend params.
     func map(query: Query) -> IParameters
     
-    // Transforms the custom backend result to an Algolia result.
-    func map(results: IResults) -> SearchResults
-    
-    
-    // Disjunctive Search operation
-    func searchDisjunctiveFaceting(_ query: IParameters, searchResultsHandler: @escaping SearchResultsHandler)
-    
-    // Transforms the Algolia disjunctive params to custom backend params.
+    // Transforms the Algolia params + disjunctive refinements to custom backend params.
     func map(query: Query, disjunctiveFacets: [String], refinements: [String : [String]]) -> IParameters
     
+    // Transforms the custom backend result to an Algolia result.
+    func map(results: IResults) -> SearchResults
     
     // Search for facet value operation
     func searchForFacetValues(_ query: IParameters, searchResultsHandler: @escaping SearchResultsHandler)
@@ -79,11 +74,6 @@ open class SearchTransformer<Parameters, Results>: Transformable, Searchable {
     
     open func map(results: Results) -> SearchResults {
         fatalError("make sure to override map(results:) for custom backend")
-    }
-    
-    /// By default, it does the same thing as search. Override for extending the functionality.
-    open func searchDisjunctiveFaceting(_ query: IParameters, searchResultsHandler: @escaping SearchResultsHandler) {
-        search(query, searchResultsHandler: searchResultsHandler)
     }
     
     /// By default, it does the same thing as search. Override to access more parameters.
@@ -131,7 +121,7 @@ open class SearchTransformer<Parameters, Results>: Transformable, Searchable {
         let operation = BlockOperation()
         operation.addExecutionBlock {
             let params = self.map(query: query, disjunctiveFacets: disjunctiveFacets, refinements: refinements)
-            self.searchDisjunctiveFaceting(params) { (results, error) in
+            self.search(params) { (results, error) in
                 if let error = error {
                     completionHandler(nil, error)
                 } else if let results = results {
@@ -173,5 +163,22 @@ open class SearchTransformer<Parameters, Results>: Transformable, Searchable {
         operation.start()
         
         return operation
+    }
+}
+
+/// Base class used to implement a custom backend with Algolia
+/// You need to make sure to implement the following method:
+/// - search(query:searchResultsHandler:)
+open class DefaultSearchTransformer: SearchTransformer<Query, SearchResults> {
+    open override func search(_ query: Query, searchResultsHandler: @escaping SearchResultsHandler) {
+        fatalError("make sure to override search(query:searchResultsHandler:) for custom backend")
+    }
+    
+    open override func map(query: Query) -> Query {
+        return query
+    }
+    
+    open override func map(results: SearchResults) -> SearchResults {
+        return results
     }
 }
