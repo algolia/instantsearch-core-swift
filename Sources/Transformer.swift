@@ -82,12 +82,12 @@ open class SearchTransformer<Parameters, Results>: Transformable, Searchable {
     }
     
     /// By default, it does the same thing as search. Override for extending the functionality.
-    open func searchForFacetValues(_ query: IParameters, searchResultsHandler: @escaping SearchResultsHandler) {
+    open func searchForFacetValues(_ query: Parameters, searchResultsHandler: @escaping SearchResultsHandler) {
         search(query, searchResultsHandler: searchResultsHandler)
     }
     
     /// By default, it does the same thing as search. Override to access more parameters.
-    open func map(query: Query?, facetName: String, matching text: String) -> IParameters {
+    open func map(query: Query?, facetName: String, matching text: String) -> Parameters {
         return map(query: query ?? Query(query: ""))
     }
     
