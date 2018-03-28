@@ -188,9 +188,16 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     @objc public let count: Int
     
+    @objc public var highlighted: String? = nil
+    
     @objc public init(value: String, count: Int) {
         self.value = value
         self.count = count
+    }
+    
+    @objc public convenience init(value: String, count: Int, highlighted: String) {
+        self.init(value: value, count: count)
+        self.highlighted = highlighted
     }
     
     /// Convert unordered facet counts into an ordered list of facet values, supplementing any missing counts
@@ -230,23 +237,41 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 /// + Note: Wraps the raw JSON returned by the API.
 ///
 @objc public class FacetResults: NSObject {
-    private var json: [String: Any]
+    public let content: [String: Any]
     
-    @objc public init(json: [String: Any]) {
-        self.json = json
+    @objc public init(content: [String: Any]) {
+        self.content = content
     }
     
-    /// Value of the facet.
-    @objc public var value: String? { return json["value"] as? String }
+    @objc public init(facetHits: [FacetValue]) {
+        let facetValues = facetHits.map({ (facetHit) in
+            return ["value" : facetHit.value,
+                    "count" : facetHit.count,
+                    "highlighted": facetHit.highlighted ?? ""]
+        })
+        
+        self.content = ["facetHits": facetValues]
+    }
     
-    /// Number of occurrences of the value.
-    ///
-    /// + Note: If `SearchResults.exhaustiveFacetsCount` is `true`, it may be approximate.
-    ///
-    @objc public var count: Int { return json["count"] as? Int ?? 0 }
+    @objc public func getFacetValues() -> [FacetValue] {
+        guard let facethits = facetHits else { return [] }
+        
+        return facethits.map { facetHit in
+            let value = facetHit["value"] as? String
+            let count = facetHit["count"] as? Int
+            let highlighted = facetHit["highlighted"] as? String
+            return FacetValue(value: value ?? "", count: count ?? 0, highlighted: highlighted ?? "")
+        }
+    }
     
-    /// Highlighted string
-    @objc public var highlighted: String? { return json["highlighted"] as? String }
+    /// facet hits
+    @objc public var facetHits: [[String: Any]]? { return content["facetHits"] as? [[String: Any]] }
+    
+    /// Processing time of the last query (in ms).
+    @objc public var processingTimeMS: Int { return content["processingTimeMS"] as? Int ?? 0 }
+    
+    /// Whether facet counts are exhaustive.
+    @objc public var exhaustiveFacetsCount: Bool { return content["exhaustiveFacetsCount"] as? Bool ?? false }
 }
 
 /// Statistics for a numerical facet.
