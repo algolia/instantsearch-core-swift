@@ -60,7 +60,7 @@ public protocol Transformable {
 /// Base class used to implement a custom backend with Algolia
 /// You need to make sure to implement the following method:
 /// - search(query:searchResultsHandler:)
-open class DefaultSearchTransformer: SearchTransformer<Query, SearchResults> {
+open class DefaultSearchClient: SearchClient<Query, SearchResults> {
     open override func search(_ query: Query, searchResultsHandler: @escaping SearchResultsHandler) {
         fatalError("make sure to override search(query:searchResultsHandler:) for custom backend")
     }
@@ -79,10 +79,10 @@ open class DefaultSearchTransformer: SearchTransformer<Query, SearchResults> {
 /// - search(query:searchResultsHandler:)
 /// - map(query:)
 /// - map(results:)
-open class SearchTransformer<Parameters, Results>: AdvancedSearchTransformer<Parameters, Results, Parameters, Results> {
+open class SearchClient<Parameters, Results>: AdvancedSearchClient<Parameters, Results, Parameters, Results> {
     
     open override func searchForFacetValues(_ query: Parameters, sffvResultsHandler: @escaping SFFVResultsHandler) {
-        print("No implementation for Search for Facet Values with the SearchTransformer class. Please use the AdvancedSearchTransformer class to add your Search for facet Values implementation")
+        print("No implementation for Search for Facet Values with the SearchClient class. Please use the AdvancedSearchClient class to add your Search for facet Values implementation")
     }
     
     open override func map(query: Query?, facetName: String, matching text: String) -> Parameters {
@@ -102,7 +102,7 @@ open class SearchTransformer<Parameters, Results>: AdvancedSearchTransformer<Par
 /// - searchForFacetValues(query:sffvResultsHandler:)
 /// - map(facetName:matching:)
 /// - map(results:)
-open class AdvancedSearchTransformer<Parameters, Results, SFFVParameters, SFFVResults>: Transformable, Searchable {
+open class AdvancedSearchClient<Parameters, Results, SFFVParameters, SFFVResults>: Transformable, Searchable {
     
     public typealias IParameters = Parameters
     public typealias IResults = Results
