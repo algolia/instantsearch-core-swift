@@ -96,9 +96,9 @@ end
 
 def update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client()
 	if !ENV['GIT_DEPENDENT_COMMIT_HASH'].to_s.empty?
-		if !ENV['pull_request_repository_url'].to_s.empty?
-			File.write("../Cartfile", "git \"#{ENV["pull_request_repository_url"]}\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
-			puts "Changed Cartfile to refer to #{ENV["pull_request_repository_url"]} with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
+		if !ENV['GIT_DEPENDENT_PULL_REQUEST_REPOSITORY_URL'].to_s.empty?
+			File.write("../Cartfile", "git \"#{ENV["GIT_DEPENDENT_PULL_REQUEST_REPOSITORY_URL"]}\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
+			puts "Changed Cartfile to refer to #{ENV["GIT_DEPENDENT_PULL_REQUEST_REPOSITORY_URL"]} with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
 		else
 			File.write("../Cartfile", "github \"algolia/algoliasearch-client-swift\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
 			puts "Changed Cartfile to refer to algolia/algoliasearch-client-swift with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
