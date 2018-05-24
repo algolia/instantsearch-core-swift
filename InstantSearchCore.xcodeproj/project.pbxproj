@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D26AD0F1F716ED500E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */; };
-		1D26AD111F716FA400E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */; };
-		1D26AD131F71701900E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */; };
 		BC0844251E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
 		BC0844261E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
 		BC0844271E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
@@ -100,6 +97,9 @@
 		E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
 		E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
 		E2960CDE20AF2D570056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */; };
+		E2F2073720B6C2330066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
+		E2F2073820B6C2430066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
+		E2F2073920B6C2540066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,7 +183,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D26AD0F1F716ED500E17A58 /* AlgoliaSearch.framework in Frameworks */,
+				E2F2073720B6C2330066AF12 /* InstantSearchClient.framework in Frameworks */,
 				BC34263C1D460DB70055E0F2 /* InstantSearchCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,7 +200,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D26AD111F716FA400E17A58 /* AlgoliaSearch.framework in Frameworks */,
+				E2F2073820B6C2430066AF12 /* InstantSearchClient.framework in Frameworks */,
 				BC4CB8941D534B6E004618DD /* InstantSearchCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,7 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D26AD131F71701900E17A58 /* AlgoliaSearch.framework in Frameworks */,
+				E2F2073920B6C2540066AF12 /* InstantSearchClient.framework in Frameworks */,
 				BC4CB8B71D535AB4004618DD /* InstantSearchCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -599,7 +599,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/AlgoliaSearch.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/InstantSearchClient.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -614,7 +614,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/Mac/AlgoliaSearch.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/InstantSearchClient.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -629,7 +629,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/tvOS/AlgoliaSearch.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/InstantSearchClient.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
