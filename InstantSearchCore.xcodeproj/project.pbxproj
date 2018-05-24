@@ -10,9 +10,6 @@
 		1D26AD0F1F716ED500E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */; };
 		1D26AD111F716FA400E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */; };
 		1D26AD131F71701900E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */; };
-		0F863780022BC192781A8C4B /* Pods_InstantSearchCore_macOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51805CF9D37D4C65AB765D24 /* Pods_InstantSearchCore_macOS.framework */; };
-		A3D47A2276D60557CA25EBC3 /* Pods_InstantSearchCore_tvOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2ABC140FFD26A4D7C40072B /* Pods_InstantSearchCore_tvOS.framework */; };
-		AA67B619DF8BB5AF88C1360C /* Pods_InstantSearchCore_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D98A6CE6B1CD0D95779BA084 /* Pods_InstantSearchCore_iOS.framework */; };
 		BC0844251E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
 		BC0844261E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
 		BC0844271E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
@@ -99,10 +96,10 @@
 		BCCEA79A1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
 		BCCEA79B1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
 		BCCEA79C1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
-		E29F2D2C1F2F5C6B0052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */; };
-		E29F2D2E1F2F5CA50052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */; };
-		E29F2D301F2F5CC00052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */; };
-		E29F2D321F2F5CC70052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D311F2F5CC70052335F /* AlgoliaSearch.framework */; };
+		E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
+		E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
+		E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
+		E2960CDE20AF2D570056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,19 +127,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		02BFC43A68DDD56B52D9661F /* Pods-InstantSearchCore-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS/Pods-InstantSearchCore-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		09D8441DD8CD15AB87BDC794 /* Pods-InstantSearchCore-watchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-watchOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-watchOS/Pods-InstantSearchCore-watchOS.debug.xcconfig"; sourceTree = "<group>"; };
-		0B2003ADCEEB406ABF775F61 /* Pods-InstantSearchCore-macOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS/Pods-InstantSearchCore-macOS.release.xcconfig"; sourceTree = "<group>"; };
-		1A45586B3A3CB1A82F3A717C /* Pods_InstantSearchCore_tvOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_tvOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		306A0D20B7675EB69FBC6C11 /* Pods_InstantSearchCore_iOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_iOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4D2CE747DE021B0989855A2A /* Pods-InstantSearchCore-iOS-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS-Tests/Pods-InstantSearchCore-iOS-Tests.release.xcconfig"; sourceTree = "<group>"; };
-		51805CF9D37D4C65AB765D24 /* Pods_InstantSearchCore_macOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstantSearchCore_macOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		56154D3693AB2C03A1E13346 /* Pods-InstantSearchCore-tvOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS-Tests/Pods-InstantSearchCore-tvOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		75C0699016AD2C2FBF7CC74E /* Pods-InstantSearchCore-macOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS-Tests/Pods-InstantSearchCore-macOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		7C89E0C2C58633293D0102C2 /* Pods-InstantSearchCore-iOS-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS-Tests/Pods-InstantSearchCore-iOS-Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		B2020FB27F0B903D1E237A22 /* Pods-InstantSearchCore-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-iOS/Pods-InstantSearchCore-iOS.release.xcconfig"; sourceTree = "<group>"; };
-		B30A5823FA6FAA56115C41AE /* Pods-InstantSearchCore-macOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-macOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-macOS/Pods-InstantSearchCore-macOS.debug.xcconfig"; sourceTree = "<group>"; };
-		BBCFDA6842A3CD7059850CE1 /* Pods-InstantSearchCore-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstantSearchCore-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstantSearchCore-tvOS/Pods-InstantSearchCore-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		BC0844241E6DA49900329B40 /* History.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		BC0844291E6DA4B600329B40 /* LocalHistoryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalHistoryTest.swift; sourceTree = "<group>"; };
 		BC154A821D92B5FD00DE764C /* HighlighterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighlighterTest.swift; sourceTree = "<group>"; };
@@ -176,6 +160,10 @@
 		BCCEA78B1E7BDDF700F3D44C /* CallerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallerTest.swift; sourceTree = "<group>"; };
 		BCCEA7941E7BDFB200F3D44C /* Caller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
 		BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebouncerTest.swift; sourceTree = "<group>"; };
+		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
+		E2960CD920AF2D350056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/Mac/InstantSearchClient.framework; sourceTree = "<group>"; };
+		E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/tvOS/InstantSearchClient.framework; sourceTree = "<group>"; };
+		E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/watchOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/iOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/Mac/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/tvOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
@@ -187,7 +175,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D2C1F2F5C6B0052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D2E1F2F5CA50052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,7 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D301F2F5CC00052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,7 +226,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D321F2F5CC70052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CDE20AF2D570056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,6 +300,10 @@
 		E29F2D2A1F2F5C6B0052335F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */,
+				E2960CD920AF2D350056E874 /* InstantSearchClient.framework */,
+				E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */,
+				E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */,
 				E29F2D311F2F5CC70052335F /* AlgoliaSearch.framework */,
 				E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */,
 				E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */,
