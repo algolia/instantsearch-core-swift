@@ -430,7 +430,7 @@ import Foundation
             return nil
         }
         // NOTE: We sort attribute names to get predictable output.
-        let expression = numericRefinements.keys.sorted().flatMap({ (attributeName: String) -> String? in
+        let expression = numericRefinements.keys.sorted().compactMap({ (attributeName: String) -> String? in
             let filters = self.numericRefinements[attributeName]!
             if filters.isEmpty {
                 return nil
@@ -456,7 +456,7 @@ import Foundation
             return nil
         }
         // NOTE: We sort attribute names to get predictable output.
-        let expression = facetRefinements.keys.sorted().flatMap({ (facetName: String) -> String? in
+        let expression = facetRefinements.keys.sorted().compactMap({ (facetName: String) -> String? in
             let refinements = self.facetRefinements[facetName]!
             if refinements.isEmpty {
                 return nil

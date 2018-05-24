@@ -482,7 +482,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - returns: The corresponding highlight, or `nil` if it was not returned, or if the JSON response is invalid.
     ///
     @objc public func highlightResult(at index: Int, path: String) -> HighlightResult? {
-        return SearchResults.highlightResult(hit: hits[index], path: path)
+        return SearchResults.highlightResult(hit: latestHits[index], path: path)
     }
 
     /// Get the snippet result for an attribute of a hit.
@@ -492,7 +492,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - returns: The corresponding snippet, or `nil` if it was not returned, or if the JSON response is invalid.
     ///
     @objc public func snippetResult(at index: Int, path: String) -> SnippetResult? {
-        return SearchResults.snippetResult(hit: hits[index], path: path)
+        return SearchResults.snippetResult(hit: latestHits[index], path: path)
     }
 
     /// Get the ranking information for a hit.
@@ -503,7 +503,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// - returns: The corresponding ranking information, or `nil` if no ranking information is available, or if the JSON response is invalid.
     ///
     @objc public func rankingInfo(at index: Int) -> RankingInfo? {
-        return SearchResults.rankingInfo(hit: hits[index])
+        return SearchResults.rankingInfo(hit: latestHits[index])
     }
     
     // MARK: - Utils

@@ -65,7 +65,7 @@ class SearchResultsTest: XCTestCase {
             XCTFail("Failed to construct results")
             return
         }
-        XCTAssertEqual(2, results.hits.count)
+        XCTAssertEqual(2, results.latestHits.count)
     }
     
     func testNbHits() {
