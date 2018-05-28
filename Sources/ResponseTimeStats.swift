@@ -55,11 +55,11 @@ import Foundation
 /// although the response has not been received yet. This allows observers to detect long-running requests and react
 /// accordingly. For example, the `AdaptiveNetworkStrategy` class makes extensive use of this.
 ///
-@objc public class ResponseTimeStats: NSObject {
+@objcMembers public class ResponseTimeStats: NSObject {
     // MARK: - Types
     
     /// Statistics about a single request.
-    @objc public class RequestStat: NSObject {
+    @objcMembers public class RequestStat: NSObject {
         /// The request's sequence number.
         @objc public let seqNo: Int
         

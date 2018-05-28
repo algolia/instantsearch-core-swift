@@ -27,7 +27,7 @@ import Foundation
 
 /// A refinement of a facet.
 ///
-@objc public class FacetRefinement: NSObject {
+@objcMembers public class FacetRefinement: NSObject {
     // MARK: Properties
     
     /// Name of the facet.
@@ -105,7 +105,7 @@ import Foundation
 
 /// A refinement on a numeric attribute.
 ///
-@objc public class NumericRefinement: NSObject {
+@objcMembers public class NumericRefinement: NSObject {
     // MARK: Types
     
     /// Comparison operator that can be applied to a numeric.
@@ -244,7 +244,7 @@ import Foundation
 ///
 /// + Note: Tags are not handled. Please use facets instead, as they are more powerful.
 ///
-@objc public class SearchParameters: Query {
+@objcMembers public class SearchParameters: Query {
     // MARK: - Properties
     
     /// Facets that will be treated as disjunctive.
