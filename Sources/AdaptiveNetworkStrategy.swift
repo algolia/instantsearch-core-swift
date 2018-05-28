@@ -45,7 +45,7 @@ import Foundation
 /// response time goes above either of them, the corresponding mode will be activated. Of course, you should ensure
 /// that `throttleThreshold` is less than `manualThreshold`.
 ///
-@objc public class AdaptiveNetworkStrategy: NSObject, RequestStrategy {
+@objcMembers public class AdaptiveNetworkStrategy: NSObject, RequestStrategy {
 
     // MARK: Types
     

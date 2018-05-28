@@ -43,7 +43,7 @@ import Foundation
 /// By default, search requests are notified immediately. However, you may introduce a **grace delay** through the
 /// `graceDelay` property: any request returning in less than this delay will not cause start/stop events to be fired.
 ///
-@objc public class SearchProgressController: NSObject {
+@objcMembers public class SearchProgressController: NSObject {
     // MARK: Properties
     
     /// Searcher monitored by this progress controller.
