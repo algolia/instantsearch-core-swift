@@ -21,13 +21,13 @@
 //  THE SOFTWARE.
 //
 
-import AlgoliaSearch
+import InstantSearchClient
 import Foundation
 
 
 /// A refinement of a facet.
 ///
-@objc public class FacetRefinement: NSObject {
+@objcMembers public class FacetRefinement: NSObject {
     // MARK: Properties
     
     /// Name of the facet.
@@ -105,7 +105,7 @@ import Foundation
 
 /// A refinement on a numeric attribute.
 ///
-@objc public class NumericRefinement: NSObject {
+@objcMembers public class NumericRefinement: NSObject {
     // MARK: Types
     
     /// Comparison operator that can be applied to a numeric.
@@ -244,7 +244,7 @@ import Foundation
 ///
 /// + Note: Tags are not handled. Please use facets instead, as they are more powerful.
 ///
-@objc public class SearchParameters: Query {
+@objcMembers public class SearchParameters: Query {
     // MARK: - Properties
     
     /// Facets that will be treated as disjunctive.
@@ -430,7 +430,7 @@ import Foundation
             return nil
         }
         // NOTE: We sort attribute names to get predictable output.
-        let expression = numericRefinements.keys.sorted().flatMap({ (attributeName: String) -> String? in
+        let expression = numericRefinements.keys.sorted().compactMap({ (attributeName: String) -> String? in
             let filters = self.numericRefinements[attributeName]!
             if filters.isEmpty {
                 return nil
@@ -456,7 +456,7 @@ import Foundation
             return nil
         }
         // NOTE: We sort attribute names to get predictable output.
-        let expression = facetRefinements.keys.sorted().flatMap({ (facetName: String) -> String? in
+        let expression = facetRefinements.keys.sorted().compactMap({ (facetName: String) -> String? in
             let refinements = self.facetRefinements[facetName]!
             if refinements.isEmpty {
                 return nil

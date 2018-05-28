@@ -21,7 +21,7 @@
 //  THE SOFTWARE.
 //
 
-import AlgoliaSearch
+import InstantSearchClient
 import Foundation
 
 
@@ -61,7 +61,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 ///
 /// + Note: Wraps the raw JSON returned by the API.
 ///
-@objc public class HighlightResult: NSObject {
+@objcMembers public class HighlightResult: NSObject {
     /// The wrapped JSON object.
     @objc public let json: [String: Any]
     
@@ -96,7 +96,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 ///
 /// + Note: Wraps the raw JSON returned by the API.
 ///
-@objc public class SnippetResult: NSObject {
+@objcMembers public class SnippetResult: NSObject {
     /// The wrapped JSON object.
     @objc public let json: [String: Any]
     
@@ -126,7 +126,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 ///
 /// + Note: Wraps the raw JSON returned by the API.
 ///
-@objc public class RankingInfo: NSObject {
+@objcMembers public class RankingInfo: NSObject {
     /// The wrapped JSON object.
     @objc public let json: [String: Any]
     
@@ -176,7 +176,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 /// A value of a given facet, together with its number of occurrences.
 /// This class is mainly useful when an ordered list of facet values has to be presented to the user.
 ///
-@objc public class FacetValue: NSObject {
+@objcMembers public class FacetValue: NSObject {
     // MARK: Properties
     
     /// Value of the facet.
@@ -236,7 +236,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 ///
 /// + Note: Wraps the raw JSON returned by the API.
 ///
-@objc public class FacetResults: NSObject {
+@objcMembers public class FacetResults: NSObject {
     public let content: [String: Any]
     
     @objc public init(content: [String: Any]) {
@@ -278,7 +278,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 ///
 /// + Note: Since values may either be integers or floats, they are typed as `NSNumber`.
 ///
-@objc public class FacetStats: NSObject {
+@objcMembers public class FacetStats: NSObject {
     // MARK: Properties
 
     /// The minimum value.
@@ -302,7 +302,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
 ///
 /// + Note: Wraps the raw JSON returned by the API.
 ///
-@objc public class SearchResults: NSObject {
+@objcMembers public class SearchResults: NSObject {
     // MARK: - Low-level properties
     
     /// The received JSON content.

@@ -23,7 +23,7 @@
 
 #import <XCTest/XCTest.h>
 
-@import AlgoliaSearch;
+@import InstantSearchClient;
 @import InstantSearchCore;
 
 

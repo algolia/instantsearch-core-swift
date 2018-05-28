@@ -21,13 +21,13 @@
 //  THE SOFTWARE.
 //
 
-import AlgoliaSearch
+import InstantSearchClient
 import Foundation
 
 
 /// Records a history of searches.
 ///
-@objc public class HistoryRecorder: NSObject {
+@objcMembers public class HistoryRecorder: NSObject {
     // MARK: Properties
 
     /// The searcher being observed.
@@ -97,7 +97,7 @@ import Foundation
 
 /// Options when searching a `History`.
 ///
-@objc public class HistorySearchOptions: NSObject {
+@objcMembers public class HistorySearchOptions: NSObject {
     /// Tag prepended to highlights.
     @objc public var highlightPreTag: String = "<em>"
     
@@ -110,7 +110,7 @@ import Foundation
 
 /// A hit from the history.
 ///
-@objc public class HistoryHit: NSObject {
+@objcMembers public class HistoryHit: NSObject {
     // MARK: Properties
 
     /// Search parameters corresponding to this hit.
@@ -133,7 +133,7 @@ import Foundation
 ///
 /// By default, the history sits purely in memory. If `filePath` is set, it is also persisted on disk.
 ///
-@objc public class LocalHistory: NSObject, History {
+@objcMembers public class LocalHistory: NSObject, History {
     // MARK: Properties
     
     /// The in-memory cache of the history's content.

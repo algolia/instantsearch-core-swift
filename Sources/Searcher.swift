@@ -21,7 +21,7 @@
 //  THE SOFTWARE.
 //
 
-import AlgoliaSearch
+@_exported import InstantSearchClient
 import Foundation
 
 

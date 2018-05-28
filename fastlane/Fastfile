@@ -60,6 +60,7 @@ end
 
 desc "Available options: type:major|minor|patch"
 lane :deploy do |options|
+	branch = options[:branch] || "master"
 	prepare_git('master')
 	pod_lib_lint(verbose: true)
 	increment_version_number(
@@ -67,17 +68,17 @@ lane :deploy do |options|
 	)
 	new_build_number = version_bump_podspec(
 		bump_type: options[:type],
-		path: "InstantSearch-Core-Swift.podspec"
+		path: "InstantSearchCore.podspec"
 	)
 
 	version_bump_podspec(
 		bump_type: options[:type],
-		path: "InstantSearch-Core-Offline-Swift.podspec"
+		path: "InstantSearchCoreOffline.podspec"
 	)
 
 	#puts changelog_from_git_commits
 	git_commit(
-		path: ["InstantSearch-Core-Swift.podspec", "InstantSearch-Core-Offline-Swift.podspec", "Sources/Info.plist" ,"Tests/Info.plist"], 
+		path: ["InstantSearchCore.podspec", "InstantSearchCoreOffline.podspec", "Sources/Info.plist" ,"Tests/Info.plist"], 
 		message: "Version #{new_build_number}"
 	)
 	add_git_tag(
@@ -86,18 +87,23 @@ lane :deploy do |options|
 	)
 	push_to_git_remote(remote: "origin")
 	pod_push(
-		path: "InstantSearch-Core-Swift.podspec"
+		path: "InstantSearchCore.podspec"
 	)
 
 	pod_push(
-		path: "InstantSearch-Core-Offline-Swift.podspec"
+		path: "InstantSearchCoreOffline.podspec"
 	)
 end
 
 def update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client()
-	if ENV['GIT_DEPENDENT_COMMIT_HASH']
-		File.write("../Cartfile", "github \"algolia/algoliasearch-client-swift\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
-		puts "Changed Cartfile to refer to algolia/algoliasearch-client-swift with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
+	if !ENV['GIT_DEPENDENT_COMMIT_HASH'].to_s.empty?
+		if !ENV['GIT_DEPENDENT_PULL_REQUEST_REPOSITORY_URL'].to_s.empty?
+			File.write("../Cartfile", "git \"#{ENV["GIT_DEPENDENT_PULL_REQUEST_REPOSITORY_URL"]}\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
+			puts "Changed Cartfile to refer to #{ENV["GIT_DEPENDENT_PULL_REQUEST_REPOSITORY_URL"]} with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
+		else
+			File.write("../Cartfile", "github \"algolia/algoliasearch-client-swift\" \"#{ENV["GIT_DEPENDENT_COMMIT_HASH"]}\"")
+			puts "Changed Cartfile to refer to algolia/algoliasearch-client-swift with commit #{ENV["GIT_DEPENDENT_COMMIT_HASH"]}"
+		end
 	else 
 		puts "No specific dependencies to test, proceeding with latest release of dependent library"
 	end

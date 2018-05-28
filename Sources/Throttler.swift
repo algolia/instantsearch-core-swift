@@ -27,7 +27,7 @@ import Foundation
 /// Ensures a maximum throughput on a stream of calls.
 /// The throughput is expressed as a minimum delay between calls, via the `delay` property.
 ///
-@objc public class Throttler: NSObject, Caller {
+@objcMembers public class Throttler: NSObject, Caller {
     
     // ----------------------------------------------------------------------
     // MARK: - Properties

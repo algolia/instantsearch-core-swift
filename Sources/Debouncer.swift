@@ -29,7 +29,7 @@ import Foundation
 /// The debouncer works by delaying every call by a given delay; if another call happens before the delay is expired,
 /// the timer is reset and the first call is ignored. When the delay expires, the last call is fired.
 ///
-@objc public class Debouncer: NSObject, Caller {
+@objcMembers public class Debouncer: NSObject, Caller {
     // MARK: Types
 
     // MARK: Properties

@@ -7,9 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D26AD0F1F716ED500E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */; };
-		1D26AD111F716FA400E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */; };
-		1D26AD131F71701900E17A58 /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */; };
 		BC0844251E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
 		BC0844261E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
 		BC0844271E6DA49900329B40 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0844241E6DA49900329B40 /* History.swift */; };
@@ -97,10 +94,13 @@
 		BCCEA79B1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
 		BCCEA79C1E7BE1C700F3D44C /* DebouncerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */; };
 		E27B623D2089F53900BCDB6A /* SearchClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27B623C2089F53900BCDB6A /* SearchClient.swift */; };
-		E29F2D2C1F2F5C6B0052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */; };
-		E29F2D2E1F2F5CA50052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */; };
-		E29F2D301F2F5CC00052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */; };
-		E29F2D321F2F5CC70052335F /* AlgoliaSearch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E29F2D311F2F5CC70052335F /* AlgoliaSearch.framework */; };
+		E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
+		E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
+		E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
+		E2960CDE20AF2D570056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */; };
+		E2F2073720B6C2330066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
+		E2F2073820B6C2430066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
+		E2F2073920B6C2540066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +162,10 @@
 		BCCEA7941E7BDFB200F3D44C /* Caller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Caller.swift; sourceTree = "<group>"; };
 		BCCEA7991E7BE1C700F3D44C /* DebouncerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebouncerTest.swift; sourceTree = "<group>"; };
 		E27B623C2089F53900BCDB6A /* SearchClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchClient.swift; sourceTree = "<group>"; };
+		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
+		E2960CD920AF2D350056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/Mac/InstantSearchClient.framework; sourceTree = "<group>"; };
+		E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/tvOS/InstantSearchClient.framework; sourceTree = "<group>"; };
+		E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/watchOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/iOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/Mac/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/tvOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
@@ -173,7 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D2C1F2F5C6B0052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D26AD0F1F716ED500E17A58 /* AlgoliaSearch.framework in Frameworks */,
+				E2F2073720B6C2330066AF12 /* InstantSearchClient.framework in Frameworks */,
 				BC34263C1D460DB70055E0F2 /* InstantSearchCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D2E1F2F5CA50052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -198,7 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D26AD111F716FA400E17A58 /* AlgoliaSearch.framework in Frameworks */,
+				E2F2073820B6C2430066AF12 /* InstantSearchClient.framework in Frameworks */,
 				BC4CB8941D534B6E004618DD /* InstantSearchCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,7 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D301F2F5CC00052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,7 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1D26AD131F71701900E17A58 /* AlgoliaSearch.framework in Frameworks */,
+				E2F2073920B6C2540066AF12 /* InstantSearchClient.framework in Frameworks */,
 				BC4CB8B71D535AB4004618DD /* InstantSearchCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -224,7 +228,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E29F2D321F2F5CC70052335F /* AlgoliaSearch.framework in Frameworks */,
+				E2960CDE20AF2D570056E874 /* InstantSearchClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +303,10 @@
 		E29F2D2A1F2F5C6B0052335F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */,
+				E2960CD920AF2D350056E874 /* InstantSearchClient.framework */,
+				E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */,
+				E2960CDD20AF2D570056E874 /* InstantSearchClient.framework */,
 				E29F2D311F2F5CC70052335F /* AlgoliaSearch.framework */,
 				E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */,
 				E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */,
@@ -477,7 +485,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Algolia;
 				TargetAttributes = {
 					BC3426301D460DB70055E0F2 = {
@@ -594,7 +602,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/AlgoliaSearch.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/InstantSearchClient.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -609,7 +617,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/Mac/AlgoliaSearch.framework",
+				"$(SRCROOT)/Carthage/Build/Mac/InstantSearchClient.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -624,7 +632,7 @@
 			files = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/tvOS/AlgoliaSearch.framework",
+				"$(SRCROOT)/Carthage/Build/tvOS/InstantSearchClient.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -803,12 +811,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -863,12 +873,14 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

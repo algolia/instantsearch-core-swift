@@ -1,9 +1,9 @@
 Pod::Spec.new do |s|
     # Pod metadata
     # ------------
-    s.name = 'InstantSearch-Core-Offline-Swift'
+    s.name = 'InstantSearchCoreOffline'
     s.module_name = 'InstantSearchCore'
-    s.version = '3.2.1'
+    s.version = '3.2.3'
     s.license = 'MIT'
     s.summary = 'Instant Search library for Swift by Algolia'
     s.homepage = 'https://github.com/algolia/instantsearch-core-swift'
@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
 
     # Dependencies
     # ------------
-    s.dependency 'AlgoliaSearch-Offline-Swift', '~> 5.0'
+    s.dependency 'InstantSearchClientOffline', '~> 5.0'
 end

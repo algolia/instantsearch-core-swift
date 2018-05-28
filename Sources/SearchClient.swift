@@ -22,7 +22,7 @@
 //
 
 import Foundation
-import AlgoliaSearch
+import InstantSearchClient
 
 /// A Transformable data source
 public protocol Transformable {
