@@ -39,9 +39,11 @@ class SearchParametersTest: XCTestCase {
     
     func testEquality() {
         let params1 = SearchParameters()
+        params1.addFacetRefinement(name: "boo", value: "barry")
         params1.addFacetRefinement(name: "foo", value: "bar")
         let params2 = SearchParameters()
         params2.addFacetRefinement(name: "foo", value: "bar")
+        params2.addFacetRefinement(name: "boo", value: "barry")
         XCTAssertEqual(params1, params2)
     }
     

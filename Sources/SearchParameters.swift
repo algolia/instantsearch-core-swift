@@ -358,8 +358,8 @@ import Foundation
             return false
         }
         // Compare facet refinements.
-        let lhsFacets = Array(self.facetRefinements.keys)
-        let rhsFacets = Array(rhs.facetRefinements.keys)
+        let lhsFacets = self.facetRefinements.keys
+        let rhsFacets = rhs.facetRefinements.keys
         if lhsFacets != rhsFacets {
             return false
         }
@@ -369,8 +369,8 @@ import Foundation
             }
         }
         // Compare numeric filters.
-        let lhsFilters = Array(self.numericRefinements.keys)
-        let rhsFilters = Array(rhs.numericRefinements.keys)
+        let lhsFilters = self.numericRefinements.keys
+        let rhsFilters = rhs.numericRefinements.keys
         if lhsFilters != rhsFilters {
             return false
         }
