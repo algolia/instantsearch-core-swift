@@ -347,6 +347,12 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     /// + Note: Should be identical to `params.query`.
     ///
     @objc public var query: String? { return content["query"] as? String }
+  
+    /// Query ID that produced these results.
+    /// Mandatory when reporting click and conversion events
+    /// Only reported when `clickAnalytics=true` in the `Query`
+    ///
+    @objc public var queryID: String? { return content["queryID"] as? String }
     
     /// Query parameters that produced these results.
     @objc public var params: Query?
