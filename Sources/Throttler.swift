@@ -85,7 +85,7 @@ import Foundation
         let fireDate = timer == nil ? now + delay : (timer!.fireDate > now ? timer!.fireDate : timer!.fireDate + delay)
         timer?.invalidate()
         timer = Timer(fireAt: fireDate, interval: delay, target: self, selector: #selector(self.runBlock), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer!, forMode: .defaultRunLoopMode)
+        RunLoop.main.add(timer!, forMode: RunLoop.Mode.default)
     }
 
     /// Remove the timer.
