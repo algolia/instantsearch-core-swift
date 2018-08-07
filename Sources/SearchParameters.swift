@@ -327,6 +327,7 @@ import Foundation
     ///
     @objc override open func clear() {
         super.clear()
+        query = nil
         clearRefinements()
     }
 
