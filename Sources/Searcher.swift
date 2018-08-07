@@ -270,6 +270,11 @@ import Foundation
     @objc public func addResultHandler(_ resultHandler: @escaping ResultHandler) {
         self.resultHandlers.append(resultHandler)
     }
+  
+    /// Clear all result handlers associated with this searcher.
+    @objc public func clearResultHandlers() {
+      self.resultHandlers = []
+    }
     
     /// Reset the search state.
     /// This resets the `query`, `disjunctiveFacets` and `filters` properties. It also cancels any pending request.
