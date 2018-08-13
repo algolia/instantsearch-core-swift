@@ -185,7 +185,14 @@ import Foundation
     
     /// Search parameters for the next query.
     ///
-    @objc public var params: SearchParameters { return nextState.params }
+    @objc public var params: SearchParameters {
+      get {
+        return nextState.params
+      }
+      set {
+        nextState.params = newValue
+        }
+      }
 
     // State management
     // ----------------
@@ -221,6 +228,8 @@ import Foundation
     
     /// variant to differentiate between searchers that target the same index.
     public var variant: String = ""
+  
+    public var debuggingEnabled: Bool = false
     
     /// Maximum number of pending requests allowed.
     /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
@@ -294,6 +303,15 @@ import Foundation
     ///
     @objc public func search() {
         search(userInfo: [:])
+      
+      if debuggingEnabled {
+        logInfo()
+      }
+    }
+  
+    private func logInfo() {
+        print("Searching on index \(indexName)-\(variant)")
+        print("Main Params query-\(params.query ?? ""), facetRefinements-\(params.facetRefinements), numericRefinements-\(params.numericRefinements)")
     }
     
     /// Search using the current settings.
