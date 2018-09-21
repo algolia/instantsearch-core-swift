@@ -592,6 +592,20 @@ import Foundation
             }
         }
     }
+  
+  /// Remove a refinement for a given refinement condition.
+  ///
+  /// - parameter condition: the condition to evaluate.
+  ///
+  @objc public func removeFacetRefinements(where condition: (FacetRefinement) -> Bool) {
+    let oldRefinements = facetRefinements
+    oldRefinements.forEach { (name: String, refinements: [FacetRefinement]) in
+      let newRefinements = refinements.filter({ !condition($0) })
+      if newRefinements.count != refinements.count {
+        facetRefinements[name] = newRefinements.isEmpty ? nil : newRefinements
+      }
+    }
+  }
     
     /// Test whether a facet has a refinement for a given value.
     ///

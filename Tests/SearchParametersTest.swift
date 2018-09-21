@@ -99,6 +99,26 @@ class SearchParametersTest: XCTestCase {
         XCTAssertNil(params.buildFilters())
         XCTAssertNil(params.buildFiltersFromFacets())
     }
+  
+    func testFacetFilterHelpers() {
+      let params = SearchParameters()
+      params.addFacetRefinement(name: "facet1", value: "value1")
+      params.addFacetRefinement(name: "facet1", value: "value2")
+      params.addFacetRefinement(name: "facet2", value: "value3")
+      params.addFacetRefinement(name: "facet3", value: "value3")
+      
+      params.removeFacetRefinements { (facetRefinement) -> Bool in
+        facetRefinement.name == "facet1"
+      }
+      
+      XCTAssertEqual(params.facetRefinements.compactMap { $0 }.count, 2)
+      
+      params.removeFacetRefinements { (facetRefinement) -> Bool in
+        facetRefinement.value == "value3"
+      }
+      
+      XCTAssertEqual(params.facetRefinements.compactMap { $0 }.count, 0)
+    }
     
     func testFacetExistence() {
         let params = SearchParameters()
