@@ -21,5 +21,5 @@ Pod::Spec.new do |s|
 
     # Dependencies
     # ------------
-    s.dependency 'InstantSearchClientOffline', '~> 5.0'
+    s.dependency 'InstantSearchClientOffline', '~> 6.0'
 end
