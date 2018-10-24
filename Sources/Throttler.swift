@@ -27,104 +27,107 @@ import Foundation
 /// The throughput is expressed as a minimum delay between calls, via the `delay` property.
 ///
 @objcMembers public class Throttler: NSObject, Caller {
-    
-    // ----------------------------------------------------------------------
-    // MARK: - Properties
-    // ----------------------------------------------------------------------
-    
-    /// Minimum delay between two calls.
-    @objc public var delay: TimeInterval {
-        didSet {
-            // Update the timer if needed.
-            if self.timer != nil {
-                initTimer()
-            }
-        }
-    }
-    
-    /// Whether to fire immediately the initial call in a series. Default = `true`.
-    ///
-    /// A series begins when a call is enqueued, and ends when the `delay` expires without any call being fired.
-    /// When this property is true, the initial call in a series will be fired immediately; subsequent calls will be
-    /// enqueued for deferred firing. When it is false, all calls are enqueued, including the initial call.
-    ///
-    @objc public var fireInitialCall: Bool = true
-    
-    /// The next call to fire.
-    private var pendingCall: Caller.Call!
-    
-    /// Timer used to fire the calls.
-    /// For performance reasons, it is only activated when and as long as necessary.
-    private var timer: Timer?
-    
-    // ----------------------------------------------------------------------
-    // MARK: - Initialization
-    // ----------------------------------------------------------------------
-    
-    /// Init a throttler with a given delay.
-    ///
-    /// - parameter delay: The minimum delay between two calls.
-    ///
-    @objc public init(delay: TimeInterval) {
-        self.delay = delay
-        super.init()
-    }
-    
-    deinit {
-        timer?.invalidate()
-    }
+  // ----------------------------------------------------------------------
 
-    /// Setup the timer.
-    /// It will be created if necessary, or replaced if already existing.
-    ///
-    private func initTimer() {
-        // NOTE: If there already is a running timer, we want to preserve the next fire date.
-        // CAUTION: In some cases, the `fireDate` property may give the *last* fired date (instead of the next one).
-        let now = Date()
-        let fireDate = timer == nil ? now + delay : (timer!.fireDate > now ? timer!.fireDate : timer!.fireDate + delay)
-        timer?.invalidate()
-        timer = Timer(fireAt: fireDate, interval: delay, target: self, selector: #selector(self.runBlock), userInfo: nil, repeats: true)
-        RunLoop.main.add(timer!, forMode: RunLoop.Mode.default)
-    }
+  // MARK: - Properties
 
-    /// Remove the timer.
-    private func deinitTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
-    
-    // ----------------------------------------------------------------------
-    // MARK: - Scheduling calls
-    // ----------------------------------------------------------------------
-    
-    /// Register another call.
-    /// It may be eventually fired or not, depending on the throttler's policy and current state.
-    ///
-    /// - parameter block: The call to throttle.
-    ///
-    @objc public func call(_ block: @escaping Caller.Call) {
-        let isInitialCall = self.pendingCall == nil && self.timer == nil
+  // ----------------------------------------------------------------------
 
-        // Start a series if needed.
-        if self.timer == nil {
-            initTimer()
-        }
-        // Fire immediately if first in its series and the policy allows it.
-        if isInitialCall && self.fireInitialCall {
-            block()
-        }
-        // Otherwise, schedule for firing later.
-        else {
-            self.pendingCall = block
-        }
+  /// Minimum delay between two calls.
+  @objc public var delay: TimeInterval {
+    didSet {
+      // Update the timer if needed.
+      if timer != nil {
+        initTimer()
+      }
     }
-    
-    @objc private func runBlock() {
-        if self.pendingCall == nil { // series has ended
-            deinitTimer()
-        } else {
-            self.pendingCall()
-            pendingCall = nil
-        }
+  }
+
+  /// Whether to fire immediately the initial call in a series. Default = `true`.
+  ///
+  /// A series begins when a call is enqueued, and ends when the `delay` expires without any call being fired.
+  /// When this property is true, the initial call in a series will be fired immediately; subsequent calls will be
+  /// enqueued for deferred firing. When it is false, all calls are enqueued, including the initial call.
+  ///
+  @objc public var fireInitialCall: Bool = true
+
+  /// The next call to fire.
+  private var pendingCall: Caller.Call!
+
+  /// Timer used to fire the calls.
+  /// For performance reasons, it is only activated when and as long as necessary.
+  private var timer: Timer?
+
+  // ----------------------------------------------------------------------
+
+  // MARK: - Initialization
+
+  // ----------------------------------------------------------------------
+
+  /// Init a throttler with a given delay.
+  ///
+  /// - parameter delay: The minimum delay between two calls.
+  ///
+  @objc public init(delay: TimeInterval) {
+    self.delay = delay
+    super.init()
+  }
+
+  deinit {
+    timer?.invalidate()
+  }
+
+  /// Setup the timer.
+  /// It will be created if necessary, or replaced if already existing.
+  ///
+  private func initTimer() {
+    // NOTE: If there already is a running timer, we want to preserve the next fire date.
+    // CAUTION: In some cases, the `fireDate` property may give the *last* fired date (instead of the next one).
+    let now = Date()
+    let fireDate = timer == nil ? now + delay : (timer!.fireDate > now ? timer!.fireDate : timer!.fireDate + delay)
+    timer?.invalidate()
+    timer = Timer(fireAt: fireDate, interval: delay, target: self, selector: #selector(runBlock), userInfo: nil, repeats: true)
+    RunLoop.main.add(timer!, forMode: RunLoop.Mode.default)
+  }
+
+  /// Remove the timer.
+  private func deinitTimer() {
+    timer?.invalidate()
+    timer = nil
+  }
+
+  // ----------------------------------------------------------------------
+
+  // MARK: - Scheduling calls
+
+  // ----------------------------------------------------------------------
+
+  /// Register another call.
+  /// It may be eventually fired or not, depending on the throttler's policy and current state.
+  ///
+  /// - parameter block: The call to throttle.
+  ///
+  @objc public func call(_ block: @escaping Caller.Call) {
+    let isInitialCall = pendingCall == nil && timer == nil
+
+    // Start a series if needed.
+    if timer == nil {
+      initTimer()
     }
+    // Fire immediately if first in its series and the policy allows it.
+    if isInitialCall && fireInitialCall {
+      block()
+    } else {
+      pendingCall = block
+    }
+  }
+
+  @objc private func runBlock() {
+    if pendingCall == nil { // series has ended
+      deinitTimer()
+    } else {
+      pendingCall()
+      pendingCall = nil
+    }
+  }
 }
