@@ -25,7 +25,6 @@
 import Foundation
 import XCTest
 
-
 class SearchParametersTest: XCTestCase {
     
     func testCopy() {

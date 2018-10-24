@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Merges multiple calls into a single one.
 ///
 /// The debouncer works by delaying every call by a given delay; if another call happens before the delay is expired,

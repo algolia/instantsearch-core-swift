@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Delegate to a `SearchProgressController`.
 ///
 @objc public protocol SearchProgressDelegate {
@@ -33,7 +32,6 @@ import Foundation
     /// Fired when progress should stop being reported.
     @objc func searchDidStop(_ searchProgressController: SearchProgressController)
 }
-
 
 /// Tracks progress of a `Searcher`.
 ///

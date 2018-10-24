@@ -23,14 +23,13 @@
 
 import Foundation
 
-
 /// Abstract protocol for scheduling calls (blocks of code).
 ///
 /// + Note: Mainly useful for genericity of code, especially in unit tests.
 ///
 @objc public protocol Caller: class {
     /// Signature of calls scheduled by a `Caller`.
-    typealias Call = () -> ()
+    typealias Call = () -> Void
 
     /// Schedule a call for execution.
     ///

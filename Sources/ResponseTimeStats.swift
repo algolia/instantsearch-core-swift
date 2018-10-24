@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Gathers response time statistics from one or more searchers.
 ///
 /// ## Usage
@@ -67,7 +66,7 @@ import Foundation
         @objc public let startDate: Date
         
         /// The request's stop date, or `nil` if the request is still running.
-        @objc public fileprivate(set) var stopDate: Date? = nil
+        @objc public fileprivate(set) var stopDate: Date?
         
         /// Whether the request was cancelled.
         @objc public fileprivate(set) var cancelled: Bool = false

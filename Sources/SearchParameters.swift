@@ -24,7 +24,6 @@
 import InstantSearchClient
 import Foundation
 
-
 /// A refinement of a facet.
 ///
 @objcMembers public class FacetRefinement: NSObject {
@@ -101,7 +100,6 @@ import Foundation
         return inclusive ? filter : "NOT " + filter
     }
 }
-
 
 /// A refinement on a numeric attribute.
 ///
@@ -236,7 +234,6 @@ import Foundation
     }
 }
 
-
 /// A high-level representation of a query's filter.
 ///
 /// This class allows manipulating facet and numeric filters individually, then combining them into a string
@@ -364,10 +361,8 @@ import Foundation
         if lhsFacets != rhsFacets {
             return false
         }
-        for facetName in lhsFacets {
-            if self.facetRefinements[facetName]! != rhs.facetRefinements[facetName]! {
-                return false
-            }
+        for facetName in lhsFacets where self.facetRefinements[facetName]! != rhs.facetRefinements[facetName]! {
+            return false
         }
         // Compare numeric filters.
         let lhsFilters = self.numericRefinements.keys
@@ -375,10 +370,10 @@ import Foundation
         if lhsFilters != rhsFilters {
             return false
         }
-        for attributeName in lhsFilters {
-            if self.numericRefinements[attributeName]! != rhs.numericRefinements[attributeName]! {
-                return false
-            }
+        for attributeName in lhsFilters where self.numericRefinements[attributeName]! != rhs.numericRefinements[attributeName]! {
+
+            return false
+
         }
         return true
     }

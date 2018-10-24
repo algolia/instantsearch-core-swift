@@ -24,7 +24,6 @@
 import InstantSearchClient
 import Foundation
 
-
 /// Various helpers to deal with JSON data.
 ///
 internal class JSONHelper {

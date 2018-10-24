@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Renders marked up text into attributed strings with markup removed and the visual attributes applied to highlights.
 ///
 @objcMembers public class Highlighter: NSObject {

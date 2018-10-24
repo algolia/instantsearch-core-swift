@@ -24,7 +24,6 @@
 import InstantSearchClient
 import Foundation
 
-
 internal protocol SequencerDelegate: class {
     /// Start the next request.
     ///
@@ -50,7 +49,6 @@ internal protocol SequencerDelegate: class {
     ///
     func requestWasCancelled(seqNo: Int)
 }
-
 
 /// Manages a sequence of requests.
 /// A `Sequencer` keeps track of the order in which requests have been issued, and cancels obsolete requests whenever a

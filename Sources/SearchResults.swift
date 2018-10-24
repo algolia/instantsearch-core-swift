@@ -24,12 +24,11 @@
 import InstantSearchClient
 import Foundation
 
-
 /// Match level of a highlight or snippet result (internal version).
-private enum MatchLevel_: String {
-    case full = "full"
-    case partial = "partial"
-    case none = "none"
+private enum MatchLevelString: String {
+    case full
+    case partial
+    case none
 }
 
 /// Match level of a highlight or snippet result.
@@ -46,7 +45,7 @@ private enum MatchLevel_: String {
 }
 
 /// Convert a pure Swift enum into an Objective-C bridgeable one.
-private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
+private func swift2Objc(_ matchLevel: MatchLevelString?) -> MatchLevel {
     if let level = matchLevel {
         switch level {
         case .full: return .full
@@ -81,7 +80,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         guard
             let value = json["value"] as? String,
             let matchLevelString = json["matchLevel"] as? String,
-            let matchLevel_ = MatchLevel_(rawValue: matchLevelString),
+            let matchLevel_ = MatchLevelString(rawValue: matchLevelString),
             let matchedWords = json["matchedWords"] as? [String]
         else {
             return nil
@@ -113,7 +112,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         guard
             let value = json["value"] as? String,
             let matchLevelString = json["matchLevel"] as? String,
-            let matchLevel_ = MatchLevel_(rawValue: matchLevelString)
+            let matchLevel_ = MatchLevelString(rawValue: matchLevelString)
             else {
                 return nil
         }
@@ -188,7 +187,7 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     ///
     @objc public let count: Int
     
-    @objc public var highlighted: String? = nil
+    @objc public var highlighted: String?
     
     @objc public init(value: String, count: Int) {
         self.value = value
@@ -211,10 +210,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
         }
         // Make sure there is a value at least for the refined values.
         if let refinements = refinements {
-            for refinement in refinements {
-                if facetCounts?[refinement] == nil {
-                    values.append(FacetValue(value: refinement, count: 0))
-                }
+            for refinement in refinements where facetCounts?[refinement] == nil {
+                values.append(FacetValue(value: refinement, count: 0))
             }
         }
         return values
@@ -245,8 +242,8 @@ private func swift2Objc(_ matchLevel: MatchLevel_?) -> MatchLevel {
     
     @objc public init(facetHits: [FacetValue]) {
         let facetValues = facetHits.map({ (facetHit) in
-            return ["value" : facetHit.value,
-                    "count" : facetHit.count,
+            return ["value": facetHit.value,
+                    "count": facetHit.count,
                     "highlighted": facetHit.highlighted ?? ""]
         })
         

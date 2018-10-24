@@ -24,7 +24,6 @@
 @testable import InstantSearchCore
 import XCTest
 
-
 class CallerTest: XCTestCase {
     
     override func setUp() {
@@ -54,6 +53,5 @@ class CallerTest: XCTestCase {
             }
         }
     }
-    
 
 }

@@ -24,7 +24,6 @@
 @_exported import InstantSearchClient
 import Foundation
 
-
 // ------------------------------------------------------------------------
 // IMPLEMENTATION NOTES
 // ------------------------------------------------------------------------
@@ -63,7 +62,6 @@ import Foundation
 //
 // ------------------------------------------------------------------------
 
-
 /// Delegate to a `Searcher`.
 ///
 @objc public protocol SearcherDelegate {
@@ -78,7 +76,6 @@ import Foundation
     @objc(searcher:didReceiveResults:error:userInfo:)
     func searcher(_ searcher: Searcher, didReceive results: SearchResults?, error: Error?, userInfo: [String: Any])
 }
-
 
 /// Manages search on an Algolia index.
 ///
@@ -375,7 +372,7 @@ import Foundation
     ///
     private func canLoadMore() -> Bool {
         // Cannot load more when no results have been received.
-        guard let receivedState = receivedState, let _ = results else {
+        guard let receivedState = receivedState, results != nil else {
             return false
         }
         // Must not load more if the results are outdated with respect to the currently on-going search.
@@ -489,8 +486,7 @@ import Foundation
         if let results = results {
             userInfo[Searcher.resultNotificationResultsKey] = results
             NotificationCenter.default.post(name: Searcher.ResultNotification, object: self, userInfo: userInfo)
-        }
-        else if let error = error {
+        } else if let error = error {
             userInfo[Searcher.errorNotificationErrorKey] = error
             NotificationCenter.default.post(name: Searcher.ErrorNotification, object: self, userInfo: userInfo)
         }

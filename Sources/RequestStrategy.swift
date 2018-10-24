@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Pluggable request strategy.
 /// A strategy acts as an optional delegate to one or more `Searcher` instances and decides how to transform logical
 /// search intents (i.e. calls to `Searcher.search(...)`) into actual search requests.

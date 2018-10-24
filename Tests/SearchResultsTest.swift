@@ -402,7 +402,6 @@ class SearchResultsTest: XCTestCase {
             XCTFail("Failed to construct results")
         }
     }
-    
 
     func testParsedQuery() {
         // Missing value: optional.

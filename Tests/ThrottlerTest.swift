@@ -24,7 +24,6 @@
 @testable import InstantSearchCore
 import XCTest
 
-
 class ThrottlerTest: CallerTest {
     
     override func setUp() {

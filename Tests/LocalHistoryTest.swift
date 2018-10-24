@@ -25,7 +25,6 @@ import InstantSearchClient
 @testable import InstantSearchCore
 import XCTest
 
-
 class LocalHistoryTest: XCTestCase {
     var history: LocalHistory!
     

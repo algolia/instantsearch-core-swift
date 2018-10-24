@@ -24,7 +24,6 @@
 import InstantSearchClient
 import Foundation
 
-
 /// Request strategy that adapts to the current network conditions.
 ///
 /// This strategies switches between three modes, depending on reponse time statistics:

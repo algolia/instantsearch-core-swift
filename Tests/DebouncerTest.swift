@@ -24,7 +24,6 @@
 @testable import InstantSearchCore
 import XCTest
 
-
 class DebouncerTest: CallerTest {
     
     override func setUp() {

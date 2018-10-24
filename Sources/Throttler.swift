@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Ensures a maximum throughput on a stream of calls.
 /// The throughput is expressed as a minimum delay between calls, via the `delay` property.
 ///

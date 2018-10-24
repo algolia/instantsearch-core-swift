@@ -24,7 +24,6 @@
 import InstantSearchClient
 import Foundation
 
-
 /// Records a history of searches.
 ///
 @objcMembers public class HistoryRecorder: NSObject {
@@ -61,7 +60,9 @@ import Foundation
         super.init()
         observeSearchNotifications()
     }
-  
+
+    // Disable swiftlint here as it only applies for iOS 8 and below which is less than 1% the target. We'll also remove support soon for iOS 8. 
+    // swiftlint:disable discarded_notification_center_observer
     private func observeSearchNotifications() {
       NotificationCenter.default.addObserver(forName: Searcher.SearchNotification, object: searcher, queue: nil) { (notification) in
         guard let params = notification.userInfo?[Searcher.userInfoParamsKey] as? SearchParameters else { return }
@@ -75,6 +76,7 @@ import Foundation
         }
       }
     }
+    // swiftlint:enable discarded_notification_center_observer
 }
 
 /// Manages a history of previous searches.
@@ -261,13 +263,13 @@ import Foundation
             if let newTextPrefixPattern = try? NSRegularExpression(pattern: "^" + newText + "(?!\\b)", options: .useUnicodeWordBoundaries) {
                 for i in 0 ..< queries.count {
                     let oldText = queries[i] as! String
-                    if newTextPrefixPattern.firstMatch(in: oldText, range: NSMakeRange(0, (oldText as NSString).length)) != nil {
+                    if newTextPrefixPattern.firstMatch(in: oldText, range: NSRange(location: 0, length: (oldText as NSString).length)) != nil {
                         // New text is a prefix of the old text, not ending on a word boundary.
                         redundant = true
                         break
                     }
                     guard let oldTextPrefixPattern = try? NSRegularExpression(pattern: "^" + oldText + "(?!\\b)", options: .useUnicodeWordBoundaries) else { continue }
-                    if oldTextPrefixPattern.firstMatch(in: newText, range: NSMakeRange(0, (newText as NSString).length)) != nil {
+                    if oldTextPrefixPattern.firstMatch(in: newText, range: NSRange(location: 0, length: (newText as NSString).length)) != nil {
                         // Old text is a prefix of the new text, not ending on a word boundary.
                         redundant = true
                         // Update the existing entry...
@@ -364,7 +366,7 @@ import Foundation
     private func normalize(_ text: String) -> String {
         return whitespaceRegex
             // Replace each sequence of whitespace by a single space.
-            .stringByReplacingMatches(in: text, options: [], range: NSMakeRange(0, (text as NSString).length), withTemplate: " ")
+            .stringByReplacingMatches(in: text, options: [], range: NSRange(location: 0, length: (text as NSString).length), withTemplate: " ")
             // Trim leading and trailing whitespace.
             .trimmingCharacters(in: .whitespaces)
             // Convert to lower case.
