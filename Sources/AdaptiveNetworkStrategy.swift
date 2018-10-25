@@ -170,16 +170,13 @@ import InstantSearchClient
       switch mode {
       case .Realtime:
         callback(userInfo)
-        break
       case .Throttled:
         throttler(for: searcher).call({
           callback(userInfo)
         })
-        break
       case .Manual:
         // Inform observers that a request has been dropped.
         NotificationCenter.default.post(name: AdaptiveNetworkStrategy.DropNotification, object: self, userInfo: nil)
-        break
       }
     }
   }

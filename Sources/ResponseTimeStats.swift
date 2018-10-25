@@ -187,7 +187,6 @@ import Foundation
       for triggerDelay in triggerDelays {
         DispatchQueue.main.asyncAfter(deadline: .now() + triggerDelay, execute: checkPendingRequestsBlock)
       }
-      break
 
     case Searcher.ResultNotification, Searcher.ErrorNotification, Searcher.CancelNotification:
       guard let statIndex = requestStats.index(where: { $0.seqNo == requestSeqNo }) else {
@@ -202,7 +201,6 @@ import Foundation
         requestStats[statIndex].cancelled = true
       }
       updateStats()
-      break
 
     default:
       break // ignore
