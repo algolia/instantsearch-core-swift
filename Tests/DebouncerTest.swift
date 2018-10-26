@@ -24,36 +24,34 @@
 @testable import InstantSearchCore
 import XCTest
 
-
 class DebouncerTest: CallerTest {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    func testDefault() {
-        let expectation = self.expectation(description: #function)
-        let delay = 0.3
-        let throttler = Debouncer(delay: delay)
-        let callDelays: [TimeInterval] = [
-            0.1, // #0
-            0.2, // #1
-            0.3, // #2
-            0.4, // #3
-            0.5, // #4: fired
-            // 0.8 = call #4 fired
-            0.9, // #5
-            1.0, // #6
-            1.1, // #7: fired
-            // 1.4 = call #7 fired
-            1.5, // #8
-            // 1.8: call #8 fired
-        ]
-        checkIterations(caller: throttler, callDelays: callDelays, callsToBeFired: [4, 7, 8], expectation: expectation)
-        self.waitForExpectations(timeout: 10, handler: nil)
-    }
+  override func setUp() {
+    super.setUp()
+  }
+
+  override func tearDown() {
+    super.tearDown()
+  }
+
+  func testDefault() {
+    let expectation = self.expectation(description: #function)
+    let delay = 0.3
+    let throttler = Debouncer(delay: delay)
+    let callDelays: [TimeInterval] = [
+      0.1, // #0
+      0.2, // #1
+      0.3, // #2
+      0.4, // #3
+      0.5, // #4: fired
+      // 0.8 = call #4 fired
+      0.9, // #5
+      1.0, // #6
+      1.1, // #7: fired
+      // 1.4 = call #7 fired
+      1.5, // #8
+      // 1.8: call #8 fired
+    ]
+    checkIterations(caller: throttler, callDelays: callDelays, callsToBeFired: [4, 7, 8], expectation: expectation)
+    waitForExpectations(timeout: 10, handler: nil)
+  }
 }

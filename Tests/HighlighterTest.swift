@@ -25,79 +25,77 @@ import InstantSearchClient
 @testable import InstantSearchCore
 import XCTest
 
-public func ==(lhs: NSRange, rhs: NSRange) -> Bool {
-    return lhs.location == rhs.location && lhs.length == rhs.length
+public func == (lhs: NSRange, rhs: NSRange) -> Bool {
+  return lhs.location == rhs.location && lhs.length == rhs.length
 }
 
-
 class HighlighterTest: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    private func checkRanges(string: NSAttributedString, ranges: [NSRange: [NSAttributedStringKey: Any]]) {
-        string.enumerateAttributes(in: NSMakeRange(0, string.length), options: []) { (attributes, range, shouldStop) in
-            guard let expectedAttributes = ranges[range] else {
-                XCTFail("Range [\(range.location), \(range.location + range.length)[ not expected")
-                return
-            }
-            // We cannot easily compare the dictionaries because values don't necessarily conform to `Equatable`.
-            // So we just verify that we have the same key set. For our purposes it's enough, because non highlighted
-            // ranges will have empty attributes.
-            XCTAssertEqual(Array(expectedAttributes.keys), Array(attributes.keys))
-        }
-    }
-    
-    func testRender() {
-        let attributes = [NSAttributedStringKey.font: "bar"]
-        let renderer = Highlighter(highlightAttrs: attributes)
-        let result = renderer.render(text: "Woodstock is <em>Snoopy</em>'s friend")
-        checkRanges(string: result, ranges: [
-            NSMakeRange(0, 13): [:],
-            NSMakeRange(13, 6): attributes,
-            NSMakeRange(19, 9): [:]
-        ])
-    }
-    
-    func testCustomMarkers() {
-        let attributes = [NSAttributedStringKey.font: "bar"]
-        let renderer = Highlighter(highlightAttrs: attributes)
-        renderer.preTag = "<mark>"
-        renderer.postTag = "</mark>"
-        let result = renderer.render(text: "Woodstock is <mark>Snoopy</mark>'s friend")
-        checkRanges(string: result, ranges: [
-            NSMakeRange(0, 13): [:],
-            NSMakeRange(13, 6): attributes,
-            NSMakeRange(19, 9): [:]
-        ])
-    }
+  override func setUp() {
+    super.setUp()
+  }
 
-    func testCaseSensitivity() {
-        let attributes = [NSAttributedStringKey.font: "bar"]
-        let renderer = Highlighter(highlightAttrs: attributes)
-        renderer.caseSensitive = true
-        let result = renderer.render(text: "Woodstock is <EM>Snoopy</EM>'s <em>friend</em>")
-        checkRanges(string: result, ranges: [
-            NSMakeRange(0, 31): [:],
-            NSMakeRange(31, 6): attributes
-        ])
+  override func tearDown() {
+    super.tearDown()
+  }
+
+  private func checkRanges(string: NSAttributedString, ranges: [NSRange: [NSAttributedStringKey: Any]]) {
+    string.enumerateAttributes(in: NSMakeRange(0, string.length), options: []) { attributes, range, _ in
+      guard let expectedAttributes = ranges[range] else {
+        XCTFail("Range [\(range.location), \(range.location + range.length)[ not expected")
+        return
+      }
+      // We cannot easily compare the dictionaries because values don't necessarily conform to `Equatable`.
+      // So we just verify that we have the same key set. For our purposes it's enough, because non highlighted
+      // ranges will have empty attributes.
+      XCTAssertEqual(Array(expectedAttributes.keys), Array(attributes.keys))
     }
-    
-    func testInverse() {
-        let renderer = Highlighter(highlightAttrs: [:])
-        XCTAssertEqual(renderer.inverseHighlights(in: ""), "")
-        XCTAssertEqual(renderer.inverseHighlights(in: "<em>everything</em>"), "everything")
-        XCTAssertEqual(renderer.inverseHighlights(in: "nothing"), "<em>nothing</em>")
-        XCTAssertEqual(renderer.inverseHighlights(in: "prefix <em>highlight</em>"), "<em>prefix </em>highlight")
-        XCTAssertEqual(renderer.inverseHighlights(in: "<em>highlight</em> suffix"), "highlight<em> suffix</em>")
-        XCTAssertEqual(renderer.inverseHighlights(in: "prefix <em>highlight</em> suffix"), "<em>prefix </em>highlight<em> suffix</em>")
-        
-        // Edge cases:
-        XCTAssertEqual(renderer.inverseHighlights(in: "abc<em>xxx"), "<em>abc</em>xxx") // unmatched tag -> up to end of string
-    }
+  }
+
+  func testRender() {
+    let attributes = [NSAttributedStringKey.font: "bar"]
+    let renderer = Highlighter(highlightAttrs: attributes)
+    let result = renderer.render(text: "Woodstock is <em>Snoopy</em>'s friend")
+    checkRanges(string: result, ranges: [
+      NSMakeRange(0, 13): [:],
+      NSMakeRange(13, 6): attributes,
+      NSMakeRange(19, 9): [:],
+    ])
+  }
+
+  func testCustomMarkers() {
+    let attributes = [NSAttributedStringKey.font: "bar"]
+    let renderer = Highlighter(highlightAttrs: attributes)
+    renderer.preTag = "<mark>"
+    renderer.postTag = "</mark>"
+    let result = renderer.render(text: "Woodstock is <mark>Snoopy</mark>'s friend")
+    checkRanges(string: result, ranges: [
+      NSMakeRange(0, 13): [:],
+      NSMakeRange(13, 6): attributes,
+      NSMakeRange(19, 9): [:],
+    ])
+  }
+
+  func testCaseSensitivity() {
+    let attributes = [NSAttributedStringKey.font: "bar"]
+    let renderer = Highlighter(highlightAttrs: attributes)
+    renderer.caseSensitive = true
+    let result = renderer.render(text: "Woodstock is <EM>Snoopy</EM>'s <em>friend</em>")
+    checkRanges(string: result, ranges: [
+      NSMakeRange(0, 31): [:],
+      NSMakeRange(31, 6): attributes,
+    ])
+  }
+
+  func testInverse() {
+    let renderer = Highlighter(highlightAttrs: [:])
+    XCTAssertEqual(renderer.inverseHighlights(in: ""), "")
+    XCTAssertEqual(renderer.inverseHighlights(in: "<em>everything</em>"), "everything")
+    XCTAssertEqual(renderer.inverseHighlights(in: "nothing"), "<em>nothing</em>")
+    XCTAssertEqual(renderer.inverseHighlights(in: "prefix <em>highlight</em>"), "<em>prefix </em>highlight")
+    XCTAssertEqual(renderer.inverseHighlights(in: "<em>highlight</em> suffix"), "highlight<em> suffix</em>")
+    XCTAssertEqual(renderer.inverseHighlights(in: "prefix <em>highlight</em> suffix"), "<em>prefix </em>highlight<em> suffix</em>")
+
+    // Edge cases:
+    XCTAssertEqual(renderer.inverseHighlights(in: "abc<em>xxx"), "<em>abc</em>xxx") // unmatched tag -> up to end of string
+  }
 }

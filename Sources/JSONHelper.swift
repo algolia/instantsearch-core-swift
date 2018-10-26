@@ -21,32 +21,31 @@
 //  THE SOFTWARE.
 //
 
-import InstantSearchClient
 import Foundation
-
+import InstantSearchClient
 
 /// Various helpers to deal with JSON data.
 ///
 internal class JSONHelper {
-    // NOTE: Should be an extension, but restricting a generic type non the non-protocol type String does not compile.
-    
-    /// Get the value for an attribute with a "deep" path (dot notation).
-    /// Example: asking for "foo.bar" will retrieve the "bar" attribute of the "foo" attribute, provided that the
-    /// latter exists and is a dictionary.
-    ///
-    /// - parameter json: The root JSON object.
-    /// - parameter path: Path of the attribute to retrieve, in dot notation.
-    /// - returns: The corresponding value, or nil if it does not exist.
-    ///
-    internal static func valueForKeyPath(json: [String: Any], path: String) -> Any? {
-        var value: Any = json
-        for name in path.components(separatedBy: ".") {
-            if let newValue = (value as? [String: Any])?[name] {
-                value = newValue
-            } else {
-                return nil
-            }
-        }
-        return value
+  // NOTE: Should be an extension, but restricting a generic type non the non-protocol type String does not compile.
+
+  /// Get the value for an attribute with a "deep" path (dot notation).
+  /// Example: asking for "foo.bar" will retrieve the "bar" attribute of the "foo" attribute, provided that the
+  /// latter exists and is a dictionary.
+  ///
+  /// - parameter json: The root JSON object.
+  /// - parameter path: Path of the attribute to retrieve, in dot notation.
+  /// - returns: The corresponding value, or nil if it does not exist.
+  ///
+  internal static func valueForKeyPath(json: [String: Any], path: String) -> Any? {
+    var value: Any = json
+    for name in path.components(separatedBy: ".") {
+      if let newValue = (value as? [String: Any])?[name] {
+        value = newValue
+      } else {
+        return nil
+      }
     }
+    return value
+  }
 }

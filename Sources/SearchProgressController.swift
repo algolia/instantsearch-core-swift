@@ -23,17 +23,15 @@
 
 import Foundation
 
-
 /// Delegate to a `SearchProgressController`.
 ///
 @objc public protocol SearchProgressDelegate {
-    /// Fired when progress should start being reported.
-    @objc func searchDidStart(_ searchProgressController: SearchProgressController)
-    
-    /// Fired when progress should stop being reported.
-    @objc func searchDidStop(_ searchProgressController: SearchProgressController)
-}
+  /// Fired when progress should start being reported.
+  @objc func searchDidStart(_ searchProgressController: SearchProgressController)
 
+  /// Fired when progress should stop being reported.
+  @objc func searchDidStop(_ searchProgressController: SearchProgressController)
+}
 
 /// Tracks progress of a `Searcher`.
 ///
@@ -44,70 +42,68 @@ import Foundation
 /// `graceDelay` property: any request returning in less than this delay will not cause start/stop events to be fired.
 ///
 @objcMembers public class SearchProgressController: NSObject {
-    // MARK: Properties
-    
-    /// Searcher monitored by this progress controller.
-    @objc public let searcher: Searcher
-    
-    /// Delegate to this progress controller.
-    @objc public weak var delegate: SearchProgressDelegate?
-    
-    /// Delay before which search requests are not reported. Default: 0, meaning requests are reported immediately.
-    /// When this is non-zero, fast enough requests do not trigger any event.
-    @objc public var graceDelay: TimeInterval = 0
-    
-    /// Whether a search is currently advertised as running.
-    @objc public private(set) var running: Bool = false {
-        didSet(wasRunning) {
-            if running && !wasRunning {
-                delegate?.searchDidStart(self)
-            } else if !running && wasRunning {
-                delegate?.searchDidStop(self)
-            }
-        }
+  // MARK: Properties
+
+  /// Searcher monitored by this progress controller.
+  @objc public let searcher: Searcher
+
+  /// Delegate to this progress controller.
+  @objc public weak var delegate: SearchProgressDelegate?
+
+  /// Delay before which search requests are not reported. Default: 0, meaning requests are reported immediately.
+  /// When this is non-zero, fast enough requests do not trigger any event.
+  @objc public var graceDelay: TimeInterval = 0
+
+  /// Whether a search is currently advertised as running.
+  @objc public private(set) var running: Bool = false {
+    didSet(wasRunning) {
+      if running && !wasRunning {
+        delegate?.searchDidStart(self)
+      } else if !running && wasRunning {
+        delegate?.searchDidStop(self)
+      }
     }
-    
-    /// Timer used to start the activity indicator after a delay.
-    private var activityIndicatorTimer: Timer?
-    
-    // MARK: - Initialization
-    
-    @objc public init(searcher: Searcher) {
-        self.searcher = searcher
-        super.init()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.SearchNotification, object: searcher)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.ResultNotification, object: searcher)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.ErrorNotification, object: searcher)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRunning), name: Searcher.CancelNotification, object: searcher)
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    /// Update the running state.
-    @objc private func updateRunning(notification: NSNotification) {
-        if !searcher.hasPendingRequests {
-            activityIndicatorTimer?.invalidate()
-            activityIndicatorTimer = nil
-            running = false
+  }
+
+  /// Timer used to start the activity indicator after a delay.
+  private var activityIndicatorTimer: Timer?
+
+  // MARK: - Initialization
+
+  @objc public init(searcher: Searcher) {
+    self.searcher = searcher
+    super.init()
+    NotificationCenter.default.addObserver(self, selector: #selector(updateRunning), name: Searcher.SearchNotification, object: searcher)
+    NotificationCenter.default.addObserver(self, selector: #selector(updateRunning), name: Searcher.ResultNotification, object: searcher)
+    NotificationCenter.default.addObserver(self, selector: #selector(updateRunning), name: Searcher.ErrorNotification, object: searcher)
+    NotificationCenter.default.addObserver(self, selector: #selector(updateRunning), name: Searcher.CancelNotification, object: searcher)
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
+  /// Update the running state.
+  @objc private func updateRunning(notification _: NSNotification) {
+    if !searcher.hasPendingRequests {
+      activityIndicatorTimer?.invalidate()
+      activityIndicatorTimer = nil
+      running = false
+    } else {
+      if !running {
+        // Start immediately.
+        if graceDelay <= 0.0 {
+          running = true
         } else {
-            if !running {
-                // Start immediately.
-                if graceDelay <= 0.0 {
-                    running = true
-                }
-                // Start delayed.
-                else {
-                    if activityIndicatorTimer == nil {
-                        activityIndicatorTimer = Timer.scheduledTimer(timeInterval: graceDelay, target: self, selector: #selector(self.setRunning), userInfo: nil, repeats: false)
-                    }
-                }
-            }
+          if activityIndicatorTimer == nil {
+            activityIndicatorTimer = Timer.scheduledTimer(timeInterval: graceDelay, target: self, selector: #selector(setRunning), userInfo: nil, repeats: false)
+          }
         }
+      }
     }
-    
-    @objc private func setRunning() {
-        running = true
-    }
+  }
+
+  @objc private func setRunning() {
+    running = true
+  }
 }

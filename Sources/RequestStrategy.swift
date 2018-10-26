@@ -23,7 +23,6 @@
 
 import Foundation
 
-
 /// Pluggable request strategy.
 /// A strategy acts as an optional delegate to one or more `Searcher` instances and decides how to transform logical
 /// search intents (i.e. calls to `Searcher.search(...)`) into actual search requests.
@@ -35,15 +34,14 @@ import Foundation
 /// multiple searchers.
 ///
 @objc public protocol RequestStrategy: class {
-
-    /// Ask the strategy to perform a search.
-    /// Whether the search will be performed or not, immediately or not, is at the discretion of the strategy.
-    ///
-    /// - parameter searcher: Searcher asking for the search.
-    /// - parameter userInfo: Search metadata, as passed to `Searcher.search(...)`. May influence the strategy.
-    /// - parameter callback: Block to be called by the strategy if and when it decides to search.
-    ///                       The argument is typically the `userInfo` parameter, although it may be altered by the
-    ///                       strategy as it sees fit.
-    ///
-    @objc func performSearch(from searcher: Searcher, userInfo: [String: Any], with callback: @escaping ([String: Any]) -> Void)
+  /// Ask the strategy to perform a search.
+  /// Whether the search will be performed or not, immediately or not, is at the discretion of the strategy.
+  ///
+  /// - parameter searcher: Searcher asking for the search.
+  /// - parameter userInfo: Search metadata, as passed to `Searcher.search(...)`. May influence the strategy.
+  /// - parameter callback: Block to be called by the strategy if and when it decides to search.
+  ///                       The argument is typically the `userInfo` parameter, although it may be altered by the
+  ///                       strategy as it sees fit.
+  ///
+  @objc func performSearch(from searcher: Searcher, userInfo: [String: Any], with callback: @escaping ([String: Any]) -> Void)
 }

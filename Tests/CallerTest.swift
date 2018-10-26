@@ -24,36 +24,32 @@
 @testable import InstantSearchCore
 import XCTest
 
-
 class CallerTest: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
-    func checkIterations(caller: Caller, callDelays: [TimeInterval], callsToBeFired: [Int], expectation: XCTestExpectation) {
-        func callback(iteration: Int) {
-            NSLog("Iteration #\(iteration) triggered")
-            XCTAssert(callsToBeFired.contains(iteration))
-            if iteration == callDelays.count - 1 {
-                expectation.fulfill()
-            }
-        }
-        NSLog("Starting loop...")
-        for i in 0 ..< callDelays.count {
-            let arg = i
-            DispatchQueue.main.asyncAfter(deadline: .now() + callDelays[i]) {
-                NSLog("Registering iteration #\(arg)")
-                caller.call {
-                    callback(iteration: arg)
-                }
-            }
-        }
-    }
-    
+  override func setUp() {
+    super.setUp()
+  }
 
+  override func tearDown() {
+    super.tearDown()
+  }
+
+  func checkIterations(caller: Caller, callDelays: [TimeInterval], callsToBeFired: [Int], expectation: XCTestExpectation) {
+    func callback(iteration: Int) {
+      NSLog("Iteration #\(iteration) triggered")
+      XCTAssert(callsToBeFired.contains(iteration))
+      if iteration == callDelays.count - 1 {
+        expectation.fulfill()
+      }
+    }
+    NSLog("Starting loop...")
+    for i in 0 ..< callDelays.count {
+      let arg = i
+      DispatchQueue.main.asyncAfter(deadline: .now() + callDelays[i]) {
+        NSLog("Registering iteration #\(arg)")
+        caller.call {
+          callback(iteration: arg)
+        }
+      }
+    }
+  }
 }

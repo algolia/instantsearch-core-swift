@@ -25,155 +25,154 @@ import InstantSearchClient
 @testable import InstantSearchCore
 import XCTest
 
-
 class LocalHistoryTest: XCTestCase {
-    var history: LocalHistory!
-    
-    override func setUp() {
-        super.setUp()
-        history = LocalHistory()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
+  var history: LocalHistory!
 
-    func testNormalization() {
-        let params = SearchParameters()
+  override func setUp() {
+    super.setUp()
+    history = LocalHistory()
+  }
 
-        // Lowercase.
-        params.query = "MiXed CaSE"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["mixed case"])
-        history.clear()
+  override func tearDown() {
+    super.tearDown()
+  }
 
-        // Whitespace trimming.
-        params.query = "\t white    space \n\r"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["white space"])
-    }
+  func testNormalization() {
+    let params = SearchParameters()
 
-    func testLRU() {
-        let params = SearchParameters()
-        
-        params.query = "first"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["first"])
-        
-        params.query = "second"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["second", "first"])
+    // Lowercase.
+    params.query = "MiXed CaSE"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["mixed case"])
+    history.clear()
 
-        params.query = "first"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["first", "second"])
-    }
+    // Whitespace trimming.
+    params.query = "\t white    space \n\r"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["white space"])
+  }
 
-    func testEviction() {
-        history.maxCount = 3
-        let params = SearchParameters()
-        
-        params.query = "one"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["one"])
-        
-        params.query = "two"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["two", "one"])
-        
-        params.query = "three"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["three", "two", "one"])
+  func testLRU() {
+    let params = SearchParameters()
 
-        params.query = "four"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["four", "three", "two"])
-    }
-    
-    func testEliminateRedundancy() {
-        let params = SearchParameters()
-        
-        params.query = "star"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["star"])
-        
-        // Prefix should be rejected.
-        params.query = "st"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["star"])
+    params.query = "first"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["first"])
 
-        // Non-prefix should be added.
-        params.query = "alien"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["alien", "star"])
-        
-        // Suffix ending on word boundary should be added.
-        params.query = "star wars"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["star wars", "alien", "star"])
-    
-        // Suffix should replace existing entry.
-        params.query = "stars"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["stars", "star wars", "alien"])
-    }
+    params.query = "second"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["second", "first"])
 
-    func testSearch() {
-        let params = SearchParameters()
-        
-        params.query = "Star Wars"
-        history.add(params)
-        params.query = "War Games"
-        history.add(params)
-        params.query = "Thwart the Unaware Awards" // contains "war", but not as word prefix
-        history.add(params)
-        
-        params.query = "war"
-        var hits = history.search(query: params)
-        XCTAssertEqual(hits.count, 2)
-        XCTAssertEqual(hits[0].params.query, "war games")
-        XCTAssertEqual(hits[0].highlightedText, "<em>war</em> games")
-        XCTAssertEqual(hits[1].params.query, "star wars")
-        XCTAssertEqual(hits[1].highlightedText, "star <em>war</em>s")
-        
-        let options = HistorySearchOptions()
+    params.query = "first"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["first", "second"])
+  }
 
-        hits = history.search(query: params, options: options)
-        XCTAssertEqual(hits.count, 2)
-        XCTAssertEqual(hits[0].params.query, "war games")
-        XCTAssertEqual(hits[0].highlightedText, "<em>war</em> games")
-        XCTAssertEqual(hits[1].params.query, "star wars")
-        XCTAssertEqual(hits[1].highlightedText, "star <em>war</em>s")
+  func testEviction() {
+    history.maxCount = 3
+    let params = SearchParameters()
 
-        options.highlightPreTag = "<mark>"
-        options.highlightPostTag = "</mark>"
-        hits = history.search(query: params, options: options)
-        XCTAssertEqual(hits.count, 2)
-        XCTAssertEqual(hits[0].params.query, "war games")
-        XCTAssertEqual(hits[0].highlightedText, "<mark>war</mark> games")
-        XCTAssertEqual(hits[1].params.query, "star wars")
-        XCTAssertEqual(hits[1].highlightedText, "star <mark>war</mark>s")
+    params.query = "one"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["one"])
 
-        options.maxHits = 1
-        hits = history.search(query: params, options: options)
-        XCTAssertEqual(hits.count, 1)
-        XCTAssertEqual(hits[0].params.query, "war games")
-        XCTAssertEqual(hits[0].highlightedText, "<mark>war</mark> games")
-    }
-    
-    func testPersistence() {
-        let filePath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("history.plist").path
-        let params = SearchParameters()
-        
-        params.query = "xyz"
-        history.add(params)
-        params.query = "abc def"
-        history.add(params)
-        XCTAssertEqual(history.contents, ["abc def", "xyz"])
-        history.filePath = filePath
-        history.save()
+    params.query = "two"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["two", "one"])
 
-        let history2 = LocalHistory(filePath: filePath)
-        XCTAssertEqual(history2.contents, ["abc def", "xyz"])
-    }
+    params.query = "three"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["three", "two", "one"])
+
+    params.query = "four"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["four", "three", "two"])
+  }
+
+  func testEliminateRedundancy() {
+    let params = SearchParameters()
+
+    params.query = "star"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["star"])
+
+    // Prefix should be rejected.
+    params.query = "st"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["star"])
+
+    // Non-prefix should be added.
+    params.query = "alien"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["alien", "star"])
+
+    // Suffix ending on word boundary should be added.
+    params.query = "star wars"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["star wars", "alien", "star"])
+
+    // Suffix should replace existing entry.
+    params.query = "stars"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["stars", "star wars", "alien"])
+  }
+
+  func testSearch() {
+    let params = SearchParameters()
+
+    params.query = "Star Wars"
+    history.add(params)
+    params.query = "War Games"
+    history.add(params)
+    params.query = "Thwart the Unaware Awards" // contains "war", but not as word prefix
+    history.add(params)
+
+    params.query = "war"
+    var hits = history.search(query: params)
+    XCTAssertEqual(hits.count, 2)
+    XCTAssertEqual(hits[0].params.query, "war games")
+    XCTAssertEqual(hits[0].highlightedText, "<em>war</em> games")
+    XCTAssertEqual(hits[1].params.query, "star wars")
+    XCTAssertEqual(hits[1].highlightedText, "star <em>war</em>s")
+
+    let options = HistorySearchOptions()
+
+    hits = history.search(query: params, options: options)
+    XCTAssertEqual(hits.count, 2)
+    XCTAssertEqual(hits[0].params.query, "war games")
+    XCTAssertEqual(hits[0].highlightedText, "<em>war</em> games")
+    XCTAssertEqual(hits[1].params.query, "star wars")
+    XCTAssertEqual(hits[1].highlightedText, "star <em>war</em>s")
+
+    options.highlightPreTag = "<mark>"
+    options.highlightPostTag = "</mark>"
+    hits = history.search(query: params, options: options)
+    XCTAssertEqual(hits.count, 2)
+    XCTAssertEqual(hits[0].params.query, "war games")
+    XCTAssertEqual(hits[0].highlightedText, "<mark>war</mark> games")
+    XCTAssertEqual(hits[1].params.query, "star wars")
+    XCTAssertEqual(hits[1].highlightedText, "star <mark>war</mark>s")
+
+    options.maxHits = 1
+    hits = history.search(query: params, options: options)
+    XCTAssertEqual(hits.count, 1)
+    XCTAssertEqual(hits[0].params.query, "war games")
+    XCTAssertEqual(hits[0].highlightedText, "<mark>war</mark> games")
+  }
+
+  func testPersistence() {
+    let filePath = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("history.plist").path
+    let params = SearchParameters()
+
+    params.query = "xyz"
+    history.add(params)
+    params.query = "abc def"
+    history.add(params)
+    XCTAssertEqual(history.contents, ["abc def", "xyz"])
+    history.filePath = filePath
+    history.save()
+
+    let history2 = LocalHistory(filePath: filePath)
+    XCTAssertEqual(history2.contents, ["abc def", "xyz"])
+  }
 }
