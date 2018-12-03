@@ -23,6 +23,7 @@ platform :ios do
 			configuration: "Debug",
 			clean: true
 		)
+		code_coverage
 		run_swift_lint
 	end
 end
@@ -139,6 +140,21 @@ def prepare_git(branch)
 	# We already pull in bitrise before doing anything, so no need for this step anymore.
 	# git_pull
 end
+
+lane :code_coverage do
+	# NOTE: You must have ran scan before being able to generate the code coverage
+
+  xcov(
+		project: "InstantSearchCore.xcodeproj",
+		scheme: "InstantSearchCore-iOS",
+		output_directory: "build/xcov_output",
+		slack_url: ENV['SLACK_WEBHOOK'],
+		slack_channel: "#notif-deploy-mobile",
+		slack_message: "InstantSearchCore code coverage report",
+		include_targets: "InstantSearchCore.framework"
+		#only_project_targets: true # trying to exclude pods, but not working, it s excluding everything
+	)
+end 
 
 after_all do
   #slack
