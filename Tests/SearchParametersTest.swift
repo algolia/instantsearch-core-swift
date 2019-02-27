@@ -321,4 +321,5 @@ class SearchParametersTest: XCTestCase {
     params.filters = "whatever"
     XCTAssertEqual(params.build(), "filters=%22bar%22:%22baz%22%20AND%20%22foo%22%20%3C%3D%20666.67&query=text&removeWordsIfNoResults=allOptional")
   }
+
 }

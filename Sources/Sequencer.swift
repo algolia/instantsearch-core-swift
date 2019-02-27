@@ -24,32 +24,8 @@
 import Foundation
 import InstantSearchClient
 
-internal protocol SequencerDelegate: class {
-  /// Start the next request.
-  ///
-  /// - parameter seqNo: The sequence number assigned to the new request.
-  /// - parameter completionHandler: Completion handler to be notified of the response.
-  /// - returns: A cancellable operation.
-  ///
-  func startRequest(seqNo: Int, completionHandler: @escaping CompletionHandler) -> Operation
 
-  /// Handle a response to a request.
-  ///
-  /// + Note: This method will not be called for cancelled requests.
-  ///
-  /// - parameter seqNo: Sequence number of the corresponding request.
-  /// - parameter content: The response's content (in case of success).
-  /// - parameter error: The error (in case of failure).
-  ///
-  func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?)
-
-  /// Handle a request cancellation.
-  ///
-  /// - parameter seqNo: Sequence number of the cancelled request.
-  ///
-  func requestWasCancelled(seqNo: Int)
-}
-
+// TODO: Make Sequencer internal after moving searchers to core lib
 /// Manages a sequence of requests.
 /// A `Sequencer` keeps track of the order in which requests have been issued, and cancels obsolete requests whenever a
 /// response to a more recent request is received. This ensures that responses are always received in the right order,
@@ -57,11 +33,8 @@ internal protocol SequencerDelegate: class {
 ///
 /// + Note: Requests can be any kind of `Operation`.
 ///
-internal class Sequencer: NSObject {
+public class Sequencer {
   // MARK: Properties
-
-  /// Delegate to this sequencer.
-  public weak var delegate: SequencerDelegate?
 
   /// Sequence number for the next request.
   ///
@@ -88,18 +61,21 @@ internal class Sequencer: NSObject {
   ///
   public var maxPendingRequests: Int = 3
 
+  private let sequencerQueue: OperationQueue
+
+  public typealias OperationLauncher = () -> Operation
+
   // MARK: - Initialization, termination
 
-  internal init(delegate: SequencerDelegate) {
-    self.delegate = delegate
-    super.init()
+  public init() {
+    self.sequencerQueue = OperationQueue()
+    self.sequencerQueue.maxConcurrentOperationCount = 10
   }
 
   // MARK: - Sequencing logic
 
   /// Launch next request.
-  internal func next() {
-    guard let delegate = delegate else { return }
+  public func orderOperation(operationLauncher: OperationLauncher) {
 
     // Increase sequence number.
     let currentSeqNo: Int = Sequencer.lockQueue.sync {
@@ -114,11 +90,7 @@ internal class Sequencer: NSObject {
       cancelRequest(seqNo: seqNo)
     }
 
-    // Launch request.
-    var operation: Operation!
-    let completionHandler: CompletionHandler = {
-      [weak self]
-      content, error in
+    let sequencingOperation = BlockOperation { [weak self] in
       // NOTE: We do not control the lifetime of the sequencer. => Fail gracefully if already released.
       guard let this = self else { return }
 
@@ -137,11 +109,15 @@ internal class Sequencer: NSObject {
 
       // Update last received response.
       this.lastReceivedSeqNo = currentSeqNo
-
-      // Call the response handler.
-      this.delegate?.handleResponse(seqNo: currentSeqNo, content: content, error: error)
     }
-    operation = delegate.startRequest(seqNo: currentSeqNo, completionHandler: completionHandler)
+
+
+    let operation = operationLauncher()
+
+    sequencingOperation.addDependency(operation)
+
+    sequencerQueue.addOperation(sequencingOperation)
+
     pendingRequests[currentSeqNo] = operation
   }
 
@@ -167,7 +143,6 @@ internal class Sequencer: NSObject {
   public func cancelRequest(seqNo: Int) {
     if let request = pendingRequests[seqNo] {
       request.cancel()
-      delegate?.requestWasCancelled(seqNo: seqNo)
       pendingRequests.removeValue(forKey: seqNo)
     }
   }
