@@ -171,7 +171,7 @@ import Foundation
   @objc public weak var strategy: RequestStrategy?
 
   /// Request sequencer used to guarantee the order of responses.
-  private var sequencer: Sequencer!
+  private var sequencer: Sequencer
 
   /// User callbacks for handling results.
   /// There should be at least one, but multiple handlers may be registered if necessary.
@@ -231,8 +231,8 @@ import Foundation
   /// This helps to avoid filling up the request queue when the network is slow.
   ///
   @objc public var maxPendingRequests: Int {
-    get { return sequencer.maxPendingRequests }
-    set { sequencer.maxPendingRequests = newValue }
+    get { return sequencer.maxPendingOperationsCount }
+    set { sequencer.maxPendingOperationsCount = newValue }
   }
 
   // MARK: - Initialization, termination
@@ -243,6 +243,7 @@ import Foundation
   ///
   @objc public init(index: Searchable) {
     self.index = index
+    self.sequencer = Sequencer()
     super.init()
     Searcher._updateClientUserAgents
   }
@@ -286,7 +287,7 @@ import Foundation
   ///
   @objc public func reset() {
     params.clear()
-    cancelPendingRequests()
+    sequencer.cancelPendingOperations()
     results = nil
     hits = []
   }
@@ -543,21 +544,21 @@ import Foundation
 
   /// Indicates whether there are any pending requests.
   @objc public var hasPendingRequests: Bool {
-    return sequencer.hasPendingRequests
+    return sequencer.hasPendingOperations
   }
 
   /// Cancel all pending requests.
   @objc public func cancelPendingRequests() {
-    sequencer.cancelPendingRequests()
+    sequencer.cancelPendingOperations()
   }
 
   /// Cancel a specific request.
   ///
   /// - parameter seqNo: The request's sequence number.
   ///
-  @objc public func cancelRequest(seqNo: Int) {
-    sequencer.cancelRequest(seqNo: seqNo)
-  }
+//  @objc public func cancelRequest(seqNo: Int) {
+//    sequencer.cancelRequest(seqNo: seqNo)
+//  }
 
   // MARK: - Notifications
 
