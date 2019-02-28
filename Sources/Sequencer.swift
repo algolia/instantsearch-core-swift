@@ -90,9 +90,12 @@ public class Sequencer {
       cancelRequest(seqNo: seqNo)
     }
 
-    let sequencingOperation = BlockOperation { [weak self] in
+    let operation = operationLauncher()
+
+    let sequencingOperation = BlockOperation { [weak self, operation] in
       // NOTE: We do not control the lifetime of the sequencer. => Fail gracefully if already released.
       guard let this = self else { return }
+      guard !operation.isCancelled else { return }
 
       // Cancel all previous requests (as this one is deemed more recent).
       let previousRequests = this.pendingRequests.filter({ $0.0 < currentSeqNo })
@@ -111,8 +114,6 @@ public class Sequencer {
       this.lastReceivedSeqNo = currentSeqNo
     }
 
-
-    let operation = operationLauncher()
 
     sequencingOperation.addDependency(operation)
 

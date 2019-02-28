@@ -421,30 +421,30 @@ import Foundation
 //      callResultHandlers(results: nil, error: finalError, userInfo: receivedState.userInfo)
     }
 
-    let operation: Operation
-    if state.disjunctiveFacets.isEmpty {
-      // All facets are conjunctive; build regular filters combining numeric and facet refinements.
-      // NOTE: Not strictly necessary since `Index.search(...)` calls `Query.build()`, but let's not rely on that.
-      params.update()
-      operation = index.search(params, requestOptions: nil, completionHandler: completionHandler)
-    } else {
-      // Facet filters are built directly by the disjunctive faceting search helper method.
-      params.updateFromNumerics() // this is really necessary (in contrast to the above)
-      let refinements = params.buildFacetRefinements()
-      operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, requestOptions: nil, completionHandler: completionHandler)
-    }
-
-    // Notify observers.
-    state.userInfo[Searcher.userInfoParamsKey] = params
-    // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
-    DispatchQueue.main.async {
-      NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
-    }
+//    let operation: Operation
+//    if state.disjunctiveFacets.isEmpty {
+//      // All facets are conjunctive; build regular filters combining numeric and facet refinements.
+//      // NOTE: Not strictly necessary since `Index.search(...)` calls `Query.build()`, but let's not rely on that.
+//      params.update()
+//      operation = index.search(params, requestOptions: nil, completionHandler: completionHandler)
+//    } else {
+//      // Facet filters are built directly by the disjunctive faceting search helper method.
+//      params.updateFromNumerics() // this is really necessary (in contrast to the above)
+//      let refinements = params.buildFacetRefinements()
+//      operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, requestOptions: nil, completionHandler: completionHandler)
+//    }
+//
+//    // Notify observers.
+//    state.userInfo[Searcher.userInfoParamsKey] = params
+//    // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
+//    DispatchQueue.main.async {
+//      NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
+//    }
 
     // Memorize state.
 //    states[seqNo] = state
 
-    return operation
+    return Operation()
   }
 
   func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?) {
