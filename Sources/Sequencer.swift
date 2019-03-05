@@ -51,7 +51,7 @@ public class Sequencer: Sequencable {
   private var nextSeqNo: Int = 0
 
   /// Queue used to serialize accesses to `nextSeqNo`.
-  private let lockQueue = DispatchQueue(label: "Sequencer.lock")
+  private let incrementSequenceQueue = DispatchQueue(label: "Sequencer.lock")
 
   /// Sequence number of the last completed operation.
   private var lastReceivedSeqNo: Int?
@@ -84,7 +84,7 @@ public class Sequencer: Sequencable {
   public func orderOperation(operationLauncher: Sequencable.OperationLauncher) {
 
     // Increase sequence number.
-    let currentSeqNo: Int = lockQueue.sync {
+    let currentSeqNo: Int = incrementSequenceQueue.sync {
       nextSeqNo += 1
       return nextSeqNo
     }
