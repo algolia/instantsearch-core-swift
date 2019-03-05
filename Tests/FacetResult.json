@@ -1,0 +1,56 @@
+{
+    "facetHits": [
+        {
+            "value": "Brand: Zebra",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Zebra",
+            "count": 481
+        },
+        {
+            "value": "Brand: Pocket",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Pocket",
+            "count": 403
+        },
+        {
+            "value": "Brand: Tor Books",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Tor Books",
+            "count": 374
+        },
+        {
+            "value": "Brand: Simon n Schuster",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Simon n Schuster",
+            "count": 372
+        },
+        {
+            "value": "Brand: Bantam",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Bantam",
+            "count": 370
+        },
+        {
+            "value": "Brand: Vintage",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Vintage",
+            "count": 241
+        },
+        {
+            "value": "Brand: Baen",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Baen",
+            "count": 222
+        },
+        {
+            "value": "Brand: DAW",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: DAW",
+            "count": 217
+        },
+        {
+            "value": "Brand: Viking Adult",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Viking Adult",
+            "count": 211
+        },
+        {
+            "value": "Brand: Scribner",
+            "highlighted": "<ais-highlight-1551716784527>Br<\/ais-highlight-1551716784527>and: Scribner",
+            "count": 200
+        }
+    ],
+    "exhaustiveFacetsCount": true,
+    "processingTimeMS": 25
+}
