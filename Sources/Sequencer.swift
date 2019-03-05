@@ -31,10 +31,16 @@ import InstantSearchClient
 /// or discarded.
 ///
 
-public class Sequencer {
+public protocol Sequencable {
     
-  public typealias OperationLauncher = () -> Operation
+    typealias OperationLauncher = () -> Operation
 
+    func orderOperation(operationLauncher: OperationLauncher)
+    func cancelPendingOperations()
+}
+
+public class Sequencer: Sequencable {
+    
   // MARK: Properties
 
   /// Sequence number for the next operation.
@@ -75,7 +81,7 @@ public class Sequencer {
   // MARK: - Sequencing logic
 
   /// Launch next operation.
-  public func orderOperation(operationLauncher: OperationLauncher) {
+  public func orderOperation(operationLauncher: Sequencable.OperationLauncher) {
 
     // Increase sequence number.
     let currentSeqNo: Int = lockQueue.sync {
