@@ -14,7 +14,7 @@ class FacetResultsTests: XCTestCase {
 
     func testFacetResultsDecoding() {
         
-        guard let searchResultURL = Bundle.init(for: SearchResultsV2Tests.self).path(forResource: "FacetResult", ofType: "json").flatMap(URL.init(fileURLWithPath:)) else {
+        guard let searchResultURL = Bundle.init(for: FacetResultsTests.self).path(forResource: "FacetResult", ofType: "json").flatMap(URL.init(fileURLWithPath:)) else {
             XCTFail("Cannot read file")
             return
         }
@@ -29,7 +29,7 @@ class FacetResultsTests: XCTestCase {
         let decoder = JSONDecoder()
         
         do {
-            let facetResults = try decoder.decode(V2.FacetResults.self, from: data)
+            let facetResults = try decoder.decode(FacetResults.self, from: data)
             XCTAssertTrue(facetResults.areFacetsCountExhaustive)
             XCTAssertEqual(facetResults.processingTimeMS, 25)
             XCTAssertEqual(facetResults.facetHits.count, 10)

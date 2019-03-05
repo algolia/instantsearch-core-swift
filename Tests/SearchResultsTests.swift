@@ -11,7 +11,7 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SearchResultsV2Tests: XCTestCase {
+class SearchResultsTests: XCTestCase {
     
     struct Item: Codable {
         let title: String
@@ -19,7 +19,7 @@ class SearchResultsV2Tests: XCTestCase {
     
     func testDecoding() {
         
-        guard let searchResultURL = Bundle.init(for: SearchResultsV2Tests.self).path(forResource: "SearchResult", ofType: "json").flatMap(URL.init(fileURLWithPath:)) else {
+        guard let searchResultURL = Bundle.init(for: SearchResultsTests.self).path(forResource: "SearchResult", ofType: "json").flatMap(URL.init(fileURLWithPath:)) else {
             XCTFail("Cannot read file")
             return
         }
@@ -33,7 +33,7 @@ class SearchResultsV2Tests: XCTestCase {
         let decoder = JSONDecoder()
                 
         do {
-            let searchResults = try decoder.decode(V2.SearchResults<Hit<Item>>.self, from: data)
+            let searchResults = try decoder.decode(SearchResults<Hit<Item>>.self, from: data)
             XCTAssertEqual(searchResults.totalHitsCount, 596)
             XCTAssertEqual(searchResults.page, 0)
             XCTAssertEqual(searchResults.pagesCount, 60)
