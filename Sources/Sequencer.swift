@@ -62,8 +62,12 @@ public class Sequencer: Sequencable {
   /// Maximum number of pending operations allowed.
   /// If many operations are made in a short time, this will keep only the N most recent and cancel the older ones.
   /// This helps to avoid filling up the operation queue when the network is slow.
-  ///
+  /// Default value: 3
   public var maxPendingOperationsCount: Int = 3
+  
+  /// Maximum number of concurrent sequencer completion operators allowed
+  /// Default value: 5
+  public var maxConcurrentCompletionOperationsCount: Int = 5
     
   /// Indicates whether there are any pending operations.
   public var hasPendingOperations: Bool {
@@ -75,7 +79,7 @@ public class Sequencer: Sequencable {
 
   public init() {
     self.sequencerQueue = OperationQueue()
-    self.sequencerQueue.maxConcurrentOperationCount = 10
+    self.sequencerQueue.maxConcurrentOperationCount = maxConcurrentCompletionOperationsCount
   }
 
   // MARK: - Sequencing logic
