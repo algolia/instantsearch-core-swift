@@ -98,6 +98,18 @@
 		AFCDEDAB222EB789001459BE /* SearchResultsV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResultsV2.swift */; };
 		AFCDEDAC222EB789001459BE /* SearchResultsV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResultsV2.swift */; };
 		AFCDEDAD222EB789001459BE /* SearchResultsV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResultsV2.swift */; };
+		AFCDEDAE222ED38D001459BE /* FacetName.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9C222E7B37001459BE /* FacetName.swift */; };
+		AFCDEDAF222ED38D001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
+		AFCDEDB0222ED38D001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
+		AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
+		AFCDEDB2222ED38E001459BE /* FacetName.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9C222E7B37001459BE /* FacetName.swift */; };
+		AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
+		AFCDEDB4222ED38E001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
+		AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
+		AFCDEDB6222ED390001459BE /* FacetName.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9C222E7B37001459BE /* FacetName.swift */; };
+		AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
+		AFCDEDB8222ED390001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
+		AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
 		AFE807D32229356200FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
 		AFE807D42229356300FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
 		AFE807D52229356400FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
@@ -778,12 +790,16 @@
 				BC4CB8A31D534C20004618DD /* JSONHelper.swift in Sources */,
 				AFCDED57222E7A4F001459BE /* AdaptiveNetworkStrategy.swift in Sources */,
 				AFCDED5F222E7A4F001459BE /* SearchProgressController.swift in Sources */,
+				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				AFCDED5C222E7A4F001459BE /* ResponseTimeStats.swift in Sources */,
 				AFCDED5D222E7A4F001459BE /* Searcher.swift in Sources */,
+				AFCDEDAF222ED38D001459BE /* GeoLocation.swift in Sources */,
 				AFCDEDAB222EB789001459BE /* SearchResultsV2.swift in Sources */,
+				AFCDEDB0222ED38D001459BE /* Hit.swift in Sources */,
 				AFCDED5B222E7A4F001459BE /* RequestStrategy.swift in Sources */,
 				AFCDED61222E7A4F001459BE /* SearchClient.swift in Sources */,
 				BC4CB8A11D534C20004618DD /* Debouncer.swift in Sources */,
+				AFCDEDAE222ED38D001459BE /* FacetName.swift in Sources */,
 				BC28C4CD1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				BC4CB8A21D534C20004618DD /* Highlighter.swift in Sources */,
 			);
@@ -820,12 +836,16 @@
 				BC4CB8C61D535CA4004618DD /* JSONHelper.swift in Sources */,
 				AFCDED62222E7A50001459BE /* AdaptiveNetworkStrategy.swift in Sources */,
 				AFCDED6A222E7A50001459BE /* SearchProgressController.swift in Sources */,
+				AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */,
 				AFCDED67222E7A50001459BE /* ResponseTimeStats.swift in Sources */,
 				AFCDED68222E7A50001459BE /* Searcher.swift in Sources */,
+				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFCDEDAC222EB789001459BE /* SearchResultsV2.swift in Sources */,
+				AFCDEDB4222ED38E001459BE /* Hit.swift in Sources */,
 				AFCDED66222E7A50001459BE /* RequestStrategy.swift in Sources */,
 				AFCDED6C222E7A50001459BE /* SearchClient.swift in Sources */,
 				BC4CB8C41D535CA4004618DD /* Debouncer.swift in Sources */,
+				AFCDEDB2222ED38E001459BE /* FacetName.swift in Sources */,
 				BC28C4CE1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				BC4CB8C51D535CA4004618DD /* Highlighter.swift in Sources */,
 			);
@@ -862,12 +882,16 @@
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
 				AFCDED6D222E7A51001459BE /* AdaptiveNetworkStrategy.swift in Sources */,
 				AFCDED75222E7A51001459BE /* SearchProgressController.swift in Sources */,
+				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFCDED72222E7A51001459BE /* ResponseTimeStats.swift in Sources */,
 				AFCDED73222E7A51001459BE /* Searcher.swift in Sources */,
+				AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */,
 				AFCDEDAD222EB789001459BE /* SearchResultsV2.swift in Sources */,
+				AFCDEDB8222ED390001459BE /* Hit.swift in Sources */,
 				AFCDED71222E7A51001459BE /* RequestStrategy.swift in Sources */,
 				AFCDED77222E7A51001459BE /* SearchClient.swift in Sources */,
 				BC5DC12C1D86BD170066D705 /* JSONHelper.swift in Sources */,
+				AFCDEDB6222ED390001459BE /* FacetName.swift in Sources */,
 				BC28C4CF1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				BC5DC12E1D86BD1C0066D705 /* Debouncer.swift in Sources */,
 			);
