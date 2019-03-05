@@ -11,7 +11,7 @@ import Foundation
 public enum JSON: Equatable {
     case string(String)
     case number(Float)
-    case object([String:JSON])
+    case dictionary([String:JSON])
     case array([JSON])
     case bool(Bool)
     case null
@@ -26,7 +26,7 @@ extension JSON: Codable {
         switch self {
         case let .array(array):
             try container.encode(array)
-        case let .object(object):
+        case let .dictionary(object):
             try container.encode(object)
         case let .string(string):
             try container.encode(string)
@@ -44,7 +44,7 @@ extension JSON: Codable {
         let container = try decoder.singleValueContainer()
         
         if let object = try? container.decode([String: JSON].self) {
-            self = .object(object)
+            self = .dictionary(object)
         } else if let array = try? container.decode([JSON].self) {
             self = .array(array)
         } else if let string = try? container.decode(String.self) {
@@ -97,7 +97,7 @@ extension JSON {
             return bool
         case .array(let array):
             return array.map { $0.object() }
-        case .object(let dictionary):
+        case .dictionary(let dictionary):
             var resultDictionary = [String: Any]()
             for (key, value) in dictionary {
                 resultDictionary[key] = value.object()
@@ -111,7 +111,7 @@ extension JSON {
 extension Dictionary where Key == String, Value == Any {
     
     public init?(_ json: JSON) {
-        guard case let .object(dict) = json else {
+        guard case let .dictionary(dict) = json else {
             return nil
         }
         var resultDictionary = [String: Any]()
