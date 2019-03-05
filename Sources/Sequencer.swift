@@ -65,13 +65,13 @@ public class Sequencer: Sequencable {
   /// Default value: 3
   public var maxPendingOperationsCount: Int = 3
   
-  /// Maximum number of concurrent sequencer completion operators allowed
+  /// Maximum number of concurrent sequencer completion operations allowed
   /// Default value: 5
   public var maxConcurrentCompletionOperationsCount: Int = 5
     
   /// Indicates whether there are any pending operations.
   public var hasPendingOperations: Bool {
-      return !pendingOperations.isEmpty
+    return !pendingOperations.isEmpty
   }
 
   /// Queue containing SequencerCompletion operations
@@ -128,7 +128,11 @@ public class Sequencer: Sequencable {
       pendingOperations.removeValue(forKey: seqNo)
     }
   }
-    
+
+  /// Clean-up after a succesful completion of a sequenced operation
+  ///
+  /// - parameter seqNo: The operation's sequence number.
+  ///
   private func dismissOperation(withSeqNo seqNo: Int) {
     
     guard let operationToDismiss = pendingOperations[seqNo], !operationToDismiss.isCancelled else {
