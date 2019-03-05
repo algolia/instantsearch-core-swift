@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /// Wraps a generic hit object with its meta information
 
 struct Hit<T: Codable>: Codable {

@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 // Temporary enum without cases for defining namespace
 enum V2 {
     
@@ -26,7 +25,7 @@ enum V2 {
             case queryID
             case areFacetsCountExhaustive = "exhaustiveFacetsCount"
             case message
-            case queryAfterRemoval = "queryAfterRemoval"
+            case queryAfterRemoval
             case aroundGeoLocation = "aroundLatLng"
             case automaticRadius
             case facetStats = "facets_stats"
@@ -119,8 +118,6 @@ enum V2 {
     
 }
 
-
-
 extension V2.SearchResults where T == JSON {
     
     func rawHits() -> [[String: Any]] {
@@ -169,8 +166,6 @@ extension V2.SearchResults {
     
 }
 
-
-
 extension V2.SearchResults {
     
     /// Statistics for a numerical facet.
@@ -192,4 +187,3 @@ extension V2.SearchResults {
     }
     
 }
-
