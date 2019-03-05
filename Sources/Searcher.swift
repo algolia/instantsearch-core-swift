@@ -96,7 +96,7 @@ import Foundation
 /// 3. Listen for **notifications** issued by this searcher (using `NotificationCenter`). Notifications give you
 ///    extra information, such as whether requests are cancelled by the searcher.
 ///
-@objcMembers public class Searcher: NSObject, SequencerDelegate {
+@objcMembers public class Searcher: NSObject {
   // MARK: Types
 
   /// Handler for search results.
@@ -171,7 +171,7 @@ import Foundation
   @objc public weak var strategy: RequestStrategy?
 
   /// Request sequencer used to guarantee the order of responses.
-  private var sequencer: Sequencer!
+  private var sequencer: Sequencer
 
   /// User callbacks for handling results.
   /// There should be at least one, but multiple handlers may be registered if necessary.
@@ -231,8 +231,8 @@ import Foundation
   /// This helps to avoid filling up the request queue when the network is slow.
   ///
   @objc public var maxPendingRequests: Int {
-    get { return sequencer.maxPendingRequests }
-    set { sequencer.maxPendingRequests = newValue }
+    get { return sequencer.maxPendingOperationsCount }
+    set { sequencer.maxPendingOperationsCount = newValue }
   }
 
   // MARK: - Initialization, termination
@@ -243,8 +243,8 @@ import Foundation
   ///
   @objc public init(index: Searchable) {
     self.index = index
+    self.sequencer = Sequencer()
     super.init()
-    sequencer = Sequencer(delegate: self)
     Searcher._updateClientUserAgents
   }
 
@@ -287,7 +287,7 @@ import Foundation
   ///
   @objc public func reset() {
     params.clear()
-    cancelPendingRequests()
+    sequencer.cancelPendingOperations()
     results = nil
     hits = []
   }
@@ -334,7 +334,7 @@ import Foundation
     // ... and override the metadata entirely.
     requestedState.userInfo = userInfo
     // Launch the search.
-    sequencer.next()
+    //sequencer.next()
   }
 
   /// Load more content, if possible.
@@ -357,7 +357,7 @@ import Foundation
     // ... and the `isLoadingMore` flags.
     requestedState.userInfo[Searcher.userInfoIsLoadingMoreKey] = true
     // Launch the search.
-    sequencer.next()
+    //sequencer.next()
   }
 
   /// Test whether the current state allows loading more results.
@@ -392,7 +392,7 @@ import Foundation
 
   // MARK: - SequencerDelegate
 
-  func startRequest(seqNo: Int, completionHandler: @escaping CompletionHandler) -> Operation {
+  func startRequest() -> Operation {
     // Freeze state.
     var state = State(copy: requestedState)
 
@@ -401,31 +401,51 @@ import Foundation
     params.page = UInt(state.page)
     params.facetFilters = [] // NOTE: will be overridden below
 
-    var operation: Operation
-    if state.disjunctiveFacets.isEmpty {
-      // All facets are conjunctive; build regular filters combining numeric and facet refinements.
-      // NOTE: Not strictly necessary since `Index.search(...)` calls `Query.build()`, but let's not rely on that.
-      params.update()
-      operation = index.search(params, requestOptions: nil, completionHandler: completionHandler)
-    } else {
-      // Facet filters are built directly by the disjunctive faceting search helper method.
-      params.updateFromNumerics() // this is really necessary (in contrast to the above)
-      let refinements = params.buildFacetRefinements()
-      operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, requestOptions: nil, completionHandler: completionHandler)
+    let completionHandler: CompletionHandler = { content, error in
+
+//      let finalError = error
+//      do {
+//        if let content = content {
+//          // Update hits.
+//          let isLoadingMore = receivedState.userInfo[Searcher.userInfoIsLoadingMoreKey] as? Bool ?? false
+//
+//          let searchResults = try SearchResults(content: content, disjunctiveFacets: receivedState!.disjunctiveFacets, previousHits: isLoadingMore ? hits : [])
+//          results = searchResults
+//          hits = searchResults.allHits
+//
+//          callResultHandlers(results: results, error: nil, userInfo: receivedState.userInfo)
+//          return
+//        }
+//      } catch let e {
+//        finalError = e
+//      }
+//      callResultHandlers(results: nil, error: finalError, userInfo: receivedState.userInfo)
     }
 
-    // Notify observers.
-    state.userInfo[Searcher.userInfoParamsKey] = params
-    state.userInfo[Searcher.userInfoSeqNoKey] = seqNo
-    // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
-    DispatchQueue.main.async {
-      NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
-    }
+//    let operation: Operation
+//    if state.disjunctiveFacets.isEmpty {
+//      // All facets are conjunctive; build regular filters combining numeric and facet refinements.
+//      // NOTE: Not strictly necessary since `Index.search(...)` calls `Query.build()`, but let's not rely on that.
+//      params.update()
+//      operation = index.search(params, requestOptions: nil, completionHandler: completionHandler)
+//    } else {
+//      // Facet filters are built directly by the disjunctive faceting search helper method.
+//      params.updateFromNumerics() // this is really necessary (in contrast to the above)
+//      let refinements = params.buildFacetRefinements()
+//      operation = index.searchDisjunctiveFaceting(params, disjunctiveFacets: state.disjunctiveFacets, refinements: refinements, requestOptions: nil, completionHandler: completionHandler)
+//    }
+//
+//    // Notify observers.
+//    state.userInfo[Searcher.userInfoParamsKey] = params
+//    // Do it asynchronously, so that the sequencer has added the request to the list of pending requests.
+//    DispatchQueue.main.async {
+//      NotificationCenter.default.post(name: Searcher.SearchNotification, object: self, userInfo: state.userInfo)
+//    }
 
     // Memorize state.
-    states[seqNo] = state
+//    states[seqNo] = state
 
-    return operation
+    return Operation()
   }
 
   func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?) {
@@ -524,21 +544,21 @@ import Foundation
 
   /// Indicates whether there are any pending requests.
   @objc public var hasPendingRequests: Bool {
-    return sequencer.hasPendingRequests
+    return sequencer.hasPendingOperations
   }
 
   /// Cancel all pending requests.
   @objc public func cancelPendingRequests() {
-    sequencer.cancelPendingRequests()
+    sequencer.cancelPendingOperations()
   }
 
   /// Cancel a specific request.
   ///
   /// - parameter seqNo: The request's sequence number.
   ///
-  @objc public func cancelRequest(seqNo: Int) {
-    sequencer.cancelRequest(seqNo: seqNo)
-  }
+//  @objc public func cancelRequest(seqNo: Int) {
+//    sequencer.cancelRequest(seqNo: seqNo)
+//  }
 
   // MARK: - Notifications
 

@@ -24,151 +24,162 @@
 import Foundation
 import InstantSearchClient
 
-internal protocol SequencerDelegate: class {
-  /// Start the next request.
-  ///
-  /// - parameter seqNo: The sequence number assigned to the new request.
-  /// - parameter completionHandler: Completion handler to be notified of the response.
-  /// - returns: A cancellable operation.
-  ///
-  func startRequest(seqNo: Int, completionHandler: @escaping CompletionHandler) -> Operation
-
-  /// Handle a response to a request.
-  ///
-  /// + Note: This method will not be called for cancelled requests.
-  ///
-  /// - parameter seqNo: Sequence number of the corresponding request.
-  /// - parameter content: The response's content (in case of success).
-  /// - parameter error: The error (in case of failure).
-  ///
-  func handleResponse(seqNo: Int, content: [String: Any]?, error: Error?)
-
-  /// Handle a request cancellation.
-  ///
-  /// - parameter seqNo: Sequence number of the cancelled request.
-  ///
-  func requestWasCancelled(seqNo: Int)
-}
-
-/// Manages a sequence of requests.
-/// A `Sequencer` keeps track of the order in which requests have been issued, and cancels obsolete requests whenever a
-/// response to a more recent request is received. This ensures that responses are always received in the right order,
+// TODO: Make Sequencer internal after moving searchers to core lib
+/// Manages a sequence of operations.
+/// A `Sequencer` keeps track of the order in which operations have been issued, and cancels obsolete requests whenever a
+/// response to a more recent operation is received. This ensures that responses are always received in the right order,
 /// or discarded.
 ///
-/// + Note: Requests can be any kind of `Operation`.
-///
-internal class Sequencer: NSObject {
+
+public protocol Sequencable {
+    
+    typealias OperationLauncher = () -> Operation
+
+    func orderOperation(operationLauncher: OperationLauncher)
+    func cancelPendingOperations()
+}
+
+public class Sequencer: Sequencable {
+    
   // MARK: Properties
 
-  /// Delegate to this sequencer.
-  public weak var delegate: SequencerDelegate?
-
-  /// Sequence number for the next request.
+  /// Sequence number for the next operation.
   ///
   /// + Note: Shared across all instances for ease of observation.
   ///
-  /// Sequence number for the next request.
-  private static var nextSeqNo: Int = 0
+  /// Sequence number for the next operation.
+  private var nextSeqNo: Int = 0
 
   /// Queue used to serialize accesses to `nextSeqNo`.
-  private static let lockQueue = DispatchQueue(label: "Sequencer.lock")
+  private let incrementSequenceQueue = DispatchQueue(label: "Sequencer.lock")
 
-  /// Sequence number of the last request.
-  public private(set) var lastRequestedSeqNo: Int?
+  /// Sequence number of the last completed operation.
+  private var lastReceivedSeqNo: Int?
 
-  /// Sequence number of the last received response.
-  public private(set) var lastReceivedSeqNo: Int?
+  /// All currently ongoing operations.
+  private var pendingOperations: [Int: Operation] = [:]
 
-  /// All currently ongoing requests.
-  private var pendingRequests: [Int: Operation] = [:]
+  /// Maximum number of pending operations allowed.
+  /// If many operations are made in a short time, this will keep only the N most recent and cancel the older ones.
+  /// This helps to avoid filling up the operation queue when the network is slow.
+  /// Default value: 3
+  public var maxPendingOperationsCount: Int = 3
+  
+  /// Maximum number of concurrent sequencer completion operations allowed
+  /// Default value: 5
+  public var maxConcurrentCompletionOperationsCount: Int = 5
+    
+  /// Indicates whether there are any pending operations.
+  public var hasPendingOperations: Bool {
+    return !pendingOperations.isEmpty
+  }
 
-  /// Maximum number of pending requests allowed.
-  /// If many requests are made in a short time, this will keep only the N most recent and cancel the older ones.
-  /// This helps to avoid filling up the request queue when the network is slow.
-  ///
-  public var maxPendingRequests: Int = 3
+  /// Queue containing SequencerCompletion operations
+  private let sequencerQueue: OperationQueue
 
-  // MARK: - Initialization, termination
-
-  internal init(delegate: SequencerDelegate) {
-    self.delegate = delegate
-    super.init()
+  public init() {
+    self.sequencerQueue = OperationQueue()
+    self.sequencerQueue.maxConcurrentOperationCount = maxConcurrentCompletionOperationsCount
   }
 
   // MARK: - Sequencing logic
 
-  /// Launch next request.
-  internal func next() {
-    guard let delegate = delegate else { return }
+  /// Launch next operation.
+  public func orderOperation(operationLauncher: Sequencable.OperationLauncher) {
 
     // Increase sequence number.
-    let currentSeqNo: Int = Sequencer.lockQueue.sync {
-      Sequencer.nextSeqNo += 1
-      return Sequencer.nextSeqNo
-    }
-    lastRequestedSeqNo = currentSeqNo
-
-    // Cancel obsolete requests.
-    let obsoleteRequests = pendingRequests.filter({ $0.0 <= currentSeqNo - maxPendingRequests })
-    for (seqNo, _) in obsoleteRequests {
-      cancelRequest(seqNo: seqNo)
+    let currentSeqNo: Int = incrementSequenceQueue.sync {
+      nextSeqNo += 1
+      return nextSeqNo
     }
 
-    // Launch request.
-    var operation: Operation!
-    let completionHandler: CompletionHandler = {
-      [weak self]
-      content, error in
-      // NOTE: We do not control the lifetime of the sequencer. => Fail gracefully if already released.
-      guard let this = self else { return }
+    // Cancel obsolete operations.
+    pendingOperations
+        .filter { $0.0 <= currentSeqNo - maxPendingOperationsCount }.keys
+        .forEach(cancelOperation)
 
-      // Cancel all previous requests (as this one is deemed more recent).
-      let previousRequests = this.pendingRequests.filter({ $0.0 < currentSeqNo })
-      for (seqNo, _) in previousRequests {
-        this.cancelRequest(seqNo: seqNo)
-      }
+    let operation = operationLauncher()
+    let sequencingOperation = SequencerCompletionOperation(sequenceNo: currentSeqNo, sequencer: self, correspondingOperation: operation)
+    sequencingOperation.addDependency(operation)
 
-      // Remove the current request.
-      this.pendingRequests.removeValue(forKey: currentSeqNo)
+    sequencerQueue.addOperation(sequencingOperation)
 
-      // Obsolete requests should not happen since they have been cancelled by more recent requests (see above).
-      // WARNING: Only works if the current queue is serial!
-      assert(this.lastReceivedSeqNo == nil || this.lastReceivedSeqNo! < currentSeqNo)
+    pendingOperations[currentSeqNo] = operation
+    
+  }
+    
+  // MARK: - Manage operations
 
-      // Update last received response.
-      this.lastReceivedSeqNo = currentSeqNo
-
-      // Call the response handler.
-      this.delegate?.handleResponse(seqNo: currentSeqNo, content: content, error: error)
+  /// Cancel all pending operations.
+  public func cancelPendingOperations() {
+    for seqNo in pendingOperations.keys {
+      cancelOperation(withSeqNo: seqNo)
     }
-    operation = delegate.startRequest(seqNo: currentSeqNo, completionHandler: completionHandler)
-    pendingRequests[currentSeqNo] = operation
+    assert(pendingOperations.isEmpty)
   }
 
-  // MARK: - Manage requests
-
-  /// Indicates whether there are any pending requests.
-  public var hasPendingRequests: Bool {
-    return !pendingRequests.isEmpty
-  }
-
-  /// Cancel all pending requests.
-  public func cancelPendingRequests() {
-    for seqNo in pendingRequests.keys {
-      cancelRequest(seqNo: seqNo)
-    }
-    assert(pendingRequests.isEmpty)
-  }
-
-  /// Cancel a specific request.
+  /// Cancel a specific operation.
   ///
-  /// - parameter seqNo: The request's sequence number.
+  /// - parameter seqNo: The operation's sequence number.
   ///
-  public func cancelRequest(seqNo: Int) {
-    if let request = pendingRequests[seqNo] {
-      request.cancel()
-      delegate?.requestWasCancelled(seqNo: seqNo)
-      pendingRequests.removeValue(forKey: seqNo)
+  private func cancelOperation(withSeqNo seqNo: Int) {
+    if let operation = pendingOperations[seqNo] {
+      operation.cancel()
+      pendingOperations.removeValue(forKey: seqNo)
     }
   }
+
+  /// Clean-up after a succesful completion of a sequenced operation
+  ///
+  /// - parameter seqNo: The operation's sequence number.
+  ///
+  private func dismissOperation(withSeqNo seqNo: Int) {
+    
+    guard let operationToDismiss = pendingOperations[seqNo], !operationToDismiss.isCancelled else {
+        return
+    }
+    
+    // Remove the current operation.
+    pendingOperations.removeValue(forKey: seqNo)
+    
+    // Obsolete operations should not happen since they have been cancelled by more recent operations (see above).
+    // WARNING: Only works if the current queue is serial!
+    assert(lastReceivedSeqNo == nil || lastReceivedSeqNo! < seqNo)
+    
+    // Update last received response.
+    lastReceivedSeqNo = seqNo
+  }
+    
+}
+
+private extension Sequencer {
+    
+    class SequencerCompletionOperation: Operation {
+        
+        let sequenceNo: Int
+        weak var sequencer: Sequencer?
+        var correspondingOperation: Operation
+        
+        init(sequenceNo: Int, sequencer: Sequencer, correspondingOperation: Operation) {
+            self.sequenceNo = sequenceNo
+            self.sequencer = sequencer
+            self.correspondingOperation = correspondingOperation
+        }
+        
+        override func main() {
+            guard
+                let sequencer = sequencer,
+                !correspondingOperation.isCancelled else { return }
+            
+            // Cancel all previous operations (as this one is deemed more recent).
+            sequencer.pendingOperations
+                .filter { $0.0 < sequenceNo }.keys
+                .forEach(sequencer.cancelOperation)
+            
+            sequencer.dismissOperation(withSeqNo: sequenceNo)
+            
+        }
+        
+    }
+    
 }

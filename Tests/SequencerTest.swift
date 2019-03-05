@@ -25,6 +25,101 @@ import InstantSearchClient
 @testable import InstantSearchCore
 import XCTest
 
+class AsyncOperation: Operation {
+    
+    public enum State: String {
+        case ready, executing, finished
+        
+        fileprivate var keyPath: String {
+            return "is" + rawValue.capitalized
+        }
+    }
+    
+    public var state: State = .ready {
+        willSet {
+            willChangeValue(forKey: newValue.keyPath)
+            willChangeValue(forKey: state.keyPath)
+        }
+        didSet {
+            didChangeValue(forKey: oldValue.keyPath)
+            didChangeValue(forKey: state.keyPath)
+        }
+    }
+    
+    override var isAsynchronous: Bool {
+        return true
+    }
+    
+    override var isReady: Bool {
+        return super.isReady && state == .ready
+    }
+    
+    override var isExecuting: Bool {
+        return state == .executing
+    }
+    
+    override var isFinished: Bool {
+        return state == .finished
+    }
+    
+    override func start() {
+        if isCancelled {
+            state = .finished
+            return
+        }
+        
+        main()
+        state = .executing
+    }
+    
+    override func cancel() {
+        super.cancel()
+        state = .finished
+    }
+    
+}
+
+class DelayedOperation: AsyncOperation {
+    
+    let delay: Int
+    let completionHandler: (() -> Void)?
+    
+    init(delay: Int = 20, completionHandler: (() -> Void)? = .none) {
+        self.delay = delay
+        self.completionHandler = completionHandler
+        super.init()
+    }
+    
+    override var debugDescription: String {
+        return "\(name ?? "")"
+    }
+    
+    override func main() {
+        print("\(name ?? "") >> launched")
+        let deadline = DispatchTime.now() + .milliseconds(delay)
+        DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
+            guard let operation = self else { return }
+            defer {
+                operation.state = .finished
+            }
+            if operation.isCancelled {
+                return
+            }
+            print("\(operation.name ?? "") >> finished")
+            operation.completionHandler?()
+        }
+        
+    }
+    
+    override func cancel() {
+        super.cancel()
+        print("\(name ?? "") >> cancelled")
+    }
+    
+}
+
+
+
 class SequencerTest: XCTestCase {
   override func setUp() {
     super.setUp()
@@ -33,109 +128,75 @@ class SequencerTest: XCTestCase {
   override func tearDown() {
     super.tearDown()
   }
-
-  class DelayedOperation: Operation {
-    let seqNo: Int
-    let delay: Int
-    let completionHandler: CompletionHandler
-
-    // IMPORTANT: Override `Operation` properties and generate KVO notifications.
-    override var isAsynchronous: Bool { return true }
-
-    override var isFinished: Bool { return _finished }
-    var _finished = false {
-      willSet { self.willChangeValue(forKey: "isFinished") }
-      didSet { self.didChangeValue(forKey: "isFinished") }
+    
+  func testObsoleteOperationsCancellation() {
+    
+    let sequencer = Sequencer()
+    sequencer.maxPendingOperationsCount = 10
+    
+    let operationsCount = 100
+    let exp = expectation(description: "delayed operation")
+    exp.expectedFulfillmentCount = sequencer.maxPendingOperationsCount
+    
+    let operations: [Operation] = (0..<operationsCount).map { number in
+        let op = DelayedOperation(delay: 10, completionHandler: { exp.fulfill() })
+        op.name = "\(number)"
+        return op
     }
-
-    override var isExecuting: Bool { return _executing }
-    var _executing: Bool = false {
-      willSet { willChangeValue(forKey: "isExecuting") }
-      didSet { didChangeValue(forKey: "isExecuting") }
+    
+    let testQueue = OperationQueue()
+    testQueue.maxConcurrentOperationCount = 10
+    
+    operations.forEach { operation in
+        testQueue.addOperation(operation)
+        sequencer.orderOperation { operation }
     }
-
-    init(seqNo: Int, delay: Int, completionHandler: @escaping CompletionHandler) {
-      self.seqNo = seqNo
-      self.delay = delay
-      self.completionHandler = completionHandler
-      super.init()
-    }
-
-    override func start() {
-      NSLog("Operation #\(seqNo) START")
-      _executing = true
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(delay)) {
-        NSLog("Operation #\(self.seqNo) END")
-        defer {
-          self._executing = false
-        }
-        if self.isCancelled {
-          return
-        }
-        self.completionHandler([:], nil)
-      }
-    }
-
-    override func cancel() {
-      super.cancel()
-      _finished = true
-    }
+    
+    waitForExpectations(timeout: 5, handler: .none)
+    
+    XCTAssertEqual(operations.filter { $0.isCancelled }.count, operationsCount - sequencer.maxPendingOperationsCount)
+    XCTAssertEqual(operations.filter { !$0.isCancelled }.count, sequencer.maxPendingOperationsCount)
+    
   }
-
-  func testSequencing() {
-    class MyDelegate: SequencerDelegate {
-      let operationCount = 100
-      var completedOperations = Set<Int>()
-      var cancelledOperations = Set<Int>()
-      var expectation: XCTestExpectation!
-
-      func startRequest(seqNo: Int, completionHandler: @escaping CompletionHandler) -> Operation {
-        let operation = DelayedOperation(seqNo: seqNo, delay: 50 + Int(arc4random() % 10) * 20, completionHandler: completionHandler)
-        operation.start()
-        return operation
-      }
-
-      func handleResponse(seqNo: Int, content _: [String: Any]?, error _: Error?) {
-        NSLog("Operation #\(seqNo) COMPLETED")
-
-        // Check that no callback was called for this operation.
-        XCTAssertFalse(cancelledOperations.contains(seqNo))
-        XCTAssertFalse(completedOperations.contains(seqNo))
-
-        // Check that no more recent operations was marked as completed.
-        XCTAssert(completedOperations.filter({ $0 > seqNo }).isEmpty)
-
-        completedOperations.insert(seqNo)
-        checkEnd()
-      }
-
-      func requestWasCancelled(seqNo: Int) {
-        NSLog("Operation #\(seqNo) CANCELLED")
-
-        // Check that no callback was called for this operation.
-        XCTAssertFalse(cancelledOperations.contains(seqNo))
-        XCTAssertFalse(completedOperations.contains(seqNo))
-
-        cancelledOperations.insert(seqNo)
-        checkEnd()
-      }
-
-      func checkEnd() {
-        if completedOperations.count + cancelledOperations.count == operationCount {
-          expectation.fulfill()
+    
+    func testPreviousOperationsCancellation() {
+        
+        let sequencer = Sequencer()
+        
+        let slowOperationsCount = 100
+        
+        sequencer.maxPendingOperationsCount = slowOperationsCount + 1
+        
+        let slowOperations: [Operation] = (0..<slowOperationsCount).map { number in
+            let op = DelayedOperation(delay: .random(in: 100...300), completionHandler: .none)
+            op.name = "\(number)"
+            let exp = expectation(description: "\(number)")
+            op.completionBlock = {
+                exp.fulfill()
+            }
+            return op
         }
-      }
+        
+        let exp = expectation(description: "fast operation")
+        let fastOperation = DelayedOperation(delay: 1, completionHandler: exp.fulfill)
+        fastOperation.name = "fast"
+
+        
+        let testQueue = OperationQueue()
+        testQueue.maxConcurrentOperationCount = 200
+        
+        slowOperations.forEach { operation in
+            testQueue.addOperation(operation)
+            sequencer.orderOperation { operation }
+        }
+        testQueue.addOperation(fastOperation)
+        sequencer.orderOperation { fastOperation }
+        
+        waitForExpectations(timeout: 100, handler: .none)
+        
+        XCTAssertEqual(slowOperations.filter { $0.isCancelled }.count, slowOperationsCount)
+        XCTAssertFalse(fastOperation.isCancelled)
+        
     }
-    let delegate = MyDelegate()
-    delegate.expectation = expectation(description: #function)
-    let sequencer = Sequencer(delegate: delegate)
-    var delay = 0
-    for _ in 0 ..< delegate.operationCount {
-      delay += 50 + Int(arc4random() % 10) * 10
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(delay), execute: {
-        sequencer.next()
-      })
-    }
-    waitForExpectations(timeout: Double(delegate.operationCount) * (0.050 + 0.100) * 2, handler: nil)
-  }
+
 }
