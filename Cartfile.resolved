@@ -1,1 +1,2 @@
 github "algolia/algoliasearch-client-swift" "6.2.0"
+github "spinach/Signals" "bba8de1b8e1725b52e94cf65570ab18a99fbf25b"

@@ -1,1 +1,2 @@
 github "algolia/algoliasearch-client-swift" ~> 6.0.0
+github "spinach/Signals" "fix-deployment-targets"
