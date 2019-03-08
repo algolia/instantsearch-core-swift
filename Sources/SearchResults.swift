@@ -20,6 +20,7 @@ public struct SearchResults<T: Decodable>: Decodable {
         case hitsPerPage
         case processingTimeMS
         case query
+        case params
         case queryID
         case areFacetsCountExhaustive = "exhaustiveFacetsCount"
         case message
@@ -36,7 +37,7 @@ public struct SearchResults<T: Decodable>: Decodable {
     public let totalHitsCount: Int
     
     /// Facets that can be used to refine the result
-    public let facets: [FacetName: [String: Int]]
+    public let facets: [FacetName: [String: Int]]?
     
     /// Last returned page.
     public let page: Int
@@ -52,6 +53,9 @@ public struct SearchResults<T: Decodable>: Decodable {
     
     /// Query text that produced these results.
     public let query: String?
+
+    /// A url-encoded string of all search parameters.
+    public let params: String?
     
     /// Query ID that produced these results.
     /// Mandatory when reporting click and conversion events
@@ -60,7 +64,7 @@ public struct SearchResults<T: Decodable>: Decodable {
     public let queryID: String?
     
     /// Whether facet counts are exhaustive.
-    public let areFacetsCountExhaustive: Bool
+    public let areFacetsCountExhaustive: Bool?
     
     /// Used to return warnings about the query. Should be nil most of the time.
     public let message: String?
@@ -88,7 +92,7 @@ public struct SearchResults<T: Decodable>: Decodable {
     public let rankingInfo: RankingInfo?
     
     /// Statistics for a numerical facets.
-    public let facetStats: [FacetName: FacetStats]
+    public let facetStats: [FacetName: FacetStats]?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -99,18 +103,24 @@ public struct SearchResults<T: Decodable>: Decodable {
         self.hitsPerPage = try container.decode(Int.self, forKey: .hitsPerPage)
         self.processingTimeMS = try container.decode(Int.self, forKey: .processingTimeMS)
         self.query = try container.decodeIfPresent(String.self, forKey: .query)
+        self.params = try container.decodeIfPresent(String.self, forKey: .params)
         self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
-        self.areFacetsCountExhaustive = try container.decode(Bool.self, forKey: .areFacetsCountExhaustive)
+        self.areFacetsCountExhaustive = try container.decodeIfPresent(Bool.self, forKey: .areFacetsCountExhaustive)
         self.message = try container.decodeIfPresent(String.self, forKey: .message)
         self.queryAfterRemoval = try container.decodeIfPresent(String.self, forKey: .queryAfterRemoval)
         self.automaticRadius = try container.decodeIfPresent(Int.self, forKey: .automaticRadius)
-        self.rankingInfo = try RankingInfo(from: decoder)
+        self.rankingInfo = try? RankingInfo(from: decoder)
         self.aroundGeoLocation = try container.decodeIfPresent(GeoLocation.self, forKey: .aroundGeoLocation)
-        let rawFacets = try container.decode(Dictionary<String, [String: Int]>.self, forKey: .facets)
-        self.facets = .init(uniqueKeysWithValues: rawFacets.map { (FacetName(rawValue: $0.key), $0.value) })
-        
-        let rawFacetStats = try container.decode([String: FacetStats].self, forKey: .facetStats)
-        self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (FacetName(rawValue: $0.key), $0.value) })
+        if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: .facets) {
+          self.facets = .init(uniqueKeysWithValues: rawFacets.map { (FacetName(rawValue: $0.key), $0.value) })
+        } else {
+          self.facets = .none
+        }
+        if let rawFacetStats = try container.decodeIfPresent([String: FacetStats].self, forKey: .facetStats) {
+          self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (FacetName(rawValue: $0.key), $0.value) })
+        } else {
+          self.facetStats = .none
+        }
     }
 }
 
@@ -124,12 +134,12 @@ extension SearchResults where T == JSON {
 
 extension SearchResults {
     
-    func facetStats(forFacetWithName facetName: FacetName) -> FacetStats? {
-        return facetStats[facetName]
+    func facetStats(for facetName: FacetName) -> FacetStats? {
+        return facetStats?[facetName]
     }
     
-    func facetOptions(forFacetWithName facetName: FacetName) -> [String: Int]? {
-        return facets[facetName]
+    func facetOptions(for facetName: FacetName) -> [String: Int]? {
+        return facets?[facetName]
     }
     
 }

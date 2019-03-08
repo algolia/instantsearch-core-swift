@@ -58,11 +58,10 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
 
   public let sequencer: Sequencer
 
-  var index: Index
-  var query: Query
+  public var index: Index
+  public var query: Query
 
-
-  let onSearchResults = Signal<Result<SearchResults<RecordType>>>()
+  public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<RecordType>>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -77,25 +76,31 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
     self.query.query = text
   }
 
-  func handle(value: [String: Any]?, error: Error?) {
-    let result: Result<SearchResults<RecordType>> = transform(content: value, error: error)
-      onSearchResults.fire(result)
+  fileprivate func handle(_ value: [String : Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
+    let result: Result<SearchResults<RecordType>> = self.transform(content: value, error: error)
+    self.onSearchResults.fire((queryMetadata, result))
   }
 
   public func search() {
 
     // TODO: weak self...
-//    sequencer.orderOperation {
-//
-//      if applyDisjunctiveFacetingWhenNecessary && query.filterBuilder.isDisjunctiveFacetingAvailable() {
-//        let disjunctiveFacets = Array(query.filterBuilder.getDisjunctiveFacetsAttributes()).map { $0.description }
-//        let refinements = query.filterBuilder.getRawFacetFilters()
-//
-//        return self.index.searchDisjunctiveFaceting(query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, completionHandler: handle)
-//      } else {
-//        return self.index.search(query, completionHandler: handle)
-//      }
-//    }
+    sequencer.orderOperation {
+      let queryMetadata = QueryMetadata(query: self.query)
+
+
+      if applyDisjunctiveFacetingWhenNecessary && query.filterBuilder.isDisjunctiveFacetingAvailable() {
+        let disjunctiveFacets = Array(query.filterBuilder.getDisjunctiveFacetsAttributes()).map { $0.description }
+        let refinements = query.filterBuilder.getRawFacetFilters()
+
+        return self.index.searchDisjunctiveFaceting(query, disjunctiveFacets: disjunctiveFacets, refinements: refinements) { value, error in
+          self.handle(value, error, queryMetadata)
+        }
+      } else {
+        return self.index.search(query) { value, error in
+          self.handle(value, error, queryMetadata)
+        }
+      }
+    }
   }
 
 
@@ -108,7 +113,7 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
 
 public class MultiIndexSearcher: Searcher {
 
-  let indexQueries: [IndexQuery]
+  public let indexQueries: [IndexQuery]
   let client: Client
   public let sequencer: Sequencer
 
@@ -189,67 +194,4 @@ public class SearchForFacetValueSearcher: Searcher {
     }
   }
 
-}
-
-//// Factory class creating those different kind of MultiIndexSearcher
-//
-//public class SearcherFactory {
-//
-//  public enum SearcherType {
-//    case singleIndex(Index, Query)
-//    case multipleIndex(Client, [IndexQuery])
-//    case searchForFacetValue(Index, Query, String, String)
-//  }
-//
-//  static public func createSearcher(searcherType: SearcherType) -> Searcher {
-//    switch searcherType {
-//    case .singleIndex(let index, let query):
-//      return SingleIndexSearcher(index: index, query: query)
-//    case .multipleIndex(let client, let indexQueries):
-//      return MultiIndexSearcher(client: client, indexQueries: indexQueries)
-//    case .searchForFacetValue(let index, let query, let facetName, let text):
-//      return SearchForFacetValueSearcher(index: index, query: query, facetName: facetName, text: text)
-//    }
-//  }
-//}
-
-
-public enum Result<T> {
-
-  case success(T), fail(Error)
-
-  public init(value: T) {
-    self = .success(value)
-  }
-
-  public init(error: Error) {
-    self = .fail(error)
-  }
-
-  public var value: T? {
-    if case let .success(val) = self { return val } else { return nil }
-  }
-
-  public var error: Error? {
-    if case let .fail(err) = self { return err } else { return nil }
-  }
-
-}
-
-public extension Result {
-
-  public init(value: T?, error: Error?) {
-    switch (value, error) {
-    case (_, .some(let error)):
-      self = .fail(error)
-    case (.some(let value), _):
-      self = .success(value)
-    default:
-      self = .fail(ResultError.invalidResultInput)
-    }
-  }
-}
-
-public enum ResultError: Error {
-  case invalidResultInput
 }
