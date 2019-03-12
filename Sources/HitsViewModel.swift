@@ -70,8 +70,9 @@ public class HitsViewModel<RecordType: Decodable> {
 
   public func numberOfRows() -> Int {
     guard let hits = hits else { return 0 }
+    let query = lastReceivedQueryMetadata?.queryText ?? ""
 
-    if let queryText = lastReceivedQueryMetadata?.queryText, queryText.isEmpty, !hitsSettings.showItemsOnEmptyQuery {
+    if query.isEmpty && !hitsSettings.showItemsOnEmptyQuery {
       return 0
     } else {
       return hits.count

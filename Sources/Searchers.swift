@@ -61,6 +61,7 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
   public var index: Index
   public var query: Query
 
+  // TODO: Refactor with typealiases, same for other searchers
   public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<RecordType>>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
@@ -117,7 +118,7 @@ public class MultiIndexSearcher: Searcher {
   let client: Client
   public let sequencer: Sequencer
 
-  var onSearchResults = Signal<[Result<SearchResults<JSON>>]>()
+  public var onSearchResults = Signal<[(QueryMetadata, Result<SearchResults<JSON>>)]>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -142,19 +143,18 @@ public class MultiIndexSearcher: Searcher {
   public func search() {
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries) { (content, error) in
+
+        let queryMetadata = self.indexQueries.map { QueryMetadata(query: $0.query) }
         var results: [Result<SearchResults<JSON>>]
         if let content = content, let contentResults = content["results"] as? [[String: Any]] {
-
           results = contentResults.map { self.transform(content: $0, error: error) }
-
-          self.onSearchResults.fire(results)
-
         } else if let error = error {
-          self.onSearchResults.fire(Array.init(repeating: Result(error: error), count: self.indexQueries.count))
+          results = Array.init(repeating: Result(error: error), count: self.indexQueries.count)
         } else {
-          self.onSearchResults.fire(Array.init(repeating: Result(error: ResultError.invalidResultInput), count: self.indexQueries.count))
+          results = Array.init(repeating: Result(error: ResultError.invalidResultInput), count: self.indexQueries.count)
         }
-
+        let returnResults = zip(queryMetadata, results).map { ($0, $1)}
+        self.onSearchResults.fire(returnResults)
       }
     }
   }
@@ -171,7 +171,7 @@ public class SearchForFacetValueSearcher: Searcher {
   public var facetName: String
   public var text: String
   public let sequencer: Sequencer
-  let onSearchResults = Signal<Result<FacetResults>>()
+  public let onSearchResults = Signal<Result<FacetResults>>()
 
   public init(index: Index, query: Query, facetName: String, text: String) {
     self.index = index
