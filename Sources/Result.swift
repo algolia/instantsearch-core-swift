@@ -80,11 +80,11 @@ public struct Constants {
 
     // Refinement
     public static let operatorRefinement = "or"
-    //static let refinementOperator: RefinementListViewModel.Settings.RefinementOperator = .or
+    public static let refinementOperator: RefinementListViewModel.Settings.RefinementOperator = .or
     public static let refinedFirst = true
     public static let sortBy = "count:desc"
     public static let limit = 10
-    public static let areMultipleSelectionsAllowed = true
+    public static let areMultipleSelectionsAllowed = false
 
     // Numeric Control
     public static let operatorNumericControl = ">="

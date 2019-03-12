@@ -12,9 +12,9 @@ import Foundation
 /// This struct is mainly useful when an ordered list of facet values has to be presented to the user.
 ///
 public struct FacetValue: Codable {
-    let value: String
-    let count: Int
-    let highlighted: String
+    public let value: String
+    public let count: Int
+    public let highlighted: String?
 }
 
 /// Search for facet value results.
@@ -26,8 +26,8 @@ public struct FacetResults: Codable {
         case areFacetsCountExhaustive = "exhaustiveFacetsCount"
     }
     
-    let facetHits: [FacetValue]
-    let processingTimeMS: Int
-    let areFacetsCountExhaustive: Bool
+    public let facetHits: [FacetValue]
+    public let processingTimeMS: Int
+    public let areFacetsCountExhaustive: Bool
     
 }

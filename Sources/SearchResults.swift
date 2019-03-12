@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@_exported import InstantSearchClient
 
 // Temporary enum without cases for defining namespace
 public struct SearchResults<T: Decodable>: Decodable {
@@ -37,7 +38,7 @@ public struct SearchResults<T: Decodable>: Decodable {
     public let totalHitsCount: Int
     
     /// Facets that can be used to refine the result
-    public let facets: [FacetName: [String: Int]]?
+    public let facets: [Attribute: [FacetValue]]?
     
     /// Last returned page.
     public let page: Int
@@ -92,7 +93,7 @@ public struct SearchResults<T: Decodable>: Decodable {
     public let rankingInfo: RankingInfo?
     
     /// Statistics for a numerical facets.
-    public let facetStats: [FacetName: FacetStats]?
+    public let facetStats: [Attribute: FacetStats]?
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -112,12 +113,18 @@ public struct SearchResults<T: Decodable>: Decodable {
         self.rankingInfo = try? RankingInfo(from: decoder)
         self.aroundGeoLocation = try container.decodeIfPresent(GeoLocation.self, forKey: .aroundGeoLocation)
         if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: .facets) {
-          self.facets = .init(uniqueKeysWithValues: rawFacets.map { (FacetName(rawValue: $0.key), $0.value) })
+          var facets: [Attribute: [FacetValue]] = [:]
+          for facet in rawFacets {
+            let facetName = Attribute(rawValue: facet.key)
+            let facetValues = facet.value.map { FacetValue(value: $0.key, count: $0.value, highlighted: .none) }
+            facets[facetName] = facetValues
+          }
+          self.facets = facets
         } else {
           self.facets = .none
         }
         if let rawFacetStats = try container.decodeIfPresent([String: FacetStats].self, forKey: .facetStats) {
-          self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (FacetName(rawValue: $0.key), $0.value) })
+          self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (Attribute(rawValue: $0.key), $0.value) })
         } else {
           self.facetStats = .none
         }
@@ -134,11 +141,11 @@ extension SearchResults where T == JSON {
 
 extension SearchResults {
     
-    func facetStats(for facetName: FacetName) -> FacetStats? {
+    func facetStats(for facetName: Attribute) -> FacetStats? {
         return facetStats?[facetName]
     }
     
-    func facetOptions(for facetName: FacetName) -> [String: Int]? {
+    func facetOptions(for facetName: Attribute) -> [FacetValue]? {
         return facets?[facetName]
     }
     

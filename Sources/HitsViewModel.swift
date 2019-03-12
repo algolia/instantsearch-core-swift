@@ -26,7 +26,7 @@ public class HitsViewModel<RecordType: Decodable> {
     }
   }
 
-  public var hitsSettings: Settings
+  public var settings: Settings
 
   var hits: ItemsPages<RecordType>?
   var lastReceivedQueryMetadata: QueryMetadata?
@@ -38,13 +38,13 @@ public class HitsViewModel<RecordType: Decodable> {
   public init(infiniteScrolling: Bool = true,
               remainingItemsBeforeLoading: UInt = 5,
               showItemsOnEmptyQuery: Bool = true) {
-    self.hitsSettings = Settings(infiniteScrolling: infiniteScrolling,
+    self.settings = Settings(infiniteScrolling: infiniteScrolling,
                                  remainingItemsBeforeLoading: remainingItemsBeforeLoading,
                                  showItemsOnEmptyQuery: showItemsOnEmptyQuery)
   }
 
   public init(hitsSettings: Settings? = nil) {
-    self.hitsSettings = hitsSettings ?? Settings()
+    self.settings = hitsSettings ?? Settings()
   }
 
   func extractHitsPage(from searchResults: SearchResults<RecordType>) -> (pageNumber: Int, hits: [RecordType]) {
@@ -72,7 +72,7 @@ public class HitsViewModel<RecordType: Decodable> {
     guard let hits = hits else { return 0 }
     let query = lastReceivedQueryMetadata?.queryText ?? ""
 
-    if query.isEmpty && !hitsSettings.showItemsOnEmptyQuery {
+    if query.isEmpty && !settings.showItemsOnEmptyQuery {
       return 0
     } else {
       return hits.count
@@ -112,9 +112,9 @@ public class HitsViewModel<RecordType: Decodable> {
   // if we load previous or next page (in case we don't have them loaded/cached already in our itemsPage struct
   private func loadMoreIfNecessary(rowNumber: Int) {
 
-    guard hitsSettings.infiniteScrolling, let hits = hits else { return }
+    guard settings.infiniteScrolling, let hits = hits else { return }
 
-    let rowToLoad = rowNumber + Int(hitsSettings.pageLoadOffset)
+    let rowToLoad = rowNumber + Int(settings.pageLoadOffset)
     print("notify next page with row \(rowNumber) and rowToLoad \(rowToLoad), lastRequestPage \(lastSentPage), latestPage \(hits.latestPage), hitsCount \(hits.count)")
 
     if !hits.containsItem(atIndex: rowToLoad), hits.hasMorePages {
@@ -130,28 +130,28 @@ extension HitsViewModel {
 
   public var infiniteScrolling: Bool {
     set {
-      hitsSettings.infiniteScrolling = newValue
+      settings.infiniteScrolling = newValue
     }
     get {
-      return hitsSettings.infiniteScrolling
+      return settings.infiniteScrolling
     }
   }
 
   public var remainingItemsBeforeLoading: UInt {
     set {
-      hitsSettings.pageLoadOffset = newValue
+      settings.pageLoadOffset = newValue
     }
     get {
-      return hitsSettings.pageLoadOffset
+      return settings.pageLoadOffset
     }
   }
 
   public var showItemsOnEmptyQuery: Bool {
     set {
-      hitsSettings.showItemsOnEmptyQuery = newValue
+      settings.showItemsOnEmptyQuery = newValue
     }
     get {
-      return hitsSettings.showItemsOnEmptyQuery
+      return settings.showItemsOnEmptyQuery
     }
   }
 }

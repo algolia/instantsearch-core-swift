@@ -70,7 +70,7 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
     self.index = index
     self.query = query
     sequencer = Sequencer()
-
+    onSearchResults.retainLastData = true
   }
 
   public func setQuery(text: String) {
@@ -134,6 +134,7 @@ public class MultiIndexSearcher: Searcher {
     self.indexQueries = indexQueries
     self.client = client
     self.sequencer = Sequencer()
+    onSearchResults.retainLastData = true
   }
 
   public func setQuery(text: String) {
@@ -179,6 +180,7 @@ public class SearchForFacetValueSearcher: Searcher {
     self.facetName = facetName
     self.text = text
     self.sequencer = Sequencer()
+    onSearchResults.retainLastData = true
   }
 
   public func setQuery(text: String) {
