@@ -39,6 +39,10 @@ public protocol Sequencable {
     func cancelPendingOperations()
 }
 
+public protocol SequencerDelegate: class {
+  func didChangeOperationsState(hasPendingOperations: Bool)
+}
+
 public class Sequencer: Sequencable {
     
   // MARK: Properties
@@ -57,7 +61,11 @@ public class Sequencer: Sequencable {
   private var lastReceivedSeqNo: Int?
 
   /// All currently ongoing operations.
-  private var pendingOperations: [Int: Operation] = [:]
+  private var pendingOperations: [Int: Operation] = [:] {
+    didSet {
+      delegate?.didChangeOperationsState(hasPendingOperations: hasPendingOperations)
+    }
+  }
 
   /// Maximum number of pending operations allowed.
   /// If many operations are made in a short time, this will keep only the N most recent and cancel the older ones.
@@ -71,8 +79,11 @@ public class Sequencer: Sequencable {
     
   /// Indicates whether there are any pending operations.
   public var hasPendingOperations: Bool {
+    print("has pending operation. pending operations: \(pendingOperations) ")
     return !pendingOperations.isEmpty
   }
+
+  public weak var delegate: SequencerDelegate?
 
   /// Queue containing SequencerCompletion operations
   private let sequencerQueue: OperationQueue
@@ -86,7 +97,6 @@ public class Sequencer: Sequencable {
 
   /// Launch next operation.
   public func orderOperation(operationLauncher: Sequencable.OperationLauncher) {
-
     // Increase sequence number.
     let currentSeqNo: Int = incrementSequenceQueue.sync {
       nextSeqNo += 1
@@ -105,7 +115,7 @@ public class Sequencer: Sequencable {
     sequencerQueue.addOperation(sequencingOperation)
 
     pendingOperations[currentSeqNo] = operation
-    
+    print("added operation with seqNo \(currentSeqNo). pending operations: \(pendingOperations) ")
   }
     
   // MARK: - Manage operations
@@ -141,7 +151,9 @@ public class Sequencer: Sequencable {
     
     // Remove the current operation.
     pendingOperations.removeValue(forKey: seqNo)
-    
+
+    print("dismissed operation with seqNo \(seqNo). pending operations: \(pendingOperations)")
+
     // Obsolete operations should not happen since they have been cancelled by more recent operations (see above).
     // WARNING: Only works if the current queue is serial!
     assert(lastReceivedSeqNo == nil || lastReceivedSeqNo! < seqNo)

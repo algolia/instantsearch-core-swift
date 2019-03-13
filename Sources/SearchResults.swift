@@ -16,6 +16,7 @@ public struct SearchResults<T: Decodable>: Decodable {
         case totalHitsCount = "nbHits"
         case page
         case facets
+        case disjunctiveFacets
         case pagesCount = "nbPages"
         case hits
         case hitsPerPage
@@ -37,8 +38,11 @@ public struct SearchResults<T: Decodable>: Decodable {
     /// Total number of hits.
     public let totalHitsCount: Int
     
-    /// Facets that can be used to refine the result
+    /// Conjunctive facets that can be used to refine the result
     public let facets: [Attribute: [FacetValue]]?
+
+    /// Disjunctive facets that can be used to refine the result
+    public let disjunctiveFacets: [Attribute: [FacetValue]]?
     
     /// Last returned page.
     public let page: Int
@@ -112,17 +116,21 @@ public struct SearchResults<T: Decodable>: Decodable {
         self.automaticRadius = try container.decodeIfPresent(Int.self, forKey: .automaticRadius)
         self.rankingInfo = try? RankingInfo(from: decoder)
         self.aroundGeoLocation = try container.decodeIfPresent(GeoLocation.self, forKey: .aroundGeoLocation)
-        if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: .facets) {
-          var facets: [Attribute: [FacetValue]] = [:]
-          for facet in rawFacets {
-            let facetName = Attribute(rawValue: facet.key)
-            let facetValues = facet.value.map { FacetValue(value: $0.key, count: $0.value, highlighted: .none) }
-            facets[facetName] = facetValues
+        func extractFacets(withKey key: CodingKeys) throws -> [Attribute: [FacetValue]]? {
+          if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: key) {
+            var facets: [Attribute: [FacetValue]] = [:]
+            for facet in rawFacets {
+              let facetName = Attribute(rawValue: facet.key)
+              let facetValues = facet.value.map { FacetValue(value: $0.key, count: $0.value, highlighted: .none) }
+              facets[facetName] = facetValues
+            }
+            return facets
+          } else {
+            return .none
           }
-          self.facets = facets
-        } else {
-          self.facets = .none
         }
+        self.facets = try extractFacets(withKey: .facets)
+        self.disjunctiveFacets = try extractFacets(withKey: .disjunctiveFacets)
         if let rawFacetStats = try container.decodeIfPresent([String: FacetStats].self, forKey: .facetStats) {
           self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (Attribute(rawValue: $0.key), $0.value) })
         } else {

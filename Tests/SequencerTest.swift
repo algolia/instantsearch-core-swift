@@ -26,96 +26,96 @@ import InstantSearchClient
 import XCTest
 
 class AsyncOperation: Operation {
-    
-    public enum State: String {
-        case ready, executing, finished
-        
-        fileprivate var keyPath: String {
-            return "is" + rawValue.capitalized
-        }
+
+  public enum State: String {
+    case ready, executing, finished
+
+    fileprivate var keyPath: String {
+      return "is" + rawValue.capitalized
     }
-    
-    public var state: State = .ready {
-        willSet {
-            willChangeValue(forKey: newValue.keyPath)
-            willChangeValue(forKey: state.keyPath)
-        }
-        didSet {
-            didChangeValue(forKey: oldValue.keyPath)
-            didChangeValue(forKey: state.keyPath)
-        }
+  }
+
+  public var state: State = .ready {
+    willSet {
+      willChangeValue(forKey: newValue.keyPath)
+      willChangeValue(forKey: state.keyPath)
     }
-    
-    override var isAsynchronous: Bool {
-        return true
+    didSet {
+      didChangeValue(forKey: oldValue.keyPath)
+      didChangeValue(forKey: state.keyPath)
     }
-    
-    override var isReady: Bool {
-        return super.isReady && state == .ready
+  }
+
+  override var isAsynchronous: Bool {
+    return true
+  }
+
+  override var isReady: Bool {
+    return super.isReady && state == .ready
+  }
+
+  override var isExecuting: Bool {
+    return state == .executing
+  }
+
+  override var isFinished: Bool {
+    return state == .finished
+  }
+
+  override func start() {
+    if isCancelled {
+      state = .finished
+      return
     }
-    
-    override var isExecuting: Bool {
-        return state == .executing
-    }
-    
-    override var isFinished: Bool {
-        return state == .finished
-    }
-    
-    override func start() {
-        if isCancelled {
-            state = .finished
-            return
-        }
-        
-        main()
-        state = .executing
-    }
-    
-    override func cancel() {
-        super.cancel()
-        state = .finished
-    }
-    
+
+    main()
+    state = .executing
+  }
+
+  override func cancel() {
+    super.cancel()
+    state = .finished
+  }
+
 }
 
 class DelayedOperation: AsyncOperation {
-    
-    let delay: Int
-    let completionHandler: (() -> Void)?
-    
-    init(delay: Int = 20, completionHandler: (() -> Void)? = .none) {
-        self.delay = delay
-        self.completionHandler = completionHandler
-        super.init()
+
+  let delay: Int
+  let completionHandler: (() -> Void)?
+
+  init(delay: Int = 20, completionHandler: (() -> Void)? = .none) {
+    self.delay = delay
+    self.completionHandler = completionHandler
+    super.init()
+  }
+
+  override var debugDescription: String {
+    return "\(name ?? "")"
+  }
+
+  override func main() {
+    print("\(name ?? "") >> launched")
+    let deadline = DispatchTime.now() + .milliseconds(delay)
+    DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
+      guard let operation = self else { return }
+      defer {
+        operation.state = .finished
+      }
+      if operation.isCancelled {
+        return
+      }
+      print("\(operation.name ?? "") >> finished")
+      operation.completionHandler?()
     }
-    
-    override var debugDescription: String {
-        return "\(name ?? "")"
-    }
-    
-    override func main() {
-        print("\(name ?? "") >> launched")
-        let deadline = DispatchTime.now() + .milliseconds(delay)
-        DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
-            guard let operation = self else { return }
-            defer {
-                operation.state = .finished
-            }
-            if operation.isCancelled {
-                return
-            }
-            print("\(operation.name ?? "") >> finished")
-            operation.completionHandler?()
-        }
-        
-    }
-    
-    override func cancel() {
-        super.cancel()
-        print("\(name ?? "") >> cancelled")
-    }
-    
+
+  }
+
+  override func cancel() {
+    super.cancel()
+    print("\(name ?? "") >> cancelled")
+  }
+
 }
 
 
@@ -128,7 +128,7 @@ class SequencerTest: XCTestCase {
   override func tearDown() {
     super.tearDown()
   }
-    
+
   func testObsoleteOperationsCancellation() {
     
     let sequencer = Sequencer()
@@ -139,17 +139,17 @@ class SequencerTest: XCTestCase {
     exp.expectedFulfillmentCount = sequencer.maxPendingOperationsCount
     
     let operations: [Operation] = (0..<operationsCount).map { number in
-        let op = DelayedOperation(delay: 10, completionHandler: { exp.fulfill() })
-        op.name = "\(number)"
-        return op
+      let op = DelayedOperation(delay: 10, completionHandler: { exp.fulfill() })
+      op.name = "\(number)"
+      return op
     }
     
     let testQueue = OperationQueue()
     testQueue.maxConcurrentOperationCount = 10
     
     operations.forEach { operation in
-        testQueue.addOperation(operation)
-        sequencer.orderOperation { operation }
+      testQueue.addOperation(operation)
+      sequencer.orderOperation { operation }
     }
     
     waitForExpectations(timeout: 5, handler: .none)
@@ -158,45 +158,66 @@ class SequencerTest: XCTestCase {
     XCTAssertEqual(operations.filter { !$0.isCancelled }.count, sequencer.maxPendingOperationsCount)
     
   }
-    
-    func testPreviousOperationsCancellation() {
-        
-        let sequencer = Sequencer()
-        
-        let slowOperationsCount = 100
-        
-        sequencer.maxPendingOperationsCount = slowOperationsCount + 1
-        
-        let slowOperations: [Operation] = (0..<slowOperationsCount).map { number in
-            let op = DelayedOperation(delay: .random(in: 100...300), completionHandler: .none)
-            op.name = "\(number)"
-            let exp = expectation(description: "\(number)")
-            op.completionBlock = {
-                exp.fulfill()
-            }
-            return op
-        }
-        
-        let exp = expectation(description: "fast operation")
-        let fastOperation = DelayedOperation(delay: 1, completionHandler: exp.fulfill)
-        fastOperation.name = "fast"
 
-        
-        let testQueue = OperationQueue()
-        testQueue.maxConcurrentOperationCount = 200
-        
-        slowOperations.forEach { operation in
-            testQueue.addOperation(operation)
-            sequencer.orderOperation { operation }
-        }
-        testQueue.addOperation(fastOperation)
-        sequencer.orderOperation { fastOperation }
-        
-        waitForExpectations(timeout: 100, handler: .none)
-        
-        XCTAssertEqual(slowOperations.filter { $0.isCancelled }.count, slowOperationsCount)
-        XCTAssertFalse(fastOperation.isCancelled)
-        
+  func testPreviousOperationsCancellation() {
+
+    let sequencer = Sequencer()
+
+    let slowOperationsCount = 100
+
+    sequencer.maxPendingOperationsCount = slowOperationsCount + 1
+
+    let slowOperations: [Operation] = (0..<slowOperationsCount).map { number in
+      let op = DelayedOperation(delay: .random(in: 100...300), completionHandler: .none)
+      op.name = "\(number)"
+      let exp = expectation(description: "\(number)")
+      op.completionBlock = {
+        exp.fulfill()
+      }
+      return op
     }
+
+    let exp = expectation(description: "fast operation")
+    let fastOperation = DelayedOperation(delay: 1, completionHandler: exp.fulfill)
+    fastOperation.name = "fast"
+
+
+    let testQueue = OperationQueue()
+    testQueue.maxConcurrentOperationCount = 200
+
+    slowOperations.forEach { operation in
+      testQueue.addOperation(operation)
+      sequencer.orderOperation { operation }
+    }
+    testQueue.addOperation(fastOperation)
+    sequencer.orderOperation { fastOperation }
+
+    waitForExpectations(timeout: 100, handler: .none)
+
+    XCTAssertEqual(slowOperations.filter { $0.isCancelled }.count, slowOperationsCount)
+    XCTAssertFalse(fastOperation.isCancelled)
+
+  }
+
+  func testPendingOperations() {
+
+    let sequencer = Sequencer()
+
+    sequencer.maxPendingOperationsCount = 3
+
+    let exp = expectation(description: "op expectation")
+
+    let op1 = DelayedOperation(delay: 1, completionHandler: exp.fulfill)
+
+    let testQueue = OperationQueue()
+    testQueue.addOperation(op1)
+
+    sequencer.orderOperation { op1 }
+    XCTAssertTrue(sequencer.hasPendingOperations)
+
+    waitForExpectations(timeout: 5, handler: .none)
+    XCTAssertFalse(sequencer.hasPendingOperations)
+
+  }
 
 }

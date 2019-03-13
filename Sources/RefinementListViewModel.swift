@@ -43,8 +43,13 @@ public class RefinementListViewModel {
   }
 
   public func update<T>(with searchResults: SearchResults<T>) {
-    // TODO: In case of disjunctive, need to extract it from searchResults.disjunctiveFacets?[attribute] Test all cases...
-    let rawFacetResults = searchResults.facets?[attribute]
+    let rawFacetResults: [FacetValue]?
+    if query.filterBuilder.getDisjunctiveFacetsAttributes().contains(attribute) {
+      rawFacetResults = searchResults.disjunctiveFacets?[attribute]
+    } else {
+      rawFacetResults = searchResults.facets?[attribute]
+    }
+
     updateFacetResults(with: rawFacetResults)
   }
 
@@ -141,7 +146,6 @@ extension RefinementListViewModel {
                          andAttribute attribute: Attribute,
                          transformRefinementList: TransformRefinementList,
                          areRefinedValuesFirst: Bool) -> [FacetValue] {
-
 
     let refinementsForAttribute: Set<FilterFacet> = query.filterBuilder.getFilters(for: attribute)
 

@@ -18,11 +18,12 @@ import Foundation
 import InstantSearchClient
 import Signals
 
-public protocol Searcher {
+public protocol Searcher: SequencerDelegate {
   func search()
   func cancel()
   func setQuery(text: String)
   var sequencer: Sequencer { get }
+  var isLoading: Signal<Bool> { get }
 }
 
 extension Searcher {
@@ -50,6 +51,16 @@ extension Searcher {
     }
 
   }
+
+}
+
+// Sequencer Delegate
+
+extension Searcher {
+  public func didChangeOperationsState(hasPendingOperations: Bool) {
+    print("Has pending operations: \(hasPendingOperations)")
+    isLoading.fire(hasPendingOperations)
+  }
 }
 
 // TODO: don t forget to add RequestOption everywhere
@@ -57,6 +68,7 @@ extension Searcher {
 public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
 
   public let sequencer: Sequencer
+  public let isLoading = Signal<Bool>()
 
   public var index: Index
   public var query: Query
@@ -70,7 +82,9 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
     self.index = index
     self.query = query
     sequencer = Sequencer()
+    sequencer.delegate = self
     onSearchResults.retainLastData = true
+    isLoading.retainLastData = true
   }
 
   public func setQuery(text: String) {
@@ -111,12 +125,13 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
   }
 }
 
-
 public class MultiIndexSearcher: Searcher {
 
   public let indexQueries: [IndexQuery]
   let client: Client
   public let sequencer: Sequencer
+  public let isLoading = Signal<Bool>()
+
 
   public var onSearchResults = Signal<[(QueryMetadata, Result<SearchResults<JSON>>)]>()
 
@@ -134,7 +149,9 @@ public class MultiIndexSearcher: Searcher {
     self.indexQueries = indexQueries
     self.client = client
     self.sequencer = Sequencer()
+    sequencer.delegate = self
     onSearchResults.retainLastData = true
+    isLoading.retainLastData = true
   }
 
   public func setQuery(text: String) {
@@ -173,6 +190,7 @@ public class SearchForFacetValueSearcher: Searcher {
   public var text: String
   public let sequencer: Sequencer
   public let onSearchResults = Signal<Result<FacetResults>>()
+  public let isLoading = Signal<Bool>()
 
   public init(index: Index, query: Query, facetName: String, text: String) {
     self.index = index
@@ -180,7 +198,9 @@ public class SearchForFacetValueSearcher: Searcher {
     self.facetName = facetName
     self.text = text
     self.sequencer = Sequencer()
+    sequencer.delegate = self
     onSearchResults.retainLastData = true
+    isLoading.retainLastData = true
   }
 
   public func setQuery(text: String) {

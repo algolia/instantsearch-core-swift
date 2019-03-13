@@ -61,8 +61,11 @@ public class HitsViewModel<RecordType: Decodable> {
       let lastQueryMetadata = lastReceivedQueryMetadata,
       queryMetadata.isLoadMoreRequest(lastQueryMetadata: lastQueryMetadata) {
       hits = currentHits.inserting(pageHits, withNumber: pageNumber)
+      print("INSERT NEW HIT lastSentPage \(lastSentPage), latestPage \(hits!.latestPage), hitsCount \(hits!.count)")
     } else {
       hits = ItemsPages(searchResults: searchResults)
+      lastSentPage = 0
+      print("RESET NEW HIT lastSentPage \(lastSentPage), latestPage \(hits!.latestPage), hitsCount \(hits!.count)")
     }
 
     self.lastReceivedQueryMetadata = queryMetadata
@@ -115,7 +118,7 @@ public class HitsViewModel<RecordType: Decodable> {
     guard settings.infiniteScrolling, let hits = hits else { return }
 
     let rowToLoad = rowNumber + Int(settings.pageLoadOffset)
-    print("notify next page with row \(rowNumber) and rowToLoad \(rowToLoad), lastRequestPage \(lastSentPage), latestPage \(hits.latestPage), hitsCount \(hits.count)")
+    //print("notify next page with row \(rowNumber) and rowToLoad \(rowToLoad), lastRequestPage \(lastSentPage), latestPage \(hits.latestPage), hitsCount \(hits.count)")
 
     if !hits.containsItem(atIndex: rowToLoad), hits.hasMorePages {
       print("notifying next page")
