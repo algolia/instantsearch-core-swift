@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// Strongly-typed recursuve JSON representation
+
 public enum JSON: Equatable {
     case string(String)
     case number(Float)
@@ -98,6 +100,7 @@ extension JSON {
         case .array(let array):
             return array.map { $0.object() }
         case .dictionary(let dictionary):
+
             var resultDictionary = [String: Any]()
             for (key, value) in dictionary {
                 resultDictionary[key] = value.object()
