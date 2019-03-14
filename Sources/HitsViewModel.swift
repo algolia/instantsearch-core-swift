@@ -40,10 +40,6 @@ public class HitsViewModel<RecordType: Decodable> {
     self.hitsPaginationController.delegate = self
   }
 
-  func extractHitsPage(from searchResults: SearchResults<RecordType>) -> (pageNumber: Int, hits: [RecordType]) {
-    return (searchResults.page, searchResults.hits)
-  }
-
   // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
   public func update(with queryMetadata: QueryMetadata, and searchResults: SearchResults<RecordType>) {
     isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
