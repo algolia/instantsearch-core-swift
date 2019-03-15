@@ -71,16 +71,18 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
   public let isLoading = Signal<Bool>()
 
   public var index: Index
-  public var query: Query
+  public let query: Query
+  public let filterBuilder: FilterBuilder
 
   // TODO: Refactor with typealiases, same for other searchers
   public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<RecordType>>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
-  public init(index: Index, query: Query) {
+  public init(index: Index, query: Query, filterBuilder: FilterBuilder) {
     self.index = index
     self.query = query
+    self.filterBuilder = filterBuilder
     sequencer = Sequencer()
     sequencer.delegate = self
     onSearchResults.retainLastData = true
@@ -97,20 +99,19 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
   }
 
   public func search() {
-
     // TODO: weak self...
     sequencer.orderOperation {
       let queryMetadata = QueryMetadata(query: self.query)
 
-
-      if applyDisjunctiveFacetingWhenNecessary && query.filterBuilder.isDisjunctiveFacetingAvailable() {
-        let disjunctiveFacets = Array(query.filterBuilder.getDisjunctiveFacetsAttributes()).map { $0.description }
-        let refinements = query.filterBuilder.getRawFacetFilters()
+      if applyDisjunctiveFacetingWhenNecessary && filterBuilder.isDisjunctiveFacetingAvailable() {
+        let disjunctiveFacets = Array(filterBuilder.getDisjunctiveFacetsAttributes()).map { $0.description }
+        let refinements = filterBuilder.getRawFacetFilters()
 
         return self.index.searchDisjunctiveFaceting(query, disjunctiveFacets: disjunctiveFacets, refinements: refinements) { value, error in
           self.handle(value, error, queryMetadata)
         }
       } else {
+        query.filters = filterBuilder.build()
         return self.index.search(query) { value, error in
           self.handle(value, error, queryMetadata)
         }
@@ -128,6 +129,7 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
 public class MultiIndexSearcher: Searcher {
 
   public let indexQueries: [IndexQuery]
+  public let filterBuilders: [FilterBuilder]
   let client: Client
   public let sequencer: Sequencer
   public let isLoading = Signal<Bool>()
@@ -137,16 +139,17 @@ public class MultiIndexSearcher: Searcher {
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
-  public convenience init(client: Client, indices: [Index], queries: [Query]) {
-    self.init(client: client, indexQueries: zip(indices, queries).map { IndexQuery(index: $0, query: $1) } )
+  public convenience init(client: Client, indices: [Index], queries: [Query], filterBuilders: [FilterBuilder]) {
+    self.init(client: client, indexQueries: zip(indices, queries).map { IndexQuery(index: $0, query: $1) }, filterBuilders: filterBuilders )
   }
 
-  public convenience init(client: Client, indices: [Index], query: Query) {
-    self.init(client: client, indexQueries: indices.map { IndexQuery(index: $0, query: query) })
+  public convenience init(client: Client, indices: [Index], query: Query, filterBuilder: FilterBuilder) {
+    self.init(client: client, indexQueries: indices.map { IndexQuery(index: $0, query: query) }, filterBuilders: [filterBuilder])
   }
 
-  public init(client: Client, indexQueries: [IndexQuery]) {
+  public init(client: Client, indexQueries: [IndexQuery], filterBuilders: [FilterBuilder]) {
     self.indexQueries = indexQueries
+    self.filterBuilders = filterBuilders
     self.client = client
     self.sequencer = Sequencer()
     sequencer.delegate = self
@@ -159,6 +162,10 @@ public class MultiIndexSearcher: Searcher {
   }
 
   public func search() {
+    zip(indexQueries, filterBuilders).forEach { (indexQuery, filterBuilder) in
+      indexQuery.query.filters = filterBuilder.build()
+    }
+
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries) { (content, error) in
 
@@ -186,16 +193,18 @@ public class SearchForFacetValueSearcher: Searcher {
 
   public let index: Index
   public let query: Query
+  public let filterBuilder: FilterBuilder
   public var facetName: String
   public var text: String
   public let sequencer: Sequencer
   public let onSearchResults = Signal<Result<FacetResults>>()
   public let isLoading = Signal<Bool>()
 
-  public init(index: Index, query: Query, facetName: String, text: String) {
+  public init(index: Index, query: Query, filterBuilder: FilterBuilder, facetName: String, text: String) {
     self.index = index
     self.query = query
     self.facetName = facetName
+    self.filterBuilder = filterBuilder
     self.text = text
     self.sequencer = Sequencer()
     sequencer.delegate = self
@@ -208,6 +217,8 @@ public class SearchForFacetValueSearcher: Searcher {
   }
 
   public func search() {
+    query.filters = filterBuilder.build()
+    
     sequencer.orderOperation {
       return self.index.searchForFacetValues(of: facetName, matching: text) { (content, error) in
         let result: Result<FacetResults> = self.transform(content: content, error: error)

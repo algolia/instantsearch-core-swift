@@ -55,7 +55,7 @@ extension PageMap: Collection {
   var endIndex: Index { return itemsSequence.endIndex }
   
   // Required subscript, based on a dictionary index
-  subscript(index: Index) -> I {
+  subscript(index: Index) -> Item {
     get { return itemsSequence[index] }
   }
   

@@ -17,10 +17,10 @@ public class RefinementListViewModel {
   public let onParamChange = Signal<Void>()
 
   var attribute: Attribute
-  var facetResults: [FacetValue]?
-  var query: Query
+  var filterBuilder: FilterBuilder
   var group: Group
 
+  var facetResults: [FacetValue]?
 
   private var orGroup: OrFilterGroup<FilterFacet> {
     return OrFilterGroup(name: group.name)
@@ -30,11 +30,11 @@ public class RefinementListViewModel {
     return AndFilterGroup(name: group.name)
   }
 
-  public init(attribute: Attribute, query: Query, hitsSettings: Settings? = nil, group: Group? = nil) {
+  public init(attribute: Attribute, filterBuilder: FilterBuilder, refinementSettings: Settings? = nil, group: Group? = nil) {
     self.attribute = attribute
-    self.query = query
-    self.settings = hitsSettings ?? Settings()
-    self.group = group ?? Group(attribute.description) // the group defaults to the name of the attribute
+    self.filterBuilder = filterBuilder
+    self.settings = refinementSettings ?? Settings()
+    self.group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
   }
 
   public func update(with facetResults: FacetResults) {
@@ -44,7 +44,7 @@ public class RefinementListViewModel {
 
   public func update<T>(with searchResults: SearchResults<T>) {
     let rawFacetResults: [FacetValue]?
-    if query.filterBuilder.getDisjunctiveFacetsAttributes().contains(attribute) {
+    if filterBuilder.getDisjunctiveFacetsAttributes().contains(attribute) {
       rawFacetResults = searchResults.disjunctiveFacets?[attribute]
     } else {
       rawFacetResults = searchResults.facets?[attribute]
@@ -54,7 +54,7 @@ public class RefinementListViewModel {
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
-    self.facetResults = getRefinementList(query: query,
+    self.facetResults = getRefinementList(filterBuilder: filterBuilder,
                                      facetValues: rawFacetResults,
                                      andAttribute: attribute,
                                      transformRefinementList: settings.sorting,
@@ -79,13 +79,13 @@ public class RefinementListViewModel {
     let value = facetResults[row].value
     let filterFacet = FilterFacet(attribute: attribute, stringValue: value)
 
-    switch settings.operator {
-    case .and:
-      return query.filterBuilder.contains(filterFacet, in: andGroup)
-    case .or:
-      return query.filterBuilder.contains(filterFacet, in: orGroup)
+    if settings.operator == .or { // Normal disjunctive case
+      return filterBuilder.contains(filterFacet, in: orGroup)
+    } else if settings.operator == .and && settings.areMultipleSelectionsAllowed { // Conjunctive case with multiple selection
+      return filterBuilder.contains(filterFacet, in: andGroup)
+    } else {
+      return filterBuilder.contains(filterFacet, in: orGroup)
     }
-
   }
 
   /// This simulated selecting a facet
@@ -97,19 +97,19 @@ public class RefinementListViewModel {
     let filterFacet = FilterFacet(attribute: attribute, stringValue: value)
 
     if settings.operator == .or { // Normal disjunctive case
-      query.filterBuilder.toggle(filterFacet, in: orGroup)
+      filterBuilder.toggle(filterFacet, in: orGroup)
     } else if settings.operator == .and && settings.areMultipleSelectionsAllowed { // Conjunctive case with multiple selection
-      query.filterBuilder.toggle(filterFacet, in: andGroup)
+      filterBuilder.toggle(filterFacet, in: andGroup)
     } else {
       // when conjunctive and one single value can be selected,
       // we need to keep the other values visible, so we still have to do a disjunctive facet
       // at the end, we only want to show up to 1 facet filter depending on the click that is made
 
-      if query.filterBuilder.contains(filterFacet, in: orGroup) {
-        query.filterBuilder.remove(filterFacet, from: orGroup)
+      if filterBuilder.contains(filterFacet, in: orGroup) {
+        filterBuilder.remove(filterFacet, from: orGroup)
       } else { // select new one only
-        query.filterBuilder.removeAll(from: orGroup)
-        query.filterBuilder.add(filterFacet, to: orGroup)
+        filterBuilder.removeAll(from: orGroup)
+        filterBuilder.add(filterFacet, to: orGroup)
       }
     }
 
@@ -141,13 +141,13 @@ extension RefinementListViewModel {
     return values
   }
 
-  func getRefinementList(query: Query,
+  func getRefinementList(filterBuilder: FilterBuilder,
                          facetValues: [FacetValue]?,
                          andAttribute attribute: Attribute,
                          transformRefinementList: TransformRefinementList,
                          areRefinedValuesFirst: Bool) -> [FacetValue] {
 
-    let refinementsForAttribute: Set<FilterFacet> = query.filterBuilder.getFilters(for: attribute)
+    let refinementsForAttribute: Set<FilterFacet> = filterBuilder.getFilters(for: attribute)
 
     let facetList = listFrom(facetValues: facetValues, refinements: refinementsForAttribute)
 
@@ -157,13 +157,16 @@ extension RefinementListViewModel {
 
       let lhsChecked: Bool
       let rhsChecked: Bool
-      switch settings.operator {
-      case .and:
-        lhsChecked = query.filterBuilder.contains(lhsFilterFacet, in: andGroup)
-        rhsChecked = query.filterBuilder.contains(rhsFilterFacet, in: andGroup)
-      case .or:
-        lhsChecked = query.filterBuilder.contains(lhsFilterFacet, in: orGroup)
-        rhsChecked = query.filterBuilder.contains(rhsFilterFacet, in: orGroup)
+
+      if settings.operator == .or { // Normal disjunctive case
+        lhsChecked = filterBuilder.contains(lhsFilterFacet, in: orGroup)
+        rhsChecked = filterBuilder.contains(rhsFilterFacet, in: orGroup)
+      } else if settings.operator == .and && settings.areMultipleSelectionsAllowed { // Conjunctive case with multiple selection
+        lhsChecked = filterBuilder.contains(lhsFilterFacet, in: andGroup)
+        rhsChecked = filterBuilder.contains(rhsFilterFacet, in: andGroup)
+      } else {
+        lhsChecked = filterBuilder.contains(lhsFilterFacet, in: orGroup)
+        rhsChecked = filterBuilder.contains(rhsFilterFacet, in: orGroup)
       }
 
       if areRefinedValuesFirst && lhsChecked != rhsChecked { // Refined wins
@@ -215,6 +218,7 @@ extension RefinementListViewModel {
   public struct Settings {
     public var areRefinedValuesShownFirst = Constants.Defaults.refinedFirst
     public var `operator` = Constants.Defaults.refinementOperator
+    // TODO: Combine this one with the above in an enum
     public var areMultipleSelectionsAllowed = Constants.Defaults.areMultipleSelectionsAllowed
     public var maximumNumberOfRows = Constants.Defaults.limit
     public var sorting: TransformRefinementList = .countDesc
