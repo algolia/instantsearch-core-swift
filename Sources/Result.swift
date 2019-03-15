@@ -68,8 +68,7 @@ public struct Constants {
 
     // Hits
     public static let hitsPerPage: UInt = 20
-    public static let infiniteScrolling: Bool = true
-    public static let remainingItemsBeforeLoading: UInt = 5
+    public static let infiniteScrolling: InfiniteScrolling = .on(withOffset: 5)
     public static let showItemsOnEmptyQuery: Bool = true
 
     // Refinement, Numeric Control, Facet Control
