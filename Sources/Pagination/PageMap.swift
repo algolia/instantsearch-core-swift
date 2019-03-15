@@ -8,19 +8,32 @@
 
 import Foundation
 
-struct PageMap<Item: Decodable> {
+struct PageMap<Item> {
   
   var pageToItems: [Int: [Item]]
   
-  let latestPage: UInt
-  let totalPageCount: Int
-  let totalItemsCount: Int
+  var latestPage: UInt
+  var totalPageCount: Int
+  var totalItemsCount: Int
   
   fileprivate var itemsSequence: [Item]
   
   mutating func insert(_ page: [Item], withNumber pageNumber: Int) {
     pageToItems[pageNumber] = page
     itemsSequence = pageToItems.sorted { $0.key < $1.key } .flatMap { $0.value }
+    
+    if pageNumber > latestPage {
+      latestPage = UInt(pageNumber)
+    }
+    
+    if pageNumber > totalPageCount - 1 {
+      totalPageCount = pageNumber + 1
+    }
+    
+    if itemsSequence.count > totalItemsCount {
+      totalItemsCount = itemsSequence.count
+    }
+    
   }
   
   func inserting(_ page: [Item], withNumber pageNumber: Int) -> PageMap {
@@ -65,7 +78,7 @@ extension PageMap: Collection {
   }
 }
 
-struct PageMapIterator<Item: Decodable>: IteratorProtocol {
+struct PageMapIterator<Item>: IteratorProtocol {
   
   private let pageMap: PageMap<Item>
   private var iterator: Array<Item>.Iterator
@@ -83,7 +96,7 @@ struct PageMapIterator<Item: Decodable>: IteratorProtocol {
 
 protocol PageMapConvertible {
   
-  associatedtype PageItem: Decodable
+  associatedtype PageItem
   
   var page: Int { get }
   var pagesCount: Int { get }
@@ -94,12 +107,41 @@ protocol PageMapConvertible {
 
 extension PageMap {
   
+  init() {
+    pageToItems = [0: []]
+    latestPage = 0
+    totalPageCount = 0
+    totalItemsCount = 0
+    itemsSequence = []
+  }
+  
   init<T: PageMapConvertible>(_ source: T) where T.PageItem == Item {
     pageToItems = [source.page: source.pageItems]
     latestPage = UInt(source.page)
     totalPageCount = source.pagesCount
     totalItemsCount = source.totalItemsCount
     itemsSequence = source.pageItems
+  }
+  
+  init<S: Sequence>(_ items: S) where S.Element == Item {
+    let itemsArray = Array(items)
+    pageToItems = [0: itemsArray]
+    latestPage = 0
+    totalPageCount = 1
+    totalItemsCount = itemsArray.count
+    itemsSequence = itemsArray
+  }
+  
+  init?(_ dictionary: [Int: [Item]]) {
+    if dictionary.isEmpty {
+      return nil
+    }
+    
+    pageToItems = dictionary
+    latestPage = UInt(dictionary.keys.sorted().last!)
+    totalPageCount = dictionary.count
+    totalItemsCount = dictionary.values.map { $0.count }.reduce(0, +)
+    itemsSequence = dictionary.sorted { $0.key < $1.key } .flatMap { $0.value }
   }
   
 }
