@@ -12,7 +12,7 @@ import InstantSearchClient
 // DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
 // something like: viewModel.bind(\.navigationTitle, to: navigationItem, at: \.title),
 
-public class HitsViewModel<RecordType: Decodable> {
+public class HitsViewModel<RecordType: Codable> {
 
   public let settings: Settings
 

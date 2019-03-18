@@ -58,14 +58,14 @@ extension Searcher {
 
 extension Searcher {
   public func didChangeOperationsState(hasPendingOperations: Bool) {
-    print("Has pending operations: \(hasPendingOperations)")
+//    print("Has pending operations: \(hasPendingOperations)")
     isLoading.fire(hasPendingOperations)
   }
 }
 
 // TODO: don t forget to add RequestOption everywhere
 
-public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
+public class SingleIndexSearcher<RecordType: Codable>: Searcher {
 
   public let sequencer: Sequencer
   public let isLoading = Signal<Bool>()
@@ -93,7 +93,7 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
     self.query.query = text
   }
 
-  fileprivate func handle(_ value: [String : Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
+  fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
     let result: Result<SearchResults<RecordType>> = self.transform(content: value, error: error)
     self.onSearchResults.fire((queryMetadata, result))
   }
@@ -119,8 +119,6 @@ public class SingleIndexSearcher<RecordType: Decodable>: Searcher {
     }
   }
 
-
-
   public func cancel() {
     sequencer.cancelPendingOperations()
   }
@@ -133,7 +131,6 @@ public class MultiIndexSearcher: Searcher {
   let client: Client
   public let sequencer: Sequencer
   public let isLoading = Signal<Bool>()
-
 
   public var onSearchResults = Signal<[(QueryMetadata, Result<SearchResults<JSON>>)]>()
 

@@ -10,7 +10,7 @@ import Foundation
 @_exported import InstantSearchClient
 
 // Temporary enum without cases for defining namespace
-public struct SearchResults<T: Decodable>: Decodable {
+public struct SearchResults<T: Codable>: Codable {
     
   enum CodingKeys: String, CodingKey {
     case totalHitsCount = "nbHits"
@@ -136,6 +136,7 @@ public struct SearchResults<T: Decodable>: Decodable {
     } else {
       self.facetStats = .none
     }
+    
   }
   
   internal init(hits: [T], query: String, params: String, queryID: String, page: Int, pagesCount: Int, hitsPerPage: Int) {
@@ -157,6 +158,32 @@ public struct SearchResults<T: Decodable>: Decodable {
     self.automaticRadius = .none
     self.rankingInfo = .none
     self.facetStats = .none
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    
+    try container.encode(hits, forKey: .hits)
+    try container.encode(totalHitsCount, forKey: .totalHitsCount)
+    try container.encode(page, forKey: .page)
+    try container.encode(pagesCount, forKey: .pagesCount)
+    try container.encode(hitsPerPage, forKey: .hitsPerPage)
+    try container.encode(processingTimeMS, forKey: .processingTimeMS)
+    try container.encodeIfPresent(query, forKey: .query)
+    try container.encodeIfPresent(params, forKey: .params)
+    try container.encodeIfPresent(queryID, forKey: .queryID)
+    try container.encodeIfPresent(areFacetsCountExhaustive, forKey: .areFacetsCountExhaustive)
+    try container.encodeIfPresent(message, forKey: .message)
+    try container.encodeIfPresent(queryAfterRemoval, forKey: .queryAfterRemoval)
+    try container.encodeIfPresent(automaticRadius, forKey: .automaticRadius)
+    try rankingInfo?.encode(to: encoder)
+    try container.encodeIfPresent(aroundGeoLocation, forKey: .aroundGeoLocation)
+    let rawFacets = facets.flatMap([String: [String: Int]].init)
+    try container.encodeIfPresent(rawFacets, forKey: .facets)
+    let rawDisjunctiveFacets = facets.flatMap([String: [String: Int]].init)
+    try container.encodeIfPresent(rawDisjunctiveFacets, forKey: .disjunctiveFacets)
+    //TODO: missing facets stats
   }
   
 }
