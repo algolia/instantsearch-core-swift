@@ -69,32 +69,20 @@ class RefinementListBuilder: RefinementListBuilding {
 
       switch sorting {
       case .countDesc:
-        if leftCount != rightCount { // Biggest Count wins
-          return leftCount > rightCount
-        } else {
-          return leftValueLowercased < rightValueLowercased // Name ascending wins by default
-        }
+        // Biggest Count wins, else alphabetically by name
+        return leftCount != rightCount ? leftCount > rightCount : leftValueLowercased < rightValueLowercased
 
       case .countAsc:
-        if leftCount != rightCount { // Smallest Count wins
-          return leftCount < rightCount
-        } else {
-          return leftValueLowercased < rightValueLowercased // Name ascending wins by default
-        }
+        // Smallest Count wins, else alphabetically by name
+        return leftCount != rightCount ? leftCount < rightCount : leftValueLowercased < rightValueLowercased
 
       case .nameAsc:
-        if leftValueLowercased != rightValueLowercased {
-          return leftValueLowercased < rightValueLowercased // Name ascending
-        } else {
-          return leftCount > rightCount // Biggest Count wins by default
-        }
+        // Sort by Name ascending. Else, Biggest Count wins by default
+        return leftValueLowercased != rightValueLowercased ? leftValueLowercased < rightValueLowercased : leftCount > rightCount
 
-      case .nameDsc:
-        if leftValueLowercased != rightValueLowercased {
-          return leftValueLowercased > rightValueLowercased // Name descending
-        } else {
-          return leftCount > rightCount // Biggest Count wins by default
-        }
+      case .nameDesc:
+        // Sort by Name descending. Else, Biggest Count wins by default
+        return leftValueLowercased != rightValueLowercased ? leftValueLowercased > rightValueLowercased : leftCount > rightCount
       }
     }
 

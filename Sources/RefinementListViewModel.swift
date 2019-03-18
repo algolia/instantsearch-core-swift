@@ -169,6 +169,6 @@ extension RefinementListViewModel {
     case countAsc
     case countDesc
     case nameAsc
-    case nameDsc
+    case nameDesc
   }
 }
