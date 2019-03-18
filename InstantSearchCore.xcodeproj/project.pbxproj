@@ -110,6 +110,9 @@
 		E2BAE6B6223FF7A500B89EA3 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6B4223FF7A500B89EA3 /* Group.swift */; };
 		E2BAE6B7223FF7A500B89EA3 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6B4223FF7A500B89EA3 /* Group.swift */; };
 		E2BAE6B8223FF7A500B89EA3 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6B4223FF7A500B89EA3 /* Group.swift */; };
+		E2BAE6BA223FFBC300B89EA3 /* RefinementListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6B9223FFBC300B89EA3 /* RefinementListViewModelTests.swift */; };
+		E2BAE6BB223FFBC300B89EA3 /* RefinementListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6B9223FFBC300B89EA3 /* RefinementListViewModelTests.swift */; };
+		E2BAE6BC223FFBC300B89EA3 /* RefinementListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6B9223FFBC300B89EA3 /* RefinementListViewModelTests.swift */; };
 		E2E09E332232709700F3056D /* HitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E282231793C00F3056D /* HitsViewModel.swift */; };
 		E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E282231793C00F3056D /* HitsViewModel.swift */; };
 		E2E09E362232709B00F3056D /* RefinementListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E2A2231794A00F3056D /* RefinementListViewModel.swift */; };
@@ -190,6 +193,7 @@
 		E29F2D311F2F5CC70052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/watchOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E2BAE6AF223FF77100B89EA3 /* RefinementListBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementListBuilder.swift; sourceTree = "<group>"; };
 		E2BAE6B4223FF7A500B89EA3 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		E2BAE6B9223FFBC300B89EA3 /* RefinementListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementListViewModelTests.swift; sourceTree = "<group>"; };
 		E2E09E282231793C00F3056D /* HitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsViewModel.swift; sourceTree = "<group>"; };
 		E2E09E2A2231794A00F3056D /* RefinementListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementListViewModel.swift; sourceTree = "<group>"; };
 		E2E09E2C2231796800F3056D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 				AFE807CE2229355900FC1D50 /* SearchResult.json */,
 				AFCDED33222D86E7001459BE /* FacetResult.json */,
 				AFCDEDE0223A5C0E001459BE /* HitsViewModelTests.swift */,
+				E2BAE6B9223FFBC300B89EA3 /* RefinementListViewModelTests.swift */,
 				AFCDEDE4223AC4E8001459BE /* PaginationControllerTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
 			);
@@ -743,6 +748,7 @@
 				AFCDEDE5223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
 				AFCDEDA6222E8166001459BE /* FacetResultsTests.swift in Sources */,
 				AFCDEDE9223AC514001459BE /* PageMapTests.swift in Sources */,
+				E2BAE6BA223FFBC300B89EA3 /* RefinementListViewModelTests.swift in Sources */,
 				AFCDEDE1223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
 				AFCDED7D222E7A60001459BE /* HighlighterTest.swift in Sources */,
 			);
@@ -779,6 +785,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED8D222E7A62001459BE /* SequencerTest.swift in Sources */,
+				E2BAE6BB223FFBC300B89EA3 /* RefinementListViewModelTests.swift in Sources */,
 				AFCDEDE6223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
 				AFCDED8F222E7A62001459BE /* SearchResultsTests.swift in Sources */,
 				AFCDEDA7222E8167001459BE /* FacetResultsTests.swift in Sources */,
@@ -819,6 +826,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED99222E7A63001459BE /* SequencerTest.swift in Sources */,
+				E2BAE6BC223FFBC300B89EA3 /* RefinementListViewModelTests.swift in Sources */,
 				AFCDEDE7223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
 				AFCDED9B222E7A63001459BE /* SearchResultsTests.swift in Sources */,
 				AFCDEDA8222E8168001459BE /* FacetResultsTests.swift in Sources */,
