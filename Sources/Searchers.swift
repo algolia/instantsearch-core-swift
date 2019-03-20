@@ -132,11 +132,7 @@ public class MultiIndexSearcher: Searcher {
   public let sequencer: Sequencer
   public let isLoading = Signal<Bool>()
 
-<<<<<<< HEAD
   public var onSearchResults = Signal<Result<[(QueryMetadata, SearchResults<JSON>)]>>()
-=======
-  public var onSearchResults = Signal<[(QueryMetadata, Result<SearchResults<JSON>>)]>()
->>>>>>> refactor-refinementlist
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
