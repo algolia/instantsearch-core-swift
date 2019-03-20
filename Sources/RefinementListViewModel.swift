@@ -22,6 +22,8 @@ public class RefinementListViewModel {
 
   var facetResults: [FacetValue]?
 
+  let refinementListBuilder: RefinementListBuilding
+
   private var orGroup: OrFilterGroup<FilterFacet> {
     return OrFilterGroup(name: group.name)
   }
@@ -30,12 +32,17 @@ public class RefinementListViewModel {
     return AndFilterGroup(name: group.name)
   }
 
+  // MARK: - Init
+
   public init(attribute: Attribute, filterBuilder: FilterBuilder, refinementSettings: Settings? = nil, group: Group? = nil) {
     self.attribute = attribute
     self.filterBuilder = filterBuilder
     self.settings = refinementSettings ?? Settings()
     self.group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
+    refinementListBuilder = RefinementListBuilder()
   }
+
+  // MARK: - Update with new results
 
   public func update(with facetResults: FacetResults) {
     let rawFacetResults = facetResults.facetHits
@@ -54,12 +61,16 @@ public class RefinementListViewModel {
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
-    self.facetResults = getRefinementList(filterBuilder: filterBuilder,
-                                     facetValues: rawFacetResults,
-                                     andAttribute: attribute,
-                                     transformRefinementList: settings.sorting,
-                                     areRefinedValuesFirst: settings.areRefinedValuesShownFirst)
+    let refinedFilterFacets: Set<FilterFacet> = filterBuilder.getFilters(for: attribute)
+    let refinedValues = refinedFilterFacets.map { $0.value.description }
+
+    self.facetResults = refinementListBuilder.getRefinementList(refinementValues: refinedValues,
+                                                                facetValues: rawFacetResults,
+                                                                sorting: settings.sorting,
+                                                                areRefinedValuesFirst: settings.areRefinedValuesShownFirst)
   }
+
+  // MARK: - Public API
 
   public func numberOfRows() -> Int {
     guard let facetResults = facetResults else { return 0 }
@@ -79,181 +90,88 @@ public class RefinementListViewModel {
     let value = facetResults[row].value
     let filterFacet = FilterFacet(attribute: attribute, stringValue: value)
 
-    if settings.operator == .or { // Normal disjunctive case
-      return filterBuilder.contains(filterFacet, in: orGroup)
-    } else if settings.operator == .and && settings.areMultipleSelectionsAllowed { // Conjunctive case with multiple selection
-      return filterBuilder.contains(filterFacet, in: andGroup)
-    } else {
-      return filterBuilder.contains(filterFacet, in: orGroup)
-    }
+    return isRefined(filterFacet)
   }
 
-  /// This simulated selecting a facet
-  /// it will tggle the facet refinement, deselect the row and then execute a search
   public func didSelectRow(_ row: Int) {
     guard let facetResults = facetResults else { return }
 
     let value = facetResults[row].value
     let filterFacet = FilterFacet(attribute: attribute, stringValue: value)
 
-    if settings.operator == .or { // Normal disjunctive case
-      filterBuilder.toggle(filterFacet, in: orGroup)
-    } else if settings.operator == .and && settings.areMultipleSelectionsAllowed { // Conjunctive case with multiple selection
-      filterBuilder.toggle(filterFacet, in: andGroup)
-    } else {
-      // when conjunctive and one single value can be selected,
-      // we need to keep the other values visible, so we still have to do a disjunctive facet
-      // at the end, we only want to show up to 1 facet filter depending on the click that is made
-
-      if filterBuilder.contains(filterFacet, in: orGroup) {
-        filterBuilder.remove(filterFacet, from: orGroup)
-      } else { // select new one only
-        filterBuilder.removeAll(from: orGroup)
-        filterBuilder.add(filterFacet, to: orGroup)
-      }
-    }
+    didSelect(filterFacet)
 
     onParamChange.fire(())
-
   }
+
 }
+
+// MARK: - Filtering Business Logic
 
 extension RefinementListViewModel {
 
-  /// Add missing refinements with a count of 0 to all returned facetValues
-  /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
-  /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-  func listFrom(facetValues: [FacetValue]?, refinements: Set<FilterFacet>) -> [FacetValue] {
-    var values = [FacetValue]()
-    if let facetValues = facetValues {
-      facetValues.forEach { (facetValue) in
-        values.append(facetValue)
+  fileprivate func didSelect(_ filterFacet: FilterFacet) {
+    switch settings.operator {
+    case .or:
+      filterBuilder.toggle(filterFacet, in: orGroup)
+    case .and(let selection):
+      switch selection {
+      case .multiple:
+        filterBuilder.toggle(filterFacet, in: andGroup)
+      case .single:
+        if filterBuilder.contains(filterFacet, in: orGroup) {
+          filterBuilder.remove(filterFacet, from: orGroup)
+        } else {
+          filterBuilder.removeAll(from: orGroup)
+          filterBuilder.add(filterFacet, to: orGroup)
+        }
       }
     }
-    // Make sure there is a value at least for the refined values.
-    refinements.forEach { (filterFacet) in
-      let refinementValue = filterFacet.value.description
-      if facetValues == nil || !facetValues!.contains { $0.value == refinementValue } {
-        values.append(FacetValue(value: refinementValue, count: 0, highlighted: .none))
-      }
-    }
-
-    return values
   }
 
-  func getRefinementList(filterBuilder: FilterBuilder,
-                         facetValues: [FacetValue]?,
-                         andAttribute attribute: Attribute,
-                         transformRefinementList: TransformRefinementList,
-                         areRefinedValuesFirst: Bool) -> [FacetValue] {
-
-    let refinementsForAttribute: Set<FilterFacet> = filterBuilder.getFilters(for: attribute)
-
-    let facetList = listFrom(facetValues: facetValues, refinements: refinementsForAttribute)
-
-    let sortedFacetList = facetList.sorted { (lhs, rhs) in
-      let lhsFilterFacet = FilterFacet(attribute: attribute, stringValue: lhs.value)
-      let rhsFilterFacet = FilterFacet(attribute: attribute, stringValue: rhs.value)
-
-      let lhsChecked: Bool
-      let rhsChecked: Bool
-
-      if settings.operator == .or { // Normal disjunctive case
-        lhsChecked = filterBuilder.contains(lhsFilterFacet, in: orGroup)
-        rhsChecked = filterBuilder.contains(rhsFilterFacet, in: orGroup)
-      } else if settings.operator == .and && settings.areMultipleSelectionsAllowed { // Conjunctive case with multiple selection
-        lhsChecked = filterBuilder.contains(lhsFilterFacet, in: andGroup)
-        rhsChecked = filterBuilder.contains(rhsFilterFacet, in: andGroup)
-      } else {
-        lhsChecked = filterBuilder.contains(lhsFilterFacet, in: orGroup)
-        rhsChecked = filterBuilder.contains(rhsFilterFacet, in: orGroup)
-      }
-
-      if areRefinedValuesFirst && lhsChecked != rhsChecked { // Refined wins
-        return lhsChecked
-      }
-
-      let leftCount = lhs.count
-      let rightCount = rhs.count
-      let leftValueLowercased = lhs.value.lowercased()
-      let rightValueLowercased = rhs.value.lowercased()
-
-      switch transformRefinementList {
-      case .countDesc:
-        if leftCount != rightCount { // Biggest Count wins
-          return leftCount > rightCount
-        } else {
-          return leftValueLowercased < rightValueLowercased // Name ascending wins by default
-        }
-
-      case .countAsc:
-        if leftCount != rightCount { // Smallest Count wins
-          return leftCount < rightCount
-        } else {
-          return leftValueLowercased < rightValueLowercased // Name ascending wins by default
-        }
-
-      case .nameAsc:
-        if leftValueLowercased != rightValueLowercased {
-          return leftValueLowercased < rightValueLowercased // Name ascending
-        } else {
-          return leftCount > rightCount // Biggest Count wins by default
-        }
-
-      case .nameDsc:
-        if leftValueLowercased != rightValueLowercased {
-          return leftValueLowercased > rightValueLowercased // Name descending
-        } else {
-          return leftCount > rightCount // Biggest Count wins by default
-        }
+  fileprivate func isRefined(_ filterFacet: FilterFacet) -> Bool {
+    switch settings.operator {
+    case .or:
+      return filterBuilder.contains(filterFacet, in: orGroup)
+    case .and(let selection):
+      switch selection {
+      case .multiple: return filterBuilder.contains(filterFacet, in: andGroup)
+      case .single: return filterBuilder.contains(filterFacet, in: orGroup)
       }
     }
-
-    return sortedFacetList
   }
 }
+
+// MARK: - Helpers
 
 extension RefinementListViewModel {
   // TODO: Rename all constants and internal classes to be consistent with names here.
   public struct Settings {
     public var areRefinedValuesShownFirst = Constants.Defaults.refinedFirst
     public var `operator` = Constants.Defaults.refinementOperator
-    // TODO: Combine this one with the above in an enum
-    public var areMultipleSelectionsAllowed = Constants.Defaults.areMultipleSelectionsAllowed
     public var maximumNumberOfRows = Constants.Defaults.limit
-    public var sorting: TransformRefinementList = .countDesc
+    public var sorting: Sorting = .countDesc
 
     public enum RefinementOperator {
-      case and
+      // when operator is 'and' + one single value can be selected,
+      // we want to keep the other values visible, so we have to do a disjunctive facet
+      // In the case of multi value that can be selected in conjunctive case,
+      // then we avoid doing a disjunctive facet and just do normal conjusctive facet
+      // and only the remaining possible facets will appear
+      case and(selection: Selection)
       case or
+
+      public enum Selection {
+        case single
+        case multiple
+      }
     }
   }
 
-  public enum TransformRefinementList {
+  public enum Sorting {
     case countAsc
     case countDesc
     case nameAsc
-    case nameDsc
+    case nameDesc
   }
-}
-
-
-public struct Group: CustomStringConvertible, Hashable {
-
-  public typealias RawValue = String
-
-  var name: String
-
-  public init(_ string: String) {
-    self.name = string
-  }
-
-  public init(rawValue: String) {
-    self.name = rawValue
-  }
-
-  public var description: String {
-    return name
-  }
-
 }
