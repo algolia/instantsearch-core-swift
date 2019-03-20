@@ -11,7 +11,7 @@ import Foundation
 /// A value of a given facet, together with its number of occurrences.
 /// This struct is mainly useful when an ordered list of facet values has to be presented to the user.
 ///
-public struct FacetValue: Codable {
+public struct FacetValue: Codable, Equatable {
     public let value: String
     public let count: Int
     public let highlighted: String?

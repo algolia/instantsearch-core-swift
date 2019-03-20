@@ -62,14 +62,12 @@ public class RefinementListViewModel {
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
     let refinedFilterFacets: Set<FilterFacet> = filterBuilder.getFilters(for: attribute)
+    let refinedValues = refinedFilterFacets.map { $0.value.description }
 
-    self.facetResults =
-      refinementListBuilder.getRefinementList(on: attribute,
-                                              refinedFilterFacets: refinedFilterFacets,
-                                              facetValues: rawFacetResults,
-                                              sorting: settings.sorting,
-                                              areRefinedValuesFirst: settings.areRefinedValuesShownFirst,
-                                              isRefinedHandler: isRefined)
+    self.facetResults = refinementListBuilder.getRefinementList(refinementValues: refinedValues,
+                                                                facetValues: rawFacetResults,
+                                                                sorting: settings.sorting,
+                                                                areRefinedValuesFirst: settings.areRefinedValuesShownFirst)
   }
 
   // MARK: - Public API
@@ -116,10 +114,11 @@ extension RefinementListViewModel {
     switch settings.operator {
     case .or:
       filterBuilder.toggle(filterFacet, in: orGroup)
-    case .and(let areMultipleSelectionsAllowed):
-      if areMultipleSelectionsAllowed {
+    case .and(let selection):
+      switch selection {
+      case .multiple:
         filterBuilder.toggle(filterFacet, in: andGroup)
-      } else {
+      case .single:
         if filterBuilder.contains(filterFacet, in: orGroup) {
           filterBuilder.remove(filterFacet, from: orGroup)
         } else {
@@ -134,11 +133,10 @@ extension RefinementListViewModel {
     switch settings.operator {
     case .or:
       return filterBuilder.contains(filterFacet, in: orGroup)
-    case .and(let areMultipleSelectionsAllowed):
-      if areMultipleSelectionsAllowed {
-        return filterBuilder.contains(filterFacet, in: andGroup)
-      } else {
-        return filterBuilder.contains(filterFacet, in: orGroup)
+    case .and(let selection):
+      switch selection {
+      case .multiple: return filterBuilder.contains(filterFacet, in: andGroup)
+      case .single: return filterBuilder.contains(filterFacet, in: orGroup)
       }
     }
   }
@@ -160,8 +158,13 @@ extension RefinementListViewModel {
       // In the case of multi value that can be selected in conjunctive case,
       // then we avoid doing a disjunctive facet and just do normal conjusctive facet
       // and only the remaining possible facets will appear
-      case and(areMultipleSelectionsAllowed: Bool)
+      case and(selection: Selection)
       case or
+
+      public enum Selection {
+        case single
+        case multiple
+      }
     }
   }
 

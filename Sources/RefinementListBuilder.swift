@@ -11,12 +11,10 @@ import Foundation
 typealias IsRefinedHandler = (_ filterFacet: FilterFacet) -> Bool
 
 protocol RefinementListBuilding {
-  func getRefinementList(on attribute: Attribute,
-                         refinedFilterFacets: Set<FilterFacet>,
+  func getRefinementList(refinementValues: [String],
                          facetValues: [FacetValue]?,
                          sorting: RefinementListViewModel.Sorting,
-                         areRefinedValuesFirst: Bool,
-                         isRefinedHandler: IsRefinedHandler?) -> [FacetValue]
+                         areRefinedValuesFirst: Bool) -> [FacetValue]
 }
 
 class RefinementListBuilder: RefinementListBuilding {
@@ -24,7 +22,7 @@ class RefinementListBuilder: RefinementListBuilding {
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
   /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-  func merge(_ facetValues: [FacetValue]?, with refinements: Set<FilterFacet>) -> [FacetValue] {
+  func merge(_ facetValues: [FacetValue]?, withRefinementValues refinementValues: [String]) -> [FacetValue] {
     var values = [FacetValue]()
     if let facetValues = facetValues {
       facetValues.forEach { (facetValue) in
@@ -32,8 +30,7 @@ class RefinementListBuilder: RefinementListBuilding {
       }
     }
     // Make sure there is a value at least for the refined values.
-    refinements.forEach { (filterFacet) in
-      let refinementValue = filterFacet.value.description
+    refinementValues.forEach { (refinementValue) in
       if facetValues == nil || !facetValues!.contains { $0.value == refinementValue } {
         values.append(FacetValue(value: refinementValue, count: 0, highlighted: .none))
       }
@@ -42,21 +39,17 @@ class RefinementListBuilder: RefinementListBuilding {
     return values
   }
 
-  func getRefinementList(on attribute: Attribute,
-                         refinedFilterFacets: Set<FilterFacet>,
+  func getRefinementList(refinementValues: [String],
                          facetValues: [FacetValue]?,
                          sorting: RefinementListViewModel.Sorting,
-                         areRefinedValuesFirst: Bool = false,
-                         isRefinedHandler: IsRefinedHandler? = nil) -> [FacetValue] {
+                         areRefinedValuesFirst: Bool) -> [FacetValue] {
 
-    let facetList = merge(facetValues, with: refinedFilterFacets)
+    let facetList = merge(facetValues, withRefinementValues: refinementValues)
 
     let sortedFacetList = facetList.sorted { (lhs, rhs) in
-      let lhsFilterFacet = FilterFacet(attribute: attribute, stringValue: lhs.value)
-      let rhsFilterFacet = FilterFacet(attribute: attribute, stringValue: rhs.value)
 
-      let lhsChecked: Bool = isRefinedHandler?(lhsFilterFacet) ?? false
-      let rhsChecked: Bool = isRefinedHandler?(rhsFilterFacet) ?? false
+      let lhsChecked: Bool = refinementValues.contains(lhs.value)
+      let rhsChecked: Bool = refinementValues.contains(rhs.value)
 
       if areRefinedValuesFirst && lhsChecked != rhsChecked { // Refined wins
         return lhsChecked
