@@ -1,5 +1,5 @@
 //
-//  PaginationController.swift
+//  Pagination.swift
 //  InstantSearchCore-iOS
 //
 //  Created by Vladislav Fitc on 13/03/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PaginationController<Item, Metadata: PageMetadata> {
+public class Paginator<Item, Metadata: PageMetadata> {
   
   private typealias State = (pageMap: PageMap<Item>, metadata: Metadata)
   
@@ -16,7 +16,7 @@ public class PaginationController<Item, Metadata: PageMetadata> {
     return state?.pageMap
   }
   
-  weak var delegate: PaginationControllerDelegate?
+  weak var delegate: PaginatorDelegate?
   
   private var lastRequestedPage: UInt?
   private var state: State?
@@ -66,7 +66,7 @@ public class PaginationController<Item, Metadata: PageMetadata> {
   
 }
 
-protocol PaginationControllerDelegate: class {
+protocol PaginatorDelegate: class {
   func didRequestLoadPage(withNumber number: UInt)
 }
 

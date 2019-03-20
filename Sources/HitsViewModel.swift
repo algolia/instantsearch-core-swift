@@ -16,7 +16,7 @@ public class HitsViewModel<RecordType: Codable> {
 
   public let settings: Settings
 
-  private let hitsPaginationController: PaginationController<RecordType, QueryMetadata>
+  private let hitsPaginationController: Paginator<RecordType, QueryMetadata>
   
   private var isLastQueryEmpty: Bool = true
   
@@ -35,12 +35,12 @@ public class HitsViewModel<RecordType: Codable> {
 
   public init(settings: Settings? = nil) {
     self.settings = settings ?? Settings()
-    self.hitsPaginationController = PaginationController<RecordType, QueryMetadata>()
+    self.hitsPaginationController = Paginator<RecordType, QueryMetadata>()
     self.hitsPaginationController.delegate = self
   }
   
   internal init(settings: Settings? = nil,
-                paginationController: PaginationController<RecordType, QueryMetadata>) {
+                paginationController: Paginator<RecordType, QueryMetadata>) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
   }
@@ -110,7 +110,7 @@ public extension HitsViewModel where RecordType == JSON {
   
 }
 
-extension HitsViewModel: PaginationControllerDelegate {
+extension HitsViewModel: PaginatorDelegate {
   
   func didRequestLoadPage(withNumber number: UInt) {
     onNewPage.fire(number)

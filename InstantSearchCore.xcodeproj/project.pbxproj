@@ -48,7 +48,7 @@
 		AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
 		AFCDEDB8222ED390001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
 		AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
-		AFCDEDBE2239797F001459BE /* PaginationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* PaginationController.swift */; };
+		AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
 		AFCDEDC02239799D001459BE /* PageMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBF2239799D001459BE /* PageMap.swift */; };
 		AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDC1223979E1001459BE /* Optional+String.swift */; };
 		AFCDEDC622397A5E001459BE /* QueryMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDC522397A5E001459BE /* QueryMetadata.swift */; };
@@ -59,9 +59,9 @@
 		AFCDEDCC22397E1D001459BE /* PageMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBF2239799D001459BE /* PageMap.swift */; };
 		AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBF2239799D001459BE /* PageMap.swift */; };
 		AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBF2239799D001459BE /* PageMap.swift */; };
-		AFCDEDCF22397E23001459BE /* PaginationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* PaginationController.swift */; };
-		AFCDEDD022397E24001459BE /* PaginationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* PaginationController.swift */; };
-		AFCDEDD122397E25001459BE /* PaginationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* PaginationController.swift */; };
+		AFCDEDCF22397E23001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
+		AFCDEDD022397E24001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
+		AFCDEDD122397E25001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
 		AFCDEDD422397E31001459BE /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResults.swift */; };
 		AFCDEDD522397E31001459BE /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC28C4CB1E5B2D1000EFC4A0 /* Sequencer.swift */; };
 		AFCDEDD622397E31001459BE /* Searchers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DC9F2222EF0C3006F1EED /* Searchers.swift */; };
@@ -158,7 +158,7 @@
 		AFCDEDA2222E7B98001459BE /* FacetResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetResults.swift; sourceTree = "<group>"; };
 		AFCDEDA4222E8161001459BE /* FacetResultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetResultsTests.swift; sourceTree = "<group>"; };
 		AFCDEDA9222EB789001459BE /* SearchResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
-		AFCDEDBD2239797F001459BE /* PaginationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationController.swift; sourceTree = "<group>"; };
+		AFCDEDBD2239797F001459BE /* Paginator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paginator.swift; sourceTree = "<group>"; };
 		AFCDEDBF2239799D001459BE /* PageMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageMap.swift; sourceTree = "<group>"; };
 		AFCDEDC1223979E1001459BE /* Optional+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+String.swift"; sourceTree = "<group>"; };
 		AFCDEDC522397A5E001459BE /* QueryMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryMetadata.swift; sourceTree = "<group>"; };
@@ -266,7 +266,7 @@
 		AFCDEDBC2239796F001459BE /* Pagination */ = {
 			isa = PBXGroup;
 			children = (
-				AFCDEDBD2239797F001459BE /* PaginationController.swift */,
+				AFCDEDBD2239797F001459BE /* Paginator.swift */,
 				AFCDEDBF2239799D001459BE /* PageMap.swift */,
 				AFCDEDC722397A9A001459BE /* SearchResults+PageMap.swift */,
 			);
@@ -719,7 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
-				AFCDEDBE2239797F001459BE /* PaginationController.swift in Sources */,
+				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
 				AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */,
 				E24233DA223947FC008F24FB /* Searchers.swift in Sources */,
 				AFCDED54222E7A4E001459BE /* Sequencer.swift in Sources */,
@@ -776,7 +776,7 @@
 				AFCDEDD722397E31001459BE /* HitsViewModel.swift in Sources */,
 				AFCDEDB0222ED38D001459BE /* Hit.swift in Sources */,
 				BC4CB8A21D534C20004618DD /* Highlighter.swift in Sources */,
-				AFCDEDCF22397E23001459BE /* PaginationController.swift in Sources */,
+				AFCDEDCF22397E23001459BE /* Paginator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -817,7 +817,7 @@
 				AFCDEDB4222ED38E001459BE /* Hit.swift in Sources */,
 				BC28C4CE1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				BC4CB8C51D535CA4004618DD /* Highlighter.swift in Sources */,
-				AFCDEDD022397E24001459BE /* PaginationController.swift in Sources */,
+				AFCDEDD022397E24001459BE /* Paginator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,7 +858,7 @@
 				AFCDEDAD222EB789001459BE /* SearchResults.swift in Sources */,
 				AFCDEDB8222ED390001459BE /* Hit.swift in Sources */,
 				BC28C4CF1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
-				AFCDEDD122397E25001459BE /* PaginationController.swift in Sources */,
+				AFCDEDD122397E25001459BE /* Paginator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

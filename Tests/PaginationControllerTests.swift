@@ -36,7 +36,7 @@ struct TestPageMapConvertible<Item>: PageMapConvertible {
   
 }
 
-class TestPaginationControllerDelegate: PaginationControllerDelegate {
+class TestPaginationControllerDelegate: PaginatorDelegate {
   
   var requestedLoadPage: ((UInt) -> Void)?
   
@@ -50,7 +50,7 @@ class PaginationControllerTests: XCTestCase {
   
   func testProcessing() {
     
-    let paginationController = PaginationController<String, TestMetaData>()
+    let paginationController = Paginator<String, TestMetaData>()
     
     XCTAssertNil(paginationController.pageMap)
     
@@ -112,7 +112,7 @@ class PaginationControllerTests: XCTestCase {
   
   func testLoadingNextPageWithoutContext() {
     
-    let paginationController = PaginationController<String, TestMetaData>()
+    let paginationController = Paginator<String, TestMetaData>()
     let delegate = TestPaginationControllerDelegate()
     paginationController.delegate = delegate
     
@@ -130,7 +130,7 @@ class PaginationControllerTests: XCTestCase {
   
   func testLoadingNextPageWithContext() {
     
-    let paginationController = PaginationController<String, TestMetaData>()
+    let paginationController = Paginator<String, TestMetaData>()
     let delegate = TestPaginationControllerDelegate()
     paginationController.delegate = delegate
     
@@ -153,7 +153,7 @@ class PaginationControllerTests: XCTestCase {
   
   func testLoadingNextPageWithCompleteDataset() {
     
-    let paginationController = PaginationController<String, TestMetaData>()
+    let paginationController = Paginator<String, TestMetaData>()
     let delegate = TestPaginationControllerDelegate()
     paginationController.delegate = delegate
     
@@ -177,7 +177,7 @@ class PaginationControllerTests: XCTestCase {
   
   func testLoadingNextPageDelegateCalledOnce() {
     
-    let paginationController = PaginationController<String, TestMetaData>()
+    let paginationController = Paginator<String, TestMetaData>()
     
     let delegate = TestPaginationControllerDelegate()
     paginationController.delegate = delegate

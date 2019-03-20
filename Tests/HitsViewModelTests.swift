@@ -59,7 +59,7 @@ class HitsViewModelTests: XCTestCase {
   
   func testLoadMoreTriggering() {
     
-    let paginationController = PaginationController<String, QueryMetadata>()
+    let paginationController = Paginator<String, QueryMetadata>()
     let testDelegate = TestPaginationControllerDelegate()
     paginationController.delegate = testDelegate
     let exp = expectation(description: "Next page request")
@@ -91,7 +91,7 @@ class HitsViewModelTests: XCTestCase {
   
   func testLoadMoreTriggeringIfDesactivated() {
     
-    let paginationController = PaginationController<String, QueryMetadata>()
+    let paginationController = Paginator<String, QueryMetadata>()
     let testDelegate = TestPaginationControllerDelegate()
     paginationController.delegate = testDelegate
     let exp = expectation(description: "Next page request")
@@ -124,7 +124,7 @@ class HitsViewModelTests: XCTestCase {
   
   func testLoadMoreManualTriggeringIfDesactivated() {
     
-    let paginationController = PaginationController<String, QueryMetadata>()
+    let paginationController = Paginator<String, QueryMetadata>()
     let testDelegate = TestPaginationControllerDelegate()
     paginationController.delegate = testDelegate
     let exp = expectation(description: "Next page request")
@@ -157,7 +157,7 @@ class HitsViewModelTests: XCTestCase {
   
   func testHitsAppearanceOnEmptyQueryIfDesactivated() {
     
-    let paginationController = PaginationController<String, QueryMetadata>()
+    let paginationController = Paginator<String, QueryMetadata>()
     let testDelegate = TestPaginationControllerDelegate()
     paginationController.delegate = testDelegate
     
@@ -182,7 +182,7 @@ class HitsViewModelTests: XCTestCase {
   
   func testHitsAppearanceOnEmptyQueryIfActivated() {
     
-    let paginationController = PaginationController<String, QueryMetadata>()
+    let paginationController = Paginator<String, QueryMetadata>()
     let testDelegate = TestPaginationControllerDelegate()
     paginationController.delegate = testDelegate
     
