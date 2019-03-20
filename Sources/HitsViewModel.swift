@@ -68,6 +68,13 @@ public class HitsViewModel<RecordType: Codable> {
     return hitsPageMap[row]
   }
   
+  public func rawHitForRow(_ row: Int) -> [String: Any]? {
+    guard let hit = hitForRow(row) else { return nil }
+    guard let data = try? JSONEncoder().encode(hit) else { return nil }
+    guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return nil }
+    return [String: Any](jsonValue)
+  }
+  
   public func loadMoreResults() {
     hitsPaginationController.loadNextPageIfNeeded()
   }
@@ -91,6 +98,14 @@ private extension HitsViewModel {
       hitsPaginationController.loadNextPageIfNeeded()
     }
     
+  }
+  
+}
+
+public extension HitsViewModel where RecordType == JSON {
+  
+  public func rawHitForRow(_ row: Int) -> [String: Any]? {
+    return hitForRow(row).flatMap([String: Any].init)
   }
   
 }

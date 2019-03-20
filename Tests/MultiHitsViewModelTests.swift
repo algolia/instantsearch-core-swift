@@ -162,12 +162,10 @@ class MultiHitsViewModelTests: XCTestCase {
     
     let results2: SearchResults<JSON> = SearchResults(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
     
-    let results: [SearchResults<JSON>] = [results1, results2]
-    
     let md = QueryMetadata(queryText: "q1", page: 0)
 
     // Update multihits ViewModel with a correct list of results
-    XCTAssertNoThrow(try multiViewModel.update(results, with: md))
+    XCTAssertNoThrow(try multiViewModel.update([(md, results1), (md, results2)]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
@@ -175,7 +173,7 @@ class MultiHitsViewModelTests: XCTestCase {
     XCTAssertEqual(multiViewModel.numberOfRows(inSection: 1), hits2.count)
     
     // Update multihits ViewModel with uncorrect list of results
-    XCTAssertThrowsError(try multiViewModel.update([results2, results1], with: md))
+    XCTAssertThrowsError(try multiViewModel.update([(md, results2), (md, results1)]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
@@ -207,12 +205,10 @@ class MultiHitsViewModelTests: XCTestCase {
       ]
     
     let results2: SearchResults<JSON> = SearchResults(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
-    
-    let results: [SearchResults<JSON>] = [results1, results2]
-    
+        
     let md = QueryMetadata(queryText: "q1", page: 0)
     
-    XCTAssertNoThrow(try multiViewModel.update(results, with: md))
+    XCTAssertNoThrow(try multiViewModel.update([(md, results1), (md, results2)]))
     
     XCTAssertNoThrow(try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Int]?)
     XCTAssertNoThrow(try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Bool]?)
@@ -241,7 +237,12 @@ class MultiHitsViewModelTests: XCTestCase {
       self.didCallLoadMoreResults = didCallLoadMoreResults
     }
     
-    func genericUpdate(_ searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {}
+    func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
+    }
+    
+    func rawHitForRow(_ row: Int) -> [String : Any]? {
+      return .none
+    }
     
     func numberOfRows() -> Int {
       return 0

@@ -8,9 +8,18 @@
 
 import Foundation
 
+/**
+ ViewModel which constitutes the aggregation of nested hits ViewModels providing a convenient functions for managing them.
+ Designed for a joint usage with multi index searcher, but can be used with multiple separate single index searchers as well.
+ */
+
 public class MultiHitsViewModel {
   
+  /// List of nested hits ViewModels
+  
   private var hitsViewModels: [AnyHitsViewModel]
+  
+  /// Common initializer
   
   public init() {
     hitsViewModels = []
@@ -107,13 +116,19 @@ public class MultiHitsViewModel {
     }
   }
   
-  /// Returns the hit at the specified index path
+  /// Returns the hit at the specified index path of a desired type
   /// - Parameter indexPath: a pointer to a hit, where section points to a hits ViewModel and row points to a hit in this ViewModel.
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
   /// - Returns: The hit at row for index path. Returns `nil` if there is no element for specified index.
   
   public func hitForRow<R: Codable>(at indexPath: IndexPath) throws -> R? {
     return try hitsViewModels[indexPath.section].genericHitForRow(indexPath.row)
+  }
+  
+  /// Returns the hit
+  
+  public func rawHitForRow(at indexPath: IndexPath) -> [String: Any]? {
+    return hitsViewModels[indexPath.section].rawHitForRow(indexPath.row)
   }
   
   /// Returns number of nested hits ViewModels
@@ -138,7 +153,10 @@ public class MultiHitsViewModel {
   
 }
 
-extension MultiHitsViewModel {
+internal extension MultiHitsViewModel {
+  
+  /// Appending a common AnyHitsViewModel hits ViewModel
+  /// Used for testing purposes
   
   func appendGeneric(_ hitsViewModel: AnyHitsViewModel) {
     hitsViewModels.append(hitsViewModel)
