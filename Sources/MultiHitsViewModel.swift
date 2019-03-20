@@ -19,7 +19,7 @@ public class MultiHitsViewModel {
   /// Adds a new hits ViewModel at the end of the view models list.
   /// - Parameter hitsViewModel: the hits ViewModel to append
   
-  public func append<R: Codable>(_ hitsViewModel: HitsViewModel<R>) {
+  public func append<R>(_ hitsViewModel: HitsViewModel<R>) {
     hitsViewModels.append(hitsViewModel)
   }
   
@@ -27,7 +27,7 @@ public class MultiHitsViewModel {
   /// - Parameter hitsViewModel: the hits ViewModel to insert
   /// - Parameter index: the position at which to insert the new hits ViewModel.
   
-  public func insert<R: Codable>(hitsViewModel: HitsViewModel<R>, atIndex index: Int) {
+  public func insert<R>(hitsViewModel: HitsViewModel<R>, atIndex index: Int) {
     hitsViewModels.insert(hitsViewModel, at: index)
   }
   
@@ -35,7 +35,7 @@ public class MultiHitsViewModel {
   /// - Parameter hitsViewModel: the hits ViewModel replacement
   /// - Parameter index: the position at which to replace the hits ViewModel
   
-  public func replace<R: Codable>(by hitsViewModel: HitsViewModel<R>, atIndex index: Int) {
+  public func replace<R>(by hitsViewModel: HitsViewModel<R>, atIndex index: Int) {
     hitsViewModels[index] = hitsViewModel
   }
   
@@ -72,7 +72,7 @@ public class MultiHitsViewModel {
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
   /// - Returns: The nested ViewModel at specified index.
   
-  public func hitsViewModel<R: Codable>(atIndex index: Int) throws -> HitsViewModel<R> {
+  public func hitsViewModel<R>(atIndex index: Int) throws -> HitsViewModel<R> {
     guard let typedViewModel = hitsViewModels[index] as? HitsViewModel<R> else {
       throw HitsViewModel<R>.Error.incompatibleRecordType
     }
@@ -86,7 +86,7 @@ public class MultiHitsViewModel {
   /// - Parameter index: the index of nested hits ViewModel
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits ViewModel
   
-  public func update<R: Codable>(_ results: SearchResults<R>, with metadata: QueryMetadata, forViewModelAtIndex index: Int) throws {
+  public func update<R>(_ results: SearchResults<R>, with metadata: QueryMetadata, forViewModelAtIndex index: Int) throws {
     guard let typedViewModel = hitsViewModels[index] as? HitsViewModel<R> else {
       throw HitsViewModel<R>.Error.incompatibleRecordType
     }
@@ -101,8 +101,9 @@ public class MultiHitsViewModel {
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the conversion of search results for one of a nested hits ViewModels is impossible due to a record type mismatch
   
   public func update(_ results: [(metadata: QueryMetadata, results: SearchResults<JSON>)]) throws {
-    try zip(hitsViewModels, results).forEach { viewModel, results in
-      try viewModel.genericUpdate(results.results, with: results.metadata)
+    try zip(hitsViewModels, results).forEach { arg in
+      let (viewModel, results) = arg
+      try viewModel.update(withGeneric: results.results, with: results.metadata)
     }
   }
   

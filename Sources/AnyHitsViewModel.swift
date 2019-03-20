@@ -10,16 +10,16 @@ import Foundation
 
 protocol AnyHitsViewModel {
   
-  func genericUpdate(_ searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws
-  func numberOfRows() -> Int
+  func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws
   func genericHitForRow<R: Decodable>(_ row: Int) throws -> R?
+  func numberOfRows() -> Int
   func loadMoreResults()
 
 }
 
 extension HitsViewModel: AnyHitsViewModel {
 
-  func genericUpdate(_ searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
+  func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
       let encoder = JSONEncoder()
       let data = try encoder.encode(searchResults)
       let decoder = JSONDecoder()
