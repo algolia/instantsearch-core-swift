@@ -351,11 +351,8 @@
 				AFE807CE2229355900FC1D50 /* SearchResult.json */,
 				AFCDED33222D86E7001459BE /* FacetResult.json */,
 				AFCDEDE0223A5C0E001459BE /* HitsViewModelTests.swift */,
-<<<<<<< HEAD
 				AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */,
-=======
 				E2BAE6B9223FFBC300B89EA3 /* RefinementListBuilderTests.swift */,
->>>>>>> refactor-refinementlist
 				AFCDEDE4223AC4E8001459BE /* PaginationControllerTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
 			);
@@ -749,11 +746,8 @@
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
 				AFCDED4C222E7A4E001459BE /* EitherSingleOrList.swift in Sources */,
-<<<<<<< HEAD
 				AFCDEDED223C0694001459BE /* MultiHitsViewModel.swift in Sources */,
-=======
 				E2BAE6B0223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
->>>>>>> refactor-refinementlist
 				AFCDEDC02239799D001459BE /* PageMap.swift in Sources */,
 				E24233DD223947FC008F24FB /* Result.swift in Sources */,
 				E24233DB223947FC008F24FB /* HitsViewModel.swift in Sources */,
@@ -795,11 +789,8 @@
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				AFCDEDD622397E31001459BE /* Searchers.swift in Sources */,
 				AFCDEDAF222ED38D001459BE /* GeoLocation.swift in Sources */,
-<<<<<<< HEAD
 				AFCDEDEE223C0695001459BE /* MultiHitsViewModel.swift in Sources */,
-=======
 				E2BAE6B1223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
->>>>>>> refactor-refinementlist
 				AFCDEDDB22397E31001459BE /* Optional+String.swift in Sources */,
 				AFCDEDCC22397E1D001459BE /* PageMap.swift in Sources */,
 				AFCDEDD922397E31001459BE /* RefinementListViewModel.swift in Sources */,
@@ -842,11 +833,8 @@
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				E24DC9F5222EF0C3006F1EED /* Searchers.swift in Sources */,
-<<<<<<< HEAD
 				AFCDEDEF223C0695001459BE /* MultiHitsViewModel.swift in Sources */,
-=======
 				E2BAE6B2223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
->>>>>>> refactor-refinementlist
 				AFCDEDDD22397E32001459BE /* Optional+String.swift in Sources */,
 				E2E09E332232709700F3056D /* HitsViewModel.swift in Sources */,
 				AFCDEDAC222EB789001459BE /* SearchResults.swift in Sources */,
@@ -889,11 +877,8 @@
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				E24DC9F6222EF0C3006F1EED /* Searchers.swift in Sources */,
-<<<<<<< HEAD
 				AFCDEDF0223C0695001459BE /* MultiHitsViewModel.swift in Sources */,
-=======
 				E2BAE6B3223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
->>>>>>> refactor-refinementlist
 				AFCDEDDF22397E33001459BE /* Optional+String.swift in Sources */,
 				E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */,
 				AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */,
