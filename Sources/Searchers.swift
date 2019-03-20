@@ -132,7 +132,7 @@ public class MultiIndexSearcher: Searcher {
   public let sequencer: Sequencer
   public let isLoading = Signal<Bool>()
 
-  public var onSearchResults = Signal<[(QueryMetadata, Result<SearchResults<JSON>>)]>()
+  public var onSearchResults = Signal<Result<[(QueryMetadata, SearchResults<JSON>)]>>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -165,18 +165,24 @@ public class MultiIndexSearcher: Searcher {
 
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries) { (content, error) in
-
-        let queryMetadata = self.indexQueries.map { QueryMetadata(query: $0.query) }
-        var results: [Result<SearchResults<JSON>>]
-        if let content = content, let contentResults = content["results"] as? [[String: Any]] {
-          results = contentResults.map { self.transform(content: $0, error: error) }
-        } else if let error = error {
-          results = Array.init(repeating: Result(error: error), count: self.indexQueries.count)
-        } else {
-          results = Array.init(repeating: Result(error: ResultError.invalidResultInput), count: self.indexQueries.count)
+        
+        let result: Result<MultiSearchResults<JSON>> = self.transform(content: content, error: error)
+        
+        let output: Result<[(QueryMetadata, SearchResults<JSON>)]>
+        
+        switch result {
+        case .success(let searchResultsWrapper):
+          let queryMetadata = self.indexQueries.map { $0.query }.map(QueryMetadata.init(query:))
+          let searchResults = searchResultsWrapper.searchResults
+          let searchResultsWithMetadata = zip(queryMetadata, searchResults).map { ($0, $1) }
+          output = .success(searchResultsWithMetadata)
+          
+        case .fail(let error):
+          output = .fail(error)
         }
-        let returnResults = zip(queryMetadata, results).map { ($0, $1)}
-        self.onSearchResults.fire(returnResults)
+        
+        self.onSearchResults.fire(output)
+        
       }
     }
   }
@@ -184,6 +190,7 @@ public class MultiIndexSearcher: Searcher {
   public func cancel() {
     sequencer.cancelPendingOperations()
   }
+  
 }
 
 public class SearchForFacetValueSearcher: Searcher {

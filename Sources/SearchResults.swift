@@ -100,6 +100,7 @@ public struct SearchResults<T: Codable>: Codable {
   public let facetStats: [Attribute: FacetStats]?
   
   public init(from decoder: Decoder) throws {
+    
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.hits = try container.decode([T].self, forKey: .hits)
     self.totalHitsCount = try container.decode(Int.self, forKey: .totalHitsCount)
@@ -254,6 +255,26 @@ extension SearchResults {
     /// The sum of all values.
     public let sum: Float
     
+  }
+  
+}
+
+struct MultiSearchResults<T: Codable>: Codable {
+  
+  let searchResults: [SearchResults<T>]
+  
+  enum CodingKeys: String, CodingKey {
+    case results
+  }
+  
+  init(from decoder: Decoder) throws {
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    searchResults = try container.decode([SearchResults<T>].self, forKey: .results)
+  }
+  
+  func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    try container.encode(searchResults, forKey: .results)
   }
   
 }

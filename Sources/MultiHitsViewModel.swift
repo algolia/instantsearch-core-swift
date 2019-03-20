@@ -100,9 +100,9 @@ public class MultiHitsViewModel {
   /// - Parameter metadata: the metadata of query corresponding to results
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the conversion of search results for one of a nested hits ViewModels is impossible due to a record type mismatch
   
-  public func update(_ results: [SearchResults<JSON>], with metadata: QueryMetadata) throws {
-    try zip(hitsViewModels, results).forEach { vm, searchResults in
-      try vm.genericUpdate(searchResults, with: metadata)
+  public func update(_ results: [(metadata: QueryMetadata, results: SearchResults<JSON>)]) throws {
+    try zip(hitsViewModels, results).forEach { viewModel, results in
+      try viewModel.genericUpdate(results.results, with: results.metadata)
     }
   }
   
