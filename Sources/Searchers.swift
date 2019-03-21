@@ -16,14 +16,13 @@ import Foundation
 
 import Foundation
 import InstantSearchClient
-import Signals
 
 public protocol Searcher: SequencerDelegate {
   func search()
   func cancel()
   func setQuery(text: String)
   var sequencer: Sequencer { get }
-  var isLoading: Signal<Bool> { get }
+  var isLoading: Observer<Bool> { get }
 }
 
 extension Searcher {
@@ -68,14 +67,14 @@ extension Searcher {
 public class SingleIndexSearcher<RecordType: Codable>: Searcher {
 
   public let sequencer: Sequencer
-  public let isLoading = Signal<Bool>()
+  public let isLoading = Observer<Bool>()
 
   public var index: Index
   public let query: Query
   public let filterBuilder: FilterBuilder
 
   // TODO: Refactor with typealiases, same for other searchers
-  public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<RecordType>>)>()
+  public let onSearchResults = Observer<(QueryMetadata, Result<SearchResults<RecordType>>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -130,9 +129,9 @@ public class MultiIndexSearcher: Searcher {
   public let filterBuilders: [FilterBuilder]
   let client: Client
   public let sequencer: Sequencer
-  public let isLoading = Signal<Bool>()
+  public let isLoading = Observer<Bool>()
 
-  public var onSearchResults = Signal<Result<[(QueryMetadata, SearchResults<JSON>)]>>()
+  public var onSearchResults = Observer<Result<[(QueryMetadata, SearchResults<JSON>)]>>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -201,8 +200,8 @@ public class SearchForFacetValueSearcher: Searcher {
   public var facetName: String
   public var text: String
   public let sequencer: Sequencer
-  public let onSearchResults = Signal<Result<FacetResults>>()
-  public let isLoading = Signal<Bool>()
+  public let onSearchResults = Observer<Result<FacetResults>>()
+  public let isLoading = Observer<Bool>()
 
   public init(index: Index, query: Query, filterBuilder: FilterBuilder, facetName: String, text: String) {
     self.index = index

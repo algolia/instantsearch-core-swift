@@ -7,14 +7,13 @@
 
 import Foundation
 import InstantSearchClient
-import Signals
 
 public class RefinementListViewModel {
 
   // MARK: - Properties
 
   public var settings: Settings
-  public let onParamChange = Signal<Void>()
+  public let onParamChange = Observer<Void>()
 
   var attribute: Attribute
   var filterBuilder: FilterBuilder
