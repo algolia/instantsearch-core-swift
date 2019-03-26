@@ -31,7 +31,7 @@ extension Searcher {
     sequencer.cancelPendingOperations()
   }
 
-  func transform<T: Decodable>(content: [String: Any]?, error: Error?) -> Result<T> {
+  func transform<T: Decodable>(content: [String: Any]?, error: Error?) -> Result<T, Error> {
     let result = Result(value: content, error: error)
 
     switch result {
@@ -41,12 +41,12 @@ extension Searcher {
         let decoder = JSONDecoder()
 
         let result = try decoder.decode(T.self, from: data)
-        return Result(value: result)
+        return .success(result)
       } catch let error {
-        return Result(error: error)
+        return .failure(error)
       }
-    case .fail(let error):
-      return Result(error: error)
+    case .failure(let error):
+      return .failure(error)
     }
 
   }
@@ -74,7 +74,7 @@ public class SingleIndexSearcher<RecordType: Codable>: Searcher {
   public let filterBuilder: FilterBuilder
 
   // TODO: Refactor with typealiases, same for other searchers
-  public let onSearchResults = Observer<(QueryMetadata, Result<SearchResults<RecordType>>)>()
+  public let onSearchResults = Observer<(QueryMetadata, Result<SearchResults<RecordType>, Error>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -93,7 +93,7 @@ public class SingleIndexSearcher<RecordType: Codable>: Searcher {
   }
 
   fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
-    let result: Result<SearchResults<RecordType>> = self.transform(content: value, error: error)
+    let result: Result<SearchResults<RecordType>, Error> = self.transform(content: value, error: error)
     self.onSearchResults.fire((queryMetadata, result))
   }
 
@@ -131,7 +131,7 @@ public class MultiIndexSearcher: Searcher {
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
 
-  public var onSearchResults = Observer<Result<[(QueryMetadata, SearchResults<JSON>)]>>()
+  public var onSearchResults = Observer<Result<[(QueryMetadata, SearchResults<JSON>)], Error>>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -165,9 +165,9 @@ public class MultiIndexSearcher: Searcher {
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries) { (content, error) in
         
-        let result: Result<MultiSearchResults<JSON>> = self.transform(content: content, error: error)
+        let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
         
-        let output: Result<[(QueryMetadata, SearchResults<JSON>)]>
+        let output: Result<[(QueryMetadata, SearchResults<JSON>)], Error>
         
         switch result {
         case .success(let searchResultsWrapper):
@@ -176,8 +176,8 @@ public class MultiIndexSearcher: Searcher {
           let searchResultsWithMetadata = zip(queryMetadata, searchResults).map { ($0, $1) }
           output = .success(searchResultsWithMetadata)
           
-        case .fail(let error):
-          output = .fail(error)
+        case .failure(let error):
+          output = .failure(error)
         }
         
         self.onSearchResults.fire(output)
@@ -200,7 +200,7 @@ public class SearchForFacetValueSearcher: Searcher {
   public var facetName: String
   public var text: String
   public let sequencer: Sequencer
-  public let onSearchResults = Observer<Result<FacetResults>>()
+  public let onSearchResults = Observer<Result<FacetResults, Error>>()
   public let isLoading = Observer<Bool>()
 
   public init(index: Index, query: Query, filterBuilder: FilterBuilder, facetName: String, text: String) {
@@ -224,7 +224,7 @@ public class SearchForFacetValueSearcher: Searcher {
     
     sequencer.orderOperation {
       return self.index.searchForFacetValues(of: facetName, matching: text) { (content, error) in
-        let result: Result<FacetResults> = self.transform(content: content, error: error)
+        let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
         self.onSearchResults.fire(result)
       }
     }

@@ -103,7 +103,7 @@ private extension HitsViewModel {
 
 public extension HitsViewModel where RecordType == JSON {
   
-  public func rawHitForRow(_ row: Int) -> [String: Any]? {
+  func rawHitForRow(_ row: Int) -> [String: Any]? {
     return hitForRow(row).flatMap([String: Any].init)
   }
   
