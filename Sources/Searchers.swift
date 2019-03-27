@@ -16,14 +16,13 @@ import Foundation
 
 import Foundation
 import InstantSearchClient
-import Signals
 
 public protocol Searcher: SequencerDelegate {
   func search()
   func cancel()
   func setQuery(text: String)
   var sequencer: Sequencer { get }
-  var isLoading: Signal<Bool> { get }
+  var isLoading: Observer<Bool> { get }
 }
 
 extension Searcher {
@@ -32,7 +31,7 @@ extension Searcher {
     sequencer.cancelPendingOperations()
   }
 
-  func transform<T: Decodable>(content: [String: Any]?, error: Error?) -> Result<T> {
+  func transform<T: Decodable>(content: [String: Any]?, error: Error?) -> Result<T, Error> {
     let result = Result(value: content, error: error)
 
     switch result {
@@ -42,12 +41,12 @@ extension Searcher {
         let decoder = JSONDecoder()
 
         let result = try decoder.decode(T.self, from: data)
-        return Result(value: result)
+        return .success(result)
       } catch let error {
-        return Result(error: error)
+        return .failure(error)
       }
-    case .fail(let error):
-      return Result(error: error)
+    case .failure(let error):
+      return .failure(error)
     }
 
   }
@@ -68,14 +67,14 @@ extension Searcher {
 public class SingleIndexSearcher<Record: Codable>: Searcher {
 
   public let sequencer: Sequencer
-  public let isLoading = Signal<Bool>()
+  public let isLoading = Observer<Bool>()
 
   public var index: Index
   public let query: Query
   public let filterBuilder: FilterBuilder
 
   // TODO: Refactor with typealiases, same for other searchers
-  public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<Record>>)>()
+  public let onSearchResults = Observer<(QueryMetadata, Result<SearchResults<Record>, Error>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -94,7 +93,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher {
   }
 
   fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
-    let result: Result<SearchResults<Record>> = self.transform(content: value, error: error)
+    let result: Result<SearchResults<Record>, Error> = self.transform(content: value, error: error)
     self.onSearchResults.fire((queryMetadata, result))
   }
 
@@ -130,9 +129,9 @@ public class MultiIndexSearcher: Searcher {
   public let filterBuilders: [FilterBuilder]
   let client: Client
   public let sequencer: Sequencer
-  public let isLoading = Signal<Bool>()
+  public let isLoading = Observer<Bool>()
 
-  public var onSearchResults = Signal<Result<[(QueryMetadata, SearchResults<JSON>)]>>()
+  public var onSearchResults = Observer<Result<[(QueryMetadata, SearchResults<JSON>)], Error>>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -166,9 +165,9 @@ public class MultiIndexSearcher: Searcher {
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries) { (content, error) in
         
-        let result: Result<MultiSearchResults<JSON>> = self.transform(content: content, error: error)
+        let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
         
-        let output: Result<[(QueryMetadata, SearchResults<JSON>)]>
+        let output: Result<[(QueryMetadata, SearchResults<JSON>)], Error>
         
         switch result {
         case .success(let searchResultsWrapper):
@@ -177,8 +176,8 @@ public class MultiIndexSearcher: Searcher {
           let searchResultsWithMetadata = zip(queryMetadata, searchResults).map { ($0, $1) }
           output = .success(searchResultsWithMetadata)
           
-        case .fail(let error):
-          output = .fail(error)
+        case .failure(let error):
+          output = .failure(error)
         }
         
         self.onSearchResults.fire(output)
@@ -201,8 +200,8 @@ public class SearchForFacetValueSearcher: Searcher {
   public var facetName: String
   public var text: String
   public let sequencer: Sequencer
-  public let onSearchResults = Signal<Result<FacetResults>>()
-  public let isLoading = Signal<Bool>()
+  public let onSearchResults = Observer<Result<FacetResults, Error>>()
+  public let isLoading = Observer<Bool>()
 
   public init(index: Index, query: Query, filterBuilder: FilterBuilder, facetName: String, text: String) {
     self.index = index
@@ -225,7 +224,7 @@ public class SearchForFacetValueSearcher: Searcher {
     
     sequencer.orderOperation {
       return self.index.searchForFacetValues(of: facetName, matching: text) { (content, error) in
-        let result: Result<FacetResults> = self.transform(content: content, error: error)
+        let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
         self.onSearchResults.fire(result)
       }
     }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Signals
 import InstantSearchClient
 
 // DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
@@ -24,7 +23,7 @@ public class HitsViewModel<Record: Codable> {
     return hitsPaginationController.pageMap?.hasMorePages ?? false
   }
   
-  public let onNewPage = Signal<UInt>()
+  public let onNewPage = Observer<UInt>()
 
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
                           showItemsOnEmptyQuery: Bool = Constants.Defaults.showItemsOnEmptyQuery) {

@@ -8,38 +8,16 @@
 
 import Foundation
 
-public enum Result<T> {
+public extension Result where Failure == Error {
 
-  case success(T), fail(Error)
-
-  public init(value: T) {
-    self = .success(value)
-  }
-
-  public init(error: Error) {
-    self = .fail(error)
-  }
-
-  public var value: T? {
-    if case let .success(val) = self { return val } else { return nil }
-  }
-
-  public var error: Error? {
-    if case let .fail(err) = self { return err } else { return nil }
-  }
-
-}
-
-public extension Result {
-
-  public init(value: T?, error: Error?) {
+  init(value: Success?, error: Failure?) {
     switch (value, error) {
     case (_, .some(let error)):
-      self = .fail(error)
+      self = .failure(error)
     case (.some(let value), _):
       self = .success(value)
     default:
-      self = .fail(ResultError.invalidResultInput)
+      self = .failure(ResultError.invalidResultInput)
     }
   }
 }
@@ -47,17 +25,6 @@ public extension Result {
 public enum ResultError: Error {
   case invalidResultInput
 }
-
-// TODO: Move back to correct place
-//
-//  Constants.swift
-//  InstantSearch
-//
-//  Created by Guy Daher on 15/05/2017.
-//
-//
-
-import Foundation
 
 public struct Constants {
   public struct Defaults {

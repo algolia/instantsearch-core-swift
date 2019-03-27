@@ -38,7 +38,7 @@ class HighlighterTest: XCTestCase {
     super.tearDown()
   }
 
-  private func checkRanges(string: NSAttributedString, ranges: [NSRange: [NSAttributedStringKey: Any]]) {
+  private func checkRanges(string: NSAttributedString, ranges: [NSRange: [NSAttributedString.Key: Any]]) {
     string.enumerateAttributes(in: NSMakeRange(0, string.length), options: []) { attributes, range, _ in
       guard let expectedAttributes = ranges[range] else {
         XCTFail("Range [\(range.location), \(range.location + range.length)[ not expected")
@@ -52,7 +52,7 @@ class HighlighterTest: XCTestCase {
   }
 
   func testRender() {
-    let attributes = [NSAttributedStringKey.font: "bar"]
+    let attributes = [NSAttributedString.Key.font: "bar"]
     let renderer = Highlighter(highlightAttrs: attributes)
     let result = renderer.render(text: "Woodstock is <em>Snoopy</em>'s friend")
     checkRanges(string: result, ranges: [
@@ -63,7 +63,7 @@ class HighlighterTest: XCTestCase {
   }
 
   func testCustomMarkers() {
-    let attributes = [NSAttributedStringKey.font: "bar"]
+    let attributes = [NSAttributedString.Key.font: "bar"]
     let renderer = Highlighter(highlightAttrs: attributes)
     renderer.preTag = "<mark>"
     renderer.postTag = "</mark>"
@@ -76,7 +76,7 @@ class HighlighterTest: XCTestCase {
   }
 
   func testCaseSensitivity() {
-    let attributes = [NSAttributedStringKey.font: "bar"]
+    let attributes = [NSAttributedString.Key.font: "bar"]
     let renderer = Highlighter(highlightAttrs: attributes)
     renderer.caseSensitive = true
     let result = renderer.render(text: "Woodstock is <EM>Snoopy</EM>'s <em>friend</em>")
