@@ -66,7 +66,8 @@ public class RefinementListViewModel {
     self.facetResults = refinementListBuilder.getRefinementList(refinementValues: refinedValues,
                                                                 facetValues: rawFacetResults,
                                                                 sorting: settings.sorting,
-                                                                areRefinedValuesFirst: settings.areRefinedValuesShownFirst)
+                                                                showSelectedValuesOnTop: settings.showSelectedValuesOnTop,
+                                                                keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
   }
 
   // MARK: - Public API
@@ -74,7 +75,12 @@ public class RefinementListViewModel {
   public func numberOfRows() -> Int {
     guard let facetResults = facetResults else { return 0 }
 
-    return min(facetResults.count, settings.maximumNumberOfRows)
+    switch settings.maximumRowCount {
+    case .none:
+      return facetResults.count
+    case .count(let count):
+      return min(facetResults.count, count)
+    }
   }
 
   public func facetForRow(_ row: Int) -> FacetValue? {
@@ -113,50 +119,50 @@ extension RefinementListViewModel {
     switch settings.operator {
     case .or:
       filterBuilder.toggle(filterFacet, in: orGroup)
-    case .and(let selection):
-      switch selection {
-      case .multiple:
-        filterBuilder.toggle(filterFacet, in: andGroup)
-      case .single:
-        if filterBuilder.contains(filterFacet, in: orGroup) {
-          filterBuilder.remove(filterFacet, from: orGroup)
-        } else {
-          filterBuilder.removeAll(from: orGroup)
-          filterBuilder.add(filterFacet, to: orGroup)
-        }
+    case .and(.multiple):
+      filterBuilder.toggle(filterFacet, in: andGroup)
+    case .and(selection: .single):
+      if filterBuilder.contains(filterFacet, in: orGroup) {
+        filterBuilder.remove(filterFacet, from: orGroup)
+      } else {
+        filterBuilder.removeAll(from: orGroup)
+        filterBuilder.add(filterFacet, to: orGroup)
       }
     }
   }
 
   fileprivate func isRefined(_ filterFacet: FilterFacet) -> Bool {
     switch settings.operator {
-    case .or:
+    case .or, .and(selection: .single):
       return filterBuilder.contains(filterFacet, in: orGroup)
-    case .and(let selection):
-      switch selection {
-      case .multiple: return filterBuilder.contains(filterFacet, in: andGroup)
-      case .single: return filterBuilder.contains(filterFacet, in: orGroup)
-      }
+    case .and(selection: .multiple):
+      return filterBuilder.contains(filterFacet, in: andGroup)
     }
   }
+
 }
 
 // MARK: - Helpers
 
 extension RefinementListViewModel {
-  // TODO: Rename all constants and internal classes to be consistent with names here.
   public struct Settings {
-    public var areRefinedValuesShownFirst = Constants.Defaults.refinedFirst
-    public var `operator` = Constants.Defaults.refinementOperator
-    public var maximumNumberOfRows = Constants.Defaults.limit
-    public var sorting: Sorting = .countDesc
+    public var keepSelectedValuesWithZeroCount = true
+    public var showSelectedValuesOnTop = true
+    public var `operator`: RefinementOperator = .or
+    public var maximumRowCount: Limit = .count(10)
+    public var sorting: Sorting = .count(order: .descending)
+
+    public enum Limit {
+      case none
+      case count(Int)
+    }
 
     public enum RefinementOperator {
       // when operator is 'and' + one single value can be selected,
       // we want to keep the other values visible, so we have to do a disjunctive facet
       // In the case of multi value that can be selected in conjunctive case,
       // then we avoid doing a disjunctive facet and just do normal conjusctive facet
-      // and only the remaining possible facets will appear
+      // and only the remaining possible facets will appear.
       case and(selection: Selection)
       case or
 
@@ -166,11 +172,13 @@ extension RefinementListViewModel {
       }
     }
   }
-
   public enum Sorting {
-    case countAsc
-    case countDesc
-    case nameAsc
-    case nameDesc
+    case count(order: Order)
+    case name(order: Order)
+
+    public enum Order {
+      case ascending
+      case descending
+    }
   }
 }

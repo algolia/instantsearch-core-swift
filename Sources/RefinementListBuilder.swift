@@ -14,7 +14,8 @@ protocol RefinementListBuilding {
   func getRefinementList(refinementValues: [String],
                          facetValues: [FacetValue]?,
                          sorting: RefinementListViewModel.Sorting,
-                         areRefinedValuesFirst: Bool) -> [FacetValue]
+                         showSelectedValuesOnTop: Bool,
+                         keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
 }
 
 class RefinementListBuilder: RefinementListBuilding {
@@ -42,16 +43,22 @@ class RefinementListBuilder: RefinementListBuilding {
   func getRefinementList(refinementValues: [String],
                          facetValues: [FacetValue]?,
                          sorting: RefinementListViewModel.Sorting,
-                         areRefinedValuesFirst: Bool) -> [FacetValue] {
+                         showSelectedValuesOnTop: Bool,
+                         keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
 
-    let facetList = merge(facetValues, withRefinementValues: refinementValues)
+    let facetList: [FacetValue]
+    if keepSelectedValuesWithZeroCount {
+      facetList = merge(facetValues, withRefinementValues: refinementValues)
+    } else {
+      facetList = facetValues ?? []
+    }
 
     let sortedFacetList = facetList.sorted { (lhs, rhs) in
 
       let lhsChecked: Bool = refinementValues.contains(lhs.value)
       let rhsChecked: Bool = refinementValues.contains(rhs.value)
 
-      if areRefinedValuesFirst && lhsChecked != rhsChecked { // Refined wins
+      if showSelectedValuesOnTop && lhsChecked != rhsChecked { // Refined wins
         return lhsChecked
       }
 
@@ -61,21 +68,21 @@ class RefinementListBuilder: RefinementListBuilding {
       let rightValueLowercased = rhs.value.lowercased()
 
       switch sorting {
-      case .countDesc:
+      case .count(order: .descending):
         // Biggest Count wins, else alphabetically by name
         return leftCount != rightCount ? leftCount > rightCount : leftValueLowercased < rightValueLowercased
 
-      case .countAsc:
+      case .count(order: .ascending):
         // Smallest Count wins, else alphabetically by name
         return leftCount != rightCount ? leftCount < rightCount : leftValueLowercased < rightValueLowercased
 
-      case .nameAsc:
-        // Sort by Name ascending. Else, Biggest Count wins by default
-        return leftValueLowercased != rightValueLowercased ? leftValueLowercased < rightValueLowercased : leftCount > rightCount
-
-      case .nameDesc:
+      case .name(order: .descending):
         // Sort by Name descending. Else, Biggest Count wins by default
         return leftValueLowercased != rightValueLowercased ? leftValueLowercased > rightValueLowercased : leftCount > rightCount
+
+      case .name(order: .ascending):
+        // Sort by Name ascending. Else, Biggest Count wins by default
+        return leftValueLowercased != rightValueLowercased ? leftValueLowercased < rightValueLowercased : leftCount > rightCount
       }
     }
 

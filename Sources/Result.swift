@@ -29,40 +29,17 @@ public enum ResultError: Error {
 public struct Constants {
   public struct Defaults {
 
-    // Multi Index
-    public static let index: String = ""
-    public static let variant: String = ""
-
     // Hits
     public static let hitsPerPage: UInt = 20
     public static let infiniteScrolling: InfiniteScrolling = .on(withOffset: 5)
     public static let showItemsOnEmptyQuery: Bool = true
 
-    // Refinement, Numeric Control, Facet Control
-    public static let attribute = ""
-
-    // Numeric Control, Facet Control
-    public static let inclusive = true
-
     // Refinement
     public static let operatorRefinement = "or"
     public static let refinementOperator: RefinementListViewModel.Settings.RefinementOperator = .or
     public static let refinedFirst = true
-    public static let sortBy = "count:desc"
+    
     public static let limit = 10
     public static let areMultipleSelectionsAllowed = false
-
-    // Numeric Control
-    public static let operatorNumericControl = ">="
-
-    // Facet Control
-    public static let valueOn = "true"
-    public static let valueOff = "false"
-
-    // Stats
-
-    public static let resultTemplate = "{nbHits} results"
-    public static let errorText = "Error in fetching results"
-    public static let clearText = ""
   }
 }
