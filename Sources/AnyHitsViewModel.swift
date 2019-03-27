@@ -39,13 +39,13 @@ extension HitsViewModel: AnyHitsViewModel {
       let encoder = JSONEncoder()
       let data = try encoder.encode(searchResults)
       let decoder = JSONDecoder()
-      let typedSearchResults = try decoder.decode(SearchResults<RecordType>.self, from: data)
+      let typedSearchResults = try decoder.decode(SearchResults<Record>.self, from: data)
       self.update(typedSearchResults, with: queryMetadata)
   }
 
   func genericHitForRow<R: Decodable>(_ row: Int) throws -> R? {
     
-    guard let hit = hitForRow(row) else {
+    guard let hit = hitForRow(atIndex: row) else {
       return .none
     }
     
@@ -57,11 +57,25 @@ extension HitsViewModel: AnyHitsViewModel {
 
   }
   
+  func genericHitForRow(_ row: Int) throws -> JSON? {
+    
+    guard let hit = hitForRow(atIndex: row) else {
+      return .none
+    }
+    
+    if let castedHit = hit as? JSON {
+      return castedHit
+    } else {
+      return try JSON(hit)
+    }
+    
+  }
+  
   public enum Error: Swift.Error, LocalizedError {
     case incompatibleRecordType
     
     var localizedDescription: String {
-      return "Unexpected record type: \(String(describing: RecordType.self))"
+      return "Unexpected record type: \(String(describing: Record.self))"
     }
     
   }
@@ -71,7 +85,7 @@ extension HitsViewModel: AnyHitsViewModel {
 /// This extension is to optimize generic search results update
 /// It omits unnecessary JSON to JSON conversion
 
-extension HitsViewModel where RecordType == JSON {
+extension HitsViewModel where Record == JSON {
   
   func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
     self.update(searchResults, with: queryMetadata)

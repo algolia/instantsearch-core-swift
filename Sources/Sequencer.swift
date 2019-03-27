@@ -48,10 +48,6 @@ public class Sequencer: Sequencable {
   // MARK: Properties
 
   /// Sequence number for the next operation.
-  ///
-  /// + Note: Shared across all instances for ease of observation.
-  ///
-  /// Sequence number for the next operation.
   private var nextSeqNo: Int = 0
 
   /// Queue used to serialize accesses to `nextSeqNo`.

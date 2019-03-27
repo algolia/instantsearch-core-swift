@@ -65,7 +65,7 @@ extension Searcher {
 
 // TODO: don t forget to add RequestOption everywhere
 
-public class SingleIndexSearcher<RecordType: Codable>: Searcher {
+public class SingleIndexSearcher<Record: Codable>: Searcher {
 
   public let sequencer: Sequencer
   public let isLoading = Signal<Bool>()
@@ -75,7 +75,7 @@ public class SingleIndexSearcher<RecordType: Codable>: Searcher {
   public let filterBuilder: FilterBuilder
 
   // TODO: Refactor with typealiases, same for other searchers
-  public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<RecordType>>)>()
+  public let onSearchResults = Signal<(QueryMetadata, Result<SearchResults<Record>>)>()
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
@@ -94,7 +94,7 @@ public class SingleIndexSearcher<RecordType: Codable>: Searcher {
   }
 
   fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
-    let result: Result<SearchResults<RecordType>> = self.transform(content: value, error: error)
+    let result: Result<SearchResults<Record>> = self.transform(content: value, error: error)
     self.onSearchResults.fire((queryMetadata, result))
   }
 

@@ -45,15 +45,15 @@ class HitsViewModelTests: XCTestCase {
     
     XCTAssertFalse(vm.hasMoreResults)
     XCTAssertEqual(vm.numberOfRows(), 0)
-    XCTAssertEqual(vm.hitForRow(0), .none)
+    XCTAssertEqual(vm.hitForRowAtIndex(0), .none)
     
     vm.update(results, with: metadata)
     
     XCTAssertFalse(vm.hasMoreResults)
     XCTAssertEqual(vm.numberOfRows(), 3)
-    XCTAssertEqual(vm.hitForRow(0), "h1")
-    XCTAssertEqual(vm.hitForRow(1), "h2")
-    XCTAssertEqual(vm.hitForRow(2), "h3")
+    XCTAssertEqual(vm.hitForRowAtIndex(0), "h1")
+    XCTAssertEqual(vm.hitForRowAtIndex(1), "h2")
+    XCTAssertEqual(vm.hitForRowAtIndex(2), "h3")
     
   }
   
@@ -83,7 +83,7 @@ class HitsViewModelTests: XCTestCase {
     
     vm.update(results, with: metadata)
     
-    _ = vm.hitForRow(hits.count - Int(infiniteScrollingOffset))
+    _ = vm.hitForRowAtIndex(hits.count - Int(infiniteScrollingOffset))
     
     waitForExpectations(timeout: 3, handler: .none)
     
@@ -116,7 +116,7 @@ class HitsViewModelTests: XCTestCase {
     
     vm.update(results, with: metadata)
     
-    _ = vm.hitForRow(hits.count - 1)
+    _ = vm.hitForRowAtIndex(hits.count - 1)
     
     waitForExpectations(timeout: 3, handler: .none)
 

@@ -10,6 +10,10 @@
 		AF19B03A223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */; };
 		AF19B03B223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */; };
 		AF19B03C223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */; };
+		AF3DE583224A984B00C8BC08 /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
+		AF3DE584224A984C00C8BC08 /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
+		AF3DE585224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
+		AF3DE586224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
 		AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
@@ -83,10 +87,6 @@
 		AFCDEDE9223AC514001459BE /* PageMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDE8223AC514001459BE /* PageMapTests.swift */; };
 		AFCDEDEA223AC514001459BE /* PageMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDE8223AC514001459BE /* PageMapTests.swift */; };
 		AFCDEDEB223AC514001459BE /* PageMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDE8223AC514001459BE /* PageMapTests.swift */; };
-		AFCDEDED223C0694001459BE /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
-		AFCDEDEE223C0695001459BE /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
-		AFCDEDEF223C0695001459BE /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
-		AFCDEDF0223C0695001459BE /* MultiHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */; };
 		AFCDEDF2223C070F001459BE /* AnyHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDF1223C070F001459BE /* AnyHitsViewModel.swift */; };
 		AFCDEDF3223C070F001459BE /* AnyHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDF1223C070F001459BE /* AnyHitsViewModel.swift */; };
 		AFCDEDF4223C070F001459BE /* AnyHitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDF1223C070F001459BE /* AnyHitsViewModel.swift */; };
@@ -586,6 +586,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = BC3426271D460DB70055E0F2;
@@ -736,6 +737,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
+				AF3DE583224A984B00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
 				AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */,
 				E24233DA223947FC008F24FB /* Searchers.swift in Sources */,
@@ -746,7 +748,6 @@
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
 				AFCDED4C222E7A4E001459BE /* EitherSingleOrList.swift in Sources */,
-				AFCDEDED223C0694001459BE /* MultiHitsViewModel.swift in Sources */,
 				E2BAE6B0223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
 				AFCDEDC02239799D001459BE /* PageMap.swift in Sources */,
 				E24233DD223947FC008F24FB /* Result.swift in Sources */,
@@ -779,6 +780,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
+				AF3DE584224A984C00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				AFCDEDC922397E18001459BE /* SearchResults+PageMap.swift in Sources */,
 				AFCDEDD422397E31001459BE /* SearchResults.swift in Sources */,
 				AFCDED5A222E7A4F001459BE /* EitherSingleOrList.swift in Sources */,
@@ -789,7 +791,6 @@
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				AFCDEDD622397E31001459BE /* Searchers.swift in Sources */,
 				AFCDEDAF222ED38D001459BE /* GeoLocation.swift in Sources */,
-				AFCDEDEE223C0695001459BE /* MultiHitsViewModel.swift in Sources */,
 				E2BAE6B1223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
 				AFCDEDDB22397E31001459BE /* Optional+String.swift in Sources */,
 				AFCDEDCC22397E1D001459BE /* PageMap.swift in Sources */,
@@ -823,6 +824,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
+				AF3DE585224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				E2E09E392232709F00F3056D /* Result.swift in Sources */,
 				AFCDEDCA22397E19001459BE /* SearchResults+PageMap.swift in Sources */,
 				E2E09E362232709B00F3056D /* RefinementListViewModel.swift in Sources */,
@@ -833,7 +835,6 @@
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				E24DC9F5222EF0C3006F1EED /* Searchers.swift in Sources */,
-				AFCDEDEF223C0695001459BE /* MultiHitsViewModel.swift in Sources */,
 				E2BAE6B2223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
 				AFCDEDDD22397E32001459BE /* Optional+String.swift in Sources */,
 				E2E09E332232709700F3056D /* HitsViewModel.swift in Sources */,
@@ -867,6 +868,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
+				AF3DE586224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				E2E09E3A2232709F00F3056D /* Result.swift in Sources */,
 				AFCDEDCB22397E1A001459BE /* SearchResults+PageMap.swift in Sources */,
 				E2E09E372232709C00F3056D /* RefinementListViewModel.swift in Sources */,
@@ -877,7 +879,6 @@
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				E24DC9F6222EF0C3006F1EED /* Searchers.swift in Sources */,
-				AFCDEDF0223C0695001459BE /* MultiHitsViewModel.swift in Sources */,
 				E2BAE6B3223FF77100B89EA3 /* RefinementListBuilder.swift in Sources */,
 				AFCDEDDF22397E33001459BE /* Optional+String.swift in Sources */,
 				E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */,

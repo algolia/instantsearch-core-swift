@@ -12,11 +12,11 @@ import InstantSearchClient
 // DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
 // something like: viewModel.bind(\.navigationTitle, to: navigationItem, at: \.title),
 
-public class HitsViewModel<RecordType: Codable> {
-
+public class HitsViewModel<Record: Codable> {
+  
   public let settings: Settings
 
-  private let hitsPaginationController: Paginator<RecordType, QueryMetadata>
+  private let hitsPaginationController: Paginator<Record, QueryMetadata>
   
   private var isLastQueryEmpty: Bool = true
   
@@ -35,18 +35,18 @@ public class HitsViewModel<RecordType: Codable> {
 
   public init(settings: Settings? = nil) {
     self.settings = settings ?? Settings()
-    self.hitsPaginationController = Paginator<RecordType, QueryMetadata>()
+    self.hitsPaginationController = Paginator<Record, QueryMetadata>()
     self.hitsPaginationController.delegate = self
   }
   
   internal init(settings: Settings? = nil,
-                paginationController: Paginator<RecordType, QueryMetadata>) {
+                paginationController: Paginator<Record, QueryMetadata>) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
   }
 
   // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
-  public func update(_ searchResults: SearchResults<RecordType>, with queryMetadata: QueryMetadata) {
+  public func update(_ searchResults: SearchResults<Record>, with queryMetadata: QueryMetadata) {
     isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
     hitsPaginationController.process(searchResults, with: queryMetadata)
   }
@@ -61,15 +61,15 @@ public class HitsViewModel<RecordType: Codable> {
     }
   }
 
-  public func hitForRow(_ row: Int) -> RecordType? {
+  public func hitForRow(atIndex rowIndex: Int) -> Record? {
     guard let hitsPageMap = hitsPaginationController.pageMap else { return nil }
 
-    loadMoreIfNeeded(rowNumber: row)
-    return hitsPageMap[row]
+    loadMoreIfNeeded(rowNumber: rowIndex)
+    return hitsPageMap[rowIndex]
   }
   
   public func rawHitForRow(_ row: Int) -> [String: Any]? {
-    guard let hit = hitForRow(row) else { return nil }
+    guard let hit = hitForRow(atIndex: row) else { return nil }
     guard let data = try? JSONEncoder().encode(hit) else { return nil }
     guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return nil }
     return [String: Any](jsonValue)
@@ -102,10 +102,10 @@ private extension HitsViewModel {
   
 }
 
-public extension HitsViewModel where RecordType == JSON {
+public extension HitsViewModel where Record == JSON {
   
-  public func rawHitForRow(_ row: Int) -> [String: Any]? {
-    return hitForRow(row).flatMap([String: Any].init)
+  func rawHitForRow(_ row: Int) -> [String: Any]? {
+    return hitForRow(atIndex: row).flatMap([String: Any].init)
   }
   
 }

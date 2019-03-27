@@ -121,6 +121,7 @@ class DelayedOperation: AsyncOperation {
 
 
 class SequencerTest: XCTestCase {
+  
   override func setUp() {
     super.setUp()
   }
@@ -140,7 +141,7 @@ class SequencerTest: XCTestCase {
     
     let operations: [Operation] = (0..<operationsCount).map { number in
       let op = DelayedOperation(delay: 10, completionHandler: { exp.fulfill() })
-      op.name = "\(number)"
+      op.name = "\(number+1)"
       return op
     }
     
@@ -169,7 +170,7 @@ class SequencerTest: XCTestCase {
 
     let slowOperations: [Operation] = (0..<slowOperationsCount).map { number in
       let op = DelayedOperation(delay: .random(in: 100...300), completionHandler: .none)
-      op.name = "\(number)"
+      op.name = "\(number+1)"
       let exp = expectation(description: "\(number)")
       op.completionBlock = {
         exp.fulfill()
