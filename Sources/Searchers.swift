@@ -87,6 +87,10 @@ public class SingleIndexSearcher<Record: Codable>: Searcher {
     onSearchResults.retainLastData = true
     isLoading.retainLastData = true
   }
+  
+  public convenience init(indexSearchData: IndexSearchData) {
+    self.init(index: indexSearchData.index, query: indexSearchData.query, filterBuilder: indexSearchData.filterBuilder)
+  }
 
   public func setQuery(text: String) {
     self.query.query = text
@@ -125,9 +129,8 @@ public class SingleIndexSearcher<Record: Codable>: Searcher {
 
 public class MultiIndexSearcher: Searcher {
 
-  public let indexQueries: [IndexQuery]
-  public let filterBuilders: [FilterBuilder]
   let client: Client
+  public let indexSearchDatas: [IndexSearchData]
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
 
@@ -135,18 +138,13 @@ public class MultiIndexSearcher: Searcher {
 
   public var applyDisjunctiveFacetingWhenNecessary = true
 
-  public convenience init(client: Client, indices: [Index], queries: [Query], filterBuilders: [FilterBuilder]) {
-    self.init(client: client, indexQueries: zip(indices, queries).map { IndexQuery(index: $0, query: $1) }, filterBuilders: filterBuilders )
-  }
-
   public convenience init(client: Client, indices: [Index], query: Query, filterBuilder: FilterBuilder) {
-    self.init(client: client, indexQueries: indices.map { IndexQuery(index: $0, query: query) }, filterBuilders: [filterBuilder])
+    self.init(client: client, indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterBuilder: filterBuilder))
   }
 
-  public init(client: Client, indexQueries: [IndexQuery], filterBuilders: [FilterBuilder]) {
-    self.indexQueries = indexQueries
-    self.filterBuilders = filterBuilders
+  public init(client: Client, indexSearchDatas: [IndexSearchData]) {
     self.client = client
+    self.indexSearchDatas = indexSearchDatas
     self.sequencer = Sequencer()
     sequencer.delegate = self
     onSearchResults.retainLastData = true
@@ -154,14 +152,15 @@ public class MultiIndexSearcher: Searcher {
   }
 
   public func setQuery(text: String) {
-    self.indexQueries.forEach { $0.query.query = text }
+    indexSearchDatas.forEach { $0.query.query = text }
   }
 
   public func search() {
-    zip(indexQueries, filterBuilders).forEach { (indexQuery, filterBuilder) in
-      indexQuery.query.filters = filterBuilder.build()
-    }
+    
+    indexSearchDatas.forEach { $0.applyFilters() }
 
+    let indexQueries = indexSearchDatas.map(IndexQuery.init(indexSearchData:))
+    
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries) { (content, error) in
         
@@ -171,7 +170,7 @@ public class MultiIndexSearcher: Searcher {
         
         switch result {
         case .success(let searchResultsWrapper):
-          let queryMetadata = self.indexQueries.map { $0.query }.map(QueryMetadata.init(query:))
+          let queryMetadata = self.indexSearchDatas.map { $0.query }.map(QueryMetadata.init(query:))
           let searchResults = searchResultsWrapper.searchResults
           let searchResultsWithMetadata = zip(queryMetadata, searchResults).map { ($0, $1) }
           output = .success(searchResultsWithMetadata)
