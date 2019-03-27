@@ -13,16 +13,23 @@ import Foundation
 public struct IndexSearchData {
   
   /// Index in which search will be performed
-  let index: Index
+  public let index: Index
   
   /// Query describing a search request
-  let query: Query
+  public let query: Query
   
   /// FilterBuilder describing query filters
-  let filterBuilder: FilterBuilder
+  public let filterBuilder: FilterBuilder
   
+  /// Build filters
   func applyFilters() {
     query.filters = filterBuilder.build()
+  }
+  
+  public init(index: Index, query: Query = Query(), filterBuilder: FilterBuilder = FilterBuilder()) {
+    self.index = index
+    self.query = query
+    self.filterBuilder = filterBuilder
   }
   
 }
@@ -37,7 +44,7 @@ extension IndexQuery {
 
 extension Array where Element == IndexSearchData {
   
-  init(indices: [InstantSearchClient.Index], query: Query, filterBuilder: FilterBuilder) {
+  init(indices: [InstantSearchClient.Index], query: Query = Query(), filterBuilder: FilterBuilder = FilterBuilder()) {
     self = indices.map { IndexSearchData(index: $0, query: query, filterBuilder: filterBuilder) }
   }
   
