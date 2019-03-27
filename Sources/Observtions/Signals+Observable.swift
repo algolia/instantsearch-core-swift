@@ -9,10 +9,5 @@
 import Foundation
 import Signals
 
-extension Signal: Observable {
-  public typealias Obs = SignalSubscription
-}
-
-extension SignalSubscription: Observation {
-  public typealias ParameterType = T
-}
+extension Signal: Observable {}
+extension SignalSubscription: Observation {}
