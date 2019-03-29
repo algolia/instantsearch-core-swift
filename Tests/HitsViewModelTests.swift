@@ -44,16 +44,16 @@ class HitsViewModelTests: XCTestCase {
     let metadata = QueryMetadata(query: query)
     
     XCTAssertFalse(vm.hasMoreResults)
-    XCTAssertEqual(vm.numberOfRows(), 0)
-    XCTAssertEqual(vm.hitForRow(atIndex: 0), .none)
+    XCTAssertEqual(vm.numberOfHits(), 0)
+    XCTAssertEqual(vm.hit(atIndex: 0), .none)
     
     vm.update(results, with: metadata)
     
     XCTAssertFalse(vm.hasMoreResults)
-    XCTAssertEqual(vm.numberOfRows(), 3)
-    XCTAssertEqual(vm.hitForRow(atIndex: 0), "h1")
-    XCTAssertEqual(vm.hitForRow(atIndex: 1), "h2")
-    XCTAssertEqual(vm.hitForRow(atIndex: 2), "h3")
+    XCTAssertEqual(vm.numberOfHits(), 3)
+    XCTAssertEqual(vm.hit(atIndex: 0), "h1")
+    XCTAssertEqual(vm.hit(atIndex: 1), "h2")
+    XCTAssertEqual(vm.hit(atIndex: 2), "h3")
     
   }
   
@@ -83,7 +83,7 @@ class HitsViewModelTests: XCTestCase {
     
     vm.update(results, with: metadata)
     
-    _ = vm.hitForRow(atIndex: hits.count - Int(infiniteScrollingOffset))
+    _ = vm.hit(atIndex: hits.count - Int(infiniteScrollingOffset))
     
     waitForExpectations(timeout: 3, handler: .none)
     
@@ -116,7 +116,7 @@ class HitsViewModelTests: XCTestCase {
     
     vm.update(results, with: metadata)
     
-    _ = vm.hitForRow(atIndex: hits.count - 1)
+    _ = vm.hit(atIndex: hits.count - 1)
     
     waitForExpectations(timeout: 3, handler: .none)
 
@@ -176,7 +176,7 @@ class HitsViewModelTests: XCTestCase {
     
     vm.update(results, with: metadata)
     
-    XCTAssertEqual(vm.numberOfRows(), 0)
+    XCTAssertEqual(vm.numberOfHits(), 0)
     
   }
   
@@ -201,7 +201,7 @@ class HitsViewModelTests: XCTestCase {
     
     vm.update(results, with: metadata)
     
-    XCTAssertEqual(vm.numberOfRows(), hits.count)
+    XCTAssertEqual(vm.numberOfHits(), hits.count)
     
   }
 

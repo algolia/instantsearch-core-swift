@@ -129,7 +129,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher {
 
 public class MultiIndexSearcher: Searcher {
 
-  let client: Client
+  public let client: Client
   public let indexSearchDatas: [IndexSearchData]
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()

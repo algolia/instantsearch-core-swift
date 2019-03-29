@@ -50,7 +50,7 @@ public class HitsViewModel<Record: Codable> {
     hitsPaginationController.process(searchResults, with: queryMetadata)
   }
 
-  public func numberOfRows() -> Int {
+  public func numberOfHits() -> Int {
     guard let hitsPageMap = hitsPaginationController.pageMap else { return 0 }
     
     if isLastQueryEmpty && !settings.showItemsOnEmptyQuery {
@@ -60,15 +60,15 @@ public class HitsViewModel<Record: Codable> {
     }
   }
 
-  public func hitForRow(atIndex rowIndex: Int) -> Record? {
+  public func hit(atIndex index: Int) -> Record? {
     guard let hitsPageMap = hitsPaginationController.pageMap else { return nil }
 
-    loadMoreIfNeeded(rowNumber: rowIndex)
-    return hitsPageMap[rowIndex]
+    loadMoreIfNeeded(rowNumber: index)
+    return hitsPageMap[index]
   }
   
-  public func rawHitForRow(_ row: Int) -> [String: Any]? {
-    guard let hit = hitForRow(atIndex: row) else { return nil }
+  public func rawHitAtIndex(_ row: Int) -> [String: Any]? {
+    guard let hit = hit(atIndex: row) else { return nil }
     guard let data = try? JSONEncoder().encode(hit) else { return nil }
     guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return nil }
     return [String: Any](jsonValue)
@@ -104,7 +104,7 @@ private extension HitsViewModel {
 public extension HitsViewModel where Record == JSON {
   
   func rawHitForRow(_ row: Int) -> [String: Any]? {
-    return hitForRow(atIndex: row).flatMap([String: Any].init)
+    return hit(atIndex: row).flatMap([String: Any].init)
   }
   
 }
