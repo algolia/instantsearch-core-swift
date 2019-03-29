@@ -81,7 +81,7 @@ public class MultiHitsViewModel {
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
   /// - Returns: The nested ViewModel at specified index.
   
-  public func hitsViewModel<R>(atSection section: Int) throws -> HitsViewModel<R> {
+  public func hitsViewModel<R>(forSection section: Int) throws -> HitsViewModel<R> {
     guard let typedViewModel = hitsViewModels[section] as? HitsViewModel<R> else {
       throw HitsViewModel<R>.Error.incompatibleRecordType
     }
