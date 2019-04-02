@@ -116,19 +116,23 @@ public class MultiHitsViewModel {
     }
   }
   
-  /// Returns the hit at the specified index path of a desired type
-  /// - Parameter indexPath: a pointer to a hit, where section points to a hits ViewModel and row points to a hit in this ViewModel.
+  /// Returns the hit of a desired type
+  /// - Parameter index: the index of a hit in a nested hits ViewModel
+  /// - Parameter section: the index of a nested hits ViewModel
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
-  /// - Returns: The hit at row for index path. Returns `nil` if there is no element for specified index.
+  /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
   
-  public func hitForRow<R: Codable>(at indexPath: IndexPath) throws -> R? {
-    return try hitsViewModels[indexPath.section].genericHitAtIndex(indexPath.row)
+  public func hit<R: Codable>(atIndex index: Int, inSection section: Int) throws -> R? {
+    return try hitsViewModels[section].genericHitAtIndex(index)
   }
   
-  /// Returns the hit
+  /// Returns the hit in raw dictionary form
+  /// - Parameter index: the index of a hit in a nested hits ViewModel
+  /// - Parameter section: the index of a nested hits ViewModel
+  /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
   
-  public func rawHitForRow(at indexPath: IndexPath) -> [String: Any]? {
-    return hitsViewModels[indexPath.section].rawHitAtIndex(indexPath.row)
+  public func rawHit(atIndex index: Int, inSection section: Int) -> [String: Any]? {
+    return hitsViewModels[section].rawHitAtIndex(index)
   }
   
   /// Returns number of nested hits ViewModels
@@ -163,3 +167,28 @@ internal extension MultiHitsViewModel {
   }
 
 }
+
+#if os(iOS) || os(tvOS)
+
+public extension MultiHitsViewModel {
+  
+  /// Returns the hit of a desired type
+  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel
+  /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
+  /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
+  
+  func hit<R: Codable>(at indexPath: IndexPath) throws -> R? {
+    return try hit(atIndex: indexPath.item, inSection: indexPath.section)
+  }
+  
+  /// Returns the hit in raw dictionary form
+  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel
+  /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
+  
+  func rawHit(at indexPath: IndexPath) -> [String: Any]? {
+    return rawHit(atIndex: indexPath.item, inSection: indexPath.section)
+  }
+  
+}
+
+#endif

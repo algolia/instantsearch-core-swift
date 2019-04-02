@@ -210,17 +210,17 @@ class MultiHitsViewModelTests: XCTestCase {
     
     XCTAssertNoThrow(try multiViewModel.update([(md, results1), (md, results2)]))
     
-    XCTAssertNoThrow(try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Int]?)
-    XCTAssertNoThrow(try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Bool]?)
-    XCTAssertThrowsError(try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Bool]?)
-    XCTAssertThrowsError(try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Int]?)
+    XCTAssertNoThrow(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?)
+    XCTAssertNoThrow(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
+    XCTAssertThrowsError(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Bool]?)
+    XCTAssertThrowsError(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Int]?)
     
     do {
       
-      let hit1 = try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Int]?
+      let hit1 = try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?
       XCTAssertEqual(hit1?["a"], 1)
       
-      let hit2 = try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Bool]?
+      let hit2 = try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?
       XCTAssertEqual(hit2?["b"], false)
       
     } catch let error {
