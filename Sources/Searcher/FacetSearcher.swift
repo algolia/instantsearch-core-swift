@@ -33,14 +33,14 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     self.text = text
   }
   
-  public func search() {
+  public func search(requestOptions: RequestOptions? = nil) {
     
     indexSearchData.applyFilters()
     
     let metadata = QueryMetadata(query: indexSearchData.query)
     
     sequencer.orderOperation {
-      return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text) { (content, error) in
+      return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text, requestOptions: requestOptions) { (content, error) in
         let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
         self.onSearchResults.fire((metadata, result))
       }

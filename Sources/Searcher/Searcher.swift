@@ -8,14 +8,12 @@
 
 import Foundation
 
-// TODO: don t forget to add RequestOption everywhere
-
 public protocol Searcher: SequencerDelegate {
   
   var sequencer: Sequencer { get }
   var isLoading: Observer<Bool> { get }
   
-  func search()
+  func search(requestOptions: RequestOptions?)
   func cancel()
   func setQuery(text: String)
   

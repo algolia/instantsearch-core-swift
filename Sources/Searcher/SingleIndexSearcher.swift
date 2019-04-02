@@ -40,7 +40,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     self.onSearchResults.fire((queryMetadata, result))
   }
   
-  public func search() {
+  public func search(requestOptions: RequestOptions? = nil) {
     // TODO: weak self...
     sequencer.orderOperation {
       let queryMetadata = QueryMetadata(query: indexSearchData.query)
@@ -49,12 +49,12 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
         let disjunctiveFacets = Array(indexSearchData.filterBuilder.getDisjunctiveFacetsAttributes()).map { $0.description }
         let refinements = indexSearchData.filterBuilder.getRawFacetFilters()
         
-        return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements) { value, error in
+        return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)
         }
       } else {
         indexSearchData.applyFilters()
-        return indexSearchData.index.search(indexSearchData.query) { value, error in
+        return indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)
         }
       }

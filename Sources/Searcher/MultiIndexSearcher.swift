@@ -36,7 +36,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     indexSearchDatas.forEach { $0.query.query = text }
   }
   
-  public func search() {
+  public func search(requestOptions: RequestOptions? = nil) {
     
     indexSearchDatas.forEach { $0.applyFilters() }
     
@@ -44,7 +44,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     let metadata = self.indexSearchDatas.map { $0.query }.map(QueryMetadata.init(query:))
     
     sequencer.orderOperation {
-      return self.client.multipleQueries(indexQueries) { (content, error) in
+      return self.client.multipleQueries(indexQueries, requestOptions: requestOptions) { (content, error) in
         
         let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
         
