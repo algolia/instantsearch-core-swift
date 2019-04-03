@@ -523,28 +523,28 @@ class SearchResultsTest: XCTestCase {
     ]
     let values2 = FacetValue.listFrom(facetCounts: facetCounts, refinements: ["abc", "def"])
     // Value present in counts.
-    if let index = values2.index(where: { $0.value == "abc" }) {
+    if let index = values2.firstIndex(where: { $0.value == "abc" }) {
       XCTAssertEqual(666, values2[index].count)
     } else {
       XCTFail("Missing value")
     }
     // Missing value in counts, but refined: should be 0.
-    if let index = values2.index(where: { $0.value == "def" }) {
+    if let index = values2.firstIndex(where: { $0.value == "def" }) {
       XCTAssertEqual(0, values2[index].count)
     } else {
       XCTFail("Missing value")
     }
-    XCTAssertNil(values2.index(where: { $0.value == "xyz" }))
+    XCTAssertNil(values2.firstIndex(where: { $0.value == "xyz" }))
 
     let values3 = FacetValue.listFrom(facetCounts: facetCounts, refinements: nil)
     // Value present in counts.
-    if let index = values3.index(where: { $0.value == "abc" }) {
+    if let index = values3.firstIndex(where: { $0.value == "abc" }) {
       XCTAssertEqual(666, values3[index].count)
     } else {
       XCTFail("Missing value")
     }
-    XCTAssertNil(values3.index(where: { $0.value == "def" }))
-    XCTAssertNil(values3.index(where: { $0.value == "xyz" }))
+    XCTAssertNil(values3.firstIndex(where: { $0.value == "def" }))
+    XCTAssertNil(values3.firstIndex(where: { $0.value == "xyz" }))
   }
 
   func testFacetStats() {
