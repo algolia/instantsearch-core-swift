@@ -8,17 +8,19 @@
 
 import Foundation
 
-typealias IsRefinedHandler = (_ filterFacet: FilterFacet) -> Bool
-
-protocol RefinementListBuilding {
-  func getRefinementList(refinementValues: [String],
-                         facetValues: [FacetValue]?,
+protocol RefinementListBuilderProtocol {
+  func getRefinementList(selectedValues: [String],
+                         resultValues: [FacetValue]?,
                          sorting: RefinementListViewModel.Sorting,
                          showSelectedValuesOnTop: Bool,
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
 }
 
-class RefinementListBuilder: RefinementListBuilding {
+/// Takes care of building the content of a refinement list given the following:
+/// - The list of Facets + Associated Count
+/// - The list of Facets that have been refined
+/// - Layout settings such as sorting
+class RefinementListBuilder: RefinementListBuilderProtocol {
 
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
@@ -40,23 +42,24 @@ class RefinementListBuilder: RefinementListBuilding {
     return values
   }
 
-  func getRefinementList(refinementValues: [String],
-                         facetValues: [FacetValue]?,
+  /// Builds the final list to be displayed in the refinement list
+  func getRefinementList(selectedValues: [String],
+                         resultValues: [FacetValue]?,
                          sorting: RefinementListViewModel.Sorting,
                          showSelectedValuesOnTop: Bool,
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
 
     let facetList: [FacetValue]
     if keepSelectedValuesWithZeroCount {
-      facetList = merge(facetValues, withRefinementValues: refinementValues)
+      facetList = merge(resultValues, withRefinementValues: selectedValues)
     } else {
-      facetList = facetValues ?? []
+      facetList = resultValues ?? []
     }
 
     let sortedFacetList = facetList.sorted { (lhs, rhs) in
 
-      let lhsChecked: Bool = refinementValues.contains(lhs.value)
-      let rhsChecked: Bool = refinementValues.contains(rhs.value)
+      let lhsChecked: Bool = selectedValues.contains(lhs.value)
+      let rhsChecked: Bool = selectedValues.contains(rhs.value)
 
       if showSelectedValuesOnTop && lhsChecked != rhsChecked { // Refined wins
         return lhsChecked

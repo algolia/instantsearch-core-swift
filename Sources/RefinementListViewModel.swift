@@ -16,28 +16,28 @@ public class RefinementListViewModel {
   public let onParamChange = Observer<Void>()
 
   var attribute: Attribute
-  var filterBuilder: FilterBuilder
-  var group: Group
 
   var facetResults: [FacetValue]?
 
-  let refinementListBuilder: RefinementListBuilding
-
-  private var orGroup: OrFilterGroup<FilterFacet> {
-    return OrFilterGroup(name: group.name)
-  }
-
-  private var andGroup: AndFilterGroup {
-    return AndFilterGroup(name: group.name)
-  }
+  let refinementListBuilder: RefinementListBuilderProtocol
+  let refinementListFilterDelegate: RefinementListFilterDelegate
 
   // MARK: - Init
 
   public init(attribute: Attribute, filterBuilder: FilterBuilder, refinementSettings: Settings? = nil, group: Group? = nil) {
     self.attribute = attribute
-    self.filterBuilder = filterBuilder
+    let group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
+
+    self.refinementListFilterDelegate = RefinementListFilterHandler(attribute: attribute, filterBuilder: filterBuilder, group: group)
+
     self.settings = refinementSettings ?? Settings()
-    self.group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
+    refinementListBuilder = RefinementListBuilder()
+  }
+
+  public init(attribute: Attribute, refinementListFilterDelegate: RefinementListFilterDelegate, refinementSettings: Settings? = nil) {
+    self.attribute = attribute
+    self.settings = refinementSettings ?? Settings()
+    self.refinementListFilterDelegate = refinementListFilterDelegate
     refinementListBuilder = RefinementListBuilder()
   }
 
@@ -49,22 +49,16 @@ public class RefinementListViewModel {
   }
 
   public func update<T>(with searchResults: SearchResults<T>) {
-    let rawFacetResults: [FacetValue]?
-    if filterBuilder.getDisjunctiveFacetsAttributes().contains(attribute) {
-      rawFacetResults = searchResults.disjunctiveFacets?[attribute]
-    } else {
-      rawFacetResults = searchResults.facets?[attribute]
-    }
+    let rawFacetResults: [FacetValue]? = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute]
 
     updateFacetResults(with: rawFacetResults)
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
-    let refinedFilterFacets: Set<FilterFacet> = filterBuilder.getFilters(for: attribute)
-    let refinedValues = refinedFilterFacets.map { $0.value.description }
+    let selectedValues: [String] = refinementListFilterDelegate.selectedValues()
 
-    self.facetResults = refinementListBuilder.getRefinementList(refinementValues: refinedValues,
-                                                                facetValues: rawFacetResults,
+    self.facetResults = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                resultValues: rawFacetResults,
                                                                 sorting: settings.sorting,
                                                                 showSelectedValuesOnTop: settings.showSelectedValuesOnTop,
                                                                 keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
@@ -93,51 +87,18 @@ public class RefinementListViewModel {
     guard let facetResults = facetResults else { return false }
 
     let value = facetResults[row].value
-    let filterFacet = FilterFacet(attribute: attribute, stringValue: value)
 
-    return isRefined(filterFacet)
+    return refinementListFilterDelegate.isRefined(value: value, operator: settings.operator)
   }
 
   public func didSelectRow(_ row: Int) {
     guard let facetResults = facetResults else { return }
 
     let value = facetResults[row].value
-    let filterFacet = FilterFacet(attribute: attribute, stringValue: value)
 
-    didSelect(filterFacet)
+    refinementListFilterDelegate.didSelect(value: value, operator: settings.operator)
 
     onParamChange.fire(())
-  }
-
-}
-
-// MARK: - Filtering Business Logic
-
-extension RefinementListViewModel {
-
-  fileprivate func didSelect(_ filterFacet: FilterFacet) {
-    switch settings.operator {
-    case .or:
-      filterBuilder.toggle(filterFacet, in: orGroup)
-    case .and(.multiple):
-      filterBuilder.toggle(filterFacet, in: andGroup)
-    case .and(selection: .single):
-      if filterBuilder.contains(filterFacet, in: orGroup) {
-        filterBuilder.remove(filterFacet, from: orGroup)
-      } else {
-        filterBuilder.removeAll(from: orGroup)
-        filterBuilder.add(filterFacet, to: orGroup)
-      }
-    }
-  }
-
-  fileprivate func isRefined(_ filterFacet: FilterFacet) -> Bool {
-    switch settings.operator {
-    case .or, .and(selection: .single):
-      return filterBuilder.contains(filterFacet, in: orGroup)
-    case .and(selection: .multiple):
-      return filterBuilder.contains(filterFacet, in: andGroup)
-    }
   }
 
 }
@@ -146,10 +107,28 @@ extension RefinementListViewModel {
 
 extension RefinementListViewModel {
   public struct Settings {
+    /// Whether to show or not the selected values that have count of 0
     public var keepSelectedValuesWithZeroCount = true
+
+    /// Whether to show or not all the selected values on top of the unselected values.
     public var showSelectedValuesOnTop = true
+
+    /// The operator mode of the refinement list.
+    /// Possible ones:
+    /// - AND + Single Selection
+    /// - AND + Multiple Selection
+    /// - OR  + Multiple Selection
     public var `operator`: RefinementOperator = .or
+
+    /// Maximum number of items to show in the list
     public var maximumRowCount: Limit = .count(10)
+
+    /// The Sorting strategy used when displaying the list.
+    /// Possible ones:
+    /// - Descending Count
+    /// - Ascending Count
+    /// - Alphabetical
+    /// - Reverse Alphabetical
     public var sorting: Sorting = .count(order: .descending)
 
     public enum Limit {

@@ -37,8 +37,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
     expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .count(order: .descending),
                                                                            showSelectedValuesOnTop: true,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -56,8 +56,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
     expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .count(order: .descending),
                                                                            showSelectedValuesOnTop: false,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -76,8 +76,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
     expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .count(order: .ascending),
                                                                            showSelectedValuesOnTop: true,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -95,8 +95,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
     expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .count(order: .ascending),
                                                                            showSelectedValuesOnTop: false,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -116,8 +116,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
     expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .name(order: .ascending),
                                                                            showSelectedValuesOnTop: true,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -136,8 +136,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
     expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .name(order: .ascending),
                                                                            showSelectedValuesOnTop: false,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -157,8 +157,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
     expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .name(order: .descending),
                                                                            showSelectedValuesOnTop: true,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -176,8 +176,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
     expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .name(order: .descending),
                                                                            showSelectedValuesOnTop: false,
                                                                            keepSelectedValuesWithZeroCount: true)
@@ -194,8 +194,8 @@ class RefinementListBuilderTests: XCTestCase {
     expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
     expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(refinementValues: selectedValues,
-                                                                           facetValues: facetValues,
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
                                                                            sorting: .name(order: .descending),
                                                                            showSelectedValuesOnTop: false,
                                                                            keepSelectedValuesWithZeroCount: false)
