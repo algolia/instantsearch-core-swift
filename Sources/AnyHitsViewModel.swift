@@ -25,10 +25,10 @@ protocol AnyHitsViewModel {
   /// Returns a hit for row of a desired type
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
   
-  func genericHitForRow<R: Decodable>(_ row: Int) throws -> R?
+  func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R?
   
-  func rawHitForRow(_ row: Int) -> [String: Any]?
-  func numberOfRows() -> Int
+  func rawHitAtIndex(_ index: Int) -> [String: Any]?
+  func numberOfHits() -> Int
   func loadMoreResults()
 
 }
@@ -43,9 +43,9 @@ extension HitsViewModel: AnyHitsViewModel {
       self.update(typedSearchResults, with: queryMetadata)
   }
 
-  func genericHitForRow<R: Decodable>(_ row: Int) throws -> R? {
+  func genericHitAtIndex<R: Decodable>(_ row: Int) throws -> R? {
     
-    guard let hit = hitForRow(atIndex: row) else {
+    guard let hit = hit(atIndex: row) else {
       return .none
     }
     
@@ -59,7 +59,7 @@ extension HitsViewModel: AnyHitsViewModel {
   
   func genericHitForRow(_ row: Int) throws -> JSON? {
     
-    guard let hit = hitForRow(atIndex: row) else {
+    guard let hit = hit(atIndex: row) else {
       return .none
     }
     

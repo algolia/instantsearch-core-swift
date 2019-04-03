@@ -26,7 +26,7 @@ public struct IndexSearchData {
     query.filters = filterBuilder.build()
   }
   
-  public init(index: Index, query: Query = Query(), filterBuilder: FilterBuilder = FilterBuilder()) {
+  public init(index: Index, query: Query = .init(), filterBuilder: FilterBuilder = .init()) {
     self.index = index
     self.query = query
     self.filterBuilder = filterBuilder
@@ -44,7 +44,7 @@ extension IndexQuery {
 
 extension Array where Element == IndexSearchData {
   
-  init(indices: [InstantSearchClient.Index], query: Query = Query(), filterBuilder: FilterBuilder = FilterBuilder()) {
+  init(indices: [InstantSearchClient.Index], query: Query = .init(), filterBuilder: FilterBuilder = .init()) {
     self = indices.map { IndexSearchData(index: $0, query: query, filterBuilder: filterBuilder) }
   }
   

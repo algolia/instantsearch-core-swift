@@ -10,21 +10,22 @@ import Foundation
 
 public struct QueryMetadata: PageMetadata {
   
-  // This is the query in the search bar
-  let queryText: String?
+  // Text of the query
+  public let queryText: String?
   
-  // This is all params that were applied (query, filters etc)
-  let filters: String?
+  // Raw fitlers string
+  public let filters: String?
   
+  // Results page number
   public let page: UInt
   
-  init(query: Query) {
+  public init(query: Query) {
     queryText = query.query
     filters = query.filters
     page = query.page ?? 0
   }
   
-  init(queryText: String? = .none, filters: String? = .none, page: UInt) {
+  public init(queryText: String? = .none, filters: String? = .none, page: UInt) {
     self.queryText = queryText
     self.filters = filters
     self.page = page
@@ -32,10 +33,6 @@ public struct QueryMetadata: PageMetadata {
   
   public func isAnotherPage(for data: QueryMetadata) -> Bool {
     return queryText == data.queryText && filters == data.filters
-  }
-  
-  func isLoadMoreRequest(lastQueryMetadata: QueryMetadata) -> Bool {
-    return queryText == lastQueryMetadata.queryText && filters == lastQueryMetadata.filters
   }
   
 }

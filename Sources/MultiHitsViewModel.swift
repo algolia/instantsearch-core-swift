@@ -32,34 +32,34 @@ public class MultiHitsViewModel {
     hitsViewModels.append(hitsViewModel)
   }
   
-  /// Inserts a hits ViewModel at the specified position
+  /// Inserts a hits ViewModel at the specified section
   /// - Parameter hitsViewModel: the hits ViewModel to insert
-  /// - Parameter index: the position at which to insert the new hits ViewModel.
+  /// - Parameter section: the position at which to insert the new hits ViewModel.
   
-  public func insert<R>(hitsViewModel: HitsViewModel<R>, atIndex index: Int) {
-    hitsViewModels.insert(hitsViewModel, at: index)
+  public func insert<R>(hitsViewModel: HitsViewModel<R>, inSection section: Int) {
+    hitsViewModels.insert(hitsViewModel, at: section)
   }
   
   /// Replaces the hits ViewModel at the specified position by a provided one
   /// - Parameter hitsViewModel: the hits ViewModel replacement
-  /// - Parameter index: the position at which to replace the hits ViewModel
+  /// - Parameter section: the position at which to replace the hits ViewModel
   
-  public func replace<R>(by hitsViewModel: HitsViewModel<R>, atIndex index: Int) {
-    hitsViewModels[index] = hitsViewModel
+  public func replace<R>(by hitsViewModel: HitsViewModel<R>, inSection section: Int) {
+    hitsViewModels[section] = hitsViewModel
   }
   
   /// Removes a hits ViewModel at the specified position
-  /// - Parameter index: the position of the element to remove
+  /// - Parameter section: the position of the hits ViewModel to remove
   
-  public func remove(atIndex index: Int) {
-    hitsViewModels.remove(at: index)
+  public func remove(inSection section: Int) {
+    hitsViewModels.remove(at: section)
   }
   
   /// Returns the index of provided hits ViewModel.
   /// - Parameter desiredViewModel: the ViewModel to search for
   /// - Returns: The index of desired ViewModel. If no there is no such ViewModel, returns `nil`
   
-  public func index<R>(of desiredViewModel: HitsViewModel<R>) -> Int? {
+  public func section<R>(of desiredViewModel: HitsViewModel<R>) -> Int? {
     return hitsViewModels.firstIndex { ($0 as? HitsViewModel<R>) === desiredViewModel }
   }
   
@@ -67,7 +67,7 @@ public class MultiHitsViewModel {
   /// - Parameter desiredViewModel: the ViewModel to check
   
   public func contains<R>(_ desiredViewModel: HitsViewModel<R>) -> Bool {
-    return index(of: desiredViewModel) != nil
+    return section(of: desiredViewModel) != nil
   }
   
   /// Removes all hits ViewModels
@@ -77,12 +77,12 @@ public class MultiHitsViewModel {
   }
   
   /// Returns a hits ViewModel at specified index
-  /// - Parameter index: the index of nested hits ViewModel
+  /// - Parameter section: the section index of nested hits ViewModel
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
   /// - Returns: The nested ViewModel at specified index.
   
-  public func hitsViewModel<R>(atIndex index: Int) throws -> HitsViewModel<R> {
-    guard let typedViewModel = hitsViewModels[index] as? HitsViewModel<R> else {
+  public func hitsViewModel<R>(forSection section: Int) throws -> HitsViewModel<R> {
+    guard let typedViewModel = hitsViewModels[section] as? HitsViewModel<R> else {
       throw HitsViewModel<R>.Error.incompatibleRecordType
     }
     
@@ -92,11 +92,11 @@ public class MultiHitsViewModel {
   /// Updates the results of a nested hits ViewModel at specified index
   /// - Parameter results: list of typed search results.
   /// - Parameter metadata: the metadata of query corresponding to results
-  /// - Parameter index: the index of nested hits ViewModel
+  /// - Parameter section: the section index of nested hits ViewModel
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits ViewModel
   
-  public func update<R>(_ results: SearchResults<R>, with metadata: QueryMetadata, forViewModelAtIndex index: Int) throws {
-    guard let typedViewModel = hitsViewModels[index] as? HitsViewModel<R> else {
+  public func update<R>(_ results: SearchResults<R>, with metadata: QueryMetadata, forViewModelInSection section: Int) throws {
+    guard let typedViewModel = hitsViewModels[section] as? HitsViewModel<R> else {
       throw HitsViewModel<R>.Error.incompatibleRecordType
     }
     
@@ -116,19 +116,23 @@ public class MultiHitsViewModel {
     }
   }
   
-  /// Returns the hit at the specified index path of a desired type
-  /// - Parameter indexPath: a pointer to a hit, where section points to a hits ViewModel and row points to a hit in this ViewModel.
+  /// Returns the hit of a desired type
+  /// - Parameter index: the index of a hit in a nested hits ViewModel
+  /// - Parameter section: the index of a nested hits ViewModel
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
-  /// - Returns: The hit at row for index path. Returns `nil` if there is no element for specified index.
+  /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
   
-  public func hitForRow<R: Codable>(at indexPath: IndexPath) throws -> R? {
-    return try hitsViewModels[indexPath.section].genericHitForRow(indexPath.row)
+  public func hit<R: Codable>(atIndex index: Int, inSection section: Int) throws -> R? {
+    return try hitsViewModels[section].genericHitAtIndex(index)
   }
   
-  /// Returns the hit
+  /// Returns the hit in raw dictionary form
+  /// - Parameter index: the index of a hit in a nested hits ViewModel
+  /// - Parameter section: the index of a nested hits ViewModel
+  /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
   
-  public func rawHitForRow(at indexPath: IndexPath) -> [String: Any]? {
-    return hitsViewModels[indexPath.section].rawHitForRow(indexPath.row)
+  public func rawHit(atIndex index: Int, inSection section: Int) -> [String: Any]? {
+    return hitsViewModels[section].rawHitAtIndex(index)
   }
   
   /// Returns number of nested hits ViewModels
@@ -140,8 +144,8 @@ public class MultiHitsViewModel {
   /// Returns number rows in the nested hits ViewModel at section
   /// - Parameter section: the index of nested hits ViewModel
   
-  public func numberOfRows(inSection section: Int) -> Int {
-    return hitsViewModels[section].numberOfRows()
+  public func numberOfHits(inSection section: Int) -> Int {
+    return hitsViewModels[section].numberOfHits()
   }
   
   /// Triggers loading of following results in the nested hits ViewModel at specified index
@@ -163,3 +167,28 @@ internal extension MultiHitsViewModel {
   }
 
 }
+
+#if os(iOS) || os(tvOS)
+
+public extension MultiHitsViewModel {
+  
+  /// Returns the hit of a desired type
+  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel
+  /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
+  /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
+  
+  func hit<R: Codable>(at indexPath: IndexPath) throws -> R? {
+    return try hit(atIndex: indexPath.item, inSection: indexPath.section)
+  }
+  
+  /// Returns the hit in raw dictionary form
+  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel
+  /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
+  
+  func rawHit(at indexPath: IndexPath) -> [String: Any]? {
+    return rawHit(atIndex: indexPath.item, inSection: indexPath.section)
+  }
+  
+}
+
+#endif

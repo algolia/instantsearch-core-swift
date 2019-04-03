@@ -36,14 +36,14 @@ class MultiHitsViewModelTests: XCTestCase {
     let viewModel1 = HitsViewModel<[String: Int]>()
     let viewModel2 = HitsViewModel<[String: [String: Int]]>()
     
-    multiViewModel.insert(hitsViewModel: viewModel1, atIndex: 0)
-    multiViewModel.insert(hitsViewModel: viewModel2, atIndex: 0)
+    multiViewModel.insert(hitsViewModel: viewModel1, inSection: 0)
+    multiViewModel.insert(hitsViewModel: viewModel2, inSection: 0)
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
     XCTAssertTrue(multiViewModel.contains(viewModel1))
     XCTAssertTrue(multiViewModel.contains(viewModel2))
-    XCTAssertEqual(multiViewModel.index(of: viewModel1), 1)
-    XCTAssertEqual(multiViewModel.index(of: viewModel2), 0)
+    XCTAssertEqual(multiViewModel.section(of: viewModel1), 1)
+    XCTAssertEqual(multiViewModel.section(of: viewModel2), 0)
 
   }
   
@@ -52,8 +52,8 @@ class MultiHitsViewModelTests: XCTestCase {
     let viewModel1 = HitsViewModel<[String: Int]>()
     let viewModel2 = HitsViewModel<[String: [String: Int]]>()
     
-    multiViewModel.insert(hitsViewModel: viewModel1, atIndex: 0)
-    multiViewModel.replace(by: viewModel2, atIndex: 0)
+    multiViewModel.insert(hitsViewModel: viewModel1, inSection: 0)
+    multiViewModel.replace(by: viewModel2, inSection: 0)
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 1)
     XCTAssertTrue(multiViewModel.contains(viewModel2))
@@ -71,7 +71,7 @@ class MultiHitsViewModelTests: XCTestCase {
     multiViewModel.append(viewModel1)
     multiViewModel.append(viewModel2)
 
-    multiViewModel.remove(atIndex: 0)
+    multiViewModel.remove(inSection: 0)
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 1)
     XCTAssertFalse(multiViewModel.contains(viewModel1))
@@ -105,10 +105,10 @@ class MultiHitsViewModelTests: XCTestCase {
     multiViewModel.append(viewModel1)
     multiViewModel.append(viewModel2)
     
-    XCTAssertNoThrow(try multiViewModel.hitsViewModel(atIndex: 0) as HitsViewModel<[String: Int]>)
-    XCTAssertNoThrow(try multiViewModel.hitsViewModel(atIndex: 1) as HitsViewModel<[String: [String: Int]]>)
-    XCTAssertThrowsError(try multiViewModel.hitsViewModel(atIndex: 0) as HitsViewModel<[String: [String: String]]>)
-    XCTAssertThrowsError(try multiViewModel.hitsViewModel(atIndex: 1) as HitsViewModel<String>)
+    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 0) as HitsViewModel<[String: Int]>)
+    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 1) as HitsViewModel<[String: [String: Int]]>)
+    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 0) as HitsViewModel<[String: [String: String]]>)
+    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 1) as HitsViewModel<String>)
 
   }
   
@@ -129,11 +129,11 @@ class MultiHitsViewModelTests: XCTestCase {
     let hits2: [[String: Bool]] = [["a": true], ["b": false], ["c": true]]
     let results2 = SearchResults<[String: Bool]>(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
     
-    XCTAssertNoThrow(try multiViewModel.update(results1, with: md, forViewModelAtIndex: 0))
-    XCTAssertNoThrow(try multiViewModel.update(results2, with: md, forViewModelAtIndex: 1))
+    XCTAssertNoThrow(try multiViewModel.update(results1, with: md, forViewModelInSection: 0))
+    XCTAssertNoThrow(try multiViewModel.update(results2, with: md, forViewModelInSection: 1))
     
-    XCTAssertThrowsError(try multiViewModel.update(results2, with: md, forViewModelAtIndex: 0))
-    XCTAssertThrowsError(try multiViewModel.update(results1, with: md, forViewModelAtIndex: 1))
+    XCTAssertThrowsError(try multiViewModel.update(results2, with: md, forViewModelInSection: 0))
+    XCTAssertThrowsError(try multiViewModel.update(results1, with: md, forViewModelInSection: 1))
 
   }
   
@@ -169,16 +169,16 @@ class MultiHitsViewModelTests: XCTestCase {
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
-    XCTAssertEqual(multiViewModel.numberOfRows(inSection: 0), hits1.count)
-    XCTAssertEqual(multiViewModel.numberOfRows(inSection: 1), hits2.count)
+    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 0), hits1.count)
+    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 1), hits2.count)
     
     // Update multihits ViewModel with uncorrect list of results
     XCTAssertThrowsError(try multiViewModel.update([(md, results2), (md, results1)]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
-    XCTAssertEqual(multiViewModel.numberOfRows(inSection: 0), hits1.count)
-    XCTAssertEqual(multiViewModel.numberOfRows(inSection: 1), hits2.count)
+    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 0), hits1.count)
+    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 1), hits2.count)
   }
   
   func testHitForRow() {
@@ -210,17 +210,17 @@ class MultiHitsViewModelTests: XCTestCase {
     
     XCTAssertNoThrow(try multiViewModel.update([(md, results1), (md, results2)]))
     
-    XCTAssertNoThrow(try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Int]?)
-    XCTAssertNoThrow(try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Bool]?)
-    XCTAssertThrowsError(try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Bool]?)
-    XCTAssertThrowsError(try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Int]?)
+    XCTAssertNoThrow(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?)
+    XCTAssertNoThrow(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
+    XCTAssertThrowsError(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Bool]?)
+    XCTAssertThrowsError(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Int]?)
     
     do {
       
-      let hit1 = try multiViewModel.hitForRow(at: IndexPath(row: 0, section: 0)) as [String: Int]?
+      let hit1 = try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?
       XCTAssertEqual(hit1?["a"], 1)
       
-      let hit2 = try multiViewModel.hitForRow(at: IndexPath(row: 1, section: 1)) as [String: Bool]?
+      let hit2 = try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?
       XCTAssertEqual(hit2?["b"], false)
       
     } catch let error {
@@ -240,15 +240,15 @@ class MultiHitsViewModelTests: XCTestCase {
     func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
     }
     
-    func rawHitForRow(_ row: Int) -> [String : Any]? {
+    func rawHitAtIndex(_ index: Int) -> [String : Any]? {
       return .none
     }
     
-    func numberOfRows() -> Int {
+    func numberOfHits() -> Int {
       return 0
     }
     
-    func genericHitForRow<R>(_ row: Int) throws -> R? where R : Decodable {
+    func genericHitAtIndex<R>(_ index: Int) throws -> R? where R : Decodable {
       return (0 as! R)
     }
     
