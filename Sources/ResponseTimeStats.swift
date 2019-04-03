@@ -189,7 +189,7 @@ import Foundation
       }
 
     case Searcher.ResultNotification, Searcher.ErrorNotification, Searcher.CancelNotification:
-      guard let statIndex = requestStats.index(where: { $0.seqNo == requestSeqNo }) else {
+      guard let statIndex = requestStats.firstIndex(where: { $0.seqNo == requestSeqNo }) else {
         assert(false) // should never happen
         return
       }

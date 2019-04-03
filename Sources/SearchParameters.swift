@@ -578,7 +578,7 @@ import InstantSearchClient
   /// - parameter value: The refined value to remove.
   ///
   @objc public func removeFacetRefinement(name: String, value: String) {
-    if let index = facetRefinements[name]?.index(where: { $0.name == name && $0.value == value }) {
+    if let index = facetRefinements[name]?.firstIndex(where: { $0.name == name && $0.value == value }) {
       facetRefinements[name]!.remove(at: index)
       if facetRefinements[name]!.isEmpty {
         facetRefinements.removeValue(forKey: name)
@@ -769,7 +769,7 @@ import InstantSearchClient
   /// - parameter refinement: The refinement to remove.
   ///
   @objc public func removeNumericRefinement(_ refinement: NumericRefinement) {
-    if let index = numericRefinements[refinement.name]?.index(where: { $0 == refinement }) {
+    if let index = numericRefinements[refinement.name]?.firstIndex(where: { $0 == refinement }) {
       numericRefinements[refinement.name]!.remove(at: index)
       if numericRefinements[refinement.name]!.isEmpty {
         numericRefinements.removeValue(forKey: refinement.name)
