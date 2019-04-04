@@ -611,7 +611,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		1D26AD121F716FAF00E17A58 /* Carthage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -626,7 +626,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 		1D26AD141F71701E00E17A58 /* Carthage Copy Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
