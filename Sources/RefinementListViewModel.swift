@@ -66,7 +66,7 @@ public class RefinementListViewModel {
 
   // MARK: - Public API
 
-  public func numberOfRows() -> Int {
+  public func numberOfFacets() -> Int {
     guard let facetResults = facetResults else { return 0 }
 
     switch settings.maximumRowCount {
@@ -77,24 +77,24 @@ public class RefinementListViewModel {
     }
   }
 
-  public func facetForRow(_ row: Int) -> FacetValue? {
+  public func facet(atIndex index: Int) -> FacetValue? {
     guard let facetResults = facetResults else { return nil }
 
-    return facetResults[row]
+    return facetResults[index]
   }
 
-  public func isRefined(_ row: Int) -> Bool {
+  public func isFacetRefined(atIndex index: Int) -> Bool {
     guard let facetResults = facetResults else { return false }
 
-    let value = facetResults[row].value
+    let value = facetResults[index].value
 
     return refinementListFilterDelegate.isRefined(value: value, operator: settings.operator)
   }
 
-  public func didSelectRow(_ row: Int) {
+  public func didSelectFacet(atIndex index: Int) {
     guard let facetResults = facetResults else { return }
 
-    let value = facetResults[row].value
+    let value = facetResults[index].value
 
     refinementListFilterDelegate.didSelect(value: value, operator: settings.operator)
 
