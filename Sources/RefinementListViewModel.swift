@@ -59,8 +59,7 @@ public class RefinementListViewModel {
 
     self.facetResults = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                 resultValues: rawFacetResults,
-                                                                sorting: settings.sorting,
-                                                                showSelectedValuesOnTop: settings.showSelectedValuesOnTop,
+                                                                sortBy: settings.sortBy,
                                                                 keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
   }
 
@@ -69,7 +68,7 @@ public class RefinementListViewModel {
   public func numberOfFacets() -> Int {
     guard let facetResults = facetResults else { return 0 }
 
-    switch settings.maximumRowCount {
+    switch settings.limit {
     case .none:
       return facetResults.count
     case .count(let count):
@@ -110,9 +109,6 @@ extension RefinementListViewModel {
     /// Whether to show or not the selected values that have count of 0
     public var keepSelectedValuesWithZeroCount = true
 
-    /// Whether to show or not all the selected values on top of the unselected values.
-    public var showSelectedValuesOnTop = true
-
     /// The operator mode of the refinement list.
     /// Possible ones:
     /// - AND + Single Selection
@@ -121,7 +117,7 @@ extension RefinementListViewModel {
     public var `operator`: RefinementOperator = .or
 
     /// Maximum number of items to show in the list
-    public var maximumRowCount: Limit = .count(10)
+    public var limit: Limit = .count(10)
 
     /// The Sorting strategy used when displaying the list.
     /// Possible ones:
@@ -129,7 +125,7 @@ extension RefinementListViewModel {
     /// - Ascending Count
     /// - Alphabetical
     /// - Reverse Alphabetical
-    public var sorting: Sorting = .count(order: .descending)
+    public var sortBy: [Sorting] = [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)]
 
     public enum Limit {
       case none
@@ -153,7 +149,8 @@ extension RefinementListViewModel {
   }
   public enum Sorting {
     case count(order: Order)
-    case name(order: Order)
+    case alphabetical(order: Order)
+    case isRefined
 
     public enum Order {
       case ascending

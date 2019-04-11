@@ -11,15 +11,14 @@ import Foundation
 protocol RefinementListBuilderProtocol {
   func getRefinementList(selectedValues: [String],
                          resultValues: [FacetValue]?,
-                         sorting: RefinementListViewModel.Sorting,
-                         showSelectedValuesOnTop: Bool,
+                         sortBy: [RefinementListViewModel.Sorting],
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
 }
 
 /// Takes care of building the content of a refinement list given the following:
 /// - The list of Facets + Associated Count
 /// - The list of Facets that have been refined
-/// - Layout settings such as sorting
+/// - Layout settings such as sortBy
 class RefinementListBuilder: RefinementListBuilderProtocol {
 
   /// Add missing refinements with a count of 0 to all returned facetValues
@@ -45,8 +44,7 @@ class RefinementListBuilder: RefinementListBuilderProtocol {
   /// Builds the final list to be displayed in the refinement list
   func getRefinementList(selectedValues: [String],
                          resultValues: [FacetValue]?,
-                         sorting: RefinementListViewModel.Sorting,
-                         showSelectedValuesOnTop: Bool,
+                         sortBy: [RefinementListViewModel.Sorting],
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
 
     let facetList: [FacetValue]
@@ -61,32 +59,44 @@ class RefinementListBuilder: RefinementListBuilderProtocol {
       let lhsChecked: Bool = selectedValues.contains(lhs.value)
       let rhsChecked: Bool = selectedValues.contains(rhs.value)
 
-      if showSelectedValuesOnTop && lhsChecked != rhsChecked { // Refined wins
-        return lhsChecked
-      }
-
       let leftCount = lhs.count
       let rightCount = rhs.count
       let leftValueLowercased = lhs.value.lowercased()
       let rightValueLowercased = rhs.value.lowercased()
 
-      switch sorting {
-      case .count(order: .descending):
-        // Biggest Count wins, else alphabetically by name
-        return leftCount != rightCount ? leftCount > rightCount : leftValueLowercased < rightValueLowercased
+      // tiebreaking algorithm to do determine the sorting. 
+      for sorting in sortBy {
 
-      case .count(order: .ascending):
-        // Smallest Count wins, else alphabetically by name
-        return leftCount != rightCount ? leftCount < rightCount : leftValueLowercased < rightValueLowercased
+        switch sorting {
+        case .isRefined:
+          if lhsChecked != rhsChecked {
+            return lhsChecked
+          }
 
-      case .name(order: .descending):
-        // Sort by Name descending. Else, Biggest Count wins by default
-        return leftValueLowercased != rightValueLowercased ? leftValueLowercased > rightValueLowercased : leftCount > rightCount
+        case .count(order: .descending):
+          if leftCount != rightCount {
+            return leftCount > rightCount
+          }
 
-      case .name(order: .ascending):
-        // Sort by Name ascending. Else, Biggest Count wins by default
-        return leftValueLowercased != rightValueLowercased ? leftValueLowercased < rightValueLowercased : leftCount > rightCount
+        case .count(order: .ascending):
+          if leftCount != rightCount {
+            return leftCount < rightCount
+          }
+
+        case .alphabetical(order: .descending):
+          if leftValueLowercased != rightValueLowercased {
+            return leftValueLowercased > rightValueLowercased
+          }
+
+        case .alphabetical(order: .ascending):
+          // Sort by Name ascending. Else, Biggest Count wins by default
+          if leftValueLowercased != rightValueLowercased {
+            return leftValueLowercased < rightValueLowercased
+          }
+        }
       }
+
+      return true
     }
 
     return sortedFacetList
