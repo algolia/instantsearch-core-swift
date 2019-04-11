@@ -30,9 +30,9 @@ public extension Filter {
       self.score = score
     }
     
-//    public init(_ facetTuple: FacetTuple) {
-//      self.init(attribute: facetTuple.0, value: facetTuple.1)
-//    }
+    public init(_ facetTuple: FacetTuple) {
+      self.init(attribute: facetTuple.0, value: facetTuple.1)
+    }
     
     public init(attribute: Attribute, stringValue: String, isNegated: Bool = false) {
       self.init(attribute: attribute, value: .string(stringValue), isNegated: isNegated)

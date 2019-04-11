@@ -59,13 +59,13 @@ public extension Filter {
       self.value = value
     }
     
-//    init(_ tuple: ComparisonTuple) {
-//      self.init(attribute: tuple.0, operator: tuple.1, value: tuple.2)
-//    }
-//    
-//    init(_ tuple: RangeTuple) {
-//      self.init(attribute: tuple.0, range: tuple.1)
-//    }
+    init(_ tuple: ComparisonTuple) {
+      self.init(attribute: tuple.0, operator: tuple.1, value: tuple.2)
+    }
+    
+    init(_ tuple: RangeTuple) {
+      self.init(attribute: tuple.0, range: tuple.1)
+    }
     
     public init(attribute: Attribute, range: ClosedRange<Float>, isNegated: Bool = false) {
       self.init(attribute: attribute, value: .range(range), isNegated: isNegated)
