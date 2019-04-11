@@ -11,7 +11,7 @@ import Foundation
 public protocol RefinementListFilterDelegate {
   func didSelect(value: String, operator: RefinementListViewModel.Settings.RefinementOperator)
   func isRefined(value: String, operator: RefinementListViewModel.Settings.RefinementOperator) -> Bool
-  func selectedValues() -> [String]
+  func selectedValues(operator: RefinementListViewModel.Settings.RefinementOperator) -> [String]
 }
 
 /// Business logic for the different actions on the Refinement list related to filtering.
@@ -65,8 +65,14 @@ class RefinementListFilterHandler: RefinementListFilterDelegate {
     }
   }
 
-  public func selectedValues() -> [String] {
-    let refinedFilterFacets: Set<Filter.Facet> = filterState.getFilters(for: attribute)
+  public func selectedValues(operator: RefinementListViewModel.Settings.RefinementOperator) -> [String] {
+    let refinedFilterFacets: [Filter.Facet]
+    switch `operator` {
+    case .or, .and(selection: .single):
+      refinedFilterFacets = filterState.getFilter(for: orGroup).compactMap { $0.filter as? Filter.Facet }
+    case .and(selection: .multiple):
+      refinedFilterFacets = filterState.getFilter(for: andGroup).compactMap { $0.filter as? Filter.Facet }
+    }
     return refinedFilterFacets.map { $0.value.description }
   }
 }

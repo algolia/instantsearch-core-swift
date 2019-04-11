@@ -191,10 +191,18 @@ public extension FilterState {
     groups.removeAll()
   }
   
-  func getFilters<F: FilterType>(for attribute: Attribute) -> Set<F> {
-    return []
+//  func getFilters<F: FilterType>(for attribute: Attribute) -> Set<F> {
+//    return []
+//  }
+
+  func getFilter(for group: FilterGroup.And.ID) -> Set<Filter> {
+    return groups[AnyFilterGroupID(group)] ?? []
   }
-  
+
+  func getFilter<F: FilterType>(for group: FilterGroup.Or<F>.ID) -> Set<Filter> {
+    return groups[AnyFilterGroupID(group)] ?? []
+  }
+
 }
 
 // MARK: Convenient methods for search for facet values and search disjunctive faceting

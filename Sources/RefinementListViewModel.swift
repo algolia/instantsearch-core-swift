@@ -55,7 +55,7 @@ public class RefinementListViewModel {
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
-    let selectedValues: [String] = refinementListFilterDelegate.selectedValues()
+    let selectedValues: [String] = refinementListFilterDelegate.selectedValues(operator: settings.operator)
 
     self.facetResults = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                 resultValues: rawFacetResults,
