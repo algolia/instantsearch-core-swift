@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol RefinementListBuilderProtocol {
+public protocol RefinementListPresenterDelegate {
   func getRefinementList(selectedValues: [String],
                          resultValues: [FacetValue]?,
                          sortBy: [RefinementListViewModel.Sorting],
@@ -19,7 +19,7 @@ protocol RefinementListBuilderProtocol {
 /// - The list of Facets + Associated Count
 /// - The list of Facets that have been refined
 /// - Layout settings such as sortBy
-class RefinementListBuilder: RefinementListBuilderProtocol {
+class RefinementListPresenter: RefinementListPresenterDelegate {
 
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements

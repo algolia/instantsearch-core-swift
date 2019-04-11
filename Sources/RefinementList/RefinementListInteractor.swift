@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol RefinementListFilterDelegate {
+public protocol RefinementListInteractorDelegate {
   func didSelect(value: String, operator: RefinementListViewModel.Settings.RefinementOperator)
   func isRefined(value: String, operator: RefinementListViewModel.Settings.RefinementOperator) -> Bool
   func selectedValues(operator: RefinementListViewModel.Settings.RefinementOperator) -> [String]
@@ -16,7 +16,7 @@ public protocol RefinementListFilterDelegate {
 
 /// Business logic for the different actions on the Refinement list related to filtering.
 /// Mainly, the onSelect action, and determining if a certain value is selected or not.
-class RefinementListFilterHandler: RefinementListFilterDelegate {
+class RefinementListInteractor: RefinementListInteractorDelegate {
 
   let filterState: FilterState
   let attribute: Attribute

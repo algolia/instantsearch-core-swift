@@ -19,8 +19,8 @@ public class RefinementListViewModel {
 
   var facetResults: [FacetValue]?
 
-  let refinementListBuilder: RefinementListBuilderProtocol
-  let refinementListFilterDelegate: RefinementListFilterDelegate
+  let refinementListPresenter: RefinementListPresenterDelegate
+  let refinementListInteractor: RefinementListInteractorDelegate
 
   // MARK: - Init
 
@@ -28,17 +28,17 @@ public class RefinementListViewModel {
     self.attribute = attribute
     let group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
 
-    self.refinementListFilterDelegate = RefinementListFilterHandler(attribute: attribute, filterState: filterState, group: group)
+    self.refinementListInteractor = RefinementListInteractor(attribute: attribute, filterState: filterState, group: group)
 
     self.settings = refinementSettings ?? Settings()
-    refinementListBuilder = RefinementListBuilder()
+    refinementListPresenter = RefinementListPresenter()
   }
 
-  public init(attribute: Attribute, refinementListFilterDelegate: RefinementListFilterDelegate, refinementSettings: Settings? = nil) {
+  public init(attribute: Attribute, refinementListInteractorDelegate: RefinementListInteractorDelegate, refinementListPresenterDelegate: RefinementListPresenterDelegate, refinementSettings: Settings? = nil) {
     self.attribute = attribute
     self.settings = refinementSettings ?? Settings()
-    self.refinementListFilterDelegate = refinementListFilterDelegate
-    refinementListBuilder = RefinementListBuilder()
+    self.refinementListInteractor = refinementListInteractorDelegate
+    refinementListPresenter = refinementListPresenterDelegate
   }
 
   // MARK: - Update with new results
@@ -55,9 +55,9 @@ public class RefinementListViewModel {
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
-    let selectedValues: [String] = refinementListFilterDelegate.selectedValues(operator: settings.operator)
+    let selectedValues: [String] = refinementListInteractor.selectedValues(operator: settings.operator)
 
-    self.facetResults = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+    self.facetResults = refinementListPresenter.getRefinementList(selectedValues: selectedValues,
                                                                 resultValues: rawFacetResults,
                                                                 sortBy: settings.sortBy,
                                                                 keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
@@ -88,7 +88,7 @@ public class RefinementListViewModel {
 
     let value = facetResults[index].value
 
-    return refinementListFilterDelegate.isRefined(value: value, operator: settings.operator)
+    return refinementListInteractor.isRefined(value: value, operator: settings.operator)
   }
 
   public func didSelectFacet(atIndex index: Int) {
@@ -96,7 +96,7 @@ public class RefinementListViewModel {
 
     let value = facetResults[index].value
 
-    refinementListFilterDelegate.didSelect(value: value, operator: settings.operator)
+    refinementListInteractor.didSelect(value: value, operator: settings.operator)
 
     onParamChange.fire(())
   }
