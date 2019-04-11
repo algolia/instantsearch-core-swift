@@ -19,8 +19,8 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public let onSearchResults = Observer<SearchResult>()
   public var applyDisjunctiveFacetingWhenNecessary = true
   
-  public convenience init(client: Client, indices: [Index], query: Query, filterBuilder: FilterBuilder) {
-    self.init(client: client, indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterBuilder: filterBuilder))
+  public convenience init(client: Client, indices: [Index], query: Query, filterState: FilterState) {
+    self.init(client: client, indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterState: filterState))
   }
   
   public init(client: Client, indexSearchDatas: [IndexSearchData]) {

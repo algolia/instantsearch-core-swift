@@ -24,11 +24,11 @@ public class RefinementListViewModel {
 
   // MARK: - Init
 
-  public init(attribute: Attribute, filterBuilder: FilterBuilder, refinementSettings: Settings? = nil, group: Group? = nil) {
+  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, group: Group? = nil) {
     self.attribute = attribute
     let group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
 
-    self.refinementListFilterDelegate = RefinementListFilterHandler(attribute: attribute, filterBuilder: filterBuilder, group: group)
+    self.refinementListFilterDelegate = RefinementListFilterHandler(attribute: attribute, filterState: filterState, group: group)
 
     self.settings = refinementSettings ?? Settings()
     refinementListBuilder = RefinementListBuilder()
@@ -61,6 +61,7 @@ public class RefinementListViewModel {
                                                                 resultValues: rawFacetResults,
                                                                 sortBy: settings.sortBy,
                                                                 keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
+    print("facetResults \(self.facetResults)")
   }
 
   // MARK: - Public API
