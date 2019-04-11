@@ -59,6 +59,22 @@
 		AF117807225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
 		AF117808225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
 		AF117809225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
+		AF11780A225F650F00C5B59B /* GroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupProxy.swift */; };
+		AF11780B225F651000C5B59B /* GroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupProxy.swift */; };
+		AF11780C225F651200C5B59B /* GroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupProxy.swift */; };
+		AF11780D225F651300C5B59B /* GroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupProxy.swift */; };
+		AF11780E225F652800C5B59B /* OrGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DD225E342300C5B59B /* OrGroupProxy.swift */; };
+		AF11780F225F652900C5B59B /* OrGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DD225E342300C5B59B /* OrGroupProxy.swift */; };
+		AF117810225F652B00C5B59B /* OrGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DD225E342300C5B59B /* OrGroupProxy.swift */; };
+		AF117811225F652B00C5B59B /* OrGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DD225E342300C5B59B /* OrGroupProxy.swift */; };
+		AF117812225F664D00C5B59B /* AndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DE225E342300C5B59B /* AndGroupProxy.swift */; };
+		AF117813225F664E00C5B59B /* AndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DE225E342300C5B59B /* AndGroupProxy.swift */; };
+		AF117814225F664F00C5B59B /* AndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DE225E342300C5B59B /* AndGroupProxy.swift */; };
+		AF117815225F665000C5B59B /* AndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DE225E342300C5B59B /* AndGroupProxy.swift */; };
+		AF117816225F67F300C5B59B /* SpecializedAndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DF225E342300C5B59B /* SpecializedAndGroupProxy.swift */; };
+		AF117817225F67F400C5B59B /* SpecializedAndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DF225E342300C5B59B /* SpecializedAndGroupProxy.swift */; };
+		AF117818225F67F500C5B59B /* SpecializedAndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DF225E342300C5B59B /* SpecializedAndGroupProxy.swift */; };
+		AF117819225F67F600C5B59B /* SpecializedAndGroupProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DF225E342300C5B59B /* SpecializedAndGroupProxy.swift */; };
 		AF19B03A223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */; };
 		AF19B03B223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */; };
 		AF19B03C223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */; };
@@ -964,11 +980,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF1177C3225E2CB300C5B59B /* Converter.swift in Sources */,
+				AF11780E225F652800C5B59B /* OrGroupProxy.swift in Sources */,
 				E29E455E2243F322005B358D /* Observer.swift in Sources */,
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
 				AF3DE5A1224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779C225E2AB500C5B59B /* FilterState.swift in Sources */,
 				AF3DE583224A984B00C8BC08 /* MultiHitsViewModel.swift in Sources */,
+				AF117812225F664D00C5B59B /* AndGroupProxy.swift in Sources */,
+				AF117816225F67F300C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
 				E29E456D2243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */,
@@ -992,6 +1011,7 @@
 				AF1177D3225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AF1177AD225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E24233DD223947FC008F24FB /* Result.swift in Sources */,
+				AF11780A225F650F00C5B59B /* GroupProxy.swift in Sources */,
 				E2242647224D2311005DD565 /* RefinementListFilterHandler.swift in Sources */,
 				AF1177B7225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				E24233DB223947FC008F24FB /* HitsViewModel.swift in Sources */,
@@ -1031,11 +1051,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF1177C4225E2CB300C5B59B /* Converter.swift in Sources */,
+				AF11780F225F652900C5B59B /* OrGroupProxy.swift in Sources */,
 				E29E455F2243F322005B358D /* Observer.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
 				AF3DE5A2224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779D225E2AB500C5B59B /* FilterState.swift in Sources */,
 				AF3DE584224A984C00C8BC08 /* MultiHitsViewModel.swift in Sources */,
+				AF117813225F664E00C5B59B /* AndGroupProxy.swift in Sources */,
+				AF117817225F67F400C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDC922397E18001459BE /* SearchResults+PageMap.swift in Sources */,
 				E29E456E2243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDD422397E31001459BE /* SearchResults.swift in Sources */,
@@ -1059,6 +1082,7 @@
 				AF1177D4225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AF1177AE225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				AFCDEDCC22397E1D001459BE /* PageMap.swift in Sources */,
+				AF11780B225F651000C5B59B /* GroupProxy.swift in Sources */,
 				E2242648224D2311005DD565 /* RefinementListFilterHandler.swift in Sources */,
 				AF1177B8225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				AFCDEDD922397E31001459BE /* RefinementListViewModel.swift in Sources */,
@@ -1098,11 +1122,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF1177C5225E2CB300C5B59B /* Converter.swift in Sources */,
+				AF117810225F652B00C5B59B /* OrGroupProxy.swift in Sources */,
 				E29E45602243F322005B358D /* Observer.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
 				AF3DE5A3224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779E225E2AB500C5B59B /* FilterState.swift in Sources */,
 				AF3DE585224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */,
+				AF117814225F664F00C5B59B /* AndGroupProxy.swift in Sources */,
+				AF117818225F67F500C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				E2E09E392232709F00F3056D /* Result.swift in Sources */,
 				E29E456F2243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDCA22397E19001459BE /* SearchResults+PageMap.swift in Sources */,
@@ -1126,6 +1153,7 @@
 				AF1177D5225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AF1177AF225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2E09E332232709700F3056D /* HitsViewModel.swift in Sources */,
+				AF11780C225F651200C5B59B /* GroupProxy.swift in Sources */,
 				E2242649224D2311005DD565 /* RefinementListFilterHandler.swift in Sources */,
 				AF1177B9225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				AFCDEDAC222EB789001459BE /* SearchResults.swift in Sources */,
@@ -1165,11 +1193,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF1177C6225E2CB300C5B59B /* Converter.swift in Sources */,
+				AF117811225F652B00C5B59B /* OrGroupProxy.swift in Sources */,
 				E29E45612243F322005B358D /* Observer.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
 				AF3DE5A4224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779F225E2AB500C5B59B /* FilterState.swift in Sources */,
 				AF3DE586224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */,
+				AF117815225F665000C5B59B /* AndGroupProxy.swift in Sources */,
+				AF117819225F67F600C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				E2E09E3A2232709F00F3056D /* Result.swift in Sources */,
 				E29E45702243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDCB22397E1A001459BE /* SearchResults+PageMap.swift in Sources */,
@@ -1193,6 +1224,7 @@
 				AF1177D6225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AF1177B0225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */,
+				AF11780D225F651300C5B59B /* GroupProxy.swift in Sources */,
 				E224264A224D2311005DD565 /* RefinementListFilterHandler.swift in Sources */,
 				AF1177BA225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */,

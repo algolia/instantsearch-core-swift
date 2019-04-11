@@ -13,105 +13,83 @@ import Foundation
 public struct AndGroupProxy: GroupProxy {
     
     let filterState: FilterState
-    let group: AnyFilterGroup
+    let groupID: AnyFilterGroupID
     
     /// A Boolean value indicating whether group contains at least on filter
     public var isEmpty: Bool {
-        if let filtersForGroup = filterState.groups[group] {
+        if let filtersForGroup = filterState.groups[groupID] {
             return filtersForGroup.isEmpty
         } else {
             return true
         }
     }
     
-    init(filterState: FilterState, group: AndFilterGroup) {
+    init(filterState: FilterState, groupID: FilterGroup.And.ID) {
         self.filterState = filterState
-        self.group = AnyFilterGroup(group)
+        self.groupID = AnyFilterGroupID(groupID)
     }
     
     /// Adds filter to group
     /// - parameter filter: filter to add
     public func add<T: FilterType>(_ filter: T) {
-        filterState.add(filter, to: group)
+        filterState.add(filter, to: groupID)
     }
     
     /// Adds the filters of a sequence to group
     /// - parameter filters: sequence of filters to add
     public func addAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T {
-        filterState.addAll(filters: filters, to: group)
+        filterState.addAll(filters: filters, to: groupID)
     }
     
     /// Tests whether group contains a filter
     /// - parameter filter: sought filter
     public func contains<T: FilterType>(_ filter: T) -> Bool {
-        return filterState.contains(filter, in: group)
+        return filterState.contains(filter, in: groupID)
     }
     
     /// Removes filter from current group and adds it to destination conjunctive group
     /// - parameter filter: filter to move
     /// - parameter destination: target group
     /// - returns: true if movement succeeded, otherwise returns false
-    public func move<T: FilterType>(_ filter: T, to destination: AndFilterGroup) -> Bool {
-        return filterState.move(filter: filter, from: group, to: AnyFilterGroup(destination))
+    public func move<T: FilterType>(_ filter: T, to destination: FilterGroup.And.ID) -> Bool {
+        return filterState.move(filter: filter, from: groupID, to: AnyFilterGroupID(destination))
     }
     
     /// Removes filter from current group and adds it to destination disjunctive group
     /// - parameter filter: filter to move
     /// - parameter destination: target group
     /// - returns: true if movement succeeded, otherwise returns false
-    public func move<T: FilterType>(_ filter: T, to destination: OrFilterGroup<T>) -> Bool {
-        return filterState.move(filter: filter, from: group, to: AnyFilterGroup(destination))
-    }
-    
-    /// Replaces all the attribute by a provided one in group
-    /// - parameter attribute: attribute to replace
-    /// - parameter replacement: replacement attribute
-    public func replace(_ attribute: Attribute, by replacement: Attribute) {
-        return filterState.replace(attribute, by: replacement, in: group)
-    }
-    
-    /// Replaces filter in group by specified filter replacement
-    /// - parameter filter: filter to replace
-    /// - parameter replacement: filter replacement
-    public func replace<T: FilterType, D: FilterType>(_ filter: T, by replacement: D) {
-        return filterState.replace(filter: filter, by: replacement, in: group)
+    public func move<T: FilterType>(_ filter: T, to destination: FilterGroup.Or<T>.ID) -> Bool {
+        return filterState.move(filter: filter, from: groupID, to: AnyFilterGroupID(destination))
     }
     
     /// Removes all filters with specified attribute from group
     /// - parameter attribute: specified attribute
     public func removeAll(for attribute: Attribute) {
-        return filterState.removeAll(for: attribute, from: group)
+        return filterState.removeAll(for: attribute, from: groupID)
     }
     
     /// Removes filter from group
     /// - parameter filter: filter to remove
     @discardableResult public func remove<T: FilterType>(_ filter: T) -> Bool {
-        return filterState.remove(filter, from: group)
+        return filterState.remove(filter, from: groupID)
     }
     
     /// Removes a sequence of filters from group
     /// - parameter filters: sequence of filters to remove
     @discardableResult public func removeAll<T: FilterType, S: Sequence>(_ filters: S) -> Bool where S.Element == T {
-        return filterState.removeAll(filters, from: group)
+        return filterState.removeAll(filters, from: groupID)
     }
     
     /// Removes all filters in group
     public func removeAll() {
-        filterState.removeAll(from: group)
+        filterState.removeAll(from: groupID)
     }
     
     /// Removes filter from group if contained by it, otherwise adds filter to group
     /// - parameter filter: filter to toggle
     public func toggle<T: FilterType>(_ filter: T) {
-        filterState.toggle(filter, in: group)
-    }
-
-    /// Constructs a string representation of filters in group
-    /// If group is empty returns nil
-    /// - parameter ignoringInversion: if set to true, ignores any filter negation
-    /// - # Example of generated string: "A":"V1" AND "B":"11" AND "C":"true"
-    public func build(ignoringInversion: Bool = false) -> String? {
-        return filterState.build(group, ignoringInversion: ignoringInversion)
+        filterState.toggle(filter, in: groupID)
     }
 
 }

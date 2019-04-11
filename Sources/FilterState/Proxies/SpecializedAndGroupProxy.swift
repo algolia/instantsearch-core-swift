@@ -14,8 +14,8 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     
     private let genericProxy: AndGroupProxy
     
-    var group: AnyFilterGroup {
-        return genericProxy.group
+    var groupID: AnyFilterGroupID {
+        return genericProxy.groupID
     }
     
     /// A Boolean value indicating whether group contains at least on filter
@@ -49,7 +49,7 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     /// - parameter filter: filter to move
     /// - parameter destination: target group
     /// - returns: true if movement succeeded, otherwise returns false
-    public func move(_ filter: T, to destination: AndFilterGroup) -> Bool {
+    public func move(_ filter: T, to destination: FilterGroup.And.ID) -> Bool {
         return genericProxy.move(filter, to: destination)
     }
     
@@ -57,22 +57,8 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     /// - parameter filter: filter to move
     /// - parameter destination: target group
     /// - returns: true if movement succeeded, otherwise returns false
-    public func move(_ filter: T, to destination: OrFilterGroup<T>) -> Bool {
+    public func move(_ filter: T, to destination: FilterGroup.Or<T>.ID) -> Bool {
         return genericProxy.move(filter, to: destination)
-    }
-    
-    /// Replaces all the attribute by a provided one in group
-    /// - parameter attribute: attribute to replace
-    /// - parameter replacement: replacement attribute
-    public func replace(_ attribute: Attribute, by replacement: Attribute) {
-        return genericProxy.replace(attribute, by: replacement)
-    }
-    
-    /// Replaces filter in group by specified filter replacement
-    /// - parameter filter: filter to replace
-    /// - parameter replacement: filter replacement
-    public func replace<T: FilterType, D: FilterType>(_ filter: T, by replacement: D) {
-        return genericProxy.replace(filter, by: replacement)
     }
     
     /// Removes all filters with specified attribute from group
@@ -102,14 +88,6 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     /// - parameter filter: filter to toggle
     public func toggle(_ filter: T) {
         genericProxy.toggle(filter)
-    }
-    
-    /// Constructs a string representation of filters in group
-    /// If FilterState is empty returns nil
-    /// - parameter ignoringInversion: if set to true, ignores any filter negation
-    /// - # Example of generated string: "A":"V1" AND "B":"11" AND "C":"true")
-    public func build() -> String? {
-        return genericProxy.build()
     }
     
 }
