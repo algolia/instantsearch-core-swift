@@ -19,8 +19,8 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   
   public var applyDisjunctiveFacetingWhenNecessary = true
   
-  public init(index: Index, query: Query = .init(), filterBuilder: FilterBuilder = .init()) {
-    self.indexSearchData = IndexSearchData(index: index, query: query, filterBuilder: filterBuilder)
+  public init(index: Index, query: Query = .init(), filterState: FilterState = .init()) {
+    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     sequencer = Sequencer()
     sequencer.delegate = self
     onSearchResults.retainLastData = true
@@ -28,7 +28,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   }
   
   public convenience init(indexSearchData: IndexSearchData) {
-    self.init(index: indexSearchData.index, query: indexSearchData.query, filterBuilder: indexSearchData.filterBuilder)
+    self.init(index: indexSearchData.index, query: indexSearchData.query, filterState: indexSearchData.filterState)
   }
   
   public func setQuery(text: String) {
@@ -45,9 +45,9 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     sequencer.orderOperation {
       let queryMetadata = QueryMetadata(query: indexSearchData.query)
       
-      if applyDisjunctiveFacetingWhenNecessary && indexSearchData.filterBuilder.isDisjunctiveFacetingAvailable() {
-        let disjunctiveFacets = Array(indexSearchData.filterBuilder.getDisjunctiveFacetsAttributes()).map { $0.description }
-        let refinements = indexSearchData.filterBuilder.getRawFacetFilters()
+      if applyDisjunctiveFacetingWhenNecessary && indexSearchData.filterState.isDisjunctiveFacetingAvailable() {
+        let disjunctiveFacets = Array(indexSearchData.filterState.getDisjunctiveFacetsAttributes()).map { $0.description }
+        let refinements = indexSearchData.filterState.getRawFacetFilters()
         
         return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)

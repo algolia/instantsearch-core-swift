@@ -19,8 +19,8 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var facetName: String
   public var text: String
   
-  public init(index: Index, query: Query, filterBuilder: FilterBuilder, facetName: String, text: String) {
-    self.indexSearchData = IndexSearchData(index: index, query: query, filterBuilder: filterBuilder)
+  public init(index: Index, query: Query, filterState: FilterState, facetName: String, text: String) {
+    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     self.facetName = facetName
     self.text = text
     self.sequencer = Sequencer()

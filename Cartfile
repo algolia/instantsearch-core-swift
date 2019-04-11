@@ -1,2 +1,2 @@
-github "algolia/algoliasearch-client-swift" "filter-builder"
+github "algolia/algoliasearch-client-swift" "search-filter-state"
 github "spinach/Signals" "fix-deployment-targets"
