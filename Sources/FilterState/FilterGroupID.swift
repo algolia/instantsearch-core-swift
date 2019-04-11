@@ -12,18 +12,6 @@ protocol FilterGroupID: Hashable {
   var name: String { get }
 }
 
-public struct AndFilterGroupID: FilterGroupID {
-  
-  let name: String
-  
-}
-
-public struct OrFilterGroupID<F: FilterType>: FilterGroupID {
-  
-  let name: String
-  
-}
-
 /**
  As FilterGroup protocol inherits Hashable protocol, it cannot be used as a type, but only as a type constraint.
  For the purpose of workaround it, a type-erased wrapper AnyFilterGroup is introduced.
@@ -81,7 +69,7 @@ final class AnyFilterGroupID: FilterGroupID {
   private let describingString: String
   
   var isConjunctive: Bool {
-    return (extractAs() as AndFilterGroupID?) != nil
+    return (extractAs() as FilterGroup.And.ID?) != nil
   }
   
   var isDisjunctive: Bool {

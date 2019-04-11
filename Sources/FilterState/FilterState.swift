@@ -15,7 +15,7 @@ public class FilterState {
   public func getFilterGroups() -> [FilterGroupType] {
     
     func extractOrGroup<F: FilterType>(from id: AnyFilterGroupID, with filters: Set<Filter>) -> FilterGroup.Or<F>? {
-      if let _: OrFilterGroupID<F> = id.extractAs() {
+      if let _: FilterGroup.Or<F>.ID = id.extractAs() {
         return FilterGroup.Or(filters: filters.map { $0.filter }.compactMap { $0 as? F })
       } else {
         return nil
@@ -23,8 +23,8 @@ public class FilterState {
     }
     
     func filterGroup(with id: AnyFilterGroupID, filters: Set<Filter>) -> FilterGroupType? {
-            
-      if let _: AndFilterGroupID = id.extractAs() {
+      
+      if let _: FilterGroup.And.ID = id.extractAs() {
         return FilterGroup.And(filters.map { $0.filter})
       } else if let tagGroup: FilterGroup.Or<Filter.Tag> = extractOrGroup(from: id, with: filters) {
         return tagGroup
@@ -148,7 +148,7 @@ public extension FilterState {
   /// - parameter source: source group
   /// - parameter destination: target group
   /// - returns: true if movement succeeded, otherwise returns false
-  func move<T: FilterType>(_ filter: T, from source: OrFilterGroupID<T>, to destination: AndFilterGroupID) -> Bool {
+  func move<T: FilterType>(_ filter: T, from source: FilterGroup.Or<T>.ID, to destination: FilterGroup.And.ID) -> Bool {
     return move(filter: filter, from: AnyFilterGroupID(source), to: AnyFilterGroupID(destination))
   }
   
@@ -157,7 +157,7 @@ public extension FilterState {
   /// - parameter source: source group
   /// - parameter destination: target group
   /// - returns: true if movement succeeded, otherwise returns false
-  func move<T: FilterType>(_ filter: T, from source: AndFilterGroupID, to destination: OrFilterGroupID<T>) -> Bool {
+  func move<T: FilterType>(_ filter: T, from source: FilterGroup.And.ID, to destination: FilterGroup.Or<T>.ID) -> Bool {
     return move(filter: filter, from: AnyFilterGroupID(source), to: AnyFilterGroupID(destination))
   }
   
@@ -257,14 +257,14 @@ public extension FilterState {
   /// Adds filter to conjunctive group
   /// - parameter filter: filter to add
   /// - parameter group: target group
-  func add<T: FilterType>(_ filter: T, to group: AndFilterGroupID) {
+  func add<T: FilterType>(_ filter: T, to group: FilterGroup.And.ID) {
     add(filter, to: AnyFilterGroupID(group))
   }
   
   /// Adds the filters of a sequence to conjunctive group
   /// - parameter filters: sequence of filters to add
   /// - parameter group: target group
-  func addAll<T: FilterType, S: Sequence>(_ filters: S, to group: AndFilterGroupID) where S.Element == T {
+  func addAll<T: FilterType, S: Sequence>(_ filters: S, to group: FilterGroup.And.ID) where S.Element == T {
     addAll(filters: filters, to: AnyFilterGroupID(group))
   }
   
@@ -272,7 +272,7 @@ public extension FilterState {
   /// - parameter filter: filter to check
   /// - parameter group: target group
   /// - returns: true if filter is contained by specified group
-  func contains<T: FilterType>(_ filter: T, in group: AndFilterGroupID) -> Bool {
+  func contains<T: FilterType>(_ filter: T, in group: FilterGroup.And.ID) -> Bool {
     return contains(filter, in: AnyFilterGroupID(group))
   }
   
@@ -281,27 +281,27 @@ public extension FilterState {
   /// - parameter source: source group
   /// - parameter destination: target group
   /// - returns: true if movement succeeded, otherwise returns false
-  func move<T: FilterType>(_ filter: T, from source: AndFilterGroupID, to destination: AndFilterGroupID) -> Bool {
+  func move<T: FilterType>(_ filter: T, from source: FilterGroup.And.ID, to destination: FilterGroup.And.ID) -> Bool {
     return move(filter: filter, from: AnyFilterGroupID(source), to: AnyFilterGroupID(destination))
   }
   
   /// Removes filter from conjunctive group
   /// - parameter filter: filter to remove
   /// - parameter group: target group
-  @discardableResult func remove<T: FilterType>(_ filter: T, from group: AndFilterGroupID) -> Bool {
+  @discardableResult func remove<T: FilterType>(_ filter: T, from group: FilterGroup.And.ID) -> Bool {
     return remove(filter, from: AnyFilterGroupID(group))
   }
   
   /// Removes all filters from conjunctive group
   /// - parameter group: target group
-  func removeAll(from group: AndFilterGroupID) {
+  func removeAll(from group: FilterGroup.And.ID) {
     removeAll(from: AnyFilterGroupID(group))
   }
   
   /// Removes filter from conjunctive group if contained by it, otherwise adds filter to group
   /// - parameter filter: filter to toggle
   /// - parameter group: target group
-  func toggle<T: FilterType>(_ filter: T, in group: AndFilterGroupID) {
+  func toggle<T: FilterType>(_ filter: T, in group: FilterGroup.And.ID) {
     toggle(filter, in: AnyFilterGroupID(group))
   }
   
@@ -314,14 +314,14 @@ public extension FilterState {
   /// Adds filter to disjunctive group
   /// - parameter filter: filter to add
   /// - parameter group: target group
-  func add<T: FilterType>(_ filter: T, to group: OrFilterGroupID<T>) {
+  func add<T: FilterType>(_ filter: T, to group: FilterGroup.Or<T>.ID) {
     add(filter, to: AnyFilterGroupID(group))
   }
   
   /// Adds the filters of a sequence to disjunctive group
   /// - parameter filters: sequence of filters to add
   /// - parameter group: target group
-  func addAll<T: FilterType, S: Sequence>(_ filters: S, to group: OrFilterGroupID<T>) where S.Element == T {
+  func addAll<T: FilterType, S: Sequence>(_ filters: S, to group: FilterGroup.Or<T>.ID) where S.Element == T {
     addAll(filters: filters, to: AnyFilterGroupID(group))
   }
   
@@ -329,7 +329,7 @@ public extension FilterState {
   /// - parameter filter: filter to check
   /// - parameter group: target group
   /// - returns: true if filter is contained by specified group
-  func contains<T: FilterType>(_ filter: T, in group: OrFilterGroupID<T>) -> Bool {
+  func contains<T: FilterType>(_ filter: T, in group: FilterGroup.Or<T>.ID) -> Bool {
     return contains(filter, in: AnyFilterGroupID(group))
   }
   
@@ -338,27 +338,27 @@ public extension FilterState {
   /// - parameter source: source group
   /// - parameter destination: target group
   /// - returns: true if movement succeeded, otherwise returns false
-  func move<T: FilterType>(_ filter: T, from source: OrFilterGroupID<T>, to destination: OrFilterGroupID<T>) -> Bool {
+  func move<T: FilterType>(_ filter: T, from source: FilterGroup.Or<T>.ID, to destination: FilterGroup.Or<T>.ID) -> Bool {
     return move(filter: filter, from: AnyFilterGroupID(source), to: AnyFilterGroupID(destination))
   }
   
   /// Removes filter from disjunctive group
   /// - parameter filter: filter to remove
   /// - parameter group: target group
-  @discardableResult func remove<T: FilterType>(_ filter: T, from group: OrFilterGroupID<T>) -> Bool {
+  @discardableResult func remove<T: FilterType>(_ filter: T, from group: FilterGroup.Or<T>.ID) -> Bool {
     return remove(filter, from: AnyFilterGroupID(group))
   }
   
   /// Removes all filters from disjunctive group
   /// - parameter group: target group
-  func removeAll<T: FilterType>(from group: OrFilterGroupID<T>) {
+  func removeAll<T: FilterType>(from group: FilterGroup.Or<T>.ID) {
     removeAll(from: AnyFilterGroupID(group))
   }
   
   /// Removes filter from disjunctive group if contained by it, otherwise adds filter to group
   /// - parameter filter: filter to toggle
   /// - parameter group: target group
-  func toggle<T: FilterType>(_ filter: T, in group: OrFilterGroupID<T>) {
+  func toggle<T: FilterType>(_ filter: T, in group: FilterGroup.Or<T>.ID) {
     toggle(filter, in: AnyFilterGroupID(group))
   }
   

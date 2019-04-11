@@ -22,12 +22,12 @@ class RefinementListFilterHandler: RefinementListFilterDelegate {
   let attribute: Attribute
   let group: Group
 
-  private var orGroup: OrFilterGroupID<Filter.Facet> {
-    return OrFilterGroupID(name: group.name)
+  private var orGroup: FilterGroup.Or<Filter.Facet>.ID {
+    return FilterGroup.Or.ID(name: group.name)
   }
 
-  private var andGroup: AndFilterGroupID {
-    return AndFilterGroupID(name: group.name)
+  private var andGroup: FilterGroup.And.ID {
+    return FilterGroup.And.ID(name: group.name)
   }
 
   public init(attribute: Attribute, filterState: FilterState, group: Group) {
