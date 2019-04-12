@@ -8,8 +8,20 @@
 
 import Foundation
 
-protocol FilterGroupID: Hashable {
-  var name: String { get }
+public enum FilterGroupID: Hashable {
+  
+  case or(name: String)
+  case and(name: String)
+  
+  var name: String {
+    switch self {
+    case .or(name: let name):
+      return name
+    case .and(name: let name):
+      return name
+    }
+  }
+  
 }
 
 /**
@@ -17,7 +29,7 @@ protocol FilterGroupID: Hashable {
  For the purpose of workaround it, a type-erased wrapper AnyFilterGroup is introduced.
  You can find more information about type erasure here:
  https://www.bignerdranch.com/blog/breaking-down-type-erasures-in-swift/
- */
+ 
 
 private class _AnyFilterGroupIDBase: AbstractClass, FilterGroupID {
   
@@ -98,3 +110,4 @@ final class AnyFilterGroupID: FilterGroupID {
   }
   
 }
+*/

@@ -13,7 +13,7 @@ import Foundation
 public struct OrGroupProxy<T: FilterType>: GroupProxy {
     
     let filterState: FilterState
-    let groupID: AnyFilterGroupID
+    let groupID: FilterGroupID
     
     /// A Boolean value indicating whether group contains at least on filter
     public var isEmpty: Bool {
@@ -24,9 +24,9 @@ public struct OrGroupProxy<T: FilterType>: GroupProxy {
         }
     }
     
-    init(filterState: FilterState, groupID: FilterGroup.Or<T>.ID) {
+    init(filterState: FilterState, groupName: String) {
         self.filterState = filterState
-        self.groupID = AnyFilterGroupID(groupID)
+        self.groupID = .or(name: groupName)
     }
     
     /// Adds filter to group
@@ -45,22 +45,6 @@ public struct OrGroupProxy<T: FilterType>: GroupProxy {
     /// - parameter filter: sought filter
     public func contains(_ filter: T) -> Bool {
         return filterState.contains(filter, in: groupID)
-    }
-    
-    /// Removes filter from current group and adds it to destination conjunctive group
-    /// - parameter filter: filter to move
-    /// - parameter destination: target group
-    /// - returns: true if movement succeeded, otherwise returns false
-    public func move(_ filter: T, to destination: FilterGroup.And.ID) -> Bool {
-        return filterState.move(filter: filter, from: groupID, to: AnyFilterGroupID(destination))
-    }
-    
-    /// Removes filter from current group and adds it to destination disjunctive group
-    /// - parameter filter: filter to move
-    /// - parameter destination: target group
-    /// - returns: true if movement succeeded, otherwise returns false
-    public func move(_ filter: T, to destination: FilterGroup.Or<T>.ID) -> Bool {
-        return filterState.move(filter: filter, from: groupID, to: AnyFilterGroupID(destination))
     }
     
     /// Removes all filters with specified attribute from group

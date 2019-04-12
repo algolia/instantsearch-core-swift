@@ -20,19 +20,12 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
 
   let filterState: FilterState
   let attribute: Attribute
-  let group: Group
+  let groupID: FilterGroupID
 
-  private var orGroup: FilterGroup.Or<Filter.Facet>.ID {
-    return FilterGroup.Or.ID(name: group.name)
-  }
 
-  private var andGroup: FilterGroup.And.ID {
-    return FilterGroup.And.ID(name: group.name)
-  }
-
-  public init(attribute: Attribute, filterState: FilterState, group: Group) {
+  public init(attribute: Attribute, filterState: FilterState, groupID: FilterGroupID) {
     self.filterState = filterState
-    self.group = group
+    self.groupID = groupID
     self.attribute = attribute
   }
 
@@ -40,16 +33,14 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
     let filterFacet = Filter.Facet(attribute: attribute, stringValue: value)
 
     switch `operator` {
-    case .or:
-      filterState.toggle(filterFacet, in: orGroup)
-    case .and(.multiple):
-      filterState.toggle(filterFacet, in: andGroup)
+    case .or, .and(.multiple):
+      filterState.toggle(filterFacet, in: groupID)
     case .and(selection: .single):
-      if filterState.contains(filterFacet, in: orGroup) {
-        filterState.remove(filterFacet, from: orGroup)
+      if filterState.contains(filterFacet, in: groupID) {
+        filterState.remove(filterFacet, from: groupID)
       } else {
-        filterState.removeAll(from: orGroup)
-        filterState.add(filterFacet, to: orGroup)
+        filterState.removeAll(from: groupID)
+        filterState.add(filterFacet, to: groupID)
       }
     }
   }
@@ -59,9 +50,9 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
 
     switch `operator` {
     case .or, .and(selection: .single):
-      return filterState.contains(filterFacet, in: orGroup)
+      return filterState.contains(filterFacet, in: groupID)
     case .and(selection: .multiple):
-      return filterState.contains(filterFacet, in: andGroup)
+      return filterState.contains(filterFacet, in: groupID)
     }
   }
 
@@ -69,9 +60,9 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
     let refinedFilterFacets: [Filter.Facet]
     switch `operator` {
     case .or, .and(selection: .single):
-      refinedFilterFacets = filterState.getFilter(for: orGroup).compactMap { $0.filter as? Filter.Facet }
+      refinedFilterFacets = filterState.getFilters(for: groupID).compactMap { $0.filter as? Filter.Facet }
     case .and(selection: .multiple):
-      refinedFilterFacets = filterState.getFilter(for: andGroup).compactMap { $0.filter as? Filter.Facet }
+      refinedFilterFacets = filterState.getFilters(for: groupID).compactMap { $0.filter as? Filter.Facet }
     }
     return refinedFilterFacets.map { $0.value.description }
   }

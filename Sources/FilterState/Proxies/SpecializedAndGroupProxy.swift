@@ -14,7 +14,7 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     
     private let genericProxy: AndGroupProxy
     
-    var groupID: AnyFilterGroupID {
+    var groupID: FilterGroupID {
         return genericProxy.groupID
     }
     
@@ -43,22 +43,6 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     /// - parameter filter: sought filter
     public func contains(_ filter: T) -> Bool {
         return genericProxy.contains(filter)
-    }
-    
-    /// Removes filter from current group and adds it to destination conjunctive group
-    /// - parameter filter: filter to move
-    /// - parameter destination: target group
-    /// - returns: true if movement succeeded, otherwise returns false
-    public func move(_ filter: T, to destination: FilterGroup.And.ID) -> Bool {
-        return genericProxy.move(filter, to: destination)
-    }
-    
-    /// Removes filter from current group and adds it to destination disjunctive group
-    /// - parameter filter: filter to move
-    /// - parameter destination: target group
-    /// - returns: true if movement succeeded, otherwise returns false
-    public func move(_ filter: T, to destination: FilterGroup.Or<T>.ID) -> Bool {
-        return genericProxy.move(filter, to: destination)
     }
     
     /// Removes all filters with specified attribute from group

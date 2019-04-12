@@ -24,13 +24,27 @@ public class RefinementListViewModel {
 
   // MARK: - Init
 
-  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, group: Group? = nil) {
+  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, groupID: FilterGroupID? = nil) {
     self.attribute = attribute
-    let group = group ?? Group(attribute.description) // if not specified, the group defaults to the name of the attribute
+    
+    let settings = refinementSettings ?? Settings()
+    
+    let finalGroupID: FilterGroupID
+    
+    if let groupID = groupID {
+      finalGroupID = groupID
+    } else {
+      switch settings.operator {
+      case .and(selection: .single), .or:
+        finalGroupID = .or(name: attribute.description)
+      case .and(selection: .multiple):
+        finalGroupID = .and(name: attribute.description)
+      }
+    }
 
-    self.refinementListInteractor = RefinementListInteractor(attribute: attribute, filterState: filterState, group: group)
+    self.refinementListInteractor = RefinementListInteractor(attribute: attribute, filterState: filterState, groupID: finalGroupID)
 
-    self.settings = refinementSettings ?? Settings()
+    self.settings = settings
     refinementListPresenter = RefinementListPresenter()
   }
 
@@ -107,6 +121,13 @@ public class RefinementListViewModel {
 
 extension RefinementListViewModel {
   public struct Settings {
+    
+    public init() {}
+    
+    public init(operator: RefinementOperator) {
+      self.operator = `operator`
+    }
+    
     /// Whether to show or not the selected values that have count of 0
     public var keepSelectedValuesWithZeroCount = true
 

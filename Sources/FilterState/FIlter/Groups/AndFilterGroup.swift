@@ -32,20 +32,20 @@ extension FilterGroup {
   
 }
 
-public extension FilterGroup.And {
-  
-  struct ID: FilterGroupID {
-    
-    public let name: String
-    
-    public init(name: String) {
-      self.name = name
-    }
-    
-    public static func and(_ name: String) -> ID {
-      return .init(name: name)
-    }
-    
-  }
-  
-}
+//public extension FilterGroup.And {
+//  
+//  struct ID: FilterGroupID {
+//
+//    public let name: String
+//
+//    public init(name: String) {
+//      self.name = name
+//    }
+//
+//    public static func and(_ name: String) -> ID {
+//      return .init(name: name)
+//    }
+//
+//  }
+//
+//}
