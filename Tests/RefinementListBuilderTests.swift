@@ -24,7 +24,7 @@ class RefinementListBuilderTests: XCTestCase {
   }()
 
   let selectedValues = ["orange", "red", "green"]
-  let refinementListBuilder = RefinementListBuilder()
+  let refinementListBuilder = RefinementListPresenter()
 
   func testCountDescSelectedOnTop() {
 
