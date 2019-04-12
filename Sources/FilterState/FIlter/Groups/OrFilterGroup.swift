@@ -42,6 +42,18 @@ public extension FilterGroup.Or {
     
     public let name: String
     
+    public init(name: String) {
+      self.name = name
+    }
+    
+    public static func or<T: FilterType>(_ name: String) -> FilterGroup.Or<T>.ID {
+      return .init(name: name)
+    }
+    
+    public static func or<T: FilterType>(_ name: String, ofType: T.Type) -> FilterGroup.Or<T>.ID {
+      return .init(name: name)
+    }
+    
   }
   
 }

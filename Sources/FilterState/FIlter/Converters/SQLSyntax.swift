@@ -8,11 +8,11 @@
 
 import Foundation
 
-protocol SQLSyntaxConvertible {
+public protocol SQLSyntaxConvertible {
   var sqlForm: String { get }
 }
 
-class SQLFilterGroupConverter {
+public class SQLFilterGroupConverter {
   
   func convert(_ filterGroups: [FilterGroupType]) -> String {
     return ""
@@ -20,7 +20,7 @@ class SQLFilterGroupConverter {
   
 }
 
-class SQLFilterConverter: FilterConverter {
+public class SQLFilterConverter: FilterConverter {
   
   typealias Output = String
   

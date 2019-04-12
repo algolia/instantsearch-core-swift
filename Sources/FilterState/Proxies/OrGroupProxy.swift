@@ -24,9 +24,9 @@ public struct OrGroupProxy<T: FilterType>: GroupProxy {
         }
     }
     
-    init(filterState: FilterState, group: FilterGroup.Or<T>.ID) {
+    init(filterState: FilterState, groupID: FilterGroup.Or<T>.ID) {
         self.filterState = filterState
-        self.groupID = AnyFilterGroupID(group)
+        self.groupID = AnyFilterGroupID(groupID)
     }
     
     /// Adds filter to group

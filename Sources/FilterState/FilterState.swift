@@ -16,7 +16,7 @@ public class FilterState {
     
     func extractOrGroup<F: FilterType>(from id: AnyFilterGroupID, with filters: Set<Filter>) -> FilterGroup.Or<F>? {
       if let _: FilterGroup.Or<F>.ID = id.extractAs() {
-        return FilterGroup.Or(filters: filters.map { $0.filter }.compactMap { $0 as? F })
+        return FilterGroup.Or(filters: filters.sorted { SQLFilterConverter().convert($0) < SQLFilterConverter().convert($1) } .map { $0.filter }.compactMap { $0 as? F })
       } else {
         return nil
       }
@@ -25,7 +25,7 @@ public class FilterState {
     func filterGroup(with id: AnyFilterGroupID, filters: Set<Filter>) -> FilterGroupType? {
       
       if let _: FilterGroup.And.ID = id.extractAs() {
-        return FilterGroup.And(filters.map { $0.filter})
+        return FilterGroup.And(filters: filters.sorted { SQLFilterConverter().convert($0) < SQLFilterConverter().convert($1) }.map { $0.filter })
       } else if let tagGroup: FilterGroup.Or<Filter.Tag> = extractOrGroup(from: id, with: filters) {
         return tagGroup
       } else if let facetGroup: FilterGroup.Or<Filter.Facet> = extractOrGroup(from: id, with: filters) {
@@ -38,7 +38,7 @@ public class FilterState {
       
     }
     
-    return groups.compactMap(filterGroup)
+    return groups.sorted { $0.0.name < $1.0.name }.compactMap(filterGroup)
     
   }
   
@@ -130,6 +130,14 @@ public class FilterState {
 // MARK: - Public interface
 
 public extension FilterState {
+  
+  subscript(groupID: FilterGroup.And.ID) -> AndGroupProxy {
+    return AndGroupProxy(filterState: self, groupID: groupID)
+  }
+  
+  subscript<T: FilterType>(groupID: FilterGroup.Or<T>.ID) -> OrGroupProxy<T> {
+    return OrGroupProxy(filterState: self, groupID: groupID)
+  }
   
   /// A Boolean value indicating whether FilterState contains at least on filter
   var isEmpty: Bool {
