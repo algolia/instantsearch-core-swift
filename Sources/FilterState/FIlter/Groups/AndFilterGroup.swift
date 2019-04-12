@@ -20,12 +20,12 @@ extension FilterGroup {
       return filters.isEmpty
     }
     
-    public init<S: Sequence>(_ filters: S) where S.Element == FilterType {
+    public init<S: Sequence>(filters: S) where S.Element == FilterType {
       self.filters = Array(filters)
     }
     
     public static func and(_ filters: [FilterType]) -> FilterGroup.And {
-      return FilterGroup.And(filters)
+      return FilterGroup.And(filters: filters)
     }
     
   }
@@ -37,6 +37,14 @@ public extension FilterGroup.And {
   struct ID: FilterGroupID {
     
     public let name: String
+    
+    public init(name: String) {
+      self.name = name
+    }
+    
+    public static func and(_ name: String) -> ID {
+      return .init(name: name)
+    }
     
   }
   
