@@ -11,7 +11,7 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class RefinementListBuilderTests: XCTestCase {
+class RefinementListPresenterTests: XCTestCase {
 
   lazy var facetValues: [FacetValue] = {
     var values: [FacetValue] = []
@@ -39,8 +39,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .count(order: .descending),
-                                                                           showSelectedValuesOnTop: true,
+                                                                           sortBy: [.isRefined, .count(order: .descending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -58,8 +57,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .count(order: .descending),
-                                                                           showSelectedValuesOnTop: false,
+                                                                           sortBy: [.count(order: .descending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -78,8 +76,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .count(order: .ascending),
-                                                                           showSelectedValuesOnTop: true,
+                                                                           sortBy: [.isRefined, .count(order: .ascending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -97,8 +94,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .count(order: .ascending),
-                                                                           showSelectedValuesOnTop: false,
+                                                                           sortBy: [.count(order: .ascending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -118,8 +114,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .name(order: .ascending),
-                                                                           showSelectedValuesOnTop: true,
+                                                                           sortBy: [.isRefined, .alphabetical(order: .ascending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -138,8 +133,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .name(order: .ascending),
-                                                                           showSelectedValuesOnTop: false,
+                                                                           sortBy: [.alphabetical(order: .ascending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -159,9 +153,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .name(order: .descending),
-                                                                           showSelectedValuesOnTop: true,
-                                                                           keepSelectedValuesWithZeroCount: true)
+                                                                           sortBy: [.isRefined, .alphabetical(order: .descending)], keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
   }
@@ -178,8 +170,7 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .name(order: .descending),
-                                                                           showSelectedValuesOnTop: false,
+                                                                           sortBy: [.alphabetical(order: .descending)],
                                                                            keepSelectedValuesWithZeroCount: true)
 
     XCTAssertEqual(expectedList, actualList)
@@ -196,8 +187,34 @@ class RefinementListBuilderTests: XCTestCase {
 
     let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
                                                                            resultValues: facetValues,
-                                                                           sorting: .name(order: .descending),
-                                                                           showSelectedValuesOnTop: false,
+                                                                           sortBy: [.alphabetical(order: .descending)],
+                                                                           keepSelectedValuesWithZeroCount: false)
+
+    XCTAssertEqual(expectedList, actualList)
+  }
+
+  func testSortWithEqualCounts() {
+    var expectedList: [FacetValue] = []
+
+    let facetValues: [FacetValue] = {
+      var values: [FacetValue] = []
+      values.append(FacetValue(value: "blue", count: 10, highlighted: nil))
+      values.append(FacetValue(value: "red", count: 10, highlighted: nil))
+      values.append(FacetValue(value: "green", count: 5, highlighted: nil))
+      values.append(FacetValue(value: "orange", count: 10, highlighted: nil))
+      return values
+    }()
+
+    let selectedValues = ["orange", "red", "green"]
+
+    expectedList.append(FacetValue(value: "orange", count: 10, highlighted: nil))
+    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
+    expectedList.append(FacetValue(value: "green", count: 5, highlighted: nil))
+    expectedList.append(FacetValue(value: "blue", count: 10, highlighted: nil))
+
+    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+                                                                           resultValues: facetValues,
+                                                                           sortBy: [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)],
                                                                            keepSelectedValuesWithZeroCount: false)
 
     XCTAssertEqual(expectedList, actualList)
