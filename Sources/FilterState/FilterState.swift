@@ -123,14 +123,6 @@ public class FilterState {
 
 public extension FilterState {
   
-//  subscript(groupID: FilterGroup.And.ID) -> AndGroupProxy {
-//    return AndGroupProxy(filterState: self, groupID: groupID)
-//  }
-//
-//  subscript<T: FilterType>(groupID: FilterGroup.Or<T>.ID) -> OrGroupProxy<T> {
-//    return OrGroupProxy(filterState: self, groupID: groupID)
-//  }
-  
   /// A Boolean value indicating whether FilterState contains at least on filter
   var isEmpty: Bool {
     return groups.isEmpty
@@ -172,12 +164,7 @@ public extension FilterState {
   func removeAll() {
     groups.removeAll()
   }
-  
-//  func getFilters<F: FilterType>(for attribute: Attribute) -> Set<F> {
-//    return []
-//  }
 
-  
   func getFilters(for groupID: FilterGroupID) -> Set<Filter> {
     return groups[groupID] ?? []
   }
@@ -259,11 +246,11 @@ public extension FilterState {
       case .or:
         switch filters.first! {
         case .facet:
-          group = FilterGroup.Or(filters: filters.compactMap{ $0.filter as? Filter.Facet } )
+          group = FilterGroup.Or(filters: filters.compactMap { $0.filter as? Filter.Facet })
         case .numeric:
-          group = FilterGroup.Or(filters: filters.compactMap{ $0.filter as? Filter.Numeric } )
+          group = FilterGroup.Or(filters: filters.compactMap { $0.filter as? Filter.Numeric })
         case .tag:
-          group = FilterGroup.Or(filters: filters.compactMap{ $0.filter as? Filter.Tag } )
+          group = FilterGroup.Or(filters: filters.compactMap { $0.filter as? Filter.Tag })
         }
       }
       
@@ -272,37 +259,6 @@ public extension FilterState {
     }
     
     return result
-    
-//    func extractOrGroup<F: FilterType>(from id: FilterGroupID, with filters: Set<Filter>) -> FilterGroup.Or<F>? {
-//
-//      if let _: FilterGroup.Or<F>.ID = id.extractAs() {
-//        return FilterGroup.Or(filters: filters.sorted { SQLFilterConverter().convert($0) < SQLFilterConverter().convert($1) } .map { $0.filter }.compactMap { $0 as? F })
-//      } else {
-//        return nil
-//      }
-//    }
-//
-//    func filterGroup(with id: FilterGroupID, filters: Set<Filter>) -> FilterGroupType? {
-//
-//      for (groupID, filters) in groups {
-//
-//      }
-//
-//      if let _: FilterGroup.And.ID = id.extractAs() {
-//        return FilterGroup.And(filters: filters.sorted { SQLFilterConverter().convert($0) < SQLFilterConverter().convert($1) }.map { $0.filter })
-//      } else if let tagGroup: FilterGroup.Or<Filter.Tag> = extractOrGroup(from: id, with: filters) {
-//        return tagGroup
-//      } else if let facetGroup: FilterGroup.Or<Filter.Facet> = extractOrGroup(from: id, with: filters) {
-//        return facetGroup
-//      } else if let numericGroup: FilterGroup.Or<Filter.Numeric> = extractOrGroup(from: id, with: filters) {
-//        return numericGroup
-//      } else {
-//        return nil
-//      }
-//
-//    }
-//
-//    return groups.sorted { $0.0.name < $1.0.name }.compactMap(filterGroup)
     
   }
   
