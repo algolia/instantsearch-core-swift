@@ -14,7 +14,7 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     
     private let genericProxy: AndGroupProxy
     
-    var groupID: FilterGroupID {
+    var groupID: FilterGroup.ID {
         return genericProxy.groupID
     }
     

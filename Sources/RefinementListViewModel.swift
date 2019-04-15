@@ -24,12 +24,12 @@ public class RefinementListViewModel {
 
   // MARK: - Init
 
-  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, groupID: FilterGroupID? = nil) {
+  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, groupID: FilterGroup.ID? = nil) {
     self.attribute = attribute
     
     let settings = refinementSettings ?? Settings()
     
-    let finalGroupID: FilterGroupID
+    let finalGroupID: FilterGroup.ID
     
     if let groupID = groupID {
       finalGroupID = groupID

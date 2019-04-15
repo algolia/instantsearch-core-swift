@@ -20,10 +20,9 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
 
   let filterState: FilterState
   let attribute: Attribute
-  let groupID: FilterGroupID
+  let groupID: FilterGroup.ID
 
-
-  public init(attribute: Attribute, filterState: FilterState, groupID: FilterGroupID) {
+  public init(attribute: Attribute, filterState: FilterState, groupID: FilterGroup.ID) {
     self.filterState = filterState
     self.groupID = groupID
     self.attribute = attribute

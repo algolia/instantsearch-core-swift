@@ -10,7 +10,7 @@ import Foundation
 
 public class FilterState {
   
-  var groups: [FilterGroupID: Set<Filter>]
+  var groups: [FilterGroup.ID: Set<Filter>]
   
   public init() {
     self.groups = [:]
@@ -20,7 +20,7 @@ public class FilterState {
     self.groups = filterState.groups
   }
   
-  private func update(_ filters: Set<Filter>, for group: FilterGroupID) {
+  private func update(_ filters: Set<Filter>, for group: FilterGroup.ID) {
     groups[group] = filters.isEmpty ? nil : filters
   }
   
@@ -28,7 +28,7 @@ public class FilterState {
   /// - parameter filter: filter to add
   /// - parameter group: target group
   
-  func add<T: FilterType>(_ filter: T, to group: FilterGroupID) {
+  func add<T: FilterType>(_ filter: T, to group: FilterGroup.ID) {
     addAll(filters: [filter], to: group)
   }
   
@@ -36,7 +36,7 @@ public class FilterState {
   /// - parameter filters: sequence of filters to add
   /// - parameter group: target group
   
-  func addAll<T: FilterType, S: Sequence>(filters: S, to group: FilterGroupID) where S.Element == T {
+  func addAll<T: FilterType, S: Sequence>(filters: S, to group: FilterGroup.ID) where S.Element == T {
     let existingFilters = groups[group] ?? []
     let updatedFilters = existingFilters.union(filters.compactMap(Filter.init))
     update(updatedFilters, for: group)
@@ -47,7 +47,7 @@ public class FilterState {
   /// - parameter group: target group
   /// - returns: true if filter is contained by specified group
   
-  func contains<T: FilterType>(_ filter: T, in group: FilterGroupID) -> Bool {
+  func contains<T: FilterType>(_ filter: T, in group: FilterGroup.ID) -> Bool {
     guard
       let filter = Filter(filter),
       let filtersForGroup = groups[group] else {
@@ -62,7 +62,7 @@ public class FilterState {
   /// - parameter destination: target group
   /// - returns: true if movement succeeded, otherwise returns false
   
-  @discardableResult func remove<T: FilterType>(_ filter: T, from anyGroup: FilterGroupID) -> Bool {
+  @discardableResult func remove<T: FilterType>(_ filter: T, from anyGroup: FilterGroup.ID) -> Bool {
     return removeAll([filter], from: anyGroup)
   }
 
@@ -70,7 +70,7 @@ public class FilterState {
   /// - parameter filter: filter to remove
   /// - parameter group: target group
   
-  @discardableResult func removeAll<T: FilterType, S: Sequence>(_ filters: S, from anyGroup: FilterGroupID) -> Bool where S.Element == T {
+  @discardableResult func removeAll<T: FilterType, S: Sequence>(_ filters: S, from anyGroup: FilterGroup.ID) -> Bool where S.Element == T {
     let filtersToRemove = filters.compactMap(Filter.init)
     guard let existingFilters = groups[anyGroup], !existingFilters.isDisjoint(with: filtersToRemove) else {
       return false
@@ -83,11 +83,11 @@ public class FilterState {
   /// Removes all filters from group
   /// - parameter group: target group
   
-  func removeAll(from group: FilterGroupID) {
+  func removeAll(from group: FilterGroup.ID) {
     groups.removeValue(forKey: group)
   }
   
-  func removeAll(for attribute: Attribute, from group: FilterGroupID) {
+  func removeAll(for attribute: Attribute, from group: FilterGroup.ID) {
     guard let filtersForGroup = groups[group] else { return }
     let updatedFilters = filtersForGroup.filter { $0.filter.attribute != attribute }
     update(updatedFilters, for: group)
@@ -97,7 +97,7 @@ public class FilterState {
   /// - parameter filter: filter to toggle
   /// - parameter group: target group
   
-  func toggle<T: FilterType>(_ filter: T, in group: FilterGroupID) {
+  func toggle<T: FilterType>(_ filter: T, in group: FilterGroup.ID) {
     if contains(filter, in: group) {
       remove(filter, from: group)
     } else {
@@ -122,7 +122,7 @@ public class FilterState {
 // MARK: - Public interface
 
 public extension FilterState {
-  
+    
   /// A Boolean value indicating whether FilterState contains at least on filter
   var isEmpty: Bool {
     return groups.isEmpty
@@ -165,7 +165,7 @@ public extension FilterState {
     groups.removeAll()
   }
 
-  func getFilters(for groupID: FilterGroupID) -> Set<Filter> {
+  func getFilters(for groupID: FilterGroup.ID) -> Set<Filter> {
     return groups[groupID] ?? []
   }
 
@@ -236,21 +236,42 @@ public extension FilterState {
     
     var result: [FilterGroupType] = []
     
-    for (groupID, filters) in groups {
+    let filterComparator: (Filter, Filter) -> Bool = {
+      let converter = SQLFilterConverter()
+      let lhsString = converter.convert($0)
+      let rhsString = converter.convert($1)
+      return lhsString < rhsString
+    }
+    
+    let groupIDComparator: (FilterGroup.ID, FilterGroup.ID) -> Bool = {
+      guard $0.name != $1.name else {
+        switch ($0, $1) {
+        case (.or, .and):
+          return true
+        default:
+          return false
+        }
+      }
+      return $0.name < $1.name
+    }
+    
+    for (groupID, filters) in groups.sorted(by: { groupIDComparator($0.key, $1.key) }) {
       
       let group: FilterGroupType
       
+      let sortedFilters = filters.sorted(by: filterComparator)
+      
       switch groupID {
       case .and:
-        group = FilterGroup.And(filters: filters.map { $0.filter })
+        group = FilterGroup.And(filters: sortedFilters.map { $0.filter })
       case .or:
         switch filters.first! {
         case .facet:
-          group = FilterGroup.Or(filters: filters.compactMap { $0.filter as? Filter.Facet })
+          group = FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Facet })
         case .numeric:
-          group = FilterGroup.Or(filters: filters.compactMap { $0.filter as? Filter.Numeric })
+          group = FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Numeric })
         case .tag:
-          group = FilterGroup.Or(filters: filters.compactMap { $0.filter as? Filter.Tag })
+          group = FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Tag })
         }
       }
       

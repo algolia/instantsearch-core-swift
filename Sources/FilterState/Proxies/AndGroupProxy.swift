@@ -13,7 +13,7 @@ import Foundation
 public struct AndGroupProxy: GroupProxy {
     
     let filterState: FilterState
-    let groupID: FilterGroupID
+    let groupID: FilterGroup.ID
     
     /// A Boolean value indicating whether group contains at least on filter
     public var isEmpty: Bool {

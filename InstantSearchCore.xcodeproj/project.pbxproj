@@ -97,9 +97,6 @@
 		AF11784B22608CBB00C5B59B /* FilterStateGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */; };
 		AF11784C22608CBC00C5B59B /* FilterStateGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */; };
 		AF11784D22608CBD00C5B59B /* FilterStateGroupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */; };
-		AF11784E22608E6700C5B59B /* FilterStateOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117833225F70E900C5B59B /* FilterStateOperatorTests.swift */; };
-		AF11784F22608E6800C5B59B /* FilterStateOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117833225F70E900C5B59B /* FilterStateOperatorTests.swift */; };
-		AF11785022608E6900C5B59B /* FilterStateOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117833225F70E900C5B59B /* FilterStateOperatorTests.swift */; };
 		AF1178512260919400C5B59B /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11782F225F70E900C5B59B /* FilterTests.swift */; };
 		AF1178522260919500C5B59B /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11782F225F70E900C5B59B /* FilterTests.swift */; };
 		AF1178532260919600C5B59B /* FilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF11782F225F70E900C5B59B /* FilterTests.swift */; };
@@ -1096,7 +1093,6 @@
 				AF1178512260919400C5B59B /* FilterTests.swift in Sources */,
 				AF19B03A223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,
 				AFCDEDE5223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
-				AF11784E22608E6700C5B59B /* FilterStateOperatorTests.swift in Sources */,
 				AFCDEDA6222E8166001459BE /* FacetResultsTests.swift in Sources */,
 				AF11783F225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117854226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
@@ -1177,7 +1173,6 @@
 				AF1178522260919500C5B59B /* FilterTests.swift in Sources */,
 				E2BAE6BB223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
 				AFCDEDE6223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
-				AF11784F22608E6800C5B59B /* FilterStateOperatorTests.swift in Sources */,
 				AF19B03B223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,
 				AF117840225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117855226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
@@ -1258,7 +1253,6 @@
 				AF1178532260919600C5B59B /* FilterTests.swift in Sources */,
 				E2BAE6BC223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
 				AFCDEDE7223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
-				AF11785022608E6900C5B59B /* FilterStateOperatorTests.swift in Sources */,
 				AF19B03C223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,
 				AF117841225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117856226091CF00C5B59B /* FilterGroupTests.swift in Sources */,
