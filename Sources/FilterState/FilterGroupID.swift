@@ -24,7 +24,18 @@ extension FilterGroup {
       }
     }
     
+    var isConjunctive: Bool {
+      if case .and = self {
+        return true
+      } else {
+        return false
+      }
+    }
+    
+    var isDisjunctive: Bool {
+      return !isConjunctive
+    }
+    
   }
   
 }
-

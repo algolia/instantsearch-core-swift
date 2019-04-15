@@ -18,7 +18,7 @@ public protocol RefinementListInteractorDelegate {
 /// Mainly, the onSelect action, and determining if a certain value is selected or not.
 class RefinementListInteractor: RefinementListInteractorDelegate {
 
-  let filterState: FilterState
+  var filterState: FilterState
   let attribute: Attribute
   let groupID: FilterGroup.ID
 

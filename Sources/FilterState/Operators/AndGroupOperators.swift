@@ -11,94 +11,94 @@ import Foundation
 // MARK: Appending
 
 @discardableResult public func +++ <T: FilterType>(left: AndGroupProxy, right: T) -> AndGroupProxy {
-  left.filterState.add(right, to: left.groupID)
+  left.add(right)
   return left
 }
 
 @discardableResult public func +++ <T: FilterType, S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == T {
-  left.filterState.addAll(filters: right, to: left.groupID)
+  left.addAll(right)
   return left
 }
 
 @discardableResult public func +++ (left: AndGroupProxy, right: FacetTuple) -> AndGroupProxy {
-  left.filterState.add(Filter.Facet(right), to: left.groupID)
+  left.add(Filter.Facet(right))
   return left
 }
 
 @discardableResult public func +++ <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == FacetTuple {
-  left.filterState.addAll(filters: right.map(Filter.Facet.init), to: left.groupID)
+  left.addAll(right.map(Filter.Facet.init))
   return left
 }
 
 @discardableResult public func +++ (left: AndGroupProxy, right: ComparisonTuple) -> AndGroupProxy {
-  left.filterState.add(Filter.Numeric(right), to: left.groupID)
+  left.add(Filter.Numeric(right))
   return left
 }
 
 @discardableResult public func +++ <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == ComparisonTuple {
-  left.filterState.addAll(filters: right.map(Filter.Numeric.init), to: left.groupID)
+  left.addAll(right.map(Filter.Numeric.init))
   return left
 }
 
 @discardableResult public func +++ (left: AndGroupProxy, right: RangeTuple) -> AndGroupProxy {
-  left.filterState.add(Filter.Numeric(right), to: left.groupID)
+  left.add(Filter.Numeric(right))
   return left
 }
 
 @discardableResult public func +++ <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == RangeTuple {
-  left.filterState.addAll(filters: right.map(Filter.Numeric.init), to: left.groupID)
+  left.addAll(right.map(Filter.Numeric.init))
   return left
 }
 
 @discardableResult public func +++ (left: AndGroupProxy, right: String) -> AndGroupProxy {
-  left.filterState.add(Filter.Tag(value: right), to: left.groupID)
+  left.add(Filter.Tag(value: right))
   return left
 }
 
 // MARK: Removal
 
 @discardableResult public func --- <T: FilterType>(left: AndGroupProxy, right: T) -> AndGroupProxy {
-  left.filterState.remove(right, from: left.groupID)
+  left.remove(right)
   return left
 }
 
 @discardableResult public func --- <T: FilterType, S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == T {
-  left.filterState.removeAll(right, from: left.groupID)
+  left.removeAll(right)
   return left
 }
 
 @discardableResult public func --- (left: AndGroupProxy, right: FacetTuple) -> AndGroupProxy {
-  left.filterState.remove(Filter.Facet(right), from: left.groupID)
+  left.remove(Filter.Facet(right))
   return left
 }
 
 @discardableResult public func --- <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == FacetTuple {
-  left.filterState.removeAll(right.map(Filter.Facet.init), from: left.groupID)
+  left.removeAll(right.map(Filter.Facet.init))
   return left
 }
 
 @discardableResult public func --- (left: AndGroupProxy, right: ComparisonTuple) -> AndGroupProxy {
-  left.filterState.remove(Filter.Numeric(right), from: left.groupID)
+  left.remove(Filter.Numeric(right))
   return left
 }
 
 @discardableResult public func --- <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == ComparisonTuple {
-  left.filterState.removeAll(right.map(Filter.Numeric.init), from: left.groupID)
+  left.removeAll(right.map(Filter.Numeric.init))
   return left
 }
 
 @discardableResult public func --- (left: AndGroupProxy, right: RangeTuple) -> AndGroupProxy {
-  left.filterState.remove(Filter.Numeric(right), from: left.groupID)
+  left.remove(Filter.Numeric(right))
   return left
 }
 
 @discardableResult public func --- <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == RangeTuple {
-  left.filterState.removeAll(right.map(Filter.Numeric.init), from: left.groupID)
+  left.removeAll(right.map(Filter.Numeric.init))
   return left
 }
 
 @discardableResult public func --- (left: AndGroupProxy, right: String) -> AndGroupProxy {
-  left.filterState.remove(Filter.Tag(value: right), from: left.groupID)
+  left.remove(Filter.Tag(value: right))
   return left
 }
 
@@ -110,7 +110,7 @@ import Foundation
 }
 
 @discardableResult public func <> <T: FilterType, S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == T {
-  right.forEach(left.toggle)
+  right.forEach { left.toggle($0) }
   return left
 }
 
@@ -120,7 +120,7 @@ import Foundation
 }
 
 @discardableResult public func <> <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == FacetTuple {
-  right.map(Filter.Facet.init).forEach(left.toggle)
+  right.map(Filter.Facet.init).forEach { left.toggle($0) }
   return left
 }
 
@@ -130,7 +130,7 @@ import Foundation
 }
 
 @discardableResult public func <> <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == ComparisonTuple {
-  right.map(Filter.Numeric.init).forEach(left.toggle)
+  right.map(Filter.Numeric.init).forEach { left.toggle($0) }
   return left
 }
 
@@ -140,7 +140,7 @@ import Foundation
 }
 
 @discardableResult public func <> <S: Sequence>(left: AndGroupProxy, right: S) -> AndGroupProxy where S.Element == RangeTuple {
-  right.map(Filter.Numeric.init).forEach(left.toggle)
+  right.map(Filter.Numeric.init).forEach { left.toggle($0) }
   return left
 }
 

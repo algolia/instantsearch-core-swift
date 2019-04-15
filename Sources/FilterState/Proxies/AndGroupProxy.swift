@@ -12,68 +12,68 @@ import Foundation
 
 public struct AndGroupProxy: GroupProxy {
     
-    let filterState: FilterState
+    let filterStateDSL: FilterStateDSL
     let groupID: FilterGroup.ID
     
     /// A Boolean value indicating whether group contains at least on filter
     public var isEmpty: Bool {
-        if let filtersForGroup = filterState.groups[groupID] {
+        if let filtersForGroup = filterStateDSL.filterState.groups[groupID] {
             return filtersForGroup.isEmpty
         } else {
             return true
         }
     }
     
-    init(filterState: FilterState, groupName: String) {
-        self.filterState = filterState
+    init(filterStateDSL: FilterStateDSL, groupName: String) {
+        self.filterStateDSL = filterStateDSL
         self.groupID = .and(name: groupName)
     }
     
     /// Adds filter to group
     /// - parameter filter: filter to add
     public func add<T: FilterType>(_ filter: T) {
-        filterState.add(filter, to: groupID)
+        filterStateDSL.filterState.add(filter, to: groupID)
     }
     
     /// Adds the filters of a sequence to group
     /// - parameter filters: sequence of filters to add
     public func addAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T {
-        filterState.addAll(filters: filters, to: groupID)
+        filterStateDSL.filterState.addAll(filters: filters, to: groupID)
     }
     
     /// Tests whether group contains a filter
     /// - parameter filter: sought filter
     public func contains<T: FilterType>(_ filter: T) -> Bool {
-        return filterState.contains(filter, in: groupID)
+        return filterStateDSL.filterState.contains(filter, in: groupID)
     }
     
     /// Removes all filters with specified attribute from group
     /// - parameter attribute: specified attribute
     public func removeAll(for attribute: Attribute) {
-        return filterState.removeAll(for: attribute, from: groupID)
+        return filterStateDSL.filterState.removeAll(for: attribute, from: groupID)
     }
     
     /// Removes filter from group
     /// - parameter filter: filter to remove
     @discardableResult public func remove<T: FilterType>(_ filter: T) -> Bool {
-        return filterState.remove(filter, from: groupID)
+        return filterStateDSL.filterState.remove(filter, from: groupID)
     }
     
     /// Removes a sequence of filters from group
     /// - parameter filters: sequence of filters to remove
     @discardableResult public func removeAll<T: FilterType, S: Sequence>(_ filters: S) -> Bool where S.Element == T {
-        return filterState.removeAll(filters, from: groupID)
+        return filterStateDSL.filterState.removeAll(filters, from: groupID)
     }
     
     /// Removes all filters in group
     public func removeAll() {
-        filterState.removeAll(from: groupID)
+        filterStateDSL.filterState.removeAll(from: groupID)
     }
     
     /// Removes filter from group if contained by it, otherwise adds filter to group
     /// - parameter filter: filter to toggle
     public func toggle<T: FilterType>(_ filter: T) {
-        filterState.toggle(filter, in: groupID)
+        filterStateDSL.filterState.toggle(filter, in: groupID)
     }
 
 }

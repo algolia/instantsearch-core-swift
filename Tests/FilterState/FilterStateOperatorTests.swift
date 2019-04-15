@@ -14,179 +14,175 @@ class FilterStateOperatorTests: XCTestCase {
   
   func testAndGroupOperators() {
     
-    let filterState = FilterState()
+    let filterStateDSL = FilterStateDSL()
     
-    filterState.add(Filter.Tag(value: "tag1"), to: .and(name: "g"))
+    filterStateDSL.filterState.add(Filter.Tag(value: "tag1"), to: .and(name: "g"))
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "_tags":"tag1"
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Tag(value:"tag1")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value:"tag1")))
     
-    filterState[.and("g")] +++ [Filter.Tag(value:"tag2"), Filter.Tag(value:"tag3")]
+    filterStateDSL.and("g") +++ [Filter.Tag(value:"tag2"), Filter.Tag(value:"tag3")]
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" AND "_tags":"tag2" AND "_tags":"tag3" )
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Tag(value:"tag2")))
-    XCTAssertTrue(filterState.contains(Filter.Tag(value:"tag3")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value:"tag2")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value:"tag3")))
     
-    filterState[.and("g")] +++ ("price", .greaterThan, 100)
+    filterStateDSL.and("g") +++ ("price", .greaterThan, 100)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" AND "_tags":"tag2" AND "_tags":"tag3" AND "price" > 100.0 )
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
     
-    filterState[.and("g")] +++ ("size", 30...40)
+    filterStateDSL.and("g") +++ ("size", 30...40)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" AND "_tags":"tag2" AND "_tags":"tag3" AND "price" > 100.0 AND "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Numeric(attribute: "size", range: 30...40)))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "size", range: 30...40)))
     
-    filterState[.and("g")] +++ ("brand", "sony")
+    filterStateDSL.and("g") +++ ("brand", "sony")
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" AND "_tags":"tag2" AND "_tags":"tag3" AND "brand":"sony" AND "price" > 100.0 AND "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
     
-    filterState[.and("g")] --- "tag1"
+    filterStateDSL.and("g") --- "tag1"
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag2" AND "_tags":"tag3" AND "brand":"sony" AND "price" > 100.0 AND "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Tag(value:"tag1")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Tag(value:"tag1")))
     
-    filterState[.and("g")] --- [Filter.Tag(value:"tag2"), Filter.Tag(value:"tag3")]
+    filterStateDSL.and("g") --- [Filter.Tag(value:"tag2"), Filter.Tag(value:"tag3")]
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "brand":"sony" AND "price" > 100.0 AND "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Tag(value:"tag2")))
-    XCTAssertFalse(filterState.contains(Filter.Tag(value:"tag3")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Tag(value:"tag2")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Tag(value:"tag3")))
     
-    filterState[.and("g")] --- ("price", .greaterThan, 100)
+    filterStateDSL.and("g") --- ("price", .greaterThan, 100)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "brand":"sony" AND "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
     
-    filterState[.and("g")] --- ("size", 30...40)
+    filterStateDSL.and("g") --- ("size", 30...40)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "brand":"sony"
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Numeric(attribute: "size", range: 30...40)))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "size", range: 30...40)))
     
-    filterState[.and("g")] --- ("brand", "sony")
+    filterStateDSL.and("g") --- ("brand", "sony")
     
-    XCTAssertEqual(filterState.buildSQL(), "")
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), "")
     
-    XCTAssertFalse(filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
     
   }
   
   func testOrGroupOperators() {
     
-    let filterState = FilterState()
+    let filterStateDSL = FilterStateDSL()
     
-    let tagGroup = FilterGroup.ID.or(name: "g1")
-    let facetGroup = FilterGroup.ID.or(name: "g2")
-    let numericGroup = FilterGroup.ID.or(name: "g3")
+    filterStateDSL.or("g1", type: Filter.Tag.self) +++ "tag1"
     
-    filterState[tagGroup] +++ "tag1"
-    
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "_tags":"tag1"
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Tag(value: "tag1")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value: "tag1")))
     
-    filterState[tagGroup] +++ [Filter.Tag(value: "tag2"), Filter.Tag(value: "tag3")]
+    filterStateDSL.or("g1", type: Filter.Tag.self) +++ [Filter.Tag(value: "tag2"), Filter.Tag(value: "tag3")]
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" )
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Tag(value: "tag2")))
-    XCTAssertTrue(filterState.contains(Filter.Tag(value: "tag3")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value: "tag2")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value: "tag3")))
     
-    filterState[facetGroup] +++ ("brand", "sony")
+    filterStateDSL.or("g2", type: Filter.Facet.self) +++ ("brand", "sony")
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony"
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
     
-    filterState[numericGroup] +++ ("price", .greaterThan, 100)
+    filterStateDSL.or("g3", type: Filter.Numeric.self) +++ ("price", .greaterThan, 100)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony" AND "price" > 100.0
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
     
-    filterState[numericGroup] +++ ("size", 30...40)
+    filterStateDSL.or("g3", type: Filter.Numeric.self) +++ ("size", 30...40)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony" AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertTrue(filterState.contains(Filter.Numeric(attribute: "size", range: 30...40)))
+    XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "size", range: 30...40)))
     
-    filterState[tagGroup] --- "tag1"
+    filterStateDSL.or("g1", type: Filter.Tag.self) --- "tag1"
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony" AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Tag(value: "tag1")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Tag(value: "tag1")))
     
-    filterState[tagGroup] --- [Filter.Tag(value: "tag2"), Filter.Tag(value: "tag3")]
+    filterStateDSL.or("g1", type: Filter.Tag.self) --- [Filter.Tag(value: "tag2"), Filter.Tag(value: "tag3")]
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "brand":"sony" AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Tag(value: "tag2")))
-    XCTAssertFalse(filterState.contains(Filter.Tag(value: "tag3")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Tag(value: "tag2")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Tag(value: "tag3")))
     
-    filterState[facetGroup] --- ("brand", "sony")
+    filterStateDSL.or("g2", type: Filter.Facet.self) --- ("brand", "sony")
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Facet(attribute: "brand", value: "sony")))
     
-    filterState[numericGroup] --- ("price", .greaterThan, 100)
+    filterStateDSL.or("g3", type: Filter.Numeric.self) --- ("price", .greaterThan, 100)
     
-    XCTAssertEqual(filterState.buildSQL(), """
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "size":30.0 TO 40.0
         """)
     
-    XCTAssertFalse(filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
     
-    filterState[numericGroup] --- ("size", 30...40)
+    filterStateDSL.or("g3", type: Filter.Numeric.self) --- ("size", 30...40)
     
-    XCTAssertEqual(filterState.buildSQL(), "")
+    XCTAssertEqual(filterStateDSL.filterState.buildSQL(), "")
     
-    XCTAssertFalse(filterState.contains(Filter.Numeric(attribute: "price", range: 30...40)))
+    XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "price", range: 30...40)))
     
-    XCTAssertTrue(filterState.isEmpty)
+    XCTAssertTrue(filterStateDSL.filterState.isEmpty)
     
   }
   
