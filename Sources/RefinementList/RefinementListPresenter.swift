@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol RefinementListPresenterDelegate {
-  func getRefinementList(selectedValues: [String],
+  func processFacetValues(selectedValues: [String],
                          resultValues: [FacetValue]?,
                          sortBy: [RefinementListViewModel.Sorting],
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
@@ -42,7 +42,7 @@ class RefinementListPresenter: RefinementListPresenterDelegate {
   }
 
   /// Builds the final list to be displayed in the refinement list
-  func getRefinementList(selectedValues: [String],
+  func processFacetValues(selectedValues: [String],
                          resultValues: [FacetValue]?,
                          sortBy: [RefinementListViewModel.Sorting],
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {

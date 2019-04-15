@@ -13,11 +13,15 @@ public class RefinementListViewModel {
   // MARK: - Properties
 
   public var settings: Settings
-  public let onParamChange = Observer<Void>()
+
+  //TODO: Might want to kill this observer.
+  public let onExecuteNewSearch = Observer<Void>()
+  public let onReloadView = Observer<Void>()
 
   var attribute: Attribute
 
-  var facetResults: [FacetValue]?
+  var sortedFacetValues: [FacetValue]?
+  var latestRawFacetValues: [FacetValue]?
 
   let refinementListPresenter: RefinementListPresenterDelegate
   let refinementListInteractor: RefinementListInteractorDelegate
@@ -46,6 +50,13 @@ public class RefinementListViewModel {
 
     self.settings = settings
     refinementListPresenter = RefinementListPresenter()
+
+    filterState.onFilterStateChange.subscribe(with: self) { [weak self] (groups) in
+      print("onparam change!")
+      // TODO: Here need to check if there was some actual change being made between what we had before and now,
+      // in order to avoid a double reload
+      self?.updateFacetResults(with: self?.latestRawFacetValues)
+    }
   }
 
   public init(attribute: Attribute, refinementListInteractorDelegate: RefinementListInteractorDelegate, refinementListPresenterDelegate: RefinementListPresenterDelegate, refinementSettings: Settings? = nil) {
@@ -69,19 +80,21 @@ public class RefinementListViewModel {
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
+    latestRawFacetValues = rawFacetResults
     let selectedValues: [String] = refinementListInteractor.selectedValues(operator: settings.operator)
 
-    self.facetResults = refinementListPresenter.getRefinementList(selectedValues: selectedValues,
+    self.sortedFacetValues = refinementListPresenter.processFacetValues(selectedValues: selectedValues,
                                                                 resultValues: rawFacetResults,
                                                                 sortBy: settings.sortBy,
                                                                 keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
-    print("facetResults \(self.facetResults)")
+    //print("facetResults \(self.sortedFacetValues)")
+    onReloadView.fire(())
   }
 
   // MARK: - Public API
 
   public func numberOfFacets() -> Int {
-    guard let facetResults = facetResults else { return 0 }
+    guard let facetResults = sortedFacetValues else { return 0 }
 
     switch settings.limit {
     case .none:
@@ -92,13 +105,13 @@ public class RefinementListViewModel {
   }
 
   public func facet(atIndex index: Int) -> FacetValue? {
-    guard let facetResults = facetResults else { return nil }
+    guard let facetResults = sortedFacetValues else { return nil }
 
     return facetResults[index]
   }
 
   public func isFacetRefined(atIndex index: Int) -> Bool {
-    guard let facetResults = facetResults else { return false }
+    guard let facetResults = sortedFacetValues else { return false }
 
     let value = facetResults[index].value
 
@@ -106,13 +119,13 @@ public class RefinementListViewModel {
   }
 
   public func didSelectFacet(atIndex index: Int) {
-    guard let facetResults = facetResults else { return }
+    guard let facetResults = sortedFacetValues else { return }
 
     let value = facetResults[index].value
 
     refinementListInteractor.didSelect(value: value, operator: settings.operator)
 
-    onParamChange.fire(())
+    onExecuteNewSearch.fire(())
   }
 
 }

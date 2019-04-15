@@ -7,10 +7,17 @@
 //
 
 import Foundation
+import Signals
 
 public class FilterState {
-  
-  var groups: [FilterGroupID: Set<Filter>]
+
+  public let onFilterStateChange = Observer<[FilterGroupID: Set<Filter>]>()
+
+  var groups: [FilterGroupID: Set<Filter>] {
+    didSet {
+      onFilterStateChange.fire(groups)
+    }
+  }
   
   public init() {
     self.groups = [:]
