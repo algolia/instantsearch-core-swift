@@ -24,4 +24,8 @@ public class FilterStateDSL {
     return OrGroupProxy(filterStateDSL: self, groupName: groupName)
   }
   
+  func or <F: FilterType>(_ groupName: String) -> OrGroupProxy<F> {
+    return OrGroupProxy(filterStateDSL: self, groupName: groupName)
+  }
+  
 }
