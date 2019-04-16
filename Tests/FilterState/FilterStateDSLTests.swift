@@ -1,5 +1,5 @@
 //
-//  FilterBuilderOperatorTEsts.swift
+//  FilterStateDSLTests.swift
 //  AlgoliaSearch OSX
 //
 //  Created by Vladislav Fitc on 22/01/2019.
@@ -10,13 +10,13 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class FilterStateOperatorTests: XCTestCase {
+class FilterStateDSLTests: XCTestCase {
   
   func testAndGroupOperators() {
     
     let filterStateDSL = FilterStateDSL()
     
-    filterStateDSL.filterState.add(Filter.Tag(value: "tag1"), to: .and(name: "g"))
+    filterStateDSL.filterState.add(Filter.Tag(value: "tag1"), toGroupWithID: .and(name: "g"))
     
     XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "_tags":"tag1"
@@ -24,7 +24,8 @@ class FilterStateOperatorTests: XCTestCase {
     
     XCTAssertTrue(filterStateDSL.filterState.contains(Filter.Tag(value:"tag1")))
     
-    filterStateDSL.and("g") +++ [Filter.Tag(value:"tag2"), Filter.Tag(value:"tag3")]
+    
+    filterStateDSL.and("g") +++ ["tag2", Filter.Tag(value:"tag3")]
     
     XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         ( "_tags":"tag1" AND "_tags":"tag2" AND "_tags":"tag3" )
@@ -83,6 +84,7 @@ class FilterStateOperatorTests: XCTestCase {
     XCTAssertFalse(filterStateDSL.filterState.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
     
     filterStateDSL.and("g") --- ("size", 30...40)
+  
     
     XCTAssertEqual(filterStateDSL.filterState.buildSQL(), """
         "brand":"sony"

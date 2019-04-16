@@ -102,7 +102,7 @@
 		AF1178702264CEBB00C5B59B /* AndGroupOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177E4225E342300C5B59B /* AndGroupOperators.swift */; };
 		AF1178712264CEBC00C5B59B /* AndGroupOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177E4225E342300C5B59B /* AndGroupOperators.swift */; };
 		AF1178722264CEBD00C5B59B /* AndGroupOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177E4225E342300C5B59B /* AndGroupOperators.swift */; };
-		AF1178742264D1B700C5B59B /* FilterStateOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117833225F70E900C5B59B /* FilterStateOperatorTests.swift */; };
+		AF1178742264D1B700C5B59B /* FilterStateDSLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117833225F70E900C5B59B /* FilterStateDSLTests.swift */; };
 		AF1178762264DBDF00C5B59B /* FilterStateDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1178752264DBDF00C5B59B /* FilterStateDSL.swift */; };
 		AF1178772264DBDF00C5B59B /* FilterStateDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1178752264DBDF00C5B59B /* FilterStateDSL.swift */; };
 		AF1178782264DBDF00C5B59B /* FilterStateDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1178752264DBDF00C5B59B /* FilterStateDSL.swift */; };
@@ -325,7 +325,7 @@
 		AF11782F225F70E900C5B59B /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateGroupTests.swift; sourceTree = "<group>"; };
 		AF117832225F70E900C5B59B /* FilterStateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateTests.swift; sourceTree = "<group>"; };
-		AF117833225F70E900C5B59B /* FilterStateOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateOperatorTests.swift; sourceTree = "<group>"; };
+		AF117833225F70E900C5B59B /* FilterStateDSLTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateDSLTests.swift; sourceTree = "<group>"; };
 		AF117834225F70E900C5B59B /* FilterGroupCollectionsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterGroupCollectionsTests.swift; sourceTree = "<group>"; };
 		AF117835225F70E900C5B59B /* FilterGroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterGroupTests.swift; sourceTree = "<group>"; };
 		AF1178752264DBDF00C5B59B /* FilterStateDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStateDSL.swift; sourceTree = "<group>"; };
@@ -529,7 +529,7 @@
 			children = (
 				AF117832225F70E900C5B59B /* FilterStateTests.swift */,
 				AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */,
-				AF117833225F70E900C5B59B /* FilterStateOperatorTests.swift */,
+				AF117833225F70E900C5B59B /* FilterStateDSLTests.swift */,
 				AF11782F225F70E900C5B59B /* FilterTests.swift */,
 				AF117835225F70E900C5B59B /* FilterGroupTests.swift */,
 				AF117834225F70E900C5B59B /* FilterGroupCollectionsTests.swift */,
@@ -1092,7 +1092,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF1178742264D1B700C5B59B /* FilterStateOperatorTests.swift in Sources */,
+				AF1178742264D1B700C5B59B /* FilterStateDSLTests.swift in Sources */,
 				AFCDED81222E7A60001459BE /* SequencerTest.swift in Sources */,
 				AF1178512260919400C5B59B /* FilterTests.swift in Sources */,
 				AF19B03A223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,

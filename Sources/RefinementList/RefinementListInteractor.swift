@@ -33,13 +33,13 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
 
     switch `operator` {
     case .or, .and(.multiple):
-      filterState.toggle(filterFacet, in: groupID)
+      filterState.toggle(filterFacet, inGroupWithID: groupID)
     case .and(selection: .single):
-      if filterState.contains(filterFacet, in: groupID) {
-        filterState.remove(filterFacet, from: groupID)
+      if filterState.contains(filterFacet, inGroupWithID: groupID) {
+        filterState.remove(filterFacet, fromGroupWithID: groupID)
       } else {
-        filterState.removeAll(from: groupID)
-        filterState.add(filterFacet, to: groupID)
+        filterState.removeAll(fromGroupWithID: groupID)
+        filterState.add(filterFacet, toGroupWithID: groupID)
       }
     }
   }
@@ -49,9 +49,9 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
 
     switch `operator` {
     case .or, .and(selection: .single):
-      return filterState.contains(filterFacet, in: groupID)
+      return filterState.contains(filterFacet, inGroupWithID: groupID)
     case .and(selection: .multiple):
-      return filterState.contains(filterFacet, in: groupID)
+      return filterState.contains(filterFacet, inGroupWithID: groupID)
     }
   }
 
@@ -59,9 +59,9 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
     let refinedFilterFacets: [Filter.Facet]
     switch `operator` {
     case .or, .and(selection: .single):
-      refinedFilterFacets = filterState.getFilters(for: groupID).compactMap { $0.filter as? Filter.Facet }
+      refinedFilterFacets = filterState.getFilters(forGroupWithID: groupID).compactMap { $0.filter as? Filter.Facet }
     case .and(selection: .multiple):
-      refinedFilterFacets = filterState.getFilters(for: groupID).compactMap { $0.filter as? Filter.Facet }
+      refinedFilterFacets = filterState.getFilters(forGroupWithID: groupID).compactMap { $0.filter as? Filter.Facet }
     }
     return refinedFilterFacets.map { $0.value.description }
   }

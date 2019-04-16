@@ -17,7 +17,7 @@ class FilterStateGroupTests: XCTestCase {
     let group = FilterGroup.ID.or(name: "group")
     let filter1 = Filter.Facet(attribute: "category", value: "table")
     let filter2 = Filter.Facet(attribute: "category", value: "chair")
-    filterState.addAll(filters: [filter1, filter2], to: group)
+    filterState.addAll(filters: [filter1, filter2], toGroupWithID: group)
     XCTAssertTrue(filterState.contains(filter1))
     XCTAssertTrue(filterState.contains(filter2))
     
@@ -31,7 +31,7 @@ class FilterStateGroupTests: XCTestCase {
     let group = FilterGroup.ID.and(name: "group")
     let filterPrice = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
     let filterSize = Filter.Numeric(attribute: "size", operator: .greaterThan, value: 20)
-    filterState.addAll(filters: [filterPrice, filterSize], to: group)
+    filterState.addAll(filters: [filterPrice, filterSize], toGroupWithID: group)
     XCTAssertTrue(filterState.contains(filterPrice))
     XCTAssertTrue(filterState.contains(filterSize))
     
