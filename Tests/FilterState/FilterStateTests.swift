@@ -11,10 +11,10 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-extension FilterState {
+extension FilterGroupsConvertible {
   
   func buildSQL() -> String {
-    return getFilterGroups().compactMap { $0 as? FilterGroupType & SQLSyntaxConvertible }.sqlForm
+    return toFilterGroups().compactMap { $0 as? FilterGroupType & SQLSyntaxConvertible }.sqlForm
   }
   
 }
@@ -31,7 +31,7 @@ class FilterStateTests: XCTestCase {
   
   func testPlayground() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     let filterFacet1 = Filter.Facet(attribute: "category", value: "table")
     let filterFacet2 = Filter.Facet(attribute: "category", value: "chair")
     let filterNumeric1 = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
@@ -87,7 +87,7 @@ class FilterStateTests: XCTestCase {
   
   func testInversion() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     filterState.addAll(filters: [
       Filter.Tag(value: "tagA", isNegated: true),
@@ -107,7 +107,7 @@ class FilterStateTests: XCTestCase {
   
   func testAdd() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     let filterFacet1 = Filter.Facet(attribute: Attribute("category"), value: "table")
     let filterFacet2 = Filter.Facet(attribute: Attribute("category"), value: "chair")
@@ -144,7 +144,7 @@ class FilterStateTests: XCTestCase {
   
   func testContains() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     let tagA = Filter.Tag(value: "A")
     let tagB = Filter.Tag(value: "B")
@@ -198,7 +198,7 @@ class FilterStateTests: XCTestCase {
   
   func testRemove() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .or(name: "orTags"))
     filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .and(name: "any"))
@@ -252,7 +252,7 @@ class FilterStateTests: XCTestCase {
   
   func testSubscriptAndOperatorPlayground() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     let filterFacet1 = Filter.Facet(attribute: "category", value: "table")
     let filterFacet2 = Filter.Facet(attribute: "category", value: "chair")
@@ -298,7 +298,7 @@ class FilterStateTests: XCTestCase {
     let groupNumericsOr = FilterGroup.ID.or(name: "filterNumeric")
     let groupTagsOr = FilterGroup.ID.or(name: "filterTags")
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     filterState.addAll(filters: [filterNumeric1, filterNumeric2], toGroupWithID: groupNumericsOr)
     XCTAssertEqual(filterState.buildSQL(), """
@@ -325,7 +325,7 @@ class FilterStateTests: XCTestCase {
   }
   
   func testIsEmpty() {
-    var filterState = FilterState()
+    var filterState = Filters()
     let filter = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
     let group = FilterGroup.ID.or(name: "group")
     XCTAssertTrue(filterState.isEmpty)
@@ -340,7 +340,7 @@ class FilterStateTests: XCTestCase {
   }
   
   func testClear() {
-    var filterState = FilterState()
+    var filterState = Filters()
     let filterNumeric = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
     let filterTag = Filter.Tag(value: "Tom")
     let group = FilterGroup.ID.and(name: "group")
@@ -359,7 +359,7 @@ class FilterStateTests: XCTestCase {
   
   func testToggle() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     let filter = Filter.Facet(attribute: "brand", stringValue: "sony")
     
@@ -417,7 +417,7 @@ class FilterStateTests: XCTestCase {
   
   func testDisjunctiveFacetAttributes() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     filterState.addAll(filters: [
       Filter.Facet(attribute: "color", stringValue: "red"),
@@ -462,7 +462,7 @@ class FilterStateTests: XCTestCase {
   
   func testRefinements() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     filterState.addAll(filters: [
       Filter.Facet(attribute: "color", stringValue: "red"),
@@ -491,7 +491,7 @@ class FilterStateTests: XCTestCase {
   
   func testFilterScoring() {
     
-    var filterState = FilterState()
+    var filterState = Filters()
     
     let filterFacet1 = Filter.Facet(attribute: Attribute("category"), value: "table", score: 5)
     let filterFacet2 = Filter.Facet(attribute: Attribute("category"), value: "chair", score: 10)

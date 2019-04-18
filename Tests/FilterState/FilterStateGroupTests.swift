@@ -13,7 +13,7 @@ import XCTest
 class FilterStateGroupTests: XCTestCase {
     
   func testOrGroupAddAll() {
-    var filterState = FilterState()
+    var filterState = Filters()
     let group = FilterGroup.ID.or(name: "group")
     let filter1 = Filter.Facet(attribute: "category", value: "table")
     let filter2 = Filter.Facet(attribute: "category", value: "chair")
@@ -27,7 +27,7 @@ class FilterStateGroupTests: XCTestCase {
   }
   
   func testAndGroupAddAll() {
-    var filterState = FilterState()
+    var filterState = Filters()
     let group = FilterGroup.ID.and(name: "group")
     let filterPrice = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
     let filterSize = Filter.Numeric(attribute: "size", operator: .greaterThan, value: 20)

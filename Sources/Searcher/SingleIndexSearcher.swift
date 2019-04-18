@@ -45,9 +45,9 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     sequencer.orderOperation {
       let queryMetadata = QueryMetadata(query: indexSearchData.query)
       
-      if applyDisjunctiveFacetingWhenNecessary && indexSearchData.filterState.isDisjunctiveFacetingAvailable() {
-        let disjunctiveFacets = Array(indexSearchData.filterState.getDisjunctiveFacetsAttributes()).map { $0.description }
-        let refinements = indexSearchData.filterState.getRawFacetFilters()
+      if applyDisjunctiveFacetingWhenNecessary && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
+        let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
+        let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
         
         return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)

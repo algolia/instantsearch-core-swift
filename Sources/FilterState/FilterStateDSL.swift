@@ -10,21 +10,21 @@ import Foundation
 
 public class FilterStateDSL {
   
-  public var filterState: FilterState
+  public var filters: FiltersReadable & FiltersWritable & FilterGroupsConvertible
   
-  init() {
-    self.filterState = FilterState()
+  public init() {
+    self.filters = Filters()
   }
   
-  func and(_ groupName: String) -> AndGroupProxy {
+  public func and(_ groupName: String) -> AndGroupProxy {
     return AndGroupProxy(filterStateDSL: self, groupName: groupName)
   }
   
-  func or <F: FilterType>(_ groupName: String, type: F.Type) -> OrGroupProxy<F> {
+  public func or <F: FilterType>(_ groupName: String, type: F.Type) -> OrGroupProxy<F> {
     return OrGroupProxy(filterStateDSL: self, groupName: groupName)
   }
   
-  func or <F: FilterType>(_ groupName: String) -> OrGroupProxy<F> {
+  public func or <F: FilterType>(_ groupName: String) -> OrGroupProxy<F> {
     return OrGroupProxy(filterStateDSL: self, groupName: groupName)
   }
   
