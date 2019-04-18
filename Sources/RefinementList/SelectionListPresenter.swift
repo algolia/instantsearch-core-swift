@@ -14,11 +14,42 @@ class RefinementFacetsPresenter: SelectionListPresenter<FacetValue> {
 
   public init(sortBy: [SortCriterion],
               limit: Int = 10) {
-    super.init(comparator: <#T##((FacetValue, Bool), (FacetValue, Bool)) -> Bool#>)
+    super.init { (lhs, rhs) -> Bool in
+      return sortBy.map { (criterion) -> Bool? in
+        switch criterion {
+        case .isRefined:
+          if lhs.1 != rhs.1 {
+            return lhs.1
+          }
+          
+        case .count(order: .descending):
+          if lhs.0.count != rhs.0.count {
+            return lhs.0.count > rhs.0.count
+          }
+          
+        case .count(order: .ascending):
+          if lhs.0.count != rhs.0.count {
+            return lhs.0.count < rhs.0.count
+          }
+          
+        case .alphabetical(order: .descending):
+          if lhs.0.value.lowercased() != rhs.0.value.lowercased() {
+            return lhs.0.value.lowercased() > rhs.0.value.lowercased()
+          }
+          
+        case .alphabetical(order: .ascending):
+          // Sort by Name ascending. Else, Biggest Count wins by default
+          if lhs.0.value.lowercased() != rhs.0.value.lowercased() {
+            return lhs.0.value.lowercased() < rhs.0.value.lowercased()
+          }
+        }
+        
+        return nil
+      }.compactMap { $0 }.first ?? true
+      
+    }
     self.sortBy = sortBy
   }
-
-  let comparator = 
 
 }
 
