@@ -228,6 +228,14 @@
 		E2242648224D2311005DD565 /* RefinementListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2242646224D2311005DD565 /* RefinementListInteractor.swift */; };
 		E2242649224D2311005DD565 /* RefinementListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2242646224D2311005DD565 /* RefinementListInteractor.swift */; };
 		E224264A224D2311005DD565 /* RefinementListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2242646224D2311005DD565 /* RefinementListInteractor.swift */; };
+		E225EDAF2268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
+		E225EDB02268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
+		E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
+		E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
+		E225EDB42268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDB32268E2C700B8D2F7 /* SelectionListPresenter.swift */; };
+		E225EDB52268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDB32268E2C700B8D2F7 /* SelectionListPresenter.swift */; };
+		E225EDB62268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDB32268E2C700B8D2F7 /* SelectionListPresenter.swift */; };
+		E225EDB72268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDB32268E2C700B8D2F7 /* SelectionListPresenter.swift */; };
 		E24233D9223947FC008F24FB /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResults.swift */; };
 		E24233DB223947FC008F24FB /* HitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E282231793C00F3056D /* HitsViewModel.swift */; };
 		E24233DC223947FC008F24FB /* RefinementListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E2A2231794A00F3056D /* RefinementListViewModel.swift */; };
@@ -372,6 +380,8 @@
 		BC5DC1301D86BDB00066D705 /* InstantSearchCore-Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "InstantSearchCore-Tests-Bridging-Header.h"; sourceTree = "<group>"; };
 		BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcBridgingTest.m; sourceTree = "<group>"; };
 		E2242646224D2311005DD565 /* RefinementListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementListInteractor.swift; sourceTree = "<group>"; };
+		E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModel.swift; sourceTree = "<group>"; };
+		E225EDB32268E2C700B8D2F7 /* SelectionListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionListPresenter.swift; sourceTree = "<group>"; };
 		E24234092243A43D008F24FB /* Signals+Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Signals+Observable.swift"; sourceTree = "<group>"; };
 		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CD920AF2D350056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/Mac/InstantSearchClient.framework; sourceTree = "<group>"; };
@@ -604,7 +614,6 @@
 				AFCDEDF1223C070F001459BE /* AnyHitsViewModel.swift */,
 				AFCDEDEC223C0694001459BE /* MultiHitsViewModel.swift */,
 				AFCDEDC522397A5E001459BE /* QueryMetadata.swift */,
-				E2E09E2A2231794A00F3056D /* RefinementListViewModel.swift */,
 				E2BAE6B4223FF7A500B89EA3 /* Group.swift */,
 				E2E09E2C2231796800F3056D /* Result.swift */,
 				AFCDEDC1223979E1001459BE /* Optional+String.swift */,
@@ -638,8 +647,11 @@
 		E2242645224D22DF005DD565 /* RefinementList */ = {
 			isa = PBXGroup;
 			children = (
+				E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */,
+				E225EDB32268E2C700B8D2F7 /* SelectionListPresenter.swift */,
 				E2BAE6AF223FF77100B89EA3 /* RefinementListPresenter.swift */,
 				E2242646224D2311005DD565 /* RefinementListInteractor.swift */,
+				E2E09E2A2231794A00F3056D /* RefinementListViewModel.swift */,
 			);
 			path = RefinementList;
 			sourceTree = "<group>";
@@ -1055,6 +1067,7 @@
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
 				E29E45632243F32C005B358D /* Observable.swift in Sources */,
+				E225EDAF2268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AF117826225F701B00C5B59B /* SpecializedAndGroupOperators.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
@@ -1085,6 +1098,7 @@
 				AF1177CF225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFCDED48222E7A4E001459BE /* Highlighter.swift in Sources */,
 				AF1177C7225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
+				E225EDB42268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1136,6 +1150,7 @@
 				AFCDEDDA22397E31001459BE /* Result.swift in Sources */,
 				AF1177A8225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
+				E225EDB02268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AF117827225F701C00C5B59B /* SpecializedAndGroupOperators.swift in Sources */,
 				E29E45642243F32C005B358D /* Observable.swift in Sources */,
@@ -1166,6 +1181,7 @@
 				AF1177D0225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFCDEDCF22397E23001459BE /* Paginator.swift in Sources */,
 				AF1177C8225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
+				E225EDB52268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1217,6 +1233,7 @@
 				AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */,
 				AF1177A9225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
+				E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AF117828225F701D00C5B59B /* SpecializedAndGroupOperators.swift in Sources */,
 				E29E45652243F32C005B358D /* Observable.swift in Sources */,
@@ -1247,6 +1264,7 @@
 				AF1177D1225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFCDEDD022397E24001459BE /* Paginator.swift in Sources */,
 				AF1177C9225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
+				E225EDB62268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1298,6 +1316,7 @@
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
 				AF1177AA225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
+				E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1177A4225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AF117829225F701D00C5B59B /* SpecializedAndGroupOperators.swift in Sources */,
 				E29E45662243F32C005B358D /* Observable.swift in Sources */,
@@ -1328,6 +1347,7 @@
 				AF1177D2225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFCDEDD122397E25001459BE /* Paginator.swift in Sources */,
 				AF1177CA225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
+				E225EDB72268E2C700B8D2F7 /* SelectionListPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

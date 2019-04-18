@@ -8,18 +8,24 @@
 
 import Foundation
 
-public protocol RefinementListPresenterDelegate {
+public typealias SelectableItem<T> = (T, Bool)
+public typealias SelectableRefinement = SelectableItem<FacetValue>
+
+public protocol SelectableListPresentable {
+
+  associatedtype Item
+
   func processFacetValues(selectedValues: [String],
-                         resultValues: [FacetValue]?,
-                         sortBy: [RefinementListViewModel.Sorting],
-                         keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
+                         resultValues: [Item]?,
+                         sortBy: [SortCriterion],
+                         keepSelectedValuesWithZeroCount: Bool) -> [Item]
 }
 
 /// Takes care of building the content of a refinement list given the following:
 /// - The list of Facets + Associated Count
 /// - The list of Facets that have been refined
 /// - Layout settings such as sortBy
-class RefinementListPresenter: RefinementListPresenterDelegate {
+public class RefinementListPresenter: SelectableListPresentable {
 
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
@@ -42,9 +48,9 @@ class RefinementListPresenter: RefinementListPresenterDelegate {
   }
 
   /// Builds the final list to be displayed in the refinement list
-  func processFacetValues(selectedValues: [String],
+  public func processFacetValues(selectedValues: [String],
                          resultValues: [FacetValue]?,
-                         sortBy: [RefinementListViewModel.Sorting],
+                         sortBy: [SortCriterion],
                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
 
     let facetList: [FacetValue]
@@ -102,3 +108,5 @@ class RefinementListPresenter: RefinementListPresenterDelegate {
     return sortedFacetList
   }
 }
+
+

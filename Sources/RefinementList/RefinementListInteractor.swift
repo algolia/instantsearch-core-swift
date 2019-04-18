@@ -9,9 +9,9 @@
 import Foundation
 
 public protocol RefinementListInteractorDelegate {
-  func didSelect(value: String, operator: RefinementListViewModel.Settings.RefinementOperator)
-  func isRefined(value: String, operator: RefinementListViewModel.Settings.RefinementOperator) -> Bool
-  func selectedValues(operator: RefinementListViewModel.Settings.RefinementOperator) -> [String]
+  func didSelect(value: String, operator: RefinementOperator)
+  func isRefined(value: String, operator: RefinementOperator) -> Bool
+  func selectedValues(operator: RefinementOperator) -> [String]
 }
 
 /// Business logic for the different actions on the Refinement list related to filtering.
@@ -29,7 +29,7 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
     self.attribute = attribute
   }
 
-  public func didSelect(value: String, operator: RefinementListViewModel.Settings.RefinementOperator) {
+  public func didSelect(value: String, operator: RefinementOperator) {
     let filterFacet = Filter.Facet(attribute: attribute, stringValue: value)
 
     switch `operator` {
@@ -45,7 +45,7 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
     }
   }
 
-  public func isRefined(value: String, operator: RefinementListViewModel.Settings.RefinementOperator) -> Bool {
+  public func isRefined(value: String, operator: RefinementOperator) -> Bool {
     let filterFacet = Filter.Facet(attribute: attribute, stringValue: value)
 
     switch `operator` {
@@ -56,7 +56,7 @@ class RefinementListInteractor: RefinementListInteractorDelegate {
     }
   }
 
-  public func selectedValues(operator: RefinementListViewModel.Settings.RefinementOperator) -> [String] {
+  public func selectedValues(operator: RefinementOperator) -> [String] {
     let refinedFilterFacets: [Filter.Facet]
     switch `operator` {
     case .or, .and(selection: .single):

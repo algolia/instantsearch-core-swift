@@ -36,7 +36,7 @@ public struct Constants {
 
     // Refinement
     public static let operatorRefinement = "or"
-    public static let refinementOperator: RefinementListViewModel.Settings.RefinementOperator = .or
+    public static let refinementOperator: RefinementOperator = .or
     public static let refinedFirst = true
     
     public static let limit = 10

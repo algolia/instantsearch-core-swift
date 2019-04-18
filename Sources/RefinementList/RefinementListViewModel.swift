@@ -8,7 +8,7 @@
 import Foundation
 import InstantSearchClient
 
-public class RefinementListViewModel {
+public class RefinementListViewModel<T> {
 
   // MARK: - Properties
 
@@ -20,10 +20,14 @@ public class RefinementListViewModel {
 
   var attribute: Attribute
 
+  // TODO: create a new struct SelectedFacet with [FacetValue] + isRefined.
+  // TODO2: Put this in the presenter, it makes more sense.
+  // TODO3: pass settings
+  // NOTE that this is a representation View/UI State that we want to show
   var sortedFacetValues: [FacetValue]?
+
   var latestRawFacetValues: [FacetValue]?
 
-  let refinementListPresenter: RefinementListPresenterDelegate
   let refinementListInteractor: RefinementListInteractorDelegate
 
   // MARK: - Init
@@ -49,7 +53,6 @@ public class RefinementListViewModel {
     self.refinementListInteractor = RefinementListInteractor(attribute: attribute, filterState: filterState, groupID: finalGroupID)
 
     self.settings = settings
-    refinementListPresenter = RefinementListPresenter()
 
     filterState.onFilterStateChange.subscribe(with: self) { [weak self] (groups) in
       print("onparam change!")
@@ -59,11 +62,10 @@ public class RefinementListViewModel {
     }
   }
 
-  public init(attribute: Attribute, refinementListInteractorDelegate: RefinementListInteractorDelegate, refinementListPresenterDelegate: RefinementListPresenterDelegate, refinementSettings: Settings? = nil) {
+  public init(attribute: Attribute, refinementListInteractorDelegate: RefinementListInteractorDelegate, refinementListPresenterDelegate: RefinementListPresenter, refinementSettings: Settings? = nil) {
     self.attribute = attribute
     self.settings = refinementSettings ?? Settings()
     self.refinementListInteractor = refinementListInteractorDelegate
-    refinementListPresenter = refinementListPresenterDelegate
   }
 
   // MARK: - Update with new results
@@ -83,10 +85,10 @@ public class RefinementListViewModel {
     latestRawFacetValues = rawFacetResults
     let selectedValues: [String] = refinementListInteractor.selectedValues(operator: settings.operator)
 
-    self.sortedFacetValues = refinementListPresenter.processFacetValues(selectedValues: selectedValues,
-                                                                resultValues: rawFacetResults,
-                                                                sortBy: settings.sortBy,
-                                                                keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
+//    self.sortedFacetValues = refinementListPresenter.processFacetValues(selectedValues: selectedValues,
+//                                                                resultValues: rawFacetResults,
+//                                                                sortBy: settings.sortBy,
+//                                                                keepSelectedValuesWithZeroCount: settings.keepSelectedValuesWithZeroCount)
     //print("facetResults \(self.sortedFacetValues)")
     onReloadView.fire(())
   }
@@ -160,36 +162,37 @@ extension RefinementListViewModel {
     /// - Ascending Count
     /// - Alphabetical
     /// - Reverse Alphabetical
-    public var sortBy: [Sorting] = [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)]
+    public var sortBy: [SortCriterion] = [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)]
 
     public enum Limit {
       case none
       case count(Int)
     }
-
-    public enum RefinementOperator {
-      // when operator is 'and' + one single value can be selected,
-      // we want to keep the other values visible, so we have to do a disjunctive facet
-      // In the case of multi value that can be selected in conjunctive case,
-      // then we avoid doing a disjunctive facet and just do normal conjusctive facet
-      // and only the remaining possible facets will appear.
-      case and(selection: Selection)
-      case or
-
-      public enum Selection {
-        case single
-        case multiple
-      }
-    }
   }
-  public enum Sorting {
-    case count(order: Order)
-    case alphabetical(order: Order)
-    case isRefined
+}
 
-    public enum Order {
-      case ascending
-      case descending
-    }
+public enum SortCriterion {
+  case count(order: Order)
+  case alphabetical(order: Order)
+  case isRefined
+
+  public enum Order {
+    case ascending
+    case descending
+  }
+}
+
+public enum RefinementOperator {
+  // when operator is 'and' + one single value can be selected,
+  // we want to keep the other values visible, so we have to do a disjunctive facet
+  // In the case of multi value that can be selected in conjunctive case,
+  // then we avoid doing a disjunctive facet and just do normal conjusctive facet
+  // and only the remaining possible facets will appear.
+  case and(selection: Selection)
+  case or
+
+  public enum Selection {
+    case single
+    case multiple
   }
 }
