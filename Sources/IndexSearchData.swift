@@ -23,7 +23,7 @@ public struct IndexSearchData {
   
   /// Build filters
   func applyFilters() {
-    query.filters = filterState.getFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm
+    query.filters = filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm
   }
   
   public init(index: Index, query: Query = .init(), filterState: FilterState = .init()) {

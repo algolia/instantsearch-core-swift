@@ -8,18 +8,34 @@
 
 import Foundation
 
-public enum FilterGroupID: Hashable {
+extension FilterGroup {
   
-  case or(name: String)
-  case and(name: String)
-  
-  var name: String {
-    switch self {
-    case .or(name: let name):
-      return name
-    case .and(name: let name):
-      return name
+  public enum ID: Hashable {
+    
+    case or(name: String)
+    case and(name: String)
+    
+    var name: String {
+      switch self {
+      case .or(name: let name):
+        return name
+      case .and(name: let name):
+        return name
+      }
     }
+    
+    var isConjunctive: Bool {
+      if case .and = self {
+        return true
+      } else {
+        return false
+      }
+    }
+    
+    var isDisjunctive: Bool {
+      return !isConjunctive
+    }
+    
   }
   
 }

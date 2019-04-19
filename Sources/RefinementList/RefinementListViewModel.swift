@@ -26,18 +26,18 @@ public class RefinementListViewModel<T> {
   // NOTE that this is a representation View/UI State that we want to show
   var sortedFacetValues: [FacetValue]?
 
-  var latestRawFacetValues: [FacetValue]?
+  var latestFacetValues: [FacetValue]?
 
   let refinementListInteractor: RefinementListInteractorDelegate
 
   // MARK: - Init
 
-  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, groupID: FilterGroupID? = nil) {
+  public init(attribute: Attribute, filterState: FilterState, refinementSettings: Settings? = nil, groupID: FilterGroup.ID? = nil) {
     self.attribute = attribute
     
     let settings = refinementSettings ?? Settings()
     
-    let finalGroupID: FilterGroupID
+    let finalGroupID: FilterGroup.ID
     
     if let groupID = groupID {
       finalGroupID = groupID
@@ -54,11 +54,11 @@ public class RefinementListViewModel<T> {
 
     self.settings = settings
 
-    filterState.onFilterStateChange.subscribe(with: self) { [weak self] (groups) in
+    filterState.onChange.subscribe(with: self) { [weak self] (groups) in
       print("onparam change!")
       // TODO: Here need to check if there was some actual change being made between what we had before and now,
       // in order to avoid a double reload
-      self?.updateFacetResults(with: self?.latestRawFacetValues)
+      self?.updateFacetResults(with: self?.latestFacetValues)
     }
   }
 
@@ -82,7 +82,7 @@ public class RefinementListViewModel<T> {
   }
 
   private func updateFacetResults(with rawFacetResults: [FacetValue]?) {
-    latestRawFacetValues = rawFacetResults
+    latestFacetValues = rawFacetResults
     let selectedValues: [String] = refinementListInteractor.selectedValues(operator: settings.operator)
 
 //    self.sortedFacetValues = refinementListPresenter.processFacetValues(selectedValues: selectedValues,

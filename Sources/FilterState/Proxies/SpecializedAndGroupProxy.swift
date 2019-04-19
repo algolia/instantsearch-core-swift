@@ -12,9 +12,9 @@ import Foundation
 
 public struct SpecializedAndGroupProxy<T: FilterType> {
     
-    private let genericProxy: AndGroupProxy
+    private var genericProxy: AndGroupProxy
     
-    var groupID: FilterGroupID {
+    var groupID: FilterGroup.ID {
         return genericProxy.groupID
     }
     
@@ -29,13 +29,13 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     
     /// Adds filter to group
     /// - parameter filter: filter to add
-    public func add(_ filter: T) {
+    public mutating func add(_ filter: T) {
         genericProxy.add(filter)
     }
     
     /// Adds the filters of a sequence to group
     /// - parameter filters: sequence of filters to add
-    public func addAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T {
+    public mutating func addAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T {
         genericProxy.addAll(filters)
     }
     
@@ -47,30 +47,30 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     
     /// Removes all filters with specified attribute from group
     /// - parameter attribute: specified attribute
-    public func removeAll(for attribute: Attribute) {
+    public mutating func removeAll(for attribute: Attribute) {
         return genericProxy.removeAll(for: attribute)
     }
     
     /// Removes filter from group
     /// - parameter filter: filter to remove
-    @discardableResult public func remove(_ filter: T) -> Bool {
+    @discardableResult public mutating func remove(_ filter: T) -> Bool {
         return genericProxy.remove(filter)
     }
     
     /// Removes a sequence of filters from group
     /// - parameter filters: sequence of filters to remove
-    @discardableResult public func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == T {
+    @discardableResult public mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == T {
         return genericProxy.removeAll(filters)
     }
     
     /// Removes all filters in group
-    public func removeAll() {
+    public mutating func removeAll() {
         genericProxy.removeAll()
     }
     
     /// Removes filter from group if contained by it, otherwise adds filter to group
     /// - parameter filter: filter to toggle
-    public func toggle(_ filter: T) {
+    public mutating func toggle(_ filter: T) {
         genericProxy.toggle(filter)
     }
     

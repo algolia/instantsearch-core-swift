@@ -10,6 +10,6 @@ import Foundation
 
 /// Group proxy provides a specific type-safe interface for FilterState specialized for a concrete group
 internal protocol GroupProxy {
-    var filterState: FilterState { get }
-    var groupID: FilterGroupID { get }
+    var filterStateDSL: FilterStateDSL { get }
+    var groupID: FilterGroup.ID { get }
 }

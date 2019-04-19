@@ -8,17 +8,15 @@
 
 import Foundation
 
-public typealias SelectableItem<T> = (T, Bool)
+public typealias SelectableItem<T> = (item: T, isSelected: Bool)
 public typealias SelectableRefinement = SelectableItem<FacetValue>
 
 public protocol SelectableListPresentable {
 
-  associatedtype Item
-
   func processFacetValues(selectedValues: [String],
-                         resultValues: [Item]?,
-                         sortBy: [SortCriterion],
-                         keepSelectedValuesWithZeroCount: Bool) -> [Item]
+                          resultValues: [FacetValue]?,
+                          sortBy: [SortCriterion],
+                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -27,31 +25,11 @@ public protocol SelectableListPresentable {
 /// - Layout settings such as sortBy
 public class RefinementListPresenter: SelectableListPresentable {
 
-  /// Add missing refinements with a count of 0 to all returned facetValues
-  /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
-  /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-  func merge(_ facetValues: [FacetValue]?, withRefinementValues refinementValues: [String]) -> [FacetValue] {
-    var values = [FacetValue]()
-    if let facetValues = facetValues {
-      facetValues.forEach { (facetValue) in
-        values.append(facetValue)
-      }
-    }
-    // Make sure there is a value at least for the refined values.
-    refinementValues.forEach { (refinementValue) in
-      if facetValues == nil || !facetValues!.contains { $0.value == refinementValue } {
-        values.append(FacetValue(value: refinementValue, count: 0, highlighted: .none))
-      }
-    }
-
-    return values
-  }
-
   /// Builds the final list to be displayed in the refinement list
   public func processFacetValues(selectedValues: [String],
-                         resultValues: [FacetValue]?,
-                         sortBy: [SortCriterion],
-                         keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
+                                 resultValues: [FacetValue]?,
+                                 sortBy: [SortCriterion],
+                                 keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
 
     let facetList: [FacetValue]
     if keepSelectedValuesWithZeroCount {
@@ -74,39 +52,56 @@ public class RefinementListPresenter: SelectableListPresentable {
       for sorting in sortBy {
 
         switch sorting {
-        case .isRefined:
-          if lhsChecked != rhsChecked {
-            return lhsChecked
-          }
+        case .isRefined where lhsChecked != rhsChecked:
+          return lhsChecked
 
-        case .count(order: .descending):
-          if leftCount != rightCount {
-            return leftCount > rightCount
-          }
+        case .count(order: .descending) where leftCount != rightCount:
+          return leftCount > rightCount
 
-        case .count(order: .ascending):
-          if leftCount != rightCount {
-            return leftCount < rightCount
-          }
+        case .count(order: .ascending) where leftCount != rightCount:
+          return leftCount < rightCount
 
-        case .alphabetical(order: .descending):
-          if leftValueLowercased != rightValueLowercased {
-            return leftValueLowercased > rightValueLowercased
-          }
+        case .alphabetical(order: .descending) where leftValueLowercased != rightValueLowercased:
+          return leftValueLowercased > rightValueLowercased
 
-        case .alphabetical(order: .ascending):
-          // Sort by Name ascending. Else, Biggest Count wins by default
-          if leftValueLowercased != rightValueLowercased {
-            return leftValueLowercased < rightValueLowercased
-          }
+        // Sort by Name ascending. Else, Biggest Count wins by default
+        case .alphabetical(order: .ascending) where leftValueLowercased != rightValueLowercased:
+          return leftValueLowercased < rightValueLowercased
+          
+        default:
+          break
         }
+        
       }
-
+      
       return true
+
     }
 
     return sortedFacetList
   }
 }
 
-
+private extension RefinementListPresenter {
+  
+  /// Add missing refinements with a count of 0 to all returned facetValues
+  /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
+  /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
+  func merge(_ facetValues: [FacetValue]?, withRefinementValues refinementValues: [String]) -> [FacetValue] {
+    var values = [FacetValue]()
+    if let facetValues = facetValues {
+      facetValues.forEach { (facetValue) in
+        values.append(facetValue)
+      }
+    }
+    // Make sure there is a value at least for the refined values.
+    refinementValues.forEach { (refinementValue) in
+      if facetValues == nil || !facetValues!.contains { $0.value == refinementValue } {
+        values.append(FacetValue(value: refinementValue, count: 0, highlighted: .none))
+      }
+    }
+    
+    return values
+  }
+  
+}
