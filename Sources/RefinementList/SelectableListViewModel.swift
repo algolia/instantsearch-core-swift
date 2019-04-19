@@ -77,7 +77,6 @@ extension RefinementFacetsViewModel {
   
 }
 
-
 class SelectableListViewModel<K: Hashable, V: Equatable> {
 
   public var selectionMode: SelectionMode
@@ -124,6 +123,3 @@ public enum SelectionMode {
   case single
   case multiple
 }
-
-
-
