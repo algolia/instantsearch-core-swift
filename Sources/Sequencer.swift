@@ -75,7 +75,7 @@ public class Sequencer: Sequencable {
     
   /// Indicates whether there are any pending operations.
   public var hasPendingOperations: Bool {
-    print("has pending operation. pending operations: \(pendingOperations) ")
+    //print("has pending operation. pending operations: \(pendingOperations) ")
     return !pendingOperations.isEmpty
   }
 
@@ -111,7 +111,7 @@ public class Sequencer: Sequencable {
     sequencerQueue.addOperation(sequencingOperation)
 
     pendingOperations[currentSeqNo] = operation
-    print("added operation with seqNo \(currentSeqNo). pending operations: \(pendingOperations) ")
+    //print("added operation with seqNo \(currentSeqNo). pending operations: \(pendingOperations) ")
   }
     
   // MARK: - Manage operations
@@ -148,7 +148,7 @@ public class Sequencer: Sequencable {
     // Remove the current operation.
     pendingOperations.removeValue(forKey: seqNo)
 
-    print("dismissed operation with seqNo \(seqNo). pending operations: \(pendingOperations)")
+    //print("dismissed operation with seqNo \(seqNo). pending operations: \(pendingOperations)")
 
     // Obsolete operations should not happen since they have been cancelled by more recent operations (see above).
     // WARNING: Only works if the current queue is serial!

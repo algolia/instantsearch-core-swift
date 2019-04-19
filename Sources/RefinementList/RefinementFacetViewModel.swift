@@ -8,9 +8,9 @@
 
 import Foundation
 
-typealias RefinementFacetsViewModel = SelectableListViewModel<String, FacetValue>
+public typealias RefinementFacetsViewModel = SelectableListViewModel<String, FacetValue>
 
-extension RefinementFacetsViewModel {
+public extension RefinementFacetsViewModel {
   
   func connect<R: Codable>(attribute: Attribute, searcher: SingleIndexSearcher<R>, operator: RefinementOperator, groupName: String? = nil) {
     
@@ -42,7 +42,7 @@ extension RefinementFacetsViewModel {
     
     searcher.onSearchResults.subscribe(with: self) { (_, result) in
       if case .success(let searchResults) = result {
-        self.values = searchResults.facets?[attribute] ?? []
+        self.values = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
       }
     }
     
@@ -50,21 +50,22 @@ extension RefinementFacetsViewModel {
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
       searcher.indexSearchData.filterState.removeAll(fromGroupWithID: groupID)
       searcher.indexSearchData.filterState.addAll(filters: filters, toGroupWithID: groupID)
+      print(searcher.indexSearchData.filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm)
     }
     
   }
   
 }
 
-extension RefinementFacetsViewModel {
-  
-  func connect(presenter: RefinementFacetsPresenter) {
-    onValuesChanged.subscribe(with: self) { facetValues in
-      presenter.values = facetValues.map { ($0, self.selections.contains($0.value)) }
-    }
-    onSelectionsChanged.subscribe(with: self) { selections in
-      presenter.values = self.values.map { ($0, selections.contains($0.value)) }
-    }
-  }
-  
-}
+//public extension RefinementFacetsViewModel {
+//
+//  func connect(presenter: RefinementFacetsPresenter) {
+//    onValuesChanged.subscribe(with: self) { facetValues in
+//      presenter.values = facetValues.map { ($0, self.selections.contains($0.value)) }
+//    }
+//    onSelectionsChanged.subscribe(with: self) { selections in
+//      presenter.values = self.values.map { ($0, selections.contains($0.value)) }
+//    }
+//  }
+//
+//}

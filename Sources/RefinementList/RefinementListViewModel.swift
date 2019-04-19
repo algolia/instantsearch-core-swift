@@ -8,7 +8,7 @@
 import Foundation
 import InstantSearchClient
 
-public class RefinementListViewModel<T> {
+public class RefinementListViewModel {
 
   // MARK: - Properties
 

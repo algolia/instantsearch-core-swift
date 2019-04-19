@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SelectableListViewModel<K: Hashable, V: Equatable> {
+public class SelectableListViewModel<K: Hashable, V: Equatable> {
 
   public var selectionMode: SelectionMode
 
@@ -45,7 +45,7 @@ class SelectableListViewModel<K: Hashable, V: Equatable> {
       selections = self.selections.contains(key) ? self.selections.subtracting([key]) : self.selections.union([key])
     }
 
-    onSelectionsChanged.fire(selections)
+    onSelectedChanged.fire(selections)
   }
 
 }

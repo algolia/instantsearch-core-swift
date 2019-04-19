@@ -15,8 +15,7 @@ public protocol SelectableListPresentable {
 
   func processFacetValues(selectedValues: [String],
                           resultValues: [FacetValue]?,
-                          sortBy: [SortCriterion],
-                          keepSelectedValuesWithZeroCount: Bool) -> [FacetValue]
+                          sortBy: [SortCriterion]) -> [SelectableRefinement]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -25,28 +24,25 @@ public protocol SelectableListPresentable {
 /// - Layout settings such as sortBy
 public class RefinementListPresenter: SelectableListPresentable {
 
+  // TODO: Pass here the sortBy and other settings
+  public init() { }
+
   /// Builds the final list to be displayed in the refinement list
   public func processFacetValues(selectedValues: [String],
                                  resultValues: [FacetValue]?,
-                                 sortBy: [SortCriterion],
-                                 keepSelectedValuesWithZeroCount: Bool) -> [FacetValue] {
+                                 sortBy: [SortCriterion]) -> [SelectableRefinement] {
 
-    let facetList: [FacetValue]
-    if keepSelectedValuesWithZeroCount {
-      facetList = merge(resultValues, withRefinementValues: selectedValues)
-    } else {
-      facetList = resultValues ?? []
-    }
+    let facetList: [SelectableRefinement] = merge(resultValues, withSelectedValues: selectedValues)
 
     let sortedFacetList = facetList.sorted { (lhs, rhs) in
 
-      let lhsChecked: Bool = selectedValues.contains(lhs.value)
-      let rhsChecked: Bool = selectedValues.contains(rhs.value)
+      let lhsChecked: Bool = lhs.isSelected
+      let rhsChecked: Bool = rhs.isSelected
 
-      let leftCount = lhs.count
-      let rightCount = rhs.count
-      let leftValueLowercased = lhs.value.lowercased()
-      let rightValueLowercased = rhs.value.lowercased()
+      let leftCount = lhs.item.count
+      let rightCount = rhs.item.count
+      let leftValueLowercased = lhs.item.value.lowercased()
+      let rightValueLowercased = rhs.item.value.lowercased()
 
       // tiebreaking algorithm to do determine the sorting. 
       for sorting in sortBy {
@@ -87,17 +83,19 @@ private extension RefinementListPresenter {
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
   /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-  func merge(_ facetValues: [FacetValue]?, withRefinementValues refinementValues: [String]) -> [FacetValue] {
-    var values = [FacetValue]()
+  func merge(_ facetValues: [FacetValue]?, withSelectedValues selectedValues: [String]) -> [SelectableRefinement] {
+
+    var values = [SelectableRefinement]()
     if let facetValues = facetValues {
       facetValues.forEach { (facetValue) in
-        values.append(facetValue)
+
+        values.append((facetValue, selectedValues.contains(facetValue.value)))
       }
     }
     // Make sure there is a value at least for the refined values.
-    refinementValues.forEach { (refinementValue) in
+    selectedValues.forEach { (refinementValue) in
       if facetValues == nil || !facetValues!.contains { $0.value == refinementValue } {
-        values.append(FacetValue(value: refinementValue, count: 0, highlighted: .none))
+        values.append((FacetValue(value: refinementValue, count: 0, highlighted: .none), true))
       }
     }
     
