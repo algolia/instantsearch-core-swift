@@ -338,7 +338,6 @@
 		AF1177DE225E342300C5B59B /* AndGroupProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndGroupProxy.swift; sourceTree = "<group>"; };
 		AF1177DF225E342300C5B59B /* SpecializedAndGroupProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializedAndGroupProxy.swift; sourceTree = "<group>"; };
 		AF1177E1225E342300C5B59B /* OrGroupOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrGroupOperators.swift; sourceTree = "<group>"; };
-		AF1177E2225E342300C5B59B /* SpecializedAndGroupOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializedAndGroupOperators.swift; sourceTree = "<group>"; };
 		AF1177E3225E342300C5B59B /* FilterOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterOperators.swift; sourceTree = "<group>"; };
 		AF1177E4225E342300C5B59B /* AndGroupOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndGroupOperators.swift; sourceTree = "<group>"; };
 		AF117805225E484000C5B59B /* AbstractClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractClass.swift; sourceTree = "<group>"; };
@@ -543,7 +542,6 @@
 			isa = PBXGroup;
 			children = (
 				AF1177E1225E342300C5B59B /* OrGroupOperators.swift */,
-				AF1177E2225E342300C5B59B /* SpecializedAndGroupOperators.swift */,
 				AF1177E3225E342300C5B59B /* FilterOperators.swift */,
 				AF1177E4225E342300C5B59B /* AndGroupOperators.swift */,
 			);
