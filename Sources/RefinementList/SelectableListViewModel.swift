@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SelectableListViewModel<K: Hashable, V: Equatable> {
+public class SelectableListViewModel<K: Hashable, Item: Equatable> {
 
   public var selectionMode: SelectionMode
 
@@ -16,14 +16,14 @@ public class SelectableListViewModel<K: Hashable, V: Equatable> {
     self.selectionMode = selectionMode
   }
 
-  public var onValuesChanged = Observer<[V]>()
+  public var onItemsChanged = Observer<[Item]>()
   public var onSelectionsChanged = Observer<Set<K>>()
-  public var onSelectedChanged = Observer<Set<K>>()
+  public var onSelectionsComputed = Observer<Set<K>>()
 
-  public var values: [V] = [] {
+  public var items: [Item] = [] {
     didSet {
-      if oldValue != values {
-        onValuesChanged.fire(values)
+      if oldValue != items {
+        onItemsChanged.fire(items)
       }
     }
   }
@@ -36,16 +36,20 @@ public class SelectableListViewModel<K: Hashable, V: Equatable> {
     }
   }
 
-  public func select(key: K) {
+  public func selectItem(forKey key: K) {
+    
     let selections: Set<K>
+    
     switch selectionMode {
     case .single:
       selections = self.selections.contains(key) ? [] : [key]
+      
     case .multiple:
       selections = self.selections.contains(key) ? self.selections.subtracting([key]) : self.selections.union([key])
     }
+    
+    onSelectionsComputed.fire(selections)
 
-    onSelectedChanged.fire(selections)
   }
 
 }

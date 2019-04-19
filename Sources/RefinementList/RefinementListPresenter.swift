@@ -9,13 +9,13 @@
 import Foundation
 
 public typealias SelectableItem<T> = (item: T, isSelected: Bool)
-public typealias SelectableRefinement = SelectableItem<FacetValue>
+public typealias RefinementFacet = SelectableItem<FacetValue>
 
 public protocol SelectableListPresentable {
 
   func processFacetValues(selectedValues: [String],
                           resultValues: [FacetValue]?,
-                          sortBy: [SortCriterion]) -> [SelectableRefinement]
+                          sortBy: [FacetSortCriterion]) -> [RefinementFacet]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -25,14 +25,14 @@ public protocol SelectableListPresentable {
 public class RefinementListPresenter: SelectableListPresentable {
 
   // TODO: Pass here the sortBy and other settings
-  public init() { }
+  public init() {}
 
   /// Builds the final list to be displayed in the refinement list
   public func processFacetValues(selectedValues: [String],
                                  resultValues: [FacetValue]?,
-                                 sortBy: [SortCriterion]) -> [SelectableRefinement] {
+                                 sortBy: [FacetSortCriterion]) -> [RefinementFacet] {
 
-    let facetList: [SelectableRefinement] = merge(resultValues, withSelectedValues: selectedValues)
+    let facetList: [RefinementFacet] = merge(resultValues, withSelectedValues: selectedValues)
 
     let sortedFacetList = facetList.sorted { (lhs, rhs) in
 
@@ -83,9 +83,11 @@ private extension RefinementListPresenter {
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
   /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-  func merge(_ facetValues: [FacetValue]?, withSelectedValues selectedValues: [String]) -> [SelectableRefinement] {
+  
+  //TODO: MOVE MERGE OUT OF PRESENTER
+  func merge(_ facetValues: [FacetValue]?, withSelectedValues selectedValues: [String]) -> [RefinementFacet] {
 
-    var values = [SelectableRefinement]()
+    var values = [RefinementFacet]()
     if let facetValues = facetValues {
       facetValues.forEach { (facetValue) in
 

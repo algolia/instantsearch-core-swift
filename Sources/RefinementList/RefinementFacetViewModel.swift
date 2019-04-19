@@ -10,6 +10,28 @@ import Foundation
 
 public typealias RefinementFacetsViewModel = SelectableListViewModel<String, FacetValue>
 
+public enum FacetSortCriterion {
+  case count(order: Order)
+  case alphabetical(order: Order)
+  case isRefined
+  
+  public enum Order {
+    case ascending
+    case descending
+  }
+}
+
+public enum RefinementOperator {
+  // when operator is 'and' + one single value can be selected,
+  // we want to keep the other values visible, so we have to do a disjunctive facet
+  // In the case of multi value that can be selected in conjunctive case,
+  // then we avoid doing a disjunctive facet and just do normal conjusctive facet
+  // and only the remaining possible facets will appear.
+  case and
+  case or
+  
+}
+
 public extension RefinementFacetsViewModel {
   
   func connect<R: Codable>(attribute: Attribute, searcher: SingleIndexSearcher<R>, operator: RefinementOperator, groupName: String? = nil) {
@@ -42,11 +64,11 @@ public extension RefinementFacetsViewModel {
     
     searcher.onSearchResults.subscribe(with: self) { (_, result) in
       if case .success(let searchResults) = result {
-        self.values = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
+        self.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
       }
     }
     
-    onSelectedChanged.subscribe(with: self) { selections in
+    onSelectionsComputed.subscribe(with: self) { selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
       searcher.indexSearchData.filterState.removeAll(fromGroupWithID: groupID)
       searcher.indexSearchData.filterState.addAll(filters: filters, toGroupWithID: groupID)
@@ -56,16 +78,3 @@ public extension RefinementFacetsViewModel {
   }
   
 }
-
-//public extension RefinementFacetsViewModel {
-//
-//  func connect(presenter: RefinementFacetsPresenter) {
-//    onValuesChanged.subscribe(with: self) { facetValues in
-//      presenter.values = facetValues.map { ($0, self.selections.contains($0.value)) }
-//    }
-//    onSelectionsChanged.subscribe(with: self) { selections in
-//      presenter.values = self.values.map { ($0, selections.contains($0.value)) }
-//    }
-//  }
-//
-//}
