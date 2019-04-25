@@ -91,10 +91,8 @@ extension SQLSyntaxConvertible where Self: FilterGroupType {
     
     if compatibleFilters.isEmpty {
       return ""
-    } else if let singleFilter = compatibleFilters.first, compatibleFilters.count == 1 {
-      return singleFilter.sqlForm
     } else {
-      return "( \(compatibleFilters.map { $0.sqlForm }.joined(separator: separator)) )"
+      return "(\(compatibleFilters.map { $0.sqlForm }.joined(separator: separator)))"
     }
 
   }
@@ -119,7 +117,7 @@ extension FilterGroup.Or: SQLSyntaxConvertible {
 
 extension Collection where Element == FilterGroupType & SQLSyntaxConvertible {
   
-  var sqlForm: String {
+  public var sqlForm: String {
     return map { $0.sqlForm }.joined(separator: " AND ")
   }
   

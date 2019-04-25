@@ -8,10 +8,36 @@
 
 import Foundation
 
+
 public typealias RefinementFacetsViewModel = SelectableListViewModel<String, FacetValue>
 
+
+public protocol RefinementFacetsView {
+  func reload()
+}
+
+// TODO: is core should not depend on UIKit
+extension UITableView: RefinementFacetsView {
+  public func reload() {
+    reloadData()
+  }
+}
+
 public extension RefinementFacetsViewModel {
-  
+
+//  func connect(refinementPresenter: SelectableListPresentable, refinementFacetsView: RefinementFacetsView, closure: @escaping (([SelectableRefinement]) -> ())) {
+//    self.onValuesChanged.subscribe(with: self) { [weak self] (facetValues) in
+//      let sortedFacetValues =
+//        refinementPresenter.processFacetValues(
+//          selectedValues: Array(self?.selections ?? Set()),
+//          resultValues: facetValues)
+//      closure(sortedFacetValues)
+//
+//      refinementFacetsView.reload()
+//    }
+//  }
+
+  // TODO: Try to refactor to smaller connect methods for more readability and clarity 
   func connect<R: Codable>(attribute: Attribute, searcher: SingleIndexSearcher<R>, operator: RefinementOperator, groupName: String? = nil) {
     
     let groupID: FilterGroup.ID
