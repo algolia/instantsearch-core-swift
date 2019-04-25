@@ -14,9 +14,7 @@ public typealias RefinementFacet = SelectableItem<FacetValue>
 public protocol SelectableListPresentable {
 
   func processFacetValues(selectedValues: [String],
-                          resultValues: [FacetValue]?,
-                          sortBy: [FacetSortCriterion],
-                          limit: Int) -> [RefinementFacet]
+                          resultValues: [FacetValue]?) -> [RefinementFacet]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -25,14 +23,18 @@ public protocol SelectableListPresentable {
 /// - Layout settings such as sortBy
 public class RefinementListPresenter: SelectableListPresentable {
 
-  // TODO: Pass here the sortBy and other settings
-  public init() {}
+  let sortBy: [FacetSortCriterion]
+  let limit: Int
+
+  public init(sortBy: [FacetSortCriterion] = [.count(order: .descending)],
+              limit: Int = 10) {
+    self.sortBy = sortBy
+    self.limit = limit
+  }
 
   /// Builds the final list to be displayed in the refinement list
   public func processFacetValues(selectedValues: [String],
-                                 resultValues: [FacetValue]?,
-                                 sortBy: [FacetSortCriterion],
-                                 limit: Int = 10) -> [RefinementFacet] {
+                                 resultValues: [FacetValue]?) -> [RefinementFacet] {
 
     let facetList: [RefinementFacet] = merge(resultValues, withSelectedValues: selectedValues)
 

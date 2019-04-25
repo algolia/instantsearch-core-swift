@@ -8,8 +8,20 @@
 
 import Foundation
 
+public typealias SelectableFacetsViewModel = SelectableListViewModel<String, FacetValue>
 
-public typealias RefinementFacetsViewModel = SelectableListViewModel<String, FacetValue>
+public class RefinementFacetsViewModel: SelectableFacetsViewModel {
+  public init() {
+    super.init(selectionMode: .multiple)
+  }
+}
+
+
+public class MenuFacetsViewModel: SelectableFacetsViewModel {
+  public init() {
+    super.init(selectionMode: .single)
+  }
+}
 
 public enum FacetSortCriterion {
   case count(order: Order)
@@ -35,7 +47,7 @@ public enum RefinementOperator {
 }
 
 
-public extension RefinementFacetsViewModel {
+public extension SelectableFacetsViewModel {
 
 //  func connect(refinementPresenter: SelectableListPresentable, refinementFacetsView: RefinementFacetsView, closure: @escaping (([SelectableRefinement]) -> ())) {
 //    self.onValuesChanged.subscribe(with: self) { [weak self] (facetValues) in
