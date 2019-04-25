@@ -11,17 +11,29 @@ import Foundation
 
 public typealias RefinementFacetsViewModel = SelectableListViewModel<String, FacetValue>
 
+public enum FacetSortCriterion {
+  case count(order: Order)
+  case alphabetical(order: Order)
+  case isRefined
 
-public protocol RefinementFacetsView {
-  func reload()
-}
-
-// TODO: is core should not depend on UIKit
-extension UITableView: RefinementFacetsView {
-  public func reload() {
-    reloadData()
+  public enum Order {
+    case ascending
+    case descending
   }
 }
+
+
+public enum RefinementOperator {
+  // when operator is 'and' + one single value can be selected,
+  // we want to keep the other values visible, so we have to do a disjunctive facet
+  // In the case of multi value that can be selected in conjunctive case,
+  // then we avoid doing a disjunctive facet and just do normal conjusctive facet
+  // and only the remaining possible facets will appear.
+  case and
+  case or
+
+}
+
 
 public extension RefinementFacetsViewModel {
 

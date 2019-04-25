@@ -15,8 +15,8 @@ public protocol SelectableListPresentable {
 
   func processFacetValues(selectedValues: [String],
                           resultValues: [FacetValue]?,
-                          sortBy: [SortCriterion],
-                          limit: Int) -> [SelectableRefinement]
+                          sortBy: [FacetSortCriterion],
+                          limit: Int) -> [RefinementFacet]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -31,8 +31,8 @@ public class RefinementListPresenter: SelectableListPresentable {
   /// Builds the final list to be displayed in the refinement list
   public func processFacetValues(selectedValues: [String],
                                  resultValues: [FacetValue]?,
-                                 sortBy: [SortCriterion],
-                                 limit: Int = 10) -> [SelectableRefinement] {
+                                 sortBy: [FacetSortCriterion],
+                                 limit: Int = 10) -> [RefinementFacet] {
 
     let facetList: [RefinementFacet] = merge(resultValues, withSelectedValues: selectedValues)
 
