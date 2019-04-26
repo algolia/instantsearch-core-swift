@@ -16,7 +16,6 @@ public class RefinementFacetsViewModel: SelectableFacetsViewModel {
   }
 }
 
-
 public class MenuFacetsViewModel: SelectableFacetsViewModel {
   public init() {
     super.init(selectionMode: .single)
@@ -34,7 +33,6 @@ public enum FacetSortCriterion {
   }
 }
 
-
 public enum RefinementOperator {
   // when operator is 'and' + one single value can be selected,
   // we want to keep the other values visible, so we have to do a disjunctive facet
@@ -46,20 +44,19 @@ public enum RefinementOperator {
 
 }
 
-
 public extension SelectableFacetsViewModel {
 
-//  func connect(refinementPresenter: SelectableListPresentable, refinementFacetsView: RefinementFacetsView, closure: @escaping (([SelectableRefinement]) -> ())) {
-//    self.onValuesChanged.subscribe(with: self) { [weak self] (facetValues) in
-//      let sortedFacetValues =
-//        refinementPresenter.processFacetValues(
-//          selectedValues: Array(self?.selections ?? Set()),
-//          resultValues: facetValues)
-//      closure(sortedFacetValues)
-//
-//      refinementFacetsView.reload()
-//    }
-//  }
+  func connect<T: RefinementFacetsView>(view: T, refinementPresenter: SelectableListPresentable = RefinementFacetsPresenter(), closure: @escaping ((T, [RefinementFacet]) -> Void)) {
+    self.onItemsChanged.subscribe(with: self) { [weak self] (facetValues) in
+      let sortedFacetValues =
+        refinementPresenter.processFacetValues(
+          selectedValues: Array(self?.selections ?? Set()),
+          resultValues: facetValues)
+
+      closure(view, sortedFacetValues)
+
+    }
+  }
 
   // TODO: Try to refactor to smaller connect methods for more readability and clarity 
   func connect<R: Codable>(attribute: Attribute, searcher: SingleIndexSearcher<R>, operator: RefinementOperator, groupName: String? = nil) {

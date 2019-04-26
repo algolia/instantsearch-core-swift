@@ -21,7 +21,7 @@ public protocol SelectableListPresentable {
 /// - The list of Facets + Associated Count
 /// - The list of Facets that have been refined
 /// - Layout settings such as sortBy
-public class RefinementListPresenter: SelectableListPresentable {
+public class RefinementFacetsPresenter: SelectableListPresentable {
 
   let sortBy: [FacetSortCriterion]
   let limit: Int
@@ -82,13 +82,14 @@ public class RefinementListPresenter: SelectableListPresentable {
   }
 }
 
-private extension RefinementListPresenter {
+private extension RefinementFacetsPresenter {
   
   /// Add missing refinements with a count of 0 to all returned facetValues
   /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
   /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
   
   //TODO: MOVE MERGE OUT OF PRESENTER
+  // The signature for processFacetValues should be [RefinementFacet] -> [RefinementFacet]
   func merge(_ facetValues: [FacetValue]?, withSelectedValues selectedValues: [String]) -> [RefinementFacet] {
 
     var values = [RefinementFacet]()

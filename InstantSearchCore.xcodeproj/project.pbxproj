@@ -240,6 +240,10 @@
 		E242340B2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
 		E242340C2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
 		E242340D2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
+		E265DBF022733D4C002DC989 /* RefinementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* RefinementList.swift */; };
+		E265DBF122733D4C002DC989 /* RefinementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* RefinementList.swift */; };
+		E265DBF222733D4C002DC989 /* RefinementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* RefinementList.swift */; };
+		E265DBF322733D4C002DC989 /* RefinementList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* RefinementList.swift */; };
 		E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
 		E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
 		E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
@@ -377,6 +381,7 @@
 		BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjcBridgingTest.m; sourceTree = "<group>"; };
 		E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModel.swift; sourceTree = "<group>"; };
 		E24234092243A43D008F24FB /* Signals+Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Signals+Observable.swift"; sourceTree = "<group>"; };
+		E265DBEF22733D4C002DC989 /* RefinementList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementList.swift; sourceTree = "<group>"; };
 		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CD920AF2D350056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/Mac/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/tvOS/InstantSearchClient.framework; sourceTree = "<group>"; };
@@ -644,6 +649,7 @@
 				E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */,
 				AFDA41312269C54400100CB5 /* RefinementFacetViewModel.swift */,
 				E2BAE6AF223FF77100B89EA3 /* RefinementListPresenter.swift */,
+				E265DBEF22733D4C002DC989 /* RefinementList.swift */,
 			);
 			path = RefinementList;
 			sourceTree = "<group>";
@@ -1039,6 +1045,7 @@
 			files = (
 				AF1177C3225E2CB300C5B59B /* Converter.swift in Sources */,
 				E29E455E2243F322005B358D /* Observer.swift in Sources */,
+				E265DBF022733D4C002DC989 /* RefinementList.swift in Sources */,
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
 				AF3DE5A1224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779C225E2AB500C5B59B /* Filters.swift in Sources */,
@@ -1121,6 +1128,7 @@
 			files = (
 				AF1177C4225E2CB300C5B59B /* Converter.swift in Sources */,
 				E29E455F2243F322005B358D /* Observer.swift in Sources */,
+				E265DBF122733D4C002DC989 /* RefinementList.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
 				AF3DE5A2224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779D225E2AB500C5B59B /* Filters.swift in Sources */,
@@ -1202,6 +1210,7 @@
 			files = (
 				AF1177C5225E2CB300C5B59B /* Converter.swift in Sources */,
 				E29E45602243F322005B358D /* Observer.swift in Sources */,
+				E265DBF222733D4C002DC989 /* RefinementList.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
 				AF3DE5A3224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779E225E2AB500C5B59B /* Filters.swift in Sources */,
@@ -1283,6 +1292,7 @@
 			files = (
 				AF1177C6225E2CB300C5B59B /* Converter.swift in Sources */,
 				E29E45612243F322005B358D /* Observer.swift in Sources */,
+				E265DBF322733D4C002DC989 /* RefinementList.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
 				AF3DE5A4224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779F225E2AB500C5B59B /* Filters.swift in Sources */,
