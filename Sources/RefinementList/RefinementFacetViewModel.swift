@@ -46,7 +46,7 @@ public enum RefinementOperator {
 
 public extension SelectableFacetsViewModel {
 
-  func connect<T: RefinementFacetsViewController>(view: T, refinementPresenter: SelectableListPresentable? = nil) {
+  func connectController<T: RefinementFacetsViewController>(_ controller: T, with: SelectableListPresentable? = nil) {
 
     /// Add missing refinements with a count of 0 to all returned facetValues
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
@@ -73,15 +73,15 @@ public extension SelectableFacetsViewModel {
     func assignSelectableItems(facetValues: [FacetValue], selections: Set<String>) {
       let refinementFacets = merge(facetValues, withSelectedValues: self.selections)
 
-      let sortedFacetValues = refinementPresenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
+      let sortedFacetValues = with?.transform(refinementFacets: refinementFacets) ?? refinementFacets
 
-      view.setSelectableItems(selectableItems: sortedFacetValues)
-      view.reload()
+      controller.setSelectableItems(selectableItems: sortedFacetValues)
+      controller.reload()
     }
 
     assignSelectableItems(facetValues: items, selections: selections)
-    
-    view.onClick = { facetValue in
+
+    controller.onClick = { facetValue in
       self.selectItem(forKey: facetValue.value)
     }
 
@@ -99,7 +99,7 @@ public extension SelectableFacetsViewModel {
   }
 
   // TODO: Try to refactor to smaller connect methods for more readability and clarity 
-  func connect<R: Codable>(attribute: Attribute, searcher: SingleIndexSearcher<R>, operator: RefinementOperator, groupName: String? = nil) {
+  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
     
     let groupID: FilterGroup.ID
     
