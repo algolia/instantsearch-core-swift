@@ -8,15 +8,17 @@
 
 import Foundation
 
-public protocol SelectableListView {
+public protocol SelectableListViewController: class {
   associatedtype Item
 
-  func setSelectableItems(selectableItems: [SelectableItem<Item>])
+  var onClick: ((Item) -> Void)? { get set }
 
-  func onClickItem(onClick: (Item) -> Void)
+  func setSelectableItems(selectableItems: [SelectableItem<Item>])
 
   func reload()
 
 }
 
-public protocol RefinementFacetsView: SelectableListView where Item == RefinementFacet {}
+public protocol RefinementFacetsViewController: SelectableListViewController where Item == FacetValue {
+
+}

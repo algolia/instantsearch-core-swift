@@ -13,8 +13,7 @@ public typealias RefinementFacet = SelectableItem<FacetValue>
 
 public protocol SelectableListPresentable {
 
-  func processFacetValues(selectedValues: [String],
-                          resultValues: [FacetValue]?) -> [RefinementFacet]
+  func transform(refinementFacets: [RefinementFacet]) -> [RefinementFacet]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -33,12 +32,9 @@ public class RefinementFacetsPresenter: SelectableListPresentable {
   }
 
   /// Builds the final list to be displayed in the refinement list
-  public func processFacetValues(selectedValues: [String],
-                                 resultValues: [FacetValue]?) -> [RefinementFacet] {
+  public func transform(refinementFacets: [RefinementFacet]) -> [RefinementFacet] {
 
-    let facetList: [RefinementFacet] = merge(resultValues, withSelectedValues: selectedValues)
-
-    let sortedFacetList = facetList.sorted { (lhs, rhs) in
+    let sortedFacetList = refinementFacets.sorted { (lhs, rhs) in
 
       let lhsChecked: Bool = lhs.isSelected
       let rhsChecked: Bool = rhs.isSelected
@@ -80,33 +76,4 @@ public class RefinementFacetsPresenter: SelectableListPresentable {
 
     return Array(sortedFacetList[..<min(limit, sortedFacetList.count)])
   }
-}
-
-private extension RefinementFacetsPresenter {
-  
-  /// Add missing refinements with a count of 0 to all returned facetValues
-  /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
-  /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-  
-  //TODO: MOVE MERGE OUT OF PRESENTER
-  // The signature for processFacetValues should be [RefinementFacet] -> [RefinementFacet]
-  func merge(_ facetValues: [FacetValue]?, withSelectedValues selectedValues: [String]) -> [RefinementFacet] {
-
-    var values = [RefinementFacet]()
-    if let facetValues = facetValues {
-      facetValues.forEach { (facetValue) in
-
-        values.append((facetValue, selectedValues.contains(facetValue.value)))
-      }
-    }
-    // Make sure there is a value at least for the refined values.
-    selectedValues.forEach { (refinementValue) in
-      if facetValues == nil || !facetValues!.contains { $0.value == refinementValue } {
-        values.append((FacetValue(value: refinementValue, count: 0, highlighted: .none), true))
-      }
-    }
-    
-    return values
-  }
-  
 }

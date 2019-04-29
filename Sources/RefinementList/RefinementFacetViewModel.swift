@@ -46,15 +46,55 @@ public enum RefinementOperator {
 
 public extension SelectableFacetsViewModel {
 
-  func connect<T: RefinementFacetsView>(view: T, refinementPresenter: SelectableListPresentable = RefinementFacetsPresenter(), closure: @escaping ((T, [RefinementFacet]) -> Void)) {
+  func connect<T: RefinementFacetsViewController>(view: T, refinementPresenter: SelectableListPresentable? = nil) {
+
+    /// Add missing refinements with a count of 0 to all returned facetValues
+    /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
+    /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
+    func merge(_ facetValues: [FacetValue], withSelectedValues selectedValues: Set<String>) -> [RefinementFacet] {
+
+      return facetValues.map { RefinementFacet($0, selectedValues.contains($0.value)) }
+//      var values = [RefinementFacet]()
+//
+//      facetValues.forEach { (facetValue) in
+//          values.append((facetValue, selectedValues.contains(facetValue.value)))
+//      }
+//
+//      // Make sure there is a value at least for the refined values.
+//      selectedValues.forEach { (refinementValue) in
+//        if !facetValues.contains { $0.value == refinementValue } {
+//          values.append((FacetValue(value: refinementValue, count: 0, highlighted: .none), true))
+//        }
+//      }
+//
+//      return values
+    }
+
+    func assignSelectableItems(facetValues: [FacetValue], selections: Set<String>) {
+      let refinementFacets = merge(facetValues, withSelectedValues: self.selections)
+
+      let sortedFacetValues = refinementPresenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
+
+      view.setSelectableItems(selectableItems: sortedFacetValues)
+      view.reload()
+    }
+
+    assignSelectableItems(facetValues: items, selections: selections)
+    
+    view.onClick = { facetValue in
+      self.selectItem(forKey: facetValue.value)
+    }
+
     self.onItemsChanged.subscribe(with: self) { [weak self] (facetValues) in
-      let sortedFacetValues =
-        refinementPresenter.processFacetValues(
-          selectedValues: Array(self?.selections ?? Set()),
-          resultValues: facetValues)
+      guard let strongSelf = self else { return }
 
-      closure(view, sortedFacetValues)
+      assignSelectableItems(facetValues: facetValues, selections: strongSelf.selections)
+    }
 
+    self.onSelectionsChanged.subscribe(with: self) { [weak self] (selections) in
+      guard let strongSelf = self else { return }
+
+      assignSelectableItems(facetValues: strongSelf.items, selections: selections)
     }
   }
 
