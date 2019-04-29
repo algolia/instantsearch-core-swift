@@ -39,10 +39,10 @@ public struct SearchResults<T: Codable>: Codable {
   public let totalHitsCount: Int
   
   /// Conjunctive facets that can be used to refine the result
-  public let facets: [Attribute: [FacetValue]]?
+  public let facets: [Attribute: [Facet]]?
   
   /// Disjunctive facets that can be used to refine the result
-  public let disjunctiveFacets: [Attribute: [FacetValue]]?
+  public let disjunctiveFacets: [Attribute: [Facet]]?
   
   /// Last returned page.
   public let page: Int
@@ -117,12 +117,12 @@ public struct SearchResults<T: Codable>: Codable {
     self.automaticRadius = try container.decodeIfPresent(Int.self, forKey: .automaticRadius)
     self.rankingInfo = try? RankingInfo(from: decoder)
     self.aroundGeoLocation = try container.decodeIfPresent(GeoLocation.self, forKey: .aroundGeoLocation)
-    func extractFacets(withKey key: CodingKeys) throws -> [Attribute: [FacetValue]]? {
+    func extractFacets(withKey key: CodingKeys) throws -> [Attribute: [Facet]]? {
       if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: key) {
-        var facets: [Attribute: [FacetValue]] = [:]
+        var facets: [Attribute: [Facet]] = [:]
         for facet in rawFacets {
           let facetName = Attribute(facet.key)
-          let facetValues = facet.value.map { FacetValue(value: $0.key, count: $0.value, highlighted: .none) }
+          let facetValues = facet.value.map { Facet(value: $0.key, count: $0.value, highlighted: .none) }
           facets[facetName] = facetValues
         }
         return facets
@@ -203,7 +203,7 @@ extension SearchResults {
     return facetStats?[facetName]
   }
   
-  func facetOptions(for facetName: Attribute) -> [FacetValue]? {
+  func facetOptions(for facetName: Attribute) -> [Facet]? {
     return facets?[facetName]
   }
   

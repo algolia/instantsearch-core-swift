@@ -19,6 +19,6 @@ public protocol SelectableListViewController: class {
 
 }
 
-public protocol RefinementFacetsViewController: SelectableListViewController where Item == FacetValue {
+public protocol RefinementFacetsViewController: SelectableListViewController where Item == Facet {
 
 }

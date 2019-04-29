@@ -9,7 +9,7 @@
 import Foundation
 
 public typealias SelectableItem<T> = (item: T, isSelected: Bool)
-public typealias RefinementFacet = SelectableItem<FacetValue>
+public typealias RefinementFacet = SelectableItem<Facet>
 
 public protocol SelectableListPresentable {
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias SelectableFacetsViewModel = SelectableListViewModel<String, FacetValue>
+public typealias SelectableFacetsViewModel = SelectableListViewModel<String, Facet>
 
 public class RefinementFacetsViewModel: SelectableFacetsViewModel {
   public init() {
@@ -51,7 +51,7 @@ public extension SelectableFacetsViewModel {
     /// Add missing refinements with a count of 0 to all returned facetValues
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-    func merge(_ facetValues: [FacetValue], withSelectedValues selectedValues: Set<String>) -> [RefinementFacet] {
+    func merge(_ facetValues: [Facet], withSelectedValues selectedValues: Set<String>) -> [RefinementFacet] {
 
       return facetValues.map { RefinementFacet($0, selectedValues.contains($0.value)) }
 //      var values = [RefinementFacet]()
@@ -70,7 +70,7 @@ public extension SelectableFacetsViewModel {
 //      return values
     }
 
-    func assignSelectableItems(facetValues: [FacetValue], selections: Set<String>) {
+    func assignSelectableItems(facetValues: [Facet], selections: Set<String>) {
       let refinementFacets = merge(facetValues, withSelectedValues: self.selections)
 
       let sortedFacetValues = presenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets

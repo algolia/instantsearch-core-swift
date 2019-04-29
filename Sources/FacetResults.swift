@@ -12,7 +12,7 @@ import Foundation
 /// A value of a given facet, together with its number of occurrences.
 /// This struct is mainly useful when an ordered list of facet values has to be presented to the user.
 ///
-public struct FacetValue: Codable, Equatable {
+public struct Facet: Codable, Equatable {
     public let value: String
     public let count: Int
     public let highlighted: String?
@@ -20,7 +20,7 @@ public struct FacetValue: Codable, Equatable {
 
 extension Dictionary where Key == String, Value == [String: Int] {
   
-  init(_ facetsForAttribute: [Attribute: [FacetValue]]) {
+  init(_ facetsForAttribute: [Attribute: [Facet]]) {
     self = [:]
     for facetForAttribute in facetsForAttribute {
       let rawAttribute = facetForAttribute.key.description
@@ -32,7 +32,7 @@ extension Dictionary where Key == String, Value == [String: Int] {
 
 extension Dictionary where Key == String, Value == Int {
   
-  init(_ facetValues: [FacetValue]) {
+  init(_ facetValues: [Facet]) {
     self = [:]
     for facetValue in facetValues {
       self[facetValue.value] = facetValue.count
@@ -50,7 +50,7 @@ public struct FacetResults: Codable {
         case areFacetsCountExhaustive = "exhaustiveFacetsCount"
     }
     
-    public let facetHits: [FacetValue]
+    public let facetHits: [Facet]
     public let processingTimeMS: Int
     public let areFacetsCountExhaustive: Bool
     
