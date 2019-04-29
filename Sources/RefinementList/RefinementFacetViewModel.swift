@@ -46,7 +46,7 @@ public enum RefinementOperator {
 
 public extension SelectableFacetsViewModel {
 
-  func connectController<T: RefinementFacetsViewController>(_ controller: T, with: SelectableListPresentable? = nil) {
+  func connectController<T: RefinementFacetsViewController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
 
     /// Add missing refinements with a count of 0 to all returned facetValues
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
@@ -73,17 +73,17 @@ public extension SelectableFacetsViewModel {
     func assignSelectableItems(facetValues: [FacetValue], selections: Set<String>) {
       let refinementFacets = merge(facetValues, withSelectedValues: self.selections)
 
-      let sortedFacetValues = with?.transform(refinementFacets: refinementFacets) ?? refinementFacets
+      let sortedFacetValues = presenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
 
       controller.setSelectableItems(selectableItems: sortedFacetValues)
       controller.reload()
     }
 
-    assignSelectableItems(facetValues: items, selections: selections)
-
     controller.onClick = { facetValue in
       self.selectItem(forKey: facetValue.value)
     }
+
+    assignSelectableItems(facetValues: items, selections: selections)
 
     self.onItemsChanged.subscribe(with: self) { [weak self] (facetValues) in
       guard let strongSelf = self else { return }
@@ -98,19 +98,44 @@ public extension SelectableFacetsViewModel {
     }
   }
 
-  // TODO: Try to refactor to smaller connect methods for more readability and clarity 
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
     
-    let groupID: FilterGroup.ID
-    
+    let groupID = self.groupID(with: `operator`, attribute: attribute, groupName: groupName)
+
+    whenSelectionsComputedThenUpdateFilterState(attribute, searcher, groupID)
+
+    whenFilterStateChangedThenUpdateSelections(of: searcher, groupID: groupID)
+
+    whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
+  }
+  
+}
+
+fileprivate extension SelectableFacetsViewModel {
+
+  func whenSelectionsComputedThenUpdateFilterState<R: Codable>(_ attribute: Attribute, _ searcher: SingleIndexSearcher<R>, _ groupID: FilterGroup.ID) {
+
+    onSelectionsComputed.subscribe(with: self) { selections in
+      let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
+      searcher.indexSearchData.filterState.removeAll(fromGroupWithID: groupID)
+      searcher.indexSearchData.filterState.addAll(filters: filters, toGroupWithID: groupID)
+      searcher.indexSearchData.filterState.notifyOnChange()
+      
+      print(searcher.indexSearchData.filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm)
+    }
+  }
+
+  func groupID(with operator: RefinementOperator, attribute: Attribute, groupName: String?) -> FilterGroup.ID {
     switch `operator` {
     case .and:
-      groupID = .and(name: groupName ?? attribute.name)
+      return .and(name: groupName ?? attribute.name)
     case .or:
-      groupID = .or(name: groupName ?? attribute.name)
+      return .or(name: groupName ?? attribute.name)
     }
-    
-    let filterStateListener: (FiltersReadable) -> Void = { filterState in
+  }
+
+  func whenFilterStateChangedThenUpdateSelections<R: Codable>(of searcher: SingleIndexSearcher<R>, groupID: FilterGroup.ID) {
+    let onChange: (FiltersReadable) -> Void = { filterState in
       self.selections = Set(filterState.getFilters(forGroupWithID: groupID).map { filter -> String? in
         if
           case .facet(let filterFacet) = filter,
@@ -120,26 +145,18 @@ public extension SelectableFacetsViewModel {
           return nil
         }
         }.compactMap { $0 })
-      searcher.search()
     }
-    
-    filterStateListener(searcher.indexSearchData.filterState)
-    
-    searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: filterStateListener)
-    
-    searcher.onSearchResults.subscribe(with: self) { (_, result) in
+
+    onChange(searcher.indexSearchData.filterState)
+
+    searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: onChange)
+  }
+
+  func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
+    searcher.onResultsChanged.subscribe(with: self) { (_, result) in
       if case .success(let searchResults) = result {
         self.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
       }
     }
-    
-    onSelectionsComputed.subscribe(with: self) { selections in
-      let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
-      searcher.indexSearchData.filterState.removeAll(fromGroupWithID: groupID)
-      searcher.indexSearchData.filterState.addAll(filters: filters, toGroupWithID: groupID)
-      print(searcher.indexSearchData.filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm)
-    }
-    
   }
-  
 }

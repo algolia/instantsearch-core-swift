@@ -11,17 +11,22 @@ import Signals
 
 public class FilterState {
   
-  var filters: Filters {
-    didSet {
-      onChange.fire(filters)
-    }
-  }
+  var filters: Filters
   
   public var onChange: Observer<FiltersReadable>
   
   public init() {
     self.filters = Filters()
     self.onChange = Observer<FiltersReadable>()
+  }
+
+  public func notify(callback: (FiltersWritable) -> Void) {
+    callback(self)
+    onChange.fire(filters)
+  }
+
+  public func notifyOnChange() {
+    onChange.fire(filters)
   }
   
 }

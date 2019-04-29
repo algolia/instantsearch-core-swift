@@ -16,7 +16,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public var indexSearchDatas: [IndexSearchData]
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
-  public let onSearchResults = Observer<SearchResult>()
+  public let onResultsChanged = Observer<SearchResult>()
   public var applyDisjunctiveFacetingWhenNecessary = true
   
   public convenience init(client: Client, indices: [Index], query: Query, filterState: FilterState) {
@@ -28,8 +28,12 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     self.indexSearchDatas = indexSearchDatas
     self.sequencer = Sequencer()
     sequencer.delegate = self
-    onSearchResults.retainLastData = true
+    onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
+
+//    filterState.onChange.subscribe(with: self) { _ in
+//      self.search()
+//    }
   }
   
   public func setQuery(text: String) {
@@ -60,7 +64,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
           output = .failure(error)
         }
         
-        self.onSearchResults.fire(output)
+        self.onResultsChanged.fire(output)
         
       }
     }

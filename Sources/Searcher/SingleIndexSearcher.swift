@@ -15,7 +15,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
   public let indexSearchData: IndexSearchData
-  public let onSearchResults = Observer<SearchResult>()
+  public let onResultsChanged = Observer<SearchResult>()
   
   public var applyDisjunctiveFacetingWhenNecessary = true
   
@@ -23,8 +23,12 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     sequencer = Sequencer()
     sequencer.delegate = self
-    onSearchResults.retainLastData = true
+    onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
+
+    filterState.onChange.subscribe(with: self) { _ in
+      self.search()
+    }
   }
   
   public convenience init(indexSearchData: IndexSearchData) {
@@ -37,7 +41,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   
   fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
     let result: Result<SearchResults<Record>, Error> = self.transform(content: value, error: error)
-    self.onSearchResults.fire((queryMetadata, result))
+    self.onResultsChanged.fire((queryMetadata, result))
   }
   
   public func search(requestOptions: RequestOptions? = nil) {

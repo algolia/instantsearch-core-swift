@@ -60,6 +60,6 @@ public protocol SearchResultObservable {
   
   associatedtype SearchResult
   
-  var onSearchResults: Observer<SearchResult> { get }
+  var onResultsChanged: Observer<SearchResult> { get }
   
 }

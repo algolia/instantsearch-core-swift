@@ -14,7 +14,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   
   public let indexSearchData: IndexSearchData
   public let sequencer: Sequencer
-  public let onSearchResults = Observer<SearchResult>()
+  public let onResultsChanged = Observer<SearchResult>()
   public let isLoading = Observer<Bool>()
   public var facetName: String
   public var text: String
@@ -25,8 +25,12 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     self.text = text
     self.sequencer = Sequencer()
     sequencer.delegate = self
-    onSearchResults.retainLastData = true
+    onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
+    
+    filterState.onChange.subscribe(with: self) { _ in
+      self.search()
+    }
   }
   
   public func setQuery(text: String) {
@@ -42,7 +46,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     sequencer.orderOperation {
       return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text, requestOptions: requestOptions) { (content, error) in
         let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
-        self.onSearchResults.fire((metadata, result))
+        self.onResultsChanged.fire((metadata, result))
       }
     }
     
