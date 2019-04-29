@@ -32,10 +32,10 @@ extension Dictionary where Key == String, Value == [String: Int] {
 
 extension Dictionary where Key == String, Value == Int {
   
-  init(_ facetValues: [Facet]) {
+  init(_ facets: [Facet]) {
     self = [:]
-    for facetValue in facetValues {
-      self[facetValue.value] = facetValue.count
+    for facet in facets {
+      self[facet.value] = facet.count
     }
   }
   

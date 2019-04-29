@@ -48,21 +48,21 @@ public extension SelectableFacetsViewModel {
 
   func connectController<T: RefinementFacetsViewController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
 
-    /// Add missing refinements with a count of 0 to all returned facetValues
+    /// Add missing refinements with a count of 0 to all returned facets
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-    func merge(_ facetValues: [Facet], withSelectedValues selectedValues: Set<String>) -> [RefinementFacet] {
+    func merge(_ facets: [Facet], withSelectedValues selectedValues: Set<String>) -> [RefinementFacet] {
 
-      return facetValues.map { RefinementFacet($0, selectedValues.contains($0.value)) }
+      return facets.map { RefinementFacet($0, selectedValues.contains($0.value)) }
 //      var values = [RefinementFacet]()
 //
-//      facetValues.forEach { (facetValue) in
-//          values.append((facetValue, selectedValues.contains(facetValue.value)))
+//      facets.forEach { (facet) in
+//          values.append((facet, selectedValues.contains(facet.value)))
 //      }
 //
 //      // Make sure there is a value at least for the refined values.
 //      selectedValues.forEach { (refinementValue) in
-//        if !facetValues.contains { $0.value == refinementValue } {
+//        if !facets.contains { $0.value == refinementValue } {
 //          values.append((FacetValue(value: refinementValue, count: 0, highlighted: .none), true))
 //        }
 //      }
@@ -70,8 +70,8 @@ public extension SelectableFacetsViewModel {
 //      return values
     }
 
-    func assignSelectableItems(facetValues: [Facet], selections: Set<String>) {
-      let refinementFacets = merge(facetValues, withSelectedValues: self.selections)
+    func assignSelectableItems(facets: [Facet], selections: Set<String>) {
+      let refinementFacets = merge(facets, withSelectedValues: self.selections)
 
       let sortedFacetValues = presenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
 
@@ -79,22 +79,22 @@ public extension SelectableFacetsViewModel {
       controller.reload()
     }
 
-    controller.onClick = { facetValue in
-      self.selectItem(forKey: facetValue.value)
+    controller.onClick = { facet in
+      self.selectItem(forKey: facet.value)
     }
 
-    assignSelectableItems(facetValues: items, selections: selections)
+    assignSelectableItems(facets: items, selections: selections)
 
-    self.onItemsChanged.subscribe(with: self) { [weak self] (facetValues) in
+    self.onItemsChanged.subscribe(with: self) { [weak self] (facets) in
       guard let strongSelf = self else { return }
 
-      assignSelectableItems(facetValues: facetValues, selections: strongSelf.selections)
+      assignSelectableItems(facets: facets, selections: strongSelf.selections)
     }
 
     self.onSelectionsChanged.subscribe(with: self) { [weak self] (selections) in
       guard let strongSelf = self else { return }
 
-      assignSelectableItems(facetValues: strongSelf.items, selections: selections)
+      assignSelectableItems(facets: strongSelf.items, selections: selections)
     }
   }
 

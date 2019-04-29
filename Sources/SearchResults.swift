@@ -119,13 +119,13 @@ public struct SearchResults<T: Codable>: Codable {
     self.aroundGeoLocation = try container.decodeIfPresent(GeoLocation.self, forKey: .aroundGeoLocation)
     func extractFacets(withKey key: CodingKeys) throws -> [Attribute: [Facet]]? {
       if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: key) {
-        var facets: [Attribute: [Facet]] = [:]
+        var attributeToFacets: [Attribute: [Facet]] = [:]
         for facet in rawFacets {
           let facetName = Attribute(facet.key)
-          let facetValues = facet.value.map { Facet(value: $0.key, count: $0.value, highlighted: .none) }
-          facets[facetName] = facetValues
+          let facets = facet.value.map { Facet(value: $0.key, count: $0.value, highlighted: .none) }
+          attributeToFacets[facetName] = facets
         }
-        return facets
+        return attributeToFacets
       } else {
         return .none
       }
