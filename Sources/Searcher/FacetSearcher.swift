@@ -19,15 +19,15 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var facetName: String
   public var text: String
   
-  public init(index: Index, query: Query, filterState: FilterState, facetName: String, text: String) {
-    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
+  public init(index: Index, query: Query, filterState: FilterState, facetName: String, text: String, requestOptions: RequestOptions? = nil) {
+    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState, requestOptions: requestOptions)
     self.facetName = facetName
     self.text = text
     self.sequencer = Sequencer()
     sequencer.delegate = self
     onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
-    
+
     filterState.onChange.subscribe(with: self) { _ in
       self.search()
     }
@@ -37,14 +37,14 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     self.text = text
   }
   
-  public func search(requestOptions: RequestOptions? = nil) {
+  public func search() {
     
     indexSearchData.applyFilters()
     
     let metadata = QueryMetadata(query: indexSearchData.query)
     
     sequencer.orderOperation {
-      return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text, requestOptions: requestOptions) { (content, error) in
+      return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text, requestOptions: self.indexSearchData.requestOptions) { (content, error) in
         let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
         self.onResultsChanged.fire((metadata, result))
       }

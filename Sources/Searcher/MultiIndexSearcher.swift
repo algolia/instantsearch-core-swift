@@ -19,8 +19,8 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public let onResultsChanged = Observer<SearchResult>()
   public var applyDisjunctiveFacetingWhenNecessary = true
   
-  public convenience init(client: Client, indices: [Index], query: Query, filterState: FilterState) {
-    self.init(client: client, indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterState: filterState))
+  public convenience init(client: Client, indices: [Index], query: Query, filterState: FilterState, requestOptions: RequestOptions? = nil) {
+    self.init(client: client, indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterState: filterState, requestOptions: requestOptions))
   }
   
   public init(client: Client, indexSearchDatas: [IndexSearchData]) {
@@ -40,7 +40,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     indexSearchDatas.forEach { $0.query.query = text }
   }
   
-  public func search(requestOptions: RequestOptions? = nil) {
+  public func search() {
     
     indexSearchDatas.forEach { $0.applyFilters() }
     
@@ -48,7 +48,8 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     let metadata = self.indexSearchDatas.map { $0.query }.map(QueryMetadata.init(query:))
     
     sequencer.orderOperation {
-      return self.client.multipleQueries(indexQueries, requestOptions: requestOptions) { (content, error) in
+      // TODO: Make sure can only have 1 request Option in the class, else we need to change that. 
+      return self.client.multipleQueries(indexQueries, requestOptions: indexSearchDatas.first?.requestOptions) { (content, error) in
         
         let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
         

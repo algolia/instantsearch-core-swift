@@ -17,6 +17,8 @@ public struct IndexSearchData {
   
   /// Query describing a search request
   public let query: Query
+
+  public let requestOptions: RequestOptions?
   
   /// FilterState describing query filters
   public let filterState: FilterState
@@ -26,10 +28,11 @@ public struct IndexSearchData {
     query.filters = filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm
   }
   
-  public init(index: Index, query: Query = .init(), filterState: FilterState = .init()) {
+  public init(index: Index, query: Query = .init(), filterState: FilterState = .init(), requestOptions: RequestOptions? = nil) {
     self.index = index
     self.query = query
     self.filterState = filterState
+    self.requestOptions = requestOptions
   }
   
 }
@@ -44,8 +47,8 @@ extension IndexQuery {
 
 extension Array where Element == IndexSearchData {
   
-  init(indices: [InstantSearchClient.Index], query: Query = .init(), filterState: FilterState = .init()) {
-    self = indices.map { IndexSearchData(index: $0, query: query, filterState: filterState) }
+  init(indices: [InstantSearchClient.Index], query: Query = .init(), filterState: FilterState = .init(), requestOptions: RequestOptions? = nil) {
+    self = indices.map { IndexSearchData(index: $0, query: query, filterState: filterState, requestOptions: requestOptions) }
   }
   
 }

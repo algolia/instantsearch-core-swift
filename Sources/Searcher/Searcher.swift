@@ -13,7 +13,7 @@ public protocol Searcher: SequencerDelegate {
   var sequencer: Sequencer { get }
   var isLoading: Observer<Bool> { get }
   
-  func search(requestOptions: RequestOptions?)
+  func search()
   func cancel()
   func setQuery(text: String)
   

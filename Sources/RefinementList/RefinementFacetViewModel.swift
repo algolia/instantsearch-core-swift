@@ -51,17 +51,17 @@ public extension SelectableFacetsViewModel {
     /// Add missing refinements with a count of 0 to all returned facets
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-    func merge(_ facets: [Facet], withSelectedValues selectedValues: Set<String>) -> [RefinementFacet] {
+    func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
 
-      return facets.map { RefinementFacet($0, selectedValues.contains($0.value)) }
+      return facets.map { RefinementFacet($0, selections.contains($0.value)) }
 //      var values = [RefinementFacet]()
 //
 //      facets.forEach { (facet) in
-//          values.append((facet, selectedValues.contains(facet.value)))
+//          values.append((facet, selections.contains(facet.value)))
 //      }
 //
 //      // Make sure there is a value at least for the refined values.
-//      selectedValues.forEach { (refinementValue) in
+//      selections.forEach { (refinementValue) in
 //        if !facets.contains { $0.value == refinementValue } {
 //          values.append((FacetValue(value: refinementValue, count: 0, highlighted: .none), true))
 //        }
