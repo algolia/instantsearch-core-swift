@@ -54,8 +54,12 @@ struct Filters {
   
   /// Copy constructor
   
-  public init(_ filterState: Filters) {
-    self = filterState
+  public init(_ filters: Filters) {
+    self = filters
+  }
+
+  public init(_ groups: [FilterGroup.ID: Set<Filter>]) {
+    self.groups = groups
   }
   
   private mutating func update(_ filters: Set<Filter>, forGroupWithID groupID: FilterGroup.ID) {

@@ -14,18 +14,23 @@ public class FilterState {
   var filters: Filters
   
   public var onChange: Observer<FiltersReadable>
-  
-  public init() {
-    self.filters = Filters()
+
+  public init(groups: [FilterGroup.ID: Set<Filter>]? = nil) {
+    if let groups = groups {
+      self.filters = Filters(groups)
+    } else {
+      self.filters = Filters()
+    }
+
     self.onChange = Observer<FiltersReadable>()
   }
 
-  public func notify(callback: (FiltersWritable) -> Void) {
+  public func notify(callback: (FilterState) -> Void) {
     callback(self)
     onChange.fire(filters)
   }
 
-  public func notifyOnChange() {
+  public func notifyChange() {
     onChange.fire(filters)
   }
   

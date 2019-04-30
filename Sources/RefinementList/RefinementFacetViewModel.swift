@@ -99,6 +99,8 @@ public extension SelectableFacetsViewModel {
   }
 
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
+
+    updateQueryFacets(of: searcher, with: attribute)
     
     let groupID = self.groupID(with: `operator`, attribute: attribute, groupName: groupName)
 
@@ -113,13 +115,30 @@ public extension SelectableFacetsViewModel {
 
 fileprivate extension SelectableFacetsViewModel {
 
+  func updateQueryFacets<R: Codable>(of searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
+
+    guard let facets = searcher.indexSearchData.query.facets else {
+      searcher.indexSearchData.query.facets = [attribute.name]
+
+      return
+    }
+
+    guard facets.contains(attribute.name) else {
+      searcher.indexSearchData.query.facets! += [attribute.name]
+
+      return
+    }
+  }
+
   func whenSelectionsComputedThenUpdateFilterState<R: Codable>(_ attribute: Attribute, _ searcher: SingleIndexSearcher<R>, _ groupID: FilterGroup.ID) {
 
     onSelectionsComputed.subscribe(with: self) { selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
-      searcher.indexSearchData.filterState.removeAll(fromGroupWithID: groupID)
-      searcher.indexSearchData.filterState.addAll(filters: filters, toGroupWithID: groupID)
-      searcher.indexSearchData.filterState.notifyOnChange()
+
+      searcher.indexSearchData.filterState.notify { filterState in
+        filterState.removeAll(fromGroupWithID: groupID)
+        filterState.addAll(filters: filters, toGroupWithID: groupID)
+      }
       
       print(searcher.indexSearchData.filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm)
     }
