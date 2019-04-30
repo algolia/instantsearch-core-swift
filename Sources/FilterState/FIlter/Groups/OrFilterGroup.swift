@@ -17,11 +17,13 @@ extension FilterGroup {
     public var filters: [FilterType] {
       return typedFilters
     }
-    
+
+    public let name: String?
     private var typedFilters: [T]
     
-    public init(filters: [T] = []) {
+    public init(filters: [T] = [], name: String? = nil) {
       self.typedFilters = filters
+      self.name = name
     }
     
     public static func or<T: FilterType>(_ filters: [T]) -> FilterGroup.Or<T> {

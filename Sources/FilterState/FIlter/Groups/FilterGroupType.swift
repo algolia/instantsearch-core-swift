@@ -11,7 +11,8 @@ import Foundation
 public enum FilterGroup {}
 
 public protocol FilterGroupType {
-  
+
+  var name: String? { get }
   var filters: [FilterType] { get }
   
 }

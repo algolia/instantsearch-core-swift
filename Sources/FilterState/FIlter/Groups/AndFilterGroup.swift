@@ -15,13 +15,15 @@ extension FilterGroup {
   public struct And: FilterGroupType {
     
     public var filters: [FilterType]
+    public let name: String?
     
     public var isEmpty: Bool {
       return filters.isEmpty
     }
     
-    public init<S: Sequence>(filters: S) where S.Element == FilterType {
+    public init<S: Sequence>(filters: S, name: String? = nil) where S.Element == FilterType {
       self.filters = Array(filters)
+      self.name = name
     }
     
     public static func and(_ filters: [FilterType]) -> FilterGroup.And {

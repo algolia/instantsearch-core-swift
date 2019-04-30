@@ -324,15 +324,15 @@ extension Filters: FilterGroupsConvertible {
       
       switch groupID {
       case .and:
-        return FilterGroup.And(filters: sortedFilters.map { $0.filter })
+        return FilterGroup.And(filters: sortedFilters.map { $0.filter }, name: groupID.name)
       case .or:
         switch firstFilter {
         case .facet:
-          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Facet })
+          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Facet }, name: groupID.name)
         case .numeric:
-          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Numeric })
+          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Numeric }, name: groupID.name)
         case .tag:
-          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Tag })
+          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Tag }, name: groupID.name)
         }
       }
     }
