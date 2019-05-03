@@ -118,6 +118,8 @@
 		AF3DE5A2224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DE5A0224BAB1A00C8BC08 /* IndexSearchData.swift */; };
 		AF3DE5A3224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DE5A0224BAB1A00C8BC08 /* IndexSearchData.swift */; };
 		AF3DE5A4224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF3DE5A0224BAB1A00C8BC08 /* IndexSearchData.swift */; };
+		AF536C23227C66DC006DAE84 /* SelectableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableViewModel.swift */; };
+		AF536C25227C6802006DAE84 /* SelectableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C24227C6802006DAE84 /* SelectableViewController.swift */; };
 		AF6C6F6222538156001E5E3C /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F6122538156001E5E3C /* Searcher.swift */; };
 		AF6C6F6322538156001E5E3C /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F6122538156001E5E3C /* Searcher.swift */; };
 		AF6C6F6422538156001E5E3C /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F6122538156001E5E3C /* Searcher.swift */; };
@@ -338,6 +340,8 @@
 		AF1178752264DBDF00C5B59B /* FilterStateDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterStateDSL.swift; sourceTree = "<group>"; };
 		AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiHitsViewModelTests.swift; sourceTree = "<group>"; };
 		AF3DE5A0224BAB1A00C8BC08 /* IndexSearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSearchData.swift; sourceTree = "<group>"; };
+		AF536C22227C66DC006DAE84 /* SelectableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableViewModel.swift; sourceTree = "<group>"; };
+		AF536C24227C6802006DAE84 /* SelectableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableViewController.swift; sourceTree = "<group>"; };
 		AF6C6F6122538156001E5E3C /* Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searcher.swift; sourceTree = "<group>"; };
 		AF6C6F6622538160001E5E3C /* SingleIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleIndexSearcher.swift; sourceTree = "<group>"; };
 		AF6C6F6B2253816A001E5E3C /* MultiIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexSearcher.swift; sourceTree = "<group>"; };
@@ -546,6 +550,15 @@
 			path = FilterState;
 			sourceTree = "<group>";
 		};
+		AF536C21227C66CE006DAE84 /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				AF536C22227C66DC006DAE84 /* SelectableViewModel.swift */,
+				AF536C24227C6802006DAE84 /* SelectableViewController.swift */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
 		AF6C6F602253813F001E5E3C /* Searcher */ = {
 			isa = PBXGroup;
 			children = (
@@ -594,6 +607,7 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AF536C21227C66CE006DAE84 /* Group */,
 				E2242645224D22DF005DD565 /* RefinementList */,
 				AF1177A5225E2B2300C5B59B /* FilterState */,
 				AF6C6F602253813F001E5E3C /* Searcher */,
@@ -1081,8 +1095,10 @@
 				E24233DD223947FC008F24FB /* Result.swift in Sources */,
 				AF11780A225F650F00C5B59B /* GroupProxy.swift in Sources */,
 				AF1177B7225E2B8500C5B59B /* TagFilter.swift in Sources */,
+				AF536C25227C6802006DAE84 /* SelectableViewController.swift in Sources */,
 				E24233DB223947FC008F24FB /* HitsViewModel.swift in Sources */,
 				E242340A2243A43D008F24FB /* Signals+Observable.swift in Sources */,
+				AF536C23227C66DC006DAE84 /* SelectableViewModel.swift in Sources */,
 				AFDA412D2268AB7000100CB5 /* FilterState.swift in Sources */,
 				E29E45682243F335005B358D /* Subscription.swift in Sources */,
 				AF6C6F6722538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
