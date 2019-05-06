@@ -1,5 +1,5 @@
 //
-//  RefinementList.swift
+//  SelectableListViewController.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 26/04/2019.
@@ -9,6 +9,7 @@
 import Foundation
 
 public protocol SelectableListViewController: class {
+  
   associatedtype Item
 
   var onClick: ((Item) -> Void)? { get set }
@@ -19,6 +20,4 @@ public protocol SelectableListViewController: class {
 
 }
 
-public protocol RefinementFacetsViewController: SelectableListViewController where Item == Facet {
-
-}
+public protocol RefinementFacetsViewController: SelectableListViewController where Item == Facet {}

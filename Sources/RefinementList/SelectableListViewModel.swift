@@ -36,7 +36,7 @@ public class SelectableListViewModel<K: Hashable, Item: Equatable> {
     }
   }
 
-  public func selectItem(forKey key: K) {
+  public func computeSelections(selectingItemForKey key: K) {
     
     let selections: Set<K>
     

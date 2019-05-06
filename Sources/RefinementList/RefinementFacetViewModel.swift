@@ -45,6 +45,19 @@ public enum RefinementOperator {
 }
 
 public extension SelectableFacetsViewModel {
+  
+  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
+    
+    searcher.updateQueryFacets(with: attribute)
+    
+    let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
+    
+    whenSelectionsComputedThenUpdateFilterState(attribute, searcher, groupID)
+    
+    whenFilterStateChangedThenUpdateSelections(of: searcher, groupID: groupID)
+    
+    whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
+  }
 
   func connectController<T: RefinementFacetsViewController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
 
@@ -52,22 +65,11 @@ public extension SelectableFacetsViewModel {
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
     func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
-
-      return facets.map { RefinementFacet($0, selections.contains($0.value)) }
-//      var values = [RefinementFacet]()
-//
-//      facets.forEach { (facet) in
-//          values.append((facet, selections.contains(facet.value)))
-//      }
-//
-//      // Make sure there is a value at least for the refined values.
-//      selections.forEach { (refinementValue) in
-//        if !facets.contains { $0.value == refinementValue } {
-//          values.append((FacetValue(value: refinementValue, count: 0, highlighted: .none), true))
-//        }
-//      }
-//
-//      return values
+      let receivedFacets = facets.map { RefinementFacet($0, selections.contains($0.value)) }
+      let persistentlySelectedFacets = selections
+        .filter { !facets.map { $0.value }.contains($0) }
+        .map { (Facet(value: $0, count: 0, highlighted: .none), true) }
+      return receivedFacets + persistentlySelectedFacets
     }
 
     func assignSelectableItems(facets: [Facet], selections: Set<String>) {
@@ -80,55 +82,25 @@ public extension SelectableFacetsViewModel {
     }
 
     controller.onClick = { facet in
-      self.selectItem(forKey: facet.value)
+      self.computeSelections(selectingItemForKey: facet.value)
     }
 
     assignSelectableItems(facets: items, selections: selections)
 
     self.onItemsChanged.subscribe(with: self) { [weak self] (facets) in
-      guard let strongSelf = self else { return }
-
-      assignSelectableItems(facets: facets, selections: strongSelf.selections)
+      guard let selections = self?.selections else { return }
+      assignSelectableItems(facets: facets, selections: selections)
     }
 
     self.onSelectionsChanged.subscribe(with: self) { [weak self] (selections) in
-      guard let strongSelf = self else { return }
-
-      assignSelectableItems(facets: strongSelf.items, selections: selections)
+      guard let facets = self?.items else { return }
+      assignSelectableItems(facets: facets, selections: selections)
     }
   }
 
-  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
-
-    updateQueryFacets(of: searcher, with: attribute)
-    
-    let groupID = self.groupID(with: `operator`, attribute: attribute, groupName: groupName)
-
-    whenSelectionsComputedThenUpdateFilterState(attribute, searcher, groupID)
-
-    whenFilterStateChangedThenUpdateSelections(of: searcher, groupID: groupID)
-
-    whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
-  }
-  
 }
 
 fileprivate extension SelectableFacetsViewModel {
-
-  func updateQueryFacets<R: Codable>(of searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
-
-    guard let facets = searcher.indexSearchData.query.facets else {
-      searcher.indexSearchData.query.facets = [attribute.name]
-
-      return
-    }
-
-    guard facets.contains(attribute.name) else {
-      searcher.indexSearchData.query.facets! += [attribute.name]
-
-      return
-    }
-  }
 
   func whenSelectionsComputedThenUpdateFilterState<R: Codable>(_ attribute: Attribute, _ searcher: SingleIndexSearcher<R>, _ groupID: FilterGroup.ID) {
 
@@ -139,18 +111,8 @@ fileprivate extension SelectableFacetsViewModel {
         filterState.removeAll(fromGroupWithID: groupID)
         filterState.addAll(filters: filters, toGroupWithID: groupID)
       }
-      
-      print(searcher.indexSearchData.filterState.toFilterGroups().compactMap({ $0 as? FilterGroupType & SQLSyntaxConvertible }).sqlForm)
     }
-  }
-
-  func groupID(with operator: RefinementOperator, attribute: Attribute, groupName: String?) -> FilterGroup.ID {
-    switch `operator` {
-    case .and:
-      return .and(name: groupName ?? attribute.name)
-    case .or:
-      return .or(name: groupName ?? attribute.name)
-    }
+    
   }
 
   func whenFilterStateChangedThenUpdateSelections<R: Codable>(of searcher: SingleIndexSearcher<R>, groupID: FilterGroup.ID) {
@@ -178,4 +140,37 @@ fileprivate extension SelectableFacetsViewModel {
       }
     }
   }
+}
+
+extension FilterGroup.ID {
+  
+  init(groupName: String? = nil, attribute: Attribute, operator: RefinementOperator) {
+    
+    let name = groupName ?? attribute.name
+    
+    switch `operator` {
+    case .and:
+      self = .and(name: name)
+    case .or:
+      self = .or(name: name)
+    }
+    
+  }
+  
+}
+
+extension SingleIndexSearcher {
+  
+  func updateQueryFacets(with attribute: Attribute) {
+    let updatedFacets: [String]
+    
+    if let facets = indexSearchData.query.facets, !facets.contains(attribute.name) {
+      updatedFacets = facets + [attribute.name]
+    } else {
+      updatedFacets = [attribute.name]
+    }
+    
+    indexSearchData.query.facets = updatedFacets
+  }
+  
 }

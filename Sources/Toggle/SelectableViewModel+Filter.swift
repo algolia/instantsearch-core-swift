@@ -1,47 +1,23 @@
 //
-//  SelectableViewModel.swift
+//  SelectableViewModel+Filter.swift
 //  InstantSearchCore-iOS
 //
-//  Created by Vladislav Fitc on 03/05/2019.
+//  Created by Vladislav Fitc on 06/05/2019.
 //  Copyright © 2019 Algolia. All rights reserved.
 //
 
 import Foundation
 
-public class SelectableViewModel<Item> {
-  
-  public let item: Item
-  public var isSelected: Bool {
-    didSet {
-      onSelectedChanged.fire(isSelected)
-    }
-  }
-  public var onSelectedChanged: Observer<Bool>
-  public var onSelectedComputed: Observer<Bool>
-
-  init(item: Item) {
-    self.item = item
-    self.isSelected = false
-    self.onSelectedChanged = Observer()
-    self.onSelectedComputed = Observer()
-  }
-  
-  func setSelected(_ isSelected: Bool) {
-    onSelectedComputed.fire(isSelected)
-  }
-  
-}
-
-extension SelectableViewModel where Item: FilterType {
+public extension SelectableViewModel where Item: FilterType {
   
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>,
                                    operator: RefinementOperator = .or,
                                    groupName: String? = nil) {
     
-    updateQueryFacets(of: searcher, with: item.attribute)
+    searcher.updateQueryFacets(with: item.attribute)
     
-    let groupID = self.groupID(with: `operator`, attribute: item.attribute, groupName: groupName)
-
+    let groupID = FilterGroup.ID(groupName: groupName, attribute: item.attribute, operator: `operator`)
+    
     whenSelectionsComputedThenUpdateFilterState(item.attribute, searcher, groupID)
     
     whenFilterStateChangedThenUpdateSelections(of: searcher, groupID: groupID)
@@ -49,9 +25,7 @@ extension SelectableViewModel where Item: FilterType {
   
   func connectViewController<VC: SelectableViewController>(_ viewController: VC) {
     viewController.setSelected(isSelected)
-    viewController.onClick = { [weak self] isSelected in
-      self?.setSelected(isSelected)
-    }
+    viewController.onClick = computeIsSelected(selecting:)
     onSelectedChanged.subscribe(with: viewController) { isSelected in
       viewController.setSelected(isSelected)
     }
@@ -60,21 +34,6 @@ extension SelectableViewModel where Item: FilterType {
 }
 
 fileprivate extension SelectableViewModel where Item: FilterType {
-  
-  func updateQueryFacets<R: Codable>(of searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
-    
-    guard let facets = searcher.indexSearchData.query.facets else {
-      searcher.indexSearchData.query.facets = [attribute.name]
-      
-      return
-    }
-    
-    guard facets.contains(attribute.name) else {
-      searcher.indexSearchData.query.facets! += [attribute.name]
-      
-      return
-    }
-  }
   
   func whenSelectionsComputedThenUpdateFilterState<R: Codable>(_ attribute: Attribute, _ searcher: SingleIndexSearcher<R>, _ groupID: FilterGroup.ID) {
     
@@ -90,15 +49,6 @@ fileprivate extension SelectableViewModel where Item: FilterType {
         }
       }
       
-    }
-  }
-  
-  func groupID(with operator: RefinementOperator, attribute: Attribute, groupName: String?) -> FilterGroup.ID {
-    switch `operator` {
-    case .and:
-      return .and(name: groupName ?? attribute.name)
-    case .or:
-      return .or(name: groupName ?? attribute.name)
     }
   }
   
