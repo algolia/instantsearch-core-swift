@@ -36,6 +36,8 @@ public protocol FiltersWritable {
   
   mutating func toggle<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID)
   
+  mutating func toggle<T: FilterType, S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == T
+  
 }
 
 public protocol FilterGroupsConvertible {
@@ -227,10 +229,20 @@ extension Filters: FiltersWritable {
   /// - parameter groupID: target group ID
   
   public mutating func toggle<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) {
-    if contains(filter, inGroupWithID: groupID) {
-      remove(filter, fromGroupWithID: groupID)
-    } else {
-      add(filter, toGroupWithID: groupID)
+    toggle([filter], inGroupWithID: groupID)
+  }
+  
+  /// Toggles a sequence of filters in group
+  /// - parameter filters: sequence of filters to toggle
+  /// - parameter groupID: target group ID
+  
+  public mutating func toggle<T: FilterType, S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == T {
+    for filter in filters {
+      if contains(filter, inGroupWithID: groupID) {
+        remove(filter, fromGroupWithID: groupID)
+      } else {
+        add(filter, toGroupWithID: groupID)
+      }
     }
   }
   

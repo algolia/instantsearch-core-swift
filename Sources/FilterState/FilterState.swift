@@ -110,6 +110,10 @@ extension FilterState: FiltersWritable {
     self.filters.toggle(filter, inGroupWithID: groupID)
   }
   
+  public func toggle<T, S>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where T: FilterType, T == S.Element, S : Sequence {
+    self.filters.toggle(filters, inGroupWithID: groupID)
+  }
+  
 }
 
 extension FilterState: FilterGroupsConvertible {
