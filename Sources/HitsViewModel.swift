@@ -11,6 +11,9 @@ import InstantSearchClient
 // DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
 // something like: viewModel.bind(\.navigationTitle, to: navigationItem, at: \.title),
 
+
+// TODO: Decouple QueryMetaData via connector
+// TODO: Paginator: keep in memory only visible results with offsets
 public class HitsViewModel<Record: Codable> {
   
   public let settings: Settings
@@ -24,7 +27,8 @@ public class HitsViewModel<Record: Codable> {
   }
   
   public let onNewPage = Observer<UInt>()
-
+  public let onResultsUpdated = Observer<Void>()
+  
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
                           showItemsOnEmptyQuery: Bool = Constants.Defaults.showItemsOnEmptyQuery) {
     let settings = Settings(infiniteScrolling: infiniteScrolling,
@@ -44,11 +48,7 @@ public class HitsViewModel<Record: Codable> {
     self.hitsPaginationController = paginationController
   }
 
-  // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
-  public func update(_ searchResults: SearchResults<Record>, with queryMetadata: QueryMetadata) {
-    isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
-    hitsPaginationController.process(searchResults, with: queryMetadata)
-  }
+
 
   public func numberOfHits() -> Int {
     guard let hitsPageMap = hitsPaginationController.pageMap else { return 0 }
@@ -137,4 +137,35 @@ extension HitsViewModel {
 public enum InfiniteScrolling {
   case on(withOffset: UInt)
   case off
+}
+
+extension HitsViewModel {
+  
+  // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
+  public func update(_ searchResults: SearchResults<Record>, with queryMetadata: QueryMetadata) {
+    isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
+    hitsPaginationController.process(searchResults, with: queryMetadata)
+    onResultsUpdated.fire(())
+  }
+  
+  public func connectSearcher(_ searcher: SingleIndexSearcher<Record>) {
+    
+    searcher.onResultsChanged.subscribe(with: self) { [weak self] (queryMetada, result) in
+      switch result {
+      case .success(let result):
+        self?.update(result, with: queryMetada)
+        
+      case .failure(let error):
+        print(error)
+        break
+      }
+    }
+    
+    onNewPage.subscribe(with: self) { [weak searcher] page in
+      searcher?.indexSearchData.query.page = UInt(page)
+      searcher?.search()
+    }
+    
+  }
+  
 }
