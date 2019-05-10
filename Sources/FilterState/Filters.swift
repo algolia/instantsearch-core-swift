@@ -309,9 +309,9 @@ extension Filters: FilterGroupsConvertible {
     // getting a constant output of converters
     
     let filterComparator: (Filter, Filter) -> Bool = {
-      let converter = SQLFilterConverter()
-      let lhsString = converter.convert($0)
-      let rhsString = converter.convert($1)
+      let converter = FilterConverter()
+      let lhsString = converter.sql($0.filter)!
+      let rhsString = converter.sql($1.filter)!
       return lhsString < rhsString
     }
     

@@ -12,19 +12,24 @@ protocol LegacySyntaxConvertible {
   var legacyForm: [[String]] { get }
 }
 
-class LegacyFilterConverter: FilterConverter {
+extension FilterConverter {
   
-  typealias Output = [[String]]
+  public func legacy(_ filter: FilterType) -> [[String]]? {
+    return (filter as? LegacySyntaxConvertible)?.legacyForm
+  }
   
-  func convert(_ input: Filter) -> Output {
-    switch input {
-    case .facet(let facetFilter):
-      return facetFilter.legacyForm
-    case .numeric(let numericFilter):
-      return numericFilter.legacyForm
-    case .tag(let tagFilter):
-      return tagFilter.legacyForm
-    }
+}
+
+extension FilterGroupConverter {
+  
+  public func legacy(_ group: FilterGroupType) -> [[String]]? {
+    return (group as? LegacySyntaxConvertible)?.legacyForm
+  }
+  
+  public func legacy<C: Sequence>(_ groups: C) -> [[String]]? where C.Element == FilterGroupType {
+    return groups
+      .compactMap { $0 as? LegacySyntaxConvertible }
+      .flatMap { $0.legacyForm }
   }
   
 }
@@ -89,37 +94,6 @@ extension FilterGroup.Or: LegacySyntaxConvertible {
   
   var legacyForm: [[String]] {
     return filters.compactMap { $0 as? LegacySyntaxConvertible }.flatMap { $0.legacyForm }
-  }
-  
-}
-
-extension Collection where Element: FilterGroupType {
-  
-  var legacyForm: [[String]] {
-    var output: [[String]] = []
-    for group in self {
-      switch group {
-      case let andGroup as FilterGroup.And:
-        output.append(contentsOf: andGroup.legacyForm)
-      case let orGroup as FilterGroup.Or<Filter.Facet>:
-        output.append(contentsOf: orGroup.legacyForm)
-      case let orGroup as FilterGroup.Or<Filter.Tag>:
-        output.append(contentsOf: orGroup.legacyForm)
-      case let orGroup as FilterGroup.Or<Filter.Numeric>:
-        output.append(contentsOf: orGroup.legacyForm)
-      default:
-        break
-      }
-    }
-    return output
-  }
-  
-}
-
-extension Collection where Element: FilterGroupType & LegacySyntaxConvertible {
-  
-  var legacyForm: [[String]] {
-    return flatMap { $0.legacyForm }
   }
   
 }

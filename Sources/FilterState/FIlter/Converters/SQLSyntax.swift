@@ -8,87 +8,29 @@
 
 import Foundation
 
-public protocol SQLSyntaxConvertible {
+protocol SQLSyntaxConvertible {
   var sqlForm: String { get }
 }
 
-public class SQLSyntaxConverter {
+extension FilterConverter {
   
-  public func convert(_ input: Filter) -> String {
-    switch input {
-    case .facet(let facetFilter):
-      return facetFilter.sqlForm
-    case .numeric(let numericFilter):
-      return numericFilter.sqlForm
-    case .tag(let tagFilter):
-      return tagFilter.sqlForm
-    }
-  }
-  
-  func groupSQLForm(for filters: [FilterType], withSeparator separator: String) -> String {
-    
-    let compatibleFilters = filters.compactMap { $0 as? SQLSyntaxConvertible }
-    
-    if compatibleFilters.isEmpty {
-      return ""
-    } else {
-      return "(\(compatibleFilters.map { $0.sqlForm }.joined(separator: separator)))"
-    }
-    
-  }
-  
-  public func convert(_ group: FilterGroupType & SQLSyntaxConvertible) -> String {
-    return group.sqlForm
-  }
-  
-  public func convert(_ andGroup: FilterGroup.And) -> String {
-    return groupSQLForm(for: andGroup.filters, withSeparator: " AND ")
-  }
-  
-  public func convert<T: FilterType>(_ orGroup: FilterGroup.Or<T>) -> String {
-    return groupSQLForm(for: orGroup.filters, withSeparator: " OR ")
-  }
-  
-  public func convert<C: Collection>(_ groupList: C) -> String where C.Element: FilterGroupType {
-    return groupList.compactMap { (filterGroup) -> String? in
-      switch filterGroup {
-      case let andGroup as FilterGroup.And:
-        return convert(andGroup)
-      case let orGroup as FilterGroup.Or<Filter.Facet>:
-        return convert(orGroup)
-      case let orGroup as FilterGroup.Or<Filter.Tag>:
-        return convert(orGroup)
-      case let orGroup as FilterGroup.Or<Filter.Numeric>:
-        return convert(orGroup)
-      default:
-        return nil
-      }
-    }.joined(separator: " AND ")
+  public func sql(_ filter: FilterType) -> String? {
+    return (filter as? SQLSyntaxConvertible)?.sqlForm
   }
   
 }
 
-public class SQLFilterGroupConverter {
+extension FilterGroupConverter {
   
-  func convert(_ filterGroups: [FilterGroupType]) -> String {
-    return ""
+  public func sql(_ group: FilterGroupType) -> String? {
+    return (group as? SQLSyntaxConvertible)?.sqlForm
   }
   
-}
-
-public class SQLFilterConverter: FilterConverter {
-  
-  typealias Output = String
-  
-  func convert(_ input: Filter) -> String {
-    switch input {
-    case .facet(let facetFilter):
-      return facetFilter.sqlForm
-    case .numeric(let numericFilter):
-      return numericFilter.sqlForm
-    case .tag(let tagFilter):
-      return tagFilter.sqlForm
-    }
+  public func sql<C: Collection>(_ groupList: C) -> String? where C.Element == FilterGroupType {
+    guard !groupList.isEmpty else { return nil }
+    return groupList
+      .compactMap(sql)
+      .joined(separator: " AND ")
   }
   
 }
@@ -167,14 +109,6 @@ extension FilterGroup.Or: SQLSyntaxConvertible {
   
   public var sqlForm: String {
     return groupSQLForm(for: filters, withSeparator: " OR ")
-  }
-  
-}
-
-extension Collection where Element == FilterGroupType & SQLSyntaxConvertible {
-  
-  public var sqlForm: String {
-    return map { $0.sqlForm }.joined(separator: " AND ")
   }
   
 }
