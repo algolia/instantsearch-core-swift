@@ -66,10 +66,10 @@ public extension SelectableFacetsViewModel {
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
     func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
       let receivedFacets = facets.map { RefinementFacet($0, selections.contains($0.value)) }
-      let persistentlySelectedFacets = selections
-        .filter { !facets.map { $0.value }.contains($0) }
-        .map { (Facet(value: $0, count: 0, highlighted: .none), true) }
-      return receivedFacets + persistentlySelectedFacets
+//      let persistentlySelectedFacets = selections
+//        .filter { !facets.map { $0.value }.contains($0) }
+//        .map { (Facet(value: $0, count: 0, highlighted: .none), true) }
+      return receivedFacets// + persistentlySelectedFacets
     }
 
     func assignSelectableItems(facets: [Facet], selections: Set<String>) {
