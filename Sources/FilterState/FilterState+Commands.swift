@@ -149,13 +149,9 @@ public extension FilterState {
     
   }
   
-  func notify(_ commands: [Command]) {
+  func notify(_ commands: Command...) {
     commands.forEach { $0.command.execute(on: self) }
     onChange.fire(filters)
-  }
-  
-  func notify(_ commands: Command...) {
-    notify(commands)
   }
   
 }
