@@ -8,4 +8,6 @@
 
 import Foundation
 
-public class FilterConverter {}
+public class FilterConverter {
+  public init() {}
+}
