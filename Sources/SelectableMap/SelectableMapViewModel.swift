@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SelectableMapViewModel<Key: Hashable, Value> {
+public class SelectableMapViewModel<Key: Hashable, Value> {
   
   public var items: [Key: Value]
   public var selected: Key?

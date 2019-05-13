@@ -10,7 +10,7 @@ import Foundation
 
 typealias RefinementFiltersViewModel<F: FilterType> = SelectableMapViewModel<Int, F>
 
-extension SelectableMapViewModel where Key == Int, Value: FilterType {
+public extension SelectableMapViewModel where Key == Int, Value: FilterType {
   
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
     
@@ -48,7 +48,7 @@ extension SelectableMapViewModel where Key == Int, Value: FilterType {
   
 }
 
-extension SelectableMapViewModel {
+public extension SelectableMapViewModel {
   
   func connectController<C: SelectableMapController>(_ controller: C) where C.Key == Key, C.Value == Value {
     controller.setItems(items: items)

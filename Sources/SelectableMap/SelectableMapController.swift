@@ -9,6 +9,7 @@
 import Foundation
 
 public protocol SelectableMapController: class {
+  
   associatedtype Key: Hashable
   associatedtype Value
   
@@ -16,4 +17,5 @@ public protocol SelectableMapController: class {
   
   func setSelected(_ selected: Key?)
   func setItems(items: [Key: Value])
+  
 }
