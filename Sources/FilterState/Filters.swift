@@ -84,8 +84,7 @@ extension Filters: FiltersReadable {
   /// - parameter filter: desired filter
   
   public func contains<T: FilterType>(_ filter: T) -> Bool {
-    guard let filter = Filter(filter) else { return false }
-    return getFilters().contains(filter)
+    return getFilters().contains(Filter(filter))
   }
   
   /// Checks whether specified group contains a filter
@@ -94,12 +93,10 @@ extension Filters: FiltersReadable {
   /// - returns: true if filter is contained by specified group
   
   public func contains<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) -> Bool {
-    guard
-      let filter = Filter(filter),
-      let filtersForGroup = groups[groupID] else {
+    guard let filtersForGroup = groups[groupID] else {
         return false
     }
-    return filtersForGroup.contains(filter)
+    return filtersForGroup.contains(Filter(filter))
   }
 
   /// Returns a set of filters in group with specified ID

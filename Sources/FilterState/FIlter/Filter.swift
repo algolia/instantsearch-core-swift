@@ -14,7 +14,7 @@ public enum Filter: Hashable {
   case numeric(Numeric)
   case tag(Tag)
   
-  init?<F: FilterType>(_ filter: F) {
+  init<F: FilterType>(_ filter: F) {
     switch filter {
     case let facetFilter as Filter.Facet:
       self = .facet(facetFilter)
@@ -23,7 +23,7 @@ public enum Filter: Hashable {
     case let tagFilter as Filter.Tag:
       self = .tag(tagFilter)
     default:
-      return nil
+      fatalError("Filter of type \(F.self) is not supported")
     }
   }
   
