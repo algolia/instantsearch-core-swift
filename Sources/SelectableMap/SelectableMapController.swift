@@ -11,11 +11,10 @@ import Foundation
 public protocol SelectableMapController: class {
   
   associatedtype Key: Hashable
-  associatedtype Value
   
   var onClick: ((Key) -> Void)? { get set }
   
   func setSelected(_ selected: Key?)
-  func setItems(items: [Key: Value])
+  func setItems(items: [Key: String])
   
 }

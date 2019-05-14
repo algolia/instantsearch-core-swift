@@ -11,7 +11,11 @@ import Foundation
 public class SelectableMapViewModel<Key: Hashable, Value> {
   
   public var items: [Key: Value]
-  public var selected: Key?
+  public var selected: Key? {
+    didSet {
+      onSelectedChanged.fire(selected)
+    }
+  }
   public let onSelectedChanged: Observer<Key?>
   public let onSelectedComputed: Observer<Key?>
   
