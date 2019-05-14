@@ -22,7 +22,7 @@ public extension Filter {
       case comparison(NumericOperator, Float)
     }
     
-    public enum NumericOperator: String {
+    public enum NumericOperator: String, CustomStringConvertible {
       case lessThan = "<"
       case lessThanOrEqual = "<="
       case equals = "="
@@ -45,6 +45,10 @@ public extension Filter {
         case .notEquals:
           return .equals
         }
+      }
+      
+      public var description: String {
+        return rawValue
       }
       
     }
