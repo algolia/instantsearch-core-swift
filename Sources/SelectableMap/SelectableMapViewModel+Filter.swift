@@ -41,11 +41,9 @@ public extension SelectableMapViewModel where Key == Int, Value: FilterType {
     searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: onChange)
   }
 
-  
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
     
     searcher.updateQueryFacets(with: attribute)
-    
     
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
     

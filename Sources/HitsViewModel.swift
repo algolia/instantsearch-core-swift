@@ -11,7 +11,6 @@ import InstantSearchClient
 // DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
 // something like: viewModel.bind(\.navigationTitle, to: navigationItem, at: \.title),
 
-
 // TODO: Decouple QueryMetaData via connector
 // TODO: Paginator: keep in memory only visible results with offsets
 public class HitsViewModel<Record: Codable> {
@@ -47,8 +46,6 @@ public class HitsViewModel<Record: Codable> {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
   }
-
-
 
   public func numberOfHits() -> Int {
     guard let hitsPageMap = hitsPaginationController.pageMap else { return 0 }
@@ -157,7 +154,6 @@ extension HitsViewModel {
         
       case .failure(let error):
         print(error)
-        break
       }
     }
     

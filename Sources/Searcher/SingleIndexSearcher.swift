@@ -16,11 +16,16 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   public let isLoading = Observer<Bool>()
   public let indexSearchData: IndexSearchData
   public let onResultsChanged = Observer<SearchResult>()
+  public var requestOptions: RequestOptions?
   
   public var isDisjunctiveFacetingEnabled = true
   
-  public init(index: Index, query: Query = .init(), filterState: FilterState = .init(), requestOptions: RequestOptions? = nil) {
-    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState, requestOptions: requestOptions)
+  public init(index: Index,
+              query: Query = .init(),
+              filterState: FilterState = .init(),
+              requestOptions: RequestOptions? = nil) {
+    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
+    self.requestOptions = requestOptions
     sequencer = Sequencer()
     sequencer.delegate = self
     onResultsChanged.retainLastData = true
@@ -31,8 +36,12 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     }
   }
   
-  public convenience init(indexSearchData: IndexSearchData) {
-    self.init(index: indexSearchData.index, query: indexSearchData.query, filterState: indexSearchData.filterState, requestOptions: indexSearchData.requestOptions)
+  public convenience init(indexSearchData: IndexSearchData,
+                          requestOptions: RequestOptions? = nil) {
+    self.init(index: indexSearchData.index,
+              query: indexSearchData.query,
+              filterState: indexSearchData.filterState,
+              requestOptions: requestOptions)
   }
   
   public func setQuery(text: String) {
@@ -53,12 +62,12 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
         let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
         let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
         
-        return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: indexSearchData.requestOptions) { value, error in
+        return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)
         }
       } else {
         indexSearchData.applyFilters()
-        return indexSearchData.index.search(indexSearchData.query, requestOptions: indexSearchData.requestOptions) { value, error in
+        return indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)
         }
       }
