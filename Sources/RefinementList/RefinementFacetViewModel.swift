@@ -45,18 +45,20 @@ public enum RefinementOperator {
 }
 
 public extension SelectableFacetsViewModel {
-  
-  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
-    
-    searcher.updateQueryFacets(with: attribute)
-    
+
+  func connectFilterState(_ filterState: FilterState, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
+
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
-    
-    whenSelectionsComputedThenUpdateFilterState(attribute, searcher, groupID)
-    
-    whenFilterStateChangedThenUpdateSelections(of: searcher, groupID: groupID)
+
+    whenSelectionsComputedThenUpdateFilterState(attribute, filterState, groupID)
+
+    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
+  }
+
+  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
     
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
+    searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
 
   func connectController<T: RefinementFacetsViewController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
@@ -102,12 +104,12 @@ public extension SelectableFacetsViewModel {
 
 fileprivate extension SelectableFacetsViewModel {
 
-  func whenSelectionsComputedThenUpdateFilterState<R: Codable>(_ attribute: Attribute, _ searcher: SingleIndexSearcher<R>, _ groupID: FilterGroup.ID) {
+  func whenSelectionsComputedThenUpdateFilterState(_ attribute: Attribute, _ filterState: FilterState, _ groupID: FilterGroup.ID) {
 
     onSelectionsComputed.subscribe(with: self) { selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
 
-      searcher.indexSearchData.filterState.notify { filterState in
+      filterState.notify { filterState in
         filterState.removeAll(fromGroupWithID: groupID)
         filterState.addAll(filters: filters, toGroupWithID: groupID)
       }
@@ -115,7 +117,7 @@ fileprivate extension SelectableFacetsViewModel {
     
   }
 
-  func whenFilterStateChangedThenUpdateSelections<R: Codable>(of searcher: SingleIndexSearcher<R>, groupID: FilterGroup.ID) {
+  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
     let onChange: (FiltersReadable) -> Void = { filterState in
       self.selections = Set(filterState.getFilters(forGroupWithID: groupID).map { filter -> String? in
         if
@@ -128,9 +130,9 @@ fileprivate extension SelectableFacetsViewModel {
         }.compactMap { $0 })
     }
 
-    onChange(searcher.indexSearchData.filterState)
+    onChange(filterState)
 
-    searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: onChange)
+    filterState.onChange.subscribe(with: self, callback: onChange)
   }
 
   func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
@@ -159,18 +161,18 @@ extension FilterGroup.ID {
   
 }
 
-extension SingleIndexSearcher {
+extension Query {
   
   func updateQueryFacets(with attribute: Attribute) {
     let updatedFacets: [String]
     
-    if let facets = indexSearchData.query.facets, !facets.contains(attribute.name) {
+    if let facets = facets, !facets.contains(attribute.name) {
       updatedFacets = facets + [attribute.name]
     } else {
       updatedFacets = [attribute.name]
     }
     
-    indexSearchData.query.facets = updatedFacets
+    facets = updatedFacets
   }
   
 }

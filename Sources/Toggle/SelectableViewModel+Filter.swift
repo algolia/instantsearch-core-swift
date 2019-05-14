@@ -9,18 +9,16 @@
 import Foundation
 
 public extension SelectableViewModel where Item: FilterType {
-  
-  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>,
+
+  func connectFilterState(_ filterState: FilterState,
                                    operator: RefinementOperator = .or,
                                    groupName: String? = nil) {
     
-    searcher.updateQueryFacets(with: item.attribute)
-    
     let groupID = FilterGroup.ID(groupName: groupName, attribute: item.attribute, operator: `operator`)
     
-    whenSelectionsComputedThenUpdateFilterState(item.attribute, searcher, groupID)
+    whenSelectionsComputedThenUpdateFilterState(item.attribute, filterState, groupID)
     
-    whenFilterStateChangedThenUpdateSelections(of: searcher, groupID: groupID)
+    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
   func connectViewController<VC: SelectableViewController>(_ viewController: VC) {
@@ -35,13 +33,13 @@ public extension SelectableViewModel where Item: FilterType {
 
 fileprivate extension SelectableViewModel where Item: FilterType {
   
-  func whenSelectionsComputedThenUpdateFilterState<R: Codable>(_ attribute: Attribute, _ searcher: SingleIndexSearcher<R>, _ groupID: FilterGroup.ID) {
+  func whenSelectionsComputedThenUpdateFilterState(_ attribute: Attribute, _ filterState: FilterState, _ groupID: FilterGroup.ID) {
     
     onSelectedComputed.subscribe(with: self) { [weak self] selected in
       
       guard let item = self?.item else { return }
       
-      searcher.indexSearchData.filterState.notify { filterState in
+      filterState.notify { filterState in
         if selected {
           filterState.add(item, toGroupWithID: groupID)
         } else {
@@ -52,15 +50,15 @@ fileprivate extension SelectableViewModel where Item: FilterType {
     }
   }
   
-  func whenFilterStateChangedThenUpdateSelections<R: Codable>(of searcher: SingleIndexSearcher<R>, groupID: FilterGroup.ID) {
+  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
     let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
       guard let filter = self?.item else { return }
       self?.isSelected = filterState.contains(filter, inGroupWithID: groupID)
     }
     
-    onChange(searcher.indexSearchData.filterState)
+    onChange(filterState)
     
-    searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: onChange)
+    filterState.onChange.subscribe(with: self, callback: onChange)
   }
   
 }
