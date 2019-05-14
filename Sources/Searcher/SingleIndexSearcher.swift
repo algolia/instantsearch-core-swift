@@ -17,7 +17,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   public let indexSearchData: IndexSearchData
   public let onResultsChanged = Observer<SearchResult>()
   
-  public var applyDisjunctiveFacetingWhenNecessary = true
+  public var isDisjunctiveFacetingEnabled = true
   
   public init(index: Index, query: Query = .init(), filterState: FilterState = .init(), requestOptions: RequestOptions? = nil) {
     self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState, requestOptions: requestOptions)
@@ -49,7 +49,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     sequencer.orderOperation {
       let queryMetadata = QueryMetadata(query: indexSearchData.query)
       
-      if applyDisjunctiveFacetingWhenNecessary && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
+      if isDisjunctiveFacetingEnabled && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
         let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
         let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
         
