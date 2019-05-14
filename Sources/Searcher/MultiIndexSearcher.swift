@@ -18,15 +18,19 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public let isLoading = Observer<Bool>()
   public let onResultsChanged = Observer<SearchResult>()
   public var applyDisjunctiveFacetingWhenNecessary = true
-  
+  public var requestOptions: RequestOptions?
+
   public convenience init(client: Client, indices: [Index], query: Query, filterState: FilterState, requestOptions: RequestOptions? = nil) {
-    self.init(client: client, indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterState: filterState, requestOptions: requestOptions))
+    self.init(client: client,
+              indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterState: filterState),
+              requestOptions: requestOptions)
   }
   
-  public init(client: Client, indexSearchDatas: [IndexSearchData]) {
+  public init(client: Client, indexSearchDatas: [IndexSearchData], requestOptions: RequestOptions? = nil) {
     self.client = client
     self.indexSearchDatas = indexSearchDatas
     self.sequencer = Sequencer()
+    self.requestOptions = requestOptions
     sequencer.delegate = self
     onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
@@ -48,8 +52,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     let metadata = self.indexSearchDatas.map { $0.query }.map(QueryMetadata.init(query:))
     
     sequencer.orderOperation {
-      // TODO: Make sure can only have 1 request Option in the class, else we need to change that. 
-      return self.client.multipleQueries(indexQueries, requestOptions: indexSearchDatas.first?.requestOptions) { (content, error) in
+      return self.client.multipleQueries(indexQueries, requestOptions: requestOptions) { (content, error) in
         
         let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
         
