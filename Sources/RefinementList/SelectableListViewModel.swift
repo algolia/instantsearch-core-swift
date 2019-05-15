@@ -11,9 +11,9 @@ import Foundation
 
 public enum FilterListViewModel {
 
-  typealias Facet = SelectableListViewModel<Filter.Facet, Filter.Facet>
-  typealias Numeric = SelectableListViewModel<Filter.Numeric, Filter.Numeric>
-  typealias Tag = SelectableListViewModel<Filter.Tag, Filter.Tag>
+  public typealias Facet = SelectableListViewModel<Filter.Facet, Filter.Facet>
+  public typealias Numeric = SelectableListViewModel<Filter.Numeric, Filter.Numeric>
+  public typealias Tag = SelectableListViewModel<Filter.Tag, Filter.Tag>
 
 }
 
