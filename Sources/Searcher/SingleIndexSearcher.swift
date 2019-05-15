@@ -16,6 +16,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   public let isLoading = Observer<Bool>()
   public let indexSearchData: IndexSearchData
   public let onResultsChanged = Observer<SearchResult>()
+  public let onQueryChanged = Observer<String>()
   public var requestOptions: RequestOptions?
   
   public var isDisjunctiveFacetingEnabled = true
@@ -46,6 +47,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   
   public func setQuery(text: String) {
     self.indexSearchData.query.query = text
+    onQueryChanged.fire(text)
   }
   
   fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {

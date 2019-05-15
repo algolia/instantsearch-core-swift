@@ -19,9 +19,8 @@ public class SelectableMapViewModel<Key: Hashable, Value> {
   public let onSelectedChanged: Observer<Key?>
   public let onSelectedComputed: Observer<Key?>
   
-  public init(items: [Key: Value], selected: Key? = nil) {
+  public init(items: [Key: Value]) {
     self.items = items
-    self.selected = selected
     self.onSelectedChanged = Observer()
     self.onSelectedComputed = Observer()
   }

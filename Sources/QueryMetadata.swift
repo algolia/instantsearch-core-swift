@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct QueryMetadata: PageMetadata {
+public struct QueryMetadata {
   
   // Text of the query
   public let queryText: String?

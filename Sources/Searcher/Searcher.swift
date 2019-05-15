@@ -12,6 +12,7 @@ public protocol Searcher: SequencerDelegate {
   
   var sequencer: Sequencer { get }
   var isLoading: Observer<Bool> { get }
+  var onQueryChanged: Observer<String> { get }
   
   func search()
   func cancel()

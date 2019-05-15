@@ -8,32 +8,28 @@
 
 import Foundation
 
-public class Paginator<Item, Metadata: PageMetadata> {
+class Paginator<Item> {
   
-  private typealias State = (pageMap: PageMap<Item>, metadata: Metadata)
-  
-  var pageMap: PageMap<Item>? {
-    return state?.pageMap
-  }
-  
+  var pageMap: PageMap<Item>?
   weak var delegate: PaginatorDelegate?
   
   private var lastRequestedPage: UInt?
-  private var state: State?
   
   func loadNextPageIfNeeded() {
     
     // No need to trigger loading the next page without any page context
-    guard let currentState = state else {
+    guard let pageMap = pageMap else {
+      lastRequestedPage = 0
+      delegate?.didRequestLoadPage(withNumber: 0)
       return
     }
     
     // No need to trigger loading the next page, if there is no such page
-    guard currentState.pageMap.hasMorePages else {
+    guard pageMap.hasMorePages else {
       return
     }
     
-    let pageToRequest = currentState.metadata.page + 1
+    let pageToRequest = pageMap.latestPage + 1
     
     // No need to trigger loading the next page if last requested page
     if let lastRequestedPage = lastRequestedPage, pageToRequest <= lastRequestedPage {
@@ -45,32 +41,27 @@ public class Paginator<Item, Metadata: PageMetadata> {
     
   }
   
-  func process<IP: PageMapConvertible>(_ page: IP, with metadata: Metadata) where IP.PageItem == Item {
-    
-    print("lastMD: \(String(describing: state?.metadata)), receivedMD \(metadata)")
-    
+  func process<IP: PageMapConvertible>(_ page: IP) where IP.PageItem == Item {
+  
     let updatedPageMap: PageMap<Item>
     
-    if let state = state, metadata.isAnotherPage(for: state.metadata) {
-      // If received page is a new page of current dataset, insert it to pageMap
-      updatedPageMap = state.pageMap.inserting(page.pageItems, withNumber: Int(metadata.page))
+    if let pageMap = pageMap {
+      updatedPageMap = pageMap.inserting(page.pageItems, withNumber: page.page)
     } else {
-      // If received page is a page of different dataset, replace pageMap by the new one
       updatedPageMap = PageMap(page)
       lastRequestedPage = 0
     }
     
-    state = (updatedPageMap, metadata)
+    pageMap = updatedPageMap
     
+  }
+  
+  public func invalidate() {
+    pageMap = .none
   }
   
 }
 
 protocol PaginatorDelegate: class {
   func didRequestLoadPage(withNumber number: UInt)
-}
-
-public protocol PageMetadata {
-  var page: UInt { get }
-  func isAnotherPage(for data: Self) -> Bool
 }
