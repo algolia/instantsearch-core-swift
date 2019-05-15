@@ -11,16 +11,11 @@ import Foundation
 public typealias SelectableFacetsViewModel = SelectableListViewModel<String, Facet>
 
 public class RefinementFacetsViewModel: SelectableFacetsViewModel {
-  public override init(selectionMode: SelectionMode = .multiple) {
+  public init(selectionMode: SelectionMode = .multiple) {
     super.init(selectionMode: selectionMode)
   }
 }
 
-public class MenuFacetsViewModel: SelectableFacetsViewModel {
-  public override init(selectionMode: SelectionMode = .single) {
-    super.init(selectionMode: selectionMode)
-  }
-}
 
 public enum FacetSortCriterion {
   case count(order: Order)

@@ -25,9 +25,9 @@ private extension FilterState {
       self.init(filters: [filter], groupID: groupID)
     }
     
-    public init(filters: [T], groupID: FilterGroup.ID) {
+    public init<S: Sequence>(filters: S, groupID: FilterGroup.ID) where S.Element == T {
       self.groupID = groupID
-      self.filters = filters
+      self.filters = Array(filters)
     }
     
     public func execute(on filterState: FilterState) {
@@ -117,7 +117,7 @@ public extension FilterState {
       return .init(command: FilterState.Add(filter: filter, groupID: groupID))
     }
     
-    public static func add<T: FilterType>(filters: [T], toGroupWithID groupID: FilterGroup.ID) -> Command {
+    public static func add<T: FilterType, S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) -> Command where S.Element == T {
       return .init(command: FilterState.Add(filters: filters, groupID: groupID))
     }
     
