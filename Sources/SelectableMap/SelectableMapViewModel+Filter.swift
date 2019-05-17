@@ -8,9 +8,7 @@
 
 import Foundation
 
-typealias RefinementFiltersViewModel<F: FilterType> = SelectableMapViewModel<Int, F>
-
-public extension SelectableMapViewModel where Key == Int, Value: FilterType {
+public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: FilterType {
   
   private func whenSelectedComputedThenUpdateFilterState<R: Codable>(groupID: FilterGroup.ID, in searcher: SingleIndexSearcher<R>) {
     onSelectedComputed.subscribe(with: self) { computed in
@@ -41,7 +39,6 @@ public extension SelectableMapViewModel where Key == Int, Value: FilterType {
     searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: onChange)
   }
 
-  
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
 
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
@@ -55,45 +52,11 @@ public extension SelectableMapViewModel where Key == Int, Value: FilterType {
   
 }
 
-public typealias FilterPresenter = (Filter) -> String
-
-public extension SelectableMapViewModel where Value: FilterType {
+public extension SelectableSegmentViewModel where Segment: FilterType {
   
-  internal func defaultFilterPresenter(_ filter: Filter) -> String {
+  func connectController<C: SelectableSegmentController>(_ controller: C, presenter: FilterPresenter? = .none) where C.SegmentKey == SegmentKey {
     
-    let attributeName = filter.filter.attribute.name
-    
-    switch filter {
-    case .facet(let facetFilter):
-      switch facetFilter.value {
-      case .bool:
-        return filter.filter.attribute.name
-        
-      case .float(let floatValue):
-        return "\(attributeName): \(floatValue)"
-        
-      case .string(let stringValue):
-        return stringValue
-      }
-      
-    case .numeric(let numericFilter):
-
-      switch numericFilter.value {
-      case .comparison(let comp):
-        return "\(attributeName) \(comp.0) \(comp.1)"
-        
-      case .range(let range):
-        return "\(attributeName): \(range.lowerBound) to \(range.upperBound)"
-      }
-      
-    case .tag(let tagFilter):
-      return tagFilter.value
-    }
-  }
-  
-  func connectController<C: SelectableMapController>(_ controller: C, presenter: FilterPresenter? = .none) where C.Key == Key {
-    
-    let presenter = presenter ?? defaultFilterPresenter
+    let presenter = presenter ?? DefaultFilterPresenter.present
     
     let itemsToPresent = items
       .map { ($0.key, presenter(Filter($0.value))) }

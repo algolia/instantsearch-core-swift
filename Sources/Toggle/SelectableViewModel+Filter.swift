@@ -11,8 +11,8 @@ import Foundation
 public extension SelectableViewModel where Item: FilterType {
 
   func connectFilterState(_ filterState: FilterState,
-                                   operator: RefinementOperator = .or,
-                                   groupName: String? = nil) {
+                          operator: RefinementOperator = .or,
+                          groupName: String? = nil) {
     
     let groupID = FilterGroup.ID(groupName: groupName, attribute: item.attribute, operator: `operator`)
     
@@ -21,7 +21,7 @@ public extension SelectableViewModel where Item: FilterType {
     whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
-  func connectViewController<VC: SelectableViewController>(_ viewController: VC) {
+  func connectViewController<VC: SelectableController>(_ viewController: VC) {
     viewController.setSelected(isSelected)
     viewController.onClick = computeIsSelected(selecting:)
     onSelectedChanged.subscribe(with: viewController) { isSelected in

@@ -1,5 +1,5 @@
 //
-//  RefinementListBuilder.swift
+//  FacetListPresenter.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 18/03/2019.
@@ -20,7 +20,7 @@ public protocol SelectableListPresentable {
 /// - The list of Facets + Associated Count
 /// - The list of Facets that have been refined
 /// - Layout settings such as sortBy
-public class RefinementFacetsPresenter: SelectableListPresentable {
+public class FacetListPresenter: SelectableListPresentable {
 
   let sortBy: [FacetSortCriterion]
   let limit: Int

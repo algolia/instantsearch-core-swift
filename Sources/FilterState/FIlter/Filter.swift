@@ -42,8 +42,6 @@ public enum Filter: Hashable {
   
 }
 
-
-
 /// Abstract filter protocol
 public protocol FilterType {
   

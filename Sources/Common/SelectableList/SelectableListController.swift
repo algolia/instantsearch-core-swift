@@ -1,5 +1,5 @@
 //
-//  SelectableListViewController.swift
+//  SelectableListController.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 26/04/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol SelectableListViewController: class {
+public protocol SelectableListController: class {
   
   associatedtype Item
 
@@ -19,5 +19,3 @@ public protocol SelectableListViewController: class {
   func reload()
 
 }
-
-public protocol RefinementFacetsViewController: SelectableListViewController where Item == Facet {}

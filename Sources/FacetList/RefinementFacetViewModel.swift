@@ -10,14 +10,14 @@ import Foundation
 
 public typealias SelectableFacetsViewModel = SelectableListViewModel<String, Facet>
 
-public class RefinementFacetsViewModel: SelectableFacetsViewModel {
+public class FacetListViewModel: SelectableListViewModel<String, Facet> {
   public init(selectionMode: SelectionMode = .multiple) {
     super.init(selectionMode: selectionMode)
   }
 }
 
-
 public enum FacetSortCriterion {
+  
   case count(order: Order)
   case alphabetical(order: Order)
   case isRefined
@@ -39,7 +39,7 @@ public enum RefinementOperator {
 
 }
 
-public extension SelectableFacetsViewModel {
+public extension SelectableListViewModel where Key == String, Item == Facet {
 
   func connectFilterState(_ filterState: FilterState, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
 
@@ -56,7 +56,7 @@ public extension SelectableFacetsViewModel {
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
 
-  func connectController<T: RefinementFacetsViewController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
+  func connectController<T: FacetListController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
 
     /// Add missing refinements with a count of 0 to all returned facets
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
@@ -97,7 +97,7 @@ public extension SelectableFacetsViewModel {
 
 }
 
-fileprivate extension SelectableFacetsViewModel {
+fileprivate extension SelectableListViewModel where Key == String, Item == Facet {
 
   func whenSelectionsComputedThenUpdateFilterState(_ attribute: Attribute, _ filterState: FilterState, _ groupID: FilterGroup.ID) {
 
@@ -137,37 +137,4 @@ fileprivate extension SelectableFacetsViewModel {
       }
     }
   }
-}
-
-extension FilterGroup.ID {
-  
-  init(groupName: String? = nil, attribute: Attribute, operator: RefinementOperator) {
-    
-    let name = groupName ?? attribute.name
-    
-    switch `operator` {
-    case .and:
-      self = .and(name: name)
-    case .or:
-      self = .or(name: name)
-    }
-    
-  }
-  
-}
-
-extension Query {
-  
-  func updateQueryFacets(with attribute: Attribute) {
-    let updatedFacets: [String]
-    
-    if let facets = facets, !facets.contains(attribute.name) {
-      updatedFacets = facets + [attribute.name]
-    } else {
-      updatedFacets = [attribute.name]
-    }
-    
-    facets = updatedFacets
-  }
-  
 }

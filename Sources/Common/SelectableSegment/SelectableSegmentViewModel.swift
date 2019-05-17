@@ -8,25 +8,25 @@
 
 import Foundation
 
-public class SelectableMapViewModel<Key: Hashable, Value> {
+public class SelectableSegmentViewModel<SegmentKey: Hashable, Segment> {
   
-  public var items: [Key: Value]
-  public var selected: Key? {
+  public var items: [SegmentKey: Segment]
+  public var selected: SegmentKey? {
     didSet {
       onSelectedChanged.fire(selected)
     }
   }
-  public let onSelectedChanged: Observer<Key?>
-  public let onSelectedComputed: Observer<Key?>
+  public let onSelectedChanged: Observer<SegmentKey?>
+  public let onSelectedComputed: Observer<SegmentKey?>
   
-  public init(items: [Key: Value], selected: Key? = nil) {
+  public init(items: [SegmentKey: Segment], selected: SegmentKey? = nil) {
     self.items = items
     self.selected = selected
     self.onSelectedChanged = Observer()
     self.onSelectedComputed = Observer()
   }
   
-  public func computeSelected(selected: Key) {
+  public func computeSelected(selected: SegmentKey) {
     onSelectedComputed.fire(selected)
   }
   

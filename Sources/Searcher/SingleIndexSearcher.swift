@@ -18,6 +18,14 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   public let onResultsChanged = Observer<SearchResult>()
   public var requestOptions: RequestOptions?
   
+  public var filterState: FilterState {
+    return indexSearchData.filterState
+  }
+  
+  public var query: Query {
+    return indexSearchData.query
+  }
+  
   public var isDisjunctiveFacetingEnabled = true
   
   public init(index: Index,
