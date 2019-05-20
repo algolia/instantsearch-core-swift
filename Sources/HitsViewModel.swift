@@ -11,13 +11,12 @@ import InstantSearchClient
 // DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
 // something like: viewModel.bind(\.navigationTitle, to: navigationItem, at: \.title),
 
-// TODO: Decouple QueryMetaData via connector
 // TODO: Paginator: keep in memory only visible results with offsets
 public class HitsViewModel<Record: Codable> {
   
   public let settings: Settings
 
-  private let hitsPaginationController: Paginator<Record, QueryMetadata>
+  private let hitsPaginationController: Paginator<Record>
   
   private var isLastQueryEmpty: Bool = true
   
@@ -37,12 +36,12 @@ public class HitsViewModel<Record: Codable> {
 
   public init(settings: Settings? = nil) {
     self.settings = settings ?? Settings()
-    self.hitsPaginationController = Paginator<Record, QueryMetadata>()
+    self.hitsPaginationController = Paginator<Record>()
     self.hitsPaginationController.delegate = self
   }
   
   internal init(settings: Settings? = nil,
-                paginationController: Paginator<Record, QueryMetadata>) {
+                paginationController: Paginator<Record>) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
   }
@@ -141,7 +140,7 @@ extension HitsViewModel {
   // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
   public func update(_ searchResults: SearchResults<Record>, with queryMetadata: QueryMetadata) {
     isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
-    hitsPaginationController.process(searchResults, with: queryMetadata)
+    hitsPaginationController.process(searchResults)
     onResultsUpdated.fire(())
   }
   
@@ -160,6 +159,14 @@ extension HitsViewModel {
     onNewPage.subscribe(with: self) { [weak searcher] page in
       searcher?.indexSearchData.query.page = UInt(page)
       searcher?.search()
+    }
+    
+    searcher.indexSearchData.filterState.onChange.subscribe(with: self) { [weak self] _ in
+      self?.hitsPaginationController.invalidate()
+    }
+    
+    searcher.onQueryChanged.subscribe(with: self) { [weak self] _ in
+      self?.hitsPaginationController.invalidate()
     }
     
   }

@@ -13,248 +13,293 @@ import XCTest
 
 class RefinementListPresenterTests: XCTestCase {
 
-  lazy var facetValues: [FacetValue] = {
-    var values: [FacetValue] = []
-    values.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    values.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    values.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    values.append(FacetValue(value: "black", count: 5, highlighted: nil))
-    values.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    return values
-  }()
-
-  let selectedValues = ["orange", "red", "green"]
-  let refinementListBuilder = RefinementListPresenter()
-
   func testCountDescSelectedOnTop() {
+    
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
 
-    var expectedList: [FacetValue] = []
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil)) // Show selected first
+    let expected: [RefinementFacet] = [
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+    ]
 
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.isRefined, .count(order: .descending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .count(order: .descending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
+    
   }
 
   func testCountDescNotSelectedOnTop() {
+    
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
 
-    var expectedList: [FacetValue] = []
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
+    let expected: [RefinementFacet] = [
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
 
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.count(order: .descending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [ .count(order: .descending)])
+    
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
 
-    XCTAssertEqual(expectedList, actualList)
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
+    
   }
 
   func testCountAscSelectedOnTop() {
 
-    var expectedList: [FacetValue] = []
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil)) // Show selected first
-
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.isRefined, .count(order: .ascending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "green", count: 0, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .count(order: .ascending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
+    
   }
 
   func testCountAscNotSelectedOnTop() {
 
-    var expectedList: [FacetValue] = []
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.count(order: .ascending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [ .count(order: .descending)])
+    
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
   }
 
   func testNameAscSelectedOnTop() {
 
-    var expectedList: [FacetValue] = []
-
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil)) // Show selected first
-
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.isRefined, .alphabetical(order: .ascending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "green", count: 0, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .alphabetical(order: .ascending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
   }
 
   func testNameAscNotSelectedOnTop() {
 
-    var expectedList: [FacetValue] = []
-
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.alphabetical(order: .ascending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.alphabetical(order: .ascending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
   }
 
   func testNameDescSelectedOnTop() {
-    var expectedList: [FacetValue] = []
-
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil)) // Show selected first
-
-
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.isRefined, .alphabetical(order: .descending)], keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .alphabetical(order: .descending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
   }
 
   func testNameDescNotSelectedOnTop() {
-    var expectedList: [FacetValue] = []
-
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.alphabetical(order: .descending)],
-                                                                           keepSelectedValuesWithZeroCount: true)
-
-    XCTAssertEqual(expectedList, actualList)
+    let initial: [RefinementFacet] = [
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "yellow", count: 30, highlighted: nil), false),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "orange", count: 20, highlighted: nil), true),
+      (.init(value: "green", count: 0, highlighted: nil), true),
+      (.init(value: "blue", count: 40, highlighted: nil), false),
+      (.init(value: "black", count: 5, highlighted: nil), false),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.alphabetical(order: .descending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
   }
 
-  func testRemoveSelectedValuesWithZeroCount() {
-    var expectedList: [FacetValue] = []
-
-    expectedList.append(FacetValue(value: "yellow", count: 30, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "orange", count: 20, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 40, highlighted: nil))
-    expectedList.append(FacetValue(value: "black", count: 5, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.alphabetical(order: .descending)],
-                                                                           keepSelectedValuesWithZeroCount: false)
-
-    XCTAssertEqual(expectedList, actualList)
-  }
+//  func testRemoveSelectedValuesWithZeroCount() {
+//    var expectedList: [Facet] = []
+//
+//    expectedList.append(Facet(value: "yellow", count: 30, highlighted: nil))
+//    expectedList.append(Facet(value: "red", count: 10, highlighted: nil))
+//    expectedList.append(Facet(value: "orange", count: 20, highlighted: nil))
+//    expectedList.append(Facet(value: "blue", count: 40, highlighted: nil))
+//    expectedList.append(Facet(value: "black", count: 5, highlighted: nil))
+//
+//    let actualList: [Facet] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
+//                                                                           resultValues: facetValues,
+//                                                                           sortBy: [.alphabetical(order: .descending)],
+//                                                                           keepSelectedValuesWithZeroCount: false)
+//
+//    XCTAssertEqual(expectedList, actualList)
+//  }
 
   func testSortWithEqualCounts() {
-    var expectedList: [FacetValue] = []
-
-    let facetValues: [FacetValue] = {
-      var values: [FacetValue] = []
-      values.append(FacetValue(value: "blue", count: 10, highlighted: nil))
-      values.append(FacetValue(value: "red", count: 10, highlighted: nil))
-      values.append(FacetValue(value: "green", count: 5, highlighted: nil))
-      values.append(FacetValue(value: "orange", count: 10, highlighted: nil))
-      return values
-    }()
-
-    let selectedValues = ["orange", "red", "green"]
-
-    expectedList.append(FacetValue(value: "orange", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 10, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 5, highlighted: nil))
-    expectedList.append(FacetValue(value: "blue", count: 10, highlighted: nil))
-
-    let actualList: [FacetValue] = refinementListBuilder.getRefinementList(selectedValues: selectedValues,
-                                                                           resultValues: facetValues,
-                                                                           sortBy: [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)],
-                                                                           keepSelectedValuesWithZeroCount: false)
-
-    XCTAssertEqual(expectedList, actualList)
+    
+    let initial: [RefinementFacet] = [
+      (.init(value: "blue", count: 10, highlighted: nil), false),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "green", count: 5, highlighted: nil), true),
+      (.init(value: "orange", count: 10, highlighted: nil), true),
+    ]
+    
+    let expected: [RefinementFacet] = [
+      (.init(value: "orange", count: 10, highlighted: nil), true),
+      (.init(value: "red", count: 10, highlighted: nil), true),
+      (.init(value: "green", count: 5, highlighted: nil), true),
+      (.init(value: "blue", count: 10, highlighted: nil), false),
+    ]
+    
+    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)])
+    let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
+    
+    XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
+    
   }
 
-  func testMergeWithFacetAndRefinementValues() {
-    let actualList = refinementListBuilder.merge(facetValues, withRefinementValues: selectedValues)
-
-    var expectedList: [FacetValue] = []
-    expectedList.append(contentsOf: facetValues)
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil)) // The missing one, put count 0
-
-    XCTAssertEqual(expectedList, actualList)
-  }
-
-  func testMergeWithRefinementValues() {
-    let actualList = refinementListBuilder.merge([], withRefinementValues: selectedValues)
-
-    var expectedList: [FacetValue] = []
-    expectedList.append(FacetValue(value: "orange", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "red", count: 0, highlighted: nil))
-    expectedList.append(FacetValue(value: "green", count: 0, highlighted: nil)) // The missing one, put count 0
-
-    XCTAssertEqual(expectedList, actualList)
-  }
-
-  func testMergeWithFacetValues() {
-    let actualList = refinementListBuilder.merge(facetValues, withRefinementValues: [])
-
-    var expectedList: [FacetValue] = []
-    expectedList.append(contentsOf: facetValues)
-
-    XCTAssertEqual(expectedList, actualList)
-  }
-
-  func testMergeWithEmptyValues() {
-    let actualList = refinementListBuilder.merge([], withRefinementValues: [])
-
-    let expectedList: [FacetValue] = []
-
-    XCTAssertEqual(expectedList, actualList)
-  }
+//  func testMergeWithFacetAndRefinementValues() {
+//    let actualList = refinementListBuilder.merge(facetValues, withRefinementValues: selectedValues)
+//
+//    var expectedList: [Facet] = []
+//    expectedList.append(contentsOf: facetValues)
+//    expectedList.append(Facet(value: "green", count: 0, highlighted: nil)) // The missing one, put count 0
+//
+//    XCTAssertEqual(expectedList, actualList)
+//  }
+//
+//  func testMergeWithRefinementValues() {
+//    let actualList = refinementListBuilder.merge([], withRefinementValues: selectedValues)
+//
+//    var expectedList: [Facet] = []
+//    expectedList.append(Facet(value: "orange", count: 0, highlighted: nil))
+//    expectedList.append(Facet(value: "red", count: 0, highlighted: nil))
+//    expectedList.append(Facet(value: "green", count: 0, highlighted: nil)) // The missing one, put count 0
+//
+//    XCTAssertEqual(expectedList, actualList)
+//  }
+//
+//  func testMergeWithFacets() {
+//    let actualList = refinementListBuilder.merge(facetValues, withRefinementValues: [])
+//
+//    var expectedList: [Facet] = []
+//    expectedList.append(contentsOf: facetValues)
+//
+//    XCTAssertEqual(expectedList, actualList)
+//  }
+//
+//  func testMergeWithEmptyValues() {
+//    let actualList = refinementListBuilder.merge([], withRefinementValues: [])
+//
+//    let expectedList: [Facet] = []
+//
+//    XCTAssertEqual(expectedList, actualList)
+//  }
 }

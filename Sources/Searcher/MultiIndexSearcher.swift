@@ -16,6 +16,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public var indexSearchDatas: [IndexSearchData]
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
+  public var onQueryChanged: Observer<String>
   public let onResultsChanged = Observer<SearchResult>()
   public var applyDisjunctiveFacetingWhenNecessary = true
   public var requestOptions: RequestOptions?
@@ -31,6 +32,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     self.indexSearchDatas = indexSearchDatas
     self.sequencer = Sequencer()
     self.requestOptions = requestOptions
+    self.onQueryChanged = Observer()
     sequencer.delegate = self
     onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
@@ -42,6 +44,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   
   public func setQuery(text: String) {
     indexSearchDatas.forEach { $0.query.query = text }
+    onQueryChanged.fire(text)
   }
   
   public func search() {

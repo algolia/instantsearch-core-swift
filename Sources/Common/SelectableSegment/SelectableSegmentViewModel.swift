@@ -21,7 +21,6 @@ public class SelectableSegmentViewModel<SegmentKey: Hashable, Segment> {
   
   public init(items: [SegmentKey: Segment], selected: SegmentKey? = nil) {
     self.items = items
-    self.selected = selected
     self.onSelectedChanged = Observer()
     self.onSelectedComputed = Observer()
   }

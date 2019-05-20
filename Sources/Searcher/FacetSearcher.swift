@@ -15,6 +15,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public let indexSearchData: IndexSearchData
   public let sequencer: Sequencer
   public let onResultsChanged = Observer<SearchResult>()
+  public var onQueryChanged = Observer<String>()
   public let isLoading = Observer<Bool>()
   public var facetName: String
   public var text: String
@@ -37,6 +38,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   
   public func setQuery(text: String) {
     self.text = text
+    onQueryChanged.fire(text)
   }
   
   public func search() {

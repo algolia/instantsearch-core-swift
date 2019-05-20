@@ -26,7 +26,10 @@ class FilterGroupCollectionsTests: XCTestCase {
       Filter.Facet(attribute: "featured", boolValue: true),
     ])
     
-    XCTAssertEqual([andGroup, orGroup].sqlForm, "( \"_tags\":\"tag\" AND \"size\" = 40.0 AND \"brand\":\"sony\" ) AND ( \"brand\":\"philips\" OR \"diagonal\":\"42.0\" OR \"featured\":\"true\" )")
+    let converter = FilterGroupConverter()
+    let groups: [FilterGroupType] = [andGroup, orGroup]
+    
+    XCTAssertEqual(converter.sql(groups), "( \"_tags\":\"tag\" AND \"size\" = 40.0 AND \"brand\":\"sony\" ) AND ( \"brand\":\"philips\" OR \"diagonal\":\"42.0\" OR \"featured\":\"true\" )")
     
   }
   

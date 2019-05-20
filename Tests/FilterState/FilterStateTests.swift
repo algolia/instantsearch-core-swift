@@ -13,8 +13,8 @@ import XCTest
 
 extension FilterGroupsConvertible {
   
-  func buildSQL() -> String {
-    return toFilterGroups().compactMap { $0 as? FilterGroupType & SQLSyntaxConvertible }.sqlForm
+  func buildSQL() -> String? {
+    return FilterGroupConverter().sql(toFilterGroups())
   }
   
 }
@@ -335,7 +335,7 @@ class FilterStateTests: XCTestCase {
         """)
     XCTAssertFalse(filterState.isEmpty)
     filterState.remove(filter)
-    XCTAssertTrue(filterState.isEmpty, filterState.buildSQL())
+    XCTAssertTrue(filterState.isEmpty, filterState.buildSQL()!)
     XCTAssertEqual(filterState.buildSQL(), "")
   }
   
