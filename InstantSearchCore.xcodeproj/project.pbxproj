@@ -196,6 +196,9 @@
 		AFC2E2C22292A1F400859EBA /* CallbackTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2C12292A1F400859EBA /* CallbackTester.swift */; };
 		AFC2E2C32292A1F400859EBA /* CallbackTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2C12292A1F400859EBA /* CallbackTester.swift */; };
 		AFC2E2C42292A1F400859EBA /* CallbackTester.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2C12292A1F400859EBA /* CallbackTester.swift */; };
+		AFC2E2C62292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */; };
+		AFC2E2C72292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */; };
+		AFC2E2C82292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */; };
 		AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
@@ -279,10 +282,10 @@
 		AFDA41332269C54400100CB5 /* RefinementFacetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDA41312269C54400100CB5 /* RefinementFacetViewModel.swift */; };
 		AFDA41342269C54400100CB5 /* RefinementFacetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDA41312269C54400100CB5 /* RefinementFacetViewModel.swift */; };
 		AFDA41352269C54400100CB5 /* RefinementFacetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDA41312269C54400100CB5 /* RefinementFacetViewModel.swift */; };
-		AFE3437B228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableMapViewModel+Filter.swift */; };
-		AFE3437C228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableMapViewModel+Filter.swift */; };
-		AFE3437D228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableMapViewModel+Filter.swift */; };
-		AFE3437E228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableMapViewModel+Filter.swift */; };
+		AFE3437B228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */; };
+		AFE3437C228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */; };
+		AFE3437D228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */; };
+		AFE3437E228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */; };
 		AFE34380228997FB00829AC1 /* SelectableSegmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437F228997FB00829AC1 /* SelectableSegmentController.swift */; };
 		AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437F228997FB00829AC1 /* SelectableSegmentController.swift */; };
 		AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE3437F228997FB00829AC1 /* SelectableSegmentController.swift */; };
@@ -429,6 +432,7 @@
 		AFC2E2B0228EE1EC00859EBA /* FacetListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetListController.swift; sourceTree = "<group>"; };
 		AFC2E2BD2292953400859EBA /* SelectableListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModelTests.swift; sourceTree = "<group>"; };
 		AFC2E2C12292A1F400859EBA /* CallbackTester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallbackTester.swift; sourceTree = "<group>"; };
+		AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentViewModelTests.swift; sourceTree = "<group>"; };
 		AFCDED33222D86E7001459BE /* FacetResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FacetResult.json; sourceTree = "<group>"; };
 		AFCDED38222D9697001459BE /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherSingleOrList.swift; sourceTree = "<group>"; };
@@ -449,7 +453,7 @@
 		AFCDEDF1223C070F001459BE /* AnyHitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyHitsViewModel.swift; sourceTree = "<group>"; };
 		AFDA412C2268AB7000100CB5 /* FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterState.swift; sourceTree = "<group>"; };
 		AFDA41312269C54400100CB5 /* RefinementFacetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementFacetViewModel.swift; sourceTree = "<group>"; };
-		AFE3437A228997E000829AC1 /* SelectableMapViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableMapViewModel+Filter.swift"; sourceTree = "<group>"; };
+		AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableSegmentViewModel+Filter.swift"; sourceTree = "<group>"; };
 		AFE3437F228997FB00829AC1 /* SelectableSegmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentController.swift; sourceTree = "<group>"; };
 		AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTests.swift; sourceTree = "<group>"; };
 		AFE807CE2229355900FC1D50 /* SearchResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResult.json; sourceTree = "<group>"; };
@@ -726,12 +730,12 @@
 			path = Pagination;
 			sourceTree = "<group>";
 		};
-		AFE343852289A11B00829AC1 /* SelectableMap */ = {
+		AFE343852289A11B00829AC1 /* Segmented */ = {
 			isa = PBXGroup;
 			children = (
-				AFE3437A228997E000829AC1 /* SelectableMapViewModel+Filter.swift */,
+				AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */,
 			);
-			path = SelectableMap;
+			path = Segmented;
 			sourceTree = "<group>";
 		};
 		BC3426271D460DB70055E0F2 = {
@@ -763,7 +767,7 @@
 			children = (
 				AFC2E2A5228EDF5600859EBA /* Helpers */,
 				AFC2E281228ED52900859EBA /* Common */,
-				AFE343852289A11B00829AC1 /* SelectableMap */,
+				AFE343852289A11B00829AC1 /* Segmented */,
 				AF536C21227C66CE006DAE84 /* Toggle */,
 				E2242645224D22DF005DD565 /* FacetList */,
 				AFC2E280228ED4DF00859EBA /* FilterList */,
@@ -812,6 +816,7 @@
 				AFCDEDE4223AC4E8001459BE /* PaginationControllerTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
 				AFC2E2BD2292953400859EBA /* SelectableListViewModelTests.swift */,
+				AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */,
 				AFC2E2C12292A1F400859EBA /* CallbackTester.swift */,
 			);
 			path = Tests;
@@ -1276,7 +1281,7 @@
 				AF6C6F6222538156001E5E3C /* Searcher.swift in Sources */,
 				AFCDEDF2223C070F001459BE /* AnyHitsViewModel.swift in Sources */,
 				AFC2E292228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
-				AFE3437B228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */,
+				AFE3437B228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */,
 				AFCDEDA1222E7B6B001459BE /* Hit.swift in Sources */,
 				E24233D9223947FC008F24FB /* SearchResults.swift in Sources */,
 				AF6C6F6C2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
@@ -1301,6 +1306,7 @@
 				AF19B03A223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,
 				AFCDEDE5223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
 				AFCDEDA6222E8166001459BE /* FacetResultsTests.swift in Sources */,
+				AFC2E2C62292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AF11783F225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117854226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
 				AF6C6F752253B204001E5E3C /* SearchResultsTests.swift in Sources */,
@@ -1324,7 +1330,7 @@
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
 				AF3DE5A2224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
-				AFE3437C228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */,
+				AFE3437C228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */,
 				AF11779D225E2AB500C5B59B /* Filters.swift in Sources */,
 				AF3DE584224A984C00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				AFCDEDC922397E18001459BE /* SearchResults+PageMap.swift in Sources */,
@@ -1410,6 +1416,7 @@
 				AFCDEDEA223AC514001459BE /* PageMapTests.swift in Sources */,
 				AFC2E2BF2292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AF11784C22608CBC00C5B59B /* FilterStateGroupTests.swift in Sources */,
+				AFC2E2C72292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AFCDEDE2223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1423,7 +1430,7 @@
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
 				AF3DE5A3224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
-				AFE3437D228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */,
+				AFE3437D228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */,
 				AF11779E225E2AB500C5B59B /* Filters.swift in Sources */,
 				AF3DE585224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				E2E09E392232709F00F3056D /* Result.swift in Sources */,
@@ -1509,6 +1516,7 @@
 				AFCDEDEB223AC514001459BE /* PageMapTests.swift in Sources */,
 				AFC2E2C02292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AF11784D22608CBD00C5B59B /* FilterStateGroupTests.swift in Sources */,
+				AFC2E2C82292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AFCDEDE3223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1522,7 +1530,7 @@
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
 				AF3DE5A4224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
-				AFE3437E228997E000829AC1 /* SelectableMapViewModel+Filter.swift in Sources */,
+				AFE3437E228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */,
 				AF11779F225E2AB500C5B59B /* Filters.swift in Sources */,
 				AF3DE586224A984D00C8BC08 /* MultiHitsViewModel.swift in Sources */,
 				E2E09E3A2232709F00F3056D /* Result.swift in Sources */,

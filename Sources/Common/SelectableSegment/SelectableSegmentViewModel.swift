@@ -19,13 +19,13 @@ public class SelectableSegmentViewModel<SegmentKey: Hashable, Segment> {
   public let onSelectedChanged: Observer<SegmentKey?>
   public let onSelectedComputed: Observer<SegmentKey?>
   
-  public init(items: [SegmentKey: Segment], selected: SegmentKey? = nil) {
+  public init(items: [SegmentKey: Segment]) {
     self.items = items
     self.onSelectedChanged = Observer()
     self.onSelectedComputed = Observer()
   }
   
-  public func computeSelected(selected: SegmentKey) {
+  public func computeSelected(selected: SegmentKey?) {
     onSelectedComputed.fire(selected)
   }
   
