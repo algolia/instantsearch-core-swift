@@ -1,5 +1,5 @@
 //
-//  SelectableMapViewModel+Filter.swift
+//  SelectableSegmentViewModel+Filter.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 13/05/2019.
