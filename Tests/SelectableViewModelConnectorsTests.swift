@@ -7,8 +7,6 @@
 //
 
 import Foundation
-
-import Foundation
 @testable import InstantSearchCore
 import XCTest
 

@@ -32,13 +32,11 @@ class SelectableListViewModelTests: XCTestCase {
     
     let items = ["s1", "s2", "s3"]
     let exp = expectation(description: "on items changed observer call")
-    
-    let cbTester = CallbackTester<[String]> { dispatchedItems in
+        
+    viewModel.onItemsChanged.subscribe(with: self) { dispatchedItems in
       XCTAssertEqual(dispatchedItems, items)
       exp.fulfill()
     }
-    
-    viewModel.onItemsChanged.subscribe(with: cbTester, callback: cbTester.callback)
     
     viewModel.items = items
     
@@ -51,12 +49,10 @@ class SelectableListViewModelTests: XCTestCase {
     let selections = Set(["s2"])
     let exp = expectation(description: "on selections changed observer call")
     
-    let cbTester = CallbackTester<Set<String>> { dispatchedSelections in
+    viewModel.onSelectionsChanged.subscribe(with: self) { dispatchedSelections in
       XCTAssertEqual(dispatchedSelections, selections)
       exp.fulfill()
     }
-    
-    viewModel.onSelectionsChanged.subscribe(with: cbTester, callback: cbTester.callback)
     
     viewModel.selections = selections
     
@@ -69,12 +65,10 @@ class SelectableListViewModelTests: XCTestCase {
     viewModel.selections = ["s2"]
     let deselectionExpectation = expectation(description: "deselection expectation")
     
-    let deselectionTester = CallbackTester<Set<String>> { dispatchedSelections in
+    viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssert(dispatchedSelections.isEmpty)
       deselectionExpectation.fulfill()
     }
-    
-    viewModel.onSelectionsComputed.subscribe(with: deselectionTester, callback: deselectionTester.callback)
     
     viewModel.computeSelections(selectingItemForKey: "s2")
     
@@ -83,13 +77,11 @@ class SelectableListViewModelTests: XCTestCase {
     viewModel.onSelectionsComputed.cancelAllSubscriptions()
     
     let selectionExpectation  = expectation(description: "selection expectation")
-
-    let selectionTester = CallbackTester<Set<String>> { dispatchedSelections in
+    
+    viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssertEqual(dispatchedSelections, ["s1"])
       selectionExpectation.fulfill()
     }
-    
-    viewModel.onSelectionsComputed.subscribe(with: selectionTester, callback: selectionTester.callback)
     
     viewModel.computeSelections(selectingItemForKey: "s1")
 
@@ -98,13 +90,11 @@ class SelectableListViewModelTests: XCTestCase {
     viewModel.onSelectionsComputed.cancelAllSubscriptions()
 
     let replacementExpectation  = expectation(description: "replacement expectation")
-
-    let replacementTester = CallbackTester<Set<String>> { dispatchedSelections in
+    
+    viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssertEqual(dispatchedSelections, ["s3"])
       replacementExpectation.fulfill()
     }
-    
-    viewModel.onSelectionsComputed.subscribe(with: replacementTester, callback: replacementTester.callback)
 
     viewModel.computeSelections(selectingItemForKey: "s3")
 
@@ -118,12 +108,10 @@ class SelectableListViewModelTests: XCTestCase {
     viewModel.selections = ["s2"]
     let deselectionExpectation = expectation(description: "deselection expectation")
     
-    let deselectionTester = CallbackTester<Set<String>> { dispatchedSelections in
+    viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssert(dispatchedSelections.isEmpty)
       deselectionExpectation.fulfill()
     }
-    
-    viewModel.onSelectionsComputed.subscribe(with: deselectionTester, callback: deselectionTester.callback)
     
     viewModel.computeSelections(selectingItemForKey: "s2")
     
@@ -131,14 +119,12 @@ class SelectableListViewModelTests: XCTestCase {
     
     viewModel.onSelectionsComputed.cancelAllSubscriptions()
     
-    let selectionExpectation  = expectation(description: "selection expectation")
+    let selectionExpectation = expectation(description: "selection expectation")
     
-    let selectionTester = CallbackTester<Set<String>> { dispatchedSelections in
+    viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssertEqual(dispatchedSelections, ["s1", "s2"])
       selectionExpectation.fulfill()
     }
-    
-    viewModel.onSelectionsComputed.subscribe(with: selectionTester, callback: selectionTester.callback)
     
     viewModel.computeSelections(selectingItemForKey: "s1")
     
@@ -146,14 +132,12 @@ class SelectableListViewModelTests: XCTestCase {
     
     viewModel.onSelectionsComputed.cancelAllSubscriptions()
     
-    let additionExpectation  = expectation(description: "addition expectation")
+    let additionExpectation = expectation(description: "addition expectation")
     
-    let additionTester = CallbackTester<Set<String>> { dispatchedSelections in
+    viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssertEqual(dispatchedSelections, ["s2", "s3"])
       additionExpectation.fulfill()
     }
-    
-    viewModel.onSelectionsComputed.subscribe(with: additionTester, callback: additionTester.callback)
     
     viewModel.computeSelections(selectingItemForKey: "s3")
     

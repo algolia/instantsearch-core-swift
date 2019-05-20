@@ -29,12 +29,10 @@ class SelectableSegmentViewModelTests: XCTestCase {
 
     let selectionExp = expectation(description: "selection expectation")
     
-    let selectionObserver = CallbackTester<String?> { selectedKey in
+    viewModel.onSelectedChanged.subscribe(with: self) { selectedKey in
       XCTAssertEqual(selectedKey, "k3")
       selectionExp.fulfill()
     }
-    
-    viewModel.onSelectedChanged.subscribe(with: selectionObserver, callback: selectionObserver.callback)
     
     viewModel.selected = "k3"
     
@@ -50,12 +48,10 @@ class SelectableSegmentViewModelTests: XCTestCase {
 
     let selectionComputedExp = expectation(description: "selection computed expectation")
     
-    let selectionComputedObserver = CallbackTester<String?> { computedSelection in
+    viewModel.onSelectedComputed.subscribe(with: self) { computedSelection in
       XCTAssertEqual(computedSelection, "k3")
       selectionComputedExp.fulfill()
     }
-    
-    viewModel.onSelectedComputed.subscribe(with: selectionComputedObserver, callback: selectionComputedObserver.callback)
     
     viewModel.computeSelected(selected: "k3")
     
@@ -68,12 +64,10 @@ class SelectableSegmentViewModelTests: XCTestCase {
     
     let selectionComputedExp = expectation(description: "selection computed expectation")
     
-    let selectionComputedObserver = CallbackTester<String?> { computedSelection in
+    viewModel.onSelectedComputed.subscribe(with: self) { computedSelection in
       XCTAssertNil(computedSelection)
       selectionComputedExp.fulfill()
     }
-    
-    viewModel.onSelectedComputed.subscribe(with: selectionComputedObserver, callback: selectionComputedObserver.callback)
     
     viewModel.computeSelected(selected: nil)
     

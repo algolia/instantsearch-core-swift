@@ -29,16 +29,14 @@ class SelectableViewModelTests: XCTestCase {
 
     let selectionExpectation = expectation(description: "selectionExpectation")
     let deselectionExpectation = expectation(description: "deselectionExpectation")
-    
-    let selectionObserver = CallbackTester<Bool> { isSelected in
+        
+    viewModel.onSelectedChanged.subscribe(with: self) { isSelected in
       if isSelected {
         selectionExpectation.fulfill()
       } else {
         deselectionExpectation.fulfill()
       }
     }
-    
-    viewModel.onSelectedChanged.subscribe(with: selectionObserver, callback: selectionObserver.callback)
     
     viewModel.isSelected = true
     viewModel.isSelected = false
@@ -53,12 +51,10 @@ class SelectableViewModelTests: XCTestCase {
 
     let selectedComputedExpectation = expectation(description: "selected computed expectation")
 
-    let selectedComputedObserver = CallbackTester<Bool> { isSelected in
+    viewModel.onSelectedComputed.subscribe(with: self) { isSelected in
       XCTAssertEqual(isSelected, false)
       selectedComputedExpectation.fulfill()
     }
-    
-    viewModel.onSelectedComputed.subscribe(with: selectedComputedObserver, callback: selectedComputedObserver.callback)
     
     viewModel.computeIsSelected(selecting: false)
     
