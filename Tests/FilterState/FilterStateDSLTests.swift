@@ -19,7 +19,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.filters.add(Filter.Tag(value: "tag1"), toGroupWithID: .and(name: "g"))
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        "_tags":"tag1"
+        ( "_tags":"tag1" )
         """)
     
     XCTAssertTrue(filterStateDSL.filters.contains(Filter.Tag(value:"tag1")))
@@ -87,14 +87,14 @@ class FilterStateDSLTests: XCTestCase {
   
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        "brand":"sony"
+        ( "brand":"sony" )
         """)
     
     XCTAssertFalse(filterStateDSL.filters.contains(Filter.Numeric(attribute: "size", range: 30...40)))
     
     filterStateDSL.and("g") --- ("brand", "sony")
     
-    XCTAssertEqual(filterStateDSL.filters.buildSQL(), "")
+    XCTAssertEqual(filterStateDSL.filters.buildSQL(), nil)
     
     XCTAssertFalse(filterStateDSL.filters.contains(Filter.Facet(attribute: "brand", value: "sony")))
     
@@ -107,7 +107,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g1") +++ "tag1"
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        "_tags":"tag1"
+        ( "_tags":"tag1" )
         """)
     
     XCTAssertTrue(filterStateDSL.filters.contains(Filter.Tag(value: "tag1")))
@@ -124,7 +124,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g2") +++ ("brand", "sony")
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony"
+        ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND ( "brand":"sony" )
         """)
     
     XCTAssertTrue(filterStateDSL.filters.contains(Filter.Facet(attribute: "brand", value: "sony")))
@@ -132,7 +132,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g3") +++ ("price", .greaterThan, 100)
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony" AND "price" > 100.0
+        ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND ( "brand":"sony" ) AND ( "price" > 100.0 )
         """)
     
     XCTAssertTrue(filterStateDSL.filters.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
@@ -140,7 +140,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g3") +++ ("size", 30...40)
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony" AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
+        ( "_tags":"tag1" OR "_tags":"tag2" OR "_tags":"tag3" ) AND ( "brand":"sony" ) AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
     XCTAssertTrue(filterStateDSL.filters.contains(Filter.Numeric(attribute: "size", range: 30...40)))
@@ -148,7 +148,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g1") --- "tag1"
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        ( "_tags":"tag2" OR "_tags":"tag3" ) AND "brand":"sony" AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
+        ( "_tags":"tag2" OR "_tags":"tag3" ) AND ( "brand":"sony" ) AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
     XCTAssertFalse(filterStateDSL.filters.contains(Filter.Tag(value: "tag1")))
@@ -156,7 +156,7 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g1") --- [Filter.Tag(value: "tag2"), Filter.Tag(value: "tag3")]
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        "brand":"sony" AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
+        ( "brand":"sony" ) AND ( "price" > 100.0 OR "size":30.0 TO 40.0 )
         """)
     
     XCTAssertFalse(filterStateDSL.filters.contains(Filter.Tag(value: "tag2")))
@@ -173,14 +173,14 @@ class FilterStateDSLTests: XCTestCase {
     filterStateDSL.or("g3") --- ("price", .greaterThan, 100)
     
     XCTAssertEqual(filterStateDSL.filters.buildSQL(), """
-        "size":30.0 TO 40.0
+        ( "size":30.0 TO 40.0 )
         """)
     
     XCTAssertFalse(filterStateDSL.filters.contains(Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)))
     
     filterStateDSL.or("g3") --- ("size", 30...40)
     
-    XCTAssertEqual(filterStateDSL.filters.buildSQL(), "")
+    XCTAssertEqual(filterStateDSL.filters.buildSQL(), nil)
     
     XCTAssertFalse(filterStateDSL.filters.contains(Filter.Numeric(attribute: "price", range: 30...40)))
     

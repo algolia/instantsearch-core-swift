@@ -18,7 +18,7 @@ class FilterGroupTests: XCTestCase {
       Filter.Tag(value: "tag"),
     ])
     
-    XCTAssertEqual(group.sqlForm, "\"_tags\":\"tag\"")
+    XCTAssertEqual(group.sqlForm, "( \"_tags\":\"tag\" )")
     
   }
   
@@ -39,7 +39,7 @@ class FilterGroupTests: XCTestCase {
     
     let group = FilterGroup.Or(filters: [Filter.Facet(attribute: "brand", stringValue: "philips")])
     
-    XCTAssertEqual(group.sqlForm, "\"brand\":\"philips\"")
+    XCTAssertEqual(group.sqlForm, "( \"brand\":\"philips\" )")
 
   }
   

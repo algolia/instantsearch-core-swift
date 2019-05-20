@@ -90,7 +90,7 @@ extension SQLSyntaxConvertible where Self: FilterGroupType {
     if compatibleFilters.isEmpty {
       return ""
     } else {
-      return "(\(compatibleFilters.map { $0.sqlForm }.joined(separator: separator)))"
+      return "( \(compatibleFilters.map { $0.sqlForm }.joined(separator: separator)) )"
     }
 
   }
