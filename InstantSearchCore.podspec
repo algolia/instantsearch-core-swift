@@ -9,6 +9,8 @@ Pod::Spec.new do |s|
     s.homepage = 'https://github.com/algolia/instantsearch-core-swift'
     s.author   = { 'Algolia' => 'contact@algolia.com' }
     s.source = { :git => 'https://github.com/algolia/instantsearch-core-swift.git', :tag => s.version }
+    s.swift_version = '5.0'
+    s.swift_versions = ['4.0', '4.2', '5.0']
 
     # Build settings
     # --------------
