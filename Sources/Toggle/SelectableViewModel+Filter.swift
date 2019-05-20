@@ -43,7 +43,7 @@ fileprivate extension SelectableViewModel where Item: FilterType {
         if selected {
           filterState.add(item, toGroupWithID: groupID)
         } else {
-          filterState.remove(item)
+          filterState.remove(item, fromGroupWithID: groupID)
         }
       }
       
