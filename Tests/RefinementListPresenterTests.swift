@@ -33,7 +33,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "black", count: 5, highlighted: nil), false),
     ]
 
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .count(order: .descending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.isRefined, .count(order: .descending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
@@ -60,7 +60,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
 
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [ .count(order: .descending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [ .count(order: .descending)])
     
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
 
@@ -88,7 +88,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "blue", count: 40, highlighted: nil), false),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .count(order: .ascending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.isRefined, .count(order: .ascending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
@@ -115,7 +115,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [ .count(order: .descending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [ .count(order: .descending)])
     
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
@@ -142,7 +142,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "yellow", count: 30, highlighted: nil), false),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .alphabetical(order: .ascending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.isRefined, .alphabetical(order: .ascending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
@@ -168,7 +168,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "yellow", count: 30, highlighted: nil), false),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.alphabetical(order: .ascending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.alphabetical(order: .ascending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
@@ -194,7 +194,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "black", count: 5, highlighted: nil), false),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .alphabetical(order: .descending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.isRefined, .alphabetical(order: .descending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
@@ -219,7 +219,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "black", count: 5, highlighted: nil), false),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.alphabetical(order: .descending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.alphabetical(order: .descending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
@@ -258,7 +258,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "blue", count: 10, highlighted: nil), false),
     ]
     
-    let refinementFacetsPresenter = RefinementFacetsPresenter(sortBy: [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)])
+    let refinementFacetsPresenter = FacetListPresenter(sortBy: [.isRefined, .count(order: .descending), .alphabetical(order: .ascending)])
     let actual = refinementFacetsPresenter.transform(refinementFacets: initial)
     
     XCTAssertEqual(expected.map { $0.item }, actual.map { $0.item })
