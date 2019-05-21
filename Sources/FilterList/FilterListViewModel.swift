@@ -34,6 +34,10 @@ public extension SelectableListViewModel where Key == Item, Item: FilterType {
     whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
+}
+
+private extension SelectableListViewModel where Key == Item, Item: FilterType {
+  
   func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState, _ groupID: FilterGroup.ID) {
     
     onSelectionsComputed.subscribe(with: self) { filters in
@@ -47,7 +51,7 @@ public extension SelectableListViewModel where Key == Item, Item: FilterType {
       case .single:
         removeCommand = .remove(filters: self.items, fromGroupWithID: groupID)
       }
-            
+      
       let addCommand: FilterState.Command = .add(filters: filters, toGroupWithID: groupID)
       
       filterState.notify(removeCommand, addCommand)
@@ -65,7 +69,7 @@ public extension SelectableListViewModel where Key == Item, Item: FilterType {
     
     filterState.onChange.subscribe(with: self, callback: onChange)
   }
-
+  
 }
 
 public extension SelectableListViewModel where Key == Item, Item: FilterType {
