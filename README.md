@@ -16,6 +16,12 @@ You can always find the latest version of the **user documentation** on [Algolia
 
 To install InstantSearch, simply add the following line to your Podfile:
 
+#### Swift 5.0
+
+```ruby
+pod 'InstantSearchCore', '~> 5.0'
+```
+
 #### Swift 4.2
 
 ```ruby
@@ -39,6 +45,12 @@ $ pod update
 [Carthage](https://github.com/Carthage/Carthage) is a simple, decentralized dependency manager for Cocoa.
 
 To install InstantSearch, simply add the following line to your Cartfile:
+
+#### Swift 5.0
+
+```ruby
+github "algolia/instantsearch-core-swift" ~> 5.0 
+```
 
 #### Swift 4.2
 
