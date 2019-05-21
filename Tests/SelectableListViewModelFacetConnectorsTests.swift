@@ -64,8 +64,32 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     let filterState = FilterState()
     let searcher = SingleIndexSearcher<String>(index:index , query: query, filterState: filterState, requestOptions: .none)
     
+    viewModel.connectSearcher(searcher, with: "type")
+    
+    
     let md = QueryMetadata(queryText: .none, filters: .none, page: 0)
-    var results = SearchResults(hits: ["h1", "h2"], query: "q", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 2)
+    
+    let bundle = Bundle(for: SelectableListViewModelFacetConnectorsTests.self)
+    
+    do {
+      let results = try SearchResults<String>(jsonFile: "SearchResultFacets", bundle: bundle)
+      
+      searcher.onResultsChanged.fire((md, .success(results)))
+
+      let expectedFacets: Set<Facet> = [
+        .init(value: "book", count: 357, highlighted: nil),
+        .init(value: "electronics", count: 184, highlighted: nil),
+        .init(value: "gifts", count: 27, highlighted: nil),
+        .init(value: "office", count: 28, highlighted: nil),
+      ]
+      
+      XCTAssertEqual(Set(viewModel.items), expectedFacets)
+      
+    } catch let error {
+      XCTFail(error.localizedDescription)
+    }
+    
+    
     
   }
   

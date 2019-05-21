@@ -23,13 +23,29 @@ class SelectableViewModelTests: XCTestCase {
     
   }
   
+  func testSwitchItem() {
+    
+    let viewModel = SelectableViewModel(item: "i")
+
+    let switchItemExpectation = expectation(description: "item changed")
+    
+    viewModel.onItemChanged.subscribe(with: self) { newItem in
+      XCTAssertEqual(newItem, "o")
+      switchItemExpectation.fulfill()
+    }
+    
+    viewModel.item = "o"
+    
+    waitForExpectations(timeout: 2, handler: nil)
+  }
+  
   func testSelection() {
     
     let viewModel = SelectableViewModel(item: "i")
 
-    let selectionExpectation = expectation(description: "selectionExpectation")
-    let deselectionExpectation = expectation(description: "deselectionExpectation")
-        
+    let selectionExpectation = expectation(description: "item selected")
+    let deselectionExpectation = expectation(description: "item deselected")
+    
     viewModel.onSelectedChanged.subscribe(with: self) { isSelected in
       if isSelected {
         selectionExpectation.fulfill()
@@ -49,7 +65,7 @@ class SelectableViewModelTests: XCTestCase {
     
     let viewModel = SelectableViewModel(item: "i")
 
-    let selectedComputedExpectation = expectation(description: "selected computed expectation")
+    let selectedComputedExpectation = expectation(description: "computed selected")
 
     viewModel.onSelectedComputed.subscribe(with: self) { isSelected in
       XCTAssertEqual(isSelected, false)

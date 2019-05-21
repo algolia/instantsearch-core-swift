@@ -9,45 +9,63 @@
 import Foundation
 
 public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: FilterType {
-  
-  private func whenSelectedComputedThenUpdateFilterState<R: Codable>(groupID: FilterGroup.ID, in searcher: SingleIndexSearcher<R>) {
-    onSelectedComputed.subscribe(with: self) { computed in
-
-      let removeSelected: FilterState.Command? = self.selected.flatMap { self.items[$0] }.flatMap { .remove(filter: $0, fromGroupWithID: groupID) }
-      
-      let addComputed: FilterState.Command? = computed.flatMap { self.items[$0] }.flatMap { .add(filter: $0, toGroupWithID: groupID) }
-      
-      for command in [removeSelected, addComputed].compactMap({ $0 }) {
-        searcher.indexSearchData.filterState.notify(command)
-      }
-      
-    }
-  }
-  
-  private func whenFilterStateChangedThenUpdateSelected<R: Codable>(groupID: FilterGroup.ID, in searcher: SingleIndexSearcher<R>) {
-    let onChange: (FiltersReadable) -> Void = { filters in
-      let selectedKey = self.items.first(where: { (arg) -> Bool in
-        let (_, value) = arg
-        guard let selectedFilterInGroup = filters.getFilters(forGroupWithID: groupID).first else {
-          return false
-        }
-        return Filter(value) == selectedFilterInGroup
-      })?.key
-      self.selected = selectedKey
-    }
-    onChange(searcher.indexSearchData.filterState.filters)
-    searcher.indexSearchData.filterState.onChange.subscribe(with: self, callback: onChange)
-  }
 
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
 
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
+    connectFilterState(searcher.indexSearchData.filterState, attribute: attribute, operator: `operator`, groupName: groupName)
+    
+  }
+  
+  func connectFilterState(_ filterState: FilterState,
+                          attribute: Attribute,
+                          operator: RefinementOperator,
+                          groupName: String? = nil) {
     
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
     
-    whenSelectedComputedThenUpdateFilterState(groupID: groupID, in: searcher)
-    whenFilterStateChangedThenUpdateSelected(groupID: groupID, in: searcher)
+    whenSelectedComputedThenUpdateFilterState(filterState, groupID: groupID)
+    whenFilterStateChangedThenUpdateSelected(groupID: groupID, filterState: filterState)
+
+  }
+  
+  private func whenSelectedComputedThenUpdateFilterState(_ filterState: FilterState,
+                                                         groupID: FilterGroup.ID) {
     
+    onSelectedComputed.subscribe(with: self) { [weak self, weak filterState]  computedSelected in
+      
+      guard let filterState = filterState else {
+        return
+      }
+      
+      if let currentlySelected = self?.selected.flatMap({ self?.items[$0] }) {
+        filterState.remove(currentlySelected, fromGroupWithID: groupID)
+      }
+      
+      if let computedSelected = computedSelected.flatMap({ self?.items[$0] }) {
+        filterState.add(computedSelected, toGroupWithID: groupID)
+      }
+      
+      filterState.notifyChange()
+      
+    }
+    
+  }
+  
+  private func whenFilterStateChangedThenUpdateSelected(groupID: FilterGroup.ID,
+                                                        filterState: FilterState) {
+    
+    let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
+      let filtersInGroup = filterState.getFilters(forGroupWithID: groupID)
+      let selectedKey = self?.items.first(where: {
+        filtersInGroup.contains(Filter($0.value))
+      })?.key
+      self?.selected = selectedKey
+    }
+    
+    onChange(filterState.filters)
+    
+    filterState.onChange.subscribe(with: self, callback: onChange)
   }
   
 }
@@ -56,20 +74,20 @@ public extension SelectableSegmentViewModel where Segment: FilterType {
   
   func connectController<C: SelectableSegmentController>(_ controller: C, presenter: FilterPresenter? = .none) where C.SegmentKey == SegmentKey {
     
-    let presenter = presenter ?? DefaultFilterPresenter.present
+    func setControllerItems(with items: [SegmentKey: Segment]) {
+      let presenter = presenter ?? DefaultFilterPresenter.present
+      let itemsToPresent = items
+        .map { ($0.key, presenter(Filter($0.value))) }
+        .reduce(into: [:]) { $0[$1.0] = $1.1 }
+      controller.setItems(items: itemsToPresent)
+    }
     
-    let itemsToPresent = items
-      .map { ($0.key, presenter(Filter($0.value))) }
-      .reduce(into: [:]) { $0[$1.0] = $1.1 }
-    
-    controller.setItems(items: itemsToPresent)
+    setControllerItems(with: items)
     controller.setSelected(selected)
-    controller.onClick = { selected in
-      self.computeSelected(selected: selected)
-    }
-    onSelectedChanged.subscribe(with: controller) { selected in
-      controller.setSelected(selected)
-    }
+    controller.onClick = computeSelected(selecting:)
+    onSelectedChanged.subscribe(with: controller, callback: controller.setSelected)
+    onItemsChanged.subscribe(with: controller, callback: setControllerItems)
+    
   }
   
 }

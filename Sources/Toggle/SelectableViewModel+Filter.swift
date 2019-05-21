@@ -14,43 +14,39 @@ public extension SelectableViewModel where Item: FilterType {
                           operator: RefinementOperator = .or,
                           groupName: String? = nil) {
     
-    let groupID = FilterGroup.ID(groupName: groupName, attribute: item.attribute, operator: `operator`)
+    let groupID = FilterGroup.ID(groupName: groupName,
+                                 attribute: item.attribute,
+                                 operator: `operator`)
     
-    whenSelectionsComputedThenUpdateFilterState(item.attribute, filterState, groupID)
-    
+    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID)
     whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
-  func connectViewController<VC: SelectableController>(_ viewController: VC) {
-    viewController.setSelected(isSelected)
-    viewController.onClick = computeIsSelected(selecting:)
-    onSelectedChanged.subscribe(with: viewController) { isSelected in
-      viewController.setSelected(isSelected)
-    }
-  }
-  
-}
-
-fileprivate extension SelectableViewModel where Item: FilterType {
-  
-  func whenSelectionsComputedThenUpdateFilterState(_ attribute: Attribute, _ filterState: FilterState, _ groupID: FilterGroup.ID) {
+  private func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
+                                                           attribute: Attribute,
+                                                           groupID: FilterGroup.ID) {
     
-    onSelectedComputed.subscribe(with: self) { [weak self] selected in
+    onSelectedComputed.subscribe(with: self) { [weak self, weak filterState] computedSelected in
       
-      guard let item = self?.item else { return }
+      guard
+        let item = self?.item,
+        let filterState = filterState
+        else { return }
       
-      filterState.notify { filterState in
-        if selected {
-          filterState.add(item, toGroupWithID: groupID)
-        } else {
-          filterState.remove(item, fromGroupWithID: groupID)
-        }
+      if computedSelected {
+        filterState.add(item, toGroupWithID: groupID)
+      } else {
+        filterState.remove(item, fromGroupWithID: groupID)
       }
       
+      filterState.notifyChange()
+      
     }
+    
   }
   
-  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+  private func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+    
     let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
       guard let filter = self?.item else { return }
       self?.isSelected = filterState.contains(filter, inGroupWithID: groupID)
@@ -61,4 +57,16 @@ fileprivate extension SelectableViewModel where Item: FilterType {
     filterState.onChange.subscribe(with: self, callback: onChange)
   }
   
+}
+
+public extension SelectableViewModel where Item: FilterType {
+
+  func connectController<C: SelectableController>(_ controller: C) where C.Item == Item {
+    controller.setItem(item)
+    controller.setSelected(isSelected)
+    controller.onClick = computeIsSelected(selecting:)
+    onSelectedChanged.subscribe(with: controller, callback: controller.setSelected)
+    onItemChanged.subscribe(with: controller, callback: controller.setItem)
+  }
+
 }

@@ -23,15 +23,32 @@ class SelectableSegmentViewModelTests: XCTestCase {
     
   }
   
+  func testSwitchItems() {
+    
+    let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
+
+    let switchItemsExpectation = expectation(description: "switch items")
+    
+    viewModel.onItemsChanged.subscribe(with: self) { newItems in
+      XCTAssertEqual(newItems, ["k4": "i4"])
+      switchItemsExpectation.fulfill()
+    }
+    
+    viewModel.items = ["k4": "i4"]
+    
+    waitForExpectations(timeout: 2, handler: nil)
+    
+  }
+  
   func testSelection() {
     
     let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
 
-    let selectionExp = expectation(description: "selection expectation")
+    let selectionExpectation = expectation(description: "selection")
     
     viewModel.onSelectedChanged.subscribe(with: self) { selectedKey in
       XCTAssertEqual(selectedKey, "k3")
-      selectionExp.fulfill()
+      selectionExpectation.fulfill()
     }
     
     viewModel.selected = "k3"
@@ -46,14 +63,14 @@ class SelectableSegmentViewModelTests: XCTestCase {
     
     let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
 
-    let selectionComputedExp = expectation(description: "selection computed expectation")
+    let selectionComputedExpectation = expectation(description: "selection computed")
     
     viewModel.onSelectedComputed.subscribe(with: self) { computedSelection in
       XCTAssertEqual(computedSelection, "k3")
-      selectionComputedExp.fulfill()
+      selectionComputedExpectation.fulfill()
     }
     
-    viewModel.computeSelected(selected: "k3")
+    viewModel.computeSelected(selecting: "k3")
     
     waitForExpectations(timeout: 2, handler: .none)
 
@@ -62,14 +79,14 @@ class SelectableSegmentViewModelTests: XCTestCase {
   func nilSelectedComputedTest() {
     let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
     
-    let selectionComputedExp = expectation(description: "selection computed expectation")
+    let selectionComputedExp = expectation(description: "selection computed")
     
     viewModel.onSelectedComputed.subscribe(with: self) { computedSelection in
       XCTAssertNil(computedSelection)
       selectionComputedExp.fulfill()
     }
     
-    viewModel.computeSelected(selected: nil)
+    viewModel.computeSelected(selecting: nil)
     
     waitForExpectations(timeout: 2, handler: .none)
   }

@@ -10,18 +10,26 @@ import Foundation
 
 public class SelectableViewModel<Item> {
   
-  public let item: Item
+  public var item: Item {
+    didSet {
+      onItemChanged.fire(item)
+    }
+  }
+  
   public var isSelected: Bool {
     didSet {
       onSelectedChanged.fire(isSelected)
     }
   }
-  public var onSelectedChanged: Observer<Bool>
-  public var onSelectedComputed: Observer<Bool>
+  
+  public let onItemChanged: Observer<Item>
+  public let onSelectedChanged: Observer<Bool>
+  public let onSelectedComputed: Observer<Bool>
 
   public init(item: Item) {
     self.item = item
     self.isSelected = false
+    self.onItemChanged = Observer()
     self.onSelectedChanged = Observer()
     self.onSelectedComputed = Observer()
   }

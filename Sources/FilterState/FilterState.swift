@@ -25,11 +25,6 @@ public class FilterState {
     self.onChange = Observer<FiltersReadable>()
   }
 
-  public func notify(callback: (FilterState) -> Void) {
-    callback(self)
-    onChange.fire(filters)
-  }
-
   public func notifyChange() {
     onChange.fire(filters)
   }

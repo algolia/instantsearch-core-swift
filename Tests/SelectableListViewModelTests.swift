@@ -15,6 +15,7 @@ class SelectableListViewModelTests: XCTestCase {
   typealias VM = SelectableListViewModel<String, String>
   
   func testConstruction() {
+    
     let viewModel = VM(items: [], selectionMode: .single)
     
     XCTAssert(viewModel.items.isEmpty)
@@ -27,15 +28,16 @@ class SelectableListViewModelTests: XCTestCase {
     
   }
   
-  func testOnItemsChanged() {
+  func testSwitchItems() {
+    
     let viewModel = VM(items: [], selectionMode: .single)
     
     let items = ["s1", "s2", "s3"]
-    let exp = expectation(description: "on items changed observer call")
+    let switchItemsExpectation = expectation(description: "switch items")
         
-    viewModel.onItemsChanged.subscribe(with: self) { dispatchedItems in
-      XCTAssertEqual(dispatchedItems, items)
-      exp.fulfill()
+    viewModel.onItemsChanged.subscribe(with: self) { newItems in
+      XCTAssertEqual(newItems, items)
+      switchItemsExpectation.fulfill()
     }
     
     viewModel.items = items
@@ -47,11 +49,11 @@ class SelectableListViewModelTests: XCTestCase {
     let viewModel = VM(items: ["s1", "s2", "s3"], selectionMode: .single)
     
     let selections = Set(["s2"])
-    let exp = expectation(description: "on selections changed observer call")
+    let selectionChangedExpectatiom = expectation(description: "selection")
     
     viewModel.onSelectionsChanged.subscribe(with: self) { dispatchedSelections in
       XCTAssertEqual(dispatchedSelections, selections)
-      exp.fulfill()
+      selectionChangedExpectatiom.fulfill()
     }
     
     viewModel.selections = selections
@@ -63,7 +65,7 @@ class SelectableListViewModelTests: XCTestCase {
     
     let viewModel = VM(items: ["s1", "s2", "s3"], selectionMode: .single)
     viewModel.selections = ["s2"]
-    let deselectionExpectation = expectation(description: "deselection expectation")
+    let deselectionExpectation = expectation(description: "deselection")
     
     viewModel.onSelectionsComputed.subscribe(with: self) { dispatchedSelections in
       XCTAssert(dispatchedSelections.isEmpty)

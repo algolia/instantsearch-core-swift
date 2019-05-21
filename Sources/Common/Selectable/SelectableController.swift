@@ -14,6 +14,7 @@ public protocol SelectableController: class {
   
   var onClick: ((Bool) -> Void)? { get set }
   
+  func setItem(_ item: Item)
   func setSelected(_ isSelected: Bool)
   
 }

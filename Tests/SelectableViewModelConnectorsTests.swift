@@ -10,16 +10,19 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class TestSelectableController: SelectableController {
+class TestSelectableController<Item>: SelectableController {
   
-  typealias Item = String
-  
+  var item: Item?
   var onClick: ((Bool) -> Void)?
   
   var isSelected: Bool = false
   
   func setSelected(_ isSelected: Bool) {
     self.isSelected = isSelected
+  }
+  
+  func setItem(_ item: Item) {
+    self.item = item
   }
   
   func toggle() {
@@ -65,9 +68,9 @@ class SelectableViewModelConnectorsTests: XCTestCase {
     
     viewModel.isSelected = true
 
-    let controller = TestSelectableController()
+    let controller = TestSelectableController<Filter.Tag>()
     
-    viewModel.connectViewController(controller)
+    viewModel.connectController(controller)
     
     // Pre-selection transmission
     

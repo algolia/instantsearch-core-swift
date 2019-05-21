@@ -14,18 +14,7 @@ public enum SelectionMode {
 }
 
 public class SelectableListViewModel<Key: Hashable, Item: Equatable> {
-
-  public var selectionMode: SelectionMode
-
-  public init(items: [Item] = [], selectionMode: SelectionMode) {
-    self.items = items
-    self.selectionMode = selectionMode
-  }
-
-  public var onItemsChanged = Observer<[Item]>()
-  public var onSelectionsChanged = Observer<Set<Key>>()
-  public var onSelectionsComputed = Observer<Set<Key>>()
-
+  
   public var items: [Item] {
     didSet {
       if oldValue != items {
@@ -33,28 +22,49 @@ public class SelectableListViewModel<Key: Hashable, Item: Equatable> {
       }
     }
   }
-
-  public var selections = Set<Key>() {
+  
+  public var selections: Set<Key> {
     didSet {
       if oldValue != selections {
         onSelectionsChanged.fire(selections)
       }
     }
   }
+  
+  public let onItemsChanged: Observer<[Item]>
+  public let onSelectionsChanged: Observer<Set<Key>>
+  public let onSelectionsComputed: Observer<Set<Key>>
+
+  public let selectionMode: SelectionMode
+
+  public init(items: [Item] = [], selectionMode: SelectionMode) {
+    self.items = items
+    self.selections = []
+    self.onItemsChanged = Observer()
+    self.onSelectionsChanged = Observer()
+    self.onSelectionsComputed = Observer()
+    self.selectionMode = selectionMode
+  }
 
   public func computeSelections(selectingItemForKey key: Key) {
     
-    let selections: Set<Key>
+    let computedSelections: Set<Key>
     
-    switch selectionMode {
-    case .single:
-      selections = self.selections.contains(key) ? [] : [key]
+    switch (selectionMode, selections.contains(key)) {
+    case (.single, true):
+      computedSelections = []
+    
+    case (.single, false):
+      computedSelections = [key]
       
-    case .multiple:
-      selections = self.selections.contains(key) ? self.selections.subtracting([key]) : self.selections.union([key])
+    case (.multiple, true):
+      computedSelections = selections.subtracting([key])
+
+    case (.multiple, false):
+      computedSelections = selections.union([key])
     }
     
-    onSelectionsComputed.fire(selections)
+    onSelectionsComputed.fire(computedSelections)
 
   }
 

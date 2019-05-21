@@ -16,5 +16,5 @@ public protocol SelectableSegmentController: class {
   
   func setSelected(_ selected: SegmentKey?)
   func setItems(items: [SegmentKey: String])
-  
+    
 }

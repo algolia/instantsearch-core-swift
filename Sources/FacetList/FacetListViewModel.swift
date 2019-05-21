@@ -41,80 +41,42 @@ public enum RefinementOperator {
 
 public extension SelectableListViewModel where Key == String, Item == Facet {
 
-  func connectFilterState(_ filterState: FilterState, with attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
-
-    let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
-
-    whenSelectionsComputedThenUpdateFilterState(attribute, filterState, groupID)
-
-    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
-  }
-
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
-    
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
+  
+  func connectFilterState(_ filterState: FilterState,
+                          with attribute: Attribute,
+                          operator: RefinementOperator,
+                          groupName: String? = nil) {
 
-  func connectController<T: FacetListController>(_ controller: T, with presenter: SelectableListPresentable? = nil) {
+    let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
 
-    /// Add missing refinements with a count of 0 to all returned facets
-    /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
-    /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-    func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
-      let receivedFacets = facets.map { RefinementFacet($0, selections.contains($0.value)) }
-//      let persistentlySelectedFacets = selections
-//        .filter { !facets.map { $0.value }.contains($0) }
-//        .map { (Facet(value: $0, count: 0, highlighted: .none), true) }
-      return receivedFacets// + persistentlySelectedFacets
-    }
-
-    func assignSelectableItems(facets: [Facet], selections: Set<String>) {
-      let refinementFacets = merge(facets, withSelectedValues: self.selections)
-
-      let sortedFacetValues = presenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
-
-      controller.setSelectableItems(selectableItems: sortedFacetValues)
-      controller.reload()
-    }
-
-    controller.onClick = { facet in
-      self.computeSelections(selectingItemForKey: facet.value)
-    }
-
-    assignSelectableItems(facets: items, selections: selections)
-
-    self.onItemsChanged.subscribe(with: self) { [weak self] (facets) in
-      guard let selections = self?.selections else { return }
-      assignSelectableItems(facets: facets, selections: selections)
-    }
-
-    self.onSelectionsChanged.subscribe(with: self) { [weak self] (selections) in
-      guard let facets = self?.items else { return }
-      assignSelectableItems(facets: facets, selections: selections)
-    }
+    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: attribute, groupID: groupID)
+    whenFilterStateChangedThenUpdateSelections(filterState: filterState, groupID: groupID)
   }
 
-}
-
-fileprivate extension SelectableListViewModel where Key == String, Item == Facet {
-
-  func whenSelectionsComputedThenUpdateFilterState(_ attribute: Attribute, _ filterState: FilterState, _ groupID: FilterGroup.ID) {
-
+  private func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
+                                                           attribute: Attribute,
+                                                           groupID: FilterGroup.ID) {
+    
     onSelectionsComputed.subscribe(with: self) { selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
-
-      filterState.notify { filterState in
-        filterState.removeAll(fromGroupWithID: groupID)
-        filterState.addAll(filters: filters, toGroupWithID: groupID)
-      }
+      
+      filterState.notify(
+        .removeAll(fromGroupWithID: groupID),
+        .add(filters: filters, toGroupWithID: groupID)
+      )
     }
     
   }
-
-  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+  
+  private func whenFilterStateChangedThenUpdateSelections(filterState: FilterState, groupID: FilterGroup.ID) {
+    
     let onChange: (FiltersReadable) -> Void = { filterState in
-      self.selections = Set(filterState.getFilters(forGroupWithID: groupID).map { filter -> String? in
+      
+      func filterToFacetString(_ filter: Filter) -> String? {
         if
           case .facet(let filterFacet) = filter,
           case .string(let stringValue) = filterFacet.value {
@@ -122,19 +84,67 @@ fileprivate extension SelectableListViewModel where Key == String, Item == Facet
         } else {
           return nil
         }
-        }.compactMap { $0 })
+      }
+      
+      self.selections = Set(filterState.getFilters(forGroupWithID: groupID).compactMap(filterToFacetString))
     }
-
+    
     onChange(filterState)
-
+    
     filterState.onChange.subscribe(with: self, callback: onChange)
   }
-
-  func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
+  
+  private func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
     searcher.onResultsChanged.subscribe(with: self) { (_, result) in
       if case .success(let searchResults) = result {
-        self.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
+        let updatedItems = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
+        self.items = updatedItems
       }
     }
   }
+  
+}
+
+public extension SelectableListViewModel where Key == String, Item == Facet {
+  
+  func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) {
+    
+    /// Add missing refinements with a count of 0 to all returned facets
+    /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
+    /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
+    func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
+      let receivedFacets = facets.map { RefinementFacet($0, selections.contains($0.value)) }
+      //      let persistentlySelectedFacets = selections
+      //        .filter { !facets.map { $0.value }.contains($0) }
+      //        .map { (Facet(value: $0, count: 0, highlighted: .none), true) }
+      return receivedFacets// + persistentlySelectedFacets
+    }
+    
+    func setControllerItemsWith(facets: [Facet], selections: Set<String>) {
+      let refinementFacets = merge(facets, withSelectedValues: self.selections)
+      
+      let sortedFacetValues = presenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
+      
+      controller.setSelectableItems(selectableItems: sortedFacetValues)
+      controller.reload()
+    }
+    
+    setControllerItemsWith(facets: items, selections: selections)
+    
+    controller.onClick = { [weak self] facet in
+      self?.computeSelections(selectingItemForKey: facet.value)
+    }
+    
+    onItemsChanged.subscribe(with: self) { [weak self] facets in
+      guard let selections = self?.selections else { return }
+      setControllerItemsWith(facets: facets, selections: selections)
+    }
+    
+    onSelectionsChanged.subscribe(with: self) { [weak self] selections in
+      guard let facets = self?.items else { return }
+      setControllerItemsWith(facets: facets, selections: selections)
+    }
+    
+  }
+
 }

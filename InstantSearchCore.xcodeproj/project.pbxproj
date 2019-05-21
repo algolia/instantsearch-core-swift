@@ -211,6 +211,12 @@
 		AFC2E2D62293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D52293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift */; };
 		AFC2E2D72293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D52293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift */; };
 		AFC2E2D82293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D52293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift */; };
+		AFC2E2DA2294103300859EBA /* SearchResultFacets.json in Resources */ = {isa = PBXBuildFile; fileRef = AFC2E2D92294103300859EBA /* SearchResultFacets.json */; };
+		AFC2E2DB2294103300859EBA /* SearchResultFacets.json in Resources */ = {isa = PBXBuildFile; fileRef = AFC2E2D92294103300859EBA /* SearchResultFacets.json */; };
+		AFC2E2DC2294103300859EBA /* SearchResultFacets.json in Resources */ = {isa = PBXBuildFile; fileRef = AFC2E2D92294103300859EBA /* SearchResultFacets.json */; };
+		AFC2E2DE22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */; };
+		AFC2E2DF22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */; };
+		AFC2E2E022941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */; };
 		AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
@@ -449,6 +455,8 @@
 		AFC2E2CD2292DBEF00859EBA /* SelectableViewModelConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableViewModelConnectorsTests.swift; sourceTree = "<group>"; };
 		AFC2E2D12292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModelFacetConnectorsTests.swift; sourceTree = "<group>"; };
 		AFC2E2D52293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModelFilterConnectorsTests.swift; sourceTree = "<group>"; };
+		AFC2E2D92294103300859EBA /* SearchResultFacets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResultFacets.json; sourceTree = "<group>"; };
+		AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentViewModelConnectorsTests.swift; sourceTree = "<group>"; };
 		AFCDED33222D86E7001459BE /* FacetResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FacetResult.json; sourceTree = "<group>"; };
 		AFCDED38222D9697001459BE /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherSingleOrList.swift; sourceTree = "<group>"; };
@@ -825,6 +833,7 @@
 				AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */,
 				AFCDEDA4222E8161001459BE /* FacetResultsTests.swift */,
 				AFE807CE2229355900FC1D50 /* SearchResult.json */,
+				AFC2E2D92294103300859EBA /* SearchResultFacets.json */,
 				AFCDED33222D86E7001459BE /* FacetResult.json */,
 				AFCDEDE0223A5C0E001459BE /* HitsViewModelTests.swift */,
 				AF19B039223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift */,
@@ -835,6 +844,7 @@
 				AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */,
 				AFC2E2C92292D0D500859EBA /* SelectableViewModelTests.swift */,
 				AFC2E2CD2292DBEF00859EBA /* SelectableViewModelConnectorsTests.swift */,
+				AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */,
 				AFC2E2D12292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift */,
 				AFC2E2D52293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift */,
 				AFC2E2C12292A1F400859EBA /* CallbackTester.swift */,
@@ -1123,6 +1133,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */,
+				AFC2E2DA2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D52229356400FC1D50 /* SearchResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1139,6 +1150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */,
+				AFC2E2DB2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D42229356300FC1D50 /* SearchResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1155,6 +1167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */,
+				AFC2E2DC2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D32229356200FC1D50 /* SearchResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1332,6 +1345,7 @@
 				AF117854226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
 				AF6C6F752253B204001E5E3C /* SearchResultsTests.swift in Sources */,
 				AFCDEDE9223AC514001459BE /* PageMapTests.swift in Sources */,
+				AFC2E2DE22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */,
 				AFC2E2D62293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */,
 				AFC2E2CA2292D0D500859EBA /* SelectableViewModelTests.swift in Sources */,
 				E2BAE6BA223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
@@ -1431,6 +1445,7 @@
 				E2BAE6BB223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
 				AFC2E2C32292A1F400859EBA /* CallbackTester.swift in Sources */,
 				AFC2E2CB2292D0D500859EBA /* SelectableViewModelTests.swift in Sources */,
+				AFC2E2DF22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */,
 				AFCDEDE6223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
 				AF19B03B223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,
 				AFC2E2D32292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift in Sources */,
@@ -1535,6 +1550,7 @@
 				E2BAE6BC223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
 				AFC2E2C42292A1F400859EBA /* CallbackTester.swift in Sources */,
 				AFC2E2CC2292D0D500859EBA /* SelectableViewModelTests.swift in Sources */,
+				AFC2E2E022941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */,
 				AFCDEDE7223AC4E8001459BE /* PaginationControllerTests.swift in Sources */,
 				AF19B03C223FF9F400FA2FE0 /* MultiHitsViewModelTests.swift in Sources */,
 				AFC2E2D42292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift in Sources */,

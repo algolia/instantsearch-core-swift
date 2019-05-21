@@ -11,6 +11,31 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
+enum JSONReadingError: Error {
+  case wrongPath
+  case invalidData
+}
+
+extension Decodable {
+  
+  init(jsonFile: String, bundle: Bundle = .main) throws {
+    
+    guard let url = bundle.path(forResource: jsonFile, ofType: "json").flatMap(URL.init(fileURLWithPath:)) else {
+      throw JSONReadingError.wrongPath
+    }
+    
+    guard let data = try? Data(contentsOf: url, options: .mappedIfSafe) else {
+      throw JSONReadingError.invalidData
+    }
+    
+    let decoder = JSONDecoder()
+    let item = try decoder.decode(Self.self, from: data)
+
+    self = item
+  }
+  
+}
+
 class SearchResultsTests: XCTestCase {
 
   struct Item: Codable {
@@ -19,21 +44,9 @@ class SearchResultsTests: XCTestCase {
 
   func testDecoding() {
 
-    guard let searchResultURL = Bundle.init(for: SearchResultsTests.self).path(forResource: "SearchResult", ofType: "json").flatMap(URL.init(fileURLWithPath:)) else {
-      XCTFail("Cannot read file")
-      return
-    }
-    guard let data = try? Data(contentsOf: searchResultURL, options: .mappedIfSafe) else {
-      XCTFail("Cannot parse data")
-      return
-    }
-
-    XCTAssertFalse(data.isEmpty, "Data is empty")
-
-    let decoder = JSONDecoder()
-
     do {
-      let searchResults = try decoder.decode(SearchResults<Hit<Item>>.self, from: data)
+      let searchResults = try SearchResults<Hit<Item>>(jsonFile: "SearchResult", bundle: Bundle(for: SearchResultsTests.self))
+        //try decoder.decode(SearchResults<Hit<Item>>.self, from: data)
       XCTAssertEqual(searchResults.totalHitsCount, 596)
       XCTAssertEqual(searchResults.page, 0)
       XCTAssertEqual(searchResults.pagesCount, 60)
