@@ -43,13 +43,13 @@ class HitsViewModelTests: XCTestCase {
     
     let metadata = QueryMetadata(query: query)
     
-    XCTAssertFalse(vm.hasMoreResults)
+    XCTAssertFalse(vm.hasMorePages)
     XCTAssertEqual(vm.numberOfHits(), 0)
     XCTAssertEqual(vm.hit(atIndex: 0), .none)
     
     vm.update(results, with: metadata)
     
-    XCTAssertFalse(vm.hasMoreResults)
+    XCTAssertFalse(vm.hasMorePages)
     XCTAssertEqual(vm.numberOfHits(), 3)
     XCTAssertEqual(vm.hit(atIndex: 0), "h1")
     XCTAssertEqual(vm.hit(atIndex: 1), "h2")

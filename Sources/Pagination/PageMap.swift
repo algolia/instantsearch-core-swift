@@ -10,88 +10,112 @@ import Foundation
 
 struct PageMap<Item> {
   
-  var pageToItems: [Int: [Item]]
+  typealias PageIndex = Int
   
-  var latestPage: UInt
-  var totalPageCount: Int
-  var totalItemsCount: Int
+  var items: [PageIndex: [Item]]
   
-  fileprivate var itemsSequence: [Item]
+  var pageSize: Int
   
-  mutating func insert(_ page: [Item], withNumber pageNumber: Int) {
-    pageToItems[pageNumber] = page
-    itemsSequence = pageToItems.sorted { $0.key < $1.key } .flatMap { $0.value }
-    
-    if pageNumber > latestPage {
-      latestPage = UInt(pageNumber)
+  var latestPageIndex: PageIndex?
+  
+  var pagesCount: Int {
+    guard let latestPageIndex = latestPageIndex else {
+      return 0
     }
+    return latestPageIndex + 1
+  }
+  
+  var totalItemsCount: Int {
+    let fullPagesCount = pagesCount - 1
+    let latestPageItemsCount = latestPageIndex.flatMap { items[$0] }?.count ?? 0
+    return fullPagesCount * pageSize + latestPageItemsCount
+  }
+  
+  mutating func insert(_ page: [Item], withIndex pageIndex: PageIndex) {
     
-    if pageNumber > totalPageCount - 1 {
-      totalPageCount = pageNumber + 1
-    }
+    items[pageIndex] = page
     
-    if itemsSequence.count > totalItemsCount {
-      totalItemsCount = itemsSequence.count
+    if let latestPageIndex = latestPageIndex, pageIndex > latestPageIndex {
+      self.latestPageIndex = pageIndex
     }
     
   }
   
-  func inserting(_ page: [Item], withNumber pageNumber: Int) -> PageMap {
+  func inserting(_ page: [Item], withIndex pageIndex: PageIndex) -> PageMap {
     var mutableCopy = self
-    mutableCopy.insert(page, withNumber: pageNumber)
+    mutableCopy.insert(page, withIndex: pageIndex)
     return mutableCopy
   }
-  
-  var hasMorePages: Bool {
-    return totalPageCount > latestPage + 1
+    
+  func pageIndex(for index: Index) -> PageIndex {
+    return index / pageSize
   }
   
-  func containsItem(atIndex index: Int) -> Bool {
-    return count > index
+  func containsPage(withIndex pageIndex: PageIndex) -> Bool {
+    return items[pageIndex] != nil
+  }
+  
+  func containsItem(atIndex index: Index) -> Bool {
+    return item(atIndex: index) != nil
+  }
+  
+  func item(atIndex index: Index) -> Item? {
+    guard index < totalItemsCount else { return nil }
+    let pageIndex = self.pageIndex(for: index)
+    let offset = index % pageSize
+    return items[pageIndex]?[offset]
   }
   
 }
 
+// MARK: SequenceType
 extension PageMap: Sequence {
-  func makeIterator() -> PageMapIterator<Item> {
-    return PageMapIterator(itemsPages: self)
+  
+  public func makeIterator() -> IndexingIterator<PageMap> {
+    return IndexingIterator(_elements: self)
   }
+  
 }
 
-extension PageMap: Collection {
-  // Required nested types, that tell Swift what our collection contains
-  typealias Index = Array<Item>.Index
-  typealias Element = Array<Item>.Element
+// MARK: CollectionType
+extension PageMap: BidirectionalCollection {
   
-  // The upper and lower bounds of the collection, used in iterations
-  var startIndex: Index { return itemsSequence.startIndex }
-  var endIndex: Index { return itemsSequence.endIndex }
+  public typealias Index = Int
   
-  // Required subscript, based on a dictionary index
-  subscript(index: Index) -> Item {
-    get { return itemsSequence[index] }
+  public var startIndex: Index { return 0 }
+  public var endIndex: Index { return totalItemsCount }
+  
+  public func index(after i: Index) -> Index {
+    return i+1
   }
   
-  // Method that returns the next index when iterating
-  func index(after i: Index) -> Index {
-    return itemsSequence.index(after: i)
-  }
-}
-
-struct PageMapIterator<Item>: IteratorProtocol {
-  
-  private let pageMap: PageMap<Item>
-  private var iterator: Array<Item>.Iterator
-  
-  init(itemsPages: PageMap<Item>) {
-    self.pageMap = itemsPages
-    self.iterator = itemsPages.itemsSequence.makeIterator()
+  public func index(before i: Index) -> Index {
+    return i-1
   }
   
-  mutating func next() -> Item? {
-    return iterator.next()
+  /// Accesses and sets elements for a given flat index position.
+  /// Currently, setter can only be used to replace non-optional values.
+  public subscript (position: Index) -> Item? {
+    get {
+      let pageIndex = self.pageIndex(for: position)
+      
+      if let page = items[pageIndex] {
+        return page[position%pageSize]
+      } else {
+        // Return nil for all pages that haven't been set yet
+        return nil
+      }
+    }
+    
+    set(newValue) {
+      guard let newValue = newValue else { return }
+      
+      let pageIndex = self.pageIndex(for: position)
+      var elementPage = items[pageIndex]
+      elementPage?[position % pageSize] = newValue
+      items[pageIndex] = elementPage
+    }
   }
-  
 }
 
 protocol PageMapConvertible {
@@ -99,37 +123,30 @@ protocol PageMapConvertible {
   associatedtype PageItem
   
   var page: Int { get }
-  var pagesCount: Int { get }
-  var totalItemsCount: Int { get }
+  var pageSize: Int { get }
   var pageItems: [PageItem] { get }
   
 }
 
 extension PageMap {
   
-  init() {
-    pageToItems = [0: []]
-    latestPage = 0
-    totalPageCount = 0
-    totalItemsCount = 0
-    itemsSequence = []
+  init(pageSize: Int) {
+    items = [:]
+    latestPageIndex = nil
+    self.pageSize = pageSize
   }
   
   init<T: PageMapConvertible>(_ source: T) where T.PageItem == Item {
-    pageToItems = [source.page: source.pageItems]
-    latestPage = UInt(source.page)
-    totalPageCount = source.pagesCount
-    totalItemsCount = source.totalItemsCount
-    itemsSequence = source.pageItems
+    items = [source.page: source.pageItems]
+    latestPageIndex = source.page
+    pageSize = source.pageItems.count
   }
   
   init<S: Sequence>(_ items: S) where S.Element == Item {
     let itemsArray = Array(items)
-    pageToItems = [0: itemsArray]
-    latestPage = 0
-    totalPageCount = 1
-    totalItemsCount = itemsArray.count
-    itemsSequence = itemsArray
+    self.items = [0: itemsArray]
+    latestPageIndex = 0
+    pageSize = itemsArray.count
   }
   
   init?(_ dictionary: [Int: [Item]]) {
@@ -137,11 +154,9 @@ extension PageMap {
       return nil
     }
     
-    pageToItems = dictionary
-    latestPage = UInt(dictionary.keys.sorted().last!)
-    totalPageCount = dictionary.count
-    totalItemsCount = dictionary.values.map { $0.count }.reduce(0, +)
-    itemsSequence = dictionary.sorted { $0.key < $1.key } .flatMap { $0.value }
+    items = dictionary
+    latestPageIndex = dictionary.keys.sorted().last
+    pageSize = dictionary.sorted(by: { $0.key < $1.key }).first?.value.count ?? 0
   }
   
 }

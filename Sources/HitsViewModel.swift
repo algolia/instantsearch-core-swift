@@ -20,11 +20,9 @@ public class HitsViewModel<Record: Codable> {
   
   private var isLastQueryEmpty: Bool = true
   
-  public var hasMoreResults: Bool {
-    return hitsPaginationController.pageMap?.hasMorePages ?? false
-  }
+  public var hasMorePages: Bool
   
-  public let onNewPage = Observer<UInt>()
+  public let onNewPage = Observer<Int>()
   public let onResultsUpdated = Observer<Void>()
   
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
@@ -37,6 +35,7 @@ public class HitsViewModel<Record: Codable> {
   public init(settings: Settings? = nil) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = Paginator<Record>()
+    self.hasMorePages = false
     self.hitsPaginationController.delegate = self
   }
   
@@ -44,6 +43,7 @@ public class HitsViewModel<Record: Codable> {
                 paginationController: Paginator<Record>) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
+    self.hasMorePages = false
   }
 
   public func numberOfHits() -> Int {
@@ -107,8 +107,8 @@ public extension HitsViewModel where Record == JSON {
 
 extension HitsViewModel: PaginatorDelegate {
   
-  func didRequestLoadPage(withNumber number: UInt) {
-    onNewPage.fire(number)
+  func didRequestLoadPage(withIndex pageIndex: Int) {
+    onNewPage.fire(pageIndex)
   }
   
 }
@@ -141,6 +141,7 @@ extension HitsViewModel {
   public func update(_ searchResults: SearchResults<Record>, with queryMetadata: QueryMetadata) {
     isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
     hitsPaginationController.process(searchResults)
+    hasMorePages = !(searchResults.page == searchResults.pagesCount - 1)
     onResultsUpdated.fire(())
   }
   

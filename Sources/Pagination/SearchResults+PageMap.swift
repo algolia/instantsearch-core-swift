@@ -12,8 +12,8 @@ extension SearchResults: PageMapConvertible {
   
   typealias PageItem = T
   
-  var totalItemsCount: Int {
-    return totalHitsCount
+  var pageSize: Int {
+    return hits.count
   }
   
   var pageItems: [T] {

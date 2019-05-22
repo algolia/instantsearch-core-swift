@@ -16,21 +16,21 @@ struct TestPageMapConvertible<Item>: PageMapConvertible {
   
   var page: Int
   
-  var pagesCount: Int
-  
-  var totalItemsCount: Int
-  
+  var pageSize: Int
+
   var pageItems: [Item]
   
 }
 
 class TestPaginationControllerDelegate: PaginatorDelegate {
   
-  var requestedLoadPage: ((UInt) -> Void)?
+  var requestedLoadPage: ((Int) -> Void)?
   
-  func didRequestLoadPage(withNumber number: UInt) {
-    requestedLoadPage?(number)
+  func didRequestLoadPage(withIndex pageIndex: Int) {
+    requestedLoadPage?(pageIndex)
   }
+  
+  var hasMorePages: Bool = true
   
 }
 
@@ -44,7 +44,7 @@ class PaginationControllerTests: XCTestCase {
     
     // Adding a first page of dataset
     
-    let page0 = TestPageMapConvertible(page: 0, pagesCount: 10, totalItemsCount: 100, pageItems: ["i1", "i2", "i3"])
+    let page0 = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
     
     paginator.process(page0)
     
@@ -53,15 +53,14 @@ class PaginationControllerTests: XCTestCase {
       return
     }
     
-    XCTAssertEqual(pageMap0.pageToItems, [0: ["i1", "i2", "i3"]])
-    XCTAssertTrue(pageMap0.hasMorePages)
-    XCTAssertEqual(pageMap0.latestPage, UInt(page0.page))
-    XCTAssertEqual(pageMap0.totalPageCount, page0.pagesCount)
-    XCTAssertEqual(pageMap0.totalItemsCount, page0.totalItemsCount)
+    XCTAssertEqual(pageMap0.items, [0: ["i1", "i2", "i3"]])
+    XCTAssertEqual(pageMap0.latestPageIndex, page0.page)
+    XCTAssertEqual(pageMap0.pagesCount, 1)
+    XCTAssertEqual(pageMap0.totalItemsCount, 3)
     
     // Adding another page for same dataset
     
-    let page1 = TestPageMapConvertible(page: 1, pagesCount: 10, totalItemsCount: 100, pageItems: ["i4", "i5", "i6"])
+    let page1 = TestPageMapConvertible(page: 1, pageSize: 3, pageItems: ["i4", "i5", "i6"])
     
     paginator.process(page1)
     
@@ -70,11 +69,10 @@ class PaginationControllerTests: XCTestCase {
       return
     }
     
-    XCTAssertEqual(pageMap1.pageToItems, [0: ["i1", "i2", "i3"], 1: ["i4", "i5", "i6"]])
-    XCTAssertTrue(pageMap1.hasMorePages)
-    XCTAssertEqual(pageMap1.latestPage, UInt(page1.page))
-    XCTAssertEqual(pageMap1.totalPageCount, page1.pagesCount)
-    XCTAssertEqual(pageMap1.totalItemsCount, page1.totalItemsCount)
+    XCTAssertEqual(pageMap1.items, [0: ["i1", "i2", "i3"], 1: ["i4", "i5", "i6"]])
+    XCTAssertEqual(pageMap1.latestPageIndex, page1.page)
+    XCTAssertEqual(pageMap1.pagesCount, 2)
+    XCTAssertEqual(pageMap1.totalItemsCount, 6)
     
   }
   
@@ -82,6 +80,7 @@ class PaginationControllerTests: XCTestCase {
     
     let paginationController = Paginator<String>()
     let delegate = TestPaginationControllerDelegate()
+    delegate.hasMorePages = true
     paginationController.delegate = delegate
     
     let exp = expectation(description: "Loading first page")
@@ -101,14 +100,15 @@ class PaginationControllerTests: XCTestCase {
     
     let paginationController = Paginator<String>()
     let delegate = TestPaginationControllerDelegate()
+    delegate.hasMorePages = true
     paginationController.delegate = delegate
     
     let exp = expectation(description: "")
     
-    let page = TestPageMapConvertible(page: 0, pagesCount: 10, totalItemsCount: 100, pageItems: ["i1", "i2", "i3"])
+    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
     
     delegate.requestedLoadPage = { pageNumber in
-      XCTAssertEqual(pageNumber, UInt(page.page + 1))
+      XCTAssertEqual(pageNumber, page.page + 1)
       exp.fulfill()
     }
     
@@ -124,14 +124,14 @@ class PaginationControllerTests: XCTestCase {
     let paginationController = Paginator<String>()
     let delegate = TestPaginationControllerDelegate()
     paginationController.delegate = delegate
-    
+    delegate.hasMorePages = false
     let exp = expectation(description: "")
     exp.isInverted = true
     
-    let page = TestPageMapConvertible(page: 0, pagesCount: 1, totalItemsCount: 100, pageItems: ["i1", "i2", "i3"])
+    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
     
     delegate.requestedLoadPage = { pageNumber in
-      XCTAssertEqual(pageNumber, UInt(page.page + 1))
+      XCTAssertEqual(pageNumber, page.page + 1)
       exp.fulfill()
     }
     
@@ -151,10 +151,10 @@ class PaginationControllerTests: XCTestCase {
     
     let exp = expectation(description: "")
     
-    let page = TestPageMapConvertible(page: 0, pagesCount: 10, totalItemsCount: 100, pageItems: ["i1", "i2", "i3"])
+    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
     
     delegate.requestedLoadPage = { pageNumber in
-      XCTAssertEqual(pageNumber, UInt(page.page + 1))
+      XCTAssertEqual(pageNumber, page.page + 1)
       exp.fulfill()
     }
     
@@ -165,6 +165,5 @@ class PaginationControllerTests: XCTestCase {
     waitForExpectations(timeout: 2, handler: .none)
     
   }
-  
   
 }
