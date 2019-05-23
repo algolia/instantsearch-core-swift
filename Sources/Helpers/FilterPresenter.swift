@@ -12,7 +12,7 @@ public typealias FilterPresenter = (Filter) -> String
 
 public struct DefaultFilterPresenter {
   
-  static let present: FilterPresenter = { filter in
+  public static let present: FilterPresenter = { filter in
     let attributeName = filter.filter.attribute.name
     
     switch filter {
