@@ -10,7 +10,7 @@ import Foundation
 
 public class FacetSearcher: Searcher, SearchResultObservable {
   
-  public typealias SearchResult = (QueryMetadata, Result<FacetResults, Error>)
+  public typealias SearchResult = Result<FacetResults, Error>
   
   public let indexSearchData: IndexSearchData
   public let sequencer: Sequencer
@@ -20,8 +20,16 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var facetName: String
   public var text: String
   public var requestOptions: RequestOptions?
+
+  public var filterState: FilterState {
+    return indexSearchData.filterState
+  }
+
+  public var query: Query {
+    return indexSearchData.query
+  }
   
-  public init(index: Index, query: Query, filterState: FilterState, facetName: String, text: String, requestOptions: RequestOptions? = nil) {
+  public init(index: Index, query: Query, filterState: FilterState, facetName: String, text: String = "", requestOptions: RequestOptions? = nil) {
     self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     self.facetName = facetName
     self.text = text
@@ -44,13 +52,11 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public func search() {
     
     indexSearchData.applyFilters()
-    
-    let metadata = QueryMetadata(query: indexSearchData.query)
-    
+        
     sequencer.orderOperation {
       return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text, requestOptions: requestOptions) { (content, error) in
         let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
-        self.onResultsChanged.fire((metadata, result))
+        self.onResultsChanged.fire(result)
       }
     }
     
