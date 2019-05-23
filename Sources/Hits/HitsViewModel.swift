@@ -43,7 +43,7 @@ public class HitsViewModel<Record: Codable> {
                 paginationController: Paginator<Record>) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
-    self.hasMorePages = false
+    self.hasMorePages = true
   }
 
   public func numberOfHits() -> Int {
