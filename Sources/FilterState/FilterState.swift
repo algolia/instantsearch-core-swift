@@ -118,3 +118,11 @@ extension FilterState: FilterGroupsConvertible {
   }
   
 }
+
+extension FilterState: CustomDebugStringConvertible {
+
+  public var debugDescription: String {
+    return FilterGroupConverter().sql(toFilterGroups()) ?? "empty"
+  }
+
+}
