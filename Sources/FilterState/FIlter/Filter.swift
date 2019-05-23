@@ -57,9 +57,9 @@ public protocol FilterType {
   
 }
 
-extension FilterType {
+public extension FilterType {
   
-  public mutating func not(value: Bool = true) {
+  mutating func not(value: Bool = true) {
     isNegated = value
   }
   
