@@ -14,7 +14,7 @@ public enum Filter: Hashable {
   case numeric(Numeric)
   case tag(Tag)
   
-  init<F: FilterType>(_ filter: F) {
+  public init<F: FilterType>(_ filter: F) {
     switch filter {
     case let facetFilter as Filter.Facet:
       self = .facet(facetFilter)
@@ -27,7 +27,7 @@ public enum Filter: Hashable {
     }
   }
   
-  var filter: FilterType {
+  public var filter: FilterType {
     switch self {
     case .facet(let facetFilter):
       return facetFilter

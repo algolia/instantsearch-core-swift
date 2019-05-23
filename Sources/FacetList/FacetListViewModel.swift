@@ -45,6 +45,10 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
+
+  func connectFacetSearcher(_ facetSearcher: FacetSearcher) {
+    whenNewFacetSearchResultsThenUpdateItems(of: facetSearcher)
+  }
   
   func connectFilterState(_ filterState: FilterState,
                           with attribute: Attribute,
@@ -92,6 +96,21 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
     onChange(filterState)
     
     filterState.onChange.subscribe(with: self, callback: onChange)
+  }
+
+
+  private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
+    facetSearcher.onResultsChanged.subscribe(with: self) { (result) in
+      if case .success(let searchResults) = result {
+        self.items = searchResults.facetHits
+      } else if case .failure(let error) = result {
+        if let error = error as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
+          // For the case of SFFV, very possible that we forgot to add the
+          // attribute as searchable in `attributesForFaceting`.
+          assertionFailure(error.message ?? "")
+        }
+      }
+    }
   }
   
   private func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {

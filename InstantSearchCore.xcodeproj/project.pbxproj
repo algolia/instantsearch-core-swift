@@ -334,6 +334,34 @@
 		E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
 		E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
 		E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
+		E26F42162295983F00583D39 /* SearchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42152295983F00583D39 /* SearchableController.swift */; };
+		E26F42172295983F00583D39 /* SearchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42152295983F00583D39 /* SearchableController.swift */; };
+		E26F42182295983F00583D39 /* SearchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42152295983F00583D39 /* SearchableController.swift */; };
+		E26F42192295983F00583D39 /* SearchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42152295983F00583D39 /* SearchableController.swift */; };
+		E26F421B22959B7400583D39 /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421A22959B7400583D39 /* SearchBarController.swift */; };
+		E26F421C22959B7400583D39 /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421A22959B7400583D39 /* SearchBarController.swift */; };
+		E26F421D22959B7400583D39 /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421A22959B7400583D39 /* SearchBarController.swift */; };
+		E26F421E22959B7400583D39 /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421A22959B7400583D39 /* SearchBarController.swift */; };
+		E26F422022959D3200583D39 /* TextfieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421F22959D3200583D39 /* TextfieldController.swift */; };
+		E26F422122959D3200583D39 /* TextfieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421F22959D3200583D39 /* TextfieldController.swift */; };
+		E26F422222959D3200583D39 /* TextfieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421F22959D3200583D39 /* TextfieldController.swift */; };
+		E26F422322959D3200583D39 /* TextfieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F421F22959D3200583D39 /* TextfieldController.swift */; };
+		E26F42252295A02400583D39 /* Searcher+SerchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42242295A02400583D39 /* Searcher+SerchableController.swift */; };
+		E26F42262295A02400583D39 /* Searcher+SerchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42242295A02400583D39 /* Searcher+SerchableController.swift */; };
+		E26F42272295A02400583D39 /* Searcher+SerchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42242295A02400583D39 /* Searcher+SerchableController.swift */; };
+		E26F42282295A02400583D39 /* Searcher+SerchableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F42242295A02400583D39 /* Searcher+SerchableController.swift */; };
+		E26F422B22969C7300583D39 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422A22969C7300583D39 /* LoadableController.swift */; };
+		E26F422C22969C7300583D39 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422A22969C7300583D39 /* LoadableController.swift */; };
+		E26F422D22969C7300583D39 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422A22969C7300583D39 /* LoadableController.swift */; };
+		E26F422E22969C7300583D39 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422A22969C7300583D39 /* LoadableController.swift */; };
+		E26F423022969CB200583D39 /* ActivityIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422F22969CB200583D39 /* ActivityIndicatorController.swift */; };
+		E26F423122969CB200583D39 /* ActivityIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422F22969CB200583D39 /* ActivityIndicatorController.swift */; };
+		E26F423222969CB200583D39 /* ActivityIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422F22969CB200583D39 /* ActivityIndicatorController.swift */; };
+		E26F423322969CB200583D39 /* ActivityIndicatorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F422F22969CB200583D39 /* ActivityIndicatorController.swift */; };
+		E26F423522969DD100583D39 /* Searcher+LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* Searcher+LoadableController.swift */; };
+		E26F423622969DD100583D39 /* Searcher+LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* Searcher+LoadableController.swift */; };
+		E26F423722969DD100583D39 /* Searcher+LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* Searcher+LoadableController.swift */; };
+		E26F423822969DD100583D39 /* Searcher+LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* Searcher+LoadableController.swift */; };
 		E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
 		E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
 		E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
@@ -499,6 +527,13 @@
 		E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModel.swift; sourceTree = "<group>"; };
 		E24234092243A43D008F24FB /* Signals+Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Signals+Observable.swift"; sourceTree = "<group>"; };
 		E265DBEF22733D4C002DC989 /* SelectableListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListController.swift; sourceTree = "<group>"; };
+		E26F42152295983F00583D39 /* SearchableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableController.swift; sourceTree = "<group>"; };
+		E26F421A22959B7400583D39 /* SearchBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarController.swift; sourceTree = "<group>"; };
+		E26F421F22959D3200583D39 /* TextfieldController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldController.swift; sourceTree = "<group>"; };
+		E26F42242295A02400583D39 /* Searcher+SerchableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Searcher+SerchableController.swift"; sourceTree = "<group>"; };
+		E26F422A22969C7300583D39 /* LoadableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableController.swift; sourceTree = "<group>"; };
+		E26F422F22969CB200583D39 /* ActivityIndicatorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorController.swift; sourceTree = "<group>"; };
+		E26F423422969DD100583D39 /* Searcher+LoadableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Searcher+LoadableController.swift"; sourceTree = "<group>"; };
 		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CD920AF2D350056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/Mac/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/tvOS/InstantSearchClient.framework; sourceTree = "<group>"; };
@@ -680,6 +715,8 @@
 				AF6C6F6622538160001E5E3C /* SingleIndexSearcher.swift */,
 				AF6C6F6B2253816A001E5E3C /* MultiIndexSearcher.swift */,
 				AF6C6F7022538179001E5E3C /* FacetSearcher.swift */,
+				E26F42242295A02400583D39 /* Searcher+SerchableController.swift */,
+				E26F423422969DD100583D39 /* Searcher+LoadableController.swift */,
 			);
 			path = Searcher;
 			sourceTree = "<group>";
@@ -789,6 +826,8 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E26F422922969C3000583D39 /* LoadingIndicator */,
+				E26F42142295980400583D39 /* SearchBox */,
 				AFC2E2A5228EDF5600859EBA /* Helpers */,
 				AFC2E281228ED52900859EBA /* Common */,
 				AFE343852289A11B00829AC1 /* Segmented */,
@@ -860,6 +899,25 @@
 				E2BAE6AF223FF77100B89EA3 /* FacetListPresenter.swift */,
 			);
 			path = FacetList;
+			sourceTree = "<group>";
+		};
+		E26F42142295980400583D39 /* SearchBox */ = {
+			isa = PBXGroup;
+			children = (
+				E26F42152295983F00583D39 /* SearchableController.swift */,
+				E26F421A22959B7400583D39 /* SearchBarController.swift */,
+				E26F421F22959D3200583D39 /* TextfieldController.swift */,
+			);
+			path = SearchBox;
+			sourceTree = "<group>";
+		};
+		E26F422922969C3000583D39 /* LoadingIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				E26F422A22969C7300583D39 /* LoadableController.swift */,
+				E26F422F22969CB200583D39 /* ActivityIndicatorController.swift */,
+			);
+			path = LoadingIndicator;
 			sourceTree = "<group>";
 		};
 		E29E455C2243F2F4005B358D /* Observtions */ = {
@@ -1258,6 +1316,8 @@
 				E265DBF022733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
+				E26F423022969CB200583D39 /* ActivityIndicatorController.swift in Sources */,
+				E26F42162295983F00583D39 /* SearchableController.swift in Sources */,
 				AF3DE5A1224BAB1A00C8BC08 /* IndexSearchData.swift in Sources */,
 				AF11779C225E2AB500C5B59B /* Filters.swift in Sources */,
 				AF3DE583224A984B00C8BC08 /* MultiHitsViewModel.swift in Sources */,
@@ -1266,6 +1326,7 @@
 				E29E456D2243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */,
 				AFC2E2AC228EDF8A00859EBA /* FilterGroupID+Convenience.swift in Sources */,
+				E26F422022959D3200583D39 /* TextfieldController.swift in Sources */,
 				AFCDED54222E7A4E001459BE /* Sequencer.swift in Sources */,
 				AFCDED4B222E7A4E001459BE /* JSON.swift in Sources */,
 				AFC2E29C228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
@@ -1273,9 +1334,12 @@
 				AFC2E288228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */,
 				AF1178762264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
+				E26F423522969DD100583D39 /* Searcher+LoadableController.swift in Sources */,
 				AF1178622264CCDE00C5B59B /* OrGroupProxy.swift in Sources */,
+				E26F421B22959B7400583D39 /* SearchBarController.swift in Sources */,
 				AF1177B2225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				AFC2E2A1228ED9A900859EBA /* FilterListController.swift in Sources */,
+				E26F422B22969C7300583D39 /* LoadableController.swift in Sources */,
 				AFCDEDC622397A5E001459BE /* QueryMetadata.swift in Sources */,
 				AF1177D7225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
@@ -1313,6 +1377,7 @@
 				AF6C6F6722538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
 				AF6C6F6222538156001E5E3C /* Searcher.swift in Sources */,
 				AFCDEDF2223C070F001459BE /* AnyHitsViewModel.swift in Sources */,
+				E26F42252295A02400583D39 /* Searcher+SerchableController.swift in Sources */,
 				AFC2E292228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				AFE3437B228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift in Sources */,
 				AFCDEDA1222E7B6B001459BE /* Hit.swift in Sources */,
@@ -1364,6 +1429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */,
+				E26F422122959D3200583D39 /* TextfieldController.swift in Sources */,
 				E29E455F2243F322005B358D /* Observer.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
@@ -1385,15 +1451,18 @@
 				E2BAE6B6223FF7A500B89EA3 /* Group.swift in Sources */,
 				AFC2E29D228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
 				AF1177D8225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
+				E26F421C22959B7400583D39 /* SearchBarController.swift in Sources */,
 				AFCDEDDA22397E31001459BE /* Result.swift in Sources */,
 				AFC2E289228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				AF1177A8225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E298228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
+				E26F423622969DD100583D39 /* Searcher+LoadableController.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				E225EDB02268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178702264CEBB00C5B59B /* AndGroupOperators.swift in Sources */,
 				AFBF37642285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
+				E26F42172295983F00583D39 /* SearchableController.swift in Sources */,
 				AFC2E2A8228EDF6A00859EBA /* Query+Facets.swift in Sources */,
 				AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
@@ -1403,6 +1472,7 @@
 				AFC2E2A2228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AF1177C0225E2CB300C5B59B /* LegacySyntax.swift in Sources */,
 				AF11786C2264CD9D00C5B59B /* OrGroupOperators.swift in Sources */,
+				E26F423122969CB200583D39 /* ActivityIndicatorController.swift in Sources */,
 				E2BAE6B1223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7222538179001E5E3C /* FacetSearcher.swift in Sources */,
 				AFBF37692285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
@@ -1411,6 +1481,7 @@
 				AF1177D4225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AF1177AE225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				AFCDEDCC22397E1D001459BE /* PageMap.swift in Sources */,
+				E26F422C22969C7300583D39 /* LoadableController.swift in Sources */,
 				AF11780B225F651000C5B59B /* GroupProxy.swift in Sources */,
 				AF1177B8225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				E242340B2243A43D008F24FB /* Signals+Observable.swift in Sources */,
@@ -1425,6 +1496,7 @@
 				AFC2E28E228ED88B00859EBA /* FilterListViewModel.swift in Sources */,
 				AF6C6F6D2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC4CB8A21D534C20004618DD /* Highlighter.swift in Sources */,
+				E26F42262295A02400583D39 /* Searcher+SerchableController.swift in Sources */,
 				AFDA41332269C54400100CB5 /* FacetListViewModel.swift in Sources */,
 				AF1177D0225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFBF375F2285D5C600787D24 /* FilterConverter.swift in Sources */,
@@ -1469,6 +1541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */,
+				E26F422222959D3200583D39 /* TextfieldController.swift in Sources */,
 				E29E45602243F322005B358D /* Observer.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
@@ -1490,15 +1563,18 @@
 				AF1177D9225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
 				AFC2E29E228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
 				AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */,
+				E26F421D22959B7400583D39 /* SearchBarController.swift in Sources */,
 				AF1177A9225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E28A228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFC2E299228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
+				E26F423722969DD100583D39 /* Searcher+LoadableController.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178712264CEBC00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFBF37652285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
+				E26F42182295983F00583D39 /* SearchableController.swift in Sources */,
 				AFC2E2A9228EDF6A00859EBA /* Query+Facets.swift in Sources */,
 				E29E45652243F32C005B358D /* Observable.swift in Sources */,
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
@@ -1508,6 +1584,7 @@
 				AFC2E2A3228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AF11786D2264CD9E00C5B59B /* OrGroupOperators.swift in Sources */,
 				E2BAE6B2223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
+				E26F423222969CB200583D39 /* ActivityIndicatorController.swift in Sources */,
 				AF6C6F7322538179001E5E3C /* FacetSearcher.swift in Sources */,
 				AF117808225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFBF376A2285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
@@ -1516,6 +1593,7 @@
 				AF1177AF225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2E09E332232709700F3056D /* HitsViewModel.swift in Sources */,
 				AF11780C225F651200C5B59B /* GroupProxy.swift in Sources */,
+				E26F422D22969C7300583D39 /* LoadableController.swift in Sources */,
 				AF1177B9225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				AFCDEDAC222EB789001459BE /* SearchResults.swift in Sources */,
 				E242340C2243A43D008F24FB /* Signals+Observable.swift in Sources */,
@@ -1530,6 +1608,7 @@
 				AFC2E28F228ED88B00859EBA /* FilterListViewModel.swift in Sources */,
 				AF6C6F6E2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC4CB8C51D535CA4004618DD /* Highlighter.swift in Sources */,
+				E26F42272295A02400583D39 /* Searcher+SerchableController.swift in Sources */,
 				AFDA41342269C54400100CB5 /* FacetListViewModel.swift in Sources */,
 				AF1177D1225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFBF37602285D5C600787D24 /* FilterConverter.swift in Sources */,
@@ -1574,6 +1653,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF2B26172281AC18006DE798 /* FilterState+Commands.swift in Sources */,
+				E26F422322959D3200583D39 /* TextfieldController.swift in Sources */,
 				E29E45612243F322005B358D /* Observer.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
@@ -1595,15 +1675,18 @@
 				AF1177DA225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
 				AFC2E29F228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
+				E26F421E22959B7400583D39 /* SearchBarController.swift in Sources */,
 				AF1177AA225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E28B228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFC2E29A228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
+				E26F423822969DD100583D39 /* Searcher+LoadableController.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178722264CEBD00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A4225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFBF37662285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
+				E26F42192295983F00583D39 /* SearchableController.swift in Sources */,
 				AFC2E2AA228EDF6A00859EBA /* Query+Facets.swift in Sources */,
 				E29E45662243F32C005B358D /* Observable.swift in Sources */,
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
@@ -1613,6 +1696,7 @@
 				AFC2E2A4228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AF11786E2264CD9F00C5B59B /* OrGroupOperators.swift in Sources */,
 				E2BAE6B3223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
+				E26F423322969CB200583D39 /* ActivityIndicatorController.swift in Sources */,
 				AF6C6F7422538179001E5E3C /* FacetSearcher.swift in Sources */,
 				AF117809225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFBF376B2285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
@@ -1621,6 +1705,7 @@
 				AF1177B0225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */,
 				AF11780D225F651300C5B59B /* GroupProxy.swift in Sources */,
+				E26F422E22969C7300583D39 /* LoadableController.swift in Sources */,
 				AF1177BA225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */,
 				E242340D2243A43D008F24FB /* Signals+Observable.swift in Sources */,
@@ -1635,6 +1720,7 @@
 				AFC2E290228ED88B00859EBA /* FilterListViewModel.swift in Sources */,
 				AF6C6F6F2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC28C4CF1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
+				E26F42282295A02400583D39 /* Searcher+SerchableController.swift in Sources */,
 				AFDA41352269C54400100CB5 /* FacetListViewModel.swift in Sources */,
 				AF1177D2225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
 				AFBF37612285D5C600787D24 /* FilterConverter.swift in Sources */,

@@ -55,6 +55,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   
   public func setQuery(text: String) {
     self.indexSearchData.query.query = text
+    self.indexSearchData.query.page = 0 // when new text changes, reset page to 0?
     onQueryChanged.fire(text)
   }
   
