@@ -2,7 +2,7 @@
 //  LoadableController.swift
 //  InstantSearchCore
 //
-//  Created by Guy Daher on 23/05/2019.
+//  Created by Vladislav Fitc on 24/05/2019.
 //  Copyright © 2019 Algolia. All rights reserved.
 //
 
