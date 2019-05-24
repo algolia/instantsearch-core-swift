@@ -8,15 +8,6 @@
 
 import Foundation
 
-public struct StatsMetadata {
-  let query: String?
-  let totalHitsCount: Int
-  let page: Int
-  let pagesCount: Int
-  let processingTimeMS: Int
-  let areFacetsCountExhaustive: Bool?
-}
-
 public protocol StatsController: class {
   func renderWith<T>(statsMetadata: StatsMetadata, query: Query, filterState: FilterState, searchResults: SearchResults<T>)
 }

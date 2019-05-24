@@ -13,11 +13,3 @@ public protocol ClearRefinementsController: class {
   var clearRefinements: (() -> Void)? { get set }
   
 }
-
-public extension ClearRefinementsController {
-  
-  func connectTo(_ filterState: FilterState) {
-    clearRefinements = { [weak filterState] in filterState?.notify(.removeAll) }
-  }
-  
-}
