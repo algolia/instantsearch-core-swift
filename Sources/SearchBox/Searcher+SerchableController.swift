@@ -10,7 +10,7 @@ import Foundation
 
 public extension Searcher {
   func connectController(_ searchableController: SearchableController) {
-    searchableController.onSearch.subscribe(with: self) { [weak self] text in
+    searchableController.onSearch.subscribePast(with: self) { [weak self] text in
       self?.setQuery(text: text)
       self?.search()
     }

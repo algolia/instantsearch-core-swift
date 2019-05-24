@@ -40,7 +40,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
 
-    filterState.onChange.subscribe(with: self) { _ in
+    filterState.onChange.subscribePast(with: self) { _ in
       self.search()
     }
   }

@@ -32,7 +32,7 @@ public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: Fi
   private func whenSelectedComputedThenUpdateFilterState(_ filterState: FilterState,
                                                          groupID: FilterGroup.ID) {
     
-    onSelectedComputed.subscribe(with: self) { [weak self, weak filterState]  computedSelected in
+    onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState]  computedSelected in
       
       guard let filterState = filterState else {
         return
@@ -65,7 +65,7 @@ public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: Fi
     
     onChange(filterState.filters)
     
-    filterState.onChange.subscribe(with: self, callback: onChange)
+    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
   
 }
@@ -85,8 +85,8 @@ public extension SelectableSegmentViewModel where Segment: FilterType {
     setControllerItems(with: items)
     controller.setSelected(selected)
     controller.onClick = computeSelected(selecting:)
-    onSelectedChanged.subscribe(with: controller, callback: controller.setSelected)
-    onItemsChanged.subscribe(with: controller, callback: setControllerItems)
+    onSelectedChanged.subscribePast(with: controller, callback: controller.setSelected)
+    onItemsChanged.subscribePast(with: controller, callback: setControllerItems)
     
   }
   
