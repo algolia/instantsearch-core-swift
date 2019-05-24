@@ -23,7 +23,7 @@ public class HitsViewModel<Record: Codable> {
   public var hasMorePages: Bool
   
   public let onNewPage = Observer<Int>()
-  public let onResultsUpdated = Observer<Void>()
+  public let onResultsUpdated = Observer<SearchResults<Record>>()
   
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
                           showItemsOnEmptyQuery: Bool = Constants.Defaults.showItemsOnEmptyQuery) {
@@ -142,7 +142,7 @@ extension HitsViewModel {
     isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
     hitsPaginationController.process(searchResults)
     hasMorePages = !(searchResults.page == searchResults.pagesCount - 1)
-    onResultsUpdated.fire(())
+    onResultsUpdated.fire(searchResults)
   }
   
   public func connectSearcher(_ searcher: SingleIndexSearcher<Record>) {

@@ -9,6 +9,19 @@
 import Foundation
 import UIKit
 
+extension Optional where Wrapped == Bool {
+
+  var falseOrNil: Bool {
+    switch self {
+    case .some(true):
+      return false
+    default:
+      return true
+    }
+  }
+
+}
+
 public class LabelStatsController: StatsController {
 
   let label: UILabel
@@ -17,10 +30,11 @@ public class LabelStatsController: StatsController {
     self.label = label
   }
 
-  public func renderWith(query: String?, totalHitsCount: Int, page: Int, pagesCount: Int, processingTimeMS: Int, areFacetsCountExhaustive: Bool?) {
-    if let areFacetsCountExhaustive = areFacetsCountExhaustive {
-      label.text = "\(areFacetsCountExhaustive ? "" : "~")hits: \(totalHitsCount)"
-    }
+  // TODO: add a Stat formatter for easier customisation
+
+  public func renderWith<T>(statsMetadata: StatsMetadata, query: Query, filterState: FilterState, searchResults: SearchResults<T>) {
+    let prefix = statsMetadata.areFacetsCountExhaustive.falseOrNil ? "" : "~"
+    label.text = "\(prefix)\(statsMetadata.totalHitsCount) results"
   }
 
 }

@@ -13,7 +13,8 @@ public extension SingleIndexSearcher {
 
     onResultsChanged.subscribe(with: self) { (_, result) in
       if case .success(let results) = result {
-        statsController.renderWith(query: results.query, totalHitsCount: results.totalHitsCount, page: results.page, pagesCount: results.pagesCount, processingTimeMS: results.processingTimeMS, areFacetsCountExhaustive: results.areFacetsCountExhaustive)
+        let statsMedata = StatsMetadata(query: results.query, totalHitsCount: results.totalHitsCount, page: results.page, pagesCount: results.pagesCount, processingTimeMS: results.processingTimeMS, areFacetsCountExhaustive: results.areFacetsCountExhaustive)
+        statsController.renderWith(statsMetadata: statsMedata, query: self.query, filterState: self.filterState, searchResults: results)
       }
     }
   }
