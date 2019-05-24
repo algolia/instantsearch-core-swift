@@ -10,14 +10,14 @@ import Foundation
 
 public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: FilterType {
 
-  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
+  func connectTo<R>(_ searcher: SingleIndexSearcher<R>, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
 
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
-    connectFilterState(searcher.indexSearchData.filterState, attribute: attribute, operator: `operator`, groupName: groupName)
+    connectTo(searcher.indexSearchData.filterState, attribute: attribute, operator: `operator`, groupName: groupName)
     
   }
   
-  func connectFilterState(_ filterState: FilterState,
+  func connectTo(_ filterState: FilterState,
                           attribute: Attribute,
                           operator: RefinementOperator,
                           groupName: String? = nil) {

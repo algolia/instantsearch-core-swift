@@ -41,16 +41,16 @@ public enum RefinementOperator {
 
 public extension SelectableListViewModel where Key == String, Item == Facet {
 
-  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
+  func connectTo<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
 
-  func connectFacetSearcher(_ facetSearcher: FacetSearcher) {
+  func connectTo(_ facetSearcher: FacetSearcher) {
     whenNewFacetSearchResultsThenUpdateItems(of: facetSearcher)
   }
   
-  func connectFilterState(_ filterState: FilterState,
+  func connectTo(_ filterState: FilterState,
                           with attribute: Attribute,
                           operator: RefinementOperator,
                           groupName: String? = nil) {

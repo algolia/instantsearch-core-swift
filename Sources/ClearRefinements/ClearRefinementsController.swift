@@ -16,7 +16,7 @@ public protocol ClearRefinementsController: class {
 
 public extension ClearRefinementsController {
   
-  func connectFilterState(_ filterState: FilterState) {
+  func connectTo(_ filterState: FilterState) {
     clearRefinements = { [weak filterState] in filterState?.notify(.removeAll) }
   }
   

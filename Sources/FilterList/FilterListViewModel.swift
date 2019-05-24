@@ -18,7 +18,7 @@ public enum FilterListViewModel {
 
 public extension SelectableListViewModel where Key == Item, Item: FilterType {
   
-  func connectFilterState(_ filterState: FilterState,
+  func connectTo(_ filterState: FilterState,
                           groupName: String = "",
                           operator: RefinementOperator) {
     
