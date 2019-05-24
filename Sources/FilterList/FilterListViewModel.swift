@@ -42,7 +42,7 @@ private extension SelectableListViewModel where Key == Item, Item: FilterType {
   
   func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState, _ groupID: FilterGroup.ID) {
     
-    onSelectionsComputed.subscribe(with: self) { filters in
+    onSelectionsComputed.subscribePast(with: self) { filters in
       
       let removeCommand: FilterState.Command
       
@@ -70,7 +70,7 @@ private extension SelectableListViewModel where Key == Item, Item: FilterType {
     
     onChange(filterState.filters)
     
-    filterState.onChange.subscribe(with: self, callback: onChange)
+    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
   
 }
@@ -89,12 +89,12 @@ public extension SelectableListViewModel where Key == Item, Item: FilterType {
     
     controller.onClick = computeSelections(selectingItemForKey:)
     
-    onItemsChanged.subscribe(with: self) { [weak self] items in
+    onItemsChanged.subscribePast(with: self) { [weak self] items in
       guard let selections = self?.selections else { return }
       setControllerItemsWith(items: items, selections: selections)
     }
     
-    onSelectionsChanged.subscribe(with: self) { [weak self] selections in
+    onSelectionsChanged.subscribePast(with: self) { [weak self] selections in
       guard let tags = self?.items else { return }
       setControllerItemsWith(items: tags, selections: selections)
     }

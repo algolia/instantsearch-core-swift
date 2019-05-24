@@ -39,7 +39,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
 
-    filterState.onChange.subscribe(with: self) { _ in
+    filterState.onChange.subscribePast(with: self) { _ in
       self.search()
     }
   }

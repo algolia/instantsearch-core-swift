@@ -40,7 +40,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     onResultsChanged.retainLastData = true
     isLoading.retainLastData = true
 
-    filterState.onChange.subscribe(with: self) { _ in
+    filterState.onChange.subscribePast(with: self) { _ in
       self.search()
     }
   }
@@ -72,7 +72,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
       if isDisjunctiveFacetingEnabled && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
         let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
         let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
-        
+        indexSearchData.query.filters = nil
         return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
           self.handle(value, error, queryMetadata)
         }

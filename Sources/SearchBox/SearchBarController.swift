@@ -11,12 +11,13 @@ import UIKit
 
 public class SearchBarController: NSObject, SearchableController {
 
-  public var onSearch: ((String) -> Void)?
+  public let onSearch: Observer<String>
 
   let searchBar: UISearchBar
 
   public init(searchBar: UISearchBar) {
     self.searchBar = searchBar
+    self.onSearch = Observer()
     super.init()
     searchBar.delegate = self
   }
@@ -26,7 +27,7 @@ public class SearchBarController: NSObject, SearchableController {
 extension SearchBarController: UISearchBarDelegate {
 
   public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-    onSearch?(searchText)
+    onSearch.fire(searchText)
   }
 
 }

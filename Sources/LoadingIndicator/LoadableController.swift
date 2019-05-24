@@ -8,7 +8,9 @@
 
 import Foundation
 
-public protocol LoadableController: class {
+public protocol LoadableController {
+  
   func startAnimating()
   func stopAnimating()
+  
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol SearchableController: class {
-  var onSearch: ((String) -> Void)? { get set }
+  var onSearch: Observer<String> { get }
 }

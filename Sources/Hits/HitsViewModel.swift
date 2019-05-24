@@ -23,7 +23,7 @@ public class HitsViewModel<Record: Codable> {
   public var hasMorePages: Bool
   
   public let onNewPage = Observer<Int>()
-  public let onResultsUpdated = Observer<Void>()
+  public let onResultsUpdated = Observer<SearchResults<Record>>()
   
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
                           showItemsOnEmptyQuery: Bool = Constants.Defaults.showItemsOnEmptyQuery) {
@@ -142,12 +142,12 @@ extension HitsViewModel {
     isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
     hitsPaginationController.process(searchResults)
     hasMorePages = !(searchResults.page == searchResults.pagesCount - 1)
-    onResultsUpdated.fire(())
+    onResultsUpdated.fire(searchResults)
   }
   
   public func connectSearcher(_ searcher: SingleIndexSearcher<Record>) {
     
-    searcher.onResultsChanged.subscribe(with: self) { [weak self] (queryMetada, result) in
+    searcher.onResultsChanged.subscribePast(with: self) { [weak self] (queryMetada, result) in
       switch result {
       case .success(let result):
         self?.update(result, with: queryMetada)
@@ -157,16 +157,16 @@ extension HitsViewModel {
       }
     }
     
-    onNewPage.subscribe(with: self) { [weak searcher] page in
+    onNewPage.subscribePast(with: self) { [weak searcher] page in
       searcher?.indexSearchData.query.page = UInt(page)
       searcher?.search()
     }
     
-    searcher.indexSearchData.filterState.onChange.subscribe(with: self) { [weak self] _ in
+    searcher.indexSearchData.filterState.onChange.subscribePast(with: self) { [weak self] _ in
       self?.hitsPaginationController.invalidate()
     }
     
-    searcher.onQueryChanged.subscribe(with: self) { [weak self] _ in
+    searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in
       self?.hitsPaginationController.invalidate()
     }
     

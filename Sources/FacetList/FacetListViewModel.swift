@@ -65,7 +65,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
                                                            attribute: Attribute,
                                                            groupID: FilterGroup.ID) {
     
-    onSelectionsComputed.subscribe(with: self) { selections in
+    onSelectionsComputed.subscribePast(with: self) { selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
       
       filterState.notify(
@@ -95,12 +95,12 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
     
     onChange(filterState)
     
-    filterState.onChange.subscribe(with: self, callback: onChange)
+    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
 
 
   private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
-    facetSearcher.onResultsChanged.subscribe(with: self) { (result) in
+    facetSearcher.onResultsChanged.subscribePast(with: self) { (result) in
       if case .success(let searchResults) = result {
         self.items = searchResults.facetHits
       } else if case .failure(let error) = result {
@@ -114,7 +114,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   }
   
   private func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
-    searcher.onResultsChanged.subscribe(with: self) { (_, result) in
+    searcher.onResultsChanged.subscribePast(with: self) { (_, result) in
       if case .success(let searchResults) = result {
         let updatedItems = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
         self.items = updatedItems
@@ -154,12 +154,12 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
       self?.computeSelections(selectingItemForKey: facet.value)
     }
     
-    onItemsChanged.subscribe(with: self) { [weak self] facets in
+    onItemsChanged.subscribePast(with: self) { [weak self] facets in
       guard let selections = self?.selections else { return }
       setControllerItemsWith(facets: facets, selections: selections)
     }
     
-    onSelectionsChanged.subscribe(with: self) { [weak self] selections in
+    onSelectionsChanged.subscribePast(with: self) { [weak self] selections in
       guard let facets = self?.items else { return }
       setControllerItemsWith(facets: facets, selections: selections)
     }

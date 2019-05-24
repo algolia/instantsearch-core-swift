@@ -11,14 +11,15 @@ import UIKit
 
 public class TextFieldController: SearchableController {
 
-  public var onSearch: ((String) -> Void)?
+  public let onSearch: Observer<String>
 
   public init (textField: UITextField) {
+    onSearch = Observer()
     textField.addTarget(self, action: #selector(textFieldTextChanged), for: .editingChanged)
   }
 
   @objc func textFieldTextChanged(textField: UITextField) {
     guard let searchText = textField.text else { return }
-    onSearch?(searchText)
+    onSearch.fire(searchText)
   }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 public extension Searcher {
   func connectController(_ loadableController: LoadableController) {
-    isLoading.subscribe(with: self) { isLoading in
+    isLoading.subscribePast(with: self) { isLoading in
       if isLoading {
         loadableController.startAnimating()
       } else {

@@ -19,8 +19,9 @@ public class Observer<P>: Observable {
 
   private let signal: Signal<P>
 
-  public init() {
+  public init(retainLastData: Bool = true) {
     self.signal = Signal<P>()
+    self.retainLastData = retainLastData
   }
 
   /// Whether or not the `Signal` should retain a reference to the last data it was fired with. Defaults to false.

@@ -26,7 +26,7 @@ public extension SelectableViewModel where Item: FilterType {
                                                            attribute: Attribute,
                                                            groupID: FilterGroup.ID) {
     
-    onSelectedComputed.subscribe(with: self) { [weak self, weak filterState] computedSelected in
+    onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState] computedSelected in
       
       guard
         let item = self?.item,
@@ -54,7 +54,7 @@ public extension SelectableViewModel where Item: FilterType {
     
     onChange(filterState)
     
-    filterState.onChange.subscribe(with: self, callback: onChange)
+    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
   
 }
@@ -65,8 +65,8 @@ public extension SelectableViewModel where Item: FilterType {
     controller.setItem(item)
     controller.setSelected(isSelected)
     controller.onClick = computeIsSelected(selecting:)
-    onSelectedChanged.subscribe(with: controller, callback: controller.setSelected)
-    onItemChanged.subscribe(with: controller, callback: controller.setItem)
+    onSelectedChanged.subscribePast(with: controller, callback: controller.setSelected)
+    onItemChanged.subscribePast(with: controller, callback: controller.setItem)
   }
 
 }
