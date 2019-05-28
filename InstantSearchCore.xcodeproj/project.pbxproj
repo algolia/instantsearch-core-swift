@@ -901,7 +901,7 @@
 				AF9396872298153800757257 /* ClearRefinements */,
 				E26F42392296A42F00583D39 /* Stats */,
 				E26F422922969C3000583D39 /* LoadingIndicator */,
-				E26F42142295980400583D39 /* SearchBox */,
+				E26F42142295980400583D39 /* QueryInput */,
 				AFF1E74C2296967D00941401 /* MultiHits */,
 				AFF1E74B2296966400941401 /* Hits */,
 				AFC2E2A5228EDF5600859EBA /* Helpers */,
@@ -975,7 +975,7 @@
 			path = FacetList;
 			sourceTree = "<group>";
 		};
-		E26F42142295980400583D39 /* SearchBox */ = {
+		E26F42142295980400583D39 /* QueryInput */ = {
 			isa = PBXGroup;
 			children = (
 				AF93969A229D51F300757257 /* QueryInputController.swift */,
@@ -983,7 +983,7 @@
 				AF9396A4229D52A900757257 /* QueryInputViewModel+Searcher.swift */,
 				AF9396A9229D52D600757257 /* QueryInputViewModel+Controller.swift */,
 			);
-			path = SearchBox;
+			path = QueryInput;
 			sourceTree = "<group>";
 		};
 		E26F422922969C3000583D39 /* LoadingIndicator */ = {
