@@ -145,7 +145,13 @@ extension HitsViewModel {
     onResultsUpdated.fire(searchResults)
   }
   
-  public func connectSearcher(_ searcher: SingleIndexSearcher<Record>) {
+  public func connect(to filterState: FilterState) {
+    filterState.onChange.subscribePast(with: self) { [weak self] _ in
+      self?.hitsPaginationController.invalidate()
+    }
+  }
+  
+  public func connect(to searcher: SingleIndexSearcher<Record>) {
     
     searcher.onResultsChanged.subscribePast(with: self) { [weak self] (query, _, result) in
       switch result {
@@ -160,10 +166,6 @@ extension HitsViewModel {
     onNewPage.subscribePast(with: self) { [weak searcher] page in
       searcher?.indexSearchData.query.page = UInt(page)
       searcher?.search()
-    }
-    
-    searcher.indexSearchData.filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.hitsPaginationController.invalidate()
     }
     
     searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in

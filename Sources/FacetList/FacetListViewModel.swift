@@ -41,16 +41,16 @@ public enum RefinementOperator {
 
 public extension SelectableListViewModel where Key == String, Item == Facet {
 
-  func connectTo<R: Codable>(_ searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
+  func connect<R: Codable>(to searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
 
-  func connectTo(_ facetSearcher: FacetSearcher) {
+  func connect(to facetSearcher: FacetSearcher) {
     whenNewFacetSearchResultsThenUpdateItems(of: facetSearcher)
   }
   
-  func connectTo(_ filterState: FilterState,
+  func connect(to filterState: FilterState,
                  with attribute: Attribute,
                  operator: RefinementOperator,
                  groupName: String? = nil) {
@@ -125,7 +125,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
 
 public extension SelectableListViewModel where Key == String, Item == Facet {
   
-  func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) {
+  func connect<C: FacetListController>(to controller: C, with presenter: SelectableListPresentable? = nil) {
     
     /// Add missing refinements with a count of 0 to all returned facets
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements

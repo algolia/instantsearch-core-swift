@@ -26,17 +26,15 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var onQueryChanged = Observer<String?>()
   public let isLoading = Observer<Bool>()
   public var facetName: String
-  public var text: String
   public var requestOptions: RequestOptions?
 
   public var filterState: FilterState {
     return indexSearchData.filterState
   }
   
-  public init(index: Index, query: Query = Query(), filterState: FilterState = FilterState(), facetName: String, text: String = "", requestOptions: RequestOptions? = nil) {
+  public init(index: Index, query: Query = Query(), filterState: FilterState = FilterState(), facetName: String, requestOptions: RequestOptions? = nil) {
     self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     self.facetName = facetName
-    self.text = text
     self.sequencer = Sequencer()
     self.requestOptions = requestOptions
     sequencer.delegate = self
@@ -49,8 +47,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   }
   
   public func setQuery(text: String) {
-    self.text = text
-    onQueryChanged.fire(text)
+    self.query = text
   }
   
   public func search() {
@@ -58,7 +55,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     indexSearchData.applyFilters()
         
     sequencer.orderOperation {
-      return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: text, requestOptions: requestOptions) { (content, error) in
+      return self.indexSearchData.index.searchForFacetValues(of: facetName, matching: query ?? "", requestOptions: requestOptions) { (content, error) in
         let result: Result<FacetResults, Error> = self.transform(content: content, error: error)
         self.onResultsChanged.fire(result)
       }

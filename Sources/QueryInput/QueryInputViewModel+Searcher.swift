@@ -10,18 +10,18 @@ import Foundation
 
 extension QueryInputViewModel {
 
-  public func connect<S: Searcher>(_ searcher: S, searchAsYouType: Bool) {
+  public func connect<S: Searcher>(to searcher: S, searchAsYouType: Bool) {
     query = searcher.query
     
     if searchAsYouType {
-      onQueryChanged.subscribe(with: self) { [weak searcher] query in
-        searcher?.query = query
-        searcher?.search()
+      onQueryChanged.subscribe(with: self) { query in
+        searcher.query = query
+        searcher.search()
       }
     } else {
-      onQuerySubmitted.subscribe(with: self) { [weak searcher] query in
-        searcher?.query = query
-        searcher?.search()
+      onQuerySubmitted.subscribe(with: self) { query in
+        searcher.query = query
+        searcher.search()
       }
     }
   }
