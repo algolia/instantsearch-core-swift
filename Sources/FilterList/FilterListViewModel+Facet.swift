@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension FilterListViewModel.Facet {
+public extension SelectableListViewModel where Key == Filter.Facet, Item == Filter.Facet {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .multiple)

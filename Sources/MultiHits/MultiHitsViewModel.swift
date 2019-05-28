@@ -95,12 +95,12 @@ public class MultiHitsViewModel {
   /// - Parameter section: the section index of nested hits ViewModel
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits ViewModel
   
-  public func update<R>(_ results: SearchResults<R>, with metadata: QueryMetadata, forViewModelInSection section: Int) throws {
+  public func update<R>(_ results: SearchResults<R>, with query: Query, forViewModelInSection section: Int) throws {
     guard let typedViewModel = hitsViewModels[section] as? HitsViewModel<R> else {
       throw HitsViewModel<R>.Error.incompatibleRecordType
     }
     
-    typedViewModel.update(results, with: metadata)
+    typedViewModel.update(results, with: query)
   }
   
   /// Updates the results of all nested hits ViewModels.
@@ -109,10 +109,10 @@ public class MultiHitsViewModel {
   /// - Parameter metadata: the metadata of query corresponding to results
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the conversion of search results for one of a nested hits ViewModels is impossible due to a record type mismatch
   
-  public func update(_ results: [(metadata: QueryMetadata, results: SearchResults<JSON>)]) throws {
+  public func update(_ results: [(query: Query, results: SearchResults<JSON>)]) throws {
     try zip(hitsViewModels, results).forEach { arg in
       let (viewModel, results) = arg
-      try viewModel.update(withGeneric: results.results, with: results.metadata)
+      try viewModel.update(withGeneric: results.results, with: results.query)
     }
   }
   

@@ -10,21 +10,33 @@ import Foundation
 
 public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObservable {
   
-  public typealias SearchResult = (QueryMetadata, Result<SearchResults<Record>, Error>)
+  public typealias SearchResult = (Query, FiltersReadable, Result<SearchResults<Record>, Error>)
+  
+  public var query: String? {
+
+    set {
+      let oldValue = indexSearchData.query.query
+      if oldValue != newValue {
+        indexSearchData.query.query = newValue
+        onQueryChanged.fire(newValue)
+      }
+    }
+    
+    get {
+      return indexSearchData.query.query
+    }
+
+  }
   
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
   public let indexSearchData: IndexSearchData
   public let onResultsChanged = Observer<SearchResult>()
-  public let onQueryChanged = Observer<String>()
+  public let onQueryChanged = Observer<String?>()
   public var requestOptions: RequestOptions?
   
   public var filterState: FilterState {
     return indexSearchData.filterState
-  }
-  
-  public var query: Query {
-    return indexSearchData.query
   }
   
   public var isDisjunctiveFacetingEnabled = true
@@ -59,27 +71,28 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     onQueryChanged.fire(text)
   }
   
-  fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ queryMetadata: QueryMetadata) {
+  fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ query: Query, _ filterState: FiltersReadable) {
     let result: Result<SearchResults<Record>, Error> = self.transform(content: value, error: error)
-    self.onResultsChanged.fire((queryMetadata, result))
+    self.onResultsChanged.fire((query, filterState, result))
   }
   
   public func search() {
     // TODO: weak self...
     sequencer.orderOperation {
-      let queryMetadata = QueryMetadata(query: indexSearchData.query)
+      let query = indexSearchData.query
+      let filterState = indexSearchData.filterState.filters
       
       if isDisjunctiveFacetingEnabled && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
         let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
         let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
         indexSearchData.query.filters = nil
         return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
-          self.handle(value, error, queryMetadata)
+          self.handle(value, error, query, filterState)
         }
       } else {
         indexSearchData.applyFilters()
         return indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { value, error in
-          self.handle(value, error, queryMetadata)
+          self.handle(value, error, query, filterState)
         }
       }
     }

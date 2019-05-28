@@ -20,7 +20,7 @@ protocol AnyHitsViewModel {
   /// - Parameter queryMetaData:
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
 
-  func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws
+  func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws
   
   /// Returns a hit for row of a desired type
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
@@ -35,12 +35,12 @@ protocol AnyHitsViewModel {
 
 extension HitsViewModel: AnyHitsViewModel {
 
-  func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
+  func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws {
       let encoder = JSONEncoder()
       let data = try encoder.encode(searchResults)
       let decoder = JSONDecoder()
       let typedSearchResults = try decoder.decode(SearchResults<Record>.self, from: data)
-      self.update(typedSearchResults, with: queryMetadata)
+      self.update(typedSearchResults, with: query)
   }
 
   func genericHitAtIndex<R: Decodable>(_ row: Int) throws -> R? {
@@ -87,8 +87,8 @@ extension HitsViewModel: AnyHitsViewModel {
 
 extension HitsViewModel where Record == JSON {
   
-  func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
-    self.update(searchResults, with: queryMetadata)
+  func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws {
+    self.update(searchResults, with: query)
   }
   
 }

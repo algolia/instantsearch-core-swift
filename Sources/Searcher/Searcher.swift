@@ -10,13 +10,14 @@ import Foundation
 
 public protocol Searcher: SequencerDelegate {
   
+  var query: String? { get set }
+    
   var sequencer: Sequencer { get }
   var isLoading: Observer<Bool> { get }
-  var onQueryChanged: Observer<String> { get }
+  var onQueryChanged: Observer<String?> { get }
   
   func search()
   func cancel()
-  func setQuery(text: String)
   
 }
 

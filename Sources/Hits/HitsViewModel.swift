@@ -138,8 +138,8 @@ public enum InfiniteScrolling {
 extension HitsViewModel {
   
   // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
-  public func update(_ searchResults: SearchResults<Record>, with queryMetadata: QueryMetadata) {
-    isLastQueryEmpty = queryMetadata.queryText.isNilOrEmpty
+  public func update(_ searchResults: SearchResults<Record>, with query: Query) {
+    isLastQueryEmpty = query.query.isNilOrEmpty
     hitsPaginationController.process(searchResults)
     hasMorePages = !(searchResults.page == searchResults.pagesCount - 1)
     onResultsUpdated.fire(searchResults)
@@ -147,10 +147,10 @@ extension HitsViewModel {
   
   public func connectSearcher(_ searcher: SingleIndexSearcher<Record>) {
     
-    searcher.onResultsChanged.subscribePast(with: self) { [weak self] (queryMetada, result) in
+    searcher.onResultsChanged.subscribePast(with: self) { [weak self] (query, _, result) in
       switch result {
       case .success(let result):
-        self?.update(result, with: queryMetada)
+        self?.update(result, with: query)
         
       case .failure(let error):
         print(error)

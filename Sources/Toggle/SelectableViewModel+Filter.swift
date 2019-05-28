@@ -11,8 +11,8 @@ import Foundation
 public extension SelectableViewModel where Item: FilterType {
 
   func connectTo(_ filterState: FilterState,
-                          operator: RefinementOperator = .or,
-                          groupName: String? = nil) {
+                 operator: RefinementOperator = .or,
+                 groupName: String? = nil) {
     
     let groupID = FilterGroup.ID(groupName: groupName,
                                  attribute: item.attribute,

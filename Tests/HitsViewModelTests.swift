@@ -47,7 +47,7 @@ class HitsViewModelTests: XCTestCase {
     XCTAssertEqual(vm.numberOfHits(), 0)
     XCTAssertEqual(vm.hit(atIndex: 0), .none)
     
-    vm.update(results, with: metadata)
+    vm.update(results, with: query)
     
     XCTAssertFalse(vm.hasMorePages)
     XCTAssertEqual(vm.numberOfHits(), 3)
@@ -81,7 +81,7 @@ class HitsViewModelTests: XCTestCase {
     let infiniteScrollingOffset: UInt = 5
     let vm = HitsViewModel(settings: .init(infiniteScrolling: .on(withOffset: infiniteScrollingOffset)), paginationController: paginationController)
     
-    vm.update(results, with: metadata)
+    vm.update(results, with: query)
     
     _ = vm.hit(atIndex: hits.count - Int(infiniteScrollingOffset))
     
@@ -114,7 +114,7 @@ class HitsViewModelTests: XCTestCase {
     
     let vm = HitsViewModel(settings: .init(infiniteScrolling: .off), paginationController: paginationController)
     
-    vm.update(results, with: metadata)
+    vm.update(results, with: query)
     
     _ = vm.hit(atIndex: hits.count - 1)
     
@@ -147,7 +147,7 @@ class HitsViewModelTests: XCTestCase {
     
     let vm = HitsViewModel(settings: .init(infiniteScrolling: .off), paginationController: paginationController)
     
-    vm.update(results, with: metadata)
+    vm.update(results, with: query)
     
     vm.loadMoreResults()
     
@@ -174,7 +174,7 @@ class HitsViewModelTests: XCTestCase {
     
     let vm = HitsViewModel(settings: .init(showItemsOnEmptyQuery: false), paginationController: paginationController)
     
-    vm.update(results, with: metadata)
+    vm.update(results, with: query)
     
     XCTAssertEqual(vm.numberOfHits(), 0)
     
@@ -199,7 +199,7 @@ class HitsViewModelTests: XCTestCase {
     
     let vm = HitsViewModel(settings: .init(showItemsOnEmptyQuery: true), paginationController: paginationController)
     
-    vm.update(results, with: metadata)
+    vm.update(results, with: query)
     
     XCTAssertEqual(vm.numberOfHits(), hits.count)
     

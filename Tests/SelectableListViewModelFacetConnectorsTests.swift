@@ -42,7 +42,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     
     let filterState = FilterState()
     
-    viewModel.connectFilterState(filterState, with: "categories", operator: .and)
+    viewModel.connectTo(filterState, with: "categories", operator: .and)
     
     // ViewModel -> FilterState
     viewModel.computeSelections(selectingItemForKey: "cat1")
@@ -64,17 +64,14 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     let filterState = FilterState()
     let searcher = SingleIndexSearcher<String>(index:index , query: query, filterState: filterState, requestOptions: .none)
     
-    viewModel.connectSearcher(searcher, with: "type")
-    
-    
-    let md = QueryMetadata(queryText: .none, filters: .none, page: 0)
-    
+    viewModel.connectTo(searcher, with: "type")
+        
     let bundle = Bundle(for: SelectableListViewModelFacetConnectorsTests.self)
     
     do {
       let results = try SearchResults<String>(jsonFile: "SearchResultFacets", bundle: bundle)
       
-      searcher.onResultsChanged.fire((md, .success(results)))
+      searcher.onResultsChanged.fire((query, filterState.filters,.success(results)))
 
       let expectedFacets: Set<Facet> = [
         .init(value: "book", count: 357, highlighted: nil),

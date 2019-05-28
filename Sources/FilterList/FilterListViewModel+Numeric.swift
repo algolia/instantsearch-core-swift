@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension FilterListViewModel.Numeric {
+public extension SelectableListViewModel where Key == Filter.Numeric, Item == Filter.Numeric {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .single)

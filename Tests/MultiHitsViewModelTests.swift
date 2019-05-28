@@ -124,16 +124,16 @@ class MultiHitsViewModelTests: XCTestCase {
     
     let hits1: [[String: Int]] = [["a": 1], ["b": 2], ["c": 3]]
     let results1 = SearchResults<[String: Int]>(hits: hits1, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
-    let md = QueryMetadata(queryText: "q1", page: 0)
+    let query = Query(query: "q1")
 
     let hits2: [[String: Bool]] = [["a": true], ["b": false], ["c": true]]
     let results2 = SearchResults<[String: Bool]>(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
     
-    XCTAssertNoThrow(try multiViewModel.update(results1, with: md, forViewModelInSection: 0))
-    XCTAssertNoThrow(try multiViewModel.update(results2, with: md, forViewModelInSection: 1))
+    XCTAssertNoThrow(try multiViewModel.update(results1, with: query, forViewModelInSection: 0))
+    XCTAssertNoThrow(try multiViewModel.update(results2, with: query, forViewModelInSection: 1))
     
-    XCTAssertThrowsError(try multiViewModel.update(results2, with: md, forViewModelInSection: 0))
-    XCTAssertThrowsError(try multiViewModel.update(results1, with: md, forViewModelInSection: 1))
+    XCTAssertThrowsError(try multiViewModel.update(results2, with: query, forViewModelInSection: 0))
+    XCTAssertThrowsError(try multiViewModel.update(results1, with: query, forViewModelInSection: 1))
 
   }
   
@@ -162,10 +162,10 @@ class MultiHitsViewModelTests: XCTestCase {
     
     let results2: SearchResults<JSON> = SearchResults(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
     
-    let md = QueryMetadata(queryText: "q1", page: 0)
+    let query = Query(query: "q1")
 
     // Update multihits ViewModel with a correct list of results
-    XCTAssertNoThrow(try multiViewModel.update([(md, results1), (md, results2)]))
+    XCTAssertNoThrow(try multiViewModel.update([(query, results1), (query, results2)]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
@@ -173,7 +173,7 @@ class MultiHitsViewModelTests: XCTestCase {
     XCTAssertEqual(multiViewModel.numberOfHits(inSection: 1), hits2.count)
     
     // Update multihits ViewModel with uncorrect list of results
-    XCTAssertThrowsError(try multiViewModel.update([(md, results2), (md, results1)]))
+    XCTAssertThrowsError(try multiViewModel.update([(query, results2), (query, results1)]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
@@ -206,9 +206,9 @@ class MultiHitsViewModelTests: XCTestCase {
     
     let results2: SearchResults<JSON> = SearchResults(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
         
-    let md = QueryMetadata(queryText: "q1", page: 0)
+    let query = Query(query: "q1")
     
-    XCTAssertNoThrow(try multiViewModel.update([(md, results1), (md, results2)]))
+    XCTAssertNoThrow(try multiViewModel.update([(query, results1), (query, results2)]))
     
     XCTAssertNoThrow(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?)
     XCTAssertNoThrow(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
@@ -236,10 +236,11 @@ class MultiHitsViewModelTests: XCTestCase {
     init(didCallLoadMoreResults: @escaping () -> Void) {
       self.didCallLoadMoreResults = didCallLoadMoreResults
     }
-    
-    func update(withGeneric searchResults: SearchResults<JSON>, with queryMetadata: QueryMetadata) throws {
+  
+    func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws {
+      
     }
-    
+
     func rawHitAtIndex(_ index: Int) -> [String : Any]? {
       return .none
     }

@@ -51,9 +51,9 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   }
   
   func connectTo(_ filterState: FilterState,
-                          with attribute: Attribute,
-                          operator: RefinementOperator,
-                          groupName: String? = nil) {
+                 with attribute: Attribute,
+                 operator: RefinementOperator,
+                 groupName: String? = nil) {
 
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
 
@@ -98,7 +98,6 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }
 
-
   private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
     facetSearcher.onResultsChanged.subscribePast(with: self) { (result) in
       if case .success(let searchResults) = result {
@@ -114,7 +113,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   }
   
   private func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
-    searcher.onResultsChanged.subscribePast(with: self) { (_, result) in
+    searcher.onResultsChanged.subscribePast(with: self) { (_, _, result) in
       if case .success(let searchResults) = result {
         let updatedItems = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
         self.items = updatedItems

@@ -12,10 +12,18 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   
   public typealias SearchResult = Result<FacetResults, Error>
   
+  public var query: String? {
+    didSet {
+      if oldValue != query {
+        onQueryChanged.fire(query)
+      }
+    }
+  }
+  
   public let indexSearchData: IndexSearchData
   public let sequencer: Sequencer
   public let onResultsChanged = Observer<SearchResult>()
-  public var onQueryChanged = Observer<String>()
+  public var onQueryChanged = Observer<String?>()
   public let isLoading = Observer<Bool>()
   public var facetName: String
   public var text: String
@@ -24,12 +32,8 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var filterState: FilterState {
     return indexSearchData.filterState
   }
-
-  public var query: Query {
-    return indexSearchData.query
-  }
   
-  public init(index: Index, query: Query, filterState: FilterState, facetName: String, text: String = "", requestOptions: RequestOptions? = nil) {
+  public init(index: Index, query: Query = Query(), filterState: FilterState = FilterState(), facetName: String, text: String = "", requestOptions: RequestOptions? = nil) {
     self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     self.facetName = facetName
     self.text = text

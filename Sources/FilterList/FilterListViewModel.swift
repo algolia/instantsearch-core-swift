@@ -8,19 +8,13 @@
 
 import Foundation
 
-public enum FilterListViewModel {
-  
-  public typealias Facet = SelectableListViewModel<Filter.Facet, Filter.Facet>
-  public typealias Numeric = SelectableListViewModel<Filter.Numeric, Filter.Numeric>
-  public typealias Tag = SelectableListViewModel<Filter.Tag, Filter.Tag>
-  
-}
+public typealias FilterListViewModel<F: FilterType & Hashable> = SelectableListViewModel<F, F>
 
 public extension SelectableListViewModel where Key == Item, Item: FilterType {
   
   func connectTo(_ filterState: FilterState,
-                          groupName: String = "",
-                          operator: RefinementOperator) {
+                 groupName: String = "",
+                 operator: RefinementOperator) {
     
     let groupID: FilterGroup.ID
     

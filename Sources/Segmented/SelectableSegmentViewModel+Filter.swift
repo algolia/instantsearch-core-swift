@@ -18,9 +18,9 @@ public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: Fi
   }
   
   func connectTo(_ filterState: FilterState,
-                          attribute: Attribute,
-                          operator: RefinementOperator,
-                          groupName: String? = nil) {
+                 attribute: Attribute,
+                 operator: RefinementOperator,
+                 groupName: String? = nil) {
     
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
     

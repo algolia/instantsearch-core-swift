@@ -14,20 +14,20 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
   
   func testConstructors() {
     
-    let facetFilterListViewModel = FilterListViewModel.Facet()
+    let facetFilterListViewModel = FilterListViewModel<Filter.Facet>()
     XCTAssertEqual(facetFilterListViewModel.selectionMode, .multiple)
     
-    let numericFilterListViewModel = FilterListViewModel.Numeric()
+    let numericFilterListViewModel = FilterListViewModel<Filter.Numeric>()
     XCTAssertEqual(numericFilterListViewModel.selectionMode, .single)
 
-    let tagFilterListViewModel = FilterListViewModel.Tag()
+    let tagFilterListViewModel = FilterListViewModel<Filter.Tag>()
     XCTAssertEqual(tagFilterListViewModel.selectionMode, .multiple)
 
   }
   
   func testFilterStateConnector() {
     
-    let viewModel = FilterListViewModel.Tag()
+    let viewModel = FilterListViewModel<Filter.Tag>()
     
     viewModel.items = [
       "tag1", "tag2", "tag3"
@@ -37,7 +37,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     filterState.notify(.add(filter: Filter.Tag(value: "tag3"), toGroupWithID: .or(name: "")))
     
-    viewModel.connectFilterState(filterState, operator: .or)
+    viewModel.connectTo(filterState, operator: .or)
     
     // FilterState -> ViewModel preselection
     
@@ -83,7 +83,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
   
   func testControllerConnector() {
     
-    let viewModel = FilterListViewModel.Tag()
+    let viewModel = FilterListViewModel<Filter.Tag>()
     let controller = TestController<Filter.Tag>()
     
     viewModel.items = ["tag1", "tag2", "tag3"]

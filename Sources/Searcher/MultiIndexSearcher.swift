@@ -10,13 +10,28 @@ import Foundation
 
 public class MultiIndexSearcher: Searcher, SearchResultObservable {
   
-  public typealias SearchResult = Result<[(QueryMetadata, SearchResults<JSON>)], Error>
+  public typealias SearchResult = Result<[(Query, SearchResults<JSON>)], Error>
+  
+  public var query: String? {
+    
+    set {
+      let oldValue = indexSearchDatas.first?.query.query
+      guard oldValue != newValue else { return }
+      indexSearchDatas.forEach { $0.query.query = newValue }
+      onQueryChanged.fire(newValue)
+    }
+    
+    get {
+      return indexSearchDatas.first?.query.query
+    }
+
+  }
   
   public let client: Client
   public var indexSearchDatas: [IndexSearchData]
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
-  public var onQueryChanged: Observer<String>
+  public let onQueryChanged: Observer<String?>
   public let onResultsChanged = Observer<SearchResult>()
   public var applyDisjunctiveFacetingWhenNecessary = true
   public var requestOptions: RequestOptions?
@@ -42,29 +57,24 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
 //    }
   }
   
-  public func setQuery(text: String) {
-    indexSearchDatas.forEach { $0.query.query = text }
-    onQueryChanged.fire(text)
-  }
-  
   public func search() {
     
     indexSearchDatas.forEach { $0.applyFilters() }
     
     let indexQueries = indexSearchDatas.map(IndexQuery.init(indexSearchData:))
-    let metadata = self.indexSearchDatas.map { $0.query }.map(QueryMetadata.init(query:))
+    let queries = self.indexSearchDatas.map { $0.query }
     
     sequencer.orderOperation {
       return self.client.multipleQueries(indexQueries, requestOptions: requestOptions) { (content, error) in
         
         let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
         
-        let output: Result<[(QueryMetadata, SearchResults<JSON>)], Error>
+        let output: Result<[(Query, SearchResults<JSON>)], Error>
         
         switch result {
         case .success(let searchResultsWrapper):
           let searchResults = searchResultsWrapper.searchResults
-          let searchResultsWithMetadata = zip(metadata, searchResults).map { ($0, $1) }
+          let searchResultsWithMetadata = zip(queries, searchResults).map { ($0, $1) }
           output = .success(searchResultsWithMetadata)
           
         case .failure(let error):
