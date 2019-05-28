@@ -10,7 +10,7 @@ import Foundation
 
 public protocol LoadableController: class {
   
-  func startAnimating()
-  func stopAnimating()
+  func startLoading()
+  func stopLoading()
   
 }

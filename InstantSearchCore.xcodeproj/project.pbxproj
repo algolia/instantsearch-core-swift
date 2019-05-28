@@ -989,8 +989,8 @@
 		E26F422922969C3000583D39 /* LoadingIndicator */ = {
 			isa = PBXGroup;
 			children = (
-				E26F423422969DD100583D39 /* LoadableController+Searcher.swift */,
 				AF93968E2298169F00757257 /* LoadableController.swift */,
+				E26F423422969DD100583D39 /* LoadableController+Searcher.swift */,
 			);
 			path = LoadingIndicator;
 			sourceTree = "<group>";

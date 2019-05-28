@@ -9,13 +9,15 @@
 import Foundation
 
 public extension LoadableController {
+  
   func connectTo(_ searcher: Searcher) {
     searcher.isLoading.subscribePast(with: self) { [weak self] isLoading in
       if isLoading {
-        self?.startAnimating()
+        self?.startLoading()
       } else {
-        self?.stopAnimating()
+        self?.stopLoading()
       }
-      }.onQueue(.main)
+    }.onQueue(.main)
   }
+  
 }
