@@ -1,5 +1,5 @@
 //
-//  PaginationControllerTests.swift
+//  PaginatorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 14/03/2019.
@@ -22,7 +22,7 @@ struct TestPageMapConvertible<Item>: PageMapConvertible {
   
 }
 
-class TestPaginationControllerDelegate: PaginatorDelegate {
+class TestPaginatorDelegate: PaginatorDelegate {
   
   var requestedLoadPage: ((Int) -> Void)?
   
@@ -32,7 +32,7 @@ class TestPaginationControllerDelegate: PaginatorDelegate {
   
 }
 
-class PaginationControllerTests: XCTestCase {
+class PaginatorTests: XCTestCase {
   
   func testProcessing() {
     
@@ -77,7 +77,7 @@ class PaginationControllerTests: XCTestCase {
   func testLoadingNextPageIfEmpty() {
     
     let paginationController = Paginator<String>()
-    let delegate = TestPaginationControllerDelegate()
+    let delegate = TestPaginatorDelegate()
     paginationController.delegate = delegate
     
     let exp = expectation(description: "Loading first page")
@@ -96,7 +96,7 @@ class PaginationControllerTests: XCTestCase {
   func testLoadingNextPageIfNonEmpty() {
     
     let paginationController = Paginator<String>()
-    let delegate = TestPaginationControllerDelegate()
+    let delegate = TestPaginatorDelegate()
     paginationController.delegate = delegate
     
     let exp = expectation(description: "")
@@ -119,7 +119,7 @@ class PaginationControllerTests: XCTestCase {
     
     let paginationController = Paginator<String>()
     
-    let delegate = TestPaginationControllerDelegate()
+    let delegate = TestPaginatorDelegate()
     paginationController.delegate = delegate
     
     let exp = expectation(description: "")
@@ -137,6 +137,20 @@ class PaginationControllerTests: XCTestCase {
     
     waitForExpectations(timeout: 2, handler: .none)
     
+  }
+  
+  func testInvalidation() {
+    
+    let paginationController = Paginator<String>()
+    let delegate = TestPaginatorDelegate()
+    paginationController.delegate = delegate
+    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
+    paginationController.process(page)
+    XCTAssertNotNil(paginationController.pageMap)
+    XCTAssertFalse(paginationController.pageMap!.isEmpty)
+    paginationController.invalidate()
+    XCTAssertNil(paginationController.pageMap)
+
   }
   
 }

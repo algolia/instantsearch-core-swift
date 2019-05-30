@@ -8,21 +8,18 @@
 import Foundation
 import InstantSearchClient
 
-// DISCUSSION: should we expose those through KVO? dynamic var in case someone wants to listen to them?
-// something like: viewModel.bind(\.navigationTitle, to: navigationItem, at: \.title),
-
-// TODO: Paginator: keep in memory only visible results with offsets
 public class HitsViewModel<Record: Codable> {
   
   public let settings: Settings
 
-  private let hitsPaginationController: Paginator<Record>
+  private let paginator: Paginator<Record>
   
   private var isLastQueryEmpty: Bool = true
   
   private var latestPageIndex: Int?
   
   public let onPageRequest = Observer<Int>()
+  public let onRequestChanged = Observer<Void>()
   public let onResultsUpdated = Observer<SearchResults<Record>>()
   
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
@@ -34,20 +31,20 @@ public class HitsViewModel<Record: Codable> {
 
   public init(settings: Settings? = nil) {
     self.settings = settings ?? Settings()
-    self.hitsPaginationController = Paginator<Record>()
+    self.paginator = Paginator<Record>()
     self.latestPageIndex = .none
-    self.hitsPaginationController.delegate = self
+    self.paginator.delegate = self
   }
   
   internal init(settings: Settings? = nil,
                 paginationController: Paginator<Record>) {
     self.settings = settings ?? Settings()
-    self.hitsPaginationController = paginationController
+    self.paginator = paginationController
     self.latestPageIndex = .none
   }
 
   public func numberOfHits() -> Int {
-    guard let hitsPageMap = hitsPaginationController.pageMap else { return 0 }
+    guard let hitsPageMap = paginator.pageMap else { return 0 }
     
     if isLastQueryEmpty && !settings.showItemsOnEmptyQuery {
       return 0
@@ -57,7 +54,7 @@ public class HitsViewModel<Record: Codable> {
   }
 
   public func hit(atIndex index: Int) -> Record? {
-    guard let hitsPageMap = hitsPaginationController.pageMap else { return nil }
+    guard let hitsPageMap = paginator.pageMap else { return nil }
 
     loadMoreIfNeeded(rowNumber: index)
     return hitsPageMap[index]
@@ -71,28 +68,39 @@ public class HitsViewModel<Record: Codable> {
   }
   
   public func loadMoreResults() {
-    hitsPaginationController.loadNextPageIfNeeded()
+    paginator.loadNextPageIfNeeded()
   }
 
 }
 
 private extension HitsViewModel {
   
-  // TODO: Here we're always loading the next page, but we don't handle the case where a page is missing in the middle for some reason
-  // So we will need to detect which page the row corresponds at, and check if we're missing the page. then check the threshold offset to determine
-  // if we load previous or next page (in case we don't have them loaded/cached already in our itemsPage struct
   func loadMoreIfNeeded(rowNumber: Int) {
-    print("Check load more relativelty to \(rowNumber)")
+    
+    debugPrint("[HitsViewModel] Row: \(rowNumber)")
+    
     guard
       case .on(let pageLoadOffset) = settings.infiniteScrolling,
-      let hitsPageMap = hitsPaginationController.pageMap else { return }
+      let hitsPageMap = paginator.pageMap else { return }
     
-    let rowToLoad = rowNumber + Int(pageLoadOffset)
+    let lowerBoundRow = rowNumber - Int(pageLoadOffset)
+  
+    if lowerBoundRow >= hitsPageMap.startIndex, !hitsPageMap.containsItem(atIndex: lowerBoundRow) {
+      let lowerBoundPage = hitsPageMap.pageIndex(for: lowerBoundRow)
+      paginator.loadPage(withIndex: lowerBoundPage)
+    }
     
-    print("Must be able to load \(rowToLoad)")
-    if !hitsPageMap.containsItem(atIndex: rowToLoad) {
-      let pageToLoad = hitsPageMap.pageIndex(for: rowToLoad)
-      hitsPaginationController.loadPage(withIndex: pageToLoad)
+    let upperBoundRow = rowNumber + Int(pageLoadOffset)
+    
+    let isLatestPageLoaded = latestPageIndex.flatMap { hitsPageMap.containsPage(atIndex: $0) } ?? false
+    
+    if isLatestPageLoaded {
+      debugPrint("[HitsViewModel] Latest page loaded")
+    }
+    
+    if !hitsPageMap.containsItem(atIndex: upperBoundRow) && !isLatestPageLoaded {
+      let lowerBoundPage = hitsPageMap.pageIndex(for: upperBoundRow)
+      paginator.loadPage(withIndex: lowerBoundPage)
     }
     
   }
@@ -145,14 +153,15 @@ extension HitsViewModel {
   // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
   public func update(_ searchResults: SearchResults<Record>, with query: Query) {
     isLastQueryEmpty = query.query.isNilOrEmpty
-    hitsPaginationController.process(searchResults)
+    paginator.process(searchResults)
     latestPageIndex = searchResults.pagesCount - 1
     onResultsUpdated.fire(searchResults)
   }
   
   public func connect(to filterState: FilterState) {
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.hitsPaginationController.invalidate()
+      self?.onRequestChanged.fire(())
+      self?.paginator.invalidate()
     }
   }
   
@@ -174,7 +183,8 @@ extension HitsViewModel {
     }
     
     searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in
-      self?.hitsPaginationController.invalidate()
+      self?.paginator.invalidate()
+      self?.onRequestChanged.fire(())
     }
     
   }

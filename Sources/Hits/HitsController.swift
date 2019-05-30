@@ -26,12 +26,13 @@ public extension HitsViewModel {
   
   func connect<Controller: HitsController>(to controller: Controller) where Controller.DataSource == HitsViewModel<Record> {
     controller.hitsSource = self
+    onRequestChanged.subscribe(with: self) { _ in
+      controller.scrollToTop()
+    }.onQueue(.main)
+    
     onResultsUpdated.subscribePast(with: controller) { searchResults in
       controller.reload()
-      if searchResults.page == 0 && searchResults.totalHitsCount != 0 {
-        controller.scrollToTop()
-      }
-    }
+    }.onQueue(.main)
   }
   
 }

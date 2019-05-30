@@ -65,9 +65,15 @@ struct PageMap<Item> {
   }
   
   func item(atIndex index: Index) -> Item? {
+    
     let pageIndex = self.pageIndex(for: index)
     let offset = index % pageSize
-    return items[pageIndex]?[offset]
+    
+    guard
+      let page = items[pageIndex],
+      offset < page.count else { return nil }
+    
+    return page[offset]
   }
   
 }

@@ -12,7 +12,7 @@ class Paginator<Item> {
   
   var pageMap: PageMap<Item>?
   weak var delegate: PaginatorDelegate?
-  var pageCleanUpOffset: Int?
+  var pageCleanUpOffset: Int? = 3
   
   private var requestedPages: Set<Int> = []
   
@@ -23,7 +23,7 @@ class Paginator<Item> {
     
     // No need to trigger loading the next page if already requested
     guard !requestedPages.contains(pageIndex) else { return }
-    
+    debugPrint("[Paginator] Requested loading page: \(pageIndex)")
     requestedPages.insert(pageIndex)
     delegate.didRequestLoadPage(withIndex: pageIndex)
     
@@ -36,6 +36,7 @@ class Paginator<Item> {
   
   func process<IP: PageMapConvertible>(_ page: IP) where IP.PageItem == Item {
   
+    debugPrint("[Paginator] Loaded page: \(page.page)")
     requestedPages.remove(page.page)
     
     let updatedPageMap: PageMap<Item>
@@ -55,6 +56,7 @@ class Paginator<Item> {
   }
   
   public func invalidate() {
+    debugPrint("[Paginator] Invalidated")
     requestedPages = []
     pageMap = .none
   }
@@ -71,6 +73,7 @@ extension PageMap {
     let pagesToRemove = loadedPageIndexes.filter { $0 < leastPageIndex || $0 > lastPageIndex }
 
     for pageIndex in pagesToRemove {
+      debugPrint("[PageMap] Removed page \(pageIndex)")
       items.removeValue(forKey: pageIndex)
     }
     

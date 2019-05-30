@@ -56,7 +56,7 @@ class HitsViewModelTests: XCTestCase {
   func testLoadMoreTriggering() {
     
     let paginationController = Paginator<String>()
-    let testDelegate = TestPaginationControllerDelegate()
+    let testDelegate = TestPaginatorDelegate()
     paginationController.delegate = testDelegate
     let exp = expectation(description: "Next page request")
     testDelegate.requestedLoadPage = { pageNumber in
@@ -87,7 +87,7 @@ class HitsViewModelTests: XCTestCase {
   func testLoadMoreTriggeringIfDesactivated() {
     
     let paginationController = Paginator<String>()
-    let testDelegate = TestPaginationControllerDelegate()
+    let testDelegate = TestPaginatorDelegate()
     paginationController.delegate = testDelegate
     let exp = expectation(description: "Next page request")
     exp.isInverted = true
@@ -118,7 +118,7 @@ class HitsViewModelTests: XCTestCase {
   func testLoadMoreManualTriggeringIfDesactivated() {
     
     let paginationController = Paginator<String>()
-    let testDelegate = TestPaginationControllerDelegate()
+    let testDelegate = TestPaginatorDelegate()
     paginationController.delegate = testDelegate
     let exp = expectation(description: "Next page request")
 
@@ -149,7 +149,7 @@ class HitsViewModelTests: XCTestCase {
   func testHitsAppearanceOnEmptyQueryIfDesactivated() {
     
     let paginationController = Paginator<String>()
-    let testDelegate = TestPaginationControllerDelegate()
+    let testDelegate = TestPaginatorDelegate()
     paginationController.delegate = testDelegate
     
     let hits = (0..<20).map(String.init)
@@ -172,7 +172,7 @@ class HitsViewModelTests: XCTestCase {
   func testHitsAppearanceOnEmptyQueryIfActivated() {
     
     let paginationController = Paginator<String>()
-    let testDelegate = TestPaginationControllerDelegate()
+    let testDelegate = TestPaginatorDelegate()
     paginationController.delegate = testDelegate
     
     let hits = (0..<20).map(String.init)
@@ -195,7 +195,7 @@ class HitsViewModelTests: XCTestCase {
   func testLoadingNextPageWithCompleteDataset() {
     
     let paginationController = Paginator<String>()
-    let delegate = TestPaginationControllerDelegate()
+    let delegate = TestPaginatorDelegate()
     paginationController.delegate = delegate
     
     let hits = (0..<20).map(String.init)
