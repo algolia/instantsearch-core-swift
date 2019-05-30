@@ -18,7 +18,7 @@ class PageMapTests: XCTestCase {
     
     XCTAssertEqual(pageMap.items, [0: ["i1", "i2", "i3"]])
     XCTAssertEqual(pageMap.latestPageIndex, 0)
-    XCTAssertEqual(pageMap.pagesCount, 1)
+    XCTAssertEqual(pageMap.loadedPagesCount, 1)
     XCTAssertEqual(pageMap.totalItemsCount, 3)
     
   }
@@ -35,7 +35,7 @@ class PageMapTests: XCTestCase {
     
     XCTAssertEqual(pageMap.items, dictionary)
     XCTAssertEqual(pageMap.latestPageIndex, 1)
-    XCTAssertEqual(pageMap.pagesCount, 2)
+    XCTAssertEqual(pageMap.loadedPagesCount, 2)
     XCTAssertEqual(pageMap.totalItemsCount, 5)
     
   }
@@ -67,7 +67,7 @@ class PageMapTests: XCTestCase {
     
     XCTAssertEqual(updatedPageMap.items, [0: p0, 1: p1])
     XCTAssertEqual(updatedPageMap.latestPageIndex, 1)
-    XCTAssertEqual(updatedPageMap.pagesCount, 2)
+    XCTAssertEqual(updatedPageMap.loadedPagesCount, 2)
     XCTAssertEqual(updatedPageMap.totalItemsCount, 6)
     
   }
@@ -81,16 +81,23 @@ class PageMapTests: XCTestCase {
     
     XCTAssertEqual(pageMap.items, [0: p0])
     XCTAssertEqual(pageMap.latestPageIndex, 0)
-    XCTAssertEqual(pageMap.pagesCount, 1)
+    XCTAssertEqual(pageMap.loadedPagesCount, 1)
+    XCTAssertEqual(pageMap.totalPagesCount, 1)
     XCTAssertEqual(pageMap.totalItemsCount, 3)
-    
+    XCTAssertTrue(pageMap.containsPage(atIndex: 0))
+    XCTAssertFalse(pageMap.containsPage(atIndex: 1))
+
     pageMap.insert(p2, withIndex: 2)
     
     XCTAssertEqual(pageMap.items, [0: p0, 2: p2])
     XCTAssertEqual(pageMap.latestPageIndex, 2)
-    XCTAssertEqual(pageMap.pagesCount, 3)
+    XCTAssertEqual(pageMap.loadedPagesCount, 2)
+    XCTAssertEqual(pageMap.totalPagesCount, 3)
     XCTAssertEqual(pageMap.totalItemsCount, 9)
-    
+    XCTAssertTrue(pageMap.containsPage(atIndex: 0))
+    XCTAssertFalse(pageMap.containsPage(atIndex: 1))
+    XCTAssertTrue(pageMap.containsPage(atIndex: 2))
+
     let itemsSequence: [String?] = p0 + Array(repeating: nil, count: 3)  + p2
     
     for (index, element) in pageMap.enumerated() {
@@ -106,6 +113,8 @@ class PageMapTests: XCTestCase {
     
     XCTAssertTrue(pageMap.containsItem(atIndex: 1))
     XCTAssertFalse(pageMap.containsItem(atIndex: 4))
+    XCTAssertTrue(pageMap.containsPage(atIndex: 0))
+    XCTAssertFalse(pageMap.containsPage(atIndex: 1))
     XCTAssertEqual(pageMap[0], "i4")
     XCTAssertEqual(pageMap[1], "i5")
     XCTAssertEqual(pageMap[2], "i6")

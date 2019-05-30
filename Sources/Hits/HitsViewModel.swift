@@ -20,9 +20,9 @@ public class HitsViewModel<Record: Codable> {
   
   private var isLastQueryEmpty: Bool = true
   
-  public var hasMorePages: Bool
+  private var latestPageIndex: Int?
   
-  public let onNewPage = Observer<Int>()
+  public let onPageRequest = Observer<Int>()
   public let onResultsUpdated = Observer<SearchResults<Record>>()
   
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
@@ -35,7 +35,7 @@ public class HitsViewModel<Record: Codable> {
   public init(settings: Settings? = nil) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = Paginator<Record>()
-    self.hasMorePages = false
+    self.latestPageIndex = .none
     self.hitsPaginationController.delegate = self
   }
   
@@ -43,7 +43,7 @@ public class HitsViewModel<Record: Codable> {
                 paginationController: Paginator<Record>) {
     self.settings = settings ?? Settings()
     self.hitsPaginationController = paginationController
-    self.hasMorePages = true
+    self.latestPageIndex = .none
   }
 
   public func numberOfHits() -> Int {
@@ -82,15 +82,17 @@ private extension HitsViewModel {
   // So we will need to detect which page the row corresponds at, and check if we're missing the page. then check the threshold offset to determine
   // if we load previous or next page (in case we don't have them loaded/cached already in our itemsPage struct
   func loadMoreIfNeeded(rowNumber: Int) {
-    
+    print("Check load more relativelty to \(rowNumber)")
     guard
       case .on(let pageLoadOffset) = settings.infiniteScrolling,
       let hitsPageMap = hitsPaginationController.pageMap else { return }
     
     let rowToLoad = rowNumber + Int(pageLoadOffset)
     
+    print("Must be able to load \(rowToLoad)")
     if !hitsPageMap.containsItem(atIndex: rowToLoad) {
-      hitsPaginationController.loadNextPageIfNeeded()
+      let pageToLoad = hitsPageMap.pageIndex(for: rowToLoad)
+      hitsPaginationController.loadPage(withIndex: pageToLoad)
     }
     
   }
@@ -108,7 +110,10 @@ public extension HitsViewModel where Record == JSON {
 extension HitsViewModel: PaginatorDelegate {
   
   func didRequestLoadPage(withIndex pageIndex: Int) {
-    onNewPage.fire(pageIndex)
+    if let latestPageIndex = latestPageIndex, pageIndex > latestPageIndex {
+      return
+    }
+    onPageRequest.fire(pageIndex)
   }
   
 }
@@ -141,7 +146,7 @@ extension HitsViewModel {
   public func update(_ searchResults: SearchResults<Record>, with query: Query) {
     isLastQueryEmpty = query.query.isNilOrEmpty
     hitsPaginationController.process(searchResults)
-    hasMorePages = !(searchResults.page == searchResults.pagesCount - 1)
+    latestPageIndex = searchResults.pagesCount - 1
     onResultsUpdated.fire(searchResults)
   }
   
@@ -163,7 +168,7 @@ extension HitsViewModel {
       }
     }
     
-    onNewPage.subscribePast(with: self) { [weak searcher] page in
+    onPageRequest.subscribePast(with: self) { [weak searcher] page in
       searcher?.indexSearchData.query.page = UInt(page)
       searcher?.search()
     }

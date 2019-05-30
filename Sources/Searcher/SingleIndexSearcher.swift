@@ -78,6 +78,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   
   public func search() {
     // TODO: weak self...
+  
     sequencer.orderOperation {
       let query = indexSearchData.query
       let filterState = indexSearchData.filterState.filters

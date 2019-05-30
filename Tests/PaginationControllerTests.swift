@@ -30,8 +30,6 @@ class TestPaginationControllerDelegate: PaginatorDelegate {
     requestedLoadPage?(pageIndex)
   }
   
-  var hasMorePages: Bool = true
-  
 }
 
 class PaginationControllerTests: XCTestCase {
@@ -55,7 +53,7 @@ class PaginationControllerTests: XCTestCase {
     
     XCTAssertEqual(pageMap0.items, [0: ["i1", "i2", "i3"]])
     XCTAssertEqual(pageMap0.latestPageIndex, page0.page)
-    XCTAssertEqual(pageMap0.pagesCount, 1)
+    XCTAssertEqual(pageMap0.items.count, 1)
     XCTAssertEqual(pageMap0.totalItemsCount, 3)
     
     // Adding another page for same dataset
@@ -71,7 +69,7 @@ class PaginationControllerTests: XCTestCase {
     
     XCTAssertEqual(pageMap1.items, [0: ["i1", "i2", "i3"], 1: ["i4", "i5", "i6"]])
     XCTAssertEqual(pageMap1.latestPageIndex, page1.page)
-    XCTAssertEqual(pageMap1.pagesCount, 2)
+    XCTAssertEqual(pageMap1.loadedPagesCount, 2)
     XCTAssertEqual(pageMap1.totalItemsCount, 6)
     
   }
@@ -80,7 +78,6 @@ class PaginationControllerTests: XCTestCase {
     
     let paginationController = Paginator<String>()
     let delegate = TestPaginationControllerDelegate()
-    delegate.hasMorePages = true
     paginationController.delegate = delegate
     
     let exp = expectation(description: "Loading first page")
@@ -100,33 +97,9 @@ class PaginationControllerTests: XCTestCase {
     
     let paginationController = Paginator<String>()
     let delegate = TestPaginationControllerDelegate()
-    delegate.hasMorePages = true
     paginationController.delegate = delegate
     
     let exp = expectation(description: "")
-    
-    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
-    
-    delegate.requestedLoadPage = { pageNumber in
-      XCTAssertEqual(pageNumber, page.page + 1)
-      exp.fulfill()
-    }
-    
-    paginationController.process(page)
-    paginationController.loadNextPageIfNeeded()
-    
-    waitForExpectations(timeout: 2, handler: .none)
-    
-  }
-  
-  func testLoadingNextPageWithCompleteDataset() {
-    
-    let paginationController = Paginator<String>()
-    let delegate = TestPaginationControllerDelegate()
-    paginationController.delegate = delegate
-    delegate.hasMorePages = false
-    let exp = expectation(description: "")
-    exp.isInverted = true
     
     let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
     

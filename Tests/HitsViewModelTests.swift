@@ -40,16 +40,12 @@ class HitsViewModelTests: XCTestCase {
     query.query = queryText
     query.filters = "test filters"
     query.page = 0
-    
-    let metadata = QueryMetadata(query: query)
-    
-    XCTAssertFalse(vm.hasMorePages)
+        
     XCTAssertEqual(vm.numberOfHits(), 0)
     XCTAssertEqual(vm.hit(atIndex: 0), .none)
     
     vm.update(results, with: query)
     
-    XCTAssertFalse(vm.hasMorePages)
     XCTAssertEqual(vm.numberOfHits(), 3)
     XCTAssertEqual(vm.hit(atIndex: 0), "h1")
     XCTAssertEqual(vm.hit(atIndex: 1), "h2")
@@ -77,7 +73,6 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let metadata = QueryMetadata(query: query)
     let infiniteScrollingOffset: UInt = 5
     let vm = HitsViewModel(settings: .init(infiniteScrolling: .on(withOffset: infiniteScrollingOffset)), paginationController: paginationController)
     
@@ -110,8 +105,6 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let metadata = QueryMetadata(query: query)
-    
     let vm = HitsViewModel(settings: .init(infiniteScrolling: .off), paginationController: paginationController)
     
     vm.update(results, with: query)
@@ -143,8 +136,6 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let metadata = QueryMetadata(query: query)
-    
     let vm = HitsViewModel(settings: .init(infiniteScrolling: .off), paginationController: paginationController)
     
     vm.update(results, with: query)
@@ -170,8 +161,6 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let metadata = QueryMetadata(query: query)
-    
     let vm = HitsViewModel(settings: .init(showItemsOnEmptyQuery: false), paginationController: paginationController)
     
     vm.update(results, with: query)
@@ -195,13 +184,43 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let metadata = QueryMetadata(query: query)
-    
     let vm = HitsViewModel(settings: .init(showItemsOnEmptyQuery: true), paginationController: paginationController)
     
     vm.update(results, with: query)
     
     XCTAssertEqual(vm.numberOfHits(), hits.count)
+    
+  }
+  
+  func testLoadingNextPageWithCompleteDataset() {
+    
+    let paginationController = Paginator<String>()
+    let delegate = TestPaginationControllerDelegate()
+    paginationController.delegate = delegate
+    
+    let hits = (0..<20).map(String.init)
+    let queryText = ""
+    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 1, hitsPerPage: 20)
+    
+    let query = Query()
+    query.query = queryText
+    query.filters = ""
+    query.page = 0
+    
+    let vm = HitsViewModel(settings: .init(showItemsOnEmptyQuery: true), paginationController: paginationController)
+    
+    vm.update(results, with: query)
+    
+    let exp = expectation(description: "")
+    exp.isInverted = true
+    
+    delegate.requestedLoadPage = { pageNumber in
+      exp.fulfill()
+    }
+    
+    vm.onPageRequest.fire(1)
+    
+    waitForExpectations(timeout: 2, handler: .none)
     
   }
 

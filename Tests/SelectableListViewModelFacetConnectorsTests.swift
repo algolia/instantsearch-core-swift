@@ -42,7 +42,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     
     let filterState = FilterState()
     
-    viewModel.connectTo(filterState, with: "categories", operator: .and)
+    viewModel.connect(to: filterState, with: "categories", operator: .and)
     
     // ViewModel -> FilterState
     viewModel.computeSelections(selectingItemForKey: "cat1")
@@ -64,7 +64,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     let filterState = FilterState()
     let searcher = SingleIndexSearcher<String>(index:index , query: query, filterState: filterState, requestOptions: .none)
     
-    viewModel.connectTo(searcher, with: "type")
+    viewModel.connect(to: searcher, with: "type")
         
     let bundle = Bundle(for: SelectableListViewModelFacetConnectorsTests.self)
     
@@ -96,7 +96,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
 
     let controller = TestController()
     
-    viewModel.connectController(controller)
+    viewModel.connect(to: controller)
     
     let reloadExpectation = expectation(description: "reload")
     reloadExpectation.expectedFulfillmentCount = 2

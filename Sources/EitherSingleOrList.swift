@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum EitherSingleOrList<T> {
+public enum EitherSingleOrList<T> {
     
     case single(T)
     case list([T])
@@ -25,7 +25,7 @@ enum EitherSingleOrList<T> {
 
 extension EitherSingleOrList: CustomStringConvertible {
     
-    var description: String {
+    public var description: String {
         switch self {
         case .single(let value):
             return (value as? CustomStringConvertible)?.description ?? "\(value)"
@@ -39,7 +39,7 @@ extension EitherSingleOrList: CustomStringConvertible {
 
 extension EitherSingleOrList: Codable where T: Codable {
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         
         if var listContainer = try? decoder.unkeyedContainer() {
             var list = [T]()
@@ -56,7 +56,7 @@ extension EitherSingleOrList: Codable where T: Codable {
         }
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         switch self {
         case .single(let value):
             var container = encoder.singleValueContainer()

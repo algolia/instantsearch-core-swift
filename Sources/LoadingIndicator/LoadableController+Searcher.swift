@@ -17,7 +17,7 @@ public extension LoadableController {
       } else {
         self?.stopLoading()
       }
-    }.onQueue(.main)
+      }.onQueue(.main)
   }
   
 }

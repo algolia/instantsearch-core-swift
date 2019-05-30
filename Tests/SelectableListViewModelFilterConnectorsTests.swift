@@ -37,7 +37,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     filterState.notify(.add(filter: Filter.Tag(value: "tag3"), toGroupWithID: .or(name: "")))
     
-    viewModel.connectTo(filterState, operator: .or)
+    viewModel.connect(to: filterState, operator: .or)
     
     // FilterState -> ViewModel preselection
     
@@ -89,7 +89,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     viewModel.items = ["tag1", "tag2", "tag3"]
     viewModel.selections = ["tag2"]
     
-    viewModel.connectController(controller)
+    viewModel.connect(to: controller)
     
     // Test preselection
     
