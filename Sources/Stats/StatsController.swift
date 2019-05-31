@@ -8,6 +8,7 @@
 
 import Foundation
 
-public protocol StatsController: class {
-  func renderWith<T>(statsMetadata: StatsMetadata, query: Query, filterState: FilterState, searchResults: SearchResults<T>)
+public protocol StatsController: ItemController where Item == SearchResults<Record> {
+  associatedtype Record: Codable
+  
 }

@@ -8,30 +8,22 @@
 
 import Foundation
 
-public class SelectableViewModel<Item> {
-  
-  public var item: Item {
-    didSet {
-      onItemChanged.fire(item)
-    }
-  }
-  
+public class SelectableViewModel<Item>: ItemViewModel<Item> {
+
   public var isSelected: Bool {
     didSet {
       onSelectedChanged.fire(isSelected)
     }
   }
   
-  public let onItemChanged: Observer<Item>
   public let onSelectedChanged: Observer<Bool>
   public let onSelectedComputed: Observer<Bool>
 
-  public init(item: Item) {
-    self.item = item
+  public override init(item: Item) {
     self.isSelected = false
-    self.onItemChanged = Observer()
     self.onSelectedChanged = Observer()
     self.onSelectedComputed = Observer()
+    super.init(item: item)
   }
   
   public func computeIsSelected(selecting: Bool) {
