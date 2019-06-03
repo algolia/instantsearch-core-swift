@@ -8,13 +8,10 @@
 
 import Foundation
 
-public protocol SelectableController: class {
-  
-  associatedtype Item
+public protocol SelectableController: ItemController {
   
   var onClick: ((Bool) -> Void)? { get set }
   
-  func setItem(_ item: Item)
   func setSelected(_ isSelected: Bool)
   
 }

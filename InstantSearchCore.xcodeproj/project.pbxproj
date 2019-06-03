@@ -347,6 +347,12 @@
 		AFE6E39222A18AE4005BA44D /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39022A18AE4005BA44D /* ItemController.swift */; };
 		AFE6E39322A18AE4005BA44D /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39022A18AE4005BA44D /* ItemController.swift */; };
 		AFE6E39422A18AE4005BA44D /* ItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39022A18AE4005BA44D /* ItemController.swift */; };
+		AFE6E39A22A18BD2005BA44D /* ItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */; };
+		AFE6E39B22A18BD4005BA44D /* ItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */; };
+		AFE6E39C22A18BD4005BA44D /* ItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */; };
+		AFE6E39E22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */; };
+		AFE6E39F22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */; };
+		AFE6E3A022A18CA9005BA44D /* StatsViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */; };
 		AFE807D32229356200FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
 		AFE807D42229356300FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
 		AFE807D52229356400FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
@@ -556,6 +562,8 @@
 		AFE6E37F22A18369005BA44D /* ItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModel.swift; sourceTree = "<group>"; };
 		AFE6E38522A185C9005BA44D /* StatsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModel.swift; sourceTree = "<group>"; };
 		AFE6E39022A18AE4005BA44D /* ItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemController.swift; sourceTree = "<group>"; };
+		AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemViewModelTests.swift; sourceTree = "<group>"; };
+		AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewModelConnectorsTests.swift; sourceTree = "<group>"; };
 		AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTests.swift; sourceTree = "<group>"; };
 		AFE807CE2229355900FC1D50 /* SearchResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResult.json; sourceTree = "<group>"; };
 		AFF1E74D229696B200941401 /* HitsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsSource.swift; sourceTree = "<group>"; };
@@ -967,6 +975,8 @@
 				E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */,
 				AFCDEDE4223AC4E8001459BE /* PaginatorTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
+				AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */,
+				AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */,
 				AFC2E2BD2292953400859EBA /* SelectableListViewModelTests.swift */,
 				AFC2E2C52292A2CF00859EBA /* SelectableSegmentViewModelTests.swift */,
 				AFC2E2C92292D0D500859EBA /* SelectableViewModelTests.swift */,
@@ -1518,11 +1528,13 @@
 				AF117854226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
 				AF6C6F752253B204001E5E3C /* SearchResultsTests.swift in Sources */,
 				AFCDEDE9223AC514001459BE /* PageMapTests.swift in Sources */,
+				AFE6E39A22A18BD2005BA44D /* ItemViewModelTests.swift in Sources */,
 				AFC2E2DE22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */,
 				AFC2E2D62293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */,
 				AF9396B3229D544E00757257 /* QueryInputViewModelTests.swift in Sources */,
 				AFC2E2CA2292D0D500859EBA /* SelectableViewModelTests.swift in Sources */,
 				E2BAE6BA223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
+				AFE6E39E22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift in Sources */,
 				AF1178572260934F00C5B59B /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC2E2BE2292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AFC2E2C22292A1F400859EBA /* CallbackTester.swift in Sources */,
@@ -1645,7 +1657,9 @@
 				AFCDED8F222E7A62001459BE /* SearchResultsTests.swift in Sources */,
 				AFCDEDA7222E8167001459BE /* FacetResultsTests.swift in Sources */,
 				AFCDED89222E7A62001459BE /* HighlighterTest.swift in Sources */,
+				AFE6E39F22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift in Sources */,
 				AF1178582260935000C5B59B /* FilterGroupCollectionsTests.swift in Sources */,
+				AFE6E39B22A18BD4005BA44D /* ItemViewModelTests.swift in Sources */,
 				AFCDEDEA223AC514001459BE /* PageMapTests.swift in Sources */,
 				AFC2E2BF2292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AFC2E2D72293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */,
@@ -1767,7 +1781,9 @@
 				AFCDED9B222E7A63001459BE /* SearchResultsTests.swift in Sources */,
 				AFCDEDA8222E8168001459BE /* FacetResultsTests.swift in Sources */,
 				AFCDED95222E7A63001459BE /* HighlighterTest.swift in Sources */,
+				AFE6E3A022A18CA9005BA44D /* StatsViewModelConnectorsTests.swift in Sources */,
 				AF1178592260935100C5B59B /* FilterGroupCollectionsTests.swift in Sources */,
+				AFE6E39C22A18BD4005BA44D /* ItemViewModelTests.swift in Sources */,
 				AFCDEDEB223AC514001459BE /* PageMapTests.swift in Sources */,
 				AFC2E2C02292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AFC2E2D82293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */,

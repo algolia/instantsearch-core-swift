@@ -34,6 +34,7 @@ public class HitsViewModel<Record: Codable> {
     self.paginator = Paginator<Record>()
     self.latestPageIndex = .none
     self.paginator.delegate = self
+    self.paginator.pageCleanUpOffset = .none
   }
   
   internal init(settings: Settings? = nil,
@@ -76,8 +77,6 @@ public class HitsViewModel<Record: Codable> {
 private extension HitsViewModel {
   
   func loadMoreIfNeeded(rowNumber: Int) {
-    
-    debugPrint("[HitsViewModel] Row: \(rowNumber)")
     
     guard
       case .on(let pageLoadOffset) = settings.infiniteScrolling,
@@ -154,7 +153,7 @@ extension HitsViewModel {
   public func update(_ searchResults: SearchResults<Record>, with query: Query) {
     isLastQueryEmpty = query.query.isNilOrEmpty
     paginator.process(searchResults)
-    latestPageIndex = searchResults.pagesCount - 1
+    latestPageIndex = searchResults.stats.pagesCount - 1
     onResultsUpdated.fire(searchResults)
   }
   

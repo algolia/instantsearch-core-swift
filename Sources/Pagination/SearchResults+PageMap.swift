@@ -20,4 +20,8 @@ extension SearchResults: PageMapConvertible {
     return hits
   }
   
+  var page: Int {
+    return stats.page
+  }
+  
 }

@@ -14,14 +14,9 @@ public struct SearchResults<T: Codable>: Codable {
     
   enum CodingKeys: String, CodingKey {
     case totalHitsCount = "nbHits"
-    case page
     case facets
     case disjunctiveFacets
-    case pagesCount = "nbPages"
     case hits
-    case hitsPerPage
-    case processingTimeMS
-    case query
     case params
     case queryID
     case areFacetsCountExhaustive = "exhaustiveFacetsCount"
@@ -35,29 +30,11 @@ public struct SearchResults<T: Codable>: Codable {
   /// Hits.
   public let hits: [T]
   
-  /// Total number of hits.
-  public let totalHitsCount: Int
-  
   /// Conjunctive facets that can be used to refine the result
   public let facets: [Attribute: [Facet]]?
   
   /// Disjunctive facets that can be used to refine the result
   public let disjunctiveFacets: [Attribute: [Facet]]?
-  
-  /// Last returned page.
-  public let page: Int
-  
-  /// Total number of pages.
-  public let pagesCount: Int
-  
-  /// Number of hits per page.
-  public let hitsPerPage: Int
-  
-  /// Processing time of the last query (in ms).
-  public let processingTimeMS: Int
-  
-  /// Query text that produced these results.
-  public let query: String?
   
   /// A url-encoded string of all search parameters.
   public let params: String?
@@ -96,6 +73,9 @@ public struct SearchResults<T: Codable>: Codable {
   /// + Note: Only returned when `getRankingInfo` is true.
   public let rankingInfo: RankingInfo?
   
+  /// Statistics and pagination information for search results
+  public let stats: SearchStats
+  
   /// Statistics for a numerical facets.
   public let facetStats: [Attribute: FacetStats]?
   
@@ -103,12 +83,6 @@ public struct SearchResults<T: Codable>: Codable {
     
     let container = try decoder.container(keyedBy: CodingKeys.self)
     self.hits = try container.decode([T].self, forKey: .hits)
-    self.totalHitsCount = try container.decode(Int.self, forKey: .totalHitsCount)
-    self.page = try container.decode(Int.self, forKey: .page)
-    self.pagesCount = try container.decode(Int.self, forKey: .pagesCount)
-    self.hitsPerPage = try container.decode(Int.self, forKey: .hitsPerPage)
-    self.processingTimeMS = try container.decode(Int.self, forKey: .processingTimeMS)
-    self.query = try container.decodeIfPresent(String.self, forKey: .query)
     self.params = try container.decodeIfPresent(String.self, forKey: .params)
     self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
     self.areFacetsCountExhaustive = try container.decodeIfPresent(Bool.self, forKey: .areFacetsCountExhaustive)
@@ -116,6 +90,7 @@ public struct SearchResults<T: Codable>: Codable {
     self.queryAfterRemoval = try container.decodeIfPresent(String.self, forKey: .queryAfterRemoval)
     self.automaticRadius = try container.decodeIfPresent(Int.self, forKey: .automaticRadius)
     self.rankingInfo = try? RankingInfo(from: decoder)
+    self.stats = try SearchStats(from: decoder)
     self.aroundGeoLocation = try container.decodeIfPresent(GeoLocation.self, forKey: .aroundGeoLocation)
     func extractFacets(withKey key: CodingKeys) throws -> [Attribute: [Facet]]? {
       if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: key) {
@@ -140,16 +115,10 @@ public struct SearchResults<T: Codable>: Codable {
     
   }
   
-  internal init(hits: [T], query: String, params: String, queryID: String, page: Int, pagesCount: Int, hitsPerPage: Int) {
+  internal init(hits: [T], stats: SearchStats) {
     self.hits = hits
-    self.totalHitsCount = hits.count
     self.facets = .none
     self.disjunctiveFacets = .none
-    self.page = page
-    self.pagesCount = pagesCount
-    self.hitsPerPage = hitsPerPage
-    self.processingTimeMS = 0
-    self.query = .none
     self.params = .none
     self.queryID = .none
     self.areFacetsCountExhaustive = .none
@@ -159,6 +128,7 @@ public struct SearchResults<T: Codable>: Codable {
     self.automaticRadius = .none
     self.rankingInfo = .none
     self.facetStats = .none
+    self.stats = stats
   }
   
   public func encode(to encoder: Encoder) throws {
@@ -166,12 +136,7 @@ public struct SearchResults<T: Codable>: Codable {
     var container = encoder.container(keyedBy: CodingKeys.self)
     
     try container.encode(hits, forKey: .hits)
-    try container.encode(totalHitsCount, forKey: .totalHitsCount)
-    try container.encode(page, forKey: .page)
-    try container.encode(pagesCount, forKey: .pagesCount)
-    try container.encode(hitsPerPage, forKey: .hitsPerPage)
-    try container.encode(processingTimeMS, forKey: .processingTimeMS)
-    try container.encodeIfPresent(query, forKey: .query)
+    try stats.encode(to: encoder)
     try container.encodeIfPresent(params, forKey: .params)
     try container.encodeIfPresent(queryID, forKey: .queryID)
     try container.encodeIfPresent(areFacetsCountExhaustive, forKey: .areFacetsCountExhaustive)
@@ -205,6 +170,84 @@ extension SearchResults {
   
   func facetOptions(for facetName: Attribute) -> [Facet]? {
     return facets?[facetName]
+  }
+  
+}
+
+public struct SearchStats: Codable {
+  
+  enum CodingKeys: String, CodingKey {
+    case totalHitsCount = "nbHits"
+    case page
+    case pagesCount = "nbPages"
+    case hitsPerPage
+    case processingTimeMS
+    case query
+  }
+
+  /// Number of hits per page.
+  public let hitsPerPage: Int
+  
+  /// Total number of hits.
+  public let totalHitsCount: Int
+  
+  /// Total number of pages.
+  public let pagesCount: Int
+  
+  /// Last returned page.
+  public let page: Int
+  
+  /// Processing time of the last query (in ms).
+  public let processingTimeMS: Int
+  
+  /// Query text that produced these results.
+  public let query: String?
+  
+  init() {
+    self.hitsPerPage = 0
+    self.totalHitsCount = 0
+    self.pagesCount = 0
+    self.page = 0
+    self.processingTimeMS = 0
+    self.query = nil
+  }
+  
+  init(hitsPerPage: Int,
+       totalHitsCount: Int,
+       pagesCount: Int,
+       page: Int,
+       processingTimeMS: Int,
+       query: String?) {
+    self.hitsPerPage = hitsPerPage
+    self.totalHitsCount = totalHitsCount
+    self.pagesCount = pagesCount
+    self.page = page
+    self.processingTimeMS = processingTimeMS
+    self.query = query
+  }
+  
+  public init(from decoder: Decoder) throws {
+    
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    
+    self.totalHitsCount = try container.decode(Int.self, forKey: .totalHitsCount)
+    self.page = try container.decode(Int.self, forKey: .page)
+    self.pagesCount = try container.decode(Int.self, forKey: .pagesCount)
+    self.hitsPerPage = try container.decode(Int.self, forKey: .hitsPerPage)
+    self.processingTimeMS = try container.decode(Int.self, forKey: .processingTimeMS)
+    self.query = try container.decodeIfPresent(String.self, forKey: .query)
+  }
+  
+  public func encode(to encoder: Encoder) throws {
+    var container = encoder.container(keyedBy: CodingKeys.self)
+    
+    try container.encode(totalHitsCount, forKey: .totalHitsCount)
+    try container.encode(page, forKey: .page)
+    try container.encode(pagesCount, forKey: .pagesCount)
+    try container.encode(hitsPerPage, forKey: .hitsPerPage)
+    try container.encode(processingTimeMS, forKey: .processingTimeMS)
+    try container.encodeIfPresent(query, forKey: .query)
+    
   }
   
 }

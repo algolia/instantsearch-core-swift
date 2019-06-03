@@ -46,13 +46,12 @@ class SearchResultsTests: XCTestCase {
 
     do {
       let searchResults = try SearchResults<Hit<Item>>(jsonFile: "SearchResult", bundle: Bundle(for: SearchResultsTests.self))
-        //try decoder.decode(SearchResults<Hit<Item>>.self, from: data)
-      XCTAssertEqual(searchResults.totalHitsCount, 596)
+      XCTAssertEqual(searchResults.stats.totalHitsCount, 596)
       XCTAssertEqual(searchResults.page, 0)
-      XCTAssertEqual(searchResults.pagesCount, 60)
-      XCTAssertEqual(searchResults.hitsPerPage, 10)
-      XCTAssertEqual(searchResults.processingTimeMS, 4)
-      XCTAssertEqual(searchResults.query, "Amazon")
+      XCTAssertEqual(searchResults.stats.pagesCount, 60)
+      XCTAssertEqual(searchResults.stats.hitsPerPage, 10)
+      XCTAssertEqual(searchResults.stats.processingTimeMS, 4)
+      XCTAssertEqual(searchResults.stats.query, "Amazon")
       XCTAssertEqual(searchResults.hits.count, 10)
       XCTAssertEqual(searchResults.areFacetsCountExhaustive, true)
       XCTAssertNil(searchResults.message)

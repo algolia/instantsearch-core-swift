@@ -8,20 +8,22 @@
 
 import Foundation
 
-class StatsViewModel<Record: Codable>: ItemViewModel<SearchResults<Record>> {}
+public class StatsViewModel: ItemViewModel<SearchStats?> {}
 
-extension StatsViewModel {
+public extension StatsViewModel {
   
-  func connectSearcher(_ searcher: SingleIndexSearcher<Record>) {
+  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>) {
     searcher.onResultsChanged.subscribe(with: self) { arg in
       let (_, _, result) = arg
       if case .success(let searchResults) = result {
-        self.item = searchResults
+        self.item = searchResults.stats
+      } else {
+        self.item = .none
       }
     }
   }
   
-  func connectController<C: StatsController>(_ controller: C) where C.Record == Record {
+  func connectController<C: ItemController>(_ controller: C) where C.Item == SearchStats? {
     onItemChanged.subscribe(with: controller) { searchResults in
       controller.setItem(searchResults)
     }

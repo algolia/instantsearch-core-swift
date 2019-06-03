@@ -1,0 +1,71 @@
+//
+//  StatsViewModelConnectorsTests.swift
+//  InstantSearchCore
+//
+//  Created by Vladislav Fitc on 31/05/2019.
+//  Copyright © 2019 Algolia. All rights reserved.
+//
+
+import Foundation
+import XCTest
+@testable import InstantSearchCore
+
+class StatsViewModelConnectorsTests: XCTestCase {
+  
+  class TestStatsController<Record: Codable>: ItemController {
+    
+    var didSetItem: ((Item) -> Void)?
+    
+    typealias Record = String
+    typealias Item = SearchStats?
+    
+    func setItem(_ item: Item) {
+      didSetItem?(item)
+    }
+  }
+  
+  func testConnectSearcher() {
+    
+    let vm = StatsViewModel(item: .none)
+    let results = SearchResults<String>(hits: [], stats: .init())
+    let query = Query()
+    let filterState = FilterState()
+    
+    let searcher = SingleIndexSearcher<String>.init(index: Client(appID: "", apiKey: "").index(withName: ""), query: query, filterState: filterState)
+    vm.connectSearcher(searcher)
+    
+    let exp = expectation(description: "on item changed")
+    
+    vm.onItemChanged.subscribe(with: self) { sr in
+      exp.fulfill()
+    }
+    
+    searcher.onResultsChanged.fire((query, filterState.filters, .success(results)))
+    
+    waitForExpectations(timeout: 2, handler: .none)
+    
+  }
+  
+  func testConnectController() {
+    
+    let vm = StatsViewModel(item: .none)
+
+    let controller = TestStatsController<String>()
+    
+    vm.connectController(controller)
+    
+    let exp = expectation(description: "did set item")
+    
+    controller.didSetItem = { stats in
+      XCTAssertEqual(stats?.query, "q1")
+      exp.fulfill() 
+    }
+    
+    vm.item = SearchStats(hitsPerPage: 10, totalHitsCount: 100, pagesCount: 10, page: 0, processingTimeMS: 1, query: "q1")
+    
+    waitForExpectations(timeout: 2, handler: nil)
+    
+  }
+  
+  
+}

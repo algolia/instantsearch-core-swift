@@ -35,7 +35,7 @@ class HitsViewModelTests: XCTestCase {
     let vm = HitsViewModel<String>()
     
     let queryText = "test query"
-    let results = SearchResults(hits: ["h1", "h2", "h3"], query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 1, hitsPerPage: 3)
+    let results = SearchResults(hits: ["h1", "h2", "h3"], stats: .init())
     let query = Query()
     query.query = queryText
     query.filters = "test filters"
@@ -66,7 +66,7 @@ class HitsViewModelTests: XCTestCase {
     
     let hits = (0..<20).map(String.init)
     let queryText = "q1"
-    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 10, hitsPerPage: 20)
+    let results = SearchResults(hits: hits, stats: .init())
     
     let query = Query()
     query.query = queryText
@@ -98,7 +98,7 @@ class HitsViewModelTests: XCTestCase {
     
     let hits = (0..<20).map(String.init)
     let queryText = "q1"
-    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 10, hitsPerPage: 20)
+    let results = SearchResults(hits: hits, stats: .init())
     
     let query = Query()
     query.query = queryText
@@ -129,7 +129,7 @@ class HitsViewModelTests: XCTestCase {
     
     let hits = (0..<20).map(String.init)
     let queryText = "q1"
-    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 10, hitsPerPage: 20)
+    let results = SearchResults(hits: hits, stats: .init())
     
     let query = Query()
     query.query = queryText
@@ -154,7 +154,7 @@ class HitsViewModelTests: XCTestCase {
     
     let hits = (0..<20).map(String.init)
     let queryText = ""
-    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 10, hitsPerPage: 20)
+    let results = SearchResults(hits: hits, stats: .init())
     
     let query = Query()
     query.query = queryText
@@ -177,7 +177,7 @@ class HitsViewModelTests: XCTestCase {
     
     let hits = (0..<20).map(String.init)
     let queryText = ""
-    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 10, hitsPerPage: 20)
+    let results = SearchResults(hits: hits, stats: .init())
     
     let query = Query()
     query.query = queryText
@@ -200,7 +200,7 @@ class HitsViewModelTests: XCTestCase {
     
     let hits = (0..<20).map(String.init)
     let queryText = ""
-    let results = SearchResults(hits: hits, query: queryText, params: "test parameters", queryID: "test query id", page: 0, pagesCount: 1, hitsPerPage: 20)
+    let results = SearchResults(hits: hits, stats: .init())
     
     let query = Query()
     query.query = queryText

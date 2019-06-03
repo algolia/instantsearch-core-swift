@@ -123,11 +123,11 @@ class MultiHitsViewModelTests: XCTestCase {
     multiViewModel.append(viewModel2)
     
     let hits1: [[String: Int]] = [["a": 1], ["b": 2], ["c": 3]]
-    let results1 = SearchResults<[String: Int]>(hits: hits1, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
+    let results1 = SearchResults<[String: Int]>(hits: hits1, stats: .init())
     let query = Query(query: "q1")
 
     let hits2: [[String: Bool]] = [["a": true], ["b": false], ["c": true]]
-    let results2 = SearchResults<[String: Bool]>(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
+    let results2 = SearchResults<[String: Bool]>(hits: hits2, stats: .init())
     
     XCTAssertNoThrow(try multiViewModel.update(results1, with: query, forViewModelInSection: 0))
     XCTAssertNoThrow(try multiViewModel.update(results2, with: query, forViewModelInSection: 1))
@@ -153,14 +153,14 @@ class MultiHitsViewModelTests: XCTestCase {
       .dictionary(["c": .number(3)])
     ]
     
-    let results1: SearchResults<JSON> = SearchResults(hits: hits1, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
+    let results1: SearchResults<JSON> = SearchResults(hits: hits1, stats: .init())
     
     let hits2: [JSON] = [
       .dictionary(["a": .bool(true)]),
       .dictionary(["b": .bool(false)]),
     ]
     
-    let results2: SearchResults<JSON> = SearchResults(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
+    let results2: SearchResults<JSON> = SearchResults(hits: hits2, stats: .init())
     
     let query = Query(query: "q1")
 
@@ -197,14 +197,14 @@ class MultiHitsViewModelTests: XCTestCase {
       .dictionary(["c": .number(3)])
     ]
     
-    let results1: SearchResults<JSON> = SearchResults(hits: hits1, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
+    let results1: SearchResults<JSON> = SearchResults(hits: hits1, stats: .init())
     
     let hits2: [JSON] = [
       .dictionary(["a": .bool(true)]),
       .dictionary(["b": .bool(false)]),
       ]
     
-    let results2: SearchResults<JSON> = SearchResults(hits: hits2, query: "q1", params: "", queryID: "", page: 0, pagesCount: 10, hitsPerPage: 3)
+    let results2: SearchResults<JSON> = SearchResults(hits: hits2, stats: .init())
         
     let query = Query(query: "q1")
     

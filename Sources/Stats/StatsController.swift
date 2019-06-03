@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol StatsController: ItemController where Item == SearchResults<Record> {
+public protocol StatsController: ItemController where Item == SearchResults<Record>? {
   associatedtype Record: Codable
   
 }
