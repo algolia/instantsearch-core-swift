@@ -12,12 +12,11 @@ import XCTest
 
 class StatsViewModelConnectorsTests: XCTestCase {
   
-  class TestStatsController<Record: Codable>: ItemController {
+  class TestStatsController: ItemController {
     
     var didSetItem: ((Item) -> Void)?
     
-    typealias Record = String
-    typealias Item = SearchStats?
+    typealias Item = String
     
     func setItem(_ item: Item) {
       didSetItem?(item)
@@ -50,14 +49,14 @@ class StatsViewModelConnectorsTests: XCTestCase {
     
     let vm = StatsViewModel(item: .none)
 
-    let controller = TestStatsController<String>()
+    let controller = TestStatsController()
     
-    vm.connectController(controller)
+    vm.connectController(controller, presenter: { _ in return "test string" })
     
     let exp = expectation(description: "did set item")
     
-    controller.didSetItem = { stats in
-      XCTAssertEqual(stats?.query, "q1")
+    controller.didSetItem = { string in
+      XCTAssertEqual(string, "test string")
       exp.fulfill() 
     }
     

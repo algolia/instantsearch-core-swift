@@ -9,7 +9,9 @@
 import Foundation
 @_exported import InstantSearchClient
 
-// Temporary enum without cases for defining namespace
+//TODO: Remove generic parameter
+//TODO: Add exhaustive nb hits
+
 public struct SearchResults<T: Codable>: Codable {
     
   enum CodingKeys: String, CodingKey {

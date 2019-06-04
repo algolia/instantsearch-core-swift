@@ -71,6 +71,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
     onQueryChanged.fire(text)
   }
   
+  //TODO: Check success/failure here, add onError
   fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ query: Query, _ filterState: FiltersReadable) {
     let result: Result<SearchResults<Record>, Error> = self.transform(content: value, error: error)
     self.onResultsChanged.fire((query, filterState, result))

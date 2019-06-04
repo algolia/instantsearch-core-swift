@@ -51,9 +51,9 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   }
   
   func connect(to filterState: FilterState,
-                 with attribute: Attribute,
-                 operator: RefinementOperator,
-                 groupName: String? = nil) {
+               with attribute: Attribute,
+               operator: RefinementOperator,
+               groupName: String? = nil) {
 
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
 

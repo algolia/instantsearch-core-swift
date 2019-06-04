@@ -10,10 +10,20 @@ import Foundation
 
 public class StatsViewModel: ItemViewModel<SearchStats?> {}
 
+public typealias StatsPresenter<Output> = (SearchStats?) -> Output
+
+public struct DefaultStatsPresenter {
+  
+  public static let present: StatsPresenter<String?> = { stats in
+    return (stats?.totalHitsCount).flatMap { "hits: \($0)" }
+  }
+  
+}
+
 public extension StatsViewModel {
   
   func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>) {
-    searcher.onResultsChanged.subscribe(with: self) { arg in
+    searcher.onResultsChanged.subscribePast(with: self) { arg in
       let (_, _, result) = arg
       if case .success(let searchResults) = result {
         self.item = searchResults.stats
@@ -23,9 +33,10 @@ public extension StatsViewModel {
     }
   }
   
-  func connectController<C: ItemController>(_ controller: C) where C.Item == SearchStats? {
-    onItemChanged.subscribe(with: controller) { searchResults in
-      controller.setItem(searchResults)
+  func connectController<C: ItemController, Output>(_ controller: C, presenter: @escaping StatsPresenter<Output>) where C.Item == Output {
+    onItemChanged.subscribePast(with: controller) { itemToPresent in
+      let presentableItem = presenter(itemToPresent)
+      controller.setItem(presentableItem)
     }
   }
   

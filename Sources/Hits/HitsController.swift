@@ -30,7 +30,7 @@ public extension HitsViewModel {
       controller.scrollToTop()
     }.onQueue(.main)
     
-    onResultsUpdated.subscribePast(with: controller) { searchResults in
+    onResultsUpdated.subscribePast(with: controller) { _ in
       controller.reload()
     }.onQueue(.main)
   }

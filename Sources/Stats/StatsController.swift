@@ -8,7 +8,8 @@
 
 import Foundation
 
-public protocol StatsController: ItemController where Item == SearchResults<Record>? {
-  associatedtype Record: Codable
-  
-}
+public protocol ItemTextController: ItemController where Item == String? {}
+
+public protocol ItemAttributedTextController: ItemController where Item == NSAttributedString? {}
+
+typealias StatsTextController = ItemTextController
