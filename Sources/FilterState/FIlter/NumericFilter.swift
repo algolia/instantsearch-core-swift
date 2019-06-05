@@ -19,10 +19,10 @@ public extension Filter {
     
     public enum ValueType: Hashable {
       case range(ClosedRange<Float>)
-      case comparison(NumericOperator, Float)
+      case comparison(Operator, Float)
     }
     
-    public enum NumericOperator: String, CustomStringConvertible {
+    public enum Operator: String, CustomStringConvertible {
       case lessThan = "<"
       case lessThanOrEqual = "<="
       case equals = "="
@@ -30,7 +30,7 @@ public extension Filter {
       case greaterThanOrEqual = ">="
       case greaterThan = ">"
       
-      var inversion: NumericOperator {
+      var inversion: Operator {
         switch self {
         case .equals:
           return .notEquals
@@ -75,7 +75,7 @@ public extension Filter {
       self.init(attribute: attribute, value: .range(range), isNegated: isNegated)
     }
     
-    public init(attribute: Attribute, `operator`: NumericOperator, value: Float, isNegated: Bool = false) {
+    public init(attribute: Attribute, `operator`: Operator, value: Float, isNegated: Bool = false) {
       self.init(attribute: attribute, value: .comparison(`operator`, value), isNegated: isNegated)
     }
     
