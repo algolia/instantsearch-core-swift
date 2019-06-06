@@ -13,7 +13,7 @@ import Foundation
 public struct IndexSearchData {
   
   /// Index in which search will be performed
-  public let index: Index
+  public var index: Index
   
   /// Query describing a search request
   public let query: Query

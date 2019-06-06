@@ -446,14 +446,10 @@
 		E2CF1A3422A6A8C000DE24FC /* Computation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3222A6A8C000DE24FC /* Computation.swift */; };
 		E2CF1A3522A6A8C000DE24FC /* Computation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3222A6A8C000DE24FC /* Computation.swift */; };
 		E2CF1A3622A6A8C000DE24FC /* Computation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3222A6A8C000DE24FC /* Computation.swift */; };
-		E2CF1A3822A6AD0200DE24FC /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberView.swift */; };
-		E2CF1A3922A6AD0200DE24FC /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberView.swift */; };
-		E2CF1A3A22A6AD0200DE24FC /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberView.swift */; };
-		E2CF1A3B22A6AD0200DE24FC /* NumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberView.swift */; };
-		E2CF1A3D22A6AD5D00DE24FC /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3C22A6AD5D00DE24FC /* ItemView.swift */; };
-		E2CF1A3E22A6AD5D00DE24FC /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3C22A6AD5D00DE24FC /* ItemView.swift */; };
-		E2CF1A3F22A6AD5D00DE24FC /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3C22A6AD5D00DE24FC /* ItemView.swift */; };
-		E2CF1A4022A6AD5D00DE24FC /* ItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3C22A6AD5D00DE24FC /* ItemView.swift */; };
+		E2CF1A3822A6AD0200DE24FC /* NumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberController.swift */; };
+		E2CF1A3922A6AD0200DE24FC /* NumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberController.swift */; };
+		E2CF1A3A22A6AD0200DE24FC /* NumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberController.swift */; };
+		E2CF1A3B22A6AD0200DE24FC /* NumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A3722A6AD0200DE24FC /* NumberController.swift */; };
 		E2CF1A4222A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A4122A6B03300DE24FC /* FilterComparisonConnectView.swift */; };
 		E2CF1A4322A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A4122A6B03300DE24FC /* FilterComparisonConnectView.swift */; };
 		E2CF1A4422A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CF1A4122A6B03300DE24FC /* FilterComparisonConnectView.swift */; };
@@ -470,6 +466,18 @@
 		E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E282231793C00F3056D /* HitsViewModel.swift */; };
 		E2E09E392232709F00F3056D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E2C2231796800F3056D /* Result.swift */; };
 		E2E09E3A2232709F00F3056D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E2C2231796800F3056D /* Result.swift */; };
+		E2EFA5DC22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */; };
+		E2EFA5DD22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */; };
+		E2EFA5DE22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */; };
+		E2EFA5DF22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */; };
+		E2EFA5E322A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */; };
+		E2EFA5E422A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */; };
+		E2EFA5E522A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */; };
+		E2EFA5E622A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */; };
+		E2EFA5E822A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
+		E2EFA5E922A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
+		E2EFA5EA22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
+		E2EFA5EB22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
 		E2F2073720B6C2330066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
 		E2F2073820B6C2430066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
 		E2F2073920B6C2540066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
@@ -636,14 +644,16 @@
 		E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementListPresenterTests.swift; sourceTree = "<group>"; };
 		E2CF1A2D22A6947700DE24FC /* NumberViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberViewModel.swift; sourceTree = "<group>"; };
 		E2CF1A3222A6A8C000DE24FC /* Computation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Computation.swift; sourceTree = "<group>"; };
-		E2CF1A3722A6AD0200DE24FC /* NumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberView.swift; sourceTree = "<group>"; };
-		E2CF1A3C22A6AD5D00DE24FC /* ItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemView.swift; sourceTree = "<group>"; };
+		E2CF1A3722A6AD0200DE24FC /* NumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberController.swift; sourceTree = "<group>"; };
 		E2CF1A4122A6B03300DE24FC /* FilterComparisonConnectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterComparisonConnectView.swift; sourceTree = "<group>"; };
 		E2CF1A4622A6B04100DE24FC /* FilterComparisonConnectFilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterComparisonConnectFilterState.swift; sourceTree = "<group>"; };
 		E2CF1A4B22A6B06200DE24FC /* FilterComparisonComputeBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterComparisonComputeBounds.swift; sourceTree = "<group>"; };
 		E2E09E282231793C00F3056D /* HitsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsViewModel.swift; sourceTree = "<group>"; };
 		E2E09E2C2231796800F3056D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		E2E09E2F22326FEA00F3056D /* Signals.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Signals.framework; path = Carthage/Build/iOS/Signals.framework; sourceTree = "<group>"; };
+		E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSegmentViewModel.swift; sourceTree = "<group>"; };
+		E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentViewModel+Searcher.swift"; sourceTree = "<group>"; };
+		E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentViewModel+Controller.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -903,7 +913,6 @@
 			isa = PBXGroup;
 			children = (
 				AFE6E37F22A18369005BA44D /* ItemViewModel.swift */,
-				E2CF1A3C22A6AD5D00DE24FC /* ItemView.swift */,
 				AFE6E39022A18AE4005BA44D /* ItemController.swift */,
 			);
 			path = Item;
@@ -957,6 +966,7 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2EFA5DA22A94D45008C9CAA /* SortBy */,
 				E2CF1A2C22A693E600DE24FC /* Number */,
 				AF9396872298153800757257 /* ClearRefinements */,
 				E26F42392296A42F00583D39 /* Stats */,
@@ -1098,13 +1108,23 @@
 			isa = PBXGroup;
 			children = (
 				E2CF1A2D22A6947700DE24FC /* NumberViewModel.swift */,
-				E2CF1A3722A6AD0200DE24FC /* NumberView.swift */,
+				E2CF1A3722A6AD0200DE24FC /* NumberController.swift */,
 				E2CF1A3222A6A8C000DE24FC /* Computation.swift */,
 				E2CF1A4122A6B03300DE24FC /* FilterComparisonConnectView.swift */,
 				E2CF1A4622A6B04100DE24FC /* FilterComparisonConnectFilterState.swift */,
 				E2CF1A4B22A6B06200DE24FC /* FilterComparisonComputeBounds.swift */,
 			);
 			path = Number;
+			sourceTree = "<group>";
+		};
+		E2EFA5DA22A94D45008C9CAA /* SortBy */ = {
+			isa = PBXGroup;
+			children = (
+				E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */,
+				E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */,
+				E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */,
+			);
+			path = SortBy;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1484,7 +1504,7 @@
 				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
 				E26F424A229830E600583D39 /* ClearRefinementsController+FilterState.swift in Sources */,
 				AF11785E2264CC9C00C5B59B /* AndGroupProxy.swift in Sources */,
-				E2CF1A3822A6AD0200DE24FC /* NumberView.swift in Sources */,
+				E2CF1A3822A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E29E456D2243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */,
 				AFC2E2AC228EDF8A00859EBA /* FilterGroupID+Convenience.swift in Sources */,
@@ -1503,7 +1523,6 @@
 				AFE6E38022A18369005BA44D /* ItemViewModel.swift in Sources */,
 				AF1178762264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
 				E26F423522969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
-				E2CF1A3D22A6AD5D00DE24FC /* ItemView.swift in Sources */,
 				AF1178622264CCDE00C5B59B /* OrGroupProxy.swift in Sources */,
 				AF1177B2225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				AFC2E2A1228ED9A900859EBA /* FilterListController.swift in Sources */,
@@ -1517,6 +1536,7 @@
 				AFC2E2A7228EDF6A00859EBA /* Query+Facets.swift in Sources */,
 				AF11786F2264CEBA00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
+				E2EFA5DC22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
 				E2CF1A2E22A6947700DE24FC /* NumberViewModel.swift in Sources */,
 				AFBF37632285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
@@ -1541,6 +1561,7 @@
 				AF11780A225F650F00C5B59B /* GroupProxy.swift in Sources */,
 				AF1177B7225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				AFBF37682285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
+				E2EFA5E822A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
 				AF536C25227C6802006DAE84 /* SelectableController.swift in Sources */,
 				E24233DB223947FC008F24FB /* HitsViewModel.swift in Sources */,
 				E242340A2243A43D008F24FB /* Signals+Observable.swift in Sources */,
@@ -1549,6 +1570,7 @@
 				E29E45682243F335005B358D /* Subscription.swift in Sources */,
 				AF6C6F6722538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
 				AF6C6F6222538156001E5E3C /* Searcher.swift in Sources */,
+				E2EFA5E322A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */,
 				E26F423B2296A45500583D39 /* StatsController.swift in Sources */,
 				AFCDEDF2223C070F001459BE /* AnyHitsViewModel.swift in Sources */,
 				AFC2E292228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
@@ -1608,7 +1630,6 @@
 			files = (
 				AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E455F2243F322005B358D /* Observer.swift in Sources */,
-				E2CF1A3E22A6AD5D00DE24FC /* ItemView.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424B229830E600583D39 /* ClearRefinementsController+FilterState.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
@@ -1640,7 +1661,8 @@
 				E2CF1A4D22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AF1177A8225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E298228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
-				E2CF1A3922A6AD0200DE24FC /* NumberView.swift in Sources */,
+				E2EFA5DD22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
+				E2CF1A3922A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E26F423622969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
@@ -1651,6 +1673,7 @@
 				AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFE6E38722A185C9005BA44D /* StatsViewModel.swift in Sources */,
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				E2EFA5E422A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */,
 				AFC2E2AD228EDF8A00859EBA /* FilterGroupID+Convenience.swift in Sources */,
 				E29E45642243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E39222A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -1696,6 +1719,7 @@
 				E2CF1A4822A6B04100DE24FC /* FilterComparisonConnectFilterState.swift in Sources */,
 				AF1178672264CD4200C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDCF22397E23001459BE /* Paginator.swift in Sources */,
+				E2EFA5E922A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
 				AF1177C8225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785B2264C20400C5B59B /* FilterOperators.swift in Sources */,
 			);
@@ -1739,7 +1763,6 @@
 			files = (
 				AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E45602243F322005B358D /* Observer.swift in Sources */,
-				E2CF1A3F22A6AD5D00DE24FC /* ItemView.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424C229830E600583D39 /* ClearRefinementsController+FilterState.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
@@ -1771,7 +1794,8 @@
 				E2CF1A4E22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFC2E299228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
-				E2CF1A3A22A6AD0200DE24FC /* NumberView.swift in Sources */,
+				E2EFA5DE22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
+				E2CF1A3A22A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E26F423722969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
@@ -1782,6 +1806,7 @@
 				E29E45652243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38822A185C9005BA44D /* StatsViewModel.swift in Sources */,
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				E2EFA5E522A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */,
 				AFC2E2AE228EDF8A00859EBA /* FilterGroupID+Convenience.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				AFE6E39322A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -1827,6 +1852,7 @@
 				E2CF1A4922A6B04100DE24FC /* FilterComparisonConnectFilterState.swift in Sources */,
 				AF1178682264CD4300C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDD022397E24001459BE /* Paginator.swift in Sources */,
+				E2EFA5EA22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
 				AF1177C9225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785C2264C20500C5B59B /* FilterOperators.swift in Sources */,
 			);
@@ -1870,7 +1896,6 @@
 			files = (
 				AF2B26172281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E45612243F322005B358D /* Observer.swift in Sources */,
-				E2CF1A4022A6AD5D00DE24FC /* ItemView.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424D229830E600583D39 /* ClearRefinementsController+FilterState.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
@@ -1902,7 +1927,8 @@
 				E2CF1A4F22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFC2E29A228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
-				E2CF1A3B22A6AD0200DE24FC /* NumberView.swift in Sources */,
+				E2EFA5DF22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
+				E2CF1A3B22A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E26F423822969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
@@ -1913,6 +1939,7 @@
 				E29E45662243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38922A185CA005BA44D /* StatsViewModel.swift in Sources */,
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				E2EFA5E622A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift in Sources */,
 				AFC2E2AF228EDF8A00859EBA /* FilterGroupID+Convenience.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				AFE6E39422A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -1958,6 +1985,7 @@
 				E2CF1A4A22A6B04100DE24FC /* FilterComparisonConnectFilterState.swift in Sources */,
 				AF1178692264CD4300C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDD122397E25001459BE /* Paginator.swift in Sources */,
+				E2EFA5EB22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
 				AF1177CA225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785D2264C20600C5B59B /* FilterOperators.swift in Sources */,
 			);

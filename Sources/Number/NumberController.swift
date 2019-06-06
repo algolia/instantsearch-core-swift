@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol NumberView: ItemView where Item: Numeric {
+public protocol NumberController: ItemController where Item: Numeric {
 
   func setComputation(computation: Computation<Item>)
   

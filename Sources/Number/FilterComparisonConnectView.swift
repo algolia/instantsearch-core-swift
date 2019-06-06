@@ -9,7 +9,7 @@
 import Foundation
 
 extension NumberViewModel {
-  public func connectView<View: NumberView>(view: View) where View.Item == Number {
+  public func connectView<View: NumberController>(view: View) where View.Item == Number {
 
     let computation = Computation(numeric: item) { [weak self] numeric in
       self?.computeNumber(number: numeric)
@@ -19,7 +19,7 @@ extension NumberViewModel {
 
     onItemChanged.subscribePast(with: self) { (item) in
       guard let item = item else { return }
-      view.setItem(item: item)
+      view.setItem(item)
     }
   }
 }

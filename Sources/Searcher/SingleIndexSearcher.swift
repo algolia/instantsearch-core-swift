@@ -30,7 +30,7 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   
   public let sequencer: Sequencer
   public let isLoading = Observer<Bool>()
-  public let indexSearchData: IndexSearchData
+  public var indexSearchData: IndexSearchData
   public let onResultsChanged = Observer<SearchResult>()
   public let onQueryChanged = Observer<String?>()
   public var requestOptions: RequestOptions?
