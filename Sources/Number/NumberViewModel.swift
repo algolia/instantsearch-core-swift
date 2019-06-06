@@ -11,6 +11,7 @@ import Foundation
 public class NumberViewModel<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemViewModel<Number?> {
 
   public let onNumberComputed: Observer<Number?>
+  public let onBoundsComputed: Observer<ClosedRange<Number>?>
 
   public private(set) var bounds: ClosedRange<Number>?
 
@@ -20,6 +21,7 @@ public class NumberViewModel<Number: Comparable & Numeric & InitaliazableWithFlo
 
   public override init(item: Number?) {
     self.onNumberComputed = Observer()
+    self.onBoundsComputed = Observer()
     super.init(item: item)
   }
 
@@ -27,6 +29,7 @@ public class NumberViewModel<Number: Comparable & Numeric & InitaliazableWithFlo
     let coerced = item?.coerce(in: bounds)
     self.bounds = bounds
 
+    onBoundsComputed.fire(bounds)
     onNumberComputed.fire(coerced)
   }
 
