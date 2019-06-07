@@ -18,6 +18,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
       let oldValue = indexSearchDatas.first?.query.query
       guard oldValue != newValue else { return }
       indexSearchDatas.forEach { $0.query.query = newValue }
+      indexSearchDatas.forEach { $0.query.page = 0 }
       onQueryChanged.fire(newValue)
     }
     

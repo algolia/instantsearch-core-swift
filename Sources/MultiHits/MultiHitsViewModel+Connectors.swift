@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension MultiHitsViewModel {
+public extension MultiHitsViewModel {
   
   func connectSearcher(_ searcher: MultiIndexSearcher) {
     
