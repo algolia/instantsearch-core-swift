@@ -41,19 +41,19 @@ public enum RefinementOperator {
 
 public extension SelectableListViewModel where Key == String, Item == Facet {
 
-  func connect<R: Codable>(to searcher: SingleIndexSearcher<R>, with attribute: Attribute) {
+  func connectSearcher(_ searcher: SingleIndexSearcher, with attribute: Attribute) {
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
   }
 
-  func connect(to facetSearcher: FacetSearcher) {
+  func connectFacetSearcher(_ facetSearcher: FacetSearcher) {
     whenNewFacetSearchResultsThenUpdateItems(of: facetSearcher)
   }
   
-  func connect(to filterState: FilterState,
-               with attribute: Attribute,
-               operator: RefinementOperator,
-               groupName: String? = nil) {
+  func connectFilterState(_ filterState: FilterState,
+                          with attribute: Attribute,
+                          operator: RefinementOperator,
+                          groupName: String? = nil) {
 
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
 
@@ -99,25 +99,25 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   }
 
   private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
-    facetSearcher.onResultsChanged.subscribePast(with: self) { (result) in
-      if case .success(let searchResults) = result {
-        self.items = searchResults.facetHits
-      } else if case .failure(let error) = result {
-        if let error = error as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
-          // For the case of SFFV, very possible that we forgot to add the
-          // attribute as searchable in `attributesForFaceting`.
-          assertionFailure(error.message ?? "")
-        }
+    
+    facetSearcher.onResults.subscribePast(with: self) { searchResults in
+      self.items = searchResults.facetHits
+    }
+    
+    facetSearcher.onError.subscribePast(with: self) { error in
+      if let error = error as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
+        // For the case of SFFV, very possible that we forgot to add the
+        // attribute as searchable in `attributesForFaceting`.
+        assertionFailure(error.message ?? "")
       }
     }
+    
   }
   
-  private func whenNewSearchResultsThenUpdateItems<R: Codable>(of searcher: SingleIndexSearcher<R>, _ attribute: Attribute) {
-    searcher.onResultsChanged.subscribePast(with: self) { (_, _, result) in
-      if case .success(let searchResults) = result {
-        let updatedItems = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
-        self.items = updatedItems
-      }
+  private func whenNewSearchResultsThenUpdateItems(of searcher: SingleIndexSearcher, _ attribute: Attribute) {
+    searcher.onResults.subscribePast(with: self) { searchResults in
+      let updatedItems = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
+      self.items = updatedItems
     }
   }
   

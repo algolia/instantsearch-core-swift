@@ -21,14 +21,15 @@ class TestSearcher: Searcher {
   
   var didLaunchSearch: (() -> Void)?
   
-  var sequencer: Sequencer = Sequencer()
-  
   var isLoading: Observer<Bool> = Observer()
   
   var onQueryChanged: Observer<String?> = Observer()
   
   func search() {
     didLaunchSearch?()
+  }
+  
+  func cancel() {
   }
   
 }

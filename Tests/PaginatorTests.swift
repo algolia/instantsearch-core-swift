@@ -10,23 +10,19 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-struct TestPageMapConvertible<Item>: PageMapConvertible {
-  
+struct TestPageable<Item>: Pageable {
   typealias PageItem = Item
   
-  var page: Int
+  var index: Int
   
-  var pageSize: Int
-
-  var pageItems: [Item]
-  
+  var items: [Item]
 }
 
-class TestPaginatorDelegate: PaginatorDelegate {
+class TestPageLoaderDelegate: PageLoadable {
   
   var requestedLoadPage: ((Int) -> Void)?
   
-  func didRequestLoadPage(withIndex pageIndex: Int) {
+  func loadPage(atIndex pageIndex: Int) {
     requestedLoadPage?(pageIndex)
   }
   
@@ -34,15 +30,22 @@ class TestPaginatorDelegate: PaginatorDelegate {
 
 class PaginatorTests: XCTestCase {
   
+  func toPages<T>(_ tuples: [(index: Int, items: [T])]) -> [PageMap<T>.Page] {
+    return tuples.map { PageMap.Page(index: $0.index, items: $0.items) }
+  }
+  
   func testProcessing() {
     
     let paginator = Paginator<String>()
+    
+    let p0 = ["i1", "i2", "i3"]
+    let p1 = ["i4", "i5", "i6"]
     
     XCTAssertNil(paginator.pageMap)
     
     // Adding a first page of dataset
     
-    let page0 = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
+    let page0 = TestPageable(index: 0, items: p0)
     
     paginator.process(page0)
     
@@ -51,14 +54,14 @@ class PaginatorTests: XCTestCase {
       return
     }
     
-    XCTAssertEqual(pageMap0.items, [0: ["i1", "i2", "i3"]])
-    XCTAssertEqual(pageMap0.latestPageIndex, page0.page)
-    XCTAssertEqual(pageMap0.items.count, 1)
-    XCTAssertEqual(pageMap0.totalItemsCount, 3)
+    XCTAssertEqual(pageMap0.loadedPages, [.init(index: 0, items: p0)])
+    XCTAssertEqual(pageMap0.latestPageIndex, page0.index)
+    XCTAssertEqual(pageMap0.loadedPagesCount, 1)
+    XCTAssertEqual(pageMap0.count, 3)
     
     // Adding another page for same dataset
     
-    let page1 = TestPageMapConvertible(page: 1, pageSize: 3, pageItems: ["i4", "i5", "i6"])
+    let page1 = TestPageable(index: 1, items: p1)
     
     paginator.process(page1)
     
@@ -67,89 +70,23 @@ class PaginatorTests: XCTestCase {
       return
     }
     
-    XCTAssertEqual(pageMap1.items, [0: ["i1", "i2", "i3"], 1: ["i4", "i5", "i6"]])
-    XCTAssertEqual(pageMap1.latestPageIndex, page1.page)
+    XCTAssertEqual(pageMap1.loadedPages, toPages([(0, p0), (1, p1)]))
+    XCTAssertEqual(pageMap1.latestPageIndex, page1.index)
     XCTAssertEqual(pageMap1.loadedPagesCount, 2)
-    XCTAssertEqual(pageMap1.totalItemsCount, 6)
+    XCTAssertEqual(pageMap1.count, 6)
     
   }
-  
-  func testLoadingNextPageIfEmpty() {
     
-    let paginationController = Paginator<String>()
-    let delegate = TestPaginatorDelegate()
-    paginationController.delegate = delegate
-    
-    let exp = expectation(description: "Loading first page")
-    
-    delegate.requestedLoadPage = { page in
-      XCTAssertEqual(page, 0)
-      exp.fulfill()
-    }
-    
-    paginationController.loadNextPageIfNeeded()
-    
-    waitForExpectations(timeout: 2, handler: .none)
-    
-  }
-  
-  func testLoadingNextPageIfNonEmpty() {
-    
-    let paginationController = Paginator<String>()
-    let delegate = TestPaginatorDelegate()
-    paginationController.delegate = delegate
-    
-    let exp = expectation(description: "")
-    
-    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
-    
-    delegate.requestedLoadPage = { pageNumber in
-      XCTAssertEqual(pageNumber, page.page + 1)
-      exp.fulfill()
-    }
-    
-    paginationController.process(page)
-    paginationController.loadNextPageIfNeeded()
-    
-    waitForExpectations(timeout: 2, handler: .none)
-    
-  }
-  
-  func testLoadingNextPageDelegateCalledOnce() {
-    
-    let paginationController = Paginator<String>()
-    
-    let delegate = TestPaginatorDelegate()
-    paginationController.delegate = delegate
-    
-    let exp = expectation(description: "")
-    
-    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
-    
-    delegate.requestedLoadPage = { pageNumber in
-      XCTAssertEqual(pageNumber, page.page + 1)
-      exp.fulfill()
-    }
-    
-    paginationController.process(page)
-    paginationController.loadNextPageIfNeeded()
-    paginationController.loadNextPageIfNeeded()
-    
-    waitForExpectations(timeout: 2, handler: .none)
-    
-  }
-  
   func testInvalidation() {
     
-    let paginationController = Paginator<String>()
-    let delegate = TestPaginatorDelegate()
-    paginationController.delegate = delegate
-    let page = TestPageMapConvertible(page: 0, pageSize: 3, pageItems: ["i1", "i2", "i3"])
-    paginationController.process(page)
-    XCTAssertNotNil(paginationController.pageMap)
-    XCTAssertFalse(paginationController.pageMap!.isEmpty)
-    paginationController.invalidate()
-    XCTAssertNil(paginationController.pageMap)
+    let paginator = Paginator<String>()
+    let p0 = ["i1", "i2", "i3"]
+    let page = TestPageable(index: 0, items: p0)
+    paginator.process(page)
+    XCTAssertNotNil(paginator.pageMap)
+    XCTAssertFalse(paginator.pageMap!.isEmpty)
+    paginator.invalidate()
+    XCTAssertNil(paginator.pageMap)
 
   }
   

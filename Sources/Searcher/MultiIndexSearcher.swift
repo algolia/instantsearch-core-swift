@@ -10,7 +10,7 @@ import Foundation
 
 public class MultiIndexSearcher: Searcher, SearchResultObservable {
   
-  public typealias SearchResult = Result<[(Query, SearchResults<JSON>)], Error>
+  public typealias SearchResult = MultiSearchResults
   
   public var query: String? {
     
@@ -28,33 +28,39 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   }
   
   public let client: Client
-  public var indexSearchDatas: [IndexSearchData]
+  public let indexSearchDatas: [IndexSearchData]
   public let sequencer: Sequencer
-  public let isLoading = Observer<Bool>()
+  public let isLoading: Observer<Bool>
   public let onQueryChanged: Observer<String?>
-  public let onResultsChanged = Observer<SearchResult>()
+  public let onResults: Observer<SearchResult>
+  public let onError: Observer<Error>
   public var applyDisjunctiveFacetingWhenNecessary = true
   public var requestOptions: RequestOptions?
-
-  public convenience init(client: Client, indices: [Index], query: Query, filterState: FilterState, requestOptions: RequestOptions? = nil) {
-    self.init(client: client,
-              indexSearchDatas: [IndexSearchData](indices: indices, query: query, filterState: filterState),
-              requestOptions: requestOptions)
-  }
+  internal var pageLoaders: [PageLoaderProxy]
   
-  public init(client: Client, indexSearchDatas: [IndexSearchData], requestOptions: RequestOptions? = nil) {
+  public init(client: Client,
+              indexSearchDatas: [IndexSearchData],
+              requestOptions: RequestOptions? = nil) {
+    
     self.client = client
     self.indexSearchDatas = indexSearchDatas
-    self.sequencer = Sequencer()
     self.requestOptions = requestOptions
-    self.onQueryChanged = Observer()
+    self.pageLoaders = []
+    
+    sequencer = Sequencer()
+    onQueryChanged = Observer()
+    isLoading = Observer()
+    onResults = Observer()
+    onError = Observer()
+    
     sequencer.delegate = self
-    onResultsChanged.retainLastData = true
+    onResults.retainLastData = true
     isLoading.retainLastData = true
+    
+    self.pageLoaders = indexSearchDatas.map { isd in
+      return PageLoaderProxy(setPage: { isd.query.page = UInt($0) }, launchSearch: self.search)
+    }
 
-//    filterState.onChange.subscribePast(with: self) { _ in
-//      self.search()
-//    }
   }
   
   public func search() {
@@ -62,29 +68,55 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
     indexSearchDatas.forEach { $0.applyFilters() }
     
     let indexQueries = indexSearchDatas.map(IndexQuery.init(indexSearchData:))
-    let queries = self.indexSearchDatas.map { $0.query }
     
-    sequencer.orderOperation {
-      return self.client.multipleQueries(indexQueries, requestOptions: requestOptions) { (content, error) in
+    let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
+      
+      guard let searcher = self else { return }
+      
+      let result: Result<MultiSearchResults, Error> = searcher.transform(content: content, error: error)
+      
+      switch result {
+      case .success(let searchResults):
+        searcher.onResults.fire(searchResults)
         
-        let result: Result<MultiSearchResults<JSON>, Error> = self.transform(content: content, error: error)
-        
-        let output: Result<[(Query, SearchResults<JSON>)], Error>
-        
-        switch result {
-        case .success(let searchResultsWrapper):
-          let searchResults = searchResultsWrapper.searchResults
-          let searchResultsWithMetadata = zip(queries, searchResults).map { ($0, $1) }
-          output = .success(searchResultsWithMetadata)
-          
-        case .failure(let error):
-          output = .failure(error)
-        }
-        
-        self.onResultsChanged.fire(output)
-        
+      case .failure(let error):
+        searcher.onError.fire(error)
       }
+      
     }
+    
+    sequencer.orderOperation(operationLauncher: { return operation })
   }
   
+  public func cancel() {
+    sequencer.cancelPendingOperations()
+  }
+  
+}
+
+extension MultiIndexSearcher {
+  
+  class PageLoaderProxy: PageLoadable {
+    
+    let setPage: (Int) -> Void
+    let launchSearch: () -> Void
+    
+    init(setPage: @escaping (Int) -> Void, launchSearch: @escaping () -> Void) {
+      self.setPage = setPage
+      self.launchSearch = launchSearch
+    }
+    
+    func loadPage(atIndex pageIndex: Int) {
+      setPage(pageIndex)
+      launchSearch()
+    }
+    
+  }
+  
+}
+
+extension MultiIndexSearcher: SequencerDelegate {
+  public func didChangeOperationsState(hasPendingOperations: Bool) {
+    isLoading.fire(hasPendingOperations)
+  }
 }

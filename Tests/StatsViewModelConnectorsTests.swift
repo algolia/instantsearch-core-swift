@@ -26,11 +26,11 @@ class StatsViewModelConnectorsTests: XCTestCase {
   func testConnectSearcher() {
     
     let vm = StatsViewModel(item: .none)
-    let results = SearchResults<String>(hits: [], stats: .init())
+    let results = SearchResults(hits: [], stats: .init())
     let query = Query()
     let filterState = FilterState()
     
-    let searcher = SingleIndexSearcher<String>.init(index: Client(appID: "", apiKey: "").index(withName: ""), query: query, filterState: filterState)
+    let searcher = SingleIndexSearcher(index: .test, query: query, filterState: filterState)
     vm.connectSearcher(searcher)
     
     let exp = expectation(description: "on item changed")
@@ -39,7 +39,7 @@ class StatsViewModelConnectorsTests: XCTestCase {
       exp.fulfill()
     }
     
-    searcher.onResultsChanged.fire((query, filterState.filters, .success(results)))
+    searcher.onResults.fire(results)
     
     waitForExpectations(timeout: 2, handler: .none)
     

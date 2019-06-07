@@ -12,14 +12,20 @@ import XCTest
 
 class PageMapTests: XCTestCase {
   
+  func toPages<T>(_ tuples: [(index: Int, items: [T])]) -> [PageMap<T>.Page] {
+    return tuples.map { PageMap.Page(index: $0.index, items: $0.items) }
+  }
+  
   func testConstructionWithSequence() {
     
     let pageMap = PageMap<String>(["i1", "i2", "i3"])
     
-    XCTAssertEqual(pageMap.items, [0: ["i1", "i2", "i3"]])
+    XCTAssertEqual(pageMap.loadedPages, [
+      .init(index: 0, items: ["i1", "i2", "i3"])
+    ])
     XCTAssertEqual(pageMap.latestPageIndex, 0)
     XCTAssertEqual(pageMap.loadedPagesCount, 1)
-    XCTAssertEqual(pageMap.totalItemsCount, 3)
+    XCTAssertEqual(pageMap.count, 3)
     
   }
   
@@ -27,16 +33,39 @@ class PageMapTests: XCTestCase {
     
     XCTAssertNil(PageMap<String>([:]))
     
-    let dictionary = [0: ["i1", "i2", "i3"], 1: ["i4", "i5"]]
+    let p0 = ["i1", "i2", "i3"]
+    let p1 = ["i4", "i5"]
+    
+    let dictionary = [
+      0: p0,
+      1: p1
+    ]
+    
+    let expectedPages: [PageMap<String>.Page] = [
+      .init(index: 0, items: p0),
+      .init(index: 1, items: p1)
+    ]
     guard let pageMap = PageMap(dictionary) else {
       XCTFail("PageMap must be correctly constructed")
       return
     }
     
-    XCTAssertEqual(pageMap.items, dictionary)
+    XCTAssertEqual(pageMap.loadedPages, expectedPages)
     XCTAssertEqual(pageMap.latestPageIndex, 1)
     XCTAssertEqual(pageMap.loadedPagesCount, 2)
-    XCTAssertEqual(pageMap.totalItemsCount, 5)
+    XCTAssertEqual(pageMap.count, 5)
+    
+  }
+  
+  func testTotalPagesCount() {
+    
+    let pageMap = PageMap<String>([0: ["i1"], 1: ["i2"]])
+    
+    XCTAssertEqual(pageMap?.totalPagesCount, 2)
+    
+    let pageMap2 = PageMap<String>([0: ["i1"], 10: ["i2"]])
+
+    XCTAssertEqual(pageMap2?.totalPagesCount, 11)
     
   }
   
@@ -44,16 +73,14 @@ class PageMapTests: XCTestCase {
     
     let dictionary = [0: ["i1", "i2", "i3"], 1: ["i4", "i5"]]
     
-    let itemsSequence = dictionary.sorted { $0.key < $1.key }.map { $0.value }.flatMap { $0 }
+    let expectedSequence = dictionary.sorted { $0.key < $1.key }.map { $0.value }.flatMap { $0 }
     
     guard let pageMap = PageMap(dictionary) else {
       XCTFail("PageMap must be correctly constructed")
       return
     }
     
-    for (index, element) in pageMap.enumerated() {
-      XCTAssertEqual(itemsSequence[index], element)
-    }
+    XCTAssertEqual(Array(pageMap), expectedSequence)
     
   }
   
@@ -65,10 +92,13 @@ class PageMapTests: XCTestCase {
     
     let updatedPageMap = pageMap.inserting(p1, withIndex: 1)
     
-    XCTAssertEqual(updatedPageMap.items, [0: p0, 1: p1])
+    XCTAssertEqual(updatedPageMap.loadedPages, [
+      .init(index: 0, items: p0),
+      .init(index: 1, items: p1)
+    ])
     XCTAssertEqual(updatedPageMap.latestPageIndex, 1)
     XCTAssertEqual(updatedPageMap.loadedPagesCount, 2)
-    XCTAssertEqual(updatedPageMap.totalItemsCount, 6)
+    XCTAssertEqual(updatedPageMap.count, 6)
     
   }
   
@@ -79,30 +109,28 @@ class PageMapTests: XCTestCase {
     
     var pageMap = PageMap(p0)
     
-    XCTAssertEqual(pageMap.items, [0: p0])
+    XCTAssertEqual(pageMap.loadedPages, [.init(index: 0, items: p0)])
     XCTAssertEqual(pageMap.latestPageIndex, 0)
     XCTAssertEqual(pageMap.loadedPagesCount, 1)
     XCTAssertEqual(pageMap.totalPagesCount, 1)
-    XCTAssertEqual(pageMap.totalItemsCount, 3)
+    XCTAssertEqual(pageMap.count, 3)
     XCTAssertTrue(pageMap.containsPage(atIndex: 0))
     XCTAssertFalse(pageMap.containsPage(atIndex: 1))
 
     pageMap.insert(p2, withIndex: 2)
     
-    XCTAssertEqual(pageMap.items, [0: p0, 2: p2])
+    XCTAssertEqual(pageMap.loadedPages, toPages([(0, p0), (2, p2)]))
     XCTAssertEqual(pageMap.latestPageIndex, 2)
     XCTAssertEqual(pageMap.loadedPagesCount, 2)
     XCTAssertEqual(pageMap.totalPagesCount, 3)
-    XCTAssertEqual(pageMap.totalItemsCount, 9)
+    XCTAssertEqual(pageMap.count, 9)
     XCTAssertTrue(pageMap.containsPage(atIndex: 0))
     XCTAssertFalse(pageMap.containsPage(atIndex: 1))
     XCTAssertTrue(pageMap.containsPage(atIndex: 2))
 
-    let itemsSequence: [String?] = p0 + Array(repeating: nil, count: 3)  + p2
+    let expectedSequence: [String?] = p0 + Array(repeating: nil, count: 3)  + p2
     
-    for (index, element) in pageMap.enumerated() {
-      XCTAssertEqual(itemsSequence[index], element)
-    }
+    XCTAssertEqual(Array(pageMap), expectedSequence)
     
   }
   
@@ -122,12 +150,10 @@ class PageMapTests: XCTestCase {
   }
   
   func testPageMapConvertibleInit() {
-    
-    let testPageMapConvertible = TestPageMapConvertible(page: 5, pageSize: 3, pageItems: ["i1", "i11", "i21"])
+    let items = ["i1", "i11", "i21"]
+    let testPageMapConvertible = TestPageable(index: 5, items: items)
     let pageMap = PageMap(testPageMapConvertible)
-    
-    XCTAssertEqual(pageMap.items, [5: ["i1", "i11", "i21"]])
-    
+    XCTAssertEqual(pageMap.loadedPages, toPages([(5, items)]))
   }
   
   func testCleanUp() {
@@ -141,7 +167,7 @@ class PageMapTests: XCTestCase {
     
     pageMap?.cleanUp(basePageIndex: 1, keepingPagesOffset: 1)
     
-    XCTAssertEqual(pageMap?.items, [0: page0, 1: page1, 2:page2])
+    XCTAssertEqual(pageMap?.loadedPages, [(0, page0), (1, page1), (2, page2)].map { PageMap<String>.Page(index: $0.0, items: $0.1) })
     
   }
   
@@ -156,7 +182,7 @@ class PageMapTests: XCTestCase {
     
     pageMap?.cleanUp(basePageIndex: 2, keepingPagesOffset: 1)
     
-    XCTAssertEqual(pageMap?.items, [1: page1, 2: page2, 3: page3])
+    XCTAssertEqual(pageMap?.loadedPages, toPages([(1, page1), (2, page2), (3, page3)]))
     
   }
   
@@ -170,7 +196,7 @@ class PageMapTests: XCTestCase {
     var pageMap = PageMap([0: page0, 1: page1, 2: page2, 3: page3])
     pageMap?.cleanUp(basePageIndex: 2, keepingPagesOffset: 0)
     
-    XCTAssertEqual(pageMap?.items, [2: page2])
+    XCTAssertEqual(pageMap?.loadedPages, toPages([(2, page2)]))
 
   }
   
@@ -184,7 +210,7 @@ class PageMapTests: XCTestCase {
     var pageMap = PageMap([0: page0, 1: page1, 2: page2, 3: page3])
     pageMap?.cleanUp(basePageIndex: 2, keepingPagesOffset: 3)
     
-    XCTAssertEqual(pageMap?.items, [0: page0, 1: page1, 2: page2, 3: page3])
+    XCTAssertEqual(pageMap?.loadedPages, toPages([(0, page0), (1, page1), (2, page2), (3, page3)]))
     
   }
   
@@ -198,7 +224,7 @@ class PageMapTests: XCTestCase {
     var pageMap = PageMap([0: page0, 1: page1, 2: page2, 3: page3])
     pageMap?.cleanUp(basePageIndex: 0, keepingPagesOffset: 1)
     
-    XCTAssertEqual(pageMap?.items, [0: page0, 1: page1])
+    XCTAssertEqual(pageMap?.loadedPages, toPages([(0, page0), (1, page1)]))
     
   }
   
@@ -212,7 +238,7 @@ class PageMapTests: XCTestCase {
     var pageMap = PageMap([0: page0, 1: page1, 2: page2, 3: page3])
     pageMap?.cleanUp(basePageIndex: 3, keepingPagesOffset: 1)
     
-    XCTAssertEqual(pageMap?.items, [2: page2, 3: page3])
+    XCTAssertEqual(pageMap?.loadedPages, toPages([(2, page2), (3, page3)]))
     
   }
   

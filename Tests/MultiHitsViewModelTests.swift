@@ -10,20 +10,27 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
+class TestPageLoader: PageLoadable {
+  
+  var didLoadPage: ((Int) -> Void)?
+  
+  func loadPage(atIndex pageIndex: Int) {
+    didLoadPage?(pageIndex)
+  }
+  
+}
+
 class MultiHitsViewModelTests: XCTestCase {
   
   func testConstruction() {
-    let viewModel = MultiHitsViewModel()
+    let viewModel = MultiHitsViewModel(hitsViewModels: [])
     XCTAssertEqual(viewModel.numberOfSections(), 0)
   }
   
   func testAppend() {
-    let multiViewModel = MultiHitsViewModel()
     let viewModel1 = HitsViewModel<[String: Int]>()
     let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
+    let multiViewModel = MultiHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
     XCTAssertTrue(multiViewModel.contains(viewModel1))
@@ -31,79 +38,25 @@ class MultiHitsViewModelTests: XCTestCase {
 
   }
   
-  func testInsertAndSearchByIndex() {
-    let multiViewModel = MultiHitsViewModel()
+  func testSearchByIndex() {
     let viewModel1 = HitsViewModel<[String: Int]>()
     let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    
-    multiViewModel.insert(hitsViewModel: viewModel1, inSection: 0)
-    multiViewModel.insert(hitsViewModel: viewModel2, inSection: 0)
+    let multiViewModel = MultiHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
     XCTAssertTrue(multiViewModel.contains(viewModel1))
     XCTAssertTrue(multiViewModel.contains(viewModel2))
-    XCTAssertEqual(multiViewModel.section(of: viewModel1), 1)
-    XCTAssertEqual(multiViewModel.section(of: viewModel2), 0)
-
-  }
-  
-  func testReplacement() {
-    let multiViewModel = MultiHitsViewModel()
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    
-    multiViewModel.insert(hitsViewModel: viewModel1, inSection: 0)
-    multiViewModel.replace(by: viewModel2, inSection: 0)
-    
-    XCTAssertEqual(multiViewModel.numberOfSections(), 1)
-    XCTAssertTrue(multiViewModel.contains(viewModel2))
-    XCTAssertFalse(multiViewModel.contains(viewModel1))
-
-  }
-  
-  func testRemoval() {
-    
-    let multiViewModel = MultiHitsViewModel()
-    
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
-
-    multiViewModel.remove(inSection: 0)
-    
-    XCTAssertEqual(multiViewModel.numberOfSections(), 1)
-    XCTAssertFalse(multiViewModel.contains(viewModel1))
-    XCTAssertTrue(multiViewModel.contains(viewModel2))
-
-  }
-  
-  func testRemoveAll() {
-    
-    let multiViewModel = MultiHitsViewModel()
-    
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
-    
-    multiViewModel.removeAll()
-    
-    XCTAssertEqual(multiViewModel.numberOfSections(), 0)
+    XCTAssertEqual(multiViewModel.section(of: viewModel1), 0)
+    XCTAssertEqual(multiViewModel.section(of: viewModel2), 1)
 
   }
   
   func testSearchByIndexThrows() {
     
-    let multiViewModel = MultiHitsViewModel()
-    
     let viewModel1 = HitsViewModel<[String: Int]>()
     let viewModel2 = HitsViewModel<[String: [String: Int]]>()
     
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
+    let multiViewModel = MultiHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
     
     XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 0) as HitsViewModel<[String: Int]>)
     XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 1) as HitsViewModel<[String: [String: Int]]>)
@@ -113,39 +66,35 @@ class MultiHitsViewModelTests: XCTestCase {
   }
   
   func testUpdatePerViewModel() {
-    
-    let multiViewModel = MultiHitsViewModel()
 
     let viewModel1 = HitsViewModel<[String: Int]>()
     let viewModel2 = HitsViewModel<[String: Bool]>()
+    let multiViewModel = MultiHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
     
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
-    
-    let hits1: [[String: Int]] = [["a": 1], ["b": 2], ["c": 3]]
-    let results1 = SearchResults<[String: Int]>(hits: hits1, stats: .init())
-    let query = Query(query: "q1")
+    let hits1 = try! [["a": 1], ["b": 2], ["c": 3]].map(JSON.init)
+    let results1 = SearchResults(hits: hits1, stats: .init())
 
-    let hits2: [[String: Bool]] = [["a": true], ["b": false], ["c": true]]
-    let results2 = SearchResults<[String: Bool]>(hits: hits2, stats: .init())
+    let hits2 = try! [["a": true], ["b": false], ["c": true]].map(JSON.init)
+    let results2 = SearchResults(hits: hits2, stats: .init())
     
-    XCTAssertNoThrow(try multiViewModel.update(results1, with: query, forViewModelInSection: 0))
-    XCTAssertNoThrow(try multiViewModel.update(results2, with: query, forViewModelInSection: 1))
+    XCTAssertNoThrow(try multiViewModel.update(results1, forViewModelInSection: 0))
+    XCTAssertNoThrow(try multiViewModel.update(results2, forViewModelInSection: 1))
     
-    XCTAssertThrowsError(try multiViewModel.update(results2, with: query, forViewModelInSection: 0))
-    XCTAssertThrowsError(try multiViewModel.update(results1, with: query, forViewModelInSection: 1))
+    XCTAssertThrowsError(try multiViewModel.update(results2, forViewModelInSection: 0))
+    XCTAssertThrowsError(try multiViewModel.update(results1, forViewModelInSection: 1))
 
   }
   
   func testUpdateSimultaneously() {
     
-    let multiViewModel = MultiHitsViewModel()
-    
+    let pageLoader = TestPageLoader()
+
     let viewModel1 = HitsViewModel<[String: Int]>()
+    viewModel1.infiniteScrollingController.pageLoader = pageLoader
     let viewModel2 = HitsViewModel<[String: Bool]>()
+    viewModel2.infiniteScrollingController.pageLoader = pageLoader
     
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
+    let multiViewModel = MultiHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
     
     let hits1: [JSON] = [
       .dictionary(["a": .number(1)]),
@@ -153,19 +102,17 @@ class MultiHitsViewModelTests: XCTestCase {
       .dictionary(["c": .number(3)])
     ]
     
-    let results1: SearchResults<JSON> = SearchResults(hits: hits1, stats: .init())
+    let results1 = SearchResults(hits: hits1, stats: .init())
     
     let hits2: [JSON] = [
       .dictionary(["a": .bool(true)]),
       .dictionary(["b": .bool(false)]),
     ]
     
-    let results2: SearchResults<JSON> = SearchResults(hits: hits2, stats: .init())
+    let results2 = SearchResults(hits: hits2, stats: .init())
     
-    let query = Query(query: "q1")
-
     // Update multihits ViewModel with a correct list of results
-    XCTAssertNoThrow(try multiViewModel.update([(query, results1), (query, results2)]))
+    XCTAssertNoThrow(try multiViewModel.update([results1, results2]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
@@ -173,7 +120,7 @@ class MultiHitsViewModelTests: XCTestCase {
     XCTAssertEqual(multiViewModel.numberOfHits(inSection: 1), hits2.count)
     
     // Update multihits ViewModel with uncorrect list of results
-    XCTAssertThrowsError(try multiViewModel.update([(query, results2), (query, results1)]))
+    XCTAssertThrowsError(try multiViewModel.update([results2, results1]))
     
     // Checking the state
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
@@ -182,14 +129,15 @@ class MultiHitsViewModelTests: XCTestCase {
   }
   
   func testHitForRow() {
-    
-    let multiViewModel = MultiHitsViewModel()
 
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: Bool]>()
+    let pageLoader = TestPageLoader()
     
-    multiViewModel.append(viewModel1)
-    multiViewModel.append(viewModel2)
+    let viewModel1 = HitsViewModel<[String: Int]>()
+    viewModel1.infiniteScrollingController.pageLoader = pageLoader
+    let viewModel2 = HitsViewModel<[String: Bool]>()
+    viewModel2.infiniteScrollingController.pageLoader = pageLoader
+    
+    let multiViewModel = MultiHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
     
     let hits1: [JSON] = [
       .dictionary(["a": .number(1)]),
@@ -197,18 +145,16 @@ class MultiHitsViewModelTests: XCTestCase {
       .dictionary(["c": .number(3)])
     ]
     
-    let results1: SearchResults<JSON> = SearchResults(hits: hits1, stats: .init())
+    let results1 = SearchResults(hits: hits1, stats: .init())
     
     let hits2: [JSON] = [
       .dictionary(["a": .bool(true)]),
       .dictionary(["b": .bool(false)]),
       ]
     
-    let results2: SearchResults<JSON> = SearchResults(hits: hits2, stats: .init())
-        
-    let query = Query(query: "q1")
+    let results2 = SearchResults(hits: hits2, stats: .init())
     
-    XCTAssertNoThrow(try multiViewModel.update([(query, results1), (query, results2)]))
+    XCTAssertNoThrow(try multiViewModel.update([results1, results2]))
     
     XCTAssertNoThrow(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?)
     XCTAssertNoThrow(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
@@ -229,16 +175,26 @@ class MultiHitsViewModelTests: XCTestCase {
     
   }
   
-  struct TestHitsViewModel: AnyHitsViewModel {
+  class TestHitsViewModel: AnyHitsViewModel {
+    
+    var pageLoader: PageLoadable?
     
     var didCallLoadMoreResults: () -> Void
     
     init(didCallLoadMoreResults: @escaping () -> Void) {
       self.didCallLoadMoreResults = didCallLoadMoreResults
     }
-  
-    func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws {
+    
+    func update(_ searchResults: SearchResults) throws {
       
+    }
+    
+    func notifyQueryChanged() {
+      
+    }
+    
+    func notifyPending(atIndex index: Int) {
+
     }
 
     func rawHitAtIndex(_ index: Int) -> [String : Any]? {
@@ -256,25 +212,6 @@ class MultiHitsViewModelTests: XCTestCase {
     func loadMoreResults() {
       didCallLoadMoreResults()
     }
-  }
-  
-  func testLoadMoreResults() {
-    
-    let multiViewModel = MultiHitsViewModel()
-    
-    let exp = expectation(description: "Call load more")
-    exp.expectedFulfillmentCount = 2
-    
-    let testViewModel1 = TestHitsViewModel(didCallLoadMoreResults: exp.fulfill)
-    let testViewModel2 = TestHitsViewModel(didCallLoadMoreResults: exp.fulfill)
-    
-    multiViewModel.appendGeneric(testViewModel1)
-    multiViewModel.appendGeneric(testViewModel2)
-    
-    multiViewModel.loadMoreResults(forSection: 0)
-    multiViewModel.loadMoreResults(forSection: 1)
-    
-    waitForExpectations(timeout: 2, handler: .none)
   }
   
 }

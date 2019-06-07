@@ -22,15 +22,16 @@ public struct DefaultStatsPresenter {
 
 public extension StatsViewModel {
   
-  func connectSearcher<R: Codable>(_ searcher: SingleIndexSearcher<R>) {
-    searcher.onResultsChanged.subscribePast(with: self) { arg in
-      let (_, _, result) = arg
-      if case .success(let searchResults) = result {
-        self.item = searchResults.stats
-      } else {
-        self.item = .none
-      }
+  func connectSearcher(_ searcher: SingleIndexSearcher) {
+    
+    searcher.onResults.subscribePast(with: self) { [weak self] searchResults in
+        self?.item = searchResults.stats
     }
+    
+    searcher.onError.subscribePast(with: self) { [weak self] _ in
+      self?.item = .none
+    }
+    
   }
   
   func connectController<C: ItemController, Output>(_ controller: C, presenter: @escaping StatsPresenter<Output>) where C.Item == Output {

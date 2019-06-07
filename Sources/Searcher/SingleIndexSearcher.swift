@@ -8,18 +8,18 @@
 
 import Foundation
 
-public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObservable {
+public class SingleIndexSearcher: Searcher, SearchResultObservable {
   
-  public typealias SearchResult = (Query, FiltersReadable, Result<SearchResults<Record>, Error>)
+  public typealias SearchResult = SearchResults
   
   public var query: String? {
 
     set {
       let oldValue = indexSearchData.query.query
-      if oldValue != newValue {
-        indexSearchData.query.query = newValue
-        onQueryChanged.fire(newValue)
-      }
+      guard oldValue != newValue else { return }
+      indexSearchData.query.query = newValue
+      indexSearchData.query.page = 0 // when new text changes, reset page to 0?
+      onQueryChanged.fire(newValue)
     }
     
     get {
@@ -29,10 +29,11 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
   }
   
   public let sequencer: Sequencer
-  public let isLoading = Observer<Bool>()
   public let indexSearchData: IndexSearchData
-  public let onResultsChanged = Observer<SearchResult>()
-  public let onQueryChanged = Observer<String?>()
+  public let isLoading: Observer<Bool>
+  public let onResults: Observer<SearchResults>
+  public let onError: Observer<Error>
+  public let onQueryChanged: Observer<String?>
   public var requestOptions: RequestOptions?
   
   public var filterState: FilterState {
@@ -45,11 +46,16 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
               query: Query = .init(),
               filterState: FilterState = .init(),
               requestOptions: RequestOptions? = nil) {
-    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
+    indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
     self.requestOptions = requestOptions
     sequencer = Sequencer()
+    isLoading = Observer()
+    onResults = Observer()
+    onError = Observer()
+    onQueryChanged = Observer()
     sequencer.delegate = self
-    onResultsChanged.retainLastData = true
+    onResults.retainLastData = true
+    onError.retainLastData = false
     isLoading.retainLastData = true
 
     filterState.onChange.subscribePast(with: self) { _ in
@@ -65,39 +71,49 @@ public class SingleIndexSearcher<Record: Codable>: Searcher, SearchResultObserva
               requestOptions: requestOptions)
   }
   
-  public func setQuery(text: String) {
-    self.indexSearchData.query.query = text
-    self.indexSearchData.query.page = 0 // when new text changes, reset page to 0?
-    onQueryChanged.fire(text)
-  }
-  
-  //TODO: Check success/failure here, add onError
-  fileprivate func handle(_ value: [String: Any]?, _ error: Error?, _ query: Query, _ filterState: FiltersReadable) {
-    let result: Result<SearchResults<Record>, Error> = self.transform(content: value, error: error)
-    self.onResultsChanged.fire((query, filterState, result))
+  fileprivate func handle(_ value: [String: Any]?, _ error: Error?) {
+    
+    let result: Result<SearchResults, Error> = transform(content: value, error: error)
+    
+    switch result {
+    case .success(let searchResults):
+      onResults.fire(searchResults)
+      
+    case .failure(let error):
+      onError.fire(error)
+    }
+    
   }
   
   public func search() {
-    // TODO: weak self...
   
-    sequencer.orderOperation {
-      let query = indexSearchData.query
-      let filterState = indexSearchData.filterState.filters
-      
-      if isDisjunctiveFacetingEnabled && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
-        let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
-        let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
-        indexSearchData.query.filters = nil
-        return indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { value, error in
-          self.handle(value, error, query, filterState)
-        }
-      } else {
-        indexSearchData.applyFilters()
-        return indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { value, error in
-          self.handle(value, error, query, filterState)
-        }
+    let operation: Operation
+    
+    if isDisjunctiveFacetingEnabled && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
+      let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
+      let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
+      indexSearchData.query.filters = nil
+      operation = indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { [weak self] value, error in
+        self?.handle(value, error)
+      }
+    } else {
+      indexSearchData.applyFilters()
+      operation = indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { [weak self] value, error in
+        self?.handle(value, error)
       }
     }
+    
+    sequencer.orderOperation(operationLauncher: { return operation })
   }
   
+  public func cancel() {
+    sequencer.cancelPendingOperations()
+  }
+  
+}
+
+extension SingleIndexSearcher: SequencerDelegate {
+  public func didChangeOperationsState(hasPendingOperations: Bool) {
+    isLoading.fire(hasPendingOperations)
+  }
 }

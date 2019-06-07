@@ -12,40 +12,39 @@ import Foundation
     to create a collections of hits ViewModels with different record types.
 */
 
-protocol AnyHitsViewModel {
+public protocol AnyHitsViewModel: class {
+  
+  var pageLoader: PageLoadable? { get set }
   
   /// Updates search results with a search results with a hit of JSON type.
   /// Internally it tries to convert JSON to a record type of hits ViewModel
-  /// - Parameter searchResult:
-  /// - Parameter queryMetaData:
+  /// - Parameter searchResults:
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
 
-  func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws
+  func update(_ searchResults: SearchResults) throws
   
   /// Returns a hit for row of a desired type
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
   
   func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R?
   
+  /// Returns a hit for row as dictionary
+  
   func rawHitAtIndex(_ index: Int) -> [String: Any]?
+  
+  /// Returns number of hits
   func numberOfHits() -> Int
-  func loadMoreResults()
+  
+  func notifyQueryChanged()
+  func notifyPending(atIndex index: Int)
 
 }
 
 extension HitsViewModel: AnyHitsViewModel {
 
-  func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws {
-      let encoder = JSONEncoder()
-      let data = try encoder.encode(searchResults)
-      let decoder = JSONDecoder()
-      let typedSearchResults = try decoder.decode(SearchResults<Record>.self, from: data)
-      self.update(typedSearchResults, with: query)
-  }
-
-  func genericHitAtIndex<R: Decodable>(_ row: Int) throws -> R? {
+  public func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R? {
     
-    guard let hit = hit(atIndex: row) else {
+    guard let hit = hit(atIndex: index) else {
       return .none
     }
     
@@ -57,18 +56,8 @@ extension HitsViewModel: AnyHitsViewModel {
 
   }
   
-  func genericHitForRow(_ row: Int) throws -> JSON? {
-    
-    guard let hit = hit(atIndex: row) else {
-      return .none
-    }
-    
-    if let castedHit = hit as? JSON {
-      return castedHit
-    } else {
-      return try JSON(hit)
-    }
-    
+  public func notifyPending(atIndex index: Int) {
+    infiniteScrollingController.notifyPending(pageIndex: index)
   }
   
   public enum Error: Swift.Error, LocalizedError {
@@ -80,15 +69,4 @@ extension HitsViewModel: AnyHitsViewModel {
     
   }
 
-}
-
-/// This extension is to optimize generic search results update
-/// It omits unnecessary JSON to JSON conversion
-
-extension HitsViewModel where Record == JSON {
-  
-  func update(withGeneric searchResults: SearchResults<JSON>, with query: Query) throws {
-    self.update(searchResults, with: query)
-  }
-  
 }

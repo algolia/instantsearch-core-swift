@@ -13,14 +13,24 @@ public class HitsViewModel<Record: Codable> {
   public let settings: Settings
 
   private let paginator: Paginator<Record>
-  
   private var isLastQueryEmpty: Bool = true
+  internal let infiniteScrollingController: InfiniteScrollable
   
-  private var latestPageIndex: Int?
+  public let onRequestChanged: Observer<Void>
+  public let onResultsUpdated: Observer<SearchResults>
+  public let onError: Observer<Swift.Error>
   
-  public let onPageRequest = Observer<Int>()
-  public let onRequestChanged = Observer<Void>()
-  public let onResultsUpdated = Observer<SearchResults<Record>>()
+  public var pageLoader: PageLoadable? {
+    
+    get {
+      return infiniteScrollingController.pageLoader
+    }
+    
+    set {
+      infiniteScrollingController.pageLoader = newValue
+    }
+    
+  }
   
   convenience public init(infiniteScrolling: InfiniteScrolling = Constants.Defaults.infiniteScrolling,
                           showItemsOnEmptyQuery: Bool = Constants.Defaults.showItemsOnEmptyQuery) {
@@ -29,19 +39,21 @@ public class HitsViewModel<Record: Codable> {
     self.init(settings: settings)
   }
 
-  public init(settings: Settings? = nil) {
-    self.settings = settings ?? Settings()
-    self.paginator = Paginator<Record>()
-    self.latestPageIndex = .none
-    self.paginator.delegate = self
-    self.paginator.pageCleanUpOffset = .none
+  public convenience init(settings: Settings? = nil) {
+    self.init(settings: settings,
+              paginationController: Paginator<Record>(),
+              infiniteScrollingController: InfiniteScrollingController())
   }
   
   internal init(settings: Settings? = nil,
-                paginationController: Paginator<Record>) {
+                paginationController: Paginator<Record>,
+                infiniteScrollingController: InfiniteScrollable) {
     self.settings = settings ?? Settings()
     self.paginator = paginationController
-    self.latestPageIndex = .none
+    self.infiniteScrollingController = infiniteScrollingController
+    self.onRequestChanged = .init()
+    self.onResultsUpdated = .init()
+    self.onError = .init()
   }
 
   public func numberOfHits() -> Int {
@@ -56,8 +68,7 @@ public class HitsViewModel<Record: Codable> {
 
   public func hit(atIndex index: Int) -> Record? {
     guard let hitsPageMap = paginator.pageMap else { return nil }
-
-    loadMoreIfNeeded(rowNumber: index)
+    notifyForInfiniteScrolling(rowNumber: index)
     return hitsPageMap[index]
   }
   
@@ -67,41 +78,17 @@ public class HitsViewModel<Record: Codable> {
     guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return nil }
     return [String: Any](jsonValue)
   }
-  
-  public func loadMoreResults() {
-    paginator.loadNextPageIfNeeded()
-  }
 
 }
 
 private extension HitsViewModel {
   
-  func loadMoreIfNeeded(rowNumber: Int) {
-    
+  func notifyForInfiniteScrolling(rowNumber: Int) {
     guard
       case .on(let pageLoadOffset) = settings.infiniteScrolling,
       let hitsPageMap = paginator.pageMap else { return }
     
-    let lowerBoundRow = rowNumber - Int(pageLoadOffset)
-  
-    if lowerBoundRow >= hitsPageMap.startIndex, !hitsPageMap.containsItem(atIndex: lowerBoundRow) {
-      let lowerBoundPage = hitsPageMap.pageIndex(for: lowerBoundRow)
-      paginator.loadPage(withIndex: lowerBoundPage)
-    }
-    
-    let upperBoundRow = rowNumber + Int(pageLoadOffset)
-    
-    let isLatestPageLoaded = latestPageIndex.flatMap { hitsPageMap.containsPage(atIndex: $0) } ?? false
-    
-    if isLatestPageLoaded {
-      debugPrint("[HitsViewModel] Latest page loaded")
-    }
-    
-    if !hitsPageMap.containsItem(atIndex: upperBoundRow) && !isLatestPageLoaded {
-      let lowerBoundPage = hitsPageMap.pageIndex(for: upperBoundRow)
-      paginator.loadPage(withIndex: lowerBoundPage)
-    }
-    
+    infiniteScrollingController.calculatePagesAndLoad(currentRow: rowNumber, offset: pageLoadOffset, pageMap: hitsPageMap)
   }
   
 }
@@ -110,17 +97,6 @@ public extension HitsViewModel where Record == JSON {
   
   func rawHitForRow(_ row: Int) -> [String: Any]? {
     return hit(atIndex: row).flatMap([String: Any].init)
-  }
-  
-}
-
-extension HitsViewModel: PaginatorDelegate {
-  
-  func didRequestLoadPage(withIndex pageIndex: Int) {
-    if let latestPageIndex = latestPageIndex, pageIndex > latestPageIndex {
-      return
-    }
-    onPageRequest.fire(pageIndex)
   }
   
 }
@@ -143,47 +119,36 @@ extension HitsViewModel {
 }
 
 public enum InfiniteScrolling {
-  case on(withOffset: UInt)
+  case on(withOffset: Int)
   case off
 }
 
 extension HitsViewModel {
   
-  // TODO: What if there was an error? What do we do with "LoadMore" functionality (lastSentPage to decrement?)
-  public func update(_ searchResults: SearchResults<Record>, with query: Query) {
-    isLastQueryEmpty = query.query.isNilOrEmpty
-    paginator.process(searchResults)
-    latestPageIndex = searchResults.stats.pagesCount - 1
-    onResultsUpdated.fire(searchResults)
+  public func notifyQueryChanged() {
+    if case .on = settings.infiniteScrolling {
+      infiniteScrollingController.notifyPendingAll()
+    }
+    
+    paginator.invalidate()
+    onRequestChanged.fire(())
   }
   
-  public func connect(to filterState: FilterState) {
-    filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.onRequestChanged.fire(())
-      self?.paginator.invalidate()
-    }
-  }
-  
-  public func connect(to searcher: SingleIndexSearcher<Record>) {
+  public func update(_ searchResults: SearchResults) throws {
     
-    searcher.onResultsChanged.subscribePast(with: self) { [weak self] (query, _, result) in
-      switch result {
-      case .success(let result):
-        self?.update(result, with: query)
-        
-      case .failure(let error):
-        print(error)
-      }
+    if case .on = settings.infiniteScrolling {
+      infiniteScrollingController.notifyPending(pageIndex: searchResults.stats.page)
+      infiniteScrollingController.lastPageIndex = searchResults.stats.pagesCount - 1
     }
-    
-    onPageRequest.subscribePast(with: self) { [weak searcher] page in
-      searcher?.indexSearchData.query.page = UInt(page)
-      searcher?.search()
-    }
-    
-    searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in
-      self?.paginator.invalidate()
-      self?.onRequestChanged.fire(())
+    isLastQueryEmpty = searchResults.stats.query.isNilOrEmpty
+
+    do {
+      let page: HitsPage<Record> = try HitsPage(searchResults: searchResults)
+      paginator.process(page)
+      onResultsUpdated.fire(searchResults)
+    } catch let error {
+      onError.fire(error)
+      throw error
     }
     
   }

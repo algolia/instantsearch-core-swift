@@ -11,38 +11,16 @@ import Foundation
 class Paginator<Item> {
   
   var pageMap: PageMap<Item>?
-  weak var delegate: PaginatorDelegate?
   var pageCleanUpOffset: Int? = 3
   
-  private var requestedPages: Set<Int> = []
+  func process<IP: Pageable>(_ page: IP) where IP.Item == Item {
   
-  func loadPage(withIndex pageIndex: Int) {
-    
-    // No need to trigger if there is no delegate
-    guard let delegate = delegate else { return }
-    
-    // No need to trigger loading the next page if already requested
-    guard !requestedPages.contains(pageIndex) else { return }
-    debugPrint("[Paginator] Requested loading page: \(pageIndex)")
-    requestedPages.insert(pageIndex)
-    delegate.didRequestLoadPage(withIndex: pageIndex)
-    
-  }
-  
-  func loadNextPageIfNeeded() {
-    let pageToLoad = pageMap?.latestPageIndex.flatMap { $0 + 1 } ?? 0
-    loadPage(withIndex: pageToLoad)
-  }
-  
-  func process<IP: PageMapConvertible>(_ page: IP) where IP.PageItem == Item {
-  
-    debugPrint("[Paginator] Loaded page: \(page.page)")
-    requestedPages.remove(page.page)
+    debugPrint("[Paginator] Loaded page: \(page.index)")
     
     let updatedPageMap: PageMap<Item>
     
     if let pageMap = pageMap {
-      updatedPageMap = pageMap.inserting(page.pageItems, withIndex: page.page)
+      updatedPageMap = pageMap.inserting(page.items, withIndex: page.index)
     } else {
       updatedPageMap = PageMap(page)
     }
@@ -50,37 +28,14 @@ class Paginator<Item> {
     pageMap = updatedPageMap
     
     if let pageCleanUpOffset = pageCleanUpOffset {
-      pageMap?.cleanUp(basePageIndex: page.page, keepingPagesOffset: pageCleanUpOffset)
+      pageMap?.cleanUp(basePageIndex: page.index, keepingPagesOffset: pageCleanUpOffset)
     }
     
   }
   
   public func invalidate() {
     debugPrint("[Paginator] Invalidated")
-    requestedPages = []
     pageMap = .none
   }
   
-}
-
-extension PageMap {
-  
-  mutating func cleanUp(basePageIndex pageIndex: Int, keepingPagesOffset: Int) {
-    
-    let leastPageIndex = pageIndex - keepingPagesOffset
-    let lastPageIndex = pageIndex + keepingPagesOffset
-    
-    let pagesToRemove = loadedPageIndexes.filter { $0 < leastPageIndex || $0 > lastPageIndex }
-
-    for pageIndex in pagesToRemove {
-      debugPrint("[PageMap] Removed page \(pageIndex)")
-      items.removeValue(forKey: pageIndex)
-    }
-    
-  }
-  
-}
-
-protocol PaginatorDelegate: class {
-  func didRequestLoadPage(withIndex pageIndex: Int)
 }

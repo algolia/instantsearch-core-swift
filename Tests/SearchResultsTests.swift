@@ -45,9 +45,9 @@ class SearchResultsTests: XCTestCase {
   func testDecoding() {
 
     do {
-      let searchResults = try SearchResults<Hit<Item>>(jsonFile: "SearchResult", bundle: Bundle(for: SearchResultsTests.self))
+      let searchResults = try SearchResults(jsonFile: "SearchResult", bundle: Bundle(for: SearchResultsTests.self))
       XCTAssertEqual(searchResults.stats.totalHitsCount, 596)
-      XCTAssertEqual(searchResults.page, 0)
+      XCTAssertEqual(searchResults.stats.page, 0)
       XCTAssertEqual(searchResults.stats.pagesCount, 60)
       XCTAssertEqual(searchResults.stats.hitsPerPage, 10)
       XCTAssertEqual(searchResults.stats.processingTimeMS, 4)

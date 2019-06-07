@@ -12,9 +12,9 @@ public typealias FilterListViewModel<F: FilterType & Hashable> = SelectableListV
 
 public extension SelectableListViewModel where Key == Item, Item: FilterType {
   
-  func connect(to filterState: FilterState,
-               groupName: String = "",
-               operator: RefinementOperator) {
+  func connectFilterState(_ filterState: FilterState,
+                          groupName: String = "",
+                          operator: RefinementOperator) {
     
     let groupID: FilterGroup.ID
     

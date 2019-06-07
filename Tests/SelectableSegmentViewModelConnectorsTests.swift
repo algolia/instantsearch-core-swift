@@ -36,10 +36,9 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
   
   func testConnectSearcher() {
     
-    let index = Client(appID: "", apiKey: "").index(withName: "")
     let query = Query()
     let filterState = FilterState()
-    let searcher = SingleIndexSearcher<String>(index: index, query: query, filterState: filterState)
+    let searcher = SingleIndexSearcher(index: .test, query: query, filterState: filterState)
     
     let viewModel = SelectableSegmentViewModel<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     

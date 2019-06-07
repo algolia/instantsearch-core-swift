@@ -42,7 +42,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     
     let filterState = FilterState()
     
-    viewModel.connect(to: filterState, with: "categories", operator: .and)
+    viewModel.connectFilterState(filterState, with: "categories", operator: .and)
     
     // ViewModel -> FilterState
     viewModel.computeSelections(selectingItemForKey: "cat1")
@@ -59,19 +59,18 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
   func testConnectSearcher() {
     let viewModel = FacetListViewModel(selectionMode: .single)
 
-    let index = Client(appID: "", apiKey: "").index(withName: "i")
     let query = Query()
     let filterState = FilterState()
-    let searcher = SingleIndexSearcher<String>(index:index , query: query, filterState: filterState, requestOptions: .none)
+    let searcher = SingleIndexSearcher(index: .test, query: query, filterState: filterState, requestOptions: .none)
     
-    viewModel.connect(to: searcher, with: "type")
+    viewModel.connectSearcher(searcher, with: "type")
         
     let bundle = Bundle(for: SelectableListViewModelFacetConnectorsTests.self)
     
     do {
-      let results = try SearchResults<String>(jsonFile: "SearchResultFacets", bundle: bundle)
+      let results = try SearchResults(jsonFile: "SearchResultFacets", bundle: bundle)
       
-      searcher.onResultsChanged.fire((query, filterState.filters,.success(results)))
+      searcher.onResults.fire(results)
 
       let expectedFacets: Set<Facet> = [
         .init(value: "book", count: 357, highlighted: nil),

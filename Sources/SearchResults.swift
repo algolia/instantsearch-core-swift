@@ -9,10 +9,9 @@
 import Foundation
 @_exported import InstantSearchClient
 
-//TODO: Remove generic parameter
 //TODO: Add exhaustive nb hits
 
-public struct SearchResults<T: Codable>: Codable {
+public struct SearchResults: Codable {
     
   enum CodingKeys: String, CodingKey {
     case totalHitsCount = "nbHits"
@@ -30,7 +29,7 @@ public struct SearchResults<T: Codable>: Codable {
   }
   
   /// Hits.
-  public let hits: [T]
+  public let hits: [JSON]
   
   /// Conjunctive facets that can be used to refine the result
   public let facets: [Attribute: [Facet]]?
@@ -84,7 +83,7 @@ public struct SearchResults<T: Codable>: Codable {
   public init(from decoder: Decoder) throws {
     
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    self.hits = try container.decode([T].self, forKey: .hits)
+    self.hits = try container.decode([JSON].self, forKey: .hits)
     self.params = try container.decodeIfPresent(String.self, forKey: .params)
     self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
     self.areFacetsCountExhaustive = try container.decodeIfPresent(Bool.self, forKey: .areFacetsCountExhaustive)
@@ -117,7 +116,7 @@ public struct SearchResults<T: Codable>: Codable {
     
   }
   
-  internal init(hits: [T], stats: SearchStats) {
+  internal init(hits: [JSON], stats: SearchStats) {
     self.hits = hits
     self.facets = .none
     self.disjunctiveFacets = .none
@@ -156,10 +155,12 @@ public struct SearchResults<T: Codable>: Codable {
   
 }
 
-extension SearchResults where T == JSON {
+extension SearchResults {
   
-  func rawHits() -> [[String: Any]] {
-    return hits.compactMap([String: Any].init)
+  func deserializeHits<T: Decodable>() throws -> [T] {
+    let encodedHits = try JSONEncoder().encode(hits)
+    let decodedTypedHits = try JSONDecoder().decode([T].self, from: encodedHits)
+    return decodedTypedHits
   }
   
 }
@@ -304,20 +305,20 @@ extension SearchResults {
   
 }
 
-struct MultiSearchResults<T: Codable>: Codable {
+public struct MultiSearchResults: Codable {
   
-  let searchResults: [SearchResults<T>]
+  public let searchResults: [SearchResults]
   
   enum CodingKeys: String, CodingKey {
     case results
   }
   
-  init(from decoder: Decoder) throws {
+  public init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    searchResults = try container.decode([SearchResults<T>].self, forKey: .results)
+    searchResults = try container.decode([SearchResults].self, forKey: .results)
   }
   
-  func encode(to encoder: Encoder) throws {
+  public func encode(to encoder: Encoder) throws {
     var container = encoder.container(keyedBy: CodingKeys.self)
     try container.encode(searchResults, forKey: .results)
   }

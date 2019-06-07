@@ -8,11 +8,10 @@
 
 import Foundation
 
-public protocol Searcher: SequencerDelegate {
+public protocol Searcher: class {
   
   var query: String? { get set }
     
-  var sequencer: Sequencer { get }
   var isLoading: Observer<Bool> { get }
   var onQueryChanged: Observer<String?> { get }
   
@@ -21,20 +20,8 @@ public protocol Searcher: SequencerDelegate {
   
 }
 
-// Sequencer Delegate
-
 extension Searcher {
-  public func didChangeOperationsState(hasPendingOperations: Bool) {
-    isLoading.fire(hasPendingOperations)
-  }
-}
-
-extension Searcher {
-  
-  public func cancel() {
-    sequencer.cancelPendingOperations()
-  }
-  
+    
   func transform<T: Decodable>(content: [String: Any]?, error: Error?) -> Result<T, Error> {
     let result = Result(value: content, error: error)
     
@@ -62,6 +49,6 @@ public protocol SearchResultObservable {
   
   associatedtype SearchResult
   
-  var onResultsChanged: Observer<SearchResult> { get }
+  var onResults: Observer<SearchResult> { get }
   
 }

@@ -12,7 +12,7 @@ struct PageMap<Item> {
   
   typealias PageIndex = Int
   
-  var items: [PageIndex: [Item]]
+  private var storage: [PageIndex: [Item]]
   
   var pageSize: Int
   
@@ -22,28 +22,32 @@ struct PageMap<Item> {
   
   var loadedPageIndexes: Set<PageIndex> = []
   
+  var loadedPages: [Page] {
+    return storage
+      .sorted { $0.key < $1.key }
+      .map { Page(index: $0.key, items: $0.value) }
+  }
+  
   var loadedPagesCount: Int {
-    return items.count
+    return storage.count
   }
   
   var totalPagesCount: Int {
     guard let latestPageIndex = latestPageIndex else { return 0 }
     return latestPageIndex + 1
   }
-  
-  var totalItemsCount: Int {
-    guard let latestPageIndex = latestPageIndex else { return 0 }
-    // Here we suppose that last items page can be not full
-    // So there is a need to calculate a number of elements
-    // On last page and add it to previous pages count * page size
-    let fullPagesCount = totalPagesCount - 1
-    let latestPageItemsCount = items[latestPageIndex]?.count ?? 0
-    return fullPagesCount * pageSize + latestPageItemsCount
+    
+  mutating func insert(_ page: [Item], withIndex pageIndex: PageIndex) {
+    storage[pageIndex] = page
+    loadedPageIndexes = Set(storage.keys)
   }
   
-  mutating func insert(_ page: [Item], withIndex pageIndex: PageIndex) {
-    items[pageIndex] = page
-    loadedPageIndexes = Set(items.keys)
+  func page(atIndex pageIndex: PageIndex) -> Page? {
+    if let items = storage[pageIndex] {
+      return Page(index: pageIndex, items: items)
+    } else {
+      return nil
+    }
   }
   
   func inserting(_ page: [Item], withIndex pageIndex: PageIndex) -> PageMap {
@@ -57,7 +61,7 @@ struct PageMap<Item> {
   }
   
   func containsPage(atIndex pageIndex: PageIndex) -> Bool {
-    return items[pageIndex] != nil
+    return storage[pageIndex] != nil
   }
   
   func containsItem(atIndex index: Index) -> Bool {
@@ -70,7 +74,7 @@ struct PageMap<Item> {
     let offset = index % pageSize
     
     guard
-      let page = items[pageIndex],
+      let page = storage[pageIndex],
       offset < page.count else { return nil }
     
     return page[offset]
@@ -93,7 +97,15 @@ extension PageMap: BidirectionalCollection {
   public typealias Index = Int
   
   public var startIndex: Index { return 0 }
-  public var endIndex: Index { return totalItemsCount }
+  public var endIndex: Index {
+    guard let latestPageIndex = latestPageIndex else { return 0 }
+    // Here we suppose that last items page can be not full
+    // So there is a need to calculate a number of elements
+    // On last page and add it to previous pages count * page size
+    let fullPagesCount = totalPagesCount - 1
+    let latestPageItemsCount = storage[latestPageIndex]?.count ?? 0
+    return fullPagesCount * pageSize + latestPageItemsCount
+  }
   
   public func index(after i: Index) -> Index {
     return i+1
@@ -109,7 +121,7 @@ extension PageMap: BidirectionalCollection {
     get {
       let pageIndex = self.pageIndex(for: position)
       
-      if let page = items[pageIndex] {
+      if let page = storage[pageIndex] {
         return page[position%pageSize]
       } else {
         // Return nil for all pages that haven't been set yet
@@ -121,39 +133,52 @@ extension PageMap: BidirectionalCollection {
       guard let newValue = newValue else { return }
       
       let pageIndex = self.pageIndex(for: position)
-      var elementPage = items[pageIndex]
+      var elementPage = storage[pageIndex]
       elementPage?[position % pageSize] = newValue
-      items[pageIndex] = elementPage
+      storage[pageIndex] = elementPage
     }
   }
 }
 
-protocol PageMapConvertible {
+protocol Pageable {
   
-  associatedtype PageItem
+  associatedtype Item
   
-  var page: Int { get }
-  var pageSize: Int { get }
-  var pageItems: [PageItem] { get }
+  var index: Int { get }
+  var items: [Item] { get }
   
 }
 
 extension PageMap {
   
-  init(pageSize: Int) {
-    items = [:]
-    self.pageSize = pageSize
+  struct Page {
+    
+    let index: Int
+  	let items: [Item]
+    
+    init(index: Int, items: [Item]) {
+      self.index = index
+      self.items = items
+    }
+    
   }
   
-  init<T: PageMapConvertible>(_ source: T) where T.PageItem == Item {
-    items = [source.page: source.pageItems]
-    loadedPageIndexes = [source.page]
-    pageSize = source.pageItems.count
+}
+
+extension PageMap.Page: Equatable where Item: Hashable {}
+extension PageMap.Page: Hashable where Item: Hashable {}
+
+extension PageMap {
+  
+  init<T: Pageable>(_ source: T) where T.Item == Item {
+    storage = [source.index: source.items]
+    loadedPageIndexes = [source.index]
+    pageSize = source.items.count
   }
   
   init<S: Sequence>(_ items: S) where S.Element == Item {
     let itemsArray = Array(items)
-    self.items = [0: itemsArray]
+    self.storage = [0: itemsArray]
     loadedPageIndexes = [0]
     pageSize = itemsArray.count
   }
@@ -163,9 +188,27 @@ extension PageMap {
       return nil
     }
     
-    items = dictionary
+    storage = dictionary
     loadedPageIndexes = Set(dictionary.keys)
     pageSize = dictionary.sorted(by: { $0.key < $1.key }).first?.value.count ?? 0
+  }
+  
+}
+
+extension PageMap {
+  
+  mutating func cleanUp(basePageIndex pageIndex: Int, keepingPagesOffset: Int) {
+    
+    let leastPageIndex = pageIndex - keepingPagesOffset
+    let lastPageIndex = pageIndex + keepingPagesOffset
+    
+    let pagesToRemove = loadedPageIndexes.filter { $0 < leastPageIndex || $0 > lastPageIndex }
+    
+    for pageIndex in pagesToRemove {
+      debugPrint("[PageMap] Removed page \(pageIndex)")
+      storage.removeValue(forKey: pageIndex)
+    }
+    
   }
   
 }

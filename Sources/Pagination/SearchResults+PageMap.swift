@@ -8,20 +8,28 @@
 
 import Foundation
 
-extension SearchResults: PageMapConvertible {
+struct HitsPage<Item: Codable>: Pageable {
   
-  typealias PageItem = T
+  let index: Int
+  let items: [Item]
   
-  var pageSize: Int {
-    return hits.count
+  init() {
+    self.index = 0
+    self.items = []
   }
   
-  var pageItems: [T] {
-    return hits
+  init(index: Int, items: [Item]) {
+    self.index = index
+    self.items = items
   }
   
-  var page: Int {
-    return stats.page
+}
+
+extension HitsPage {
+  
+  init(searchResults: SearchResults) throws {
+    self.index = searchResults.stats.page
+    self.items = try searchResults.deserializeHits()
   }
   
 }
