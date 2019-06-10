@@ -29,7 +29,7 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
   }
   
   public let sequencer: Sequencer
-  public let indexSearchData: IndexSearchData
+  public var indexSearchData: IndexSearchData
   public let isLoading: Observer<Bool>
   public let onResults: Observer<SearchResults>
   public let onError: Observer<Error>

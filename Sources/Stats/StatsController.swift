@@ -12,4 +12,4 @@ public protocol ItemTextController: ItemController where Item == String? {}
 
 public protocol ItemAttributedTextController: ItemController where Item == NSAttributedString? {}
 
-typealias StatsTextController = ItemTextController
+public typealias StatsTextController = ItemTextController
