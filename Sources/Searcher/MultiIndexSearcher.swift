@@ -66,8 +66,6 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   
   public func search() {
     
-    indexSearchDatas.forEach { $0.applyFilters() }
-    
     let indexQueries = indexSearchDatas.map(IndexQuery.init(indexSearchData:))
     
     let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
@@ -120,4 +118,17 @@ extension MultiIndexSearcher: SequencerDelegate {
   public func didChangeOperationsState(hasPendingOperations: Bool) {
     isLoading.fire(hasPendingOperations)
   }
+}
+
+//TODO: do a proper connection between each query and filterState
+
+extension MultiIndexSearcher {
+  
+  func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) {
+    filterState.onChange.subscribe(with: self) { [weak self] filters in
+      self?.indexSearchDatas[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      self?.search()
+    }
+  }
+  
 }

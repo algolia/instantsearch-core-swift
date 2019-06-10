@@ -28,12 +28,8 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var facetName: String
   public var requestOptions: RequestOptions?
 
-  public var filterState: FilterState {
-    return indexSearchData.filterState
-  }
-  
-  public init(index: Index, query: Query = Query(), filterState: FilterState = FilterState(), facetName: String, requestOptions: RequestOptions? = nil) {
-    self.indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
+  public init(index: Index, query: Query = .init(), facetName: String, requestOptions: RequestOptions? = nil) {
+    self.indexSearchData = IndexSearchData(index: index, query: query)
     self.isLoading = Observer()
     self.onQueryChanged = Observer()
     self.onResults = Observer()
@@ -44,10 +40,6 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     sequencer.delegate = self
     onResults.retainLastData = true
     isLoading.retainLastData = true
-
-    filterState.onChange.subscribePast(with: self) { _ in
-      self.search()
-    }
   }
   
   public func setQuery(text: String) {
@@ -55,8 +47,6 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   }
   
   public func search() {
-    
-    indexSearchData.applyFilters()
     
     let operation = indexSearchData.index.searchForFacetValues(of: facetName, matching: query ?? "", requestOptions: requestOptions) { [weak self] (content, error) in
       
@@ -87,4 +77,15 @@ extension FacetSearcher: SequencerDelegate {
   public func didChangeOperationsState(hasPendingOperations: Bool) {
     isLoading.fire(hasPendingOperations)
   }
+}
+
+public extension FacetSearcher {
+  
+  func connectFilterState(_ filterState: FilterState) {
+    filterState.onChange.subscribePast(with: self) { [weak self] _ in
+      self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      self?.search()
+    }
+  }
+  
 }

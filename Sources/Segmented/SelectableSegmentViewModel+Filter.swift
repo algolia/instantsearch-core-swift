@@ -10,17 +10,14 @@ import Foundation
 
 public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: FilterType {
 
-  func connectTo(_ searcher: SingleIndexSearcher, attribute: Attribute, operator: RefinementOperator, groupName: String? = nil) {
-
+  func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
-    connectTo(searcher.indexSearchData.filterState, attribute: attribute, operator: `operator`, groupName: groupName)
-    
   }
   
-  func connectTo(_ filterState: FilterState,
-                 attribute: Attribute,
-                 operator: RefinementOperator,
-                 groupName: String? = nil) {
+  func connectFilterState(_ filterState: FilterState,
+                          attribute: Attribute,
+                          operator: RefinementOperator,
+                          groupName: String? = nil) {
     
     let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
     

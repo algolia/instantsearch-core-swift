@@ -18,20 +18,10 @@ public struct IndexSearchData {
   /// Query describing a search request
   public let query: Query
   
-  /// FilterState describing query filters
-  public let filterState: FilterState
-  
-  /// Build filters
-  func applyFilters() {
-    query.filters = FilterGroupConverter().sql(filterState.toFilterGroups()) 
-  }
-  
   public init(index: Index,
-              query: Query = .init(),
-              filterState: FilterState = .init()) {
+              query: Query = .init()) {
     self.index = index
     self.query = query
-    self.filterState = filterState
   }
   
 }
@@ -46,8 +36,8 @@ extension IndexQuery {
 
 extension Array where Element == IndexSearchData {
   
-  init(indices: [InstantSearchClient.Index], query: Query = .init(), filterState: FilterState = .init(), requestOptions: RequestOptions? = nil) {
-    self = indices.map { IndexSearchData(index: $0, query: query, filterState: filterState) }
+  init(indices: [InstantSearchClient.Index], query: Query = .init(), requestOptions: RequestOptions? = nil) {
+    self = indices.map { IndexSearchData(index: $0, query: query) }
   }
   
 }

@@ -32,14 +32,7 @@ public extension MultiHitsViewModel {
     searcher.onQueryChanged.subscribe(with: self) { [weak self] _ in
       self?.notifyQueryChanged()
     }
-    
-    let filterStates = searcher.indexSearchDatas.map { $0.filterState }
-    
-    zip(filterStates, hitsViewModels).forEach {
-      let (filterState, hitsViewModel) = $0
-      hitsViewModel.connectFilterState(filterState)
-    }
-    
+        
   }
   
 }

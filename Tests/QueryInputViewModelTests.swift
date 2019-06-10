@@ -102,7 +102,7 @@ class QueryInputViewModelTests: XCTestCase {
     let viewModel = QueryInputViewModel()
     let query = "q1"
     searcher.query = query
-    viewModel.connect(to: searcher, searchAsYouType: false)
+    viewModel.connectSearcher(searcher, searchAsYouType: false)
     XCTAssertEqual(viewModel.query, query)
   }
   
@@ -125,7 +125,7 @@ class QueryInputViewModelTests: XCTestCase {
       launchSearchExpectation.fulfill()
     }
     
-    viewModel.connect(to: searcher, searchAsYouType: true)
+    viewModel.connectSearcher(searcher, searchAsYouType: true)
     
     viewModel.query = query
     
@@ -144,7 +144,7 @@ class QueryInputViewModelTests: XCTestCase {
       launchSearchExpectation.fulfill()
     }
     
-    viewModel.connect(to: searcher, searchAsYouType: false)
+    viewModel.connectSearcher(searcher, searchAsYouType: false)
     
     viewModel.query = query
     viewModel.submitQuery()
@@ -160,7 +160,7 @@ class QueryInputViewModelTests: XCTestCase {
     let presetQuery = "q1"
     viewModel.query = presetQuery
     
-    viewModel.connect(to: controller)
+    viewModel.connectController(controller)
     
     XCTAssertEqual(controller.query, presetQuery)
     
