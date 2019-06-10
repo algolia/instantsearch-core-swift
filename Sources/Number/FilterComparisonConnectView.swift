@@ -18,7 +18,10 @@ extension NumberViewModel {
     view.setComputation(computation: computation)
 
     onItemChanged.subscribePast(with: self) { (item) in
-      guard let item = item else { return }
+      guard let item = item else {
+        view.invalidate()
+        return
+      }
       view.setItem(item)
     }
   }

@@ -13,5 +13,13 @@ public protocol ItemController: class {
   associatedtype Item
   
   func setItem(_ item: Item)
+  func invalidate()
+
+}
+
+public extension ItemController {
+  
+  func invalidate() {
+  }
   
 }
