@@ -16,4 +16,3 @@ public protocol MultiHitsSource: class {
   
 }
 
-extension MultiHitsViewModel: MultiHitsSource {}

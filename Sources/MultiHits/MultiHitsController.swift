@@ -17,3 +17,19 @@ public protocol MultiHitsController: class {
   func scrollToTop()
   
 }
+
+extension MultiHitsViewModel: MultiHitsSource {}
+
+public extension MultiHitsViewModel {
+  
+  func connectController<Controller: MultiHitsController>(_ controller: Controller) {
+    controller.hitsSource = self
+    onRequestChanged.subscribe(with: controller) { _ in
+      controller.scrollToTop()
+    }.onQueue(.main)
+    onResultsUpdated.subscribePast(with: controller) { _ in
+      controller.reload()
+    }.onQueue(.main)
+  }
+  
+}

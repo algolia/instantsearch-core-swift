@@ -10,7 +10,7 @@ import Foundation
 
 extension QueryInputViewModel {
 
-  public func connect<S: Searcher>(to searcher: S, searchAsYouType: Bool) {
+  public func connectSearcher<S: Searcher>(_ searcher: S, searchAsYouType: Bool) {
     query = searcher.query
     
     if searchAsYouType {

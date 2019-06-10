@@ -170,13 +170,19 @@ extension PageMap.Page: Hashable where Item: Hashable {}
 
 extension PageMap {
   
-  init<T: Pageable>(_ source: T) where T.Item == Item {
+  init?<T: Pageable>(_ source: T) where T.Item == Item {
+    guard !source.items.isEmpty else {
+      return nil
+    }
     storage = [source.index: source.items]
     loadedPageIndexes = [source.index]
     pageSize = source.items.count
   }
   
-  init<S: Sequence>(_ items: S) where S.Element == Item {
+  init?<C: Collection>(_ items: C) where C.Element == Item {
+    guard !items.isEmpty else {
+      return nil
+    }
     let itemsArray = Array(items)
     self.storage = [0: itemsArray]
     loadedPageIndexes = [0]

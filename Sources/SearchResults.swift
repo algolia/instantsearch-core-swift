@@ -155,7 +155,7 @@ public struct SearchResults: Codable {
   
 }
 
-extension SearchResults {
+public extension SearchResults {
   
   func deserializeHits<T: Decodable>() throws -> [T] {
     let encodedHits = try JSONEncoder().encode(hits)

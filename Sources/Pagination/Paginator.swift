@@ -17,7 +17,7 @@ class Paginator<Item> {
   
     debugPrint("[Paginator] Loaded page: \(page.index)")
     
-    let updatedPageMap: PageMap<Item>
+    let updatedPageMap: PageMap<Item>?
     
     if let pageMap = pageMap {
       updatedPageMap = pageMap.inserting(page.items, withIndex: page.index)

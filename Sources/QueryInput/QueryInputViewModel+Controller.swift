@@ -10,7 +10,7 @@ import Foundation
 
 extension QueryInputViewModel {
   
-  public func connect<C: QueryInputController>(to controller: C) {
+  public func connectController<C: QueryInputController>(_ controller: C) {
     onQueryChanged.subscribePast(with: controller, callback: controller.setQuery)
     controller.onQueryChanged = { self.query = $0 }
     controller.onQuerySubmitted = {

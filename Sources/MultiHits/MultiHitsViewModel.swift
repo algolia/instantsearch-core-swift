@@ -15,6 +15,10 @@ import Foundation
 
 public class MultiHitsViewModel {
   
+  public let onRequestChanged: Observer<Void>
+  public let onResultsUpdated: Observer<[SearchResults]>
+  public let onError: Observer<Swift.Error>
+  
   /// List of nested hits ViewModels
   
   let hitsViewModels: [AnyHitsViewModel]
@@ -23,6 +27,9 @@ public class MultiHitsViewModel {
   
   public init(hitsViewModels: [AnyHitsViewModel]) {
     self.hitsViewModels = hitsViewModels
+    self.onRequestChanged = .init()
+    self.onResultsUpdated = .init()
+    self.onError = .init()
   }
   
   /// Returns the index of provided hits ViewModel.
@@ -73,12 +80,14 @@ public class MultiHitsViewModel {
       let (viewModel, results) = arg
       try viewModel.update(results)
     }
+    onResultsUpdated.fire(results)
   }
   
   public func notifyQueryChanged() {
     hitsViewModels.forEach {
       $0.notifyQueryChanged()
     }
+    onRequestChanged.fire(())
   }
   
   /// Returns the hit of a desired type
@@ -112,7 +121,7 @@ public class MultiHitsViewModel {
   public func numberOfHits(inSection section: Int) -> Int {
     return hitsViewModels[section].numberOfHits()
   }
-    
+  
 }
 
 #if os(iOS) || os(tvOS)
