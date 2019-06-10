@@ -38,11 +38,11 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
     
     let query = Query()
     let filterState = FilterState()
-    let searcher = SingleIndexSearcher(index: .test, query: query, filterState: filterState)
+    let searcher = SingleIndexSearcher(index: .test, query: query)
     
     let viewModel = SelectableSegmentViewModel<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
-    
-    viewModel.connectTo(searcher, attribute: "tags", operator: .or)
+    viewModel.connectSearcher(searcher, attribute: "tags")
+    viewModel.connectFilterState(filterState, attribute: "tags", operator: .or)
     
     XCTAssertTrue((query.facets ?? []).contains("tags"))
     
@@ -53,8 +53,7 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
     let filterState = FilterState()
     let viewModel = SelectableSegmentViewModel<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     
-    viewModel.connectTo(filterState, attribute: "tags", operator: .or)
-    
+    viewModel.connectFilterState(filterState, attribute: "tags", operator: .or)
     // ViewModel -> FilterState
     
     viewModel.computeSelected(selecting: 1)

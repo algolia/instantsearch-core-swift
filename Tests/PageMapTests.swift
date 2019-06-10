@@ -18,7 +18,7 @@ class PageMapTests: XCTestCase {
   
   func testConstructionWithSequence() {
     
-    let pageMap = PageMap<String>(["i1", "i2", "i3"])
+    let pageMap = PageMap<String>(["i1", "i2", "i3"])!
     
     XCTAssertEqual(pageMap.loadedPages, [
       .init(index: 0, items: ["i1", "i2", "i3"])
@@ -88,7 +88,7 @@ class PageMapTests: XCTestCase {
     
     let p0 = ["i1", "i2", "i3"]
     let p1 = ["i4", "i5", "i6"]
-    let pageMap = PageMap(p0)
+    let pageMap = PageMap(p0)!
     
     let updatedPageMap = pageMap.inserting(p1, withIndex: 1)
     
@@ -107,7 +107,7 @@ class PageMapTests: XCTestCase {
     let p0 = ["i4", "i5", "i6"]
     let p2 = ["i10", "i11", "i12"]
     
-    var pageMap = PageMap(p0)
+    var pageMap = PageMap(p0)!
     
     XCTAssertEqual(pageMap.loadedPages, [.init(index: 0, items: p0)])
     XCTAssertEqual(pageMap.latestPageIndex, 0)
@@ -137,7 +137,7 @@ class PageMapTests: XCTestCase {
   func testContainsItem() {
     
     let p0 = ["i4", "i5", "i6"]
-    let pageMap = PageMap(p0)
+    let pageMap = PageMap(p0)!
     
     XCTAssertTrue(pageMap.containsItem(atIndex: 1))
     XCTAssertFalse(pageMap.containsItem(atIndex: 4))
@@ -152,7 +152,7 @@ class PageMapTests: XCTestCase {
   func testPageMapConvertibleInit() {
     let items = ["i1", "i11", "i21"]
     let testPageMapConvertible = TestPageable(index: 5, items: items)
-    let pageMap = PageMap(testPageMapConvertible)
+    let pageMap = PageMap(testPageMapConvertible)!
     XCTAssertEqual(pageMap.loadedPages, toPages([(5, items)]))
   }
   

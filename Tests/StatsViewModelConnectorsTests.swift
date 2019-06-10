@@ -28,9 +28,8 @@ class StatsViewModelConnectorsTests: XCTestCase {
     let vm = StatsViewModel(item: .none)
     let results = SearchResults(hits: [], stats: .init())
     let query = Query()
-    let filterState = FilterState()
     
-    let searcher = SingleIndexSearcher(index: .test, query: query, filterState: filterState)
+    let searcher = SingleIndexSearcher(index: .test, query: query)
     vm.connectSearcher(searcher)
     
     let exp = expectation(description: "on item changed")

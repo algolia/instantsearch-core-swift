@@ -60,11 +60,10 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     let viewModel = FacetListViewModel(selectionMode: .single)
 
     let query = Query()
-    let filterState = FilterState()
-    let searcher = SingleIndexSearcher(index: .test, query: query, filterState: filterState, requestOptions: .none)
+    let searcher = SingleIndexSearcher(index: .test, query: query, requestOptions: .none)
     
     viewModel.connectSearcher(searcher, with: "type")
-        
+    
     let bundle = Bundle(for: SelectableListViewModelFacetConnectorsTests.self)
     
     do {
