@@ -126,3 +126,15 @@ extension FilterState: CustomDebugStringConvertible {
   }
 
 }
+
+extension FilterState: DisjunctiveFacetingDelegate {
+  
+  public var disjunctiveFacetsAttributes: [String] {
+    return Array(filters.getDisjunctiveFacetsAttributes()).map { $0.description }
+  }
+  
+  public var facetFilters: [String: [String]] {
+    return filters.getRawFacetFilters()
+  }
+  
+}

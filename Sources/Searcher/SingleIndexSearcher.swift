@@ -35,18 +35,14 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
   public let onError: Observer<Error>
   public let onQueryChanged: Observer<String?>
   public var requestOptions: RequestOptions?
-  
-  public var filterState: FilterState {
-    return indexSearchData.filterState
-  }
+  public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
   
   public var isDisjunctiveFacetingEnabled = true
   
   public init(index: Index,
               query: Query = .init(),
-              filterState: FilterState = .init(),
               requestOptions: RequestOptions? = nil) {
-    indexSearchData = IndexSearchData(index: index, query: query, filterState: filterState)
+    indexSearchData = IndexSearchData(index: index, query: query)
     self.requestOptions = requestOptions
     sequencer = Sequencer()
     isLoading = Observer()
@@ -57,17 +53,12 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
     onResults.retainLastData = true
     onError.retainLastData = false
     isLoading.retainLastData = true
-
-    filterState.onChange.subscribePast(with: self) { _ in
-      self.search()
-    }
   }
   
   public convenience init(indexSearchData: IndexSearchData,
                           requestOptions: RequestOptions? = nil) {
     self.init(index: indexSearchData.index,
               query: indexSearchData.query,
-              filterState: indexSearchData.filterState,
               requestOptions: requestOptions)
   }
   
@@ -89,15 +80,18 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
   
     let operation: Operation
     
-    if isDisjunctiveFacetingEnabled && indexSearchData.filterState.filters.isDisjunctiveFacetingAvailable() {
-      let disjunctiveFacets = Array(indexSearchData.filterState.filters.getDisjunctiveFacetsAttributes()).map { $0.description }
-      let refinements = indexSearchData.filterState.filters.getRawFacetFilters()
+    if
+      let disjunctiveFacetingDelegate = disjunctiveFacetingDelegate,
+      !disjunctiveFacetingDelegate.disjunctiveFacetsAttributes.isEmpty,
+      isDisjunctiveFacetingEnabled
+    {
+      let disjunctiveFacets = Array(disjunctiveFacetingDelegate.disjunctiveFacetsAttributes).map { $0.description }
+      let refinements = disjunctiveFacetingDelegate.facetFilters
       indexSearchData.query.filters = nil
       operation = indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { [weak self] value, error in
         self?.handle(value, error)
       }
     } else {
-      indexSearchData.applyFilters()
       operation = indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { [weak self] value, error in
         self?.handle(value, error)
       }
@@ -116,4 +110,26 @@ extension SingleIndexSearcher: SequencerDelegate {
   public func didChangeOperationsState(hasPendingOperations: Bool) {
     isLoading.fire(hasPendingOperations)
   }
+}
+
+public protocol DisjunctiveFacetingDelegate: class {
+  
+  var disjunctiveFacetsAttributes: [String] { get }
+  var facetFilters: [String: [String]] { get }
+  
+}
+
+public extension SingleIndexSearcher {
+  
+  func connectFilterState(_ filterState: FilterState) {
+    
+    disjunctiveFacetingDelegate = filterState
+    
+    filterState.onChange.subscribePast(with: self) { [weak self] _ in
+      self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      self?.search()
+    }
+    
+  }
+  
 }
