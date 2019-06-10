@@ -28,7 +28,7 @@ public extension StatsViewModel {
         self?.item = searchResults.stats
     }
     
-    searcher.onError.subscribePast(with: self) { [weak self] _ in
+    searcher.onError.subscribe(with: self) { [weak self] _ in
       self?.item = .none
     }
     
