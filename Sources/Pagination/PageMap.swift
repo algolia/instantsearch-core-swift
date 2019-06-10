@@ -120,9 +120,9 @@ extension PageMap: BidirectionalCollection {
   public subscript (position: Index) -> Item? {
     get {
       let pageIndex = self.pageIndex(for: position)
-      
-      if let page = storage[pageIndex] {
-        return page[position%pageSize]
+      let inPageIndex = position % pageSize
+      if let page = storage[pageIndex], inPageIndex < page.count {
+        return page[inPageIndex]
       } else {
         // Return nil for all pages that haven't been set yet
         return nil

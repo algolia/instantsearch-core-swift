@@ -26,8 +26,16 @@ public class InfiniteScrollingController: InfiniteScrollable {
     pendingPageIndexes.removeAll()
   }
   
-  func isLoadedOrPending<T>(pageIndex: PageMap<T>.PageIndex, pageMap: PageMap<T>) -> Bool {
-    return pageMap.containsPage(atIndex: pageIndex) || pendingPageIndexes.contains(pageIndex)
+  internal func isLoadedOrPending<T>(pageIndex: PageMap<T>.PageIndex, pageMap: PageMap<T>) -> Bool {
+    let pageIsLoaded = pageMap.containsPage(atIndex: pageIndex)
+    let pageIsPending = pendingPageIndexes.contains(pageIndex)
+    return pageIsLoaded || pageIsPending
+  }
+  
+  private func pagesToLoad<T>(in range: [Int], from pageMap: PageMap<T>) -> Set<Int> {
+    let pagesContainingRequiredRows = Set(range.map(pageMap.pageIndex(for:)))
+    let pagesToLoad = pagesContainingRequiredRows.filter { !isLoadedOrPending(pageIndex: $0, pageMap: pageMap) }
+    return pagesToLoad
   }
   
   func calculatePagesAndLoad<T>(currentRow: Int, offset: Int, pageMap: PageMap<T>) {
@@ -41,13 +49,7 @@ public class InfiniteScrollingController: InfiniteScrollable {
     
     let nextPagesToLoad = computeNextPagesToLoad(currentRow: currentRow, offset: offset, pageMap: pageMap)
     
-    // Zipping sorted pages to load sequences
-    // makes possible to load the nearest pages firstly
-    
-    let pagesToLoad =
-      zip(previousPagesToLoad.sorted(), nextPagesToLoad.sorted())
-      .map { [$0.0, $0.1] }
-      .reduce([], +)
+    let pagesToLoad = previousPagesToLoad.union(nextPagesToLoad)
     
     for pageIndex in pagesToLoad {
       debugPrint("[InfiniteScrollingController] Requested loading page: \(pageIndex)")
@@ -68,11 +70,8 @@ public class InfiniteScrollingController: InfiniteScrollable {
       lowerBoundRow = computedLowerBoundRow
     }
     
-    let pagesToLoad = (lowerBoundRow..<currentRow)
-      .map(pageMap.pageIndex(for:))
-      .filter { !isLoadedOrPending(pageIndex: $0, pageMap: pageMap) }
-    
-    return Set(pagesToLoad)
+    let requiredRows = Array(lowerBoundRow..<currentRow)
+    return pagesToLoad(in: requiredRows, from: pageMap)
 
   }
   
@@ -91,15 +90,14 @@ public class InfiniteScrollingController: InfiniteScrollable {
       upperBoundRow = computedUpperBoundRow
     }
     
-    guard currentRow + 1 <= upperBoundRow else {
+    let nextRow = currentRow + 1
+    
+    guard nextRow <= upperBoundRow else {
       return []
     }
     
-    let pagesToLoad = ((currentRow + 1)...upperBoundRow)
-      .map(pageMap.pageIndex(for:))
-      .filter { !isLoadedOrPending(pageIndex: $0, pageMap: pageMap) }
-    
-    return Set(pagesToLoad)
+    let requiredRows = Array(nextRow...upperBoundRow)
+    return pagesToLoad(in: requiredRows, from: pageMap)
     
   }
   

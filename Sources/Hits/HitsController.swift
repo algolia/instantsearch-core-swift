@@ -25,7 +25,9 @@ extension HitsViewModel: HitsSource {}
 public extension HitsViewModel {
   
   func connectController<Controller: HitsController>(_ controller: Controller) where Controller.DataSource == HitsViewModel<Record> {
+    
     controller.hitsSource = self
+    
     onRequestChanged.subscribe(with: self) { _ in
       controller.scrollToTop()
     }.onQueue(.main)
