@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class MultiIndexSearcher: Searcher, SearchResultObservable {
+public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = MultiSearchResults
   
@@ -119,12 +119,6 @@ extension MultiIndexSearcher {
     
   }
   
-}
-
-extension MultiIndexSearcher: SequencerDelegate {
-  public func didChangeOperationsState(hasPendingOperations: Bool) {
-    isLoading.fire(hasPendingOperations)
-  }
 }
 
 //TODO: do a proper connection between each query and filterState

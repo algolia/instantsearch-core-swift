@@ -8,14 +8,18 @@
 
 import Foundation
 
-public class StatsViewModel: ItemViewModel<SearchStats?> {}
+public class StatsViewModel: ItemViewModel<SearchStats?> {
+  public init() {
+    super.init(item: .none)
+  }
+}
 
-public typealias StatsPresenter<Output> = (SearchStats?) -> Output
+public typealias StatsPresenter<Output> = Presenter<SearchStats?, Output>
 
 public struct DefaultStatsPresenter {
   
   public static let present: StatsPresenter<String?> = { stats in
-    return (stats?.totalHitsCount).flatMap { "hits: \($0)" }
+    return (stats?.totalHitsCount).flatMap { "\($0) results" }
   }
   
 }
@@ -31,14 +35,10 @@ public extension StatsViewModel {
     searcher.onError.subscribe(with: self) { [weak self] _ in
       self?.item = .none
     }
-    
   }
-  
-  func connectController<C: ItemController, Output>(_ controller: C, presenter: @escaping StatsPresenter<Output>) where C.Item == Output {
-    onItemChanged.subscribePast(with: controller) { itemToPresent in
-      let presentableItem = presenter(itemToPresent)
-      controller.setItem(presentableItem)
-    }
+
+  func connectController<C: StatsTextController>(_ controller: C, presenter: Presenter<SearchStats?, String?>? = nil) {
+    let statsPresenter = presenter ?? DefaultStatsPresenter.present
+    connectController(controller, presenter: statsPresenter)
   }
-  
 }

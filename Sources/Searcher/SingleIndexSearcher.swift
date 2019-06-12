@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SingleIndexSearcher: Searcher, SearchResultObservable {
+public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = SearchResults
   
@@ -106,12 +106,6 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
     sequencer.cancelPendingOperations()
   }
   
-}
-
-extension SingleIndexSearcher: SequencerDelegate {
-  public func didChangeOperationsState(hasPendingOperations: Bool) {
-    isLoading.fire(hasPendingOperations)
-  }
 }
 
 public protocol DisjunctiveFacetingDelegate: class {
