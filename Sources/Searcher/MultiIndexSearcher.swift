@@ -34,10 +34,17 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public let isLoading: Observer<Bool>
   public let onQueryChanged: Observer<String?>
   public let onResults: Observer<SearchResult>
-  public let onError: Observer<Error>
+  public let onError: Observer<([Query], Error)>
   public var applyDisjunctiveFacetingWhenNecessary = true
   public var requestOptions: RequestOptions?
   internal var pageLoaders: [PageLoaderProxy]
+  
+  public convenience init(client: Client, indices: [Index], requestOptions: RequestOptions? = nil) {
+    let indexSearchDatas = indices.map { IndexSearchData(index: $0, query: .init()) }
+    self.init(client: client,
+              indexSearchDatas: indexSearchDatas,
+              requestOptions: requestOptions)
+  }
   
   public init(client: Client,
               indexSearchDatas: [IndexSearchData],
@@ -67,7 +74,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
   public func search() {
     
     let indexQueries = indexSearchDatas.map(IndexQuery.init(indexSearchData:))
-    
+    let queries = indexSearchDatas.map { $0.query.copy() as! Query }
     let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
       
       guard let searcher = self else { return }
@@ -79,7 +86,7 @@ public class MultiIndexSearcher: Searcher, SearchResultObservable {
         searcher.onResults.fire(searchResults)
         
       case .failure(let error):
-        searcher.onError.fire(error)
+        searcher.onError.fire((queries, error))
       }
       
     }

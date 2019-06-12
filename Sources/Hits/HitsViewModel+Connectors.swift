@@ -22,16 +22,15 @@ extension HitsViewModel {
   
   public func connectSearcher(_ searcher: SingleIndexSearcher) {
     
-    infiniteScrollingController.pageLoader = searcher
+    pageLoader = searcher
     
     searcher.onResults.subscribePast(with: self) { [weak self] searchResults in
       try? self?.update(searchResults)
     }
     
-    searcher.onError.subscribe(with: self) { [weak self] _ in
-      //TODO: NOT RELIABLE
-      let loadedPage = Int(searcher.indexSearchData.query.page!)
-      self?.infiniteScrollingController.notifyPending(pageIndex: loadedPage)
+    searcher.onError.subscribe(with: self) { [weak self] (arg) in
+      let (query, error) = arg
+      self?.process(error, for: query)
     }
     
     searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in

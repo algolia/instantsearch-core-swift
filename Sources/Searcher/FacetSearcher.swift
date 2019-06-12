@@ -24,7 +24,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
   public var onQueryChanged: Observer<String?>
   public let isLoading: Observer<Bool>
   public let onResults: Observer<SearchResult>
-  public let onError: Observer<Error>
+  public let onError: Observer<(String, Error)>
   public var facetName: String
   public var requestOptions: RequestOptions?
 
@@ -42,13 +42,10 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     isLoading.retainLastData = true
   }
   
-  public func setQuery(text: String) {
-    self.query = text
-  }
-  
   public func search() {
     
-    let operation = indexSearchData.index.searchForFacetValues(of: facetName, matching: query ?? "", requestOptions: requestOptions) { [weak self] (content, error) in
+    let query = self.query ?? ""
+    let operation = indexSearchData.index.searchForFacetValues(of: facetName, matching: query, requestOptions: requestOptions) { [weak self] (content, error) in
       
       guard let searcher = self else { return }
       
@@ -59,7 +56,7 @@ public class FacetSearcher: Searcher, SearchResultObservable {
         searcher.onResults.fire(results)
         
       case .failure(let error):
-        searcher.onError.fire(error)
+        searcher.onError.fire((query, error))
       }
     }
     

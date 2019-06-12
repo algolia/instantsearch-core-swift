@@ -1,5 +1,5 @@
 //
-//  MultiHitsViewModel+Connectors.swift
+//  MultiIndexHitsViewModel+Connectors.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 07/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension MultiHitsViewModel {
+public extension MultiIndexHitsViewModel {
   
   func connectSearcher(_ searcher: MultiIndexSearcher) {
     
@@ -18,15 +18,15 @@ public extension MultiHitsViewModel {
     }
     
     searcher.onResults.subscribePast(with: self) { [weak self] searchResults in
-      try? self?.update(searchResults.searchResults)
+      do {
+        try self?.update(searchResults.searchResults)
+      } catch let error {
+        self?.onError.fire(error)
+      }
     }
     
-    searcher.onError.subscribe(with: self) { [weak self] _  in
-      let currentPages = searcher.indexSearchDatas.compactMap { $0.query.page }.map { Int($0) }
-      let hitsViewModels = self?.hitsViewModels ?? []
-      zip(hitsViewModels, currentPages).forEach { (hitsViewModel, page) in
-        hitsViewModel.notifyPending(atIndex: page)
-      }
+    searcher.onError.subscribe(with: self) { [weak self] (queries, error)  in
+      self?.process(error, for: queries)
     }
     
     searcher.onQueryChanged.subscribe(with: self) { [weak self] _ in

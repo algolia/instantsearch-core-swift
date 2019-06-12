@@ -39,34 +39,3 @@ public protocol AnyHitsViewModel: class {
   func notifyPending(atIndex index: Int)
 
 }
-
-extension HitsViewModel: AnyHitsViewModel {
-
-  public func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R? {
-    
-    guard let hit = hit(atIndex: index) else {
-      return .none
-    }
-    
-    if let castedHit = hit as? R {
-      return castedHit
-    } else {
-      throw Error.incompatibleRecordType
-    }
-
-  }
-  
-  public func notifyPending(atIndex index: Int) {
-    infiniteScrollingController.notifyPending(pageIndex: index)
-  }
-  
-  public enum Error: Swift.Error, LocalizedError {
-    case incompatibleRecordType
-    
-    var localizedDescription: String {
-      return "Unexpected record type: \(String(describing: Record.self))"
-    }
-    
-  }
-
-}

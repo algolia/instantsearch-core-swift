@@ -1,5 +1,5 @@
 //
-//  MultiHitsViewModel.swift
+//  MultiIndexHitsViewModel.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 15/03/2019.
@@ -13,7 +13,7 @@ import Foundation
  Designed for a joint usage with multi index searcher, but can be used with multiple separate single index searchers as well.
  */
 
-public class MultiHitsViewModel {
+public class MultiIndexHitsViewModel {
   
   public let onRequestChanged: Observer<Void>
   public let onResultsUpdated: Observer<[SearchResults]>
@@ -83,6 +83,13 @@ public class MultiHitsViewModel {
     onResultsUpdated.fire(results)
   }
   
+  public func process(_ error: Error, for queries: [Query]) {
+    let pages = queries.compactMap { $0.page }.map { Int($0) }
+    zip(hitsViewModels, pages).forEach { (hitsViewModel, page) in
+      hitsViewModel.notifyPending(atIndex: page)
+    }
+  }
+  
   public func notifyQueryChanged() {
     hitsViewModels.forEach {
       $0.notifyQueryChanged()
@@ -126,7 +133,7 @@ public class MultiHitsViewModel {
 
 #if os(iOS) || os(tvOS)
 
-public extension MultiHitsViewModel {
+public extension MultiIndexHitsViewModel {
   
   /// Returns the hit of a desired type
   /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel

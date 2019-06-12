@@ -8,13 +8,13 @@
 import Foundation
 import InstantSearchClient
 
-public class HitsViewModel<Record: Codable> {
+public class HitsViewModel<Record: Codable>: AnyHitsViewModel {
   
   public let settings: Settings
 
   private let paginator: Paginator<Record>
   private var isLastQueryEmpty: Bool = true
-  internal let infiniteScrollingController: InfiniteScrollable
+  private let infiniteScrollingController: InfiniteScrollable
   
   public let onRequestChanged: Observer<Void>
   public let onResultsUpdated: Observer<SearchResults>
@@ -78,7 +78,38 @@ public class HitsViewModel<Record: Codable> {
     guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return nil }
     return [String: Any](jsonValue)
   }
+  
+  public func notifyPending(atIndex index: Int) {
+    infiniteScrollingController.notifyPending(pageIndex: index)
+  }
+  
+  public func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R? {
+    
+    guard let hit = hit(atIndex: index) else {
+      return .none
+    }
+    
+    if let castedHit = hit as? R {
+      return castedHit
+    } else {
+      throw Error.incompatibleRecordType
+    }
+    
+  }
 
+}
+
+extension HitsViewModel {
+  
+  public enum Error: Swift.Error, LocalizedError {
+    case incompatibleRecordType
+    
+    var localizedDescription: String {
+      return "Unexpected record type: \(String(describing: Record.self))"
+    }
+    
+  }
+  
 }
 
 private extension HitsViewModel {
@@ -151,6 +182,12 @@ extension HitsViewModel {
       throw error
     }
     
+  }
+  
+  public func process(_ error: Swift.Error, for query: Query) {
+    if let pendingPage = query.page {
+      infiniteScrollingController.notifyPending(pageIndex: Int(pendingPage))
+    }
   }
   
 }

@@ -1,5 +1,5 @@
 //
-//  MultiHitsSource.swift
+//  MultiIndexHitsSource.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 23/05/2019.
@@ -8,11 +8,10 @@
 
 import Foundation
 
-public protocol MultiHitsSource: class {
+public protocol MultiIndexHitsSource: class {
   
   func numberOfSections() -> Int
   func numberOfHits(inSection section: Int) -> Int
   func hit<R: Codable>(atIndex index: Int, inSection section: Int) throws -> R?
   
 }
-

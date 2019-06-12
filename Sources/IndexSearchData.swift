@@ -36,7 +36,7 @@ extension IndexQuery {
 
 extension Array where Element == IndexSearchData {
   
-  init(indices: [InstantSearchClient.Index], query: Query = .init(), requestOptions: RequestOptions? = nil) {
+  init(indices: [InstantSearchClient.Index], query: Query = .init()) {
     self = indices.map { IndexSearchData(index: $0, query: query) }
   }
   

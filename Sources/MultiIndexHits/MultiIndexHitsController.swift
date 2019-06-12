@@ -1,5 +1,5 @@
 //
-//  MultiHitsController.swift
+//  MultiIndexHitsController.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 23/05/2019.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public protocol MultiHitsController: class {
+public protocol MultiIndexHitsController: class {
   
-  var hitsSource: MultiHitsSource? { get set }
+  var hitsSource: MultiIndexHitsSource? { get set }
   
   func reload()
   
@@ -18,11 +18,11 @@ public protocol MultiHitsController: class {
   
 }
 
-extension MultiHitsViewModel: MultiHitsSource {}
+extension MultiIndexHitsViewModel: MultiIndexHitsSource {}
 
-public extension MultiHitsViewModel {
+public extension MultiIndexHitsViewModel {
   
-  func connectController<Controller: MultiHitsController>(_ controller: Controller) {
+  func connectController<Controller: MultiIndexHitsController>(_ controller: Controller) {
     
     controller.hitsSource = self
     
@@ -33,6 +33,8 @@ public extension MultiHitsViewModel {
     onResultsUpdated.subscribePast(with: controller) { _ in
       controller.reload()
     }.onQueue(.main)
+    
+    controller.reload()
   }
   
 }

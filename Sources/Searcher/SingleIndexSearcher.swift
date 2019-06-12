@@ -18,7 +18,7 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
       let oldValue = indexSearchData.query.query
       guard oldValue != newValue else { return }
       indexSearchData.query.query = newValue
-      indexSearchData.query.page = 0 // when new text changes, reset page to 0?
+      indexSearchData.query.page = 0
       onQueryChanged.fire(newValue)
     }
     
@@ -32,7 +32,7 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
   public var indexSearchData: IndexSearchData
   public let isLoading: Observer<Bool>
   public let onResults: Observer<SearchResults>
-  public let onError: Observer<Error>
+  public let onError: Observer<(Query, Error)>
   public let onQueryChanged: Observer<String?>
   public var requestOptions: RequestOptions?
   public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
@@ -62,7 +62,7 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
               requestOptions: requestOptions)
   }
   
-  fileprivate func handle(_ value: [String: Any]?, _ error: Error?) {
+  fileprivate func handle(_ value: [String: Any]?, _ error: Error?, for query: Query) {
     
     let result: Result<SearchResults, Error> = transform(content: value, error: error)
     
@@ -71,7 +71,7 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
       onResults.fire(searchResults)
       
     case .failure(let error):
-      onError.fire(error)
+      onError.fire((query, error))
     }
     
   }
@@ -79,7 +79,7 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
   public func search() {
   
     let operation: Operation
-    
+
     if
       let disjunctiveFacetingDelegate = disjunctiveFacetingDelegate,
       !disjunctiveFacetingDelegate.disjunctiveFacetsAttributes.isEmpty,
@@ -88,12 +88,14 @@ public class SingleIndexSearcher: Searcher, SearchResultObservable {
       let disjunctiveFacets = Array(disjunctiveFacetingDelegate.disjunctiveFacetsAttributes).map { $0.description }
       let refinements = disjunctiveFacetingDelegate.facetFilters
       indexSearchData.query.filters = nil
+      let query = indexSearchData.query.copy() as! Query
       operation = indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { [weak self] value, error in
-        self?.handle(value, error)
+        self?.handle(value, error, for: query)
       }
     } else {
+      let query = indexSearchData.query.copy() as! Query
       operation = indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { [weak self] value, error in
-        self?.handle(value, error)
+        self?.handle(value, error, for: query)
       }
     }
     

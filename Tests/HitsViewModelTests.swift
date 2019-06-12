@@ -286,7 +286,7 @@ class HitsViewModelTests: XCTestCase {
     searcher.onResults.fire(searchResults)
     
     isc.pendingPages = [0]
-    searcher.onError.fire(NSError())
+    searcher.onError.fire((searcher.indexSearchData.query, NSError()))
     XCTAssertTrue(isc.pendingPages.isEmpty)
     
     waitForExpectations(timeout: 2, handler: nil)
