@@ -22,7 +22,40 @@ public extension SelectableViewModel where Item: FilterType {
     whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
-  private func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
+  func connectTo<F: FilterType>(_ filterState: FilterState,
+                 operator: RefinementOperator = .or,
+                 groupName: String? = nil,
+                 default: F) {
+    
+    let groupID = FilterGroup.ID(groupName: groupName,
+                                 attribute: item.attribute,
+                                 operator: `operator`)
+    
+    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID, default: `default`)
+    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
+    filterState.notify(.add(filter: `default`, toGroupWithID: groupID))
+  }
+  
+}
+
+
+
+private extension SelectableViewModel where Item: FilterType {
+  
+  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+    
+    let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
+      guard let filter = self?.item else { return }
+      self?.isSelected = filterState.contains(filter, inGroupWithID: groupID)
+    }
+    
+    onChange(filterState)
+    
+    filterState.onChange.subscribePast(with: self, callback: onChange)
+  }
+
+  
+  func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
                                                            attribute: Attribute,
                                                            groupID: FilterGroup.ID) {
     
@@ -45,17 +78,32 @@ public extension SelectableViewModel where Item: FilterType {
     
   }
   
-  private func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+  func whenSelectionsComputedThenUpdateFilterState<F: FilterType>(_ filterState: FilterState,
+                                                                          attribute: Attribute,
+                                                                          groupID: FilterGroup.ID,
+                                                                          default: F) {
     
-    let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
-      guard let filter = self?.item else { return }
-      self?.isSelected = filterState.contains(filter, inGroupWithID: groupID)
+    onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState] computedSelected in
+      
+      guard
+        let item = self?.item,
+        let filterState = filterState
+        else { return }
+      
+      if computedSelected {
+        filterState.remove(`default`, fromGroupWithID: groupID)
+        filterState.add(item, toGroupWithID: groupID)
+      } else {
+        filterState.remove(item, fromGroupWithID: groupID)
+        filterState.add(`default`, toGroupWithID: groupID)
+      }
+      
+      filterState.notifyChange()
+      
     }
     
-    onChange(filterState)
-    
-    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
+
   
 }
 
