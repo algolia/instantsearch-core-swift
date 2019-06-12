@@ -16,11 +16,23 @@ public class ItemViewModel<Item> {
     }
   }
   
-  public let onItemChanged: Observer<Item>
+  let onItemChanged: Observer<Item>
   
-  public init(item: Item) {
+  init(item: Item) {
     self.item = item
     self.onItemChanged = Observer()
   }
   
+}
+
+extension ItemViewModel {
+  func connectController<O, C: ItemController>(_ controller: C, dispatchOnMainThread: Bool = false, presenter: @escaping Presenter<Item, O>) where C.Item == O {
+    let sub = onItemChanged.subscribePast(with: self) { (item) in
+      controller.setItem(presenter(item))
+    }
+
+    if dispatchOnMainThread {
+      sub.onQueue(.main)
+    }
+  }
 }

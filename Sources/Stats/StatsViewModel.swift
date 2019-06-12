@@ -8,7 +8,11 @@
 
 import Foundation
 
-public class StatsViewModel: ItemViewModel<SearchStats?> {}
+public class StatsViewModel: ItemViewModel<SearchStats?> {
+  public init() {
+    super.init(item: .none)
+  }
+}
 
 public typealias StatsPresenter<Output> = (SearchStats?) -> Output
 

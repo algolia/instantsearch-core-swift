@@ -142,10 +142,6 @@
 		AF93968A2298154900757257 /* ClearRefinementsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* ClearRefinementsController.swift */; };
 		AF93968B2298154900757257 /* ClearRefinementsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* ClearRefinementsController.swift */; };
 		AF93968C2298154900757257 /* ClearRefinementsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* ClearRefinementsController.swift */; };
-		AF93968F2298169F00757257 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93968E2298169F00757257 /* LoadableController.swift */; };
-		AF9396902298169F00757257 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93968E2298169F00757257 /* LoadableController.swift */; };
-		AF9396912298169F00757257 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93968E2298169F00757257 /* LoadableController.swift */; };
-		AF9396922298169F00757257 /* LoadableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93968E2298169F00757257 /* LoadableController.swift */; };
 		AF93969B229D51F300757257 /* QueryInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93969A229D51F300757257 /* QueryInputController.swift */; };
 		AF93969C229D51F300757257 /* QueryInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93969A229D51F300757257 /* QueryInputController.swift */; };
 		AF93969D229D51F300757257 /* QueryInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF93969A229D51F300757257 /* QueryInputController.swift */; };
@@ -422,10 +418,6 @@
 		E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
 		E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
 		E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
-		E26F423522969DD100583D39 /* LoadableController+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* LoadableController+Searcher.swift */; };
-		E26F423622969DD100583D39 /* LoadableController+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* LoadableController+Searcher.swift */; };
-		E26F423722969DD100583D39 /* LoadableController+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* LoadableController+Searcher.swift */; };
-		E26F423822969DD100583D39 /* LoadableController+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423422969DD100583D39 /* LoadableController+Searcher.swift */; };
 		E26F423B2296A45500583D39 /* StatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423A2296A45500583D39 /* StatsController.swift */; };
 		E26F423C2296A45500583D39 /* StatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423A2296A45500583D39 /* StatsController.swift */; };
 		E26F423D2296A45500583D39 /* StatsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F423A2296A45500583D39 /* StatsController.swift */; };
@@ -505,6 +497,30 @@
 		E2EFA5E922A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
 		E2EFA5EA22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
 		E2EFA5EB22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */; };
+		E2EFA5F622AEBD72008C9CAA /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5F522AEBD72008C9CAA /* EventViewModel.swift */; };
+		E2EFA5F722AEBD72008C9CAA /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5F522AEBD72008C9CAA /* EventViewModel.swift */; };
+		E2EFA5F822AEBD72008C9CAA /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5F522AEBD72008C9CAA /* EventViewModel.swift */; };
+		E2EFA5F922AEBD72008C9CAA /* EventViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5F522AEBD72008C9CAA /* EventViewModel.swift */; };
+		E2EFA5FC22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5FB22AEBE29008C9CAA /* LoadingViewModel.swift */; };
+		E2EFA5FD22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5FB22AEBE29008C9CAA /* LoadingViewModel.swift */; };
+		E2EFA5FE22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5FB22AEBE29008C9CAA /* LoadingViewModel.swift */; };
+		E2EFA5FF22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5FB22AEBE29008C9CAA /* LoadingViewModel.swift */; };
+		E2EFA60122AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60022AEBF22008C9CAA /* LoadingViewModel+Searcher.swift */; };
+		E2EFA60222AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60022AEBF22008C9CAA /* LoadingViewModel+Searcher.swift */; };
+		E2EFA60322AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60022AEBF22008C9CAA /* LoadingViewModel+Searcher.swift */; };
+		E2EFA60422AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60022AEBF22008C9CAA /* LoadingViewModel+Searcher.swift */; };
+		E2EFA60622B0FFD2008C9CAA /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */; };
+		E2EFA60722B0FFD2008C9CAA /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */; };
+		E2EFA60822B0FFD2008C9CAA /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */; };
+		E2EFA60922B0FFD2008C9CAA /* LoadingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */; };
+		E2EFA60B22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60A22B10062008C9CAA /* LoadingViewModel+Controller.swift */; };
+		E2EFA60C22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60A22B10062008C9CAA /* LoadingViewModel+Controller.swift */; };
+		E2EFA60D22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60A22B10062008C9CAA /* LoadingViewModel+Controller.swift */; };
+		E2EFA60E22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA60A22B10062008C9CAA /* LoadingViewModel+Controller.swift */; };
+		E2EFA61122B101E2008C9CAA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA61022B101E2008C9CAA /* Presenter.swift */; };
+		E2EFA61222B101E2008C9CAA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA61022B101E2008C9CAA /* Presenter.swift */; };
+		E2EFA61322B101E2008C9CAA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA61022B101E2008C9CAA /* Presenter.swift */; };
+		E2EFA61422B101E2008C9CAA /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA61022B101E2008C9CAA /* Presenter.swift */; };
 		E2F2073720B6C2330066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
 		E2F2073820B6C2430066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
 		E2F2073920B6C2540066AF12 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
@@ -572,7 +588,6 @@
 		AF6C6F7022538179001E5E3C /* FacetSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetSearcher.swift; sourceTree = "<group>"; };
 		AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableViewModel+Filter.swift"; sourceTree = "<group>"; };
 		AF9396882298154900757257 /* ClearRefinementsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearRefinementsController.swift; sourceTree = "<group>"; };
-		AF93968E2298169F00757257 /* LoadableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableController.swift; sourceTree = "<group>"; };
 		AF93969A229D51F300757257 /* QueryInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryInputController.swift; sourceTree = "<group>"; };
 		AF93969F229D527C00757257 /* QueryInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputViewModel.swift; sourceTree = "<group>"; };
 		AF9396A4229D52A900757257 /* QueryInputViewModel+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QueryInputViewModel+Searcher.swift"; sourceTree = "<group>"; };
@@ -658,7 +673,6 @@
 		E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModel.swift; sourceTree = "<group>"; };
 		E24234092243A43D008F24FB /* Signals+Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Signals+Observable.swift"; sourceTree = "<group>"; };
 		E265DBEF22733D4C002DC989 /* SelectableListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListController.swift; sourceTree = "<group>"; };
-		E26F423422969DD100583D39 /* LoadableController+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoadableController+Searcher.swift"; sourceTree = "<group>"; };
 		E26F423A2296A45500583D39 /* StatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsController.swift; sourceTree = "<group>"; };
 		E26F4249229830E500583D39 /* ClearRefinementsController+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClearRefinementsController+FilterState.swift"; sourceTree = "<group>"; };
 		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
@@ -688,6 +702,12 @@
 		E2EFA5DB22A94D5B008C9CAA /* IndexSegmentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSegmentViewModel.swift; sourceTree = "<group>"; };
 		E2EFA5E222A95CED008C9CAA /* IndexSegmentViewModel+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentViewModel+Searcher.swift"; sourceTree = "<group>"; };
 		E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentViewModel+Controller.swift"; sourceTree = "<group>"; };
+		E2EFA5F522AEBD72008C9CAA /* EventViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventViewModel.swift; sourceTree = "<group>"; };
+		E2EFA5FB22AEBE29008C9CAA /* LoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewModel.swift; sourceTree = "<group>"; };
+		E2EFA60022AEBF22008C9CAA /* LoadingViewModel+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoadingViewModel+Searcher.swift"; sourceTree = "<group>"; };
+		E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingController.swift; sourceTree = "<group>"; };
+		E2EFA60A22B10062008C9CAA /* LoadingViewModel+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoadingViewModel+Controller.swift"; sourceTree = "<group>"; };
+		E2EFA61022B101E2008C9CAA /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -880,6 +900,8 @@
 		AFC2E281228ED52900859EBA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				E2EFA60F22B101D6008C9CAA /* Presenter */,
+				E2EFA5F422AEBD59008C9CAA /* Event */,
 				AFE6E38A22A18ABA005BA44D /* Item */,
 				AFC2E2B5228EE25800859EBA /* Selectable */,
 				AFC2E2B6228EE25D00859EBA /* SelectableList */,
@@ -1006,11 +1028,11 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2EFA5FA22AEBE15008C9CAA /* Loading */,
 				E2EFA5DA22A94D45008C9CAA /* SortBy */,
 				E2CF1A2C22A693E600DE24FC /* Number */,
 				AF9396872298153800757257 /* ClearRefinements */,
 				E26F42392296A42F00583D39 /* Stats */,
-				E26F422922969C3000583D39 /* LoadingIndicator */,
 				E26F42142295980400583D39 /* QueryInput */,
 				AFF1E74C2296967D00941401 /* MultiHits */,
 				AFF1E74B2296966400941401 /* Hits */,
@@ -1099,15 +1121,6 @@
 			path = QueryInput;
 			sourceTree = "<group>";
 		};
-		E26F422922969C3000583D39 /* LoadingIndicator */ = {
-			isa = PBXGroup;
-			children = (
-				AF93968E2298169F00757257 /* LoadableController.swift */,
-				E26F423422969DD100583D39 /* LoadableController+Searcher.swift */,
-			);
-			path = LoadingIndicator;
-			sourceTree = "<group>";
-		};
 		E26F42392296A42F00583D39 /* Stats */ = {
 			isa = PBXGroup;
 			children = (
@@ -1166,6 +1179,33 @@
 				E2EFA5E722A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift */,
 			);
 			path = SortBy;
+			sourceTree = "<group>";
+		};
+		E2EFA5F422AEBD59008C9CAA /* Event */ = {
+			isa = PBXGroup;
+			children = (
+				E2EFA5F522AEBD72008C9CAA /* EventViewModel.swift */,
+			);
+			path = Event;
+			sourceTree = "<group>";
+		};
+		E2EFA5FA22AEBE15008C9CAA /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				E2EFA5FB22AEBE29008C9CAA /* LoadingViewModel.swift */,
+				E2EFA60022AEBF22008C9CAA /* LoadingViewModel+Searcher.swift */,
+				E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */,
+				E2EFA60A22B10062008C9CAA /* LoadingViewModel+Controller.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		E2EFA60F22B101D6008C9CAA /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				E2EFA61022B101E2008C9CAA /* Presenter.swift */,
+			);
+			path = Presenter;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1546,11 +1586,12 @@
 				E26F424A229830E600583D39 /* ClearRefinementsController+FilterState.swift in Sources */,
 				AF11785E2264CC9C00C5B59B /* AndGroupProxy.swift in Sources */,
 				AFE6E3C522A82B1C005BA44D /* InfiniteScrollingController.swift in Sources */,
+				E2EFA61122B101E2008C9CAA /* Presenter.swift in Sources */,
 				E2CF1A3822A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E29E456D2243F351005B358D /* Observation.swift in Sources */,
 				AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */,
+				E2EFA5FC22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */,
 				AFC2E2AC228EDF8A00859EBA /* FilterGroupID+Convenience.swift in Sources */,
-				AF93968F2298169F00757257 /* LoadableController.swift in Sources */,
 				AF9396A0229D527C00757257 /* QueryInputViewModel.swift in Sources */,
 				AFCDED54222E7A4E001459BE /* Sequencer.swift in Sources */,
 				AFF1E758229696F700941401 /* MultiHitsSource.swift in Sources */,
@@ -1565,7 +1606,6 @@
 				AF93969B229D51F300757257 /* QueryInputController.swift in Sources */,
 				AFE6E38022A18369005BA44D /* ItemViewModel.swift in Sources */,
 				AF1178762264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
-				E26F423522969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
 				AF1178622264CCDE00C5B59B /* OrGroupProxy.swift in Sources */,
 				AF1177B2225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				AFC2E2A1228ED9A900859EBA /* FilterListController.swift in Sources */,
@@ -1577,6 +1617,7 @@
 				E29E45632243F32C005B358D /* Observable.swift in Sources */,
 				E225EDAF2268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AFC2E2A7228EDF6A00859EBA /* Query+Facets.swift in Sources */,
+				E2EFA60622B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				AF11786F2264CEBA00C5B59B /* AndGroupOperators.swift in Sources */,
 				AFE6E3AE22A6DC7E005BA44D /* HitsViewModel+Connectors.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
@@ -1587,6 +1628,7 @@
 				E2CF1A4C22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AF9396AA229D52D600757257 /* QueryInputViewModel+Controller.swift in Sources */,
 				AFCDED4C222E7A4E001459BE /* EitherSingleOrList.swift in Sources */,
+				E2EFA60122AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */,
 				AFE6E3A222A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AF1177BF225E2CB300C5B59B /* LegacySyntax.swift in Sources */,
 				AF11786A2264CD9C00C5B59B /* OrGroupOperators.swift in Sources */,
@@ -1628,11 +1670,13 @@
 				E2CF1A4222A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
 				AFDA41322269C54400100CB5 /* FacetListViewModel.swift in Sources */,
 				AF1177CF225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
+				E2EFA60B22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CB22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				AF1178662264CD4100C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFC2E297228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
 				AFC2E28D228ED88B00859EBA /* FilterListViewModel.swift in Sources */,
 				AFCDED48222E7A4E001459BE /* Highlighter.swift in Sources */,
+				E2EFA5F622AEBD72008C9CAA /* EventViewModel.swift in Sources */,
 				AF1177C7225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785A2264C20200C5B59B /* FilterOperators.swift in Sources */,
 			);
@@ -1696,6 +1740,7 @@
 				E2CF1A4322A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
 				AFCDEDD522397E31001459BE /* Sequencer.swift in Sources */,
 				AFCDEDD822397E31001459BE /* QueryMetadata.swift in Sources */,
+				E2EFA60722B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				AF1178772264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
 				AF1178632264CCDF00C5B59B /* OrGroupProxy.swift in Sources */,
 				AF1177B3225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
@@ -1711,12 +1756,13 @@
 				AFC2E298228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
 				E2EFA5DD22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
 				E2CF1A3922A6AD0200DE24FC /* NumberController.swift in Sources */,
-				E26F423622969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
+				E2EFA60C22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CC22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				E225EDB02268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178702264CEBB00C5B59B /* AndGroupOperators.swift in Sources */,
+				E2EFA5F722AEBD72008C9CAA /* EventViewModel.swift in Sources */,
 				AFBF37642285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A322A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2A8228EDF6A00859EBA /* Query+Facets.swift in Sources */,
@@ -1739,8 +1785,10 @@
 				AF117807225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFE6E3D122AAD5AA005BA44D /* MultiHitsViewModel+Connectors.swift in Sources */,
 				AFE6E3C422A82B1B005BA44D /* InfiniteScrollingController.swift in Sources */,
+				E2EFA61222B101E2008C9CAA /* Presenter.swift in Sources */,
 				AFCDEDDB22397E31001459BE /* Optional+String.swift in Sources */,
 				AFE6E38122A18369005BA44D /* ItemViewModel.swift in Sources */,
+				E2EFA60222AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */,
 				AF1177D4225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				E2CF1A3422A6A8C000DE24FC /* Computation.swift in Sources */,
 				AF1177AE225E2B7800C5B59B /* FacetFilter.swift in Sources */,
@@ -1749,9 +1797,9 @@
 				AF1177B8225E2B8500C5B59B /* TagFilter.swift in Sources */,
 				E242340B2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AFF1E759229696F700941401 /* MultiHitsSource.swift in Sources */,
-				AF9396902298169F00757257 /* LoadableController.swift in Sources */,
 				AFC2E2B2228EE1EC00859EBA /* FacetListController.swift in Sources */,
 				E26F423C2296A45500583D39 /* StatsController.swift in Sources */,
+				E2EFA5FD22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */,
 				AFDA412E2268AB7000100CB5 /* FilterState.swift in Sources */,
 				AF93968A2298154900757257 /* ClearRefinementsController.swift in Sources */,
 				E29E45692243F335005B358D /* Subscription.swift in Sources */,
@@ -1836,6 +1884,7 @@
 				E2CF1A4422A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
 				AFCDEDDC22397E32001459BE /* QueryMetadata.swift in Sources */,
 				AF1178782264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
+				E2EFA60822B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				AF1178642264CCDF00C5B59B /* OrGroupProxy.swift in Sources */,
 				AF1177B4225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				E2BAE6B7223FF7A500B89EA3 /* Group.swift in Sources */,
@@ -1851,12 +1900,13 @@
 				AFC2E299228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
 				E2EFA5DE22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
 				E2CF1A3A22A6AD0200DE24FC /* NumberController.swift in Sources */,
-				E26F423722969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
+				E2EFA60D22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CD22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178712264CEBC00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
+				E2EFA5F822AEBD72008C9CAA /* EventViewModel.swift in Sources */,
 				AFBF37652285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A422A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2A9228EDF6A00859EBA /* Query+Facets.swift in Sources */,
@@ -1879,8 +1929,10 @@
 				AFCDEDDD22397E32001459BE /* Optional+String.swift in Sources */,
 				AFE6E3D222AAD5AA005BA44D /* MultiHitsViewModel+Connectors.swift in Sources */,
 				AFE6E3C322A82B1A005BA44D /* InfiniteScrollingController.swift in Sources */,
+				E2EFA61322B101E2008C9CAA /* Presenter.swift in Sources */,
 				AF1177D5225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AFE6E38222A18369005BA44D /* ItemViewModel.swift in Sources */,
+				E2EFA60322AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */,
 				AF1177AF225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2CF1A3522A6A8C000DE24FC /* Computation.swift in Sources */,
 				E2E09E332232709700F3056D /* HitsViewModel.swift in Sources */,
@@ -1889,9 +1941,9 @@
 				AFCDEDAC222EB789001459BE /* SearchResults.swift in Sources */,
 				E242340C2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AFF1E75A229696F700941401 /* MultiHitsSource.swift in Sources */,
-				AF9396912298169F00757257 /* LoadableController.swift in Sources */,
 				AFC2E2B3228EE1EC00859EBA /* FacetListController.swift in Sources */,
 				E26F423D2296A45500583D39 /* StatsController.swift in Sources */,
+				E2EFA5FE22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */,
 				AFDA412F2268AB7000100CB5 /* FilterState.swift in Sources */,
 				AF93968B2298154900757257 /* ClearRefinementsController.swift in Sources */,
 				E29E456A2243F335005B358D /* Subscription.swift in Sources */,
@@ -1976,6 +2028,7 @@
 				E2CF1A4522A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
 				AFCDEDDE22397E33001459BE /* QueryMetadata.swift in Sources */,
 				AF1178792264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
+				E2EFA60922B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				AF1178652264CCE000C5B59B /* OrGroupProxy.swift in Sources */,
 				AF1177B5225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				E2BAE6B8223FF7A500B89EA3 /* Group.swift in Sources */,
@@ -1991,12 +2044,13 @@
 				AFC2E29A228ED8AE00859EBA /* FilterListViewModel+Numeric.swift in Sources */,
 				E2EFA5DF22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
 				E2CF1A3B22A6AD0200DE24FC /* NumberController.swift in Sources */,
-				E26F423822969DD100583D39 /* LoadableController+Searcher.swift in Sources */,
+				E2EFA60E22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CE22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178722264CEBD00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A4225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
+				E2EFA5F922AEBD72008C9CAA /* EventViewModel.swift in Sources */,
 				AFBF37662285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A522A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2AA228EDF6A00859EBA /* Query+Facets.swift in Sources */,
@@ -2019,8 +2073,10 @@
 				AFCDEDDF22397E33001459BE /* Optional+String.swift in Sources */,
 				AFE6E3D322AAD5AA005BA44D /* MultiHitsViewModel+Connectors.swift in Sources */,
 				AFE6E3C222A82B19005BA44D /* InfiniteScrollingController.swift in Sources */,
+				E2EFA61422B101E2008C9CAA /* Presenter.swift in Sources */,
 				AF1177D6225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AFE6E38322A18369005BA44D /* ItemViewModel.swift in Sources */,
+				E2EFA60422AEBF22008C9CAA /* LoadingViewModel+Searcher.swift in Sources */,
 				AF1177B0225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2CF1A3622A6A8C000DE24FC /* Computation.swift in Sources */,
 				E2E09E342232709800F3056D /* HitsViewModel.swift in Sources */,
@@ -2029,9 +2085,9 @@
 				AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */,
 				E242340D2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AFF1E75B229696F700941401 /* MultiHitsSource.swift in Sources */,
-				AF9396922298169F00757257 /* LoadableController.swift in Sources */,
 				AFC2E2B4228EE1EC00859EBA /* FacetListController.swift in Sources */,
 				E26F423E2296A45500583D39 /* StatsController.swift in Sources */,
+				E2EFA5FF22AEBE29008C9CAA /* LoadingViewModel.swift in Sources */,
 				AFDA41302268AB7000100CB5 /* FilterState.swift in Sources */,
 				AF93968C2298154900757257 /* ClearRefinementsController.swift in Sources */,
 				E29E456B2243F335005B358D /* Subscription.swift in Sources */,

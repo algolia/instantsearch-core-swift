@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FacetSearcher: Searcher, SearchResultObservable {
+public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = FacetResults
   
@@ -71,12 +71,6 @@ public class FacetSearcher: Searcher, SearchResultObservable {
     sequencer.cancelPendingOperations()
   }
   
-}
-
-extension FacetSearcher: SequencerDelegate {
-  public func didChangeOperationsState(hasPendingOperations: Bool) {
-    isLoading.fire(hasPendingOperations)
-  }
 }
 
 public extension FacetSearcher {

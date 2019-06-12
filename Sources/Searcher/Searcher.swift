@@ -45,6 +45,12 @@ extension Searcher {
   
 }
 
+extension Searcher where Self: SequencerDelegate {
+  public func didChangeOperationsState(hasPendingOperations: Bool) {
+    isLoading.fire(hasPendingOperations)
+  }
+}
+
 public protocol SearchResultObservable {
   
   associatedtype SearchResult
@@ -52,3 +58,4 @@ public protocol SearchResultObservable {
   var onResults: Observer<SearchResult> { get }
   
 }
+
