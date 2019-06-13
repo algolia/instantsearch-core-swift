@@ -8,22 +8,31 @@
 
 import Foundation
 
+public enum SearchTriggeringMode {
+  case searchAsYouType
+  case searchOnSubmit
+}
+
 extension QueryInputViewModel {
 
-  public func connectSearcher<S: Searcher>(_ searcher: S, searchAsYouType: Bool) {
+  public func connectSearcher<S: Searcher>(_ searcher: S, searchTriggeringMode: SearchTriggeringMode) {
+    
     query = searcher.query
     
-    if searchAsYouType {
+    switch searchTriggeringMode {
+    case .searchAsYouType:
       onQueryChanged.subscribe(with: self) { query in
         searcher.query = query
         searcher.search()
       }
-    } else {
+      
+    case .searchOnSubmit:
       onQuerySubmitted.subscribe(with: self) { query in
         searcher.query = query
         searcher.search()
       }
     }
+
   }
   
 }
