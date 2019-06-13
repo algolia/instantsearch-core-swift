@@ -16,6 +16,7 @@ public protocol FiltersReadable {
   func contains<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) -> Bool
   func getFilters(forGroupWithID groupID: FilterGroup.ID) -> Set<Filter>
   func getFilters(for attribute: Attribute) -> Set<Filter>
+  func getFiltersAndID() -> Set<FilterAndID>
   func getFilters() -> Set<Filter>
   
 }
@@ -121,6 +122,10 @@ extension Filters: FiltersReadable {
     return groups.values.reduce(Set<Filter>(), { $0.union($1) })
   }
 
+  func getFiltersAndID() -> Set<FilterAndID> {
+    return Set(groups.map { entry in entry.value.map { f in FilterAndID(filter: f, id: entry.key) } }.flatMap { $0 })
+  }
+
 }
 
 // MARK: - Public mutating interface
@@ -133,6 +138,16 @@ extension Filters: FiltersWritable {
   
   public mutating func add<T: FilterType>(_ filter: T, toGroupWithID groupID: FilterGroup.ID) {
     addAll(filters: [filter], toGroupWithID: groupID)
+  }
+
+  mutating func add(_ filter: Filter, toGroupWithID groupID: FilterGroup.ID) {
+    addAll(filters: [filter], toGroupWithID: groupID)
+  }
+
+  mutating func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == Filter {
+    let existingFilters = groups[groupID] ?? []
+    let updatedFilters = existingFilters.union(filters)
+    update(updatedFilters, forGroupWithID: groupID)
   }
   
   /// Adds a sequence of filters to a specified group

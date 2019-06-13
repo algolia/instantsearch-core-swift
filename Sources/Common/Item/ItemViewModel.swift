@@ -25,7 +25,7 @@ public class ItemViewModel<Item> {
   
 }
 
-public extension ItemViewModel {
+extension ItemViewModel {
   func connectController<O, C: ItemController>(_ controller: C, dispatchOnMainThread: Bool = false, presenter: @escaping Presenter<Item, O>) where C.Item == O {
     let sub = onItemChanged.subscribePast(with: controller) { (item) in
       controller.setItem(presenter(item))

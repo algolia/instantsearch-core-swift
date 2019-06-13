@@ -56,6 +56,10 @@ extension FilterState: FiltersReadable {
   public func getFilters() -> Set<Filter> {
     return self.filters.getFilters()
   }
+
+  public func getFiltersAndID() -> Set<FilterAndID> {
+    return self.filters.getFiltersAndID()
+  }
   
 }
 
