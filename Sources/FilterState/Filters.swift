@@ -29,6 +29,8 @@ public protocol FiltersWritable {
   @discardableResult mutating func remove<T: FilterType>(_ filter: T, fromGroupWithID groupID: FilterGroup.ID) -> Bool
   @discardableResult mutating func removeAll<T: FilterType, S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == T
   mutating func removeAll(fromGroupWithID groupID: FilterGroup.ID)
+  mutating func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID])
+  mutating func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID])
   @discardableResult mutating func remove<T: FilterType>(_ filter: T) -> Bool
   mutating func removeAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T
   mutating func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID)
@@ -131,7 +133,7 @@ extension Filters: FiltersReadable {
 // MARK: - Public mutating interface
 
 extension Filters: FiltersWritable {
-  
+
   /// Adds filter to a specified group
   /// - parameter filter: filter to add
   /// - parameter groupID: target group ID
@@ -189,6 +191,21 @@ extension Filters: FiltersWritable {
   
   public mutating func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
     groups.removeValue(forKey: groupID)
+  }
+
+  public mutating func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
+    groupIDs.forEach { groups.removeValue(forKey: $0) }
+  }
+
+  public mutating func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
+    var newGroups: [FilterGroup.ID: Set<Filter>] = [:]
+    for (id, filters) in groups {
+      if groupIDs.contains(id) {
+        newGroups[id] = filters
+      }
+    }
+
+    groups = newGroups
   }
   
   /// Removes filter from all the groups

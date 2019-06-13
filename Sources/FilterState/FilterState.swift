@@ -84,6 +84,14 @@ extension FilterState: FiltersWritable {
   public func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
     return self.filters.removeAll(fromGroupWithID: groupID)
   }
+
+  public func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
+    return self.filters.removeAll(fromGroupWithIDs: groupIDs)
+  }
+
+  public func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
+    return self.filters.removeAllExcept(fromGroupWithIDs: groupIDs)
+  }
   
   @discardableResult public func remove<T>(_ filter: T) -> Bool where T: FilterType {
     return self.filters.remove(filter)

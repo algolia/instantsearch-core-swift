@@ -8,8 +8,8 @@
 
 import Foundation
 
-public protocol ClearRefinementsController: class {
+public protocol FilterClearController: class {
   
-  var clearRefinements: (() -> Void)? { get set }
+  var onClick: (() -> Void)? { get set }
   
 }
