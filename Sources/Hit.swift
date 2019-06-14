@@ -71,7 +71,7 @@ extension Hit {
     
     public struct HighlightResult: Codable {
         /// Value of this highlight.
-        public let value: String
+        public let value: HighlightedString
         
         /// Match level.
         public let matchLevel: MatchLevel
