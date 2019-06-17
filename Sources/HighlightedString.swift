@@ -13,7 +13,7 @@ public struct HighlightedString: Codable {
   static let preTag = "<em>"
   static let postTag = "</em>"
   
-  let taggedString: TaggedString
+  public let taggedString: TaggedString
   
   public init(string: String) {
     self.taggedString = TaggedString(string: string, preTag: HighlightedString.preTag, postTag: HighlightedString.postTag, options: [.caseInsensitive])

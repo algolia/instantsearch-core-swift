@@ -37,7 +37,35 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
       NSMakeRange(13, 6): attributes,
       NSMakeRange(19, 9): [:],
       ])
-    
+  }
+  
+  func testInvertedAttributedString() {
+    let input = "Woodstock is <em>Snoopy</em>'s friend"
+    let highlightedString = HighlightedString(string: input)
+    let attributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: UIColor.red
+    ]
+    let attributedString = NSAttributedString(taggedString: highlightedString.taggedString, inverted: true, attributes: attributes)
+    checkRanges(string: attributedString, ranges: [
+      NSMakeRange(0, 13): attributes,
+      NSMakeRange(13, 6): [:],
+      NSMakeRange(19, 9): attributes,
+    ])
+  }
+  
+  func testAttributedStringList() {
+    let input = ["aaa<em>bbb</em>ccc", "ddd<em>eee</em>fff"].map(HighlightedString.init).map { $0.taggedString }
+    let attributes: [NSAttributedString.Key: Any] = [
+      .foregroundColor: UIColor.red
+    ]
+    let attributedString = NSAttributedString(taggedStrings: input, separator: NSAttributedString(string: ", "), attributes: attributes)
+    checkRanges(string: attributedString, ranges: [
+      NSMakeRange(0, 3): [:],
+      NSMakeRange(3, 3): attributes,
+      NSMakeRange(6, 8): [:],
+      NSMakeRange(14, 3): attributes,
+      NSMakeRange(17, 3): [:]
+    ])
   }
   
 }
