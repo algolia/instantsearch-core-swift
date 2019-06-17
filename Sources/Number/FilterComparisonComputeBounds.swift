@@ -8,31 +8,7 @@
 
 import Foundation
 
-public protocol InitaliazableWithFloat {
-
-  init(_ float: Float)
-  func toFloat() -> Float
-}
-
-extension Int: InitaliazableWithFloat {
-  public func toFloat() -> Float {
-    return Float(self)
-  }
-}
-
-extension Double: InitaliazableWithFloat {
-  public func toFloat() -> Float {
-    return Float(self)
-  }
-}
-
-extension Float: InitaliazableWithFloat {
-  public func toFloat() -> Float {
-    return Float(self)
-  }
-}
-
-extension NumberViewModel {
+extension Boundable {
 
   public func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
     searcher.indexSearchData.query.updateQueryFacets(with: attribute)
