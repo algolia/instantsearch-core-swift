@@ -61,7 +61,7 @@ class HighlighterTest: XCTestCase {
       NSMakeRange(19, 9): [:],
     ])
   }
-
+  
   func testCustomMarkers() {
     let attributes = [NSAttributedString.Key.font: "bar"]
     let renderer = Highlighter(highlightAttrs: attributes)

@@ -37,6 +37,17 @@ extension EitherSingleOrList: CustomStringConvertible {
     
 }
 
+public extension Array {
+  init(_ singleOrList: EitherSingleOrList<Element>) {
+    switch singleOrList {
+    case .single(let element):
+      self = [element]
+    case .list(let list):
+      self = list
+    }
+  }
+}
+
 extension EitherSingleOrList: Codable where T: Codable {
     
     public init(from decoder: Decoder) throws {

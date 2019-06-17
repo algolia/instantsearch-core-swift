@@ -68,7 +68,6 @@ class SearchResultsTests: XCTestCase {
       } else {
         XCTFail("Missing facet stats")
       }
-      print(searchResults.hits)
 
     } catch let error {
       XCTFail("\(error)")
