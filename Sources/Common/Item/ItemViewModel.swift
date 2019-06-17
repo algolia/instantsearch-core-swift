@@ -16,7 +16,7 @@ public class ItemViewModel<Item> {
     }
   }
   
-  let onItemChanged: Observer<Item>
+  public let onItemChanged: Observer<Item>
   
   init(item: Item) {
     self.item = item

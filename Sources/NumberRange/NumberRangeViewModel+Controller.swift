@@ -9,23 +9,23 @@
 import Foundation
 
 extension NumberRangeViewModel {
-  public func connectView<View: NumberRangeController>(view: View) where View.Number == Number {
+  public func connectController<Controller: NumberRangeController>(_ controller: Controller) where Controller.Number == Number {
 
     onItemChanged.subscribePast(with: self) { (item) in
       guard let item = item else {
-        view.invalidate()
+        controller.invalidate()
         return
       }
-      view.setItem(item)
+      controller.setItem(item)
     }
 
-    view.onRangeChanged = { [weak self] closedRange in
+    controller.onRangeChanged = { [weak self] closedRange in
       self?.computeNumberRange(numberRange: closedRange)
     }
 
-    onBoundsComputed.subscribePast(with: view) { (bounds) in
+    onBoundsComputed.subscribePast(with: controller) { (bounds) in
       guard let bounds = bounds else { return }
-      view.setBounds(bounds)
+      controller.setBounds(bounds)
     }
     
   }

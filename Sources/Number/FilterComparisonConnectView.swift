@@ -9,20 +9,20 @@
 import Foundation
 
 extension NumberViewModel {
-  public func connectView<View: NumberController>(view: View) where View.Item == Number {
+  public func connectController<Controller: NumberController>(_ controller: Controller) where Controller.Item == Number {
 
     let computation = Computation(numeric: item) { [weak self] numeric in
       self?.computeNumber(number: numeric)
     }
 
-    view.setComputation(computation: computation)
+    controller.setComputation(computation: computation)
 
     onItemChanged.subscribePast(with: self) { (item) in
       guard let item = item else {
-        view.invalidate()
+        controller.invalidate()
         return
       }
-      view.setItem(item)
+      controller.setItem(item)
     }
   }
 }

@@ -11,7 +11,6 @@ import Foundation
 public class NumberViewModel<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemViewModel<Number?>, Boundable {
 
   public let onNumberComputed: Observer<Number?>
-  // TODO: Need to move that info at the view/controller level.
   public let onBoundsComputed: Observer<ClosedRange<Number>?>
 
   public private(set) var bounds: ClosedRange<Number>?
