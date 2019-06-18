@@ -105,7 +105,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
     }
     
     facetSearcher.onError.subscribe(with: self) { error in
-      if let error = error as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
+      if let error = error.1 as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
         // For the case of SFFV, very possible that we forgot to add the
         // attribute as searchable in `attributesForFaceting`.
         assertionFailure(error.message ?? "")

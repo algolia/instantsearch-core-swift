@@ -58,4 +58,3 @@ public protocol SearchResultObservable {
   var onResults: Observer<SearchResult> { get }
   
 }
-

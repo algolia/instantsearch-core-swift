@@ -23,9 +23,9 @@ public extension SelectableViewModel where Item: FilterType {
   }
   
   func connectTo<F: FilterType>(_ filterState: FilterState,
-                 operator: RefinementOperator = .or,
-                 groupName: String? = nil,
-                 default: F) {
+                                operator: RefinementOperator = .or,
+                                groupName: String? = nil,
+                                default: F) {
     
     let groupID = FilterGroup.ID(groupName: groupName,
                                  attribute: item.attribute,
@@ -37,8 +37,6 @@ public extension SelectableViewModel where Item: FilterType {
   }
   
 }
-
-
 
 private extension SelectableViewModel where Item: FilterType {
   
@@ -54,10 +52,9 @@ private extension SelectableViewModel where Item: FilterType {
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }
 
-  
   func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
-                                                           attribute: Attribute,
-                                                           groupID: FilterGroup.ID) {
+                                                   attribute: Attribute,
+                                                   groupID: FilterGroup.ID) {
     
     onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState] computedSelected in
       
@@ -79,9 +76,9 @@ private extension SelectableViewModel where Item: FilterType {
   }
   
   func whenSelectionsComputedThenUpdateFilterState<F: FilterType>(_ filterState: FilterState,
-                                                                          attribute: Attribute,
-                                                                          groupID: FilterGroup.ID,
-                                                                          default: F) {
+                                                                  attribute: Attribute,
+                                                                  groupID: FilterGroup.ID,
+                                                                  default: F) {
     
     onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState] computedSelected in
       
@@ -104,7 +101,6 @@ private extension SelectableViewModel where Item: FilterType {
     
   }
 
-  
 }
 
 public extension SelectableViewModel where Item: FilterType {
