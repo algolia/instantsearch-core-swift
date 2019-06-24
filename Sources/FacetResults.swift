@@ -18,6 +18,22 @@ public struct Facet: Codable, Equatable, Hashable {
     public let highlighted: String?
 }
 
+public extension Facet {
+  
+  var isEmpty: Bool {
+    return count < 1
+  }
+  
+}
+
+extension Facet: CustomStringConvertible {
+  
+  public var description: String {
+    return "\(value) (\(count))"
+  }
+  
+}
+
 extension Dictionary where Key == String, Value == [String: Int] {
   
   init(_ facetsForAttribute: [Attribute: [Facet]]) {

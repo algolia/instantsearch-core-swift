@@ -72,6 +72,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
         .removeAll(fromGroupWithID: groupID),
         .add(filters: filters, toGroupWithID: groupID)
       )
+      print("Selections computed -> update filter state \(self.selections)")
     }
     
   }
@@ -91,6 +92,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
       }
       
       self.selections = Set(filterState.getFilters(forGroupWithID: groupID).compactMap(filterToFacetString))
+      print("FilterState changed -> update selections: \(self.selections)")
     }
     
     onChange(filterState)
@@ -125,24 +127,18 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
 
 public extension SelectableListViewModel where Key == String, Item == Facet {
   
-  func connect<C: FacetListController>(to controller: C, with presenter: SelectableListPresentable? = nil) {
+  func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) {
     
     /// Add missing refinements with a count of 0 to all returned facets
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
     func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
-      let receivedFacets = facets.map { RefinementFacet($0, selections.contains($0.value)) }
-      //      let persistentlySelectedFacets = selections
-      //        .filter { !facets.map { $0.value }.contains($0) }
-      //        .map { (Facet(value: $0, count: 0, highlighted: .none), true) }
-      return receivedFacets// + persistentlySelectedFacets
+      return facets.map { RefinementFacet($0, selections.contains($0.value)) }
     }
     
     func setControllerItemsWith(facets: [Facet], selections: Set<String>) {
-      let refinementFacets = merge(facets, withSelectedValues: self.selections)
-      
-      let sortedFacetValues = presenter?.transform(refinementFacets: refinementFacets) ?? refinementFacets
-      
+      let updatedFacets = merge(facets, withSelectedValues: selections)
+      let sortedFacetValues = presenter?.transform(refinementFacets: updatedFacets) ?? updatedFacets
       controller.setSelectableItems(selectableItems: sortedFacetValues)
       controller.reload()
     }
