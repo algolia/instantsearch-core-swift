@@ -41,3 +41,11 @@ extension Filter.Tag: ExpressibleByStringLiteral {
   }
   
 }
+
+extension Filter.Tag: CustomStringConvertible {
+  
+  public var description: String {
+    return "\(value)"
+  }
+  
+}

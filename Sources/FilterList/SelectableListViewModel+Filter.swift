@@ -1,5 +1,5 @@
 //
-//  FilterListViewModel.swift
+//  SelectableListViewModel+Filter.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 17/05/2019.

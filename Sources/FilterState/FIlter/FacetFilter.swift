@@ -66,6 +66,14 @@ extension Filter.Facet: RawRepresentable {
   
 }
 
+extension Filter.Facet: CustomStringConvertible {
+  
+  public var description: String {
+    return "\(attribute): \(value.description)"
+  }
+  
+}
+
 extension Filter.Facet {
   
   public enum ValueType: CustomStringConvertible, Hashable {

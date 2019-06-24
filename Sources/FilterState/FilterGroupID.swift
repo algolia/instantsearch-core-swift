@@ -39,3 +39,16 @@ extension FilterGroup {
   }
   
 }
+
+extension FilterGroup.ID: CustomStringConvertible {
+  
+  public var description: String {
+    switch self {
+    case .and(name: let name):
+      return "and<\(name)>"
+    case .or(name: let name):
+      return "or<\(name)>"
+    }
+  }
+  
+}

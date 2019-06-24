@@ -83,4 +83,17 @@ public extension Filter {
   
 }
 
+extension Filter.Numeric: CustomStringConvertible {
+  
+  public var description: String {
+    switch value {
+    case .range(let range):
+      return "\(attribute): \(range.lowerBound) – \(range.upperBound)"
+    case .comparison(let op, let value):
+      return "\(attribute) \(op.description) \(value)"
+    }
+  }
+  
+}
+
 extension Filter.Numeric: Hashable {}

@@ -42,6 +42,21 @@ public enum Filter: Hashable {
   
 }
 
+extension Filter: CustomStringConvertible {
+  
+  public var description: String {
+    switch self {
+    case .facet(let facetFilter):
+      return facetFilter.description
+    case .numeric(let numericFilter):
+      return numericFilter.description
+    case .tag(let tagFilter):
+      return tagFilter.description
+    }
+  }
+  
+}
+
 /// Abstract filter protocol
 public protocol FilterType {
   
