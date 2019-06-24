@@ -94,7 +94,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
 
     let controller = TestController()
     
-    viewModel.connect(to: controller)
+    viewModel.connectController(controller)
     
     let reloadExpectation = expectation(description: "reload")
     reloadExpectation.expectedFulfillmentCount = 2

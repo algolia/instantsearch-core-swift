@@ -118,8 +118,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   
   private func whenNewSearchResultsThenUpdateItems(of searcher: SingleIndexSearcher, _ attribute: Attribute) {
     searcher.onResults.subscribePast(with: self) { searchResults in
-      let updatedItems = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
-      self.items = updatedItems
+      self.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
     }
   }
   
