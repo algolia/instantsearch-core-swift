@@ -37,6 +37,9 @@ public struct SearchResults: Codable {
   /// Disjunctive facets that can be used to refine the result
   public let disjunctiveFacets: [Attribute: [Facet]]?
   
+  /// Hierarchical facets
+  public let hierarchicalFacets: [Attribute: [Facet]]?
+  
   /// A url-encoded string of all search parameters.
   public let params: String?
   
@@ -108,6 +111,7 @@ public struct SearchResults: Codable {
     }
     self.facets = try extractFacets(withKey: .facets)
     self.disjunctiveFacets = try extractFacets(withKey: .disjunctiveFacets)
+    self.hierarchicalFacets = [:]
     if let rawFacetStats = try container.decodeIfPresent([String: FacetStats].self, forKey: .facetStats) {
       self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (Attribute($0.key), $0.value) })
     } else {
@@ -130,6 +134,7 @@ public struct SearchResults: Codable {
     self.rankingInfo = .none
     self.facetStats = .none
     self.stats = stats
+    self.hierarchicalFacets = [:]
   }
   
   public func encode(to encoder: Encoder) throws {
