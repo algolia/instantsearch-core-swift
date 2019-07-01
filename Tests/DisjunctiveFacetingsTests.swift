@@ -80,4 +80,47 @@ class DisjunctiveFacetingTests: XCTestCase {
     
   }
   
+  func testBuildHierarchicalQueries() {
+    
+    let query = Query()
+    
+    let colorGroup = FilterGroup.And(filters: [Filter.Facet(attribute: "color", stringValue: "red")], name: "color")
+    
+    let hierarchicalGroup = FilterGroup.And(filters: [Filter.Facet(attribute: "category.lvl2", stringValue: "a > b > c")], name: "h")
+    
+    
+    let filterGroups: [FilterGroupType] = [colorGroup, hierarchicalGroup]
+
+    let hierarchicalAttributes = (0...3)
+      .map { "category.lvl\($0)" }
+      .map(Attribute.init(rawValue:))
+    
+    let hierarchicalFilters: [Filter.Facet] = [
+      .init(attribute: "category.lvl0", stringValue: "a"),
+      .init(attribute: "category.lvl1", stringValue: "a > b"),
+      .init(attribute: "category.lvl2", stringValue: "a > b > c")
+    ]
+    
+    let queries = DisjunctiveFacetingHelper.buildHierarchicalQueries(with: query,
+                                                                     filterGroups: filterGroups,
+                                                                     hierarchicalAttributes: hierarchicalAttributes,
+                                                                     hierachicalFilters: hierarchicalFilters)
+    
+    XCTAssertEqual(queries.count, hierarchicalAttributes.count)
+    
+    XCTAssertEqual(queries[0].filters, "( \"color\":\"red\" )")
+    XCTAssertEqual(queries[0].facets, ["category.lvl0"])
+
+    XCTAssertEqual(queries[1].filters, "( \"color\":\"red\" ) AND ( \"category.lvl0\":\"a\" )")
+    XCTAssertEqual(queries[1].facets, ["category.lvl1"])
+
+    XCTAssertEqual(queries[2].filters, "( \"color\":\"red\" ) AND ( \"category.lvl1\":\"a > b\" )")
+    XCTAssertEqual(queries[2].facets, ["category.lvl2"])
+
+    XCTAssertEqual(queries[3].filters, "( \"color\":\"red\" )")
+    XCTAssertEqual(queries[3].facets, ["category.lvl3"])
+
+    
+  }
+  
 }

@@ -40,34 +40,71 @@ public class DisjunctiveFacetingHelper {
     return [resultQuery] + disjunctiveQueries
   }
   
-//  public static func buildQueries(with query: Query,
-//                                  filtersAnd: [FilterType],
-//                                  filtersOr: [FilterGroup],
-//                                  hierarchicalAttributes: [Attribute],
-//                                  hierachicalFilters: [Filter.Facet]) -> [Query] {
-//
+  public static func buildHierarchicalQueries(with query: Query,
+                                              filterGroups: [FilterGroupType],
+                                              hierarchicalAttributes: [Attribute],
+                                              hierachicalFilters: [Filter.Facet]) -> [Query] {
+
+    let attrs = hierarchicalAttributes
+      .prefix(hierachicalFilters.count + 1)
+    let hfilters: [Filter.Facet?] = [nil] + hierachicalFilters
+    
+    let queriess = zip(attrs, hfilters).map { arg -> Query in
+      let (attribute, hfilter) = arg
+      var outputFilterGroups = filterGroups
+      if let currentHierarhicalFilter = hfilter {
+        outputFilterGroups.append(FilterGroup.And(filters: [currentHierarhicalFilter], name: "hierarchical"))
+      }
+      
+      if let appliedHierachicalFacet = hierachicalFilters.last {
+        outputFilterGroups = outputFilterGroups.map { group in
+          guard let andGroup = group as? FilterGroup.And else {
+            return group
+          }
+          let filtersMinusHierarchicalFacet = andGroup.filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
+          return FilterGroup.And(filters: filtersMinusHierarchicalFacet, name: andGroup.name)
+        }
+      }
+      
+      let query = Query(copy: query)
+      query.facets = [attribute.name]
+      query.filters = FilterGroupConverter().sql(outputFilterGroups)
+      return query
+
+    }
+    
+    return queriess
+    
 //    let queriesForHierarchicalFacets: [Query] = hierarchicalAttributes
 //      .prefix(hierachicalFilters.count + 1)
 //      .enumerated()
 //      .map { (index, attribute) in
-//        var filters = filtersAnd
+//
+//        var outputFilterGroups = filterGroups
+//
 //        if let currentHierarhicalFilter = hierachicalFilters[safe: index - 1] {
-//          filters.append(currentHierarhicalFilter)
-//        }
-//        if let appliedHierachicalFacet = hierachicalFilters.last {
-//          filters = filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
+//          outputFilterGroups.append(FilterGroup.And(filters: [currentHierarhicalFilter], name: "hierarchical"))
 //        }
 //
-//        query.filters = converter.sql(filterGroups)
+//        if let appliedHierachicalFacet = hierachicalFilters.last {
+//          outputFilterGroups = outputFilterGroups.map { group in
+//            guard let andGroup = group as? FilterGroup.And else {
+//              return group
+//            }
+//            let filtersMinusHierarchicalFacet = andGroup.filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
+//            return FilterGroup.And(filters: filtersMinusHierarchicalFacet, name: andGroup.name)
+//          }
+//        }
+//
 //        let query = Query(copy: query)
 //        query.facets = [attribute.name]
-//        query.filters = FilterGroupConverter().sql(FilterGroup.And(filters: filters))
+//        query.filters = FilterGroupConverter().sql(outputFilterGroups)
 //        return query
 //    }
 //
 //    return queriesForHierarchicalFacets
-//
-//  }
+
+  }
   
   /// Merges multi-query results of disjuncitve faceting request to one result containing disjunctive faceting information
   /// - parameter results: search results of disjunctive faceting multi-query
