@@ -72,7 +72,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
         .removeAll(fromGroupWithID: groupID),
         .add(filters: filters, toGroupWithID: groupID)
       )
-      print("Selections computed -> update filter state \(self.selections)")
+//      print("Selections computed -> update filter state \(self.selections)")
     }
     
   }
@@ -92,7 +92,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
       }
       
       self.selections = Set(filterState.getFilters(forGroupWithID: groupID).compactMap(filterToFacetString))
-      print("FilterState changed -> update selections: \(self.selections)")
+//      print("FilterState changed -> update selections: \(self.selections)")
     }
     
     onChange(filterState)

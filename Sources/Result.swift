@@ -20,6 +20,29 @@ public extension Result where Failure == Error {
       self = .failure(ResultError.invalidResultInput)
     }
   }
+  
+}
+
+public extension Result where Success: Decodable, Failure == Error {
+  
+  init(rawValue: [String: Any]?, error: Failure?) {
+    switch (rawValue, error) {
+    case (.none, .some(let error)):
+      self = .failure(error)
+    case (.some(let rawValue), .none):
+      do {
+        let data = try JSONSerialization.data(withJSONObject: rawValue, options: [])
+        let decoder = JSONDecoder()
+        let result = try decoder.decode(Success.self, from: data)
+        self = .success(result)
+      } catch let error {
+        self = .failure(error)
+      }
+    default:
+      self = .failure(ResultError.invalidResultInput)
+    }
+  }
+
 }
 
 public enum ResultError: Error {

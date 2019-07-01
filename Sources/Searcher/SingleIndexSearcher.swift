@@ -62,22 +62,42 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
               requestOptions: requestOptions)
   }
   
-  fileprivate func handle(_ value: [String: Any]?, _ error: Error?, for query: Query) {
-    
-    let result: Result<SearchResults, Error> = transform(content: value, error: error)
-    
-    switch result {
-    case .success(let searchResults):
-      onResults.fire(searchResults)
+  fileprivate func handle(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
+    return { [weak self] value, error in
+      let result = Result<SearchResults, Error>(rawValue: value, error: error)
       
-    case .failure(let error):
-      onError.fire((query, error))
+      switch result {
+      case .success(let searchResults):
+        self?.onResults.fire(searchResults)
+        
+      case .failure(let error):
+        self?.onError.fire((query, error))
+      }
+
     }
-    
+  }
+  
+  fileprivate func handleDisjunctiveFacetingResponse(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
+    return { [weak self] value, error in
+      let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
+      
+      switch result {
+      case .failure(let error):
+        self?.onError.fire((query, error))
+        
+      case .success(let results):
+        let finalResult = DisjunctiveFacetingHelper.mergeResults(results.searchResults)
+        let dfd = self!.disjunctiveFacetingDelegate!
+        let completedResult = DisjunctiveFacetingHelper.completeMissingFacets(in: finalResult, disjunctiveFacets: dfd .disjunctiveFacetsAttributes, filters: dfd.filterList)
+        self?.onResults.fire(completedResult)
+      }
+    }
   }
   
   public func search() {
   
+    let query = Query(copy: indexSearchData.query)
+    
     let operation: Operation
 
     if
@@ -85,18 +105,10 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       !disjunctiveFacetingDelegate.disjunctiveFacetsAttributes.isEmpty,
       isDisjunctiveFacetingEnabled
     {
-      let disjunctiveFacets = Array(disjunctiveFacetingDelegate.disjunctiveFacetsAttributes).map { $0.description }
-      let refinements = disjunctiveFacetingDelegate.facetFilters
-      indexSearchData.query.filters = nil
-      let query = indexSearchData.query.copy() as! Query
-      operation = indexSearchData.index.searchDisjunctiveFaceting(indexSearchData.query, disjunctiveFacets: disjunctiveFacets, refinements: refinements, requestOptions: requestOptions) { [weak self] value, error in
-        self?.handle(value, error, for: query)
-      }
+      let queries = DisjunctiveFacetingHelper.buildQueries(with: query, delegate: disjunctiveFacetingDelegate).map { IndexQuery(index: indexSearchData.index, query: $0) }
+      operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: query))
     } else {
-      let query = indexSearchData.query.copy() as! Query
-      operation = indexSearchData.index.search(indexSearchData.query, requestOptions: requestOptions) { [weak self] value, error in
-        self?.handle(value, error, for: query)
-      }
+      operation = indexSearchData.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
     }
     
     sequencer.orderOperation(operationLauncher: { return operation })
@@ -110,8 +122,8 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
 
 public protocol DisjunctiveFacetingDelegate: class {
   
-  var disjunctiveFacetsAttributes: [String] { get }
-  var facetFilters: [String: [String]] { get }
+  var disjunctiveFacetsAttributes: Set<Attribute> { get }
+  var filterList: [FilterType] { get }
   
 }
 

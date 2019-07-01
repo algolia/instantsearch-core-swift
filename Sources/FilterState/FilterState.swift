@@ -140,13 +140,13 @@ extension FilterState: CustomDebugStringConvertible {
 }
 
 extension FilterState: DisjunctiveFacetingDelegate {
-  
-  public var disjunctiveFacetsAttributes: [String] {
-    return Array(filters.getDisjunctiveFacetsAttributes()).map { $0.description }
+    
+  public var disjunctiveFacetsAttributes: Set<Attribute> {
+    return filters.getDisjunctiveFacetsAttributes()
   }
   
-  public var facetFilters: [String: [String]] {
-    return filters.getRawFacetFilters()
+  public var filterList: [FilterType] {
+    return []
   }
   
 }

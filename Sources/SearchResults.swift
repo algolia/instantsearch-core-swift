@@ -35,7 +35,7 @@ public struct SearchResults: Codable {
   public let facets: [Attribute: [Facet]]?
   
   /// Disjunctive facets that can be used to refine the result
-  public let disjunctiveFacets: [Attribute: [Facet]]?
+  public var disjunctiveFacets: [Attribute: [Facet]]?
   
   /// Hierarchical facets
   public let hierarchicalFacets: [Attribute: [Facet]]?
@@ -50,7 +50,7 @@ public struct SearchResults: Codable {
   public let queryID: String?
   
   /// Whether facet counts are exhaustive.
-  public let areFacetsCountExhaustive: Bool?
+  public var areFacetsCountExhaustive: Bool?
   
   /// Used to return warnings about the query. Should be nil most of the time.
   public let message: String?
@@ -81,7 +81,7 @@ public struct SearchResults: Codable {
   public let stats: SearchStats
   
   /// Statistics for a numerical facets.
-  public let facetStats: [Attribute: FacetStats]?
+  public var facetStats: [Attribute: FacetStats]?
   
   public init(from decoder: Decoder) throws {
     

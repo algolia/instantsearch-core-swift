@@ -9,7 +9,7 @@
 import Foundation
 
 public enum EitherSingleOrList<T> {
-    
+  
     case single(T)
     case list([T])
     
@@ -22,6 +22,9 @@ public enum EitherSingleOrList<T> {
     }
     
 }
+
+extension EitherSingleOrList: Equatable where T: Equatable {}
+extension EitherSingleOrList: Hashable where T: Hashable {}
 
 extension EitherSingleOrList: CustomStringConvertible {
     
@@ -63,7 +66,7 @@ extension EitherSingleOrList: Codable where T: Codable {
             let value = try singleValueContainer.decode(T.self)
             self = .single(value)
         } else {
-            throw DecodingError.typeMismatch(EitherSingleOrList.self, .init(codingPath: [], debugDescription: "Value doesn't contain a single value no a list"))
+            throw DecodingError.typeMismatch(EitherSingleOrList.self, .init(codingPath: [], debugDescription: "Value doesn't contain a single value nor a list"))
         }
     }
     
