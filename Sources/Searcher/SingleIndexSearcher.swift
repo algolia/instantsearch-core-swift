@@ -88,7 +88,8 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       case .success(let results):
         let finalResult = DisjunctiveFacetingHelper.mergeResults(results.searchResults)
         let dfd = self!.disjunctiveFacetingDelegate!
-        let completedResult = DisjunctiveFacetingHelper.completeMissingFacets(in: finalResult, disjunctiveFacets: dfd .disjunctiveFacetsAttributes, filters: dfd.filterList)
+        let filters = dfd.toFilterGroups().map { $0.filters }.flatMap { $0 }
+        let completedResult = DisjunctiveFacetingHelper.completeMissingFacets(in: finalResult, disjunctiveFacets: dfd .disjunctiveFacetsAttributes, filters: filters)
         self?.onResults.fire(completedResult)
       }
     }
@@ -120,10 +121,9 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
 }
 
-public protocol DisjunctiveFacetingDelegate: class {
+public protocol DisjunctiveFacetingDelegate: class, FilterGroupsConvertible {
   
   var disjunctiveFacetsAttributes: Set<Attribute> { get }
-  var filterList: [FilterType] { get }
   
 }
 

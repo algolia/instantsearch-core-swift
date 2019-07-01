@@ -145,8 +145,4 @@ extension FilterState: DisjunctiveFacetingDelegate {
     return filters.getDisjunctiveFacetsAttributes()
   }
   
-  public var filterList: [FilterType] {
-    return []
-  }
-  
 }

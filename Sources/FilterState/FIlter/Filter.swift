@@ -27,6 +27,20 @@ public enum Filter: Hashable {
     }
   }
   
+  public init(_ filter: FilterType) {
+    switch filter {
+    case let facetFilter as Filter.Facet:
+      self = .facet(facetFilter)
+    case let numericFilter as Filter.Numeric:
+      self = .numeric(numericFilter)
+    case let tagFilter as Filter.Tag:
+      self = .tag(tagFilter)
+    default:
+      fatalError("Filter of type \(FilterType.self) is not supported")
+    }
+  }
+
+  
   public var filter: FilterType {
     switch self {
     case .facet(let facetFilter):

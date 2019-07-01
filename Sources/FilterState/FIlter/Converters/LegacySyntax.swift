@@ -28,6 +28,7 @@ extension FilterGroupConverter {
   
   public func legacy<C: Sequence>(_ groups: C) -> [[String]]? where C.Element == FilterGroupType {
     return groups
+      .filter { !$0.filters.isEmpty }
       .compactMap { $0 as? LegacySyntaxConvertible }
       .flatMap { $0.legacyForm }
   }

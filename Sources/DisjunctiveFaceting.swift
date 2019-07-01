@@ -23,8 +23,8 @@ public class DisjunctiveFacetingHelper {
   
   public static func buildQueries(with query: Query, delegate: DisjunctiveFacetingDelegate) -> [Query] {
     let facets = delegate.disjunctiveFacetsAttributes
-    let filters = delegate.filterList
-    return buildQueries(with: query, disjunctiveFacets: facets, filters: filters)
+    let filterGroups = delegate.toFilterGroups()
+    return buildQueries(with: query, disjunctiveFacets: facets, filterGroups: filterGroups)
   }
   
   /// Build list of queries for disjuncitve faceting
@@ -33,12 +33,41 @@ public class DisjunctiveFacetingHelper {
   /// - parameters filters: list of search filters
   /// - returns: list of queries for disjunctive faceting
   
-  public static func buildQueries(with query: Query, disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> [Query] {
-    let (filtersOr, filtersAnd) = filters.partition { disjunctiveFacets.contains($0.attribute) }
-    let andQuery = buildAndQuery(query: query, filtersAnd: filtersAnd, filtersOr: filtersOr)
-    let orQueries = buildOrQueries(query: query, filtersAnd: filtersAnd, filtersOr: filtersOr, disjunctiveFacets: disjunctiveFacets)
-    return [andQuery] + orQueries
+  public static func buildQueries(with query: Query, disjunctiveFacets: Set<Attribute>, filterGroups: [FilterGroupType]) -> [Query] {
+    let resultQuery = Query(copy: query)
+    resultQuery.filters = FilterGroupConverter().sql(filterGroups)
+    let disjunctiveQueries = buildDisjunctiveQueries(query: query, filterGroups: filterGroups, disjunctiveFacets: disjunctiveFacets)
+    return [resultQuery] + disjunctiveQueries
   }
+  
+//  public static func buildQueries(with query: Query,
+//                                  filtersAnd: [FilterType],
+//                                  filtersOr: [FilterGroup],
+//                                  hierarchicalAttributes: [Attribute],
+//                                  hierachicalFilters: [Filter.Facet]) -> [Query] {
+//
+//    let queriesForHierarchicalFacets: [Query] = hierarchicalAttributes
+//      .prefix(hierachicalFilters.count + 1)
+//      .enumerated()
+//      .map { (index, attribute) in
+//        var filters = filtersAnd
+//        if let currentHierarhicalFilter = hierachicalFilters[safe: index - 1] {
+//          filters.append(currentHierarhicalFilter)
+//        }
+//        if let appliedHierachicalFacet = hierachicalFilters.last {
+//          filters = filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
+//        }
+//
+//        query.filters = converter.sql(filterGroups)
+//        let query = Query(copy: query)
+//        query.facets = [attribute.name]
+//        query.filters = FilterGroupConverter().sql(FilterGroup.And(filters: filters))
+//        return query
+//    }
+//
+//    return queriesForHierarchicalFacets
+//
+//  }
   
   /// Merges multi-query results of disjuncitve faceting request to one result containing disjunctive faceting information
   /// - parameter results: search results of disjunctive faceting multi-query
@@ -138,54 +167,39 @@ public class DisjunctiveFacetingHelper {
     return completeMissingFacets(in: results, with: facetDictionary)
   }
   
-  /// Builds "and" query necessary for base disjuncitve faceting result
+  //TODO: add DF explanation
+  /// Builds disjunctive queries for each facet
   /// - parameter query: source query
-  /// - parameter filtersAnd: filters in conjunctive groups
-  /// - parameter filtersOr: filters in disjunctive groups
-  /// - returns: "and" query for disjunctive faceting
-  
-  internal static func buildAndQuery(query: Query, filtersAnd: [FilterType], filtersOr: [FilterType]) -> Query {
-    let query = Query(copy: query)
-    let converter = FilterGroupConverter()
-    let andGroup = FilterGroup.And(filters: filtersAnd)
-    let (orFacetGroup, orNumericGroup, orTagGroup) = filtersOr.splitInDisjunctiveGroupsByFilterType()
-    let filterGroups: [FilterGroupType] = [andGroup, orFacetGroup, orNumericGroup, orTagGroup].filter { !$0.filters.isEmpty }
-    query.filters = converter.sql(filterGroups)
-    return query
-  }
-  
-  /// Builds "or" query for each facet
-  /// - parameter query: source query
-  /// - parameter filtersAnd: filters in conjunctive groups
-  /// - parameter filtersOr: filters in disjunctive groups
+  /// - parameter filterGroups:
   /// - parameter disjunctiveFacets: attributes of disjunctive facets
   /// - returns: list of "or" queries for disjunctive faceting
 
-  internal static func buildOrQueries(query: Query, filtersAnd: [FilterType], filtersOr: [FilterType], disjunctiveFacets: Set<Attribute>) -> [Query] {
+  internal static func buildDisjunctiveQueries(query: Query, filterGroups: [FilterGroupType], disjunctiveFacets: Set<Attribute>) -> [Query] {
     return disjunctiveFacets.map { attribute in
       let query = Query(copy: query)
       query.facets = [attribute.name]
-      query.attributesToRetrieve = []
-      query.attributesToHighlight = []
-      query.hitsPerPage = 0
-      query.analytics = false
-      let converter = FilterGroupConverter()
-      let andGroup = FilterGroup.And(filters: filtersAnd)
-      let (orFacetGroup, orNumericGroup, orTagGroup) = filtersOr.filter { !($0 is Filter.Facet && $0.attribute == attribute) }.splitInDisjunctiveGroupsByFilterType()
-      let filterGroups: [FilterGroupType] = [andGroup, orFacetGroup, orNumericGroup, orTagGroup].filter { !$0.filters.isEmpty }
-      query.filters = converter.sql(filterGroups)
+      query.requestOnlyFacets()
+      let groups = filterGroups.map { (group) -> FilterGroupType in
+        guard let disjunctiveFacetGroup = group as? FilterGroup.Or<Filter.Facet> else {
+          return group
+        }
+        let filtersMinusDisjunctiveFacet = disjunctiveFacetGroup.typedFilters.filter { $0.attribute != attribute }
+        return FilterGroup.Or(filters: filtersMinusDisjunctiveFacet, name: group.name)
+      }.filter { !$0.filters.isEmpty }
+      query.filters = FilterGroupConverter().sql(groups)
       return query
     }
   }
   
 }
 
-extension Collection where Element == FilterType {
+extension Query {
   
-  func splitInDisjunctiveGroupsByFilterType() -> (FilterGroup.Or<Filter.Facet>, FilterGroup.Or<Filter.Numeric>, FilterGroup.Or<Filter.Tag>) {
-    return (.init(filters: compactMap { $0 as? Filter.Facet }),
-            .init(filters: compactMap { $0 as? Filter.Numeric }),
-            .init(filters: compactMap { $0 as? Filter.Tag }))
+  func requestOnlyFacets() {
+    attributesToRetrieve = []
+    attributesToHighlight = []
+    hitsPerPage = 0
+    analytics = false
   }
   
 }
@@ -203,6 +217,15 @@ extension Collection {
       }
     }
     return (satisfying, rest)
+  }
+  
+}
+
+extension Collection {
+  
+  /// Returns the element at the specified index if it is within bounds, otherwise nil.
+  subscript (safe index: Index) -> Element? {
+    return indices.contains(index) ? self[index] : nil
   }
   
 }

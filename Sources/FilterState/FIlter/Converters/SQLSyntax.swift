@@ -29,6 +29,7 @@ extension FilterGroupConverter {
   public func sql<C: Collection>(_ groupList: C) -> String? where C.Element == FilterGroupType {
     guard !groupList.isEmpty else { return nil }
     return groupList
+      .filter { !$0.filters.isEmpty }
       .compactMap(sql)
       .joined(separator: " AND ")
   }

@@ -19,7 +19,7 @@ extension FilterGroup {
     }
 
     public let name: String?
-    private var typedFilters: [T]
+    internal var typedFilters: [T]
     
     public init(filters: [T] = [], name: String? = nil) {
       self.typedFilters = filters
