@@ -77,20 +77,21 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     }
   }
   
-  fileprivate func handleDisjunctiveFacetingResponse(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
+  fileprivate func handleDisjunctiveFacetingResponse(for queryBuilder: ComplexQueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
     return { [weak self] value, error in
       let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
       
       switch result {
       case .failure(let error):
-        self?.onError.fire((query, error))
+        self?.onError.fire((queryBuilder.query, error))
         
       case .success(let results):
-        let finalResult = DisjunctiveFacetingHelper.mergeResults(results.searchResults)
-        let dfd = self!.disjunctiveFacetingDelegate!
-        let filters = dfd.toFilterGroups().map { $0.filters }.flatMap { $0 }
-        let completedResult = DisjunctiveFacetingHelper.completeMissingFacets(in: finalResult, disjunctiveFacets: dfd .disjunctiveFacetsAttributes, filters: filters)
-        self?.onResults.fire(completedResult)
+        do {
+          let result = try queryBuilder.aggregate(results.searchResults)
+          self?.onResults.fire(result)
+        } catch let error {
+          self?.onError.fire((queryBuilder.query, error))
+        }
       }
     }
   }
@@ -106,8 +107,12 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       !disjunctiveFacetingDelegate.disjunctiveFacetsAttributes.isEmpty,
       isDisjunctiveFacetingEnabled
     {
-      let queries = DisjunctiveFacetingHelper.buildQueries(with: query, delegate: disjunctiveFacetingDelegate).map { IndexQuery(index: indexSearchData.index, query: $0) }
-      operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: query))
+      var queriesBuilder = ComplexQueryBuilder(query: query,
+                                               filterGroups: disjunctiveFacetingDelegate.toFilterGroups(),
+                                               disjunctiveFacets: disjunctiveFacetingDelegate.disjunctiveFacetsAttributes)
+      queriesBuilder.keepSelectedEmptyFacets = true
+      let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
+      operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
     } else {
       operation = indexSearchData.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
     }

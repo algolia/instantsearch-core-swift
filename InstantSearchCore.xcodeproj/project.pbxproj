@@ -278,6 +278,14 @@
 		AFC2E2DE22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */; };
 		AFC2E2DF22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */; };
 		AFC2E2E022941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */; };
+		AFCB30A222CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
+		AFCB30A322CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
+		AFCB30A422CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
+		AFCB30A522CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
+		AFCB30A722CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
+		AFCB30A822CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
+		AFCB30A922CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
+		AFCB30AA22CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
 		AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
@@ -708,6 +716,8 @@
 		AFC2E2D52293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModelFilterConnectorsTests.swift; sourceTree = "<group>"; };
 		AFC2E2D92294103300859EBA /* SearchResultFacets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResultFacets.json; sourceTree = "<group>"; };
 		AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentViewModelConnectorsTests.swift; sourceTree = "<group>"; };
+		AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexQueryBuilder.swift; sourceTree = "<group>"; };
+		AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalFacetingHelper.swift; sourceTree = "<group>"; };
 		AFCDED33222D86E7001459BE /* FacetResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FacetResult.json; sourceTree = "<group>"; };
 		AFCDED38222D9697001459BE /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherSingleOrList.swift; sourceTree = "<group>"; };
@@ -1158,6 +1168,8 @@
 				BC3426361D460DB70055E0F2 /* Info.plist */,
 				AFCDED9E222E7B56001459BE /* GeoLocation.swift */,
 				AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */,
+				AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */,
+				AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */,
 				AFCDEDA0222E7B6B001459BE /* Hit.swift */,
 				BC34264B1D4613CB0055E0F2 /* Highlighter.swift */,
 				AF21EEA922B40170004A0542 /* TaggedString.swift */,
@@ -1772,6 +1784,7 @@
 				AFE6E38022A18369005BA44D /* ItemViewModel.swift in Sources */,
 				AF1178762264DBDF00C5B59B /* FilterStateDSL.swift in Sources */,
 				AF1178622264CCDE00C5B59B /* OrGroupProxy.swift in Sources */,
+				AFCB30A222CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */,
 				AF1177B2225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				AFC2E2A1228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AFCDEDC622397A5E001459BE /* QueryMetadata.swift in Sources */,
@@ -1779,6 +1792,7 @@
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFC2E283228ED58300859EBA /* FilterListViewController.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
+				AFCB30A722CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
 				E29E45632243F32C005B358D /* Observable.swift in Sources */,
 				E225EDAF2268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AFC2E2A7228EDF6A00859EBA /* Query+Facets.swift in Sources */,
@@ -1900,6 +1914,7 @@
 			files = (
 				AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E455F2243F322005B358D /* Observer.swift in Sources */,
+				AFCB30A822CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424B229830E600583D39 /* FilterClearViewModel+FilterState.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
@@ -2016,6 +2031,7 @@
 				AF1178672264CD4200C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDCF22397E23001459BE /* Paginator.swift in Sources */,
 				E2EFA5E922A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
+				AFCB30A322CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */,
 				AF1177C8225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785B2264C20400C5B59B /* FilterOperators.swift in Sources */,
 			);
@@ -2063,6 +2079,7 @@
 			files = (
 				AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E45602243F322005B358D /* Observer.swift in Sources */,
+				AFCB30A922CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424C229830E600583D39 /* FilterClearViewModel+FilterState.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
@@ -2179,6 +2196,7 @@
 				AF1178682264CD4300C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDD022397E24001459BE /* Paginator.swift in Sources */,
 				E2EFA5EA22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
+				AFCB30A422CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */,
 				AF1177C9225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785C2264C20500C5B59B /* FilterOperators.swift in Sources */,
 			);
@@ -2226,6 +2244,7 @@
 			files = (
 				AF2B26172281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E45612243F322005B358D /* Observer.swift in Sources */,
+				AFCB30AA22CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424D229830E600583D39 /* FilterClearViewModel+FilterState.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
@@ -2342,6 +2361,7 @@
 				AF1178692264CD4300C5B59B /* SpecializedAndGroupProxy.swift in Sources */,
 				AFCDEDD122397E25001459BE /* Paginator.swift in Sources */,
 				E2EFA5EB22A95ECC008C9CAA /* IndexSegmentViewModel+Controller.swift in Sources */,
+				AFCB30A522CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */,
 				AF1177CA225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785D2264C20600C5B59B /* FilterOperators.swift in Sources */,
 			);

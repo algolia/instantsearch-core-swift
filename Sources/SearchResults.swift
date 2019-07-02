@@ -38,7 +38,7 @@ public struct SearchResults: Codable {
   public var disjunctiveFacets: [Attribute: [Facet]]?
   
   /// Hierarchical facets
-  public let hierarchicalFacets: [Attribute: [Facet]]?
+  public var hierarchicalFacets: [Attribute: [Facet]]?
   
   /// A url-encoded string of all search parameters.
   public let params: String?

@@ -16,121 +16,6 @@ public class DisjunctiveFacetingHelper {
   
   private init() {}
   
-  /// Convenient method for building query list for disjunctive faceting with delegate instance
-  /// - parameter query: base search query
-  /// - parameter delegate: disjunctive faceting delegate
-  /// - returns: list of queries for disjunctive faceting
-  
-  public static func buildQueries(with query: Query, delegate: DisjunctiveFacetingDelegate) -> [Query] {
-    let facets = delegate.disjunctiveFacetsAttributes
-    let filterGroups = delegate.toFilterGroups()
-    return buildQueries(with: query, disjunctiveFacets: facets, filterGroups: filterGroups)
-  }
-  
-  /// Build list of queries for disjuncitve faceting
-  /// - parameter query: base search query
-  /// - parameter disjunctiveFacets: set of disjunctive filters attributes
-  /// - parameters filters: list of search filters
-  /// - returns: list of queries for disjunctive faceting
-  
-  public static func buildQueries(with query: Query, disjunctiveFacets: Set<Attribute>, filterGroups: [FilterGroupType]) -> [Query] {
-    let resultQuery = Query(copy: query)
-    resultQuery.filters = FilterGroupConverter().sql(filterGroups)
-    let disjunctiveQueries = buildDisjunctiveQueries(query: query, filterGroups: filterGroups, disjunctiveFacets: disjunctiveFacets)
-    return [resultQuery] + disjunctiveQueries
-  }
-  
-  public static func buildHierarchicalQueries(with query: Query,
-                                              filterGroups: [FilterGroupType],
-                                              hierarchicalAttributes: [Attribute],
-                                              hierachicalFilters: [Filter.Facet]) -> [Query] {
-
-    let attrs = hierarchicalAttributes
-      .prefix(hierachicalFilters.count + 1)
-    let hfilters: [Filter.Facet?] = [nil] + hierachicalFilters
-    
-    let queriess = zip(attrs, hfilters).map { arg -> Query in
-      let (attribute, hfilter) = arg
-      var outputFilterGroups = filterGroups
-      if let currentHierarhicalFilter = hfilter {
-        outputFilterGroups.append(FilterGroup.And(filters: [currentHierarhicalFilter], name: "hierarchical"))
-      }
-      
-      if let appliedHierachicalFacet = hierachicalFilters.last {
-        outputFilterGroups = outputFilterGroups.map { group in
-          guard let andGroup = group as? FilterGroup.And else {
-            return group
-          }
-          let filtersMinusHierarchicalFacet = andGroup.filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
-          return FilterGroup.And(filters: filtersMinusHierarchicalFacet, name: andGroup.name)
-        }
-      }
-      
-      let query = Query(copy: query)
-      query.facets = [attribute.name]
-      query.filters = FilterGroupConverter().sql(outputFilterGroups)
-      return query
-
-    }
-    
-    return queriess
-    
-//    let queriesForHierarchicalFacets: [Query] = hierarchicalAttributes
-//      .prefix(hierachicalFilters.count + 1)
-//      .enumerated()
-//      .map { (index, attribute) in
-//
-//        var outputFilterGroups = filterGroups
-//
-//        if let currentHierarhicalFilter = hierachicalFilters[safe: index - 1] {
-//          outputFilterGroups.append(FilterGroup.And(filters: [currentHierarhicalFilter], name: "hierarchical"))
-//        }
-//
-//        if let appliedHierachicalFacet = hierachicalFilters.last {
-//          outputFilterGroups = outputFilterGroups.map { group in
-//            guard let andGroup = group as? FilterGroup.And else {
-//              return group
-//            }
-//            let filtersMinusHierarchicalFacet = andGroup.filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
-//            return FilterGroup.And(filters: filtersMinusHierarchicalFacet, name: andGroup.name)
-//          }
-//        }
-//
-//        let query = Query(copy: query)
-//        query.facets = [attribute.name]
-//        query.filters = FilterGroupConverter().sql(outputFilterGroups)
-//        return query
-//    }
-//
-//    return queriesForHierarchicalFacets
-
-  }
-  
-  /// Merges multi-query results of disjuncitve faceting request to one result containing disjunctive faceting information
-  /// - parameter results: search results of disjunctive faceting multi-query
-  /// - returns: unique search result containing information of disjunctive faceting multi-query response
-  
-  public static func mergeResults(_ results: [SearchResults]) -> SearchResults {
-    
-    let resultAnd = results.first!
-    let resultsOr = results[1..<results.endIndex]
-    
-    let facets: [Attribute: [Facet]] = resultsOr
-      .compactMap { $0.facets }
-      .reduce([:]) { $0.merging($1) { (v, _) in v } }
-    let facetStats = results
-      .compactMap { $0.facetStats }
-      .reduce([:]) { $0.merging($1) { (v, _) in v } }
-    
-    var output = resultAnd
-    
-    output.disjunctiveFacets = facets
-    output.facetStats = facetStats
-    output.areFacetsCountExhaustive = resultsOr.compactMap { $0.areFacetsCountExhaustive }.all { $0 }
-    
-    return output
-  }
-  
   /// Constructs dictionary of raw facets for attribute with filters and set of disjunctive faceting attributes
   /// - parameter disjunctiveFacets: set of disjuncitve faceting attributes
   /// - parameter filters: list of filters containing disjunctive facets
@@ -204,18 +89,16 @@ public class DisjunctiveFacetingHelper {
     return completeMissingFacets(in: results, with: facetDictionary)
   }
   
-  //TODO: add DF explanation
-  /// Builds disjunctive queries for each facet
+  /// Builds disjunctive faceting queries for each facet
   /// - parameter query: source query
   /// - parameter filterGroups:
   /// - parameter disjunctiveFacets: attributes of disjunctive facets
   /// - returns: list of "or" queries for disjunctive faceting
 
-  internal static func buildDisjunctiveQueries(query: Query, filterGroups: [FilterGroupType], disjunctiveFacets: Set<Attribute>) -> [Query] {
+  internal static func buildDisjunctiveFacetingQueries(query: Query, filterGroups: [FilterGroupType], disjunctiveFacets: Set<Attribute>) -> [Query] {
+    
     return disjunctiveFacets.map { attribute in
-      let query = Query(copy: query)
-      query.facets = [attribute.name]
-      query.requestOnlyFacets()
+      
       let groups = filterGroups.map { (group) -> FilterGroupType in
         guard let disjunctiveFacetGroup = group as? FilterGroup.Or<Filter.Facet> else {
           return group
@@ -223,12 +106,19 @@ public class DisjunctiveFacetingHelper {
         let filtersMinusDisjunctiveFacet = disjunctiveFacetGroup.typedFilters.filter { $0.attribute != attribute }
         return FilterGroup.Or(filters: filtersMinusDisjunctiveFacet, name: group.name)
       }.filter { !$0.filters.isEmpty }
+      
+      let query = Query(copy: query)
+      query.facets = [attribute.name]
+      query.requestOnlyFacets()
       query.filters = FilterGroupConverter().sql(groups)
       return query
+      
     }
+    
   }
   
 }
+
 
 extension Query {
   
@@ -269,12 +159,24 @@ extension Collection {
 
 extension Collection {
   
-  func all(predicate: (Element) -> Bool) -> Bool {
-    return reduce(true) { $0 && predicate($1) }
+  func anySatisfy(_ predicate: (Element) -> Bool) -> Bool {
+    return reduce(false) { $0 || predicate($1) }
   }
   
-  func any(predicate: (Element) -> Bool) -> Bool {
-    return reduce(false) { $0 || predicate($1) }
+}
+
+extension Collection where Element == SearchResults {
+  
+  func aggregateFacets() -> [Attribute: [Facet]] {
+    return compactMap { $0.facets }.reduce([:]) { (aggregatedFacets, facets) in
+      aggregatedFacets.merging(facets) { (_, new) in new }
+    }
+  }
+  
+  func aggregateFacetStats() -> [Attribute: SearchResults.FacetStats] {
+    return compactMap { $0.facetStats }.reduce([:]) { (aggregatedFacetStats, facetStats) in
+      aggregatedFacetStats.merging(facetStats) { (_, new) in new }
+    }
   }
   
 }

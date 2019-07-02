@@ -30,16 +30,25 @@ class DisjunctiveFacetingTests: XCTestCase {
   
   func testMergeResults() {
     
+    let query = Query()
+    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: [], disjunctiveFacets: ["price", "pubYear"])
+    
     let res1 = try! SearchResults(jsonFile: "DisjFacetingResult1", bundle: Bundle(for: DisjunctiveFacetingTests.self))
     let res2 = try! SearchResults(jsonFile: "DisjFacetingResult2", bundle: Bundle(for: DisjunctiveFacetingTests.self))
     let res3 = try! SearchResults(jsonFile: "DisjFacetingResult3", bundle: Bundle(for: DisjunctiveFacetingTests.self))
     
-    let output = DisjunctiveFacetingHelper.mergeResults([res1, res2, res3])
+    do {
+      let output = try queryBuilder.aggregate([res1, res2, res3])
+      XCTAssertEqual(output.facetStats?.count, 2)
+      XCTAssertEqual(output.disjunctiveFacets?.count, 2)
+      XCTAssertEqual(output.disjunctiveFacets?.map { $0.key }.contains("price"), true)
+      XCTAssertEqual(output.disjunctiveFacets?.map { $0.key }.contains("pubYear"), true)
+
+    } catch let error {
+      
+      XCTFail("\(error)")
+    }
     
-    XCTAssertEqual(output.facetStats?.count, 2)
-    XCTAssertEqual(output.disjunctiveFacets?.count, 2)
-    XCTAssertEqual(output.disjunctiveFacets?.map { $0.key }.contains("price"), true)
-    XCTAssertEqual(output.disjunctiveFacets?.map { $0.key }.contains("pubYear"), true)
 
   }
   
@@ -47,13 +56,17 @@ class DisjunctiveFacetingTests: XCTestCase {
     
     let query = Query()
     
+    
     let colorGroup = FilterGroup.Or<Filter.Facet>(filters: [.init(attribute: "color", stringValue: "red"), .init(attribute: "color", stringValue: "green")], name: "color")
     let sizeGroup = FilterGroup.Or<Filter.Facet>(filters: [.init(attribute: "size", stringValue: "m"), .init(attribute: "size", stringValue: "s")], name: "size")
 
     let filterGroups: [FilterGroupType] = [colorGroup, sizeGroup]
     
     let disjunctiveFacets = Set([colorGroup.name, sizeGroup.name].compactMap { $0 }.map(Attribute.init(rawValue:)))
-    let queries = DisjunctiveFacetingHelper.buildQueries(with: query, disjunctiveFacets: disjunctiveFacets, filterGroups: filterGroups)
+    
+    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups, disjunctiveFacets: disjunctiveFacets)
+    
+    let queries = queryBuilder.build()
     
     let andQuery = queries.first!
     XCTAssertNil(andQuery.facets)
@@ -101,25 +114,23 @@ class DisjunctiveFacetingTests: XCTestCase {
       .init(attribute: "category.lvl2", stringValue: "a > b > c")
     ]
     
-    let queries = DisjunctiveFacetingHelper.buildHierarchicalQueries(with: query,
-                                                                     filterGroups: filterGroups,
-                                                                     hierarchicalAttributes: hierarchicalAttributes,
-                                                                     hierachicalFilters: hierarchicalFilters)
+    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
     
-    XCTAssertEqual(queries.count, hierarchicalAttributes.count)
+    let queries = queryBuilder.build()
     
-    XCTAssertEqual(queries[0].filters, "( \"color\":\"red\" )")
-    XCTAssertEqual(queries[0].facets, ["category.lvl0"])
+    XCTAssertEqual(queries.count, hierarchicalAttributes.count + 1)
+    
+    XCTAssertEqual(queries[1].filters, "( \"color\":\"red\" )")
+    XCTAssertEqual(queries[1].facets, ["category.lvl0"])
 
-    XCTAssertEqual(queries[1].filters, "( \"color\":\"red\" ) AND ( \"category.lvl0\":\"a\" )")
-    XCTAssertEqual(queries[1].facets, ["category.lvl1"])
+    XCTAssertEqual(queries[2].filters, "( \"color\":\"red\" ) AND ( \"category.lvl0\":\"a\" )")
+    XCTAssertEqual(queries[2].facets, ["category.lvl1"])
 
-    XCTAssertEqual(queries[2].filters, "( \"color\":\"red\" ) AND ( \"category.lvl1\":\"a > b\" )")
-    XCTAssertEqual(queries[2].facets, ["category.lvl2"])
+    XCTAssertEqual(queries[3].filters, "( \"color\":\"red\" ) AND ( \"category.lvl1\":\"a > b\" )")
+    XCTAssertEqual(queries[3].facets, ["category.lvl2"])
 
-    XCTAssertEqual(queries[3].filters, "( \"color\":\"red\" )")
-    XCTAssertEqual(queries[3].facets, ["category.lvl3"])
-
+    XCTAssertEqual(queries[4].filters, "( \"color\":\"red\" )")
+    XCTAssertEqual(queries[4].facets, ["category.lvl3"])
     
   }
   
