@@ -1,5 +1,5 @@
 //
-//  HierarchicalFacetingHelper.swift
+//  ComplexQueryBuilder+HierarchicalFaceting.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 02/07/2019.
@@ -8,16 +8,12 @@
 
 import Foundation
 
-public class HierarchicalFacetingHelper {
+extension ComplexQueryBuilder {
   
-  /// Blocks instantiating this class
-  
-  private init() {}
-  
-  public static func buildHierarchicalQueries(with query: Query,
-                                              filterGroups: [FilterGroupType],
-                                              hierarchicalAttributes: [Attribute],
-                                              hierachicalFilters: [Filter.Facet]) -> [Query] {
+  func buildHierarchicalQueries(with query: Query,
+                                filterGroups: [FilterGroupType],
+                                hierarchicalAttributes: [Attribute],
+                                hierachicalFilters: [Filter.Facet]) -> [Query] {
     
     // An empty hierarchical offset in the beggining is added to create
     // The first request in the list returning search results

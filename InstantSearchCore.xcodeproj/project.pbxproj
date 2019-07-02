@@ -132,10 +132,10 @@
 		AF21EED522C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EED322C0EAA5004A0542 /* SelectableListViewModel+Filter.swift */; };
 		AF21EED622C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EED322C0EAA5004A0542 /* SelectableListViewModel+Filter.swift */; };
 		AF21EED722C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EED322C0EAA5004A0542 /* SelectableListViewModel+Filter.swift */; };
-		AF21EEE522C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */; };
-		AF21EEE622C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */; };
-		AF21EEE722C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */; };
-		AF21EEE822C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */; };
+		AF21EEE522C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift */; };
+		AF21EEE622C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift */; };
+		AF21EEE722C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift */; };
+		AF21EEE822C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE422C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift */; };
 		AF21EEEE22C3CAD1004A0542 /* DisjunctiveFacetingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */; };
 		AF21EEEF22C3CAD4004A0542 /* DisjunctiveFacetingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */; };
 		AF21EEF022C3CAD6004A0542 /* DisjunctiveFacetingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */; };
@@ -282,10 +282,22 @@
 		AFCB30A322CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
 		AFCB30A422CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
 		AFCB30A522CB85A40094ED2E /* ComplexQueryBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */; };
-		AFCB30A722CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
-		AFCB30A822CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
-		AFCB30A922CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
-		AFCB30AA22CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */; };
+		AFCB30A722CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift */; };
+		AFCB30A822CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift */; };
+		AFCB30A922CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift */; };
+		AFCB30AA22CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30A622CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift */; };
+		AFCB30AC22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */; };
+		AFCB30AD22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */; };
+		AFCB30AE22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */; };
+		AFCB30B022CB96DF0094ED2E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30AF22CB96DF0094ED2E /* Helpers.swift */; };
+		AFCB30B122CB96DF0094ED2E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30AF22CB96DF0094ED2E /* Helpers.swift */; };
+		AFCB30B222CB96DF0094ED2E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30AF22CB96DF0094ED2E /* Helpers.swift */; };
+		AFCB30B422CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */; };
+		AFCB30B522CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */; };
+		AFCB30B622CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */; };
+		AFCB30B822CB97DE0094ED2E /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCB30B722CB97DE0094ED2E /* hierarchical.json */; };
+		AFCB30B922CB97DE0094ED2E /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCB30B722CB97DE0094ED2E /* hierarchical.json */; };
+		AFCB30BA22CB97DE0094ED2E /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCB30B722CB97DE0094ED2E /* hierarchical.json */; };
 		AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
@@ -675,7 +687,7 @@
 		AF21EEB822B4062C004A0542 /* AttributedStringWithTaggedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringWithTaggedStringTests.swift; sourceTree = "<group>"; };
 		AF21EECE22C0EA8B004A0542 /* SelectableListViewModel+Facet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SelectableListViewModel+Facet.swift"; sourceTree = "<group>"; };
 		AF21EED322C0EAA5004A0542 /* SelectableListViewModel+Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SelectableListViewModel+Filter.swift"; sourceTree = "<group>"; };
-		AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisjunctiveFaceting.swift; sourceTree = "<group>"; };
+		AF21EEE422C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QueryBuilder+DisjunctiveFaceting.swift"; sourceTree = "<group>"; };
 		AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisjunctiveFacetingsTests.swift; sourceTree = "<group>"; };
 		AF21EEF122C523B0004A0542 /* DisjFacetingResult1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DisjFacetingResult1.json; sourceTree = "<group>"; };
 		AF21EEF222C523B0004A0542 /* DisjFacetingResult3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DisjFacetingResult3.json; sourceTree = "<group>"; };
@@ -717,7 +729,11 @@
 		AFC2E2D92294103300859EBA /* SearchResultFacets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResultFacets.json; sourceTree = "<group>"; };
 		AFC2E2DD22941C1F00859EBA /* SelectableSegmentViewModelConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentViewModelConnectorsTests.swift; sourceTree = "<group>"; };
 		AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexQueryBuilder.swift; sourceTree = "<group>"; };
-		AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalFacetingHelper.swift; sourceTree = "<group>"; };
+		AFCB30A622CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "QueryBuilder+HierarchicalFaceting.swift"; sourceTree = "<group>"; };
+		AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineTestCase.swift; sourceTree = "<group>"; };
+		AFCB30AF22CB96DF0094ED2E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalIntegrationTests.swift; sourceTree = "<group>"; };
+		AFCB30B722CB97DE0094ED2E /* hierarchical.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hierarchical.json; sourceTree = "<group>"; };
 		AFCDED33222D86E7001459BE /* FacetResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FacetResult.json; sourceTree = "<group>"; };
 		AFCDED38222D9697001459BE /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherSingleOrList.swift; sourceTree = "<group>"; };
@@ -1167,8 +1183,8 @@
 				AFCDEDBC2239796F001459BE /* Pagination */,
 				BC3426361D460DB70055E0F2 /* Info.plist */,
 				AFCDED9E222E7B56001459BE /* GeoLocation.swift */,
-				AF21EEE422C3CAB9004A0542 /* DisjunctiveFaceting.swift */,
-				AFCB30A622CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift */,
+				AF21EEE422C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift */,
+				AFCB30A622CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift */,
 				AFCB30A122CB85A40094ED2E /* ComplexQueryBuilder.swift */,
 				AFCDEDA0222E7B6B001459BE /* Hit.swift */,
 				BC34264B1D4613CB0055E0F2 /* Highlighter.swift */,
@@ -1210,12 +1226,16 @@
 				AF21EEF322C523B0004A0542 /* DisjFacetingResult2.json */,
 				AF21EEF222C523B0004A0542 /* DisjFacetingResult3.json */,
 				AFCDED33222D86E7001459BE /* FacetResult.json */,
+				AFCB30B722CB97DE0094ED2E /* hierarchical.json */,
 				AFCDEDE0223A5C0E001459BE /* HitsViewModelTests.swift */,
 				AF19B039223FF9F400FA2FE0 /* MultiIndexHitsViewModelTests.swift */,
 				E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */,
 				AFCDEDE4223AC4E8001459BE /* PaginatorTests.swift */,
 				AFE6E3C622A830BF005BA44D /* InfiniteScrollingControllerTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
+				AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */,
+				AFCB30AF22CB96DF0094ED2E /* Helpers.swift */,
+				AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */,
 				AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */,
 				AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */,
 				AFC2E2BD2292953400859EBA /* SelectableListViewModelTests.swift */,
@@ -1614,6 +1634,7 @@
 			files = (
 				AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */,
 				AF21EF0222C52762004A0542 /* DisjFacetingResult3.json in Resources */,
+				AFCB30B822CB97DE0094ED2E /* hierarchical.json in Resources */,
 				AFC2E2DA2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D52229356400FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0122C52762004A0542 /* DisjFacetingResult2.json in Resources */,
@@ -1634,6 +1655,7 @@
 			files = (
 				AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */,
 				AF21EF0522C52763004A0542 /* DisjFacetingResult3.json in Resources */,
+				AFCB30B922CB97DE0094ED2E /* hierarchical.json in Resources */,
 				AFC2E2DB2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D42229356300FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0422C52763004A0542 /* DisjFacetingResult2.json in Resources */,
@@ -1654,6 +1676,7 @@
 			files = (
 				AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */,
 				AF21EF0822C52764004A0542 /* DisjFacetingResult3.json in Resources */,
+				AFCB30BA22CB97DE0094ED2E /* hierarchical.json in Resources */,
 				AFC2E2DC2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D32229356200FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0722C52764004A0542 /* DisjFacetingResult2.json in Resources */,
@@ -1792,7 +1815,7 @@
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFC2E283228ED58300859EBA /* FilterListViewController.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
-				AFCB30A722CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
+				AFCB30A722CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E29E45632243F32C005B358D /* Observable.swift in Sources */,
 				E225EDAF2268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AFC2E2A7228EDF6A00859EBA /* Query+Facets.swift in Sources */,
@@ -1816,7 +1839,7 @@
 				AF11786A2264CD9C00C5B59B /* OrGroupOperators.swift in Sources */,
 				E2BAE6B0223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				E2EBE72C22B1347D00B91B23 /* ItemsListViewModel.swift in Sources */,
-				AF21EEE522C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */,
+				AF21EEE522C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				AF21EECF22C0EA8B004A0542 /* SelectableListViewModel+Facet.swift in Sources */,
 				AFF1E753229696CD00941401 /* HitsController.swift in Sources */,
 				AFE6E3BA22A6E078005BA44D /* PageLoadable.swift in Sources */,
@@ -1884,6 +1907,7 @@
 				AFCDEDE5223AC4E8001459BE /* PaginatorTests.swift in Sources */,
 				AFCDEDA6222E8166001459BE /* FacetResultsTests.swift in Sources */,
 				AFC2E2C62292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
+				AFCB30AC22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */,
 				AF21EEEE22C3CAD1004A0542 /* DisjunctiveFacetingsTests.swift in Sources */,
 				AF11783F225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117854226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
@@ -1901,8 +1925,10 @@
 				AFC2E2BE2292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AFC2E2C22292A1F400859EBA /* CallbackTester.swift in Sources */,
 				AFC2E2D22292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift in Sources */,
+				AFCB30B022CB96DF0094ED2E /* Helpers.swift in Sources */,
 				AFCDEDE1223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
 				AF21EEBD22B4065F004A0542 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AFCB30B422CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */,
 				AF11784B22608CBB00C5B59B /* FilterStateGroupTests.swift in Sources */,
 				AFCDED7D222E7A60001459BE /* HighlighterTest.swift in Sources */,
 			);
@@ -1914,7 +1940,7 @@
 			files = (
 				AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E455F2243F322005B358D /* Observer.swift in Sources */,
-				AFCB30A822CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
+				AFCB30A822CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424B229830E600583D39 /* FilterClearViewModel+FilterState.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
@@ -1966,7 +1992,7 @@
 				AFBF37642285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A322A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2A8228EDF6A00859EBA /* Query+Facets.swift in Sources */,
-				AF21EEE622C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */,
+				AF21EEE622C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFE6E38722A185C9005BA44D /* StatsViewModel.swift in Sources */,
 				E2146C0222B3CE6700927350 /* NumberRangeViewModel+FilterState.swift in Sources */,
@@ -2053,6 +2079,7 @@
 				AF19B03B223FF9F400FA2FE0 /* MultiIndexHitsViewModelTests.swift in Sources */,
 				AFC2E2D32292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift in Sources */,
 				AF21EEEF22C3CAD4004A0542 /* DisjunctiveFacetingsTests.swift in Sources */,
+				AFCB30AD22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */,
 				AF117840225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117855226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
 				AFCDED8F222E7A62001459BE /* SearchResultsTests.swift in Sources */,
@@ -2066,10 +2093,12 @@
 				AFC2E2D72293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */,
 				AF11784C22608CBC00C5B59B /* FilterStateGroupTests.swift in Sources */,
 				AF21EEBE22B40660004A0542 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AFCB30B122CB96DF0094ED2E /* Helpers.swift in Sources */,
 				AFE6E3C822A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AF21EEA722B3E989004A0542 /* TaggedStringTests.swift in Sources */,
 				AFC2E2C72292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AFCDEDE2223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
+				AFCB30B522CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2079,7 +2108,7 @@
 			files = (
 				AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E45602243F322005B358D /* Observer.swift in Sources */,
-				AFCB30A922CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
+				AFCB30A922CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424C229830E600583D39 /* FilterClearViewModel+FilterState.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
@@ -2131,7 +2160,7 @@
 				AFBF37652285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A422A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2A9228EDF6A00859EBA /* Query+Facets.swift in Sources */,
-				AF21EEE722C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */,
+				AF21EEE722C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				E29E45652243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38822A185C9005BA44D /* StatsViewModel.swift in Sources */,
 				E2146C0322B3CE6700927350 /* NumberRangeViewModel+FilterState.swift in Sources */,
@@ -2218,6 +2247,7 @@
 				AF19B03C223FF9F400FA2FE0 /* MultiIndexHitsViewModelTests.swift in Sources */,
 				AFC2E2D42292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift in Sources */,
 				AF21EEF022C3CAD6004A0542 /* DisjunctiveFacetingsTests.swift in Sources */,
+				AFCB30AE22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */,
 				AF117841225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117856226091CF00C5B59B /* FilterGroupTests.swift in Sources */,
 				AFCDED9B222E7A63001459BE /* SearchResultsTests.swift in Sources */,
@@ -2231,10 +2261,12 @@
 				AFC2E2D82293F1D500859EBA /* SelectableListViewModelFilterConnectorsTests.swift in Sources */,
 				AF11784D22608CBD00C5B59B /* FilterStateGroupTests.swift in Sources */,
 				AF21EEBF22B40661004A0542 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AFCB30B222CB96DF0094ED2E /* Helpers.swift in Sources */,
 				AFE6E3C922A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AF21EEA622B3E988004A0542 /* TaggedStringTests.swift in Sources */,
 				AFC2E2C82292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AFCDEDE3223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
+				AFCB30B622CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2244,7 +2276,7 @@
 			files = (
 				AF2B26172281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				E29E45612243F322005B358D /* Observer.swift in Sources */,
-				AFCB30AA22CB8F8D0094ED2E /* HierarchicalFacetingHelper.swift in Sources */,
+				AFCB30AA22CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424D229830E600583D39 /* FilterClearViewModel+FilterState.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
@@ -2296,7 +2328,7 @@
 				AFBF37662285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A522A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2AA228EDF6A00859EBA /* Query+Facets.swift in Sources */,
-				AF21EEE822C3CAB9004A0542 /* DisjunctiveFaceting.swift in Sources */,
+				AF21EEE822C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				E29E45662243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38922A185CA005BA44D /* StatsViewModel.swift in Sources */,
 				E2146C0422B3CE6700927350 /* NumberRangeViewModel+FilterState.swift in Sources */,

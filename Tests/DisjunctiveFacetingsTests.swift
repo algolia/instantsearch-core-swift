@@ -31,7 +31,11 @@ class DisjunctiveFacetingTests: XCTestCase {
   func testMergeResults() {
     
     let query = Query()
-    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: [], disjunctiveFacets: ["price", "pubYear"])
+    
+    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: [
+      FilterGroup.Or(filters: [Filter.Facet(attribute: "price", floatValue: 100)], name: "price"),
+      FilterGroup.Or(filters: [Filter.Facet(attribute: "pubYear", floatValue: 2000)], name: "pubYear"),
+    ])
     
     let res1 = try! SearchResults(jsonFile: "DisjFacetingResult1", bundle: Bundle(for: DisjunctiveFacetingTests.self))
     let res2 = try! SearchResults(jsonFile: "DisjFacetingResult2", bundle: Bundle(for: DisjunctiveFacetingTests.self))
@@ -64,7 +68,7 @@ class DisjunctiveFacetingTests: XCTestCase {
     
     let disjunctiveFacets = Set([colorGroup.name, sizeGroup.name].compactMap { $0 }.map(Attribute.init(rawValue:)))
     
-    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups, disjunctiveFacets: disjunctiveFacets)
+    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups)
     
     let queries = queryBuilder.build()
     

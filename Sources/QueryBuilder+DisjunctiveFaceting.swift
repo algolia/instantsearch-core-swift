@@ -1,5 +1,5 @@
 //
-//  DisjunctiveFacetingHelper.swift
+//  QueryBuilder+DisjunctiveFaceting.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 26/06/2019.
@@ -10,18 +10,14 @@ import Foundation
 
 /// Provides convenient method for building disjuncitve faceting queries and parsing disjunctive faceting
 
-public class DisjunctiveFacetingHelper {
-  
-  /// Blocks instantiating this class
-  
-  private init() {}
+extension ComplexQueryBuilder {
   
   /// Constructs dictionary of raw facets for attribute with filters and set of disjunctive faceting attributes
   /// - parameter disjunctiveFacets: set of disjuncitve faceting attributes
   /// - parameter filters: list of filters containing disjunctive facets
   /// - returns: dictionary mapping disjunctive faceting attributes to list of raw facets
   
-  private static func facetDictionary(with disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> [Attribute: [String]] {
+  private func facetDictionary(with disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> [Attribute: [String]] {
     return disjunctiveFacets.map { attribute -> (Attribute, [String]) in
       let values = filters
         .compactMap { $0 as? Filter.Facet }
@@ -39,7 +35,7 @@ public class DisjunctiveFacetingHelper {
   /// - parameter filters: list of filters containing disjunctive facets
   /// - returns: dictionary mapping disjunctive faceting attributes to list of facets
   
-  private static func typedFacetDictionary(with dict: [Attribute: [String]]) -> [Attribute: [Facet]] {
+  private func typedFacetDictionary(with dict: [Attribute: [String]]) -> [Attribute: [Facet]] {
     return dict
       .map { (attribute, facetValues) -> (Attribute, [Facet]) in
         let facets = facetValues.map { Facet(value: $0, count: 0, highlighted: .none) }
@@ -55,7 +51,7 @@ public class DisjunctiveFacetingHelper {
   /// - parameter facets: dictionary of current facets
   /// - returns: disjuncitve faceting results enriched with selected but empty facets
   
-  public static func completeMissingFacets(in results: SearchResults, with facets: [Attribute: [String]]) -> SearchResults {
+  private func completeMissingFacets(in results: SearchResults, with facets: [Attribute: [String]]) -> SearchResults {
     
     var output = results
     
@@ -84,7 +80,7 @@ public class DisjunctiveFacetingHelper {
   /// - parameter facets: set of attribute of facets
   /// - returns: disjuncitve faceting results enriched with selected but empty facets
   
-  public static func completeMissingFacets(in results: SearchResults, disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> SearchResults {
+  func completeMissingFacets(in results: SearchResults, disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> SearchResults {
     let facetDictionary = self.facetDictionary(with: disjunctiveFacets, filters: filters)
     return completeMissingFacets(in: results, with: facetDictionary)
   }
@@ -95,7 +91,7 @@ public class DisjunctiveFacetingHelper {
   /// - parameter disjunctiveFacets: attributes of disjunctive facets
   /// - returns: list of "or" queries for disjunctive faceting
 
-  internal static func buildDisjunctiveFacetingQueries(query: Query, filterGroups: [FilterGroupType], disjunctiveFacets: Set<Attribute>) -> [Query] {
+  func buildDisjunctiveFacetingQueries(query: Query, filterGroups: [FilterGroupType], disjunctiveFacets: Set<Attribute>) -> [Query] {
     
     return disjunctiveFacets.map { attribute in
       
@@ -118,7 +114,6 @@ public class DisjunctiveFacetingHelper {
   }
   
 }
-
 
 extension Query {
   

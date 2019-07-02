@@ -107,9 +107,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       !disjunctiveFacetingDelegate.disjunctiveFacetsAttributes.isEmpty,
       isDisjunctiveFacetingEnabled
     {
-      var queriesBuilder = ComplexQueryBuilder(query: query,
-                                               filterGroups: disjunctiveFacetingDelegate.toFilterGroups(),
-                                               disjunctiveFacets: disjunctiveFacetingDelegate.disjunctiveFacetsAttributes)
+      var queriesBuilder = ComplexQueryBuilder(query: query, filterGroups: disjunctiveFacetingDelegate.toFilterGroups())
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
       operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))

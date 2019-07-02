@@ -13,8 +13,9 @@ public struct ComplexQueryBuilder {
   public let query: Query
   public let filterGroups: [FilterGroupType]
   
-  public let disjunctiveFacets: Set<Attribute>
   public var keepSelectedEmptyFacets: Bool
+  
+  private let disjunctiveFacets: Set<Attribute>
   
   public let hierarchicalAttributes: [Attribute]
   public let hierachicalFilters: [Filter.Facet]
@@ -35,13 +36,16 @@ public struct ComplexQueryBuilder {
   
   public init(query: Query,
               filterGroups: [FilterGroupType] = [],
-              disjunctiveFacets: Set<Attribute> = [],
               hierarchicalAttributes: [Attribute] = [],
               hierachicalFilters: [Filter.Facet] = []) {
     self.query = query
     self.keepSelectedEmptyFacets = false
     self.filterGroups = filterGroups
-    self.disjunctiveFacets = disjunctiveFacets
+    self.disjunctiveFacets = Set(filterGroups
+      .compactMap { $0 as? FilterGroup.Or<Filter.Facet> }
+      .map { $0.filters }
+      .flatMap { $0 }
+      .map { $0.attribute })
     self.hierarchicalAttributes = hierarchicalAttributes
     self.hierachicalFilters = hierachicalFilters
   }
@@ -51,12 +55,14 @@ public struct ComplexQueryBuilder {
     let queryForResults = Query(copy: query)
     queryForResults.filters = FilterGroupConverter().sql(filterGroups)
     
-    let disjunctiveFacetingQueries = DisjunctiveFacetingHelper.buildDisjunctiveFacetingQueries(query: query, filterGroups: filterGroups, disjunctiveFacets: disjunctiveFacets)
+    let disjunctiveFacetingQueries = buildDisjunctiveFacetingQueries(query: query,
+                                                                     filterGroups: filterGroups,
+                                                                     disjunctiveFacets: disjunctiveFacets)
     
-    let hierarchicalFacetingQueries = HierarchicalFacetingHelper.buildHierarchicalQueries(with: query,
-                                                                                          filterGroups: filterGroups,
-                                                                                          hierarchicalAttributes: hierarchicalAttributes,
-                                                                                          hierachicalFilters: hierachicalFilters)
+    let hierarchicalFacetingQueries = buildHierarchicalQueries(with: query,
+                                                               filterGroups: filterGroups,
+                                                               hierarchicalAttributes: hierarchicalAttributes,
+                                                               hierachicalFilters: hierachicalFilters)
     
     return [queryForResults] + disjunctiveFacetingQueries + hierarchicalFacetingQueries
   }
@@ -85,7 +91,7 @@ public struct ComplexQueryBuilder {
     
     if keepSelectedEmptyFacets {
       let filters = filterGroups.flatMap { $0.filters }
-      aggregatedResult = DisjunctiveFacetingHelper.completeMissingFacets(in: aggregatedResult, disjunctiveFacets: disjunctiveFacets, filters: filters )
+      aggregatedResult = completeMissingFacets(in: aggregatedResult, disjunctiveFacets: disjunctiveFacets, filters: filters )
     }
     
     return aggregatedResult
