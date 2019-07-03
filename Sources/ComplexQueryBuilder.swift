@@ -77,17 +77,15 @@ public struct ComplexQueryBuilder {
       throw Error.queriesResultsCountMismatch(totalQueriesCount, results.count)
     }
     
-    let resultsForDisjuncitveFaceting = results[1...disjunctiveFacetingQueriesCount]
-    let resultsForHierarchicalFaceting = results[1 + disjunctiveFacetingQueriesCount..<totalQueriesCount]
+    let resultsForFaceting = results.dropFirst()
+    let resultsForDisjuncitveFaceting = resultsForFaceting[...disjunctiveFacetingQueriesCount]
+    let resultsForHierarchicalFaceting = resultsForFaceting.dropFirst(disjunctiveFacetingQueriesCount)[..<totalQueriesCount]
     
-    let facets = resultsForDisjuncitveFaceting.aggregateFacets()
     let facetStats = results.aggregateFacetStats()
-    let hierarchicalFacets = resultsForHierarchicalFaceting.aggregateFacets()
-    
     aggregatedResult.facetStats = facetStats.isEmpty ? nil : facetStats
-    aggregatedResult.disjunctiveFacets = facets
-    aggregatedResult.hierarchicalFacets = hierarchicalFacets.isEmpty ? nil : hierarchicalFacets
-    aggregatedResult.areFacetsCountExhaustive = resultsForDisjuncitveFaceting.allSatisfy { $0.areFacetsCountExhaustive == true }
+    
+    aggregatedResult = update(aggregatedResult, withResultsForDisjuncitveFaceting: resultsForDisjuncitveFaceting)
+    aggregatedResult = update(aggregatedResult, withResultsForHierarchicalFaceting: resultsForHierarchicalFaceting)
     
     if keepSelectedEmptyFacets {
       let filters = filterGroups.flatMap { $0.filters }
@@ -96,6 +94,20 @@ public struct ComplexQueryBuilder {
     
     return aggregatedResult
     
+  }
+  
+  func update<C: Collection>(_ results: SearchResults, withResultsForDisjuncitveFaceting resultsForDisjuncitveFaceting: C) -> SearchResults where C.Element == SearchResults {
+    var output = results
+    output.disjunctiveFacets = resultsForDisjuncitveFaceting.aggregateFacets()
+    output.areFacetsCountExhaustive = resultsForDisjuncitveFaceting.allSatisfy { $0.areFacetsCountExhaustive == true }
+    return output
+  }
+  
+  func update<C: Collection>(_ results: SearchResults, withResultsForHierarchicalFaceting resultsForHierarchicalFaceting: C) -> SearchResults where C.Element == SearchResults {
+    var output = results
+    let hierarchicalFacets = resultsForHierarchicalFaceting.aggregateFacets()
+    output.hierarchicalFacets = hierarchicalFacets.isEmpty ? nil : hierarchicalFacets
+    return output
   }
   
   public enum Error: Swift.Error {

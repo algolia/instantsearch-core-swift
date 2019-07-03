@@ -18,12 +18,13 @@ class OnlineTestCase: XCTestCase {
   var client: Client!
   var index: Index!
   
+  let appID = ""
+  let apiKey = ""
+  
   override func setUp() {
     super.setUp()
     
     // Init client.
-    let appID = "1M1U6ZWKZP" //Bundle(for: type(of: self)).object(forInfoDictionaryKey: ) as? String ?? ""
-    let apiKey = "c762c14ebbd970c7f5c7ec6654b26472" //Bundle(for: type(of: self)).object(forInfoDictionaryKey: ) as? String ?? ""
     client = InstantSearchClient.Client(appID: appID, apiKey: apiKey)
     
     // Init index.
