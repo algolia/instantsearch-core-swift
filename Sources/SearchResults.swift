@@ -10,6 +10,7 @@ import Foundation
 @_exported import InstantSearchClient
 
 //TODO: Add exhaustive nb hits
+//TODO: Add hierarchicalFacet serialisation
 
 public struct SearchResults: Codable {
     
@@ -111,7 +112,6 @@ public struct SearchResults: Codable {
     }
     self.facets = try extractFacets(withKey: .facets)
     self.disjunctiveFacets = try extractFacets(withKey: .disjunctiveFacets)
-    self.hierarchicalFacets = [:]
     if let rawFacetStats = try container.decodeIfPresent([String: FacetStats].self, forKey: .facetStats) {
       self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (Attribute($0.key), $0.value) })
     } else {

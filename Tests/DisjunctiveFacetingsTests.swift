@@ -133,7 +133,7 @@ class DisjunctiveFacetingTests: XCTestCase {
     XCTAssertEqual(queries[3].filters, "( \"color\":\"red\" ) AND ( \"category.lvl1\":\"a > b\" )")
     XCTAssertEqual(queries[3].facets, ["category.lvl2"])
 
-    XCTAssertEqual(queries[4].filters, "( \"color\":\"red\" )")
+    XCTAssertEqual(queries[4].filters, "( \"color\":\"red\" ) AND ( \"category.lvl2\":\"a > b > c\" )")
     XCTAssertEqual(queries[4].facets, ["category.lvl3"])
     
   }

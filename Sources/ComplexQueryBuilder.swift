@@ -27,6 +27,9 @@ public struct ComplexQueryBuilder {
   }
   
   public var hierarchicalFacetingQueriesCount: Int {
+    if hierarchicalAttributes.count == hierachicalFilters.count {
+      return hierarchicalAttributes.count
+    }
     return hierachicalFilters.isEmpty ? 0 : hierachicalFilters.count + 1
   }
   

@@ -2,53 +2,53 @@
   {
     "name": "Item 7",
     "hierarchicalCategories": {
-      "lvl0": "Category3",
-      "lvl1": "Category3 > SubCategory2",
-      "lvl2": "Category3 > SubCategory2 > SubSubCategory2"
+      "lvl0": "Clothing",
+      "lvl1": "Clothing > Women",
+      "lvl2": "Clothing > Women > Shoes"
     }
   },
   {
     "name": "Item 6",
     "hierarchicalCategories": {
-      "lvl0": "Category3",
-      "lvl1": "Category3 > SubCategory2",
-      "lvl2": "Category3 > SubCategory2 > SubSubCategory1"
+      "lvl0": "Clothing",
+      "lvl1": "Clothing > Women",
+      "lvl2": "Clothing > Women > Bags"
     }
   },
   {
     "name": "Item 5",
     "hierarchicalCategories": {
-      "lvl0": "Category3",
-      "lvl1": "Category3 > SubCategory1",
-      "lvl2": "Category3 > SubCategory1 > SubSubCategory2"
+      "lvl0": "Clothing",
+      "lvl1": "Clothing > Men",
+      "lvl2": "Clothing > Men > Hats"
     }
   },
   {
     "name": "Item 4",
     "hierarchicalCategories": {
-      "lvl0": "Category3",
-      "lvl1": "Category3 > SubCategory1",
-      "lvl2": "Category3 > SubCategory1 > SubSubCategory1"
+      "lvl0": "Clothing",
+      "lvl1": "Clothing > Men",
+      "lvl2": "Clothing > Men > Shirt"
     }
   },
   {
     "name": "Item 3",
     "hierarchicalCategories": {
-      "lvl0": "Category2",
-      "lvl1": "Category2 > SubCategory2"
+      "lvl0": "Book",
+      "lvl1": "Book > Romance"
     }
   },
   {
     "name": "Item 2",
     "hierarchicalCategories": {
-      "lvl0": "Category2",
-      "lvl1": "Category2 > SubCategory1"
+      "lvl0": "Book",
+      "lvl1": "Book > Science Fiction"
     }
   },
   {
     "name": "Item 1",
     "hierarchicalCategories": {
-      "lvl0": "Category1"
+      "lvl0": "Furniture"
     }
   }
 ]

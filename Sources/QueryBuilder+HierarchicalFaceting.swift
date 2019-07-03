@@ -18,6 +18,10 @@ extension ComplexQueryBuilder {
     // An empty hierarchical offset in the beggining is added to create
     // The first request in the list returning search results
     
+    guard !hierachicalFilters.isEmpty else {
+      return []
+    }
+    
     let offsetHierachicalFilters: [Filter.Facet?] = [.none] + hierachicalFilters
     
     let queriesForHierarchicalFacets = zip(hierarchicalAttributes, offsetHierachicalFilters)
@@ -25,10 +29,6 @@ extension ComplexQueryBuilder {
         let (attribute, hierarchicalFilter) = arguments
         
         var outputFilterGroups = filterGroups
-        
-        if let currentHierarchicalFilter = hierarchicalFilter {
-          outputFilterGroups.append(FilterGroup.And(filters: [currentHierarchicalFilter], name: "_hierarchical"))
-        }
         
         if let appliedHierachicalFacet = hierachicalFilters.last {
           outputFilterGroups = outputFilterGroups.map { group in
@@ -38,6 +38,10 @@ extension ComplexQueryBuilder {
             let filtersMinusHierarchicalFacet = andGroup.filters.filter { ($0 as? Filter.Facet) != appliedHierachicalFacet }
             return FilterGroup.And(filters: filtersMinusHierarchicalFacet, name: andGroup.name)
           }
+        }
+        
+        if let currentHierarchicalFilter = hierarchicalFilter {
+          outputFilterGroups.append(FilterGroup.And(filters: [currentHierarchicalFilter], name: "_hierarchical"))
         }
         
         let query = Query(copy: query)
