@@ -12,6 +12,8 @@ import Signals
 public class FilterState {
   
   var filters: Filters
+  var hierarchicalAttributes: [Attribute] = []
+  var hierarchicalFilters: [Filter.Facet] = []
   
   public var onChange: Observer<FiltersReadable>
 

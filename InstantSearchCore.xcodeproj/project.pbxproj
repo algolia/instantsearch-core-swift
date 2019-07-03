@@ -489,6 +489,18 @@
 		E2146C0C22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C0A22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift */; };
 		E2146C0D22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C0A22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift */; };
 		E2146C0E22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C0A22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift */; };
+		E2146C1E22CD058D00927350 /* HiearchicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */; };
+		E2146C1F22CD058D00927350 /* HiearchicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */; };
+		E2146C2022CD058D00927350 /* HiearchicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */; };
+		E2146C2122CD058D00927350 /* HiearchicalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */; };
+		E2146C2322CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */; };
+		E2146C2422CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */; };
+		E2146C2522CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */; };
+		E2146C2622CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */; };
+		E2146C2822CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */; };
+		E2146C2922CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */; };
+		E2146C2A22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */; };
+		E2146C2B22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */; };
 		E225EDAF2268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
 		E225EDB02268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
 		E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */; };
@@ -796,6 +808,9 @@
 		E2146C0022B3CE6700927350 /* NumberRangeViewModel+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberRangeViewModel+FilterState.swift"; sourceTree = "<group>"; };
 		E2146C0522B3D07F00927350 /* NumberRangeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberRangeController.swift; sourceTree = "<group>"; };
 		E2146C0A22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberRangeViewModel+Controller.swift"; sourceTree = "<group>"; };
+		E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiearchicalViewModel.swift; sourceTree = "<group>"; };
+		E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HierarchicalViewModel+FilterState.swift"; sourceTree = "<group>"; };
+		E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HierarchicalViewModel+Searcher.swift"; sourceTree = "<group>"; };
 		E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModel.swift; sourceTree = "<group>"; };
 		E24234092243A43D008F24FB /* Signals+Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Signals+Observable.swift"; sourceTree = "<group>"; };
 		E265DBEF22733D4C002DC989 /* SelectableListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListController.swift; sourceTree = "<group>"; };
@@ -1161,6 +1176,7 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2146C1C22CD054D00927350 /* Hierarchical */,
 				E2146BEF22B3C2AD00927350 /* NumberRange */,
 				E2EBE72A22B1330500B91B23 /* CurrentFilters */,
 				E2EFA5FA22AEBE15008C9CAA /* Loading */,
@@ -1269,6 +1285,16 @@
 				E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */,
 			);
 			path = Number;
+			sourceTree = "<group>";
+		};
+		E2146C1C22CD054D00927350 /* Hierarchical */ = {
+			isa = PBXGroup;
+			children = (
+				E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */,
+				E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */,
+				E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */,
+			);
+			path = Hierarchical;
 			sourceTree = "<group>";
 		};
 		E2242645224D22DF005DD565 /* FacetList */ = {
@@ -1814,6 +1840,7 @@
 				AF1177D7225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFC2E283228ED58300859EBA /* FilterListViewController.swift in Sources */,
+				E2146C1E22CD058D00927350 /* HiearchicalViewModel.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFCB30A722CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E29E45632243F32C005B358D /* Observable.swift in Sources */,
@@ -1827,9 +1854,11 @@
 				E2146C0622B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5DC22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
+				E2146C2322CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
 				E2CF1A2E22A6947700DE24FC /* NumberViewModel.swift in Sources */,
 				AFBF37632285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
+				E2146C2822CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2CF1A4C22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AF9396AA229D52D600757257 /* QueryInputViewModel+Controller.swift in Sources */,
 				AFCDED4C222E7A4E001459BE /* EitherSingleOrList.swift in Sources */,
@@ -1981,6 +2010,7 @@
 				E2EFA60C22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CC22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				E2146BF222B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
+				E2146C2922CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
@@ -2005,6 +2035,7 @@
 				AFCDEDAF222ED38D001459BE /* GeoLocation.swift in Sources */,
 				E2146C0C22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift in Sources */,
 				AF21EED522C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */,
+				E2146C2422CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */,
 				AFE6E3BB22A6E079005BA44D /* PageLoadable.swift in Sources */,
 				AFC2E2A2228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AF1177C0225E2CB300C5B59B /* LegacySyntax.swift in Sources */,
@@ -2016,6 +2047,7 @@
 				AFBF37692285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
 				AF117807225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsViewModel+Connectors.swift in Sources */,
+				E2146C1F22CD058D00927350 /* HiearchicalViewModel.swift in Sources */,
 				AFE6E3C422A82B1B005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73722B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				E2EFA61222B101E2008C9CAA /* Presenter.swift in Sources */,
@@ -2149,6 +2181,7 @@
 				E2EFA60D22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CD22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				E2146BF322B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
+				E2146C2A22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2146BF822B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
@@ -2173,6 +2206,7 @@
 				AF1177C1225E2CB300C5B59B /* LegacySyntax.swift in Sources */,
 				E2146C0D22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift in Sources */,
 				AF21EED622C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */,
+				E2146C2522CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */,
 				AFE6E3BC22A6E07A005BA44D /* PageLoadable.swift in Sources */,
 				AFC2E2A3228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AF11786D2264CD9E00C5B59B /* OrGroupOperators.swift in Sources */,
@@ -2184,6 +2218,7 @@
 				AFBF376A2285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
 				AFCDEDDD22397E32001459BE /* Optional+String.swift in Sources */,
 				AFE6E3D222AAD5AA005BA44D /* MultiIndexHitsViewModel+Connectors.swift in Sources */,
+				E2146C2022CD058D00927350 /* HiearchicalViewModel.swift in Sources */,
 				AFE6E3C322A82B1A005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73822B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				E2EFA61322B101E2008C9CAA /* Presenter.swift in Sources */,
@@ -2317,6 +2352,7 @@
 				E2EFA60E22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CE22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
 				E2146BF422B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
+				E2146C2B22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2146BF922B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
@@ -2341,6 +2377,7 @@
 				AF1177C2225E2CB300C5B59B /* LegacySyntax.swift in Sources */,
 				E2146C0E22B3D1CA00927350 /* NumberRangeViewModel+Controller.swift in Sources */,
 				AF21EED722C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */,
+				E2146C2622CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */,
 				AFE6E3BD22A6E07C005BA44D /* PageLoadable.swift in Sources */,
 				AFC2E2A4228ED9A900859EBA /* FilterListController.swift in Sources */,
 				AF11786E2264CD9F00C5B59B /* OrGroupOperators.swift in Sources */,
@@ -2352,6 +2389,7 @@
 				AFBF376B2285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
 				AFCDEDDF22397E33001459BE /* Optional+String.swift in Sources */,
 				AFE6E3D322AAD5AA005BA44D /* MultiIndexHitsViewModel+Connectors.swift in Sources */,
+				E2146C2122CD058D00927350 /* HiearchicalViewModel.swift in Sources */,
 				AFE6E3C222A82B19005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73922B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				E2EFA61422B101E2008C9CAA /* Presenter.swift in Sources */,
