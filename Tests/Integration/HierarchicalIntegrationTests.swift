@@ -231,6 +231,19 @@ class HierarchicalTests: OnlineTestCase {
   
 }
 
+class ClientWrapper<V: Codable> {
+  
+  
+  init(completionHandler)
+  
+}
+
+//class Strongifier<V: Codable> {
+//
+//  init()
+//
+//}
+
 extension Array where Element: Equatable {
   func equalContents(to other: [Element]) -> Bool {
     guard self.count == other.count else { return false }

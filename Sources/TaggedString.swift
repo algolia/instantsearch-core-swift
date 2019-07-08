@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct TaggedString {
+public struct TaggedString: Hashable {
   
   public let input: String
   public let output: String

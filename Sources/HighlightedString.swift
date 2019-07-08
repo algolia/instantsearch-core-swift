@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct HighlightedString: Codable {
+public struct HighlightedString: Codable, Hashable {
   
   static let preTag = "<em>"
   static let postTag = "</em>"

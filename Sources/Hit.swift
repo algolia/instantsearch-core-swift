@@ -24,6 +24,14 @@ public struct Hit<T: Codable>: Codable {
         case highlightResult = "_highlightResult"
         case rankingInfo = "_rankingInfo"
     }
+  
+    public init(objectID: String, object: T) {
+        self.objectID = objectID
+        self.object = object
+        self.snippetResult = nil
+        self.highlightResult = nil
+        self.rankingInfo = nil
+    }
     
     public init(from decoder: Decoder) throws {
         self.object = try T(from: decoder)
@@ -49,7 +57,7 @@ extension Hit {
     
     /// Snippet result for an attribute of a hit.
     
-    public struct SnippetResult: Codable {
+    public struct SnippetResult: Codable, Hashable {
         /// Value of this snippet.
         public let value: String
         
@@ -59,7 +67,7 @@ extension Hit {
     
     /// Match level of a highlight or snippet result.
     
-    public enum MatchLevel: String, Codable, CustomStringConvertible {
+    public enum MatchLevel: String, Codable, Hashable, CustomStringConvertible {
         
         /// All the query terms were found in the attribute.
         case none
@@ -78,7 +86,7 @@ extension Hit {
     
     /// Highlight result for an attribute of a hit.
     
-    public struct HighlightResult: Codable {
+    public struct HighlightResult: Codable, Hashable {
         /// Value of this highlight.
         public let value: HighlightedString
         
@@ -91,7 +99,7 @@ extension Hit {
     
     /// Ranking info for a hit.
     
-    public struct RankingInfo: Codable {
+    public struct RankingInfo: Codable, Hashable {
         
         /// Number of typos encountered when matching the record.
         /// Corresponds to the `typos` ranking criterion in the ranking formula.

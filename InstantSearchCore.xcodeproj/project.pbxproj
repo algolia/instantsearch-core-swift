@@ -298,6 +298,12 @@
 		AFCB30B822CB97DE0094ED2E /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCB30B722CB97DE0094ED2E /* hierarchical.json */; };
 		AFCB30B922CB97DE0094ED2E /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCB30B722CB97DE0094ED2E /* hierarchical.json */; };
 		AFCB30BA22CB97DE0094ED2E /* hierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCB30B722CB97DE0094ED2E /* hierarchical.json */; };
+		AFCB30C622CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30C522CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift */; };
+		AFCB30C722CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30C522CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift */; };
+		AFCB30C822CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30C522CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift */; };
+		AFCB30CA22CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30C922CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift */; };
+		AFCB30CB22CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30C922CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift */; };
+		AFCB30CC22CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCB30C922CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift */; };
 		AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
 		AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFCDED33222D86E7001459BE /* FacetResult.json */; };
@@ -754,6 +760,8 @@
 		AFCB30AF22CB96DF0094ED2E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalIntegrationTests.swift; sourceTree = "<group>"; };
 		AFCB30B722CB97DE0094ED2E /* hierarchical.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hierarchical.json; sourceTree = "<group>"; };
+		AFCB30C522CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisjunctiveFacetingIntegrationTests.swift; sourceTree = "<group>"; };
+		AFCB30C922CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisjuncitveAndHierarchicalIntegrationTests.swift; sourceTree = "<group>"; };
 		AFCDED33222D86E7001459BE /* FacetResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = FacetResult.json; sourceTree = "<group>"; };
 		AFCDED38222D9697001459BE /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EitherSingleOrList.swift; sourceTree = "<group>"; };
@@ -1105,6 +1113,24 @@
 			path = SelectableSegment;
 			sourceTree = "<group>";
 		};
+		AFCB30BF22CD04EC0094ED2E /* Hierarchical */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Hierarchical;
+			sourceTree = "<group>";
+		};
+		AFCB30C022CDED2C0094ED2E /* Integration */ = {
+			isa = PBXGroup;
+			children = (
+				AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */,
+				AFCB30C522CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift */,
+				AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */,
+				AFCB30C922CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift */,
+			);
+			path = Integration;
+			sourceTree = "<group>";
+		};
 		AFCDEDBC2239796F001459BE /* Pagination */ = {
 			isa = PBXGroup;
 			children = (
@@ -1186,7 +1212,11 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< Updated upstream
 				E2146C1C22CD054D00927350 /* Hierarchical */,
+=======
+				AFCB30BF22CD04EC0094ED2E /* Hierarchical */,
+>>>>>>> Stashed changes
 				E2146BEF22B3C2AD00927350 /* NumberRange */,
 				E2EBE72A22B1330500B91B23 /* CurrentFilters */,
 				E2EFA5FA22AEBE15008C9CAA /* Loading */,
@@ -1235,6 +1265,7 @@
 		BC34263F1D460DB70055E0F2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				AFCB30C022CDED2C0094ED2E /* Integration */,
 				AF11782E225F70A400C5B59B /* FilterState */,
 				BC154A821D92B5FD00DE764C /* HighlighterTest.swift */,
 				AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */,
@@ -1259,9 +1290,7 @@
 				AFCDEDE4223AC4E8001459BE /* PaginatorTests.swift */,
 				AFE6E3C622A830BF005BA44D /* InfiniteScrollingControllerTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
-				AFCB30AB22CB96AC0094ED2E /* OnlineTestCase.swift */,
 				AFCB30AF22CB96DF0094ED2E /* Helpers.swift */,
-				AFCB30B322CB975B0094ED2E /* HierarchicalIntegrationTests.swift */,
 				AFE6E39522A18BC7005BA44D /* ItemViewModelTests.swift */,
 				AFE6E39D22A18CA9005BA44D /* StatsViewModelConnectorsTests.swift */,
 				AFC2E2BD2292953400859EBA /* SelectableListViewModelTests.swift */,
@@ -1967,10 +1996,12 @@
 				AF1178572260934F00C5B59B /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC2E2BE2292953400859EBA /* SelectableListViewModelTests.swift in Sources */,
 				AFC2E2C22292A1F400859EBA /* CallbackTester.swift in Sources */,
+				AFCB30C622CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift in Sources */,
 				AFC2E2D22292EEB200859EBA /* SelectableListViewModelFacetConnectorsTests.swift in Sources */,
 				AFCB30B022CB96DF0094ED2E /* Helpers.swift in Sources */,
 				AFCDEDE1223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
 				AF21EEBD22B4065F004A0542 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AFCB30CA22CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AFCB30B422CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */,
 				AF11784B22608CBB00C5B59B /* FilterStateGroupTests.swift in Sources */,
 				AFCDED7D222E7A60001459BE /* HighlighterTest.swift in Sources */,
@@ -2130,6 +2161,7 @@
 				AFCB30AD22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */,
 				AF117840225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117855226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
+				AFCB30C722CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift in Sources */,
 				AFCDED8F222E7A62001459BE /* SearchResultsTests.swift in Sources */,
 				AFCDEDA7222E8167001459BE /* FacetResultsTests.swift in Sources */,
 				AFCDED89222E7A62001459BE /* HighlighterTest.swift in Sources */,
@@ -2146,6 +2178,7 @@
 				AF21EEA722B3E989004A0542 /* TaggedStringTests.swift in Sources */,
 				AFC2E2C72292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AFCDEDE2223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
+				AFCB30CB22CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AFCB30B522CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2303,6 +2336,7 @@
 				AFCB30AE22CB96AC0094ED2E /* OnlineTestCase.swift in Sources */,
 				AF117841225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117856226091CF00C5B59B /* FilterGroupTests.swift in Sources */,
+				AFCB30C822CDED5B0094ED2E /* DisjunctiveFacetingIntegrationTests.swift in Sources */,
 				AFCDED9B222E7A63001459BE /* SearchResultsTests.swift in Sources */,
 				AFCDEDA8222E8168001459BE /* FacetResultsTests.swift in Sources */,
 				AFCDED95222E7A63001459BE /* HighlighterTest.swift in Sources */,
@@ -2319,6 +2353,7 @@
 				AF21EEA622B3E988004A0542 /* TaggedStringTests.swift in Sources */,
 				AFC2E2C82292A2CF00859EBA /* SelectableSegmentViewModelTests.swift in Sources */,
 				AFCDEDE3223A5C0E001459BE /* HitsViewModelTests.swift in Sources */,
+				AFCB30CC22CDEE770094ED2E /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AFCB30B622CB975B0094ED2E /* HierarchicalIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
