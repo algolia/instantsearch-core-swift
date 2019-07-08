@@ -40,7 +40,7 @@ public class HierarchicalViewModel: ItemViewModel<[[Facet]]> {
 
   public func computeSelection(key: String) {
     let selections = key.subPaths(withSeparator: separator)
-    let hierarchicalPath: HierarchicalPath = zip(hierarchicalAttributes, selections).map { $0 }
+    let hierarchicalPath = zip(hierarchicalAttributes, selections).map { Filter.Facet(attribute: $0, stringValue: $1) }
     onSelectionsComputed.fire(hierarchicalPath)
   }
 }

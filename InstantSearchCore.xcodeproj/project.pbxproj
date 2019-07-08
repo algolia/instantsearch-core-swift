@@ -512,6 +512,14 @@
 		E242340B2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
 		E242340C2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
 		E242340D2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
+		E25D634222D36AD8008CD0FD /* HierarchicalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634122D36AD8008CD0FD /* HierarchicalController.swift */; };
+		E25D634322D36AD8008CD0FD /* HierarchicalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634122D36AD8008CD0FD /* HierarchicalController.swift */; };
+		E25D634422D36AD8008CD0FD /* HierarchicalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634122D36AD8008CD0FD /* HierarchicalController.swift */; };
+		E25D634522D36AD8008CD0FD /* HierarchicalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634122D36AD8008CD0FD /* HierarchicalController.swift */; };
+		E25D634722D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634622D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift */; };
+		E25D634822D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634622D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift */; };
+		E25D634922D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634622D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift */; };
+		E25D634A22D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D634622D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift */; };
 		E265DBF022733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
 		E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
 		E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E265DBEF22733D4C002DC989 /* SelectableListController.swift */; };
@@ -813,6 +821,8 @@
 		E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HierarchicalViewModel+Searcher.swift"; sourceTree = "<group>"; };
 		E225EDAE2268CFF300B8D2F7 /* SelectableListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListViewModel.swift; sourceTree = "<group>"; };
 		E24234092243A43D008F24FB /* Signals+Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Signals+Observable.swift"; sourceTree = "<group>"; };
+		E25D634122D36AD8008CD0FD /* HierarchicalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalController.swift; sourceTree = "<group>"; };
+		E25D634622D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HierarchicalViewModel+Controller.swift"; sourceTree = "<group>"; };
 		E265DBEF22733D4C002DC989 /* SelectableListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListController.swift; sourceTree = "<group>"; };
 		E26F423A2296A45500583D39 /* StatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsController.swift; sourceTree = "<group>"; };
 		E26F4249229830E500583D39 /* FilterClearViewModel+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterClearViewModel+FilterState.swift"; sourceTree = "<group>"; };
@@ -1293,6 +1303,8 @@
 				E2146C1D22CD058D00927350 /* HiearchicalViewModel.swift */,
 				E2146C2222CD0B3200927350 /* HierarchicalViewModel+FilterState.swift */,
 				E2146C2722CD0F5500927350 /* HierarchicalViewModel+Searcher.swift */,
+				E25D634122D36AD8008CD0FD /* HierarchicalController.swift */,
+				E25D634622D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift */,
 			);
 			path = Hierarchical;
 			sourceTree = "<group>";
@@ -1822,6 +1834,7 @@
 				AFCDED4B222E7A4E001459BE /* JSON.swift in Sources */,
 				AFC2E29C228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
 				E2BAE6B5223FF7A500B89EA3 /* Group.swift in Sources */,
+				E25D634222D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				AF21EED422C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */,
 				E2146BF122B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				AFF1E74E229696B200941401 /* HitsSource.swift in Sources */,
@@ -1850,6 +1863,7 @@
 				E2EBE73122B1367C00B91B23 /* CurrentFiltersViewModel.swift in Sources */,
 				E2EFA60622B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				AF11786F2264CEBA00C5B59B /* AndGroupOperators.swift in Sources */,
+				E25D634722D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */,
 				AFE6E3AE22A6DC7E005BA44D /* HitsViewModel+Connectors.swift in Sources */,
 				E2146C0622B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
@@ -2009,12 +2023,14 @@
 				E2CF1A3922A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E2EFA60C22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CC22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
+				E25D634322D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				E2146BF222B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				E2146C2922CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				E2146BFD22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E25D634822D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */,
 				E225EDB02268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				AF1178702264CEBB00C5B59B /* AndGroupOperators.swift in Sources */,
 				E2EFA5F722AEBD72008C9CAA /* EventViewModel.swift in Sources */,
@@ -2180,12 +2196,14 @@
 				E2CF1A3A22A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E2EFA60D22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CD22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
+				E25D634422D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				E2146BF322B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				E2146C2A22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2146BF822B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				E2146BFE22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E25D634922D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */,
 				AF1178712264CEBC00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5F822AEBD72008C9CAA /* EventViewModel.swift in Sources */,
@@ -2351,12 +2369,14 @@
 				E2CF1A3B22A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E2EFA60E22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CE22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
+				E25D634522D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				E2146BF422B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				E2146C2B22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
 				E2146BF922B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListViewModel+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListViewModel.swift in Sources */,
 				E2146BFF22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E25D634A22D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */,
 				AF1178722264CEBD00C5B59B /* AndGroupOperators.swift in Sources */,
 				AF1177A4225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5F922AEBD72008C9CAA /* EventViewModel.swift in Sources */,

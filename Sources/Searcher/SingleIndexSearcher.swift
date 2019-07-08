@@ -36,6 +36,8 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   public let onQueryChanged: Observer<String?>
   public var requestOptions: RequestOptions?
   public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
+  public var hierarchicalAttributes: [Attribute] = []
+  public var hierarchicalFilters: [Filter.Facet] = []
   
   public var isDisjunctiveFacetingEnabled = true
   
@@ -102,12 +104,9 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     
     let operation: Operation
 
-    if
-      let disjunctiveFacetingDelegate = disjunctiveFacetingDelegate,
-      !disjunctiveFacetingDelegate.disjunctiveFacetsAttributes.isEmpty,
-      isDisjunctiveFacetingEnabled
-    {
-      var queriesBuilder = ComplexQueryBuilder(query: query, filterGroups: disjunctiveFacetingDelegate.toFilterGroups())
+    if isDisjunctiveFacetingEnabled {
+      let filterGroups = disjunctiveFacetingDelegate?.toFilterGroups() ?? []
+      var queriesBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
       operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
@@ -135,8 +134,10 @@ public extension SingleIndexSearcher {
   func connectFilterState(_ filterState: FilterState) {
     
     disjunctiveFacetingDelegate = filterState
-    
+
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
+      self?.hierarchicalAttributes = filterState.hierarchicalAttributes
+      self?.hierarchicalFilters = filterState.hierarchicalFilters
       self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
     }

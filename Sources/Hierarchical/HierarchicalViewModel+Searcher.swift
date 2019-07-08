@@ -8,15 +8,20 @@
 
 import Foundation
 
-//public extension HierarchicalViewModel {
-//  func connectSearcher(searcher: SingleIndexSearcher) {
-//    hierarchicalAttributes.forEach(searcher.indexSearchData.query.updateQueryFacets)
-//
-//    searcher.onResults.subscribePast(with: self) { (searchResults) in
-//      guard let firstHierarchicalAttribute = self.hierarchicalAttributes.first else { return }
-//      let
-//      let hierarchicalFacets = searchResults.hierarchicalFacets ?? searchResults.facets?[firstHierarchicalAttribute] ?? []
-//    }
-//
-//  }
-//}
+public extension HierarchicalViewModel {
+  func connectSearcher(searcher: SingleIndexSearcher) {
+    hierarchicalAttributes.forEach(searcher.indexSearchData.query.updateQueryFacets)
+
+    searcher.onResults.subscribePast(with: self) { (searchResults) in
+
+      if let hierarchicalFacets = searchResults.hierarchicalFacets {
+        self.item = self.hierarchicalAttributes.map { hierarchicalFacets[$0] }.compactMap { $0 }
+      } else if let firstHierarchicalAttribute = self.hierarchicalAttributes.first {
+        self.item = searchResults.facets?[firstHierarchicalAttribute].flatMap { [$0] } ?? []
+      } else {
+        self.item = []
+      }
+    }
+
+  }
+}

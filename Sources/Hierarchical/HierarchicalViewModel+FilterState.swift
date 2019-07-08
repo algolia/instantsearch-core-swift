@@ -9,12 +9,15 @@
 import Foundation
 
 public extension HierarchicalViewModel {
-  func connectFilterState(_ filterState: FilterState, attribute: Attribute) {
-    let filterGroupID = FilterGroup.ID(attribute: attribute, operator: .and)
+
+  func connectFilterState(_ filterState: FilterState, groupName: String? = nil) {
+    let filterGroupID = FilterGroup.ID(attribute: Attribute(groupName ?? hierarchicalAttributes.first?.description ?? "_hierarchical"), operator: .and)
 
     filterState.hierarchicalAttributes = hierarchicalAttributes
 
     onSelectionsComputed.subscribePast(with: self) { (selections) in
+
+      self.selections = selections.map { $0.value.description }
 
       filterState.removeAll(fromGroupWithID: filterGroupID)
 
