@@ -38,19 +38,18 @@ public struct DefaultHierarchicalPresenter {
     let levels = Set(facets.map { $0.level }).sorted()
     
     guard !levels.isEmpty else { return facets }
-
+    
     var output: [HierarchicalFacet] = []
     
     output.reserveCapacity(facets.count)
-    
-    let zeroLevelFacets = facets.filter { $0.level == 0 }.sorted { $0.facet.value < $1.facet.value }
-    output.append(contentsOf: zeroLevelFacets)
-
-    for i in 1..<levels.count {
-      let hierarchicalFacetsAtSpecificLevel = facets.filter { $0.level == i }.sorted { $0.facet.value < $1.facet.value }
-      if let indexOfSelectedOneLevelBelow = output.lastIndex(where: { $0.level == i-1 && $0.isSelected }) {
-        output.insert(contentsOf: hierarchicalFacetsAtSpecificLevel, at: indexOfSelectedOneLevelBelow + 1)
-      }
+    levels.forEach { level in
+        let facetsForLevel = facets
+            .filter { $0.level == level }
+            .sorted { $0.facet.value < $1.facet.value }
+        let indexToInsert = output
+            .lastIndex { $0.isSelected }
+            .flatMap { output.index(after: $0) } ?? output.endIndex
+        output.insert(contentsOf: facetsForLevel, at: indexToInsert)
     }
 
     return output
