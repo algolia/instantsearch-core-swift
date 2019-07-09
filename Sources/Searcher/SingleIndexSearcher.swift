@@ -79,7 +79,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     }
   }
   
-  fileprivate func handleDisjunctiveFacetingResponse(for queryBuilder: ComplexQueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
+  fileprivate func handleDisjunctiveFacetingResponse(for queryBuilder: QueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
     return { [weak self] value, error in
       let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
       
@@ -102,13 +102,16 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
     let query = Query(copy: indexSearchData.query)
     
+    print(query)
+    
     let operation: Operation
 
     if isDisjunctiveFacetingEnabled {
       let filterGroups = disjunctiveFacetingDelegate?.toFilterGroups() ?? []
-      var queriesBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
+      var queriesBuilder = QueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
+      print(queries.map { $0.query })
       operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
     } else {
       operation = indexSearchData.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))

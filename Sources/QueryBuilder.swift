@@ -1,5 +1,5 @@
 //
-//  ComplexQueryBuilder.swift
+//  QueryBuilder.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 02/07/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct ComplexQueryBuilder {
+public struct QueryBuilder {
   
   public let query: Query
   public let filterGroups: [FilterGroupType]
@@ -57,6 +57,9 @@ public struct ComplexQueryBuilder {
     
     let queryForResults = Query(copy: query)
     queryForResults.filters = FilterGroupConverter().sql(filterGroups)
+    
+    print(self.query)
+    print(queryForResults)
     
     let disjunctiveFacetingQueries = buildDisjunctiveFacetingQueries(query: query,
                                                                      filterGroups: filterGroups,

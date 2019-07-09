@@ -13,13 +13,21 @@ import XCTest
 /// Abstract base class for online test cases.
 ///
 class OnlineTestCase: XCTestCase {
-  var expectationTimeout: TimeInterval = 100
+    
+    struct Task: Codable {
+        let id: Int
+        enum CodingKeys: String, CodingKey {
+            case id = "taskID"
+        }
+    }
+    
+  var expectationTimeout: TimeInterval = 10
   
   var client: Client!
   var index: Index!
   
-  let appID = ""
-  let apiKey = ""
+  let appID = "1M1U6ZWKZP"
+  let apiKey = "c762c14ebbd970c7f5c7ec6654b26472"
   
   override func setUp() {
     super.setUp()
@@ -64,4 +72,37 @@ class OnlineTestCase: XCTestCase {
     }
     waitForExpectations(timeout: expectationTimeout, handler: nil)
   }
+    
+    func fillIndex<O: Encodable>(withItems items: [O], settings: [String: Any], completionHandler: @escaping () -> Void) {
+        
+        let data = try! JSONEncoder().encode(items)
+        let objects: [[String: Any]] = try! JSONSerialization.jsonObject(with: data, options: []) as! [[String : Any]]
+        
+        index.saveObjects(objects) { (value, error) in
+            self.extract(value, error) { (task: Task) in
+                self.index.waitTask(withID: task.id) { _, _ in
+                    self.index.setSettings(settings) { (value, error) in
+                        self.extract(value, error) { (task: Task) in
+                            self.index.waitTask(withID: task.id) { _, _ in
+                                completionHandler()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    func extract<V>(_ value: [String: Any]?, _ error: Error?, success: (V) -> Void) where V: Decodable {
+        switch Result<V, Error>(rawValue: value, error: error) {
+        case .success(let value):
+            success(value)
+        case .failure(let error):
+            XCTFail("\(error)")
+        }
+    }
+
+
+    
 }

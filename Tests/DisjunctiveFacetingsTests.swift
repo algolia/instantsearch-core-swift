@@ -32,7 +32,7 @@ class DisjunctiveFacetingTests: XCTestCase {
     
     let query = Query()
     
-    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: [
+    let queryBuilder = QueryBuilder(query: query, filterGroups: [
       FilterGroup.Or(filters: [Filter.Facet(attribute: "price", floatValue: 100)], name: "price"),
       FilterGroup.Or(filters: [Filter.Facet(attribute: "pubYear", floatValue: 2000)], name: "pubYear"),
     ])
@@ -68,7 +68,7 @@ class DisjunctiveFacetingTests: XCTestCase {
     
     let disjunctiveFacets = Set([colorGroup.name, sizeGroup.name].compactMap { $0 }.map(Attribute.init(rawValue:)))
     
-    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups)
+    let queryBuilder = QueryBuilder(query: query, filterGroups: filterGroups)
     
     let queries = queryBuilder.build()
     
@@ -118,7 +118,7 @@ class DisjunctiveFacetingTests: XCTestCase {
       .init(attribute: "category.lvl2", stringValue: "a > b > c")
     ]
     
-    let queryBuilder = ComplexQueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
+    let queryBuilder = QueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
     
     let queries = queryBuilder.build()
     

@@ -10,7 +10,7 @@ import Foundation
 
 /// Provides convenient method for building disjuncitve faceting queries and parsing disjunctive faceting
 
-extension ComplexQueryBuilder {
+extension QueryBuilder {
   
   /// Constructs dictionary of raw facets for attribute with filters and set of disjunctive faceting attributes
   /// - parameter disjunctiveFacets: set of disjuncitve faceting attributes

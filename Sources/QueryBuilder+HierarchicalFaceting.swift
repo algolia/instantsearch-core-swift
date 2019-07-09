@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension ComplexQueryBuilder {
+extension QueryBuilder {
   
   func buildHierarchicalQueries(with query: Query,
                                 filterGroups: [FilterGroupType],
