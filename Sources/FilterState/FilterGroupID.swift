@@ -14,6 +14,7 @@ extension FilterGroup {
     
     case or(name: String)
     case and(name: String)
+    case hierarchical(name: String)
     
     var name: String {
       switch self {
@@ -21,13 +22,16 @@ extension FilterGroup {
         return name
       case .and(name: let name):
         return name
+      case .hierarchical(name: let name):
+        return name
       }
     }
     
     var isConjunctive: Bool {
-      if case .and = self {
+      switch self {
+      case .and, .hierarchical:
         return true
-      } else {
+      case .or:
         return false
       }
     }
@@ -48,6 +52,8 @@ extension FilterGroup.ID: CustomStringConvertible {
       return "and<\(name)>"
     case .or(name: let name):
       return "or<\(name)>"
+    case .hierarchical(name: let name):
+      return "hierarchical<\(name)>"
     }
   }
   

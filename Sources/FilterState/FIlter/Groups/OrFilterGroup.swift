@@ -33,25 +33,3 @@ extension FilterGroup {
   }
   
 }
-
-//public extension FilterGroup.Or {
-//
-//  struct ID: FilterGroupID {
-//
-//    public let name: String
-//
-//    public init(name: String) {
-//      self.name = name
-//    }
-//
-//    public static func or(_ name: String) -> FilterGroup.Or<T>.ID {
-//      return .init(name: name)
-//    }
-//
-//    public static func or(_ name: String, ofType: T.Type) -> FilterGroup.Or<T>.ID {
-//      return .init(name: name)
-//    }
-//
-//  }
-//
-//}

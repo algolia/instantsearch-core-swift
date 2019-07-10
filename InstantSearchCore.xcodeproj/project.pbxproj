@@ -182,6 +182,10 @@
 		AF7F669422D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */; };
 		AF7F669522D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */; };
 		AF7F669622D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */; };
+		AF7F669C22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */; };
+		AF7F669D22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */; };
+		AF7F669E22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */; };
+		AF7F669F22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */; };
 		AF8C0E2C22807B9C00EEB6CE /* SelectableViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */; };
 		AF9396892298154900757257 /* FilterClearController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* FilterClearController.swift */; };
 		AF93968A2298154900757257 /* FilterClearController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* FilterClearController.swift */; };
@@ -749,6 +753,7 @@
 		AF6C6F6B2253816A001E5E3C /* MultiIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexSearcher.swift; sourceTree = "<group>"; };
 		AF6C6F7022538179001E5E3C /* FacetSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetSearcher.swift; sourceTree = "<group>"; };
 		AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = disjunctiveHierarchical.json; sourceTree = "<group>"; };
+		AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalFilterGroup.swift; sourceTree = "<group>"; };
 		AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableViewModel+Filter.swift"; sourceTree = "<group>"; };
 		AF9396882298154900757257 /* FilterClearController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClearController.swift; sourceTree = "<group>"; };
 		AF93969A229D51F300757257 /* QueryInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryInputController.swift; sourceTree = "<group>"; };
@@ -1009,6 +1014,7 @@
 				AF1177CD225E2CEB00C5B59B /* AndFilterGroup.swift */,
 				AF1177CC225E2CEA00C5B59B /* FilterGroupType.swift */,
 				AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */,
+				AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
@@ -1936,6 +1942,7 @@
 				E2B1AC7C22D8C3E1000B913E /* DefaultPresenter.swift in Sources */,
 				E2B1AC8122D8C80E000B913E /* StatsPresenter.swift in Sources */,
 				E2146C0622B3D07F00927350 /* NumberRangeController.swift in Sources */,
+				AF7F669C22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5DC22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
 				E2146C2322CD0B3200927350 /* HierarchicalViewModel+FilterState.swift in Sources */,
@@ -2096,6 +2103,7 @@
 				E2CF1A3922A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E2EFA60C22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CC22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
+				AF7F669D22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */,
 				E25D634322D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				E2146BF222B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				E2146C2922CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
@@ -2275,6 +2283,7 @@
 				E2CF1A3A22A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E2EFA60D22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CD22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
+				AF7F669E22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */,
 				E25D634422D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				E2146BF322B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				E2146C2A22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,
@@ -2454,6 +2463,7 @@
 				E2CF1A3B22A6AD0200DE24FC /* NumberController.swift in Sources */,
 				E2EFA60E22B10062008C9CAA /* LoadingViewModel+Controller.swift in Sources */,
 				AFE6E3CE22AA6CDF005BA44D /* InfiniteScrollable.swift in Sources */,
+				AF7F669F22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */,
 				E25D634522D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				E2146BF422B3C56F00927350 /* NumberRangeViewModel.swift in Sources */,
 				E2146C2B22CD0F5500927350 /* HierarchicalViewModel+Searcher.swift in Sources */,

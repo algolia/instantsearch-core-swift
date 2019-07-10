@@ -364,7 +364,7 @@ extension Filters: FilterGroupsConvertible {
       let sortedFilters = filters.sorted(by: filterComparator)
       
       switch groupID {
-      case .and:
+      case .and, .hierarchical:
         return FilterGroup.And(filters: sortedFilters.map { $0.filter }, name: groupID.name)
       case .or:
         switch firstFilter {

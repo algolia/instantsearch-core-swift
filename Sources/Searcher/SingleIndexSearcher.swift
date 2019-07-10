@@ -36,6 +36,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   public let onQueryChanged: Observer<String?>
   public var requestOptions: RequestOptions?
   public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
+  public weak var hierarchicalFacetingDelegate: HierarchicalFacetingDelegate?
   public var hierarchicalAttributes: [Attribute] = []
   public var hierarchicalFilters: [Filter.Facet] = []
   
@@ -102,8 +103,6 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
     let query = Query(copy: indexSearchData.query)
     
-    print(query)
-    
     let operation: Operation
 
     if isDisjunctiveFacetingEnabled {
@@ -129,6 +128,13 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
 public protocol DisjunctiveFacetingDelegate: class, FilterGroupsConvertible {
   
   var disjunctiveFacetsAttributes: Set<Attribute> { get }
+  
+}
+
+public protocol HierarchicalFacetingDelegate: class {
+  
+  var hierarchicalFacetsAttributes: Set<Attribute> { get }
+  var hierarhicalFilters: [Filter.Facet] { get }
   
 }
 
