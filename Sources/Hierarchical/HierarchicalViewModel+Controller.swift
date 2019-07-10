@@ -42,6 +42,7 @@ public struct DefaultHierarchicalPresenter {
     var output: [HierarchicalFacet] = []
     
     output.reserveCapacity(facets.count)
+    
     levels.forEach { level in
         let facetsForLevel = facets
             .filter { $0.level == level }

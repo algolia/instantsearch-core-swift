@@ -179,6 +179,9 @@
 		AF6C6F7322538179001E5E3C /* FacetSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F7022538179001E5E3C /* FacetSearcher.swift */; };
 		AF6C6F7422538179001E5E3C /* FacetSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F7022538179001E5E3C /* FacetSearcher.swift */; };
 		AF6C6F752253B204001E5E3C /* SearchResultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */; };
+		AF7F669422D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */; };
+		AF7F669522D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */; };
+		AF7F669622D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */ = {isa = PBXBuildFile; fileRef = AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */; };
 		AF8C0E2C22807B9C00EEB6CE /* SelectableViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */; };
 		AF9396892298154900757257 /* FilterClearController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* FilterClearController.swift */; };
 		AF93968A2298154900757257 /* FilterClearController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396882298154900757257 /* FilterClearController.swift */; };
@@ -729,6 +732,7 @@
 		AF6C6F6622538160001E5E3C /* SingleIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleIndexSearcher.swift; sourceTree = "<group>"; };
 		AF6C6F6B2253816A001E5E3C /* MultiIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexSearcher.swift; sourceTree = "<group>"; };
 		AF6C6F7022538179001E5E3C /* FacetSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetSearcher.swift; sourceTree = "<group>"; };
+		AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = disjunctiveHierarchical.json; sourceTree = "<group>"; };
 		AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableViewModel+Filter.swift"; sourceTree = "<group>"; };
 		AF9396882298154900757257 /* FilterClearController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClearController.swift; sourceTree = "<group>"; };
 		AF93969A229D51F300757257 /* QueryInputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryInputController.swift; sourceTree = "<group>"; };
@@ -1278,6 +1282,7 @@
 				AFCDED33222D86E7001459BE /* FacetResult.json */,
 				AFCB30B722CB97DE0094ED2E /* hierarchical.json */,
 				AFB9783522D49933001C2718 /* disjunctive.json */,
+				AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */,
 				AFCDEDE0223A5C0E001459BE /* HitsViewModelTests.swift */,
 				AF19B039223FF9F400FA2FE0 /* MultiIndexHitsViewModelTests.swift */,
 				E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */,
@@ -1695,6 +1700,7 @@
 			files = (
 				AFB9783622D49933001C2718 /* disjunctive.json in Resources */,
 				AFCDED35222D8BB2001459BE /* FacetResult.json in Resources */,
+				AF7F669422D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */,
 				AF21EF0222C52762004A0542 /* DisjFacetingResult3.json in Resources */,
 				AFCB30B822CB97DE0094ED2E /* hierarchical.json in Resources */,
 				AFC2E2DA2294103300859EBA /* SearchResultFacets.json in Resources */,
@@ -1717,6 +1723,7 @@
 			files = (
 				AFB9783722D49933001C2718 /* disjunctive.json in Resources */,
 				AFCDED36222D8BB3001459BE /* FacetResult.json in Resources */,
+				AF7F669522D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */,
 				AF21EF0522C52763004A0542 /* DisjFacetingResult3.json in Resources */,
 				AFCB30B922CB97DE0094ED2E /* hierarchical.json in Resources */,
 				AFC2E2DB2294103300859EBA /* SearchResultFacets.json in Resources */,
@@ -1739,6 +1746,7 @@
 			files = (
 				AFB9783822D49933001C2718 /* disjunctive.json in Resources */,
 				AFCDED37222D8BB4001459BE /* FacetResult.json in Resources */,
+				AF7F669622D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */,
 				AF21EF0822C52764004A0542 /* DisjFacetingResult3.json in Resources */,
 				AFCB30BA22CB97DE0094ED2E /* hierarchical.json in Resources */,
 				AFC2E2DC2294103300859EBA /* SearchResultFacets.json in Resources */,
