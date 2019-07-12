@@ -15,6 +15,11 @@ public struct FilterAndID: Hashable {
   public let id: FilterGroup.ID
 }
 
+public struct TextAndID: Hashable {
+  public let text: String
+  public let id: FilterGroup.ID
+}
+
 public extension CurrentFiltersViewModel {
   func connectFilterState(_ filterState: FilterState, filterGroupID: FilterGroup.ID? = nil) {
     filterState.onChange.subscribePast(with: self) { [weak self](filters) in
@@ -44,6 +49,7 @@ public extension CurrentFiltersViewModel {
 }
 
 public extension ItemsListViewModel {
+
   func connectController<C: ItemListController>(_ controller: C) where C.Item == Item {
     controller.onRemoveItem = self.remove(item:)
 

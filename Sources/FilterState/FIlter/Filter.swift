@@ -40,7 +40,6 @@ public enum Filter: Hashable {
     }
   }
 
-  
   public var filter: FilterType {
     switch self {
     case .facet(let facetFilter):

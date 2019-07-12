@@ -564,6 +564,22 @@
 		E29E456E2243F351005B358D /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29E456C2243F351005B358D /* Observation.swift */; };
 		E29E456F2243F351005B358D /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29E456C2243F351005B358D /* Observation.swift */; };
 		E29E45702243F351005B358D /* Observation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29E456C2243F351005B358D /* Observation.swift */; };
+		E2B1AC7C22D8C3E1000B913E /* DefaultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */; };
+		E2B1AC7D22D8C3E1000B913E /* DefaultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */; };
+		E2B1AC7E22D8C3E1000B913E /* DefaultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */; };
+		E2B1AC7F22D8C3E1000B913E /* DefaultPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */; };
+		E2B1AC8122D8C80E000B913E /* StatsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */; };
+		E2B1AC8222D8C80E000B913E /* StatsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */; };
+		E2B1AC8322D8C80E000B913E /* StatsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */; };
+		E2B1AC8422D8C80E000B913E /* StatsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */; };
+		E2B1AC8622D8C865000B913E /* HierarchicalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */; };
+		E2B1AC8722D8C865000B913E /* HierarchicalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */; };
+		E2B1AC8822D8C865000B913E /* HierarchicalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */; };
+		E2B1AC8922D8C865000B913E /* HierarchicalPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */; };
+		E2B1AC8B22D8C8C0000B913E /* IndexPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */; };
+		E2B1AC8C22D8C8C0000B913E /* IndexPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */; };
+		E2B1AC8D22D8C8C0000B913E /* IndexPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */; };
+		E2B1AC8E22D8C8C0000B913E /* IndexPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */; };
 		E2BAE6B0223FF77100B89EA3 /* FacetListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6AF223FF77100B89EA3 /* FacetListPresenter.swift */; };
 		E2BAE6B1223FF77100B89EA3 /* FacetListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6AF223FF77100B89EA3 /* FacetListPresenter.swift */; };
 		E2BAE6B2223FF77100B89EA3 /* FacetListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BAE6AF223FF77100B89EA3 /* FacetListPresenter.swift */; };
@@ -854,6 +870,10 @@
 		E29F2D2D1F2F5CA50052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/Mac/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E29F2D2F1F2F5CC00052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/tvOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
 		E29F2D311F2F5CC70052335F /* AlgoliaSearch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlgoliaSearch.framework; path = Carthage/Build/watchOS/AlgoliaSearch.framework; sourceTree = "<group>"; };
+		E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPresenter.swift; sourceTree = "<group>"; };
+		E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsPresenter.swift; sourceTree = "<group>"; };
+		E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalPresenter.swift; sourceTree = "<group>"; };
+		E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexPresenter.swift; sourceTree = "<group>"; };
 		E2BAE6AF223FF77100B89EA3 /* FacetListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetListPresenter.swift; sourceTree = "<group>"; };
 		E2BAE6B4223FF7A500B89EA3 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefinementListPresenterTests.swift; sourceTree = "<group>"; };
@@ -1213,6 +1233,7 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				E2B1AC7A22D8C3CA000B913E /* Presenters */,
 				E2146C1C22CD054D00927350 /* Hierarchical */,
 				E2146BEF22B3C2AD00927350 /* NumberRange */,
 				E2EBE72A22B1330500B91B23 /* CurrentFilters */,
@@ -1393,6 +1414,17 @@
 				E29F2D2B1F2F5C6B0052335F /* AlgoliaSearch.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E2B1AC7A22D8C3CA000B913E /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */,
+				E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */,
+				E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */,
+				E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */,
+			);
+			path = Presenters;
 			sourceTree = "<group>";
 		};
 		E2CF1A2C22A693E600DE24FC /* Number */ = {
@@ -1867,6 +1899,7 @@
 				E2CF1A4722A6B04100DE24FC /* FilterComparisonConnectFilterState.swift in Sources */,
 				AFCDED4B222E7A4E001459BE /* JSON.swift in Sources */,
 				AFC2E29C228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
+				E2B1AC8622D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
 				E2BAE6B5223FF7A500B89EA3 /* Group.swift in Sources */,
 				E25D634222D36AD8008CD0FD /* HierarchicalController.swift in Sources */,
 				AF21EED422C0EAA5004A0542 /* SelectableListViewModel+Filter.swift in Sources */,
@@ -1898,7 +1931,10 @@
 				E2EFA60622B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				AF11786F2264CEBA00C5B59B /* AndGroupOperators.swift in Sources */,
 				E25D634722D36B5C008CD0FD /* HierarchicalViewModel+Controller.swift in Sources */,
+				E2B1AC8B22D8C8C0000B913E /* IndexPresenter.swift in Sources */,
 				AFE6E3AE22A6DC7E005BA44D /* HitsViewModel+Connectors.swift in Sources */,
+				E2B1AC7C22D8C3E1000B913E /* DefaultPresenter.swift in Sources */,
+				E2B1AC8122D8C80E000B913E /* StatsPresenter.swift in Sources */,
 				E2146C0622B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5DC22A94D5B008C9CAA /* IndexSegmentViewModel.swift in Sources */,
@@ -2033,6 +2069,7 @@
 				AFCDEDC922397E18001459BE /* SearchResults+PageMap.swift in Sources */,
 				AF11785F2264CC9D00C5B59B /* AndGroupProxy.swift in Sources */,
 				E29E456E2243F351005B358D /* Observation.swift in Sources */,
+				E2B1AC8C22D8C8C0000B913E /* IndexPresenter.swift in Sources */,
 				AFCDEDD422397E31001459BE /* SearchResults.swift in Sources */,
 				AFCDED5A222E7A4F001459BE /* EitherSingleOrList.swift in Sources */,
 				E2CF1A4322A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
@@ -2074,6 +2111,7 @@
 				AFBF37642285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A322A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2A8228EDF6A00859EBA /* Query+Facets.swift in Sources */,
+				E2B1AC8722D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
 				AF21EEE622C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFE6E38722A185C9005BA44D /* StatsViewModel.swift in Sources */,
@@ -2127,6 +2165,7 @@
 				AF9396A6229D52A900757257 /* QueryInputViewModel+Searcher.swift in Sources */,
 				AF93969C229D51F300757257 /* QueryInputController.swift in Sources */,
 				AF6C6F6822538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
+				E2B1AC7D22D8C3E1000B913E /* DefaultPresenter.swift in Sources */,
 				AF6C6F6322538156001E5E3C /* Searcher.swift in Sources */,
 				AFCDEDF3223C070F001459BE /* AnyHitsViewModel.swift in Sources */,
 				AF21EEB022B401A6004A0542 /* HighlightedString.swift in Sources */,
@@ -2144,6 +2183,7 @@
 				AFCB30A322CB85A40094ED2E /* QueryBuilder.swift in Sources */,
 				AF1177C8225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785B2264C20400C5B59B /* FilterOperators.swift in Sources */,
+				E2B1AC8222D8C80E000B913E /* StatsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2208,6 +2248,7 @@
 				E2E09E392232709F00F3056D /* Result.swift in Sources */,
 				AF1178602264CC9E00C5B59B /* AndGroupProxy.swift in Sources */,
 				E29E456F2243F351005B358D /* Observation.swift in Sources */,
+				E2B1AC8D22D8C8C0000B913E /* IndexPresenter.swift in Sources */,
 				AFCDEDCA22397E19001459BE /* SearchResults+PageMap.swift in Sources */,
 				AFCDED65222E7A50001459BE /* EitherSingleOrList.swift in Sources */,
 				E2CF1A4422A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
@@ -2249,6 +2290,7 @@
 				AFBF37652285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A422A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2A9228EDF6A00859EBA /* Query+Facets.swift in Sources */,
+				E2B1AC8822D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
 				AF21EEE722C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				E29E45652243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38822A185C9005BA44D /* StatsViewModel.swift in Sources */,
@@ -2302,6 +2344,7 @@
 				AF9396A7229D52A900757257 /* QueryInputViewModel+Searcher.swift in Sources */,
 				AF93969D229D51F300757257 /* QueryInputController.swift in Sources */,
 				AF6C6F6922538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
+				E2B1AC7E22D8C3E1000B913E /* DefaultPresenter.swift in Sources */,
 				AF6C6F6422538156001E5E3C /* Searcher.swift in Sources */,
 				AFCDEDF4223C070F001459BE /* AnyHitsViewModel.swift in Sources */,
 				AF21EEB122B401A6004A0542 /* HighlightedString.swift in Sources */,
@@ -2319,6 +2362,7 @@
 				AFCB30A422CB85A40094ED2E /* QueryBuilder.swift in Sources */,
 				AF1177C9225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785C2264C20500C5B59B /* FilterOperators.swift in Sources */,
+				E2B1AC8322D8C80E000B913E /* StatsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2383,6 +2427,7 @@
 				E2E09E3A2232709F00F3056D /* Result.swift in Sources */,
 				AF1178612264CC9F00C5B59B /* AndGroupProxy.swift in Sources */,
 				E29E45702243F351005B358D /* Observation.swift in Sources */,
+				E2B1AC8E22D8C8C0000B913E /* IndexPresenter.swift in Sources */,
 				AFCDEDCB22397E1A001459BE /* SearchResults+PageMap.swift in Sources */,
 				AFCDED70222E7A51001459BE /* EitherSingleOrList.swift in Sources */,
 				E2CF1A4522A6B03300DE24FC /* FilterComparisonConnectView.swift in Sources */,
@@ -2424,6 +2469,7 @@
 				AFBF37662285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A522A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AFC2E2AA228EDF6A00859EBA /* Query+Facets.swift in Sources */,
+				E2B1AC8922D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
 				AF21EEE822C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
 				E29E45662243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38922A185CA005BA44D /* StatsViewModel.swift in Sources */,
@@ -2477,6 +2523,7 @@
 				AF9396A8229D52A900757257 /* QueryInputViewModel+Searcher.swift in Sources */,
 				AF93969E229D51F300757257 /* QueryInputController.swift in Sources */,
 				AF6C6F6A22538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
+				E2B1AC7F22D8C3E1000B913E /* DefaultPresenter.swift in Sources */,
 				AF6C6F6522538156001E5E3C /* Searcher.swift in Sources */,
 				AFCDEDF5223C070F001459BE /* AnyHitsViewModel.swift in Sources */,
 				AF21EEB222B401A6004A0542 /* HighlightedString.swift in Sources */,
@@ -2494,6 +2541,7 @@
 				AFCB30A522CB85A40094ED2E /* QueryBuilder.swift in Sources */,
 				AF1177CA225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785D2264C20600C5B59B /* FilterOperators.swift in Sources */,
+				E2B1AC8422D8C80E000B913E /* StatsPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

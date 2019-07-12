@@ -14,16 +14,6 @@ public class StatsViewModel: ItemViewModel<SearchStats?> {
   }
 }
 
-public typealias StatsPresenter<Output> = Presenter<SearchStats?, Output>
-
-public struct DefaultStatsPresenter {
-  
-  public static let present: StatsPresenter<String?> = { stats in
-    return (stats?.totalHitsCount).flatMap { "\($0) results" }
-  }
-  
-}
-
 public extension StatsViewModel {
   
   func connectSearcher(_ searcher: SingleIndexSearcher) {
@@ -38,7 +28,7 @@ public extension StatsViewModel {
   }
 
   func connectController<C: StatsTextController>(_ controller: C, presenter: Presenter<SearchStats?, String?>? = nil) {
-    let statsPresenter = presenter ?? DefaultStatsPresenter.present
+    let statsPresenter = presenter ?? DefaultPresenter.Stats.present
     connectController(controller, presenter: statsPresenter)
   }
 }

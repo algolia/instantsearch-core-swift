@@ -8,20 +8,10 @@
 
 import Foundation
 
-public typealias IndexPresenter = (Index) -> String
-
-public struct DefaultIndexPresenter {
-
-  public static let present: IndexPresenter = { index in
-    return index.name
-  }
-
-}
-
 public extension IndexSegmentViewModel {
   func connectController<C: SelectableSegmentController>(_ controller: C, presenter: IndexPresenter? = .none) where C.SegmentKey == SegmentKey {
 
-    let presenter = presenter ?? DefaultIndexPresenter.present
+    let presenter = presenter ?? DefaultPresenter.Index.present
 
     controller.setItems(items: items.mapValues { presenter($0) })
     controller.onClick = computeSelected(selecting:)
