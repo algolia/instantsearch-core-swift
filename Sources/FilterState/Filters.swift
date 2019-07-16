@@ -8,41 +8,6 @@
 
 import Foundation
 
-public protocol FiltersReadable {
-  
-  var isEmpty: Bool { get }
-  
-  func contains<T: FilterType>(_ filter: T) -> Bool
-  func contains<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) -> Bool
-  func getFilters(forGroupWithID groupID: FilterGroup.ID) -> Set<Filter>
-  func getFilters(for attribute: Attribute) -> Set<Filter>
-  func getFiltersAndID() -> Set<FilterAndID>
-  func getFilters() -> Set<Filter>
-  
-}
-
-public protocol FiltersWritable {
-  
-  mutating func add<T: FilterType>(_ filter: T, toGroupWithID groupID: FilterGroup.ID)
-  mutating func addAll<T: FilterType, S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == T
-  
-  @discardableResult mutating func remove<T: FilterType>(_ filter: T, fromGroupWithID groupID: FilterGroup.ID) -> Bool
-  @discardableResult mutating func removeAll<T: FilterType, S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == T
-  mutating func removeAll(fromGroupWithID groupID: FilterGroup.ID)
-  mutating func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID])
-  mutating func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID])
-  @discardableResult mutating func remove<T: FilterType>(_ filter: T) -> Bool
-  mutating func removeAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T
-  mutating func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID)
-  mutating func removeAll(for attribute: Attribute)
-  mutating func removeAll()
-  
-  mutating func toggle<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID)
-  
-  mutating func toggle<T: FilterType, S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == T
-  
-}
-
 public protocol FilterGroupsConvertible {
   
   func toFilterGroups() -> [FilterGroupType]
@@ -76,49 +41,31 @@ struct Filters {
 // MARK: - Public interface
 
 extension Filters: FiltersReadable {
-    
-  /// A Boolean value indicating whether FilterState contains at least on filter
+  
+  func getGroupIDs() -> Set<FilterGroup.ID> {
+    return Set(groups.keys.map { $0 })
+  }
   
   public var isEmpty: Bool {
     return groups.isEmpty
   }
   
-  /// Tests whether FilterState contains a filter
-  /// - parameter filter: desired filter
-  
-  public func contains<T: FilterType>(_ filter: T) -> Bool {
-    return getFilters().contains(Filter(filter))
-  }
-  
-  /// Checks whether specified group contains a filter
-  /// - parameter filter: filter to check
-  /// - parameter groupID: target group ID
-  /// - returns: true if filter is contained by specified group
-  
-  public func contains<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) -> Bool {
+  public func contains(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) -> Bool {
     guard let filtersForGroup = groups[groupID] else {
         return false
     }
     return filtersForGroup.contains(Filter(filter))
   }
-
-  /// Returns a set of filters in group with specified ID
-  /// - parameter groupID: target group ID
   
   public func getFilters(forGroupWithID groupID: FilterGroup.ID) -> Set<Filter> {
     return groups[groupID] ?? []
   }
-  
-  /// Returns a set of filters for attribute
-  /// - parameter attribute: target attribute
   
   public func getFilters(for attribute: Attribute) -> Set<Filter> {
     let filtersArray = getFilters()
       .filter { $0.filter.attribute == attribute }
     return Set(filtersArray)
   }
-  
-  /// Returns a set of all the filters contained by all the groups
   
   public func getFilters() -> Set<Filter> {
     return groups.values.reduce(Set<Filter>(), { $0.union($1) })
@@ -133,12 +80,8 @@ extension Filters: FiltersReadable {
 // MARK: - Public mutating interface
 
 extension Filters: FiltersWritable {
-
-  /// Adds filter to a specified group
-  /// - parameter filter: filter to add
-  /// - parameter groupID: target group ID
   
-  public mutating func add<T: FilterType>(_ filter: T, toGroupWithID groupID: FilterGroup.ID) {
+  public mutating func add(_ filter: FilterType, toGroupWithID groupID: FilterGroup.ID) {
     addAll(filters: [filter], toGroupWithID: groupID)
   }
 
@@ -152,31 +95,18 @@ extension Filters: FiltersWritable {
     update(updatedFilters, forGroupWithID: groupID)
   }
   
-  /// Adds a sequence of filters to a specified group
-  /// - parameter filters: sequence of filters to add
-  /// - parameter groupID: target group ID
   
-  public mutating func addAll<T: FilterType, S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == T {
+  public mutating func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     let existingFilters = groups[groupID] ?? []
     let updatedFilters = existingFilters.union(filters.compactMap(Filter.init))
     update(updatedFilters, forGroupWithID: groupID)
   }
-  
-  /// Removes filter from a specified group
-  /// - parameter filter: filter to remove
-  /// - parameter groupID: target group ID
-  /// - returns: true if removal succeeded, otherwise returns false
 
-  @discardableResult public mutating func remove<T: FilterType>(_ filter: T, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
+  @discardableResult public mutating func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
     return removeAll([filter], fromGroupWithID: groupID)
   }
-  
-  /// Removes a sequence of filters from a specified group
-  /// - parameter filters: sequence of filters to remove
-  /// - parameter groupID: target group ID
-  /// - returns: true if at least one filter in filters sequence is contained by a specified group and so has been removed, otherwise returns false
 
-  @discardableResult public mutating func removeAll<T: FilterType, S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == T {
+  @discardableResult public mutating func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
     let filtersToRemove = filters.compactMap(Filter.init)
     guard let existingFilters = groups[groupID], !existingFilters.isDisjoint(with: filtersToRemove) else {
       return false
@@ -185,9 +115,6 @@ extension Filters: FiltersWritable {
     update(updatedFilters, forGroupWithID: groupID)
     return true
   }
-  
-  /// Removes all filters from a specifed group
-  /// - parameter group: target group ID
   
   public mutating func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
     groups.removeValue(forKey: groupID)
@@ -208,18 +135,11 @@ extension Filters: FiltersWritable {
     groups = newGroups
   }
   
-  /// Removes filter from all the groups
-  /// - parameter filter: filter to remove
-  /// - returns: true if specified filter has been removed from at least one group, otherwise returns false
-
-  @discardableResult public mutating func remove<T: FilterType>(_ filter: T) -> Bool {
+  @discardableResult public mutating func remove(_ filter: FilterType) -> Bool {
     return groups.map { remove(filter, fromGroupWithID: $0.key) }.reduce(false) { $0 || $1 }
   }
   
-  /// Removes a sequence of filters from all the groups
-  /// - parameter filters: sequence of filters to remove
-  
-  public mutating func removeAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T {
+  public mutating func removeAll<S: Sequence>(_ filters: S) where S.Element == FilterType {
     let anyFilters = filters.compactMap(Filter.init)
     groups.keys.forEach { group in
       let existingFilters = groups[group] ?? []
@@ -228,18 +148,11 @@ extension Filters: FiltersWritable {
     }
   }
   
-  /// Removes all filters with specified attribute in a specified group
-  /// - parameter attribute: target attribute
-  /// - parameter groupID: target group ID
-  
   public mutating func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID) {
     guard let filtersForGroup = groups[groupID] else { return }
     let updatedFilters = filtersForGroup.filter { $0.filter.attribute != attribute }
     update(updatedFilters, forGroupWithID: groupID)
   }
-  
-  /// Removes all filters with specified attribute in all the groups
-  /// - parameter attribute: target attribute
   
   public mutating func removeAll(for attribute: Attribute) {
     groups.keys.forEach { group in
@@ -247,25 +160,18 @@ extension Filters: FiltersWritable {
     }
   }
   
-  /// Removes all filters from all the groups
   
   public mutating func removeAll() {
     groups.removeAll()
   }
   
-  /// Removes filter from group if contained by it, otherwise adds filter to group
-  /// - parameter filter: filter to toggle
-  /// - parameter groupID: target group ID
   
-  public mutating func toggle<T: FilterType>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) {
+  public mutating func toggle(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) {
     toggle([filter], inGroupWithID: groupID)
   }
   
-  /// Toggles a sequence of filters in group
-  /// - parameter filters: sequence of filters to toggle
-  /// - parameter groupID: target group ID
   
-  public mutating func toggle<T: FilterType, S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == T {
+  public mutating func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     for filter in filters {
       if contains(filter, inGroupWithID: groupID) {
         remove(filter, fromGroupWithID: groupID)
@@ -356,32 +262,28 @@ extension Filters: FilterGroupsConvertible {
       return $0.name < $1.name
     }
     
-    let transform: (FilterGroup.ID, Set<Filter>) -> FilterGroupType? = { (groupID, filters) in
-      guard let firstFilter = filters.first else {
-        return nil
-      }
+    let transform: (FilterGroup.ID, Set<Filter>) -> FilterGroupType = { (groupID, filters) in
       
       let sortedFilters = filters.sorted(by: filterComparator)
       
       switch groupID {
-      case .and, .hierarchical:
+      case .and:
         return FilterGroup.And(filters: sortedFilters.map { $0.filter }, name: groupID.name)
-      case .or:
-        switch firstFilter {
-        case .facet:
-          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Facet }, name: groupID.name)
-        case .numeric:
-          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Numeric }, name: groupID.name)
-        case .tag:
-          return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Tag }, name: groupID.name)
-        }
+      case .hierarchical:
+        return FilterGroup.And(filters: sortedFilters.compactMap { $0.filter as? Filter.Facet }, name: groupID.name)
+      case .or(_, .facet):
+        return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Facet }, name: groupID.name)
+      case .or(_, .tag):
+        return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Tag }, name: groupID.name)
+      case .or(_, .numeric):
+        return FilterGroup.Or(filters: sortedFilters.compactMap { $0.filter as? Filter.Numeric }, name: groupID.name)
       }
+      
     }
     
     return groups
       .sorted(by: { groupIDComparator($0.key, $1.key) })
       .compactMap(transform)
-    
   }
   
 }

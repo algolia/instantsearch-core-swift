@@ -11,9 +11,11 @@ import Foundation
 public extension HierarchicalViewModel {
 
   func connectFilterState(_ filterState: FilterState, groupName: String? = nil) {
-    let filterGroupID = FilterGroup.ID(attribute: Attribute(groupName ?? hierarchicalAttributes.first?.description ?? "_hierarchical"), operator: .and)
+    
+    let groupName = groupName ?? hierarchicalAttributes.first?.description ?? "_hierarchical"
+    let filterGroupID = FilterGroup.ID.hierarchical(name: groupName)
 
-    filterState.hierarchicalAttributes = hierarchicalAttributes
+    filterState.hierarchical(name: groupName).set(hierarchicalAttributes)
 
     onSelectionsComputed.subscribePast(with: self) { (selections) in
 
@@ -22,12 +24,12 @@ public extension HierarchicalViewModel {
       filterState.removeAll(fromGroupWithID: filterGroupID)
 
       guard let lastSelectedFilter = selections.last else {
-        filterState.hierarchicalFilters = []
+        filterState.hierarchical(name: groupName).set([Filter.Facet]())
         return
       }
 
       filterState.add(lastSelectedFilter, toGroupWithID: filterGroupID)
-      filterState.hierarchicalFilters = selections
+      filterState.hierarchical(name: groupName).set(selections)
       filterState.notifyChange()
 
     }

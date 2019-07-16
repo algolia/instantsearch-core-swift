@@ -20,7 +20,14 @@ public extension SelectableListViewModel where Key == Item, Item: FilterType {
     
     switch `operator` {
     case .or:
-      groupID = .or(name: groupName)
+      switch Item.self {
+      case is Filter.Facet.Type:
+        groupID = .or(name: groupName, filterType: .facet)
+      case is Filter.Numeric.Type:
+        groupID = .or(name: groupName, filterType: .numeric)
+      default:
+        groupID = .or(name: groupName, filterType: .tag)
+      }
       
     case .and:
       groupID = .and(name: groupName)

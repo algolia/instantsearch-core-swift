@@ -35,11 +35,11 @@ public extension NumberViewModel {
       guard let strongSelf = self else { return }
       
       if let item = strongSelf.item {
-        filterState.remove(Filter.Numeric(attribute: attribute, operator: `operator`, value: item.toFloat()), fromGroupWithID: finalGroupID)
+        filterState.filters.remove(Filter.Numeric(attribute: attribute, operator: `operator`, value: item.toFloat()), fromGroupWithID: finalGroupID)
       }
 
       if let computed = computed {
-        filterState.add(Filter.Numeric(attribute: attribute, operator: `operator`, value: computed.toFloat()), toGroupWithID: finalGroupID)
+        filterState.filters.add(Filter.Numeric(attribute: attribute, operator: `operator`, value: computed.toFloat()), toGroupWithID: finalGroupID)
       }
 
       filterState.notifyChange()

@@ -16,16 +16,4 @@ public class FilterStateDSL {
     self.filters = Filters()
   }
   
-  public func and(_ groupName: String) -> AndGroupProxy {
-    return AndGroupProxy(filterStateDSL: self, groupName: groupName)
-  }
-  
-  public func or <F: FilterType>(_ groupName: String, type: F.Type) -> OrGroupProxy<F> {
-    return OrGroupProxy(filterStateDSL: self, groupName: groupName)
-  }
-  
-  public func or <F: FilterType>(_ groupName: String) -> OrGroupProxy<F> {
-    return OrGroupProxy(filterStateDSL: self, groupName: groupName)
-  }
-  
 }

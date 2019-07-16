@@ -15,12 +15,15 @@ extension FilterGroup {
     public var filters: [FilterType] {
       return typedFilters
     }
-    
+  
     public let name: String?
-    
-    public var isEmpty: Bool {
-      return filters.isEmpty
+
+    public var isDisjuncitve: Bool {
+      return false
     }
+    
+    public var hierarchicalAttributes: [Attribute] = []
+    public var hierarchicalFilters: [Filter.Facet] = []
     
     internal var typedFilters: [Filter.Facet]
     
@@ -31,6 +34,10 @@ extension FilterGroup {
     
     public static func hierarchical(_ filters: [Filter.Facet]) -> FilterGroup.Hierarchical {
       return FilterGroup.Hierarchical(filters: filters)
+    }
+    
+    public func withFilters<S: Sequence>(_ filters: S) -> FilterGroup.Hierarchical where S.Element == FilterType {
+      return .init(filters: filters.compactMap { $0 as? Filter.Facet }, name: name)
     }
     
   }

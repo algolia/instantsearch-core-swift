@@ -110,7 +110,6 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       var queriesBuilder = QueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
-      print(queries.map { $0.query })
       operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
     } else {
       operation = indexSearchData.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
@@ -145,8 +144,8 @@ public extension SingleIndexSearcher {
     disjunctiveFacetingDelegate = filterState
 
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.hierarchicalAttributes = filterState.hierarchicalAttributes
-      self?.hierarchicalFilters = filterState.hierarchicalFilters
+//      self?.hierarchicalAttributes = filterState.hierarchicalAttributes
+//      self?.hierarchicalFilters = filterState.hierarchicalFilters
       self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
     }

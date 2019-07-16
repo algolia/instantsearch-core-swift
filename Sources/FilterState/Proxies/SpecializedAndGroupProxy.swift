@@ -35,7 +35,7 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     
     /// Adds the filters of a sequence to group
     /// - parameter filters: sequence of filters to add
-    public mutating func addAll<T: FilterType, S: Sequence>(_ filters: S) where S.Element == T {
+    public mutating func addAll<S: Sequence>(_ filters: S) where S.Element == FilterType {
         genericProxy.addAll(filters)
     }
     
@@ -60,7 +60,7 @@ public struct SpecializedAndGroupProxy<T: FilterType> {
     /// Removes a sequence of filters from group
     /// - parameter filters: sequence of filters to remove
     @discardableResult public mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == T {
-        return genericProxy.removeAll(filters)
+        return genericProxy.removeAll(filters.map { $0 as FilterType })
     }
     
     /// Removes all filters in group

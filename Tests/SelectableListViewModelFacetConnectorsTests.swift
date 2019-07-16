@@ -44,13 +44,16 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     
     viewModel.connectFilterState(filterState, with: "categories", operator: .and)
     
+    let groupID: FilterGroup.ID = .and(name: "categories")
+    
     // ViewModel -> FilterState
     viewModel.computeSelections(selectingItemForKey: "cat1")
-    XCTAssertTrue(filterState.contains(Filter.Facet.init(attribute: "categories", stringValue: "cat1"), inGroupWithID: .and(name: "categories")))
+        
+    XCTAssertTrue(filterState.contains(Filter.Facet(attribute: "categories", stringValue: "cat1"), inGroupWithID: groupID))
     
     // FilterState -> ViewModel
     
-    filterState.notify(.add(filter: Filter.Facet(attribute: "categories", stringValue: "cat2"), toGroupWithID: .and(name: "categories")))
+    filterState.notify(.add(filter: Filter.Facet(attribute: "categories", stringValue: "cat2"), toGroupWithID: groupID))
     
     XCTAssertEqual(viewModel.selections, ["cat1", "cat2"])
     

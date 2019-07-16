@@ -57,10 +57,7 @@ public struct QueryBuilder {
     
     let queryForResults = Query(copy: query)
     queryForResults.filters = FilterGroupConverter().sql(filterGroups)
-    
-    print(self.query)
-    print(queryForResults)
-    
+        
     let disjunctiveFacetingQueries = buildDisjunctiveFacetingQueries(query: query,
                                                                      filterGroups: filterGroups,
                                                                      disjunctiveFacets: disjunctiveFacets)

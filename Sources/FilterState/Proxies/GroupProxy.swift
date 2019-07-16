@@ -8,8 +8,32 @@
 
 import Foundation
 
+public protocol FiltersContainer: class {
+  var filters: FiltersReadable & FiltersWritable & FilterGroupsConvertible & HierarchicalManageable { get set }
+}
+
+//public extension FiltersContainer {
+//  
+//  func and(_ groupName: String) -> AndGroupProxy {
+//    return AndGroupProxy(filtersContainer: self, groupName: groupName)
+//  }
+//  
+//  func or <F: FilterType>(_ groupName: String, type: F.Type) -> OrGroupProxy<F> {
+//    return OrGroupProxy(filtersContainer: self, groupName: groupName)
+//  }
+//  
+//  func or <F: FilterType>(_ groupName: String) -> OrGroupProxy<F> {
+//    return OrGroupProxy(filtersContainer: self, groupName: groupName)
+//  }
+//  
+//  func hierarchical(_ groupName: String) -> SpecializedAndGroupProxy<Filter.Facet> {
+//    return SpecializedAndGroupProxy(genericProxy: AndGroupProxy(filtersContainer: self, groupName: groupName))
+//  }
+//  
+//}
+
 /// Group proxy provides a specific type-safe interface for FilterState specialized for a concrete group
 internal protocol GroupProxy {
-    var filterStateDSL: FilterStateDSL { get }
+    var filtersContainer: FiltersContainer { get }
     var groupID: FilterGroup.ID { get }
 }

@@ -48,7 +48,10 @@ class SelectableViewModelConnectorsTests: XCTestCase {
     
     viewModel.computeIsSelected(selecting: true)
     
-    XCTAssertTrue(filterState.filters.contains(Filter.Tag("tag"), inGroupWithID: FilterGroup.ID.or(name: "_tags")))
+    let groupID: FilterGroup.ID = .or(name: "_tags", filterType: .tag)
+    
+    
+    XCTAssertTrue(filterState.filters.contains(Filter.Tag("tag"), inGroupWithID: groupID))
     
     viewModel.computeIsSelected(selecting: false)
     
@@ -56,7 +59,7 @@ class SelectableViewModelConnectorsTests: XCTestCase {
   
     // FilterState to ViewModel
     
-    filterState.notify(.add(filter: Filter.Tag("tag"), toGroupWithID: FilterGroup.ID.or(name: "_tags")))
+    filterState.notify(.add(filter: Filter.Tag("tag"), toGroupWithID: groupID))
     
     XCTAssertTrue(viewModel.isSelected)
     

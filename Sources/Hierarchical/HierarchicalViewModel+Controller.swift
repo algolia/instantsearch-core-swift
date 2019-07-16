@@ -10,7 +10,7 @@ import Foundation
 
 public extension HierarchicalViewModel {
 
-  func connectController<O, C>(_ controller: C, presenter: @escaping ([HierarchicalFacet]) -> O) where O == C.Item, C : HierarchicalController {
+  func connectController<O, C>(_ controller: C, presenter: @escaping ([HierarchicalFacet]) -> O) where O == C.Item, C: HierarchicalController {
     onItemChanged.subscribePast(with: self) { facets in
 
       let hierarchicalFacets = facets.enumerated()

@@ -19,6 +19,11 @@ extension FilterGroup {
     }
 
     public let name: String?
+    
+    public var isDisjuncitve: Bool {
+      return true
+    }
+    
     internal var typedFilters: [T]
     
     public init(filters: [T] = [], name: String? = nil) {
@@ -28,6 +33,10 @@ extension FilterGroup {
     
     public static func or<T: FilterType>(_ filters: [T]) -> FilterGroup.Or<T> {
       return FilterGroup.Or<T>(filters: filters)
+    }
+    
+    public func withFilters<S: Sequence>(_ filters: S) -> Or where S.Element == FilterType {
+      return .init(filters: filters.compactMap { $0 as? T }, name: name)
     }
     
   }

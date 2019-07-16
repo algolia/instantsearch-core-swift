@@ -9,21 +9,14 @@
 import Foundation
 import Signals
 
-public class FilterState {
+public class FilterState: FiltersContainer {
   
-  var filters: Filters
-  var hierarchicalAttributes: [Attribute] = []
-  var hierarchicalFilters: [Filter.Facet] = []
+  public var filters: FiltersReadable & FiltersWritable & FilterGroupsConvertible & HierarchicalManageable
   
   public var onChange: Observer<FiltersReadable>
 
-  public init(groups: [FilterGroup.ID: Set<Filter>]? = nil) {
-    if let groups = groups {
-      self.filters = Filters(groups)
-    } else {
-      self.filters = Filters()
-    }
-
+  public init() {
+    self.filters = GroupsStorage()
     self.onChange = Observer<FiltersReadable>()
   }
 
@@ -31,19 +24,31 @@ public class FilterState {
     onChange.fire(filters)
   }
   
+  func and(name: String) -> AndGroupProxy {
+    return .init(filtersContainer: self, groupName: name)
+  }
+  
+  func or<F: FilterType>(name: String) -> OrGroupProxy<F> {
+    return .init(filtersContainer: self, groupName: name)
+  }
+  
+  func hierarchical(name: String) -> HierarchicalGroupProxy {
+    return .init(filtersContainer: self, groupName: name)
+  }
+  
 }
 
 extension FilterState: FiltersReadable {
+  
+  public func getGroupIDs() -> Set<FilterGroup.ID> {
+    return filters.getGroupIDs()
+  }
   
   public var isEmpty: Bool {
     return self.filters.isEmpty
   }
   
-  public func contains<T>(_ filter: T) -> Bool where T: FilterType {
-    return self.filters.contains(filter)
-  }
-  
-  public func contains<T>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) -> Bool where T: FilterType {
+  public func contains(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) -> Bool {
     return self.filters.contains(filter, inGroupWithID: groupID)
   }
   
@@ -67,19 +72,19 @@ extension FilterState: FiltersReadable {
 
 extension FilterState: FiltersWritable {
   
-  public func add<T>(_ filter: T, toGroupWithID groupID: FilterGroup.ID) where T: FilterType {
+  public func add(_ filter: FilterType, toGroupWithID groupID: FilterGroup.ID) {
     self.filters.add(filter, toGroupWithID: groupID)
   }
   
-  public func addAll<T, S>(filters: S, toGroupWithID groupID: FilterGroup.ID) where T: FilterType, T == S.Element, S: Sequence {
+  public func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     self.filters.addAll(filters: filters, toGroupWithID: groupID)
   }
   
-  @discardableResult public func remove<T>(_ filter: T, fromGroupWithID groupID: FilterGroup.ID) -> Bool where T: FilterType {
+  @discardableResult public func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
     return self.filters.remove(filter, fromGroupWithID: groupID)
   }
   
-  @discardableResult public func removeAll<T, S>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where T: FilterType, T == S.Element, S: Sequence {
+  @discardableResult public func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
     return self.filters.removeAll(filters, fromGroupWithID: groupID)
   }
   
@@ -95,11 +100,11 @@ extension FilterState: FiltersWritable {
     return self.filters.removeAllExcept(fromGroupWithIDs: groupIDs)
   }
   
-  @discardableResult public func remove<T>(_ filter: T) -> Bool where T: FilterType {
+  @discardableResult public func remove(_ filter: FilterType) -> Bool {
     return self.filters.remove(filter)
   }
   
-  public func removeAll<T, S>(_ filters: S) where T: FilterType, T == S.Element, S: Sequence {
+  public func removeAll<S: Sequence>(_ filters: S) where S.Element == FilterType {
     self.filters.removeAll(filters)
   }
   
@@ -115,11 +120,11 @@ extension FilterState: FiltersWritable {
     self.filters.removeAll()
   }
   
-  public func toggle<T>(_ filter: T, inGroupWithID groupID: FilterGroup.ID) where T: FilterType {
+  public func toggle(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) {
     self.filters.toggle(filter, inGroupWithID: groupID)
   }
   
-  public func toggle<T, S>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where T: FilterType, T == S.Element, S: Sequence {
+  public func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     self.filters.toggle(filters, inGroupWithID: groupID)
   }
   
@@ -144,7 +149,7 @@ extension FilterState: CustomDebugStringConvertible {
 extension FilterState: DisjunctiveFacetingDelegate {
     
   public var disjunctiveFacetsAttributes: Set<Attribute> {
-    return filters.getDisjunctiveFacetsAttributes()
+    return filters.disjunctiveFacetsAttributes
   }
   
 }

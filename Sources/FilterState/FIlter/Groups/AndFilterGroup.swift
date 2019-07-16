@@ -17,8 +17,8 @@ extension FilterGroup {
     public var filters: [FilterType]
     public let name: String?
     
-    public var isEmpty: Bool {
-      return filters.isEmpty
+    public var isDisjuncitve: Bool {
+      return false
     }
     
     public init<S: Sequence>(filters: S, name: String? = nil) where S.Element == FilterType {
@@ -28,6 +28,10 @@ extension FilterGroup {
     
     public static func and(_ filters: [FilterType]) -> FilterGroup.And {
       return FilterGroup.And(filters: filters)
+    }
+    
+    public func withFilters<S: Sequence>(_ filters: S) -> FilterGroup.And where S.Element == FilterType {
+      return .init(filters: filters, name: name)
     }
     
   }

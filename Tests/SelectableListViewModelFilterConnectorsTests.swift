@@ -35,7 +35,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
 
     let filterState = FilterState()
     
-    filterState.notify(.add(filter: Filter.Tag(value: "tag3"), toGroupWithID: .or(name: "")))
+    filterState.notify(.add(filter: Filter.Tag(value: "tag3"), toGroupWithID: .or(name: "", filterType: .tag)))
     
     viewModel.connectFilterState(filterState, operator: .or)
     
@@ -46,7 +46,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     // FilterState -> ViewModel
     
     filterState.notify(.add(filter: Filter.Tag(value: "tag1")
-      , toGroupWithID: .or(name: "")))
+      , toGroupWithID: .or(name: "", filterType: .tag)))
     
     XCTAssertEqual(viewModel.selections, ["tag1", "tag3"])
    
@@ -54,7 +54,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     viewModel.computeSelections(selectingItemForKey: "tag2")
     
-    XCTAssertTrue(filterState.contains(Filter.Tag(value: "tag2"), inGroupWithID: .or(name: "")))
+    XCTAssertTrue(filterState.contains(Filter.Tag(value: "tag2"), inGroupWithID: .or(name: "", filterType: .tag)))
     
   }
   

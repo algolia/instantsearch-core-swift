@@ -39,10 +39,10 @@ class FilterStateTests: XCTestCase {
     let filterTag1 = Filter.Tag(value: "Tom")
     let filterTag2 = Filter.Tag(value: "Hank")
     
-    let groupFacets = FilterGroup.ID.or(name: "filterFacets")
-    let groupFacetsOtherInstance = FilterGroup.ID.or(name: "filterFacets")
+    let groupFacets = FilterGroup.ID.or(name: "filterFacets", filterType: .facet)
+    let groupFacetsOtherInstance = FilterGroup.ID.or(name: "filterFacets", filterType: .facet)
     let groupNumerics = FilterGroup.ID.and(name: "filterNumerics")
-    let groupTagsOr = FilterGroup.ID.or(name: "filterTags")
+    let groupTagsOr = FilterGroup.ID.or(name: "filterTags", filterType: .tag)
     let groupTagsAnd = FilterGroup.ID.and(name: "filterTags")
     
     filterState.add(filterFacet1, toGroupWithID: groupFacets)
@@ -92,12 +92,12 @@ class FilterStateTests: XCTestCase {
     filterState.addAll(filters: [
       Filter.Tag(value: "tagA", isNegated: true),
       Filter.Tag(value: "tagB", isNegated: true)]
-      , toGroupWithID: .or(name: "a"))
+      , toGroupWithID: .or(name: "a", filterType: .tag))
     
     filterState.addAll(filters: [
       Filter.Facet(attribute: "size", value: 40, isNegated: true),
       Filter.Facet(attribute: "featured", value: true, isNegated: true)
-      ], toGroupWithID: .or(name: "b"))
+    ], toGroupWithID: .or(name: "b", filterType: .facet))
     
     let expectedState = "( NOT \"_tags\":\"tagA\" OR NOT \"_tags\":\"tagB\" ) AND ( NOT \"featured\":\"true\" OR NOT \"size\":\"40.0\" )"
     
@@ -116,11 +116,11 @@ class FilterStateTests: XCTestCase {
     let filterTag1 = Filter.Tag(value: "Tom")
     let filterTag2 = Filter.Tag(value: "Hank")
     
-    let groupFacets = FilterGroup.ID.or(name: "filterFacets")
-    let groupFacetsOtherInstance = FilterGroup.ID.or(name: "filterFacets")
-    let groupNumerics = FilterGroup.ID.and(name: "filterNumerics")
-    let groupTagsOr = FilterGroup.ID.or(name: "filterTags")
-    let groupTagsAnd = FilterGroup.ID.and(name: "filterTags")
+    let groupFacets: FilterGroup.ID = .or(name: "filterFacets", filterType: .facet)
+    let groupFacetsOtherInstance: FilterGroup.ID = .or(name: "filterFacets", filterType: .facet)
+    let groupNumerics: FilterGroup.ID = .and(name: "filterNumerics")
+    let groupTagsOr: FilterGroup.ID = .or(name: "filterTags", filterType: .tag)
+    let groupTagsAnd: FilterGroup.ID = .and(name: "filterTags")
     
     filterState.add(filterFacet1, toGroupWithID: groupFacets)
     // Make sure that if we re-create a group instance, filters will stay in same group bracket
@@ -152,13 +152,13 @@ class FilterStateTests: XCTestCase {
     let numeric = Filter.Numeric(attribute: "price", operator: .lessThan, value: 100)
     let facet = Filter.Facet(attribute: "new", value: true)
     
-    filterState.addAll(filters: [tagA, tagB], toGroupWithID: .or(name: "tags"))
+    filterState.addAll(filters: [tagA, tagB], toGroupWithID: .or(name: "tags", filterType: .tag))
     
-    filterState.addAll(filters: [Filter.Tag(value: "hm"), Filter.Tag(value: "other")], toGroupWithID: .or(name: "tags"))
+    filterState.addAll(filters: [Filter.Tag(value: "hm"), Filter.Tag(value: "other")], toGroupWithID: .or(name: "tags", filterType: .tag))
     
     filterState.addAll(filters: [
       Filter.Numeric(attribute: "size", range: 15...20),
-      Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)], toGroupWithID: .or(name: "numeric"))
+      Filter.Numeric(attribute: "price", operator: .greaterThan, value: 100)], toGroupWithID: .or(name: "numeric", filterType: .numeric))
     
     filterState.add(numeric, toGroupWithID: .and(name: "others"))
     filterState.add(facet, toGroupWithID: .and(name: "others"))
@@ -177,14 +177,14 @@ class FilterStateTests: XCTestCase {
     XCTAssertTrue(filterState.contains(tagB))
     XCTAssertTrue(filterState.contains(numeric))
     XCTAssertTrue(filterState.contains(facet))
-    XCTAssertTrue(filterState.contains(tagA, inGroupWithID: .or(name: "tags")))
-    XCTAssertTrue(filterState.contains(tagB, inGroupWithID: .or(name: "tags")))
+    XCTAssertTrue(filterState.contains(tagA, inGroupWithID: .or(name: "tags", filterType: .tag)))
+    XCTAssertTrue(filterState.contains(tagB, inGroupWithID: .or(name: "tags", filterType: .tag)))
     XCTAssertTrue(filterState.contains(numeric, inGroupWithID: .and(name: "others")))
     XCTAssertTrue(filterState.contains(facet, inGroupWithID: .and(name: "others")))
     
     XCTAssertFalse(filterState.contains(tagC))
     XCTAssertFalse(filterState.contains(Filter.Facet(attribute: "new", value: false)))
-    XCTAssertFalse(filterState.contains(tagC, inGroupWithID: .or(name: "tags")))
+    XCTAssertFalse(filterState.contains(tagC, inGroupWithID: .or(name: "tags", filterType: .tag)))
     XCTAssertFalse(filterState.contains(tagA, inGroupWithID: .and(name: "others")))
     XCTAssertFalse(filterState.contains(tagB, inGroupWithID: .and(name: "others")))
     
@@ -200,7 +200,7 @@ class FilterStateTests: XCTestCase {
     
     var filterState = Filters()
     
-    filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .or(name: "orTags"))
+    filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .or(name: "orTags", filterType: .tag))
     filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .and(name: "any"))
     filterState.add(Filter.Numeric(attribute: "price", range: 1...10), toGroupWithID: .and(name: "any"))
     
@@ -228,7 +228,7 @@ class FilterStateTests: XCTestCase {
     
     XCTAssertTrue(filterState.contains(Filter.Tag(value: "b")))
     XCTAssertFalse(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .and(name: "any")))
-    XCTAssertTrue(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .or(name: "orTags")))
+    XCTAssertTrue(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .or(name: "orTags", filterType: .tag)))
     
     XCTAssertEqual(filterState.buildSQL(), """
         ( "price":1.0 TO 10.0 ) AND ( "_tags":"b" )
@@ -260,8 +260,8 @@ class FilterStateTests: XCTestCase {
     let filterNumeric2 = Filter.Numeric(attribute: "price", operator: .lessThan, value: 20)
     let filterTag1 = Filter.Tag(value: "Tom")
     
-    filterState.add(filterFacet1, toGroupWithID: .or(name: "a"))
-    filterState.remove(filterFacet2, fromGroupWithID: .or(name: "a"))
+    filterState.add(filterFacet1, toGroupWithID: .or(name: "a", filterType: .facet))
+    filterState.remove(filterFacet2, fromGroupWithID: .or(name: "a", filterType: .facet))
     
     XCTAssertEqual(filterState.buildSQL(), """
         ( "category":"table" )
@@ -274,7 +274,7 @@ class FilterStateTests: XCTestCase {
         ( "category":"table" ) AND ( "_tags":"Tom" AND "price" > 10.0 )
         """)
     
-    filterState.addAll(filters: [filterFacet1, filterFacet2], toGroupWithID: .or(name:"a"))
+    filterState.addAll(filters: [filterFacet1, filterFacet2], toGroupWithID: .or(name:"a", filterType: .facet))
     
     XCTAssertEqual(filterState.buildSQL(), """
         ( "category":"chair" OR "category":"table" ) AND ( "_tags":"Tom" AND "price" > 10.0 )
@@ -295,8 +295,8 @@ class FilterStateTests: XCTestCase {
     let filterTag1 = Filter.Tag(value: "Tom")
     let filterTag2 = Filter.Tag(value: "Hank")
     
-    let groupNumericsOr = FilterGroup.ID.or(name: "filterNumeric")
-    let groupTagsOr = FilterGroup.ID.or(name: "filterTags")
+    let groupNumericsOr = FilterGroup.ID.or(name: "filterNumeric", filterType: .numeric)
+    let groupTagsOr = FilterGroup.ID.or(name: "filterTags", filterType: .tag)
     
     var filterState = Filters()
     
@@ -327,7 +327,7 @@ class FilterStateTests: XCTestCase {
   func testIsEmpty() {
     var filterState = Filters()
     let filter = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
-    let group = FilterGroup.ID.or(name: "group")
+    let group = FilterGroup.ID.or(name: "group", filterType: .numeric)
     XCTAssertTrue(filterState.isEmpty)
     filterState.add(filter, toGroupWithID: group)
     XCTAssertEqual(filterState.buildSQL(), """
@@ -365,16 +365,16 @@ class FilterStateTests: XCTestCase {
     
     // Conjunctive Group
     
-    XCTAssertFalse(filterState.getFilters(forGroupWithID: .or(name: "a")).contains(.facet(filter)))
-    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a")).isEmpty)
+    XCTAssertFalse(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).contains(.facet(filter)))
+    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).isEmpty)
     
-    filterState.toggle(filter, inGroupWithID: .or(name: "a"))
-    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a")).contains(.facet(filter)))
-    XCTAssertFalse(filterState.getFilters(forGroupWithID: .or(name: "a")).isEmpty)
+    filterState.toggle(filter, inGroupWithID: .or(name: "a", filterType: .facet))
+    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).contains(.facet(filter)))
+    XCTAssertFalse(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).isEmpty)
     
-    filterState.toggle(filter, inGroupWithID: .or(name: "a"))
-    XCTAssertFalse(filterState.contains(filter, inGroupWithID: .or(name: "a")))
-    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a")).isEmpty)
+    filterState.toggle(filter, inGroupWithID: .or(name: "a", filterType: .facet))
+    XCTAssertFalse(filterState.contains(filter, inGroupWithID: .or(name: "a", filterType: .facet)))
+    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).isEmpty)
     
     // Disjunctive Group
     
@@ -405,12 +405,12 @@ class FilterStateTests: XCTestCase {
     XCTAssertFalse(filterState.getFilters(forGroupWithID: .and(name: "a")).contains(.facet(Filter.Facet(attribute: "country", stringValue: "france"))))
     
     
-    filterState.toggle(Filter.Facet(attribute: "size", floatValue: 40), inGroupWithID: .or(name: "a"))
-    filterState.toggle(Filter.Facet(attribute: "count", floatValue: 25), inGroupWithID: .or(name: "a"))
+    filterState.toggle(Filter.Facet(attribute: "size", floatValue: 40), inGroupWithID: .or(name: "a", filterType: .facet))
+    filterState.toggle(Filter.Facet(attribute: "count", floatValue: 25), inGroupWithID: .or(name: "a", filterType: .facet))
         
-    XCTAssertFalse(filterState.getFilters(forGroupWithID: .or(name: "a")).isEmpty)
-    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a")).contains(.facet(Filter.Facet(attribute: "size", floatValue: 40))))
-    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a")).contains(.facet(Filter.Facet(attribute: "count", floatValue: 25))))
+    XCTAssertFalse(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).isEmpty)
+    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).contains(.facet(Filter.Facet(attribute: "size", floatValue: 40))))
+    XCTAssertTrue(filterState.getFilters(forGroupWithID: .or(name: "a", filterType: .facet)).contains(.facet(Filter.Facet(attribute: "count", floatValue: 25))))
     
   }
   
@@ -423,17 +423,17 @@ class FilterStateTests: XCTestCase {
       Filter.Facet(attribute: "color", stringValue: "red"),
       Filter.Facet(attribute: "color", stringValue: "green"),
       Filter.Facet(attribute: "color", stringValue: "blue")
-    ], toGroupWithID: .or(name: "g1"))
+    ], toGroupWithID: .or(name: "g1", filterType: .facet))
     
     XCTAssertEqual(filterState.getDisjunctiveFacetsAttributes(), ["color"])
     
-    filterState.add(Filter.Facet(attribute: "country", stringValue: "france"), toGroupWithID: .or(name: "g2"))
+    filterState.add(Filter.Facet(attribute: "country", stringValue: "france"), toGroupWithID: .or(name: "g2", filterType: .facet))
     
     XCTAssertEqual(filterState.getDisjunctiveFacetsAttributes(), ["color", "country"])
     
-    filterState.add(Filter.Facet(attribute: "country", stringValue: "uk"), toGroupWithID: .or(name: "g2"))
+    filterState.add(Filter.Facet(attribute: "country", stringValue: "uk"), toGroupWithID: .or(name: "g2", filterType: .facet))
     
-    filterState.add(Filter.Facet(attribute: "size", floatValue: 40), toGroupWithID: .or(name: "g2"))
+    filterState.add(Filter.Facet(attribute: "size", floatValue: 40), toGroupWithID: .or(name: "g2", filterType: .facet))
     
     XCTAssertEqual(filterState.getDisjunctiveFacetsAttributes(), ["color", "country", "size"])
     
@@ -446,7 +446,7 @@ class FilterStateTests: XCTestCase {
     
     XCTAssertEqual(filterState.getDisjunctiveFacetsAttributes(), ["color", "country", "size"])
     
-    filterState.add(Filter.Facet(attribute: "size", floatValue: 42), toGroupWithID: .or(name: "g2"))
+    filterState.add(Filter.Facet(attribute: "size", floatValue: 42), toGroupWithID: .or(name: "g2", filterType: .facet))
     
     XCTAssertEqual(filterState.getDisjunctiveFacetsAttributes(), ["color", "country", "size"])
     
@@ -454,7 +454,7 @@ class FilterStateTests: XCTestCase {
       Filter.Facet(attribute: "color", stringValue: "red"),
       Filter.Facet(attribute: "color", stringValue: "green"),
       Filter.Facet(attribute: "color", stringValue: "blue")
-    ], fromGroupWithID: .or(name: "g1"))
+    ], fromGroupWithID: .or(name: "g1", filterType: .facet))
     
     XCTAssertEqual(filterState.getDisjunctiveFacetsAttributes(), ["country", "size"])
     
@@ -468,11 +468,11 @@ class FilterStateTests: XCTestCase {
       Filter.Facet(attribute: "color", stringValue: "red"),
       Filter.Facet(attribute: "color", stringValue: "green"),
       Filter.Facet(attribute: "color", stringValue: "blue"),
-    ], toGroupWithID: .or(name: "g1"))
+    ], toGroupWithID: .or(name: "g1", filterType: .facet))
     
     XCTAssertEqual(filterState.getRawFacetFilters()["color"].flatMap(Set.init), Set(["red", "green", "blue"]))
     
-    filterState.add(Filter.Facet(attribute: "country", stringValue: "france"), toGroupWithID: .or(name: "g2"))
+    filterState.add(Filter.Facet(attribute: "country", stringValue: "france"), toGroupWithID: .or(name: "g2", filterType: .facet))
     
     XCTAssertEqual(filterState.getRawFacetFilters()["color"].flatMap(Set.init), Set(["red", "green", "blue"]))
     XCTAssertEqual(filterState.getRawFacetFilters()["country"], ["france"])
@@ -482,7 +482,7 @@ class FilterStateTests: XCTestCase {
     XCTAssertEqual(filterState.getRawFacetFilters()["color"].flatMap(Set.init), Set(["red", "green", "blue"]))
     XCTAssertEqual(filterState.getRawFacetFilters()["country"].flatMap(Set.init), Set(["france", "uk"]))
     
-    filterState.remove(Filter.Facet(attribute: "color", stringValue: "green"), fromGroupWithID: .or(name: "g1"))
+    filterState.remove(Filter.Facet(attribute: "color", stringValue: "green"), fromGroupWithID: .or(name: "g1", filterType: .facet))
     
     XCTAssertEqual(filterState.getRawFacetFilters()["color"].flatMap(Set.init), Set(["red", "blue"]))
     XCTAssertEqual(filterState.getRawFacetFilters()["country"].flatMap(Set.init), Set(["france", "uk"]))
@@ -496,7 +496,7 @@ class FilterStateTests: XCTestCase {
     let filterFacet1 = Filter.Facet(attribute: Attribute("category"), value: "table", score: 5)
     let filterFacet2 = Filter.Facet(attribute: Attribute("category"), value: "chair", score: 10)
     
-    let groupFacets = FilterGroup.ID.or(name: "filterFacets")
+    let groupFacets = FilterGroup.ID.or(name: "filterFacets", filterType: .facet)
     
     filterState.add(filterFacet1, toGroupWithID: groupFacets)
     filterState.add(filterFacet2, toGroupWithID: groupFacets)

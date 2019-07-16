@@ -58,15 +58,15 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
     
     viewModel.computeSelected(selecting: 1)
     
-    XCTAssertTrue(filterState.contains(Filter.Tag(value: "t2"), inGroupWithID: .or(name: "tags")))
+    XCTAssertTrue(filterState.contains(Filter.Tag(value: "t2"), inGroupWithID: .or(name: "tags", filterType: .tag)))
 
     // FilterState -> ViewModel
     
-    filterState.notify(.remove(filter: Filter.Tag(value: "t2"), fromGroupWithID: .or(name: "tags")))
+    filterState.notify(.remove(filter: Filter.Tag(value: "t2"), fromGroupWithID: .or(name: "tags", filterType: .tag)))
     
     XCTAssertNil(viewModel.selected)
     
-    filterState.notify(.add(filter: Filter.Tag(value: "t3"), toGroupWithID: .or(name: "tags")))
+    filterState.notify(.add(filter: Filter.Tag(value: "t3"), toGroupWithID: .or(name: "tags", filterType: .tag)))
     
     XCTAssertEqual(viewModel.selected, 2)
     

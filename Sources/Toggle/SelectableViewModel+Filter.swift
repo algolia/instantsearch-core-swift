@@ -14,27 +14,59 @@ public extension SelectableViewModel where Item: FilterType {
                  operator: RefinementOperator = .or,
                  groupName: String? = nil) {
     
-    let groupID = FilterGroup.ID(groupName: groupName,
-                                 attribute: item.attribute,
-                                 operator: `operator`)
+    let groupName = groupName ?? item.attribute.name
+    let groupID: FilterGroup.ID
     
+    switch `operator` {
+    case .and:
+      groupID = .and(name: groupName)
+      
+    case .or:
+      switch Item.self {
+      case is Filter.Facet.Type:
+        groupID = .or(name: groupName, filterType: .facet)
+      case is Filter.Numeric.Type:
+        groupID = .or(name: groupName, filterType: .numeric)
+      case is Filter.Tag.Type:
+        groupID = .or(name: groupName, filterType: .tag)
+      default:
+        return
+      }
+    }
+
     whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID)
     whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
-  func connectTo<F: FilterType>(_ filterState: FilterState,
-                                operator: RefinementOperator = .or,
-                                groupName: String? = nil,
-                                default: F) {
-    
-    let groupID = FilterGroup.ID(groupName: groupName,
-                                 attribute: item.attribute,
-                                 operator: `operator`)
-    
-    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID, default: `default`)
-    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
-    filterState.notify(.add(filter: `default`, toGroupWithID: groupID))
-  }
+//  func connectTo<F: FilterType>(_ filterState: FilterState,
+//                                operator: RefinementOperator = .or,
+//                                groupName: String? = nil,
+//                                default: F) {
+//    
+//    let groupName = groupName ?? item.attribute.name
+//    let groupID: FilterGroup.ID
+//    
+//    switch `operator` {
+//    case .and:
+//      groupID = .and(name: groupName)
+//      
+//    case .or:
+//      switch Item.self {
+//      case is Filter.Facet.Type:
+//        groupID = .or(name: groupName, filterType: .facet)
+//      case is Filter.Numeric.Type:
+//        groupID = .or(name: groupName, filterType: .numeric)
+//      case is Filter.Tag.Type:
+//        groupID = .or(name: groupName, filterType: .tag)
+//      default:
+//        return
+//      }
+//    }
+//
+//    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID, default: `default`)
+//    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
+//    filterState.notify(.add(filter: `default`, toGroupWithID: groupID))
+//  }
   
 }
 
@@ -47,7 +79,7 @@ private extension SelectableViewModel where Item: FilterType {
       self?.isSelected = filterState.contains(filter, inGroupWithID: groupID)
     }
     
-    onChange(filterState)
+    onChange(filterState.filters)
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }
@@ -64,9 +96,9 @@ private extension SelectableViewModel where Item: FilterType {
         else { return }
       
       if computedSelected {
-        filterState.add(item, toGroupWithID: groupID)
+        filterState.filters.add(item, toGroupWithID: groupID)
       } else {
-        filterState.remove(item, fromGroupWithID: groupID)
+        filterState.filters.remove(item, fromGroupWithID: groupID)
       }
       
       filterState.notifyChange()
@@ -88,11 +120,11 @@ private extension SelectableViewModel where Item: FilterType {
         else { return }
       
       if computedSelected {
-        filterState.remove(`default`, fromGroupWithID: groupID)
-        filterState.add(item, toGroupWithID: groupID)
+        filterState.filters.remove(`default`, fromGroupWithID: groupID)
+        filterState.filters.add(item, toGroupWithID: groupID)
       } else {
-        filterState.remove(item, fromGroupWithID: groupID)
-        filterState.add(`default`, toGroupWithID: groupID)
+        filterState.filters.remove(item, fromGroupWithID: groupID)
+        filterState.filters.add(`default`, toGroupWithID: groupID)
       }
       
       filterState.notifyChange()

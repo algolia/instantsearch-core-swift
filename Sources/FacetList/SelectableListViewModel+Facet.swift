@@ -55,8 +55,17 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
                           operator: RefinementOperator,
                           groupName: String? = nil) {
 
-    let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
+    let groupID: FilterGroup.ID// = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
 
+    let groupName = groupName ?? attribute.name
+    
+    switch `operator` {
+    case .and:
+      groupID = .and(name: groupName)
+    case .or:
+      groupID = .or(name: groupName, filterType: .facet)
+    }
+    
     whenSelectionsComputedThenUpdateFilterState(filterState, attribute: attribute, groupID: groupID)
     whenFilterStateChangedThenUpdateSelections(filterState: filterState, groupID: groupID)
   }
@@ -95,7 +104,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
 //      print("FilterState changed -> update selections: \(self.selections)")
     }
     
-    onChange(filterState)
+    onChange(filterState.filters)
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }

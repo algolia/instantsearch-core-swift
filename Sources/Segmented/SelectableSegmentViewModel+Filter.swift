@@ -19,7 +19,25 @@ public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: Fi
                           operator: RefinementOperator,
                           groupName: String? = nil) {
     
-    let groupID = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
+    let groupName = groupName ?? attribute.name
+    let groupID: FilterGroup.ID
+    
+    switch `operator` {
+    case .and:
+      groupID = .and(name: groupName)
+      
+    case .or:
+      switch Segment.self {
+      case is Filter.Facet.Type:
+        groupID = .or(name: groupName, filterType: .facet)
+      case is Filter.Numeric.Type:
+        groupID = .or(name: groupName, filterType: .numeric)
+      case is Filter.Tag.Type:
+        groupID = .or(name: groupName, filterType: .tag)
+      default:
+        return
+      }
+    }
     
     whenSelectedComputedThenUpdateFilterState(filterState, groupID: groupID)
     whenFilterStateChangedThenUpdateSelected(groupID: groupID, filterState: filterState)

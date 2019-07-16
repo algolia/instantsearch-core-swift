@@ -15,9 +15,9 @@ public extension FilterClearViewModel {
       if let filterGroupIDs = filterGroupIDs {
         switch clearMode {
         case .specified:
-          filterState.removeAll(fromGroupWithIDs: filterGroupIDs)
+          filterState.filters.removeAll(fromGroupWithIDs: filterGroupIDs)
         case .except:
-          filterState.removeAllExcept(fromGroupWithIDs: filterGroupIDs)
+          filterState.filters.removeAllExcept(fromGroupWithIDs: filterGroupIDs)
         }
 
         filterState.notifyChange()

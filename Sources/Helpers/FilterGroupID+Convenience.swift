@@ -10,7 +10,7 @@ import Foundation
 
 extension FilterGroup.ID {
   
-  init(groupName: String? = nil, attribute: Attribute, operator: RefinementOperator) {
+  init(groupName: String? = nil, attribute: Attribute, operator: RefinementOperator, filterType: FilterType.Type) {
     
     let name = groupName ?? attribute.name
     
@@ -18,7 +18,7 @@ extension FilterGroup.ID {
     case .and:
       self = .and(name: name)
     case .or:
-      self = .or(name: name)
+      self = FilterGroup.ID.or(filterType, name: name)!
     }
     
   }

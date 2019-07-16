@@ -14,6 +14,17 @@ public enum Filter: Hashable {
   case numeric(Numeric)
   case tag(Tag)
   
+  public var attribute: Attribute {
+    switch self {
+    case .facet(let filter):
+      return filter.attribute
+    case .numeric(let filter):
+      return filter.attribute
+    case .tag(let filter):
+      return filter.attribute
+    }
+  }
+  
   public init<F: FilterType>(_ filter: F) {
     switch filter {
     case let facetFilter as Filter.Facet:

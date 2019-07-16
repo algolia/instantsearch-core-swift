@@ -14,7 +14,7 @@ class FilterStateGroupTests: XCTestCase {
     
   func testOrGroupAddAll() {
     var filterState = Filters()
-    let group = FilterGroup.ID.or(name: "group")
+    let group = FilterGroup.ID.or(name: "group", filterType: .facet)
     let filter1 = Filter.Facet(attribute: "category", value: "table")
     let filter2 = Filter.Facet(attribute: "category", value: "chair")
     filterState.addAll(filters: [filter1, filter2], toGroupWithID: group)
