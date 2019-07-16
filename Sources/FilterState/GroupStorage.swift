@@ -10,10 +10,10 @@ import Foundation
 
 struct GroupsStorage {
   
-  var filterGroups: [FilterGroupType]
+  var filterGroups: [FilterGroup.ID: FilterGroupType]
   
   init() {
-    filterGroups = []
+    filterGroups = [:]
   }
   
 }
@@ -21,7 +21,7 @@ struct GroupsStorage {
 extension GroupsStorage: FilterGroupsConvertible {
   
   func toFilterGroups() -> [FilterGroupType] {
-    return filterGroups
+    return filterGroups.values.map { $0 }
   }
   
 }
@@ -29,7 +29,7 @@ extension GroupsStorage: FilterGroupsConvertible {
 extension GroupsStorage: FiltersReadable {
   
   func getFilters(forGroupWithID groupID: FilterGroup.ID) -> Set<Filter> {
-    return Set(filterGroups.first { FilterGroup.ID($0) == groupID }?.filters.map(Filter.init) ?? [])
+    return Set(filterGroups[groupID]?.filters.map(Filter.init) ?? [])
   }
   
   func getFilters(for attribute: Attribute) -> Set<Filter> {
@@ -38,31 +38,25 @@ extension GroupsStorage: FiltersReadable {
   
   func getFiltersAndID() -> Set<FilterAndID> {
     return Set(filterGroups
-      .map { group -> [(FilterGroup.ID, FilterType)?] in
-        guard let groupID = FilterGroup.ID(group) else {
-          return []
-        }
-        return group.filters.map { (groupID, $0) }
-      }
+      .map { (id, group) in group.filters.map { (id, $0)  } }
       .flatMap { $0 }
-      .compactMap { $0 }
       .map { FilterAndID(filter: Filter($0.1), id: $0.0) })
   }
   
   func getFilters() -> Set<Filter> {
-    return Set(filterGroups.flatMap { $0.filters }.map(Filter.init))
+    return Set(filterGroups.values.flatMap { $0.filters }.map(Filter.init))
   }
   
   var isEmpty: Bool {
-    return filterGroups.allSatisfy { $0.filters.isEmpty }
+    return filterGroups.values.allSatisfy { $0.filters.isEmpty }
   }
   
   func contains(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) -> Bool {
-    return filterGroups.first { FilterGroup.ID($0) == groupID }?.contains(filter) ?? false
+    return filterGroups[groupID]?.contains(filter) == true
   }
   
   func getGroupIDs() -> Set<FilterGroup.ID> {
-    return Set(filterGroups.compactMap(FilterGroup.ID.init))
+    return Set(filterGroups.keys)
   }
   
 }
@@ -85,35 +79,29 @@ extension GroupsStorage: FiltersWritable {
   }
   
   mutating func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
-    guard let indexOfExistingGroup = filterGroups.firstIndex(where: { FilterGroup.ID($0) == groupID }) else {
-      let group = emptyGroup(with: groupID).withFilters(filters)
-      self.filterGroups.append(group)
-      return
-    }
-    
-    let existingGroup = filterGroups[indexOfExistingGroup]
-    let updatedFilters = Set(existingGroup.filters.map(Filter.init)).union(filters.map(Filter.init)).map { $0.filter }
-    
-    filterGroups[indexOfExistingGroup] = emptyGroup(with: groupID).withFilters(updatedFilters)
+    let group = filterGroups[groupID] ?? emptyGroup(with: groupID)
+    let updatedFilters = Set(group.filters.map(Filter.init)).union(filters.map(Filter.init)).map { $0.filter }
+    filterGroups[groupID] = group.withFilters(updatedFilters)
   }
   
   mutating func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
-    var wasRemoved: Bool = false
-    let filtersToRemove = Set(filters.map(Filter.init))
-    self.filterGroups = filterGroups.map { group in
-      let updatedFilters = group.filters.filter { !filtersToRemove.contains(Filter($0)) }
-      wasRemoved = wasRemoved || updatedFilters.count < group.filters.count
-      return group.withFilters(updatedFilters)
+    guard let existingGroup = filterGroups[groupID] else {
+      return false
     }
-    return wasRemoved
+    
+    let updatedFilters = Set(existingGroup.filters.map(Filter.init)).subtracting(filters.map(Filter.init)).map { $0.filter }
+    filterGroups[groupID] = existingGroup.withFilters(updatedFilters)
+    return existingGroup.filters.count > updatedFilters.count
   }
   
   mutating func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
-    self.filterGroups.removeAll(where: { return FilterGroup.ID($0).flatMap(groupIDs.contains) ?? false })
+    groupIDs.forEach { filterGroups.removeValue(forKey: $0) }
   }
   
   mutating func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
-    self.filterGroups.removeAll(where: { return !(FilterGroup.ID($0).flatMap(groupIDs.contains) ?? false) })
+    filterGroups.keys
+      .filter { !groupIDs.contains($0) }
+      .forEach { filterGroups.removeValue(forKey: $0) }
   }
   
   mutating func removeAll<S: Sequence>(_ filters: S) where S.Element == FilterType {
@@ -121,20 +109,18 @@ extension GroupsStorage: FiltersWritable {
   }
   
   mutating func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID) {
-    self.filterGroups = filterGroups.map { group in
-      if FilterGroup.ID(group) == groupID {
-        let updatedFilters = group.filters.filter { $0.attribute != attribute }
-        return group.withFilters(updatedFilters)
-      } else {
-        return group
-      }
+    guard let existingGroup = filterGroups[groupID] else {
+      return
     }
+    
+    let updatedFilters = existingGroup.filters.filter { $0.attribute != attribute }
+    filterGroups[groupID] = existingGroup.withFilters(updatedFilters)
   }
   
   mutating func removeAll(for attribute: Attribute) {
-    self.filterGroups = filterGroups.map { group in
+    for (groupID, group) in filterGroups {
       let updatedFilters = group.filters.filter { $0.attribute != attribute }
-      return group.withFilters(updatedFilters)
+      filterGroups[groupID] = group.withFilters(updatedFilters)
     }
   }
   
@@ -147,7 +133,7 @@ extension GroupsStorage: FiltersWritable {
 extension GroupsStorage: HierarchicalManageable {
   
   func hierarchicalGroup(withName groupName: String) -> FilterGroup.Hierarchical? {
-    return filterGroups.first(where: { FilterGroup.ID($0) == .hierarchical(name: groupName) }).flatMap { $0 as? FilterGroup.Hierarchical }
+    return filterGroups[.hierarchical(name: groupName)].flatMap { $0 as? FilterGroup.Hierarchical }
   }
   
   func hierarchicalAttributes(forGroupWithName groupName: String) -> [Attribute] {
@@ -160,27 +146,17 @@ extension GroupsStorage: HierarchicalManageable {
   }
   
   mutating func set(_ hierarchicalAttributes: [Attribute], forGroupWithName groupName: String) {
-    guard let existingIndex = filterGroups.firstIndex (where: { FilterGroup.ID($0) == .hierarchical(name: groupName) }) else {
-      var newGroup = FilterGroup.Hierarchical(filters: [], name: groupName)
-      newGroup.hierarchicalAttributes = hierarchicalAttributes
-      filterGroups.append(newGroup)
-      return
-    }
-    var existingGroup = filterGroups[existingIndex] as! FilterGroup.Hierarchical
-    existingGroup.hierarchicalAttributes = hierarchicalAttributes
-    filterGroups[existingIndex] = existingGroup
+    let groupID: FilterGroup.ID = .hierarchical(name: groupName)
+    var updatedGroup: FilterGroup.Hierarchical = (filterGroups[groupID] as? FilterGroup.Hierarchical) ?? .init(filters: [], name: groupName)
+    updatedGroup.hierarchicalAttributes = hierarchicalAttributes
+    filterGroups[groupID] = updatedGroup
   }
   
   mutating func set(_ hierarchicalFilters: [Filter.Facet], forGroupWithName groupName: String) {
-    guard let existingIndex = filterGroups.firstIndex (where: { FilterGroup.ID($0) == .hierarchical(name: groupName) }) else {
-      var newGroup = FilterGroup.Hierarchical(filters: [], name: groupName)
-      newGroup.hierarchicalFilters = hierarchicalFilters
-      filterGroups.append(newGroup)
-      return
-    }
-    var existingGroup = filterGroups[existingIndex] as! FilterGroup.Hierarchical
-    existingGroup.hierarchicalFilters = hierarchicalFilters
-    filterGroups[existingIndex] = existingGroup
+    let groupID: FilterGroup.ID = .hierarchical(name: groupName)
+    var updatedGroup: FilterGroup.Hierarchical = (filterGroups[groupID] as? FilterGroup.Hierarchical) ?? .init(filters: [], name: groupName)
+    updatedGroup.hierarchicalFilters = hierarchicalFilters
+    filterGroups[groupID] = updatedGroup
   }
   
 }
