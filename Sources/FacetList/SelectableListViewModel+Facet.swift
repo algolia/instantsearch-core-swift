@@ -55,7 +55,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
                           operator: RefinementOperator,
                           groupName: String? = nil) {
 
-    let groupID: FilterGroup.ID// = FilterGroup.ID(groupName: groupName, attribute: attribute, operator: `operator`)
+    let groupID: FilterGroup.ID
 
     let groupName = groupName ?? attribute.name
     
@@ -81,7 +81,6 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
         .removeAll(fromGroupWithID: groupID),
         .add(filters: filters, toGroupWithID: groupID)
       )
-//      print("Selections computed -> update filter state \(self.selections)")
     }
     
   }
@@ -101,7 +100,6 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
       }
       
       self.selections = Set(filterState.getFilters(forGroupWithID: groupID).compactMap(filterToFacetString))
-//      print("FilterState changed -> update selections: \(self.selections)")
     }
     
     onChange(filterState.filters)

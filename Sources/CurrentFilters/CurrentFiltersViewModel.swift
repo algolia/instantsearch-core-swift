@@ -23,6 +23,7 @@ public struct TextAndID: Hashable {
 public extension CurrentFiltersViewModel {
   
   func connectFilterState(_ filterState: FilterState, filterGroupID: FilterGroup.ID? = nil) {
+    
     filterState.onChange.subscribePast(with: self) { [weak self](filters) in
       if let filterGroupID = filterGroupID {
         self?.items = Set(filters.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
@@ -36,7 +37,6 @@ public extension CurrentFiltersViewModel {
       if let filterGroupID = filterGroupID {
         filterState.filters.removeAll(fromGroupWithID: filterGroupID)
         filterState.filters.addAll(filters: items.map { $0.filter.filter }, toGroupWithID: filterGroupID)
-        
       } else {
         filterState.filters.removeAll()
         items.forEach({ (filterAndID) in
