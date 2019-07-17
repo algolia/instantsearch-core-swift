@@ -36,9 +36,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   public let onQueryChanged: Observer<String?>
   public var requestOptions: RequestOptions?
   public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
-  public weak var hierarchicalFacetingDelegate: HierarchicalFacetingDelegate?
-  public var hierarchicalAttributes: [Attribute] = []
-  public var hierarchicalFilters: [Filter.Facet] = []
+  public weak var hierarchicalFacetingDelegate: HierarchicalDelegate?
   
   public var isDisjunctiveFacetingEnabled = true
   
@@ -107,6 +105,8 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
 
     if isDisjunctiveFacetingEnabled {
       let filterGroups = disjunctiveFacetingDelegate?.toFilterGroups() ?? []
+      let hierarchicalAttributes = hierarchicalFacetingDelegate?.hierarchicalAttributes ?? []
+      let hierarchicalFilters = hierarchicalFacetingDelegate?.hierarchicalFilters ?? []
       var queriesBuilder = QueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
@@ -130,22 +130,14 @@ public protocol DisjunctiveFacetingDelegate: class, FilterGroupsConvertible {
   
 }
 
-public protocol HierarchicalFacetingDelegate: class {
-  
-  var hierarchicalFacetsAttributes: Set<Attribute> { get }
-  var hierarhicalFilters: [Filter.Facet] { get }
-  
-}
-
 public extension SingleIndexSearcher {
   
   func connectFilterState(_ filterState: FilterState) {
     
     disjunctiveFacetingDelegate = filterState
-
+    hierarchicalFacetingDelegate = filterState
+    
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
-//      self?.hierarchicalAttributes = filterState.hierarchicalAttributes
-//      self?.hierarchicalFilters = filterState.hierarchicalFilters
       self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
     }

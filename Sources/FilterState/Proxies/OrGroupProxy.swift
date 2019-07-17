@@ -21,8 +21,9 @@ public struct OrGroupProxy<T: FilterType>: GroupProxy {
     }
     
     init(filtersContainer: FiltersContainer, groupName: String) {
-        self.filtersContainer = filtersContainer
-        self.groupID = FilterGroup.ID.or(T.self, name: groupName)!
+      self.filtersContainer = filtersContainer
+      let filterType = FilterGroup.ID.Filter(T.self)!
+      self.groupID = .or(name: groupName, filterType: filterType)
     }
     
     /// Adds filter to group

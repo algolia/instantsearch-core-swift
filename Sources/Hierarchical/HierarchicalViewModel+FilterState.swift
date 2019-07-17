@@ -13,23 +13,22 @@ public extension HierarchicalViewModel {
   func connectFilterState(_ filterState: FilterState, groupName: String? = nil) {
     
     let groupName = groupName ?? hierarchicalAttributes.first?.description ?? "_hierarchical"
-    let filterGroupID = FilterGroup.ID.hierarchical(name: groupName)
 
-    filterState.hierarchical(name: groupName).set(hierarchicalAttributes)
+    filterState[hierarchical: groupName].set(hierarchicalAttributes)
 
     onSelectionsComputed.subscribePast(with: self) { (selections) in
 
       self.selections = selections.map { $0.value.description }
 
-      filterState.removeAll(fromGroupWithID: filterGroupID)
+      filterState[hierarchical: groupName].removeAll()
 
       guard let lastSelectedFilter = selections.last else {
-        filterState.hierarchical(name: groupName).set([Filter.Facet]())
+        filterState[hierarchical: groupName].set([Filter.Facet]())
         return
       }
 
-      filterState.add(lastSelectedFilter, toGroupWithID: filterGroupID)
-      filterState.hierarchical(name: groupName).set(selections)
+      filterState[hierarchical: groupName].add(lastSelectedFilter)
+      filterState[hierarchical: groupName].set(selections)
       filterState.notifyChange()
 
     }

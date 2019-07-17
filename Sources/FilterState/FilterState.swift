@@ -24,18 +24,6 @@ public class FilterState: FiltersContainer {
     onChange.fire(filters)
   }
   
-  func and(name: String) -> AndGroupProxy {
-    return .init(filtersContainer: self, groupName: name)
-  }
-  
-  func or<F: FilterType>(name: String) -> OrGroupProxy<F> {
-    return .init(filtersContainer: self, groupName: name)
-  }
-  
-  func hierarchical(name: String) -> HierarchicalGroupProxy {
-    return .init(filtersContainer: self, groupName: name)
-  }
-  
 }
 
 extension FilterState: FiltersReadable {
@@ -71,23 +59,23 @@ extension FilterState: FiltersReadable {
 }
 
 extension FilterState: FiltersWritable {
-  
+
   public func add(_ filter: FilterType, toGroupWithID groupID: FilterGroup.ID) {
     self.filters.add(filter, toGroupWithID: groupID)
   }
-  
+
   public func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     self.filters.addAll(filters: filters, toGroupWithID: groupID)
   }
-  
+
   @discardableResult public func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
     return self.filters.remove(filter, fromGroupWithID: groupID)
   }
-  
+
   @discardableResult public func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
     return self.filters.removeAll(filters, fromGroupWithID: groupID)
   }
-  
+
   public func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
     return self.filters.removeAll(fromGroupWithID: groupID)
   }
@@ -99,35 +87,35 @@ extension FilterState: FiltersWritable {
   public func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
     return self.filters.removeAllExcept(fromGroupWithIDs: groupIDs)
   }
-  
+
   @discardableResult public func remove(_ filter: FilterType) -> Bool {
     return self.filters.remove(filter)
   }
-  
+
   public func removeAll<S: Sequence>(_ filters: S) where S.Element == FilterType {
     self.filters.removeAll(filters)
   }
-  
+
   public func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID) {
     self.filters.removeAll(for: attribute, fromGroupWithID: groupID)
   }
-  
+
   public func removeAll(for attribute: Attribute) {
     self.filters.removeAll(for: attribute)
   }
-  
+
   public func removeAll() {
     self.filters.removeAll()
   }
-  
+
   public func toggle(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) {
     self.filters.toggle(filter, inGroupWithID: groupID)
   }
-  
+
   public func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     self.filters.toggle(filters, inGroupWithID: groupID)
   }
-  
+
 }
 
 extension FilterState: FilterGroupsConvertible {
@@ -150,6 +138,35 @@ extension FilterState: DisjunctiveFacetingDelegate {
     
   public var disjunctiveFacetsAttributes: Set<Attribute> {
     return filters.disjunctiveFacetsAttributes
+  }
+  
+}
+
+extension FilterState: HierarchicalDelegate {
+  
+  private var hierarchicalGroupName: String {
+    return "_hierarchical"
+  }
+  
+  public var hierarchicalFilters: [Filter.Facet] {
+    get {
+      return self[hierarchical: hierarchicalGroupName].hierarchicalFilters
+    }
+    
+    set {
+      self[hierarchical: hierarchicalGroupName].set(newValue)
+
+    }
+  }
+  
+  public var hierarchicalAttributes: [Attribute] {
+    get {
+      return self[hierarchical: hierarchicalGroupName].hierarchicalAttributes
+    }
+    
+    set {
+      self[hierarchical: hierarchicalGroupName].set(newValue)
+    }
   }
   
 }

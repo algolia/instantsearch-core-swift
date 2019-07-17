@@ -10,9 +10,13 @@ import Foundation
 
 /// Provides a specific type-safe interface for FilterState specialized for a conjunctive group specialized for filters of concrete type
 
-public struct SpecializedAndGroupProxy<T: FilterType> {
+public struct SpecializedAndGroupProxy<T: FilterType>: GroupProxy {
     
     private var genericProxy: AndGroupProxy
+  
+    var filtersContainer: FiltersContainer {
+      return genericProxy.filtersContainer
+    }
     
     var groupID: FilterGroup.ID {
         return genericProxy.groupID

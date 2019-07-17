@@ -12,28 +12,30 @@ public protocol FiltersContainer: class {
   var filters: FiltersReadable & FiltersWritable & FilterGroupsConvertible & HierarchicalManageable { get set }
 }
 
-//public extension FiltersContainer {
-//  
-//  func and(_ groupName: String) -> AndGroupProxy {
-//    return AndGroupProxy(filtersContainer: self, groupName: groupName)
-//  }
-//  
-//  func or <F: FilterType>(_ groupName: String, type: F.Type) -> OrGroupProxy<F> {
-//    return OrGroupProxy(filtersContainer: self, groupName: groupName)
-//  }
-//  
-//  func or <F: FilterType>(_ groupName: String) -> OrGroupProxy<F> {
-//    return OrGroupProxy(filtersContainer: self, groupName: groupName)
-//  }
-//  
-//  func hierarchical(_ groupName: String) -> SpecializedAndGroupProxy<Filter.Facet> {
-//    return SpecializedAndGroupProxy(genericProxy: AndGroupProxy(filtersContainer: self, groupName: groupName))
-//  }
-//  
-//}
+public extension FiltersContainer {
+  
+  subscript(and groupName: String) -> AndGroupProxy {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
+  subscript<F: FilterType>(or groupName: String, type: F.Type) -> OrGroupProxy<F> {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
+  subscript<F: FilterType>(or groupName: String) -> OrGroupProxy<F> {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
+  subscript(hierarchical groupName: String) -> HierarchicalGroupProxy {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+}
 
 /// Group proxy provides a specific type-safe interface for FilterState specialized for a concrete group
 internal protocol GroupProxy {
     var filtersContainer: FiltersContainer { get }
     var groupID: FilterGroup.ID { get }
+  
+  var isEmpty: Bool { get }
+    
 }

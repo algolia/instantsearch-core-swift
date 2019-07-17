@@ -27,7 +27,7 @@ public struct AndGroupProxy: GroupProxy {
     
     /// Adds filter to group
     /// - parameter filter: filter to add
-    public func add<T: FilterType>(_ filter: T) {
+    public func add(_ filter: FilterType) {
         filtersContainer.filters.add(filter, toGroupWithID: groupID)
     }
     

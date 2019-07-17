@@ -14,6 +14,20 @@ extension FilterGroup {
     
     public enum Filter {
       case facet, numeric, tag
+      
+      init?<F: FilterType>(_ filterType: F.Type) {
+        switch filterType {
+        case is InstantSearchCore.Filter.Facet.Type:
+          self = .facet
+        case is InstantSearchCore.Filter.Numeric.Type:
+          self = .numeric
+        case is InstantSearchCore.Filter.Tag.Type:
+          self = .tag
+        default:
+          return nil
+        }
+      }
+      
     }
     
     case or(name: String, filterType: Filter)
@@ -41,19 +55,6 @@ extension FilterGroup {
     
     var isDisjunctive: Bool {
       return !isConjunctive
-    }
-    
-    public static func or<F: FilterType>(_ filterType: F.Type, name: String) -> ID? {
-      switch filterType {
-      case is InstantSearchCore.Filter.Facet.Type:
-        return .or(name: name, filterType: .facet)
-      case is InstantSearchCore.Filter.Numeric.Type:
-        return .or(name: name, filterType: .numeric)
-      case is InstantSearchCore.Filter.Tag.Type:
-        return .or(name: name, filterType: .tag)
-      default:
-        return nil
-      }
     }
     
     init?(_ filterGroup: FilterGroupType) {

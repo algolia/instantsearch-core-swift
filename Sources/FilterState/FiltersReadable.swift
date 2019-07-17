@@ -36,8 +36,8 @@ public protocol FiltersReadable {
   
   func getFilters(forGroupWithID groupID: FilterGroup.ID) -> Set<Filter>
   
-  
   func getFilters(for attribute: Attribute) -> Set<Filter>
+  
   func getFiltersAndID() -> Set<FilterAndID>
   
   /// Returns a set of all the filters contained by all the groups
