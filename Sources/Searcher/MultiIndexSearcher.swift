@@ -64,6 +64,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     sequencer.delegate = self
     onResults.retainLastData = true
     isLoading.retainLastData = true
+    updateClientUserAgents()
     
     self.pageLoaders = indexSearchDatas.map { isd in
       return PageLoaderProxy(setPage: { isd.query.page = UInt($0) }, launchSearch: self.search)

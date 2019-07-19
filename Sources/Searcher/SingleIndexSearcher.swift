@@ -54,6 +54,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     onResults.retainLastData = true
     onError.retainLastData = false
     isLoading.retainLastData = true
+    updateClientUserAgents()
   }
   
   public convenience init(indexSearchData: IndexSearchData,

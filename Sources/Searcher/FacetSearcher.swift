@@ -40,6 +40,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     sequencer.delegate = self
     onResults.retainLastData = true
     isLoading.retainLastData = true
+    updateClientUserAgents()
   }
   
   public func search() {
