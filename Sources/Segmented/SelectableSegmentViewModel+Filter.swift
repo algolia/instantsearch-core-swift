@@ -80,7 +80,6 @@ public extension SelectableSegmentViewModel where Segment: FilterType {
       controller.setItems(items: itemsToPresent)
     }
     
-    setControllerItems(with: items)
     controller.setSelected(selected)
     controller.onClick = computeSelected(selecting:)
     onSelectedChanged.subscribePast(with: controller, callback: controller.setSelected)

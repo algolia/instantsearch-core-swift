@@ -54,14 +54,10 @@ private extension SelectableListViewModel where Key == Item, Item: FilterType {
   
   func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                       via accessor: Accessor) where Accessor.Filter == Item {
-    
-    let onChange: (ReadOnlyFiltersContainer) -> Void = { _ in
+
+    filterState.onChange.subscribePast(with: self) { _ in
       self.selections = Set(accessor.filters())
     }
-    
-    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
-    
-    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
   
 }

@@ -91,14 +91,10 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
         return nil
       }
     }
-    
-    let onChange: (ReadOnlyFiltersContainer) -> Void = { [weak self] _ in
+
+    filterState.onChange.subscribePast(with: self) { [weak self] _ in
       self?.selections = Set(accessor.filters().compactMap(extractString))
     }
-    
-    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
-    
-    filterState.onChange.subscribePast(with: self, callback: onChange)
   }
 
   private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
