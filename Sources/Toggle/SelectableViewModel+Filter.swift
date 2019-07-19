@@ -10,7 +10,7 @@ import Foundation
 
 public extension SelectableViewModel where Item: FilterType {
 
-  func connectTo(_ filterState: FilterState,
+  func connectFilterState(_ filterState: FilterState,
                  operator: RefinementOperator = .or,
                  groupName: String? = nil) {
     

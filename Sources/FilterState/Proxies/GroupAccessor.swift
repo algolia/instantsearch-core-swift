@@ -54,6 +54,13 @@ public class ReadOnlyFiltersContainer {
   
 }
 
+extension ReadOnlyFiltersContainer: FilterGroupsConvertible {
+  public func toFilterGroups() -> [FilterGroupType] {
+    return filtersContainer.filters.toFilterGroups()
+  }
+
+}
+
 /// Group accessor provides a specific type-safe interface for FilterState specialized for a concrete group
 public protocol GroupAccessor {
   
