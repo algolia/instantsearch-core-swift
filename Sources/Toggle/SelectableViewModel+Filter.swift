@@ -15,78 +15,41 @@ public extension SelectableViewModel where Item: FilterType {
                  groupName: String? = nil) {
     
     let groupName = groupName ?? item.attribute.name
-    let groupID: FilterGroup.ID
     
     switch `operator` {
     case .and:
-      groupID = .and(name: groupName)
-      
+      connectTo(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
     case .or:
-      switch Item.self {
-      case is Filter.Facet.Type:
-        groupID = .or(name: groupName, filterType: .facet)
-      case is Filter.Numeric.Type:
-        groupID = .or(name: groupName, filterType: .numeric)
-      case is Filter.Tag.Type:
-        groupID = .or(name: groupName, filterType: .tag)
-      default:
-        return
-      }
+      connectTo(filterState, via: filterState[or: groupName])
     }
 
-    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID)
-    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
-  
-//  func connectTo<F: FilterType>(_ filterState: FilterState,
-//                                operator: RefinementOperator = .or,
-//                                groupName: String? = nil,
-//                                default: F) {
-//    
-//    let groupName = groupName ?? item.attribute.name
-//    let groupID: FilterGroup.ID
-//    
-//    switch `operator` {
-//    case .and:
-//      groupID = .and(name: groupName)
-//      
-//    case .or:
-//      switch Item.self {
-//      case is Filter.Facet.Type:
-//        groupID = .or(name: groupName, filterType: .facet)
-//      case is Filter.Numeric.Type:
-//        groupID = .or(name: groupName, filterType: .numeric)
-//      case is Filter.Tag.Type:
-//        groupID = .or(name: groupName, filterType: .tag)
-//      default:
-//        return
-//      }
-//    }
-//
-//    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, groupID: groupID, default: `default`)
-//    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
-//    filterState.notify(.add(filter: `default`, toGroupWithID: groupID))
-//  }
   
 }
 
 private extension SelectableViewModel where Item: FilterType {
   
-  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+  func connectTo<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                          via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
+    whenFilterStateChangedThenUpdateSelections(filterState, via: accessor)
+    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, via: accessor)
+  }
+  
+  func whenFilterStateChangedThenUpdateSelections<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState, via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
     
-    let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
+    let onChange: (ReadOnlyFiltersContainer) -> Void = { [weak self] _ in
       guard let filter = self?.item else { return }
-      self?.isSelected = filterState.contains(filter, inGroupWithID: groupID)
+      self?.isSelected = accessor.contains(filter)
     }
     
-    onChange(filterState.filters)
+    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }
 
-  func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
-                                                   attribute: Attribute,
-                                                   groupID: FilterGroup.ID) {
+  func whenSelectionsComputedThenUpdateFilterState<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                            attribute: Attribute,
+                                                                                            via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
     
     onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState] computedSelected in
       
@@ -96,9 +59,9 @@ private extension SelectableViewModel where Item: FilterType {
         else { return }
       
       if computedSelected {
-        filterState.filters.add(item, toGroupWithID: groupID)
+        accessor.add(item)
       } else {
-        filterState.filters.remove(item, fromGroupWithID: groupID)
+        accessor.remove(item)
       }
       
       filterState.notifyChange()

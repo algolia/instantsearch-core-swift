@@ -55,54 +55,48 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
                           operator: RefinementOperator,
                           groupName: String? = nil) {
 
-    let groupID: FilterGroup.ID
-
     let groupName = groupName ?? attribute.name
     
     switch `operator` {
     case .and:
-      groupID = .and(name: groupName)
+      connectFilterState(filterState, with: attribute, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
     case .or:
-      groupID = .or(name: groupName, filterType: .facet)
+      connectFilterState(filterState, with: attribute, via: filterState[or: groupName])
     }
-    
-    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: attribute, groupID: groupID)
-    whenFilterStateChangedThenUpdateSelections(filterState: filterState, groupID: groupID)
+  }
+  
+  private func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, with attribute: Attribute, via accessor: Accessor) where Accessor.Filter == Filter.Facet {
+    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: attribute, via: accessor)
+    whenFilterStateChangedThenUpdateSelections(filterState: filterState, via: accessor)
   }
 
-  private func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState,
-                                                           attribute: Attribute,
-                                                           groupID: FilterGroup.ID) {
-    
-    onSelectionsComputed.subscribePast(with: self) { selections in
+  private func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                               attribute: Attribute,
+                                                                                               via accessor: Accessor) where Accessor.Filter == Filter.Facet {
+    onSelectionsComputed.subscribePast(with: self) { [weak filterState] selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
-      
-      filterState.notify(
-        .removeAll(fromGroupWithID: groupID),
-        .add(filters: filters, toGroupWithID: groupID)
-      )
+      accessor.removeAll()
+      accessor.addAll(filters)
+      filterState?.notifyChange()
     }
     
   }
   
-  private func whenFilterStateChangedThenUpdateSelections(filterState: FilterState, groupID: FilterGroup.ID) {
+  private func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(filterState: FilterState, via accessor: Accessor) where Accessor.Filter == Filter.Facet {
     
-    let onChange: (FiltersReadable) -> Void = { filterState in
-      
-      func filterToFacetString(_ filter: Filter) -> String? {
-        if
-          case .facet(let filterFacet) = filter,
-          case .string(let stringValue) = filterFacet.value {
-          return stringValue
-        } else {
-          return nil
-        }
+    func extractString(from filter: Filter.Facet) -> String? {
+      if case .string(let stringValue) = filter.value {
+        return stringValue
+      } else {
+        return nil
       }
-      
-      self.selections = Set(filterState.getFilters(forGroupWithID: groupID).compactMap(filterToFacetString))
     }
     
-    onChange(filterState.filters)
+    let onChange: (ReadOnlyFiltersContainer) -> Void = { [weak self] _ in
+      self?.selections = Set(accessor.filters().compactMap(extractString))
+    }
+    
+    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }

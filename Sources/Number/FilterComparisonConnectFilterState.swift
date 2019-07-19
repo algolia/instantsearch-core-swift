@@ -9,40 +9,74 @@
 import Foundation
 
 public extension NumberViewModel {
-  func connectFilterState(_ filterState: FilterState, attribute: Attribute, operator: Filter.Numeric.Operator, groupID: FilterGroup.ID? = nil) {
+  
+  func connectFilterState(_ filterState: FilterState,
+                          attribute: Attribute,
+                          numericOperator: Filter.Numeric.Operator, 
+                          operator: RefinementOperator = .and,
+                          groupName: String? = nil) {
 
-    let finalGroupID = groupID ?? FilterGroup.ID.and(name: attribute.name)
-
-    filterState.onChange.subscribePast(with: self) { [weak self] (filterStateReadable) in
-
-      let numericFilters: [Filter.Numeric] =
-        filterStateReadable
-          .getFilters(forGroupWithID: finalGroupID)
-          .filter { $0.filter.attribute == attribute }
-          .compactMap { $0.filter as? Filter.Numeric }
-
-      self?.item = numericFilters.compactMap { numericFilter in
-        switch numericFilter.value {
-        case .range: return nil
-        case .comparison(let potentialOperator, let value):
-          return potentialOperator == `operator` ? Number(value) : nil
-        }
-
-      }.first
+    let groupName = groupName ?? attribute.name
+    
+    switch `operator` {
+    case .and:
+      connectFilterState(filterState, attribute: attribute, numericOperator: numericOperator, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
+    case .or:
+      connectFilterState(filterState, attribute: attribute, numericOperator: numericOperator, via: filterState[or: groupName] )
     }
 
-    onNumberComputed.subscribePast(with: self) { [weak self] (computed) in
-      guard let strongSelf = self else { return }
-      
-      if let item = strongSelf.item {
-        filterState.filters.remove(Filter.Numeric(attribute: attribute, operator: `operator`, value: item.toFloat()), fromGroupWithID: finalGroupID)
-      }
-
-      if let computed = computed {
-        filterState.filters.add(Filter.Numeric(attribute: attribute, operator: `operator`, value: computed.toFloat()), toGroupWithID: finalGroupID)
-      }
-
-      filterState.notifyChange()
-    }
   }
+  
+  private func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                      attribute: Attribute,
+                                                                      numericOperator: Filter.Numeric.Operator,
+                                                                      via accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+    whenFilterStateChangedUpdateExpression(filterState, attribute: attribute, numericOperator: numericOperator, accessor: accessor)
+    whenExpressionComputedUpdateFilterState(filterState, attribute: attribute, numericOperator: numericOperator, accessor: accessor)
+  }
+  
+  private func whenFilterStateChangedUpdateExpression<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                          attribute: Attribute,
+                                                                                          numericOperator: Filter.Numeric.Operator,
+                                                                                          accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+    
+    func extractValue(from numericFilter: Filter.Numeric) -> Number? {
+      if case .comparison(numericOperator, let value) = numericFilter.value {
+        return Number(value)
+      } else {
+        return nil
+      }
+    }
+    
+    filterState.onChange.subscribePast(with: self) { [weak self] _ in
+      self?.item = accessor.filters(for: attribute).compactMap(extractValue).first
+    }
+    
+  }
+  
+  private func whenExpressionComputedUpdateFilterState<P: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                    attribute: Attribute,
+                                                                                    numericOperator: Filter.Numeric.Operator,
+                                                                                    accessor: P) where P.Filter == Filter.Numeric {
+    
+    let removeCurrentItem = { [weak self] in
+      guard let item = self?.item else { return }
+      let filter = Filter.Numeric(attribute: attribute, operator: numericOperator, value: item.toFloat())
+      accessor.remove(filter)
+    }
+    
+    let addItem: (Number?) -> Void = { value in
+      guard let value = value else { return }
+      let filter = Filter.Numeric(attribute: attribute, operator: numericOperator, value: value.toFloat())
+      accessor.add(filter)
+    }
+    
+    onNumberComputed.subscribePast(with: self) { [weak filterState] computed in
+      removeCurrentItem()
+      addItem(computed)
+      filterState?.notifyChange()
+    }
+    
+  }
+  
 }

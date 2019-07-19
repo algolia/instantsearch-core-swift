@@ -151,7 +151,7 @@ public extension FilterState {
   
   func notify(_ commands: Command...) {
     commands.forEach { $0.command.execute(on: self) }
-    onChange.fire(filters)
+    onChange.fire(ReadOnlyFiltersContainer(filtersContainer: self))
   }
   
 }

@@ -20,65 +20,48 @@ public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: Fi
                           groupName: String? = nil) {
     
     let groupName = groupName ?? attribute.name
-    let groupID: FilterGroup.ID
     
     switch `operator` {
     case .and:
-      groupID = .and(name: groupName)
-      
+      connectFilterState(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
     case .or:
-      switch Segment.self {
-      case is Filter.Facet.Type:
-        groupID = .or(name: groupName, filterType: .facet)
-      case is Filter.Numeric.Type:
-        groupID = .or(name: groupName, filterType: .numeric)
-      case is Filter.Tag.Type:
-        groupID = .or(name: groupName, filterType: .tag)
-      default:
-        return
-      }
+      connectFilterState(filterState, via: filterState[or: groupName])
     }
-    
-    whenSelectedComputedThenUpdateFilterState(filterState, groupID: groupID)
-    whenFilterStateChangedThenUpdateSelected(groupID: groupID, filterState: filterState)
 
   }
   
-  private func whenSelectedComputedThenUpdateFilterState(_ filterState: FilterState,
-                                                         groupID: FilterGroup.ID) {
+  private func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                      via accessor: Accessor) where Accessor.Filter == Segment {
+    whenSelectedComputedThenUpdateFilterState(filterState, via: accessor)
+    whenFilterStateChangedThenUpdateSelected(filterState, via: accessor)
+  }
+  
+  private func whenSelectedComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                             via accessor: Accessor) where Accessor.Filter == Segment {
     
-    onSelectedComputed.subscribePast(with: self) { [weak self, weak filterState]  computedSelected in
-      
-      guard let filterState = filterState else {
-        return
-      }
-      
-      if let currentlySelected = self?.selected.flatMap({ self?.items[$0] }) {
-        filterState.remove(currentlySelected, fromGroupWithID: groupID)
-      }
-      
-      if let computedSelected = computedSelected.flatMap({ self?.items[$0] }) {
-        filterState.add(computedSelected, toGroupWithID: groupID)
-      }
-      
-      filterState.notifyChange()
-      
+    let removeSelectedItem = { [weak self] in
+      self?.selected.flatMap { self?.items[$0] }.flatMap(accessor.remove)
+    }
+    
+    let addItem: (SegmentKey?) -> Void = { [weak self] itemKey in
+      itemKey.flatMap { self?.items[$0] }.flatMap(accessor.add)
+    }
+    
+    onSelectedComputed.subscribePast(with: self) { [weak filterState] computedSelectionKey in
+      removeSelectedItem()
+      addItem(computedSelectionKey)
+      filterState?.notifyChange()
     }
     
   }
-  
-  private func whenFilterStateChangedThenUpdateSelected(groupID: FilterGroup.ID,
-                                                        filterState: FilterState) {
     
-    let onChange: (FiltersReadable) -> Void = { [weak self] filterState in
-      let filtersInGroup = filterState.getFilters(forGroupWithID: groupID)
-      let selectedKey = self?.items.first(where: {
-        filtersInGroup.contains(Filter($0.value))
-      })?.key
-      self?.selected = selectedKey
+  private func whenFilterStateChangedThenUpdateSelected<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                            via accessor: Accessor) where Accessor.Filter == Segment {
+    let onChange: (ReadOnlyFiltersContainer) -> Void = { [weak self] _ in
+      self?.selected = self?.items.first(where: { accessor.contains($0.value) })?.key
     }
     
-    onChange(filterState.filters)
+    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }

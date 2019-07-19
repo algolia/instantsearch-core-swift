@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol FiltersWritable {
+protocol FiltersWritable {
   
   /// Adds filter to a specified group
   /// - parameter filter: filter to add
@@ -40,8 +40,8 @@ public protocol FiltersWritable {
   /// - parameter group: target group ID
   
   mutating func removeAll(fromGroupWithID groupID: FilterGroup.ID)
+  
   mutating func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID])
-  mutating func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID])
   
   /// Removes filter from all the groups
   /// - parameter filter: filter to remove
@@ -52,7 +52,7 @@ public protocol FiltersWritable {
   /// Removes a sequence of filters from all the groups
   /// - parameter filters: sequence of filters to remove
   
-  mutating func removeAll<S: Sequence>(_ filters: S) where S.Element == FilterType
+  mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType
   
   /// Removes all filters with specified attribute in a specified group
   /// - parameter attribute: target attribute
@@ -83,7 +83,7 @@ public protocol FiltersWritable {
   
 }
 
-public extension FiltersWritable {
+extension FiltersWritable {
   
   mutating func add(_ filter: FilterType, toGroupWithID groupID: FilterGroup.ID) {
     addAll(filters: [filter], toGroupWithID: groupID)
@@ -94,8 +94,7 @@ public extension FiltersWritable {
   }
   
   mutating func remove(_ filter: FilterType) -> Bool {
-    removeAll([filter])
-    return true
+    return removeAll([filter])
   }
   
   mutating func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
@@ -108,7 +107,7 @@ public extension FiltersWritable {
   
 }
 
-public extension FiltersWritable where Self: FiltersReadable {
+extension FiltersWritable where Self: FiltersReadable {
   
   mutating func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     for filter in filters {
@@ -118,6 +117,11 @@ public extension FiltersWritable where Self: FiltersReadable {
         add(filter, toGroupWithID: groupID)
       }
     }
+  }
+  
+  mutating func removeAllExcept(_ groupIDsToKeep: [FilterGroup.ID]) {
+    let groupIDsToRemove = getGroupIDs().filter { !groupIDsToKeep.contains($0) }
+    removeAll(fromGroupWithIDs: Array(groupIDsToRemove))
   }
   
 }

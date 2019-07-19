@@ -10,9 +10,9 @@ import Foundation
 
 public extension HierarchicalViewModel {
 
-  func connectFilterState(_ filterState: FilterState, groupName: String? = nil) {
+  func connectFilterState(_ filterState: FilterState) {
     
-    let groupName = groupName ?? hierarchicalAttributes.first?.description ?? "_hierarchical"
+    let groupName = "_hierarchical"
 
     filterState[hierarchical: groupName].set(hierarchicalAttributes)
 

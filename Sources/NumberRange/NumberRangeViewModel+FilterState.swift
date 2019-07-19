@@ -9,38 +9,69 @@
 import Foundation
 
 public extension NumberRangeViewModel {
-  func connectFilterState(_ filterState: FilterState, attribute: Attribute, groupID: FilterGroup.ID? = nil) {
+  
+  func connectFilterState(_ filterState: FilterState,
+                          attribute: Attribute,
+                          operator: RefinementOperator = .and,
+                          groupName: String? = nil) {
 
-    let finalGroupID = groupID ?? FilterGroup.ID.and(name: attribute.name)
-
-    filterState.onChange.subscribePast(with: self) { [weak self] (filterStateReadable) in
-
-      let numericFilters: [Filter.Numeric] =
-        filterStateReadable
-          .getFilters(forGroupWithID: finalGroupID)
-          .filter { $0.filter.attribute == attribute }
-          .compactMap { $0.filter as? Filter.Numeric }
-
-      self?.item = numericFilters.compactMap { numericFilter in
-        switch numericFilter.value {
-        case .range(let closedRange): return Number(closedRange.lowerBound)...Number(closedRange.upperBound)
-        case .comparison: return nil
-        }
-        }.first
+    let groupName = groupName ?? attribute.name
+    
+    switch `operator` {
+    case .and:
+      connectFilterState(filterState, attribute: attribute, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
+    case .or:
+      connectFilterState(filterState, attribute: attribute, via: filterState[or: groupName])
     }
-
-    onNumberRangeComputed.subscribePast(with: self) { [weak self] (computed) in
-      guard let strongSelf = self else { return }
-
-      if let item = strongSelf.item {
-        filterState.remove(Filter.Numeric(attribute: attribute, range: item.lowerBound.toFloat()...item.upperBound.toFloat()), fromGroupWithID: finalGroupID)
-      }
-
-      if let computed = computed {
-        filterState.add(Filter.Numeric(attribute: attribute, range: computed.lowerBound.toFloat()...computed.upperBound.toFloat()), toGroupWithID: finalGroupID)
-      }
-
-      filterState.notifyChange()
-    }
+    
   }
+  
+  private func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, attribute: Attribute, via accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+    whenFilterStateChangedUpdateRange(filterState, attribute: attribute, accessor: accessor)
+    whenRangeComputedUpdateFilterState(filterState, attribute: attribute, accessor: accessor)
+  }
+  
+  private func whenFilterStateChangedUpdateRange<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, attribute: Attribute, accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+    
+    func extractRange(from numericFilter: Filter.Numeric) -> ClosedRange<Number>? {
+      switch numericFilter.value {
+      case .range(let closedRange):
+        return Number(closedRange.lowerBound)...Number(closedRange.upperBound)
+      case .comparison:
+        return nil
+      }
+    }
+    
+    filterState.onChange.subscribePast(with: self) { [weak self] _ in
+      self?.item = accessor.filters(for: attribute).compactMap(extractRange).first
+    }
+
+  }
+  
+  private func whenRangeComputedUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, attribute: Attribute, accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+    
+    func numericFilter(with range: ClosedRange<Number>) -> Filter.Numeric {
+      let castedRange: ClosedRange<Float> = range.lowerBound.toFloat()...range.upperBound.toFloat()
+      return .init(attribute: attribute, range: castedRange)
+
+    }
+    
+    let removeCurrentItem = { [weak self] in
+      guard let item = self?.item else { return }
+      accessor.remove(numericFilter(with: item))
+    }
+    
+    let addItem: (ClosedRange<Number>?) -> Void = { range in
+      guard let range = range else { return }
+      accessor.add(numericFilter(with: range))
+    }
+    
+    onNumberRangeComputed.subscribePast(with: self) { [weak filterState] computedRange in
+      removeCurrentItem()
+      addItem(computedRange)
+      filterState?.notifyChange()
+    }
+
+  }
+  
 }

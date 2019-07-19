@@ -22,13 +22,15 @@ public struct TextAndID: Hashable {
 
 public extension CurrentFiltersViewModel {
   
-  func connectFilterState(_ filterState: FilterState, filterGroupID: FilterGroup.ID? = nil) {
+  func connectFilterState(_ filterState: FilterState,
+                          filterGroupID: FilterGroup.ID? = nil) {
     
-    filterState.onChange.subscribePast(with: self) { [weak self](filters) in
+    filterState.onChange.subscribePast(with: self) { [weak self, weak filterState] _ in
+      guard let filterState = filterState else { return }
       if let filterGroupID = filterGroupID {
-        self?.items = Set(filters.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
+        self?.items = Set(filterState.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
       } else {
-        self?.items = filters.getFiltersAndID()
+        self?.items = filterState.getFiltersAndID()
       }
     }
 
@@ -50,7 +52,11 @@ public extension CurrentFiltersViewModel {
 }
 
 public extension ItemsListViewModel {
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> Implemented FilterState access with type-safe accessors
   func connectController<C: ItemListController>(_ controller: C) where C.Item == Item {
     controller.onRemoveItem = self.remove(item:)
 
@@ -58,6 +64,6 @@ public extension ItemsListViewModel {
       controller.setItems(items)
       controller.reload()
     }
-
   }
+  
 }

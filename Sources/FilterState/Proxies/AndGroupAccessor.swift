@@ -1,5 +1,5 @@
 //
-//  AndGroupProxy.swift
+//  AndGroupAccessor.swift
 //  AlgoliaSearch OSX
 //
 //  Created by Vladislav Fitc on 24/12/2018.
@@ -10,7 +10,7 @@ import Foundation
 
 /// Provides a specific type-safe interface for FilterState specialized for a conjunctive group
 
-public struct AndGroupProxy: GroupProxy {
+public struct AndGroupAccessor: GroupAccessor {
     
     let filtersContainer: FiltersContainer
     let groupID: FilterGroup.ID

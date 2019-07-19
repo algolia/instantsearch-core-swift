@@ -13,63 +13,53 @@ public typealias FilterListViewModel<F: FilterType & Hashable> = SelectableListV
 public extension SelectableListViewModel where Key == Item, Item: FilterType {
   
   func connectFilterState(_ filterState: FilterState,
-                          groupName: String = "",
-                          operator: RefinementOperator) {
-    
-    let groupID: FilterGroup.ID
-    
+                          operator: RefinementOperator,
+                          groupName: String = "") {
     switch `operator` {
     case .or:
-      switch Item.self {
-      case is Filter.Facet.Type:
-        groupID = .or(name: groupName, filterType: .facet)
-      case is Filter.Numeric.Type:
-        groupID = .or(name: groupName, filterType: .numeric)
-      default:
-        groupID = .or(name: groupName, filterType: .tag)
-      }
-      
+      connectFilterState(filterState, via: filterState[or: groupName])
     case .and:
-      groupID = .and(name: groupName)
+      connectFilterState(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
     }
-    
-    whenSelectionsComputedThenUpdateFilterState(filterState, groupID)
-    whenFilterStateChangedThenUpdateSelections(filterState, groupID: groupID)
   }
   
 }
 
 private extension SelectableListViewModel where Key == Item, Item: FilterType {
   
-  func whenSelectionsComputedThenUpdateFilterState(_ filterState: FilterState, _ groupID: FilterGroup.ID) {
+  func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, via accessor: Accessor) where Accessor.Filter == Key {
+    whenSelectionsComputedThenUpdateFilterState(filterState, via: accessor)
+    whenFilterStateChangedThenUpdateSelections(filterState, via: accessor)
+  }
+  
+  func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                       via accessor: Accessor) where Accessor.Filter == Item {
     
-    onSelectionsComputed.subscribePast(with: self) { filters in
-      
-      let removeCommand: FilterState.Command
+    onSelectionsComputed.subscribePast(with: self) { [weak filterState] filters in
       
       switch self.selectionMode {
       case .multiple:
-        removeCommand = .removeAll(fromGroupWithID: groupID)
+        accessor.removeAll()
         
       case .single:
-        removeCommand = .remove(filters: self.items, fromGroupWithID: groupID)
+        accessor.removeAll(self.items)
       }
       
-      let addCommand: FilterState.Command = .add(filters: filters, toGroupWithID: groupID)
+      accessor.addAll(filters)
       
-      filterState.notify(removeCommand, addCommand)
-      
+      filterState?.notifyChange()
     }
     
   }
   
-  func whenFilterStateChangedThenUpdateSelections(_ filterState: FilterState, groupID: FilterGroup.ID) {
+  func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                      via accessor: Accessor) where Accessor.Filter == Item {
     
-    let onChange: (FiltersReadable) -> Void = { filters in
-      self.selections = Set(filters.getFilters(forGroupWithID: groupID).compactMap { $0.filter as? Key })
+    let onChange: (ReadOnlyFiltersContainer) -> Void = { _ in
+      self.selections = Set(accessor.filters())
     }
     
-    onChange(filterState.filters)
+    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }

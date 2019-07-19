@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol FiltersReadable {
+protocol FiltersReadable {
   
   /// A Boolean value indicating whether FilterState contains at least on filter
   
@@ -45,7 +45,7 @@ public protocol FiltersReadable {
   
 }
 
-public extension FiltersReadable {
+extension FiltersReadable {
   
   func contains(_ filter: FilterType) -> Bool {
     return getGroupIDs().anySatisfy { self.contains(filter, inGroupWithID: $0) }

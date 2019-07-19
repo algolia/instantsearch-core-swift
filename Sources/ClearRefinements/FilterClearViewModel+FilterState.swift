@@ -9,21 +9,27 @@
 import Foundation
 
 public extension FilterClearViewModel {
-
-  func connectFilterState(_ filterState: FilterState, filterGroupIDs: [FilterGroup.ID]? = nil, clearMode: ClearMode = .specified) {
+  
+  func connectFilterState(_ filterState: FilterState,
+                          filterGroupIDs: [FilterGroup.ID]? = nil,
+                          clearMode: ClearMode = .specified) {
     onTriggered.subscribe(with: self) {
-      if let filterGroupIDs = filterGroupIDs {
-        switch clearMode {
-        case .specified:
-          filterState.filters.removeAll(fromGroupWithIDs: filterGroupIDs)
-        case .except:
-          filterState.filters.removeAllExcept(fromGroupWithIDs: filterGroupIDs)
-        }
-
+      defer {
         filterState.notifyChange()
-      } else {
-        filterState.notify(.removeAll)
       }
+      
+      guard let filterGroupIDs = filterGroupIDs else {
+        filterState.filters.removeAll()
+        return
+      }
+      
+      switch clearMode {
+      case .specified:
+        filterState.filters.removeAll(fromGroupWithIDs: filterGroupIDs)
+      case .except:
+        filterState.filters.removeAllExcept(filterGroupIDs)
+      }
+      
     }
   }
 

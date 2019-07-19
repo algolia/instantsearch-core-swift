@@ -31,7 +31,7 @@ class FilterStateTests: XCTestCase {
   
   func testPlayground() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     let filterFacet1 = Filter.Facet(attribute: "category", value: "table")
     let filterFacet2 = Filter.Facet(attribute: "category", value: "chair")
     let filterNumeric1 = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
@@ -87,7 +87,7 @@ class FilterStateTests: XCTestCase {
   
   func testInversion() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     filterState.addAll(filters: [
       Filter.Tag(value: "tagA", isNegated: true),
@@ -107,7 +107,7 @@ class FilterStateTests: XCTestCase {
   
   func testAdd() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     let filterFacet1 = Filter.Facet(attribute: Attribute("category"), value: "table")
     let filterFacet2 = Filter.Facet(attribute: Attribute("category"), value: "chair")
@@ -144,7 +144,7 @@ class FilterStateTests: XCTestCase {
   
   func testContains() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     let tagA = Filter.Tag(value: "A")
     let tagB = Filter.Tag(value: "B")
@@ -198,7 +198,7 @@ class FilterStateTests: XCTestCase {
   
   func testRemove() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .or(name: "orTags", filterType: .tag))
     filterState.addAll(filters: [Filter.Tag(value: "a"), Filter.Tag(value: "b")], toGroupWithID: .and(name: "any"))
@@ -209,6 +209,7 @@ class FilterStateTests: XCTestCase {
         """)
     
     XCTAssertTrue(filterState.remove(Filter.Tag(value: "a")))
+    print(filterState)
     XCTAssertFalse(filterState.contains(Filter.Tag(value: "a")))
     
     XCTAssertEqual(filterState.buildSQL(), """
@@ -252,7 +253,7 @@ class FilterStateTests: XCTestCase {
   
   func testSubscriptAndOperatorPlayground() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     let filterFacet1 = Filter.Facet(attribute: "category", value: "table")
     let filterFacet2 = Filter.Facet(attribute: "category", value: "chair")
@@ -298,7 +299,7 @@ class FilterStateTests: XCTestCase {
     let groupNumericsOr = FilterGroup.ID.or(name: "filterNumeric", filterType: .numeric)
     let groupTagsOr = FilterGroup.ID.or(name: "filterTags", filterType: .tag)
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     filterState.addAll(filters: [filterNumeric1, filterNumeric2], toGroupWithID: groupNumericsOr)
     XCTAssertEqual(filterState.buildSQL(), """
@@ -325,7 +326,7 @@ class FilterStateTests: XCTestCase {
   }
   
   func testIsEmpty() {
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     let filter = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
     let group = FilterGroup.ID.or(name: "group", filterType: .numeric)
     XCTAssertTrue(filterState.isEmpty)
@@ -340,7 +341,7 @@ class FilterStateTests: XCTestCase {
   }
   
   func testClear() {
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     let filterNumeric = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
     let filterTag = Filter.Tag(value: "Tom")
     let group = FilterGroup.ID.and(name: "group")
@@ -359,7 +360,7 @@ class FilterStateTests: XCTestCase {
   
   func testToggle() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     let filter = Filter.Facet(attribute: "brand", stringValue: "sony")
     
@@ -417,7 +418,7 @@ class FilterStateTests: XCTestCase {
   
   func testDisjunctiveFacetAttributes() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     filterState.addAll(filters: [
       Filter.Facet(attribute: "color", stringValue: "red"),
@@ -462,7 +463,7 @@ class FilterStateTests: XCTestCase {
   
   func testRefinements() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     filterState.addAll(filters: [
       Filter.Facet(attribute: "color", stringValue: "red"),
@@ -491,7 +492,7 @@ class FilterStateTests: XCTestCase {
   
   func testFilterScoring() {
     
-    var filterState = Filters()
+    var filterState = GroupsStorage()
     
     let filterFacet1 = Filter.Facet(attribute: Attribute("category"), value: "table", score: 5)
     let filterFacet2 = Filter.Facet(attribute: Attribute("category"), value: "chair", score: 10)

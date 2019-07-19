@@ -8,12 +8,6 @@
 
 import Foundation
 
-public protocol FilterGroupsConvertible {
-  
-  func toFilterGroups() -> [FilterGroupType]
-  
-}
-
 struct Filters {
   
   var groups: [FilterGroup.ID: Set<Filter>]
@@ -95,7 +89,6 @@ extension Filters: FiltersWritable {
     update(updatedFilters, forGroupWithID: groupID)
   }
   
-  
   public mutating func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     let existingFilters = groups[groupID] ?? []
     let updatedFilters = existingFilters.union(filters.compactMap(Filter.init))
@@ -124,17 +117,6 @@ extension Filters: FiltersWritable {
     groupIDs.forEach { groups.removeValue(forKey: $0) }
   }
 
-  public mutating func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
-    var newGroups: [FilterGroup.ID: Set<Filter>] = [:]
-    for (id, filters) in groups {
-      if groupIDs.contains(id) {
-        newGroups[id] = filters
-      }
-    }
-
-    groups = newGroups
-  }
-  
   @discardableResult public mutating func remove(_ filter: FilterType) -> Bool {
     return groups.map { remove(filter, fromGroupWithID: $0.key) }.reduce(false) { $0 || $1 }
   }
@@ -160,16 +142,13 @@ extension Filters: FiltersWritable {
     }
   }
   
-  
   public mutating func removeAll() {
     groups.removeAll()
   }
   
-  
   public mutating func toggle(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) {
     toggle([filter], inGroupWithID: groupID)
   }
-  
   
   public mutating func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     for filter in filters {
