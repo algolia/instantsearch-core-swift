@@ -2228,11 +2228,8 @@
 				AFCB30A322CB85A40094ED2E /* QueryBuilder.swift in Sources */,
 				AF1177C8225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785B2264C20400C5B59B /* FilterOperators.swift in Sources */,
-<<<<<<< HEAD
 				E2B1AC8222D8C80E000B913E /* StatsPresenter.swift in Sources */,
-=======
 				AF8DA20122E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */,
->>>>>>> Implemented FilterState access with type-safe accessors
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2414,11 +2411,8 @@
 				AFCB30A422CB85A40094ED2E /* QueryBuilder.swift in Sources */,
 				AF1177C9225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785C2264C20500C5B59B /* FilterOperators.swift in Sources */,
-<<<<<<< HEAD
 				E2B1AC8322D8C80E000B913E /* StatsPresenter.swift in Sources */,
-=======
 				AF8DA20222E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */,
->>>>>>> Implemented FilterState access with type-safe accessors
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2600,11 +2594,8 @@
 				AFCB30A522CB85A40094ED2E /* QueryBuilder.swift in Sources */,
 				AF1177CA225E2CB300C5B59B /* SQLSyntax.swift in Sources */,
 				AF11785D2264C20600C5B59B /* FilterOperators.swift in Sources */,
-<<<<<<< HEAD
 				E2B1AC8422D8C80E000B913E /* StatsPresenter.swift in Sources */,
-=======
 				AF8DA20322E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */,
->>>>>>> Implemented FilterState access with type-safe accessors
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

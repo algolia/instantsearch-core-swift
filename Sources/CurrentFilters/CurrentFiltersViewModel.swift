@@ -52,11 +52,7 @@ public extension CurrentFiltersViewModel {
 }
 
 public extension ItemsListViewModel {
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> Implemented FilterState access with type-safe accessors
   func connectController<C: ItemListController>(_ controller: C) where C.Item == Item {
     controller.onRemoveItem = self.remove(item:)
 
