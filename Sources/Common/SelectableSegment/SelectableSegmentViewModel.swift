@@ -29,9 +29,10 @@ public class SelectableSegmentViewModel<SegmentKey: Hashable, Segment> {
   public init(items: [SegmentKey: Segment]) {
     self.items = items
     self.selected = .none
-    self.onItemsChanged = Observer()
-    self.onSelectedChanged = Observer()
-    self.onSelectedComputed = Observer()
+    self.onItemsChanged = .init()
+    self.onSelectedChanged = .init()
+    self.onSelectedComputed = .init()
+    onItemsChanged.fire(items)
   }
   
   public func computeSelected(selecting keyToSelect: SegmentKey?) {

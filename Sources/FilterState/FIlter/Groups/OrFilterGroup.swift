@@ -42,3 +42,11 @@ extension FilterGroup {
   }
   
 }
+
+extension FilterGroup.Or: CustomStringConvertible {
+  
+  public var description: String {
+    return "{ \(name ?? "_"): \(filters) }"
+  }
+  
+}

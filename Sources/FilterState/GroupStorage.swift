@@ -132,14 +132,14 @@ extension GroupsStorage: FiltersWritable {
       return false
     }
     
-    let currentFilters = existingGroup.filters.map(Filter.init)
     let filtersToRemove = filters.map(Filter.init)
-    print(">>> Remove \(filtersToRemove) from \(currentFilters)")
-    let updatedFilters = Set(currentFilters).subtracting(filtersToRemove).map { $0.filter }
+    let updatedFilters = existingGroup.filters.filter { !filtersToRemove.contains(Filter($0))  }
     let updatedGroup = existingGroup.withFilters(updatedFilters)
-    print(">>> Result \(updatedGroup)")
-    filterGroups[groupID] = updatedGroup
-    print(">>> Groups: \(filterGroups)")
+    if updatedGroup.isEmpty {
+      filterGroups.removeValue(forKey: groupID)
+    } else {
+      filterGroups[groupID] = updatedGroup
+    }
     return existingGroup.filters.count > updatedFilters.count
   }
   
@@ -156,11 +156,20 @@ extension GroupsStorage: FiltersWritable {
   
   @discardableResult mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType {
     var wasRemoved = false
-    for groupID in getGroupIDs() {
-      print("Remove \(filters) from \(groupID) of \(filterGroups)")
-      wasRemoved = wasRemoved || removeAll(filters, fromGroupWithID: groupID)
-      print("After \(filterGroups)")
+    let filtersToRemove = Set(filters.map(Filter.init))
+    for (id, group) in filterGroups {
+      let updatedFilters = group.filters.filter { !filtersToRemove.contains(Filter($0)) }
+      filterGroups[id] = group.withFilters(updatedFilters)
+      wasRemoved = wasRemoved || updatedFilters.count < group.filters.count
     }
+//    var wasRemoved = false
+//    let groupIDs = getGroupIDs()
+//    print(">>> Group IDs \(groupIDs)")
+//    for groupID in groupIDs {
+//      print("=== Remove \(filters) from \(groupID) of \(filterGroups)")
+//      wasRemoved = wasRemoved || removeAll(filters, fromGroupWithID: groupID)
+//      print("=== After \(filterGroups)")
+//    }
     return wasRemoved
   }
   

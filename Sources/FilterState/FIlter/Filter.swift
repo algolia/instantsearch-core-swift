@@ -103,3 +103,9 @@ public extension FilterType {
   }
   
 }
+
+@discardableResult public prefix func ! <T: FilterType>(f: T) -> T {
+  var mutableFilterCopy = f
+  mutableFilterCopy.not(value: !f.isNegated)
+  return mutableFilterCopy
+}
