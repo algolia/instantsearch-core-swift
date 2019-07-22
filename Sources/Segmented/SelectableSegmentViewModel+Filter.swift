@@ -73,7 +73,7 @@ public extension SelectableSegmentViewModel where Segment: FilterType {
   func connectController<C: SelectableSegmentController>(_ controller: C, presenter: FilterPresenter? = .none) where C.SegmentKey == SegmentKey {
     
     func setControllerItems(with items: [SegmentKey: Segment]) {
-      let presenter = presenter ?? DefaultFilterPresenter.present
+      let presenter = presenter ?? DefaultPresenter.Filter.present
       let itemsToPresent = items
         .map { ($0.key, presenter(Filter($0.value))) }
         .reduce(into: [:]) { $0[$1.0] = $1.1 }

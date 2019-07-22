@@ -1136,7 +1136,6 @@
 		AFC2E2A5228EDF5600859EBA /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				AFC2E287228ED80200859EBA /* FilterPresenter.swift */,
 				AFC2E2A6228EDF6A00859EBA /* Query+Facets.swift */,
 			);
 			path = Helpers;
@@ -1438,6 +1437,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B1AC7B22D8C3E1000B913E /* DefaultPresenter.swift */,
+				AFC2E287228ED80200859EBA /* FilterPresenter.swift */,
 				E2B1AC8022D8C80E000B913E /* StatsPresenter.swift */,
 				E2B1AC8522D8C865000B913E /* HierarchicalPresenter.swift */,
 				E2B1AC8A22D8C8C0000B913E /* IndexPresenter.swift */,

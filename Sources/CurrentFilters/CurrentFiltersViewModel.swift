@@ -13,11 +13,13 @@ public typealias CurrentFiltersViewModel = ItemsListViewModel<FilterAndID>
 public struct FilterAndID: Hashable {
   public let filter: Filter
   public let id: FilterGroup.ID
-}
+  public var text: String
 
-public struct TextAndID: Hashable {
-  public let text: String
-  public let id: FilterGroup.ID
+  public init(filter: Filter, id: FilterGroup.ID, text: String = "") {
+    self.filter = filter
+    self.id = id
+    self.text = text
+  }
 }
 
 public extension CurrentFiltersViewModel {
@@ -53,13 +55,19 @@ public extension CurrentFiltersViewModel {
 
 public extension ItemsListViewModel {
 
-  func connectController<C: ItemListController>(_ controller: C) where C.Item == Item {
-    controller.onRemoveItem = self.remove(item:)
+  func connectController<C: ItemListController>(_ controller: C, presenter: Presenter<Filter, String>? = nil) where C.Item == Item, Item == FilterAndID {
+
+    let filterPresenter = presenter ?? DefaultPresenter.Filter.present
+
+    controller.onRemoveItem = { item in
+      let filterAndID = FilterAndID(filter: item.filter, id: item.id)
+      self.remove(item: filterAndID)
+    }
 
     onItemsChanged.subscribePast(with: controller) { (items) in
-      controller.setItems(items)
+      let itemsWithPresenterApplied = items.map { FilterAndID(filter: $0.filter, id: $0.id, text: filterPresenter($0.filter))}
+      controller.setItems(itemsWithPresenterApplied)
       controller.reload()
     }
   }
-  
 }

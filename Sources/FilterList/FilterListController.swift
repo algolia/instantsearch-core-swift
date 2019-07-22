@@ -47,7 +47,7 @@ open class FilterListTableController<F: FilterType>: NSObject, SelectableListCon
   open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
     let filter = selectableItems[indexPath.row]
-    let filterPresenter = self.filterFormatter ?? DefaultFilterPresenter.present
+    let filterPresenter = self.filterFormatter ?? DefaultPresenter.Filter.present
     cell.textLabel?.text = filterPresenter(Filter(filter.item))
     cell.accessoryType = filter.isSelected ? .checkmark : .none
     
