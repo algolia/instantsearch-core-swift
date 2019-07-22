@@ -29,11 +29,18 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   }
   
   public let sequencer: Sequencer
-  public var indexSearchData: IndexSearchData
+  public var indexSearchData: IndexQueryState {
+    didSet {
+      if oldValue.index != indexSearchData.index {
+        onIndexChanged.fire(indexSearchData.index)
+      }
+    }
+  }
   public let isLoading: Observer<Bool>
   public let onResults: Observer<SearchResults>
   public let onError: Observer<(Query, Error)>
   public let onQueryChanged: Observer<String?>
+  public let onIndexChanged: Observer<Index>
   public var requestOptions: RequestOptions?
   public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
   public weak var hierarchicalFacetingDelegate: HierarchicalDelegate?
@@ -43,13 +50,14 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   public init(index: Index,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
-    indexSearchData = IndexSearchData(index: index, query: query)
+    indexSearchData = IndexQueryState(index: index, query: query)
     self.requestOptions = requestOptions
     sequencer = Sequencer()
-    isLoading = Observer()
-    onResults = Observer()
-    onError = Observer()
-    onQueryChanged = Observer()
+    isLoading = .init()
+    onResults = .init()
+    onError = .init()
+    onQueryChanged = .init()
+    onIndexChanged = .init()
     sequencer.delegate = self
     onResults.retainLastData = true
     onError.retainLastData = false
@@ -57,7 +65,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     updateClientUserAgents()
   }
   
-  public convenience init(indexSearchData: IndexSearchData,
+  public convenience init(indexSearchData: IndexQueryState,
                           requestOptions: RequestOptions? = nil) {
     self.init(index: indexSearchData.index,
               query: indexSearchData.query,

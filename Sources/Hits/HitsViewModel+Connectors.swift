@@ -33,6 +33,10 @@ extension HitsViewModel {
       self?.process(error, for: query)
     }
     
+    searcher.onIndexChanged.subscribePast(with: self) { [weak self] _ in
+      self?.notifyQueryChanged()
+    }
+    
     searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in
       self?.notifyQueryChanged()
     }

@@ -39,8 +39,8 @@ class SelectableViewModelConnectorsTests: XCTestCase {
     let filterState = FilterState()
     
     let viewModel = SelectableViewModel<Filter.Tag>(item: "tag")
-    
-    viewModel.connectTo(filterState)
+  
+    viewModel.connectFilterState(filterState)
     
     // ViewModel to FilterState
     

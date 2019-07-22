@@ -1,5 +1,5 @@
 //
-//  IndexSearchData.swift
+//  IndexQueryState.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 27/03/2019.
@@ -10,7 +10,7 @@ import Foundation
 
 /// Structure containing all necessary components to perform a search
 
-public struct IndexSearchData {
+public struct IndexQueryState {
   
   /// Index in which search will be performed
   public var index: Index
@@ -28,16 +28,16 @@ public struct IndexSearchData {
 
 extension IndexQuery {
   
-  convenience init(indexSearchData: IndexSearchData) {
+  convenience init(indexSearchData: IndexQueryState) {
     self.init(index: indexSearchData.index, query: indexSearchData.query)
   }
   
 }
 
-extension Array where Element == IndexSearchData {
+extension Array where Element == IndexQueryState {
   
   init(indices: [InstantSearchClient.Index], query: Query = .init()) {
-    self = indices.map { IndexSearchData(index: $0, query: query) }
+    self = indices.map { IndexQueryState(index: $0, query: query) }
   }
   
 }

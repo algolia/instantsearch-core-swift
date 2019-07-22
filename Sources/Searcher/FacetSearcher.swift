@@ -19,7 +19,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     }
   }
   
-  public let indexSearchData: IndexSearchData
+  public let indexSearchData: IndexQueryState
   public let sequencer: Sequencer
   public var onQueryChanged: Observer<String?>
   public let isLoading: Observer<Bool>
@@ -29,7 +29,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public var requestOptions: RequestOptions?
 
   public init(index: Index, query: Query = .init(), facetName: String, requestOptions: RequestOptions? = nil) {
-    self.indexSearchData = IndexSearchData(index: index, query: query)
+    self.indexSearchData = IndexQueryState(index: index, query: query)
     self.isLoading = Observer()
     self.onQueryChanged = Observer()
     self.onResults = Observer()

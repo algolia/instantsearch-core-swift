@@ -12,6 +12,7 @@ public extension IndexSegmentViewModel {
   func connectSearcher(searcher: SingleIndexSearcher) {
     if let selected = selected, let index = items[selected] {
       searcher.indexSearchData.index = index
+      
     }
 
     onSelectedComputed.subscribePast(with: self) { (computed) in

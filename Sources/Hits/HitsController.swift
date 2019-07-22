@@ -32,9 +32,23 @@ public extension HitsViewModel {
       controller.scrollToTop()
     }.onQueue(.main)
     
-    onResultsUpdated.subscribePast(with: controller) { _ in
+    onResultsUpdated.subscribePast(with: controller) { searchResults in
+      do {
+        let hits = try searchResults.deserializeHits() as [Movie]
+        print(hits.map { $0.title })
+      } catch _ {
+        
+      }
+
       controller.reload()
     }.onQueue(.main)
   }
   
+}
+
+struct Movie: Codable {
+  let title: String
+  let year: Int
+  let image: URL
+  let genre: [String]
 }

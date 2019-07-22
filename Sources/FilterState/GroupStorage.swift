@@ -127,7 +127,7 @@ extension GroupsStorage: FiltersWritable {
     filterGroups[groupID] = group.withFilters(updatedFilters)
   }
   
-  mutating func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
+  @discardableResult mutating func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
     guard let existingGroup = filterGroups[groupID] else {
       return false
     }
@@ -154,7 +154,7 @@ extension GroupsStorage: FiltersWritable {
     }
   }
   
-  mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType {
+  @discardableResult mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType {
     var wasRemoved = false
     for groupID in getGroupIDs() {
       print("Remove \(filters) from \(groupID) of \(filterGroups)")

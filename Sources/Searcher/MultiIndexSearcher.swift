@@ -29,7 +29,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   }
   
   public let client: Client
-  public let indexSearchDatas: [IndexSearchData]
+  public let indexSearchDatas: [IndexQueryState]
   public let sequencer: Sequencer
   public let isLoading: Observer<Bool>
   public let onQueryChanged: Observer<String?>
@@ -40,14 +40,14 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   internal var pageLoaders: [PageLoaderProxy]
   
   public convenience init(client: Client, indices: [Index], requestOptions: RequestOptions? = nil) {
-    let indexSearchDatas = indices.map { IndexSearchData(index: $0, query: .init()) }
+    let indexSearchDatas = indices.map { IndexQueryState(index: $0, query: .init()) }
     self.init(client: client,
               indexSearchDatas: indexSearchDatas,
               requestOptions: requestOptions)
   }
   
   public init(client: Client,
-              indexSearchDatas: [IndexSearchData],
+              indexSearchDatas: [IndexQueryState],
               requestOptions: RequestOptions? = nil) {
     
     self.client = client
