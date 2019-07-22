@@ -20,14 +20,15 @@ open class FilterListTableController<F: FilterType>: NSObject, SelectableListCon
   public var selectableItems: [SelectableItem<F>] = []
   public var filterFormatter: FilterPresenter?
   
-  private let cellIdentifier = "cellID"
+  let cellID: String
   
-  public init(tableView: UITableView) {
+  public init(tableView: UITableView, cellID: String = "FilterListFacet") {
     self.tableView = tableView
+    self.cellID = cellID
     super.init()
     tableView.dataSource = self
     tableView.delegate = self
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
   }
   
   open func setSelectableItems(selectableItems: [(item: F, isSelected: Bool)]) {
@@ -45,7 +46,7 @@ open class FilterListTableController<F: FilterType>: NSObject, SelectableListCon
   }
   
   open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
     let filter = selectableItems[indexPath.row]
     let filterPresenter = self.filterFormatter ?? DefaultPresenter.Filter.present
     cell.textLabel?.text = filterPresenter(Filter(filter.item))
