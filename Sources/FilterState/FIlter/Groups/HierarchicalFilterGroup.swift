@@ -37,9 +37,12 @@ extension FilterGroup {
     }
     
     public func withFilters<S: Sequence>(_ filters: S) -> FilterGroup.Hierarchical where S.Element == FilterType {
-      return .init(filters: filters.compactMap { $0 as? Filter.Facet }, name: name)
+      var updatedGroup = FilterGroup.Hierarchical(filters: filters.compactMap { $0 as? Filter.Facet }, name: name)
+      updatedGroup.hierarchicalAttributes = hierarchicalAttributes
+      updatedGroup.hierarchicalFilters = hierarchicalFilters
+      return updatedGroup
     }
-    
+      
   }
 
 }

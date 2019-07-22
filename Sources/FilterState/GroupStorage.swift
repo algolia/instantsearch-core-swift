@@ -144,7 +144,14 @@ extension GroupsStorage: FiltersWritable {
   }
   
   mutating func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
-    groupIDs.forEach { filterGroups.removeValue(forKey: $0) }
+    for groupID in groupIDs {
+      switch groupID {
+      case .hierarchical:
+        filterGroups[groupID] = filterGroups[groupID]?.withFilters([])
+      default:
+        filterGroups.removeValue(forKey: groupID)
+      }
+    }
   }
   
   mutating func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType {
@@ -155,7 +162,6 @@ extension GroupsStorage: FiltersWritable {
       print("After \(filterGroups)")
     }
     return wasRemoved
-//    return getGroupIDs().anySatisfy { removeAll(filters, fromGroupWithID: $0) }
   }
   
   mutating func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID) {
