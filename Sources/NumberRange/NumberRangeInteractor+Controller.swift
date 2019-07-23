@@ -11,7 +11,7 @@ import Foundation
 extension NumberRangeInteractor {
   public func connectController<Controller: NumberRangeController>(_ controller: Controller) where Controller.Number == Number {
 
-    onItemChanged.subscribePast(with: self) { (item) in
+    onItemChanged.subscribePast(with: self) { _, item in
       guard let item = item else {
         controller.invalidate()
         return
@@ -23,9 +23,8 @@ extension NumberRangeInteractor {
       self?.computeNumberRange(numberRange: closedRange)
     }
 
-    onBoundsComputed.subscribePast(with: controller) { (bounds) in
-      guard let bounds = bounds else { return }
-      controller.setBounds(bounds)
+    onBoundsComputed.subscribePast(with: controller) { controller, bounds in
+      bounds.flatMap(controller.setBounds)
     }
     
   }

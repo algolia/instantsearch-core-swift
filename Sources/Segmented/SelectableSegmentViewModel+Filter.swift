@@ -47,7 +47,7 @@ public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: F
       itemKey.flatMap { self?.items[$0] }.flatMap { accessor.add($0) }
     }
     
-    onSelectedComputed.subscribePast(with: self) { [weak filterState] computedSelectionKey in
+    onSelectedComputed.subscribePast(with: self) { [weak filterState] _, computedSelectionKey in
       removeSelectedItem()
       addItem(computedSelectionKey)
       filterState?.notifyChange()
@@ -57,11 +57,11 @@ public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: F
     
   private func whenFilterStateChangedThenUpdateSelected<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                             via accessor: Accessor) where Accessor.Filter == Segment {
-    let onChange: (ReadOnlyFiltersContainer) -> Void = { [weak self] _ in
-      self?.selected = self?.items.first(where: { accessor.contains($0.value) })?.key
+    let onChange: (SelectableSegmentViewModel, ReadOnlyFiltersContainer) -> Void = { viewModel, _ in
+      viewModel.selected = viewModel.items.first(where: { accessor.contains($0.value) })?.key
     }
     
-    onChange(ReadOnlyFiltersContainer(filtersContainer: filterState))
+    onChange(self, ReadOnlyFiltersContainer(filtersContainer: filterState))
     
     filterState.onChange.subscribePast(with: self, callback: onChange)
   }
@@ -72,7 +72,7 @@ public extension SelectableSegmentInteractor where Segment: FilterType {
   
   func connectController<C: SelectableSegmentController>(_ controller: C, presenter: FilterPresenter? = .none) where C.SegmentKey == SegmentKey {
     
-    func setControllerItems(with items: [SegmentKey: Segment]) {
+    func setControllerItems(controller: C, with items: [SegmentKey: Segment]) {
       let presenter = presenter ?? DefaultPresenter.Filter.present
       let itemsToPresent = items
         .map { ($0.key, presenter(Filter($0.value))) }
@@ -82,7 +82,9 @@ public extension SelectableSegmentInteractor where Segment: FilterType {
     
     controller.setSelected(selected)
     controller.onClick = computeSelected(selecting:)
-    onSelectedChanged.subscribePast(with: controller, callback: controller.setSelected)
+    onSelectedChanged.subscribePast(with: controller) { controller, selectedItem in
+      controller.setSelected(selectedItem)
+    }
     onItemsChanged.subscribePast(with: controller, callback: setControllerItems)
     
   }

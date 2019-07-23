@@ -26,8 +26,8 @@ class OnlineTestCase: XCTestCase {
   var client: Client!
   var index: Index!
   
-  let appID = ""
-  let apiKey = ""
+  let appID = "1M1U6ZWKZP"
+  let apiKey = "c762c14ebbd970c7f5c7ec6654b26472"
   
   override func setUp() {
     super.setUp()

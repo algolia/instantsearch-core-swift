@@ -27,16 +27,16 @@ public extension CurrentFiltersInteractor {
   func connectFilterState(_ filterState: FilterState,
                           filterGroupID: FilterGroup.ID? = nil) {
     
-    filterState.onChange.subscribePast(with: self) { [weak self, weak filterState] _ in
+    filterState.onChange.subscribePast(with: self) { [weak filterState] viewModel, _  in
       guard let filterState = filterState else { return }
       if let filterGroupID = filterGroupID {
-        self?.items = Set(filterState.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
+        viewModel.items = Set(filterState.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
       } else {
-        self?.items = filterState.getFiltersAndID()
+        viewModel.items = filterState.getFiltersAndID()
       }
     }
 
-    onItemsComputed.subscribePast(with: self) { (items) in
+    onItemsComputed.subscribePast(with: self) { _, items in
 
       if let filterGroupID = filterGroupID {
         filterState.filters.removeAll(fromGroupWithID: filterGroupID)
@@ -64,7 +64,7 @@ public extension ItemsListInteractor {
       self.remove(item: filterAndID)
     }
 
-    onItemsChanged.subscribePast(with: controller) { (items) in
+    onItemsChanged.subscribePast(with: controller) { controller, items in
       let itemsWithPresenterApplied = items.map { FilterAndID(filter: $0.filter, id: $0.id, text: filterPresenter($0.filter))}
       controller.setItems(itemsWithPresenterApplied)
       controller.reload()

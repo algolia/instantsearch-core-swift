@@ -156,9 +156,15 @@ public extension SingleIndexSearcher {
     disjunctiveFacetingDelegate = filterState
     hierarchicalFacetingDelegate = filterState
     
+<<<<<<< HEAD
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
       self?.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
+=======
+    filterState.onChange.subscribePast(with: self) { searcher, _ in
+      searcher.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      searcher.search()
+>>>>>>> Adding strongly typed observer to signal
     }
     
   }

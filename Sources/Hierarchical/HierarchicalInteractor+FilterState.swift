@@ -16,9 +16,9 @@ public extension HierarchicalInteractor {
 
     filterState[hierarchical: groupName].set(hierarchicalAttributes)
 
-    onSelectionsComputed.subscribePast(with: self) { (selections) in
+    onSelectionsComputed.subscribePast(with: self) { viewModel, selections in
 
-      self.selections = selections.map { $0.value.description }
+      viewModel.selections = selections.map { $0.value.description }
 
       filterState[hierarchical: groupName].removeAll()
 
@@ -33,7 +33,7 @@ public extension HierarchicalInteractor {
 
     }
 
-    filterState.onChange.subscribePast(with: self) { _ in
+    filterState.onChange.subscribePast(with: self) { viewModel, filters in
       // TODO
     }
   }

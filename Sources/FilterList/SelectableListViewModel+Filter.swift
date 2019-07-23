@@ -35,7 +35,7 @@ private extension SelectableListInteractor where Key == Item, Item: FilterType {
   func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                        via accessor: Accessor) where Accessor.Filter == Item {
     
-    onSelectionsComputed.subscribePast(with: self) { [weak filterState] filters in
+    onSelectionsComputed.subscribePast(with: self) { [weak filterState] _, filters in
       
       switch self.selectionMode {
       case .multiple:
@@ -55,8 +55,8 @@ private extension SelectableListInteractor where Key == Item, Item: FilterType {
   func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                       via accessor: Accessor) where Accessor.Filter == Item {
 
-    filterState.onChange.subscribePast(with: self) { _ in
-      self.selections = Set(accessor.filters())
+    filterState.onChange.subscribePast(with: self) { viewModel, _ in
+      viewModel.selections = Set(accessor.filters())
     }
   }
   
@@ -76,14 +76,12 @@ public extension SelectableListInteractor where Key == Item, Item: FilterType {
     
     controller.onClick = computeSelections(selectingItemForKey:)
     
-    onItemsChanged.subscribePast(with: self) { [weak self] items in
-      guard let selections = self?.selections else { return }
-      setControllerItemsWith(items: items, selections: selections)
+    onItemsChanged.subscribePast(with: self) { viewModel, items in
+      setControllerItemsWith(items: items, selections: viewModel.selections)
     }
     
-    onSelectionsChanged.subscribePast(with: self) { [weak self] selections in
-      guard let tags = self?.items else { return }
-      setControllerItemsWith(items: tags, selections: selections)
+    onSelectionsChanged.subscribePast(with: self) { viewModel, selections in
+      setControllerItemsWith(items: viewModel.items, selections: selections)
     }
     
   }

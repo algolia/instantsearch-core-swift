@@ -15,9 +15,11 @@ public extension IndexSegmentInteractor {
       
     }
 
-    onSelectedComputed.subscribePast(with: self) { (computed) in
-      if let selected = computed, let index = self.items[selected] {
-        searcher.indexQueryState.index = index
+    onSelectedComputed.subscribePast(with: self) { viewModel, computed in
+      if
+        let selected = computed,
+        let index = viewModel.items[selected] {
+        searcher.indexSearchData.index = index
         searcher.search()
       }
     }

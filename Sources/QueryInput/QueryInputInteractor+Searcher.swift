@@ -21,13 +21,13 @@ extension QueryInputInteractor {
     
     switch searchTriggeringMode {
     case .searchAsYouType:
-      onQueryChanged.subscribe(with: self) { query in
+      onQueryChanged.subscribe(with: searcher) { searcher, query in
         searcher.query = query
         searcher.search()
       }
       
     case .searchOnSubmit:
-      onQuerySubmitted.subscribe(with: self) { query in
+      onQuerySubmitted.subscribe(with: searcher) { searcher, query in
         searcher.query = query
         searcher.search()
       }

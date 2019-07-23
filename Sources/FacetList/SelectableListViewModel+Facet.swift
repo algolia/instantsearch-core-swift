@@ -73,7 +73,7 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
   private func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                                attribute: Attribute,
                                                                                                via accessor: Accessor) where Accessor.Filter == Filter.Facet {
-    onSelectionsComputed.subscribePast(with: self) { [weak filterState] selections in
+    onSelectionsComputed.subscribePast(with: self) { [weak filterState] _, selections in
       let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
       accessor.removeAll()
       accessor.addAll(filters)
@@ -92,18 +92,18 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
       }
     }
 
-    filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.selections = Set(accessor.filters().compactMap(extractString))
+    filterState.onChange.subscribePast(with: self) { viewModel, _ in
+      viewModel.selections = Set(accessor.filters().compactMap(extractString))
     }
   }
 
   private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
     
-    facetSearcher.onResults.subscribePast(with: self) { searchResults in
-      self.items = searchResults.facetHits
+    facetSearcher.onResults.subscribePast(with: self) { viewModel, searchResults in
+      viewModel.items = searchResults.facetHits
     }
     
-    facetSearcher.onError.subscribe(with: self) { error in
+    facetSearcher.onError.subscribe(with: self) { _, error in
       if let error = error.1 as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
         // For the case of SFFV, very possible that we forgot to add the
         // attribute as searchable in `attributesForFaceting`.
@@ -114,8 +114,8 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
   }
   
   private func whenNewSearchResultsThenUpdateItems(of searcher: SingleIndexSearcher, _ attribute: Attribute) {
-    searcher.onResults.subscribePast(with: self) { searchResults in
-      self.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
+    searcher.onResults.subscribePast(with: self) { viewModel, searchResults in
+      viewModel.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
     }
   }
   
@@ -145,14 +145,12 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
       self?.computeSelections(selectingItemForKey: facet.value)
     }
     
-    onItemsChanged.subscribePast(with: self) { [weak self] facets in
-      guard let selections = self?.selections else { return }
-      setControllerItemsWith(facets: facets, selections: selections)
+    onItemsChanged.subscribePast(with: self) { viewModel, facets in
+      setControllerItemsWith(facets: facets, selections: viewModel.selections)
     }
     
-    onSelectionsChanged.subscribePast(with: self) { [weak self] selections in
-      guard let facets = self?.items else { return }
-      setControllerItemsWith(facets: facets, selections: selections)
+    onSelectionsChanged.subscribePast(with: self) { viewModel, selections in
+      setControllerItemsWith(facets: viewModel.items, selections: selections)
     }
     
   }

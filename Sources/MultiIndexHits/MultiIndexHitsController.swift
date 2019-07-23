@@ -20,3 +20,24 @@ public protocol MultiIndexHitsController: class {
 
 extension MultiIndexHitsInteractor: MultiIndexHitsSource {}
 
+<<<<<<< HEAD
+=======
+public extension MultiIndexHitsViewModel {
+  
+  func connectController<Controller: MultiIndexHitsController>(_ controller: Controller) {
+    
+    controller.hitsSource = self
+    
+    onRequestChanged.subscribe(with: controller) { controller, _ in
+      controller.scrollToTop()
+    }.onQueue(.main)
+    
+    onResultsUpdated.subscribePast(with: controller) { controller, _ in
+      controller.reload()
+    }.onQueue(.main)
+    
+    controller.reload()
+  }
+  
+}
+>>>>>>> Adding strongly typed observer to signal

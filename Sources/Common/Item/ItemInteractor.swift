@@ -28,7 +28,7 @@ public class ItemInteractor<Item> {
 public extension ItemInteractor {
   
   func connectController<O, C: ItemController>(_ controller: C, dispatchOnMainThread: Bool = false, presenter: @escaping Presenter<Item, O>) where C.Item == O {
-    let sub = onItemChanged.subscribePast(with: controller) { (item) in
+    let sub = onItemChanged.subscribePast(with: controller) { controller, item in
       controller.setItem(presenter(item))
     }
 

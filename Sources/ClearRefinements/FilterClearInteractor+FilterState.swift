@@ -13,21 +13,21 @@ public extension FilterClearInteractor {
   func connectFilterState(_ filterState: FilterState,
                           filterGroupIDs: [FilterGroup.ID]? = nil,
                           clearMode: ClearMode = .specified) {
-    onTriggered.subscribe(with: self) {
+    onTriggered.subscribe(with: self) { [weak filterState] _,_ in
       defer {
-        filterState.notifyChange()
+        filterState?.notifyChange()
       }
 
       guard let filterGroupIDs = filterGroupIDs else {
-        filterState.filters.removeAll()
+        filterState?.filters.removeAll()
         return
       }
       
       switch clearMode {
       case .specified:
-        filterState.filters.removeAll(fromGroupWithIDs: filterGroupIDs)
+        filterState?.filters.removeAll(fromGroupWithIDs: filterGroupIDs)
       case .except:
-        filterState.filters.removeAllExcept(filterGroupIDs)
+        filterState?.filters.removeAllExcept(filterGroupIDs)
       }
       
     }

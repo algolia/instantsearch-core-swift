@@ -11,7 +11,7 @@ import Foundation
 public extension HierarchicalInteractor {
 
   func connectController<O, C>(_ controller: C, presenter: @escaping ([HierarchicalFacet]) -> O) where O == C.Item, C: HierarchicalController {
-    onItemChanged.subscribePast(with: self) { facets in
+    onItemChanged.subscribePast(with: self) { _, facets in
 
       let hierarchicalFacets = facets.enumerated()
         .map { index, items in
@@ -30,7 +30,7 @@ public extension HierarchicalInteractor {
 
 public extension HierarchicalInteractor {
   func connectController<C>(_ controller: C, presenter: @escaping HierarchicalPresenter = DefaultPresenter.Hierarchical.present) where C: HierarchicalController, C.Item == [HierarchicalFacet] {
-    onItemChanged.subscribePast(with: self) { facets in
+    onItemChanged.subscribePast(with: self) { _, facets in
 
       let hierarchicalFacets = facets.enumerated()
         .map { index, items in
