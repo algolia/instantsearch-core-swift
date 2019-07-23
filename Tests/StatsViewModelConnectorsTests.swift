@@ -1,5 +1,5 @@
 //
-//  StatsViewModelConnectorsTests.swift
+//  StatsInteractorConnectorsTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 31/05/2019.
@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 @testable import InstantSearchCore
 
-class StatsViewModelConnectorsTests: XCTestCase {
+class StatsInteractorConnectorsTests: XCTestCase {
   
   class TestStatsController: ItemController {
     

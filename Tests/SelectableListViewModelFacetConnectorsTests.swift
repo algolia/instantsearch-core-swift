@@ -1,5 +1,5 @@
 //
-//  SelectableListViewModelFacetConnectorsTests.swift
+//  SelectableListInteractorFacetConnectorsTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 20/05/2019.
@@ -10,7 +10,7 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SelectableListViewModelFacetConnectorsTests: XCTestCase {
+class SelectableListInteractorFacetConnectorsTests: XCTestCase {
   
   class TestController: FacetListController {
     
@@ -32,9 +32,9 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
   
   func testConnectFilterState() {
     
-    let viewModel = FacetListViewModel(selectionMode: .single)
+    let interactor = FacetListInteractor(selectionMode: .single)
     
-    viewModel.items = [
+    interactor.items = [
       .init(value: "cat1", count: 10, highlighted: nil),
       .init(value: "cat2", count: 5, highlighted: nil),
       .init(value: "cat3", count: 5, highlighted: nil),
@@ -42,32 +42,32 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     
     let filterState = FilterState()
     
-    viewModel.connectFilterState(filterState, with: "categories", operator: .and)
+    interactor.connectFilterState(filterState, with: "categories", operator: .and)
     
     let groupID: FilterGroup.ID = .and(name: "categories")
     
-    // ViewModel -> FilterState
-    viewModel.computeSelections(selectingItemForKey: "cat1")
+    // Interactor -> FilterState
+    interactor.computeSelections(selectingItemForKey: "cat1")
         
     XCTAssertTrue(filterState.contains(Filter.Facet(attribute: "categories", stringValue: "cat1"), inGroupWithID: groupID))
     
-    // FilterState -> ViewModel
+    // FilterState -> Interactor
     
     filterState.notify(.add(filter: Filter.Facet(attribute: "categories", stringValue: "cat2"), toGroupWithID: groupID))
     
-    XCTAssertEqual(viewModel.selections, ["cat1", "cat2"])
+    XCTAssertEqual(interactor.selections, ["cat1", "cat2"])
     
   }
   
   func testConnectSearcher() {
-    let viewModel = FacetListViewModel(selectionMode: .single)
+    let interactor = FacetListInteractor(selectionMode: .single)
 
     let query = Query()
     let searcher = SingleIndexSearcher(index: .test, query: query, requestOptions: .none)
     
-    viewModel.connectSearcher(searcher, with: "type")
+    interactor.connectSearcher(searcher, with: "type")
     
-    let bundle = Bundle(for: SelectableListViewModelFacetConnectorsTests.self)
+    let bundle = Bundle(for: SelectableListInteractorFacetConnectorsTests.self)
     
     do {
       let results = try SearchResults(jsonFile: "SearchResultFacets", bundle: bundle)
@@ -81,7 +81,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
         .init(value: "office", count: 28, highlighted: nil),
       ]
       
-      XCTAssertEqual(Set(viewModel.items), expectedFacets)
+      XCTAssertEqual(Set(interactor.items), expectedFacets)
       
     } catch let error {
       XCTFail(error.localizedDescription)
@@ -93,11 +93,11 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
   
   func testConnectController() {
     
-    let viewModel = FacetListViewModel(selectionMode: .single)
+    let interactor = FacetListInteractor(selectionMode: .single)
 
     let controller = TestController()
     
-    viewModel.connectController(controller)
+    interactor.connectController(controller)
     
     let reloadExpectation = expectation(description: "reload")
     reloadExpectation.expectedFulfillmentCount = 2
@@ -106,7 +106,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
       reloadExpectation.fulfill()
     }
     
-    viewModel.items = [
+    interactor.items = [
       .init(value: "cat1", count: 10, highlighted: nil),
       .init(value: "cat2", count: 20, highlighted: nil),
       .init(value: "cat3", count: 30, highlighted: nil)
@@ -121,7 +121,7 @@ class SelectableListViewModelFacetConnectorsTests: XCTestCase {
     XCTAssertEqual(controller.selectableItems.map { $0.0 }, expectedItems.map { $0.0 })
     XCTAssertEqual(controller.selectableItems.map { $0.1 }, expectedItems.map { $0.1 })
     
-    viewModel.selections = ["cat1", "cat3"]
+    interactor.selections = ["cat1", "cat3"]
     
     let expectedItems2 = [
       (item: Facet(value: "cat1", count: 10, highlighted: nil), isSelected: true),

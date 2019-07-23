@@ -52,41 +52,41 @@ public class MultiIndexHitsInteractor {
   /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits interactor
   /// - Returns: The nested interactor at specified index.
   
-  public func hitsViewModel<R>(forSection section: Int) throws -> HitsInteractor<R> {
-    guard let typedViewModel = hitsInteractors[section] as? HitsInteractor<R> else {
+  public func hitsInteractor<R>(forSection section: Int) throws -> HitsInteractor<R> {
+    guard let typedInteractor = hitsInteractors[section] as? HitsInteractor<R> else {
       throw HitsInteractor<R>.Error.incompatibleRecordType
     }
     
-    return typedViewModel
+    return typedInteractor
   }
   
-  /// Updates the results of a nested hits ViewModel at specified index
+  /// Updates the results of a nested hits Interactor at specified index
   /// - Parameter results: list of typed search results.
-  /// - Parameter section: the section index of nested hits ViewModel
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits ViewModel
+  /// - Parameter section: the section index of nested hits Interactor
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits Interactor
   
-  public func update(_ results: SearchResults, forViewModelInSection section: Int) throws {
+  public func update(_ results: SearchResults, forInteractorInSection section: Int) throws {
     try hitsInteractors[section].update(results)
   }
   
-  /// Updates the results of all nested hits ViewModels.
-  /// Each search results element will be converted to a corresponding nested hits ViewModel search results type.
-  /// - Parameter results: list of generic search results. Order of results must match the order of nested hits ViewModels.
+  /// Updates the results of all nested hits Interactors.
+  /// Each search results element will be converted to a corresponding nested hits Interactor search results type.
+  /// - Parameter results: list of generic search results. Order of results must match the order of nested hits Interactors.
   /// - Parameter metadata: the metadata of query corresponding to results
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if the conversion of search results for one of a nested hits ViewModels is impossible due to a record type mismatch
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the conversion of search results for one of a nested hits Interactors is impossible due to a record type mismatch
   
   public func update(_ results: [SearchResults]) throws {
     try zip(hitsInteractors, results).forEach { arg in
-      let (viewModel, results) = arg
-      try viewModel.update(results)
+      let (interactor, results) = arg
+      try interactor.update(results)
     }
     onResultsUpdated.fire(results)
   }
   
   public func process(_ error: Error, for queries: [Query]) {
     let pages = queries.compactMap { $0.page }.map { Int($0) }
-    zip(hitsInteractors, pages).forEach { (hitsViewModel, page) in
-      hitsViewModel.notifyPending(atIndex: page)
+    zip(hitsInteractors, pages).forEach { (hitsInteractor, page) in
+      hitsInteractor.notifyPending(atIndex: page)
     }
   }
   
@@ -98,9 +98,9 @@ public class MultiIndexHitsInteractor {
   }
   
   /// Returns the hit of a desired type
-  /// - Parameter index: the index of a hit in a nested hits ViewModel
-  /// - Parameter section: the index of a nested hits ViewModel
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
+  /// - Parameter index: the index of a hit in a nested hits Interactor
+  /// - Parameter section: the index of a nested hits Interactor
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits Interactor
   /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
   
   public func hit<R: Codable>(atIndex index: Int, inSection section: Int) throws -> R? {
@@ -108,22 +108,22 @@ public class MultiIndexHitsInteractor {
   }
   
   /// Returns the hit in raw dictionary form
-  /// - Parameter index: the index of a hit in a nested hits ViewModel
-  /// - Parameter section: the index of a nested hits ViewModel
+  /// - Parameter index: the index of a hit in a nested hits Interactor
+  /// - Parameter section: the index of a nested hits Interactor
   /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
   
   public func rawHit(atIndex index: Int, inSection section: Int) -> [String: Any]? {
     return hitsInteractors[section].rawHitAtIndex(index)
   }
   
-  /// Returns number of nested hits ViewModels
+  /// Returns number of nested hits Interactors
   
   public func numberOfSections() -> Int {
     return hitsInteractors.count
   }
   
-  /// Returns number rows in the nested hits ViewModel at section
-  /// - Parameter section: the index of nested hits ViewModel
+  /// Returns number rows in the nested hits Interactor at section
+  /// - Parameter section: the index of nested hits Interactor
   
   public func numberOfHits(inSection section: Int) -> Int {
     return hitsInteractors[section].numberOfHits()
@@ -136,8 +136,8 @@ public class MultiIndexHitsInteractor {
 public extension MultiIndexHitsInteractor {
   
   /// Returns the hit of a desired type
-  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits ViewModel
+  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits Interactor, and item defines the index of a hit in a Interactor
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if desired type of record doesn't match with record type of corresponding hits Interactor
   /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
   
   func hit<R: Codable>(at indexPath: IndexPath) throws -> R? {
@@ -145,7 +145,7 @@ public extension MultiIndexHitsInteractor {
   }
   
   /// Returns the hit in raw dictionary form
-  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel
+  /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits Interactor, and item defines the index of a hit in a Interactor
   /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
   
   func rawHit(at indexPath: IndexPath) -> [String: Any]? {

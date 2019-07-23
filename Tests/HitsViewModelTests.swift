@@ -1,5 +1,5 @@
 //
-//  HitsViewModelTests.swift
+//  HitsInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 14/03/2019.
@@ -40,7 +40,7 @@ class TestInfiniteScrollingController: InfiniteScrollable {
   
 }
 
-class HitsViewModelTests: XCTestCase {
+class HitsInteractorTests: XCTestCase {
   
   func testConstructionWithExplicitSettings() {
     

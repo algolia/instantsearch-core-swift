@@ -1,5 +1,5 @@
 //
-//  RefinementListViewModelTests.swift
+//  RefinementListInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 18/03/2019.

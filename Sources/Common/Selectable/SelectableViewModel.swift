@@ -1,5 +1,5 @@
 //
-//  SelectableViewModel.swift
+//  SelectableInteractor.swift
 //  InstantSearchCore-iOS
 //
 //  Created by Vladislav Fitc on 03/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SelectableViewModel<Item>: ItemInteractor<Item> {
+public class SelectableInteractor<Item>: ItemInteractor<Item> {
 
   public var isSelected: Bool {
     didSet {

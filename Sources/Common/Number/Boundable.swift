@@ -1,5 +1,5 @@
 //
-//  NumberRangeViewModel+Searcher.swift
+//  NumberRangeInteractor+Searcher.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 14/06/2019.

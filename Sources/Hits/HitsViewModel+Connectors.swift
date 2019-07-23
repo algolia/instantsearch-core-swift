@@ -1,5 +1,5 @@
 //
-//  HitsViewModel+Connectors.swift
+//  HitsInteractor+Connectors.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 04/06/2019.

@@ -1,5 +1,5 @@
 //
-//  MultiHitsViewModelTests.swift
+//  MultiHitsInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 18/03/2019.
@@ -20,56 +20,56 @@ class TestPageLoader: PageLoadable {
   
 }
 
-class MultiIndexHitsViewModelTests: XCTestCase {
+class MultiIndexHitsInteractorTests: XCTestCase {
   
   func testConstruction() {
-    let viewModel = MultiIndexHitsInteractor(hitsInteractors: [])
-    XCTAssertEqual(viewModel.numberOfSections(), 0)
+    let interactor = MultiIndexHitsInteractor(hitsInteractors: [])
+    XCTAssertEqual(interactor.numberOfSections(), 0)
   }
   
   func testAppend() {
-    let viewModel1 = HitsInteractor<[String: Int]>()
-    let viewModel2 = HitsInteractor<[String: [String: Int]]>()
-    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
+    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor2 = HitsInteractor<[String: [String: Int]]>()
+    let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    XCTAssertEqual(multiViewModel.numberOfSections(), 2)
-    XCTAssertTrue(multiViewModel.contains(viewModel1))
-    XCTAssertTrue(multiViewModel.contains(viewModel2))
+    XCTAssertEqual(multiInteractor.numberOfSections(), 2)
+    XCTAssertTrue(multiInteractor.contains(interactor1))
+    XCTAssertTrue(multiInteractor.contains(interactor2))
 
   }
   
   func testSearchByIndex() {
-    let viewModel1 = HitsInteractor<[String: Int]>()
-    let viewModel2 = HitsInteractor<[String: [String: Int]]>()
-    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
+    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor2 = HitsInteractor<[String: [String: Int]]>()
+    let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    XCTAssertEqual(multiViewModel.numberOfSections(), 2)
-    XCTAssertTrue(multiViewModel.contains(viewModel1))
-    XCTAssertTrue(multiViewModel.contains(viewModel2))
-    XCTAssertEqual(multiViewModel.section(of: viewModel1), 0)
-    XCTAssertEqual(multiViewModel.section(of: viewModel2), 1)
+    XCTAssertEqual(multiInteractor.numberOfSections(), 2)
+    XCTAssertTrue(multiInteractor.contains(interactor1))
+    XCTAssertTrue(multiInteractor.contains(interactor2))
+    XCTAssertEqual(multiInteractor.section(of: interactor1), 0)
+    XCTAssertEqual(multiInteractor.section(of: interactor2), 1)
 
   }
   
   func testSearchByIndexThrows() {
     
-    let viewModel1 = HitsInteractor<[String: Int]>()
-    let viewModel2 = HitsInteractor<[String: [String: Int]]>()
+    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor2 = HitsInteractor<[String: [String: Int]]>()
     
-    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
+    let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 0) as HitsInteractor<[String: Int]>)
-    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 1) as HitsInteractor<[String: [String: Int]]>)
-    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 0) as HitsInteractor<[String: [String: String]]>)
-    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 1) as HitsInteractor<String>)
+    XCTAssertNoThrow(try multiInteractor.hitsInteractor(forSection: 0) as HitsInteractor<[String: Int]>)
+    XCTAssertNoThrow(try multiInteractor.hitsInteractor(forSection: 1) as HitsInteractor<[String: [String: Int]]>)
+    XCTAssertThrowsError(try multiInteractor.hitsInteractor(forSection: 0) as HitsInteractor<[String: [String: String]]>)
+    XCTAssertThrowsError(try multiInteractor.hitsInteractor(forSection: 1) as HitsInteractor<String>)
 
   }
   
-  func testUpdatePerViewModel() {
+  func testUpdatePerInteractor() {
 
-    let viewModel1 = HitsInteractor<[String: Int]>()
-    let viewModel2 = HitsInteractor<[String: Bool]>()
-    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
+    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor2 = HitsInteractor<[String: Bool]>()
+    let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
     let hits1 = try! [["a": 1], ["b": 2], ["c": 3]].map(JSON.init)
     let results1 = SearchResults(hits: hits1, stats: .init())
@@ -77,11 +77,11 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     let hits2 = try! [["a": true], ["b": false], ["c": true]].map(JSON.init)
     let results2 = SearchResults(hits: hits2, stats: .init())
     
-    XCTAssertNoThrow(try multiViewModel.update(results1, forViewModelInSection: 0))
-    XCTAssertNoThrow(try multiViewModel.update(results2, forViewModelInSection: 1))
+    XCTAssertNoThrow(try multiInteractor.update(results1, forInteractorInSection: 0))
+    XCTAssertNoThrow(try multiInteractor.update(results2, forInteractorInSection: 1))
     
-    XCTAssertThrowsError(try multiViewModel.update(results2, forViewModelInSection: 0))
-    XCTAssertThrowsError(try multiViewModel.update(results1, forViewModelInSection: 1))
+    XCTAssertThrowsError(try multiInteractor.update(results2, forInteractorInSection: 0))
+    XCTAssertThrowsError(try multiInteractor.update(results1, forInteractorInSection: 1))
 
   }
   
@@ -89,12 +89,12 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     
     let pageLoader = TestPageLoader()
 
-    let viewModel1 = HitsInteractor<[String: Int]>()
-    viewModel1.pageLoader = pageLoader
-    let viewModel2 = HitsInteractor<[String: Bool]>()
-    viewModel2.pageLoader = pageLoader
+    let interactor1 = HitsInteractor<[String: Int]>()
+    interactor1.pageLoader = pageLoader
+    let interactor2 = HitsInteractor<[String: Bool]>()
+    interactor2.pageLoader = pageLoader
     
-    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
+    let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
     let hits1: [JSON] = [
       .dictionary(["a": .number(1)]),
@@ -111,33 +111,33 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     
     let results2 = SearchResults(hits: hits2, stats: .init())
     
-    // Update multihits ViewModel with a correct list of results
-    XCTAssertNoThrow(try multiViewModel.update([results1, results2]))
+    // Update multihits Interactor with a correct list of results
+    XCTAssertNoThrow(try multiInteractor.update([results1, results2]))
     
     // Checking the state
-    XCTAssertEqual(multiViewModel.numberOfSections(), 2)
-    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 0), hits1.count)
-    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 1), hits2.count)
+    XCTAssertEqual(multiInteractor.numberOfSections(), 2)
+    XCTAssertEqual(multiInteractor.numberOfHits(inSection: 0), hits1.count)
+    XCTAssertEqual(multiInteractor.numberOfHits(inSection: 1), hits2.count)
     
-    // Update multihits ViewModel with uncorrect list of results
-    XCTAssertThrowsError(try multiViewModel.update([results2, results1]))
+    // Update multihits Interactor with uncorrect list of results
+    XCTAssertThrowsError(try multiInteractor.update([results2, results1]))
     
     // Checking the state
-    XCTAssertEqual(multiViewModel.numberOfSections(), 2)
-    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 0), hits1.count)
-    XCTAssertEqual(multiViewModel.numberOfHits(inSection: 1), hits2.count)
+    XCTAssertEqual(multiInteractor.numberOfSections(), 2)
+    XCTAssertEqual(multiInteractor.numberOfHits(inSection: 0), hits1.count)
+    XCTAssertEqual(multiInteractor.numberOfHits(inSection: 1), hits2.count)
   }
   
   func testHitForRow() {
 
     let pageLoader = TestPageLoader()
     
-    let viewModel1 = HitsInteractor<[String: Int]>()
-    viewModel1.pageLoader = pageLoader
-    let viewModel2 = HitsInteractor<[String: Bool]>()
-    viewModel2.pageLoader = pageLoader
+    let interactor1 = HitsInteractor<[String: Int]>()
+    interactor1.pageLoader = pageLoader
+    let interactor2 = HitsInteractor<[String: Bool]>()
+    interactor2.pageLoader = pageLoader
     
-    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
+    let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
     let hits1: [JSON] = [
       .dictionary(["a": .number(1)]),
@@ -154,19 +154,19 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     
     let results2 = SearchResults(hits: hits2, stats: .init())
     
-    XCTAssertNoThrow(try multiViewModel.update([results1, results2]))
+    XCTAssertNoThrow(try multiInteractor.update([results1, results2]))
     
-    XCTAssertNoThrow(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?)
-    XCTAssertNoThrow(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
-    XCTAssertThrowsError(try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Bool]?)
-    XCTAssertThrowsError(try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Int]?)
+    XCTAssertNoThrow(try multiInteractor.hit(atIndex: 0, inSection: 0) as [String: Int]?)
+    XCTAssertNoThrow(try multiInteractor.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
+    XCTAssertThrowsError(try multiInteractor.hit(atIndex: 0, inSection: 0) as [String: Bool]?)
+    XCTAssertThrowsError(try multiInteractor.hit(atIndex: 1, inSection: 1) as [String: Int]?)
     
     do {
       
-      let hit1 = try multiViewModel.hit(atIndex: 0, inSection: 0) as [String: Int]?
+      let hit1 = try multiInteractor.hit(atIndex: 0, inSection: 0) as [String: Int]?
       XCTAssertEqual(hit1?["a"], 1)
       
-      let hit2 = try multiViewModel.hit(atIndex: 1, inSection: 1) as [String: Bool]?
+      let hit2 = try multiInteractor.hit(atIndex: 1, inSection: 1) as [String: Bool]?
       XCTAssertEqual(hit2?["b"], false)
       
     } catch let error {
@@ -175,7 +175,7 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     
   }
   
-  class TestHitsViewModel: AnyHitsInteractor {
+  class TestHitsInteractor: AnyHitsInteractor {
     
     var pageLoader: PageLoadable?
     

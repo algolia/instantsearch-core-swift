@@ -1,5 +1,5 @@
 //
-//  FilterListViewModel+Tag.swift
+//  FilterListInteractor+Tag.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 17/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension SelectableListViewModel where Key == Filter.Tag, Item == Filter.Tag {
+public extension SelectableListInteractor where Key == Filter.Tag, Item == Filter.Tag {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .multiple)

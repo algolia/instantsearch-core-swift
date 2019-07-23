@@ -1,5 +1,5 @@
 //
-//  SelectableListViewModelFilterConnectorsTests.swift
+//  SelectableListInteractorFilterConnectorsTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 21/05/2019.
@@ -10,26 +10,26 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SelectableListViewModelFilterConnectorsTests: XCTestCase {
+class SelectableListInteractorFilterConnectorsTests: XCTestCase {
   
   func testConstructors() {
     
-    let facetFilterListViewModel = FilterListViewModel<Filter.Facet>()
-    XCTAssertEqual(facetFilterListViewModel.selectionMode, .multiple)
+    let facetFilterListInteractor = FilterListInteractor<Filter.Facet>()
+    XCTAssertEqual(facetFilterListInteractor.selectionMode, .multiple)
     
-    let numericFilterListViewModel = FilterListViewModel<Filter.Numeric>()
-    XCTAssertEqual(numericFilterListViewModel.selectionMode, .single)
+    let numericFilterListInteractor = FilterListInteractor<Filter.Numeric>()
+    XCTAssertEqual(numericFilterListInteractor.selectionMode, .single)
 
-    let tagFilterListViewModel = FilterListViewModel<Filter.Tag>()
-    XCTAssertEqual(tagFilterListViewModel.selectionMode, .multiple)
+    let tagFilterListInteractor = FilterListInteractor<Filter.Tag>()
+    XCTAssertEqual(tagFilterListInteractor.selectionMode, .multiple)
 
   }
   
   func testFilterStateConnector() {
     
-    let viewModel = FilterListViewModel<Filter.Tag>()
+    let interactor = FilterListInteractor<Filter.Tag>()
     
-    viewModel.items = [
+    interactor.items = [
       "tag1", "tag2", "tag3"
     ]
 
@@ -37,22 +37,22 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     filterState.notify(.add(filter: Filter.Tag(value: "tag3"), toGroupWithID: .or(name: "", filterType: .tag)))
     
-    viewModel.connectFilterState(filterState, operator: .or)
+    interactor.connectFilterState(filterState, operator: .or)
     
-    // FilterState -> ViewModel preselection
+    // FilterState -> Interactor preselection
     
-    XCTAssertEqual(viewModel.selections, ["tag3"])
+    XCTAssertEqual(interactor.selections, ["tag3"])
     
-    // FilterState -> ViewModel
+    // FilterState -> Interactor
     
     filterState.notify(.add(filter: Filter.Tag(value: "tag1")
       , toGroupWithID: .or(name: "", filterType: .tag)))
     
-    XCTAssertEqual(viewModel.selections, ["tag1", "tag3"])
+    XCTAssertEqual(interactor.selections, ["tag1", "tag3"])
    
-    // ViewModel -> FilterState
+    // Interactor -> FilterState
     
-    viewModel.computeSelections(selectingItemForKey: "tag2")
+    interactor.computeSelections(selectingItemForKey: "tag2")
     
     XCTAssertTrue(filterState.contains(Filter.Tag(value: "tag2"), inGroupWithID: .or(name: "", filterType: .tag)))
     
@@ -83,13 +83,13 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
   
   func testControllerConnector() {
     
-    let viewModel = FilterListViewModel<Filter.Tag>()
+    let interactor = FilterListInteractor<Filter.Tag>()
     let controller = TestController<Filter.Tag>()
     
-    viewModel.items = ["tag1", "tag2", "tag3"]
-    viewModel.selections = ["tag2"]
+    interactor.items = ["tag1", "tag2", "tag3"]
+    interactor.selections = ["tag2"]
     
-    viewModel.connect(to: controller)
+    interactor.connect(to: controller)
     
     // Test preselection
     
@@ -111,7 +111,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     controller.didReload = itemsChangedReloadExpectation.fulfill
     
-    viewModel.items = ["tag1", "tag2", "tag3", "tag4"]
+    interactor.items = ["tag1", "tag2", "tag3", "tag4"]
     
     XCTAssertEqual(controller.selectableItems.map { $0.0 }, [
       Filter.Tag(value: "tag1"),
@@ -135,7 +135,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     controller.didReload = selectionsChangedReloadExpectation.fulfill
     
-    viewModel.selections = ["tag3", "tag4"]
+    interactor.selections = ["tag3", "tag4"]
     
     XCTAssertEqual(controller.selectableItems.map { $0.0 }, [
       Filter.Tag(value: "tag1"),
@@ -157,7 +157,7 @@ class SelectableListViewModelFilterConnectorsTests: XCTestCase {
     
     let selectionsComputedExpectation = expectation(description: "selections computed")
     
-    viewModel.onSelectionsComputed.subscribe(with: self) { selectedTags in
+    interactor.onSelectionsComputed.subscribe(with: self) { selectedTags in
       XCTAssertEqual(selectedTags, ["tag1", "tag3", "tag4"])
       selectionsComputedExpectation.fulfill()
     }

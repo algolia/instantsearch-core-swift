@@ -1,5 +1,5 @@
 //
-//  SelectableViewModelConnectorsTests.swift
+//  SelectableInteractorConnectorsTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 20/05/2019.
@@ -32,64 +32,64 @@ class TestSelectableController<Item>: SelectableController {
   
 }
 
-class SelectableViewModelConnectorsTests: XCTestCase {
+class SelectableInteractorConnectorsTests: XCTestCase {
   
   func testConnectFilterState() {
     
     let filterState = FilterState()
     
-    let viewModel = SelectableViewModel<Filter.Tag>(item: "tag")
+    let interactor = SelectableInteractor<Filter.Tag>(item: "tag")
   
-    viewModel.connectFilterState(filterState)
+    interactor.connectFilterState(filterState)
     
-    // ViewModel to FilterState
+    // Interactor to FilterState
     
     XCTAssertTrue(filterState.filters.isEmpty)
     
-    viewModel.computeIsSelected(selecting: true)
+    interactor.computeIsSelected(selecting: true)
     
     let groupID: FilterGroup.ID = .or(name: "_tags", filterType: .tag)
     
     
     XCTAssertTrue(filterState.filters.contains(Filter.Tag("tag"), inGroupWithID: groupID))
     
-    viewModel.computeIsSelected(selecting: false)
+    interactor.computeIsSelected(selecting: false)
     
     XCTAssertTrue(filterState.filters.isEmpty)
   
-    // FilterState to ViewModel
+    // FilterState to Interactor
     
     filterState.notify(.add(filter: Filter.Tag("tag"), toGroupWithID: groupID))
     
-    XCTAssertTrue(viewModel.isSelected)
+    XCTAssertTrue(interactor.isSelected)
     
   }
   
   func testConnectController() {
     
-    let viewModel = SelectableViewModel<Filter.Tag>(item: "tag")
+    let interactor = SelectableInteractor<Filter.Tag>(item: "tag")
     
-    viewModel.isSelected = true
+    interactor.isSelected = true
 
     let controller = TestSelectableController<Filter.Tag>()
     
-    viewModel.connectController(controller)
+    interactor.connectController(controller)
     
     // Pre-selection transmission
     
     XCTAssertTrue(controller.isSelected)
     
-    // ViewModel -> Controller
+    // Interactor -> Controller
     
-    viewModel.isSelected = false
+    interactor.isSelected = false
     
     XCTAssertFalse(controller.isSelected)
     
-    // Controller -> ViewModel
+    // Controller -> Interactor
     
     let selectedComputedExpectation = expectation(description: "selected computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { isSelected in
+    interactor.onSelectedComputed.subscribe(with: self) { isSelected in
       XCTAssertTrue(isSelected)
       selectedComputedExpectation.fulfill()
     }

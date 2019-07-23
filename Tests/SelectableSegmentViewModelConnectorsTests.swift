@@ -1,5 +1,5 @@
 //
-//  SelectableSegmentViewModelConnectorsTests.swift
+//  SelectableSegmentInteractorConnectorsTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 21/05/2019.
@@ -10,7 +10,7 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SelectableSegmentViewModelConnectorsTests: XCTestCase {
+class SelectableSegmentInteractorConnectorsTests: XCTestCase {
   
   class TestController: SelectableSegmentController {
     
@@ -40,9 +40,9 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
     let filterState = FilterState()
     let searcher = SingleIndexSearcher(index: .test, query: query)
     
-    let viewModel = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
-    viewModel.connectSearcher(searcher, attribute: "tags")
-    viewModel.connectFilterState(filterState, attribute: "tags", operator: .or)
+    let interactor = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
+    interactor.connectSearcher(searcher, attribute: "tags")
+    interactor.connectFilterState(filterState, attribute: "tags", operator: .or)
     
     XCTAssertTrue((query.facets ?? []).contains("tags"))
     
@@ -51,54 +51,54 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
   func testConnectFilterState() {
     
     let filterState = FilterState()
-    let viewModel = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
+    let interactor = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     
-    viewModel.connectFilterState(filterState, attribute: "tags", operator: .or)
-    // ViewModel -> FilterState
+    interactor.connectFilterState(filterState, attribute: "tags", operator: .or)
+    // Interactor -> FilterState
     
-    viewModel.computeSelected(selecting: 1)
+    interactor.computeSelected(selecting: 1)
     
     XCTAssertTrue(filterState.contains(Filter.Tag(value: "t2"), inGroupWithID: .or(name: "tags", filterType: .tag)))
 
-    // FilterState -> ViewModel
+    // FilterState -> Interactor
     
     filterState.notify(.remove(filter: Filter.Tag(value: "t2"), fromGroupWithID: .or(name: "tags", filterType: .tag)))
     
-    XCTAssertNil(viewModel.selected)
+    XCTAssertNil(interactor.selected)
     
     filterState.notify(.add(filter: Filter.Tag(value: "t3"), toGroupWithID: .or(name: "tags", filterType: .tag)))
     
-    XCTAssertEqual(viewModel.selected, 2)
+    XCTAssertEqual(interactor.selected, 2)
     
   }
   
   func testConnectController() {
     
-    let viewModel = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
+    let interactor = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     let controller = TestController()
 
-    viewModel.selected = 1
+    interactor.selected = 1
     
-    viewModel.connectController(controller)
+    interactor.connectController(controller)
 
     // Preselection
     
     XCTAssertEqual(controller.items, [0: "t1", 1: "t2", 2: "t3"])
     XCTAssertEqual(controller.selected, 1)
     
-    // ViewModel -> Controller
+    // Interactor -> Controller
     
-    viewModel.selected = 2
+    interactor.selected = 2
     XCTAssertEqual(controller.selected, 2)
 
-    viewModel.items = [0: "t4", 1: "t5", 2: "t6"]
+    interactor.items = [0: "t4", 1: "t5", 2: "t6"]
     XCTAssertEqual(controller.items, [0: "t4", 1: "t5", 2: "t6"])
     
-    // Controller -> ViewModel
+    // Controller -> Interactor
     
     let selectedComputedExpectation = expectation(description: "selected computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { selected in
+    interactor.onSelectedComputed.subscribe(with: self) { selected in
       XCTAssertEqual(selected, 0)
       selectedComputedExpectation.fulfill()
     }

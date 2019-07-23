@@ -1,5 +1,5 @@
 //
-//  SelectableSegmentViewModelTests.swift
+//  SelectableSegmentInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 20/05/2019.
@@ -10,31 +10,31 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SelectableSegmentViewModelTests: XCTestCase {
+class SelectableSegmentInteractorTests: XCTestCase {
   
   typealias VM = SelectableSegmentInteractor<String, String>
   
   func testConstruction() {
     
-    let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
+    let interactor = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
     
-    XCTAssertEqual(viewModel.items, ["k1": "i1", "k2": "i2", "k3": "i3"])
-    XCTAssertNil(viewModel.selected)
+    XCTAssertEqual(interactor.items, ["k1": "i1", "k2": "i2", "k3": "i3"])
+    XCTAssertNil(interactor.selected)
     
   }
   
   func testSwitchItems() {
     
-    let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
+    let interactor = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
 
     let switchItemsExpectation = expectation(description: "switch items")
     
-    viewModel.onItemsChanged.subscribe(with: self) { newItems in
+    interactor.onItemsChanged.subscribe(with: self) { newItems in
       XCTAssertEqual(newItems, ["k4": "i4"])
       switchItemsExpectation.fulfill()
     }
     
-    viewModel.items = ["k4": "i4"]
+    interactor.items = ["k4": "i4"]
     
     waitForExpectations(timeout: 2, handler: nil)
     
@@ -42,18 +42,18 @@ class SelectableSegmentViewModelTests: XCTestCase {
   
   func testSelection() {
     
-    let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
+    let interactor = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
 
     let selectionExpectation = expectation(description: "selection")
     
-    viewModel.onSelectedChanged.subscribe(with: self) { selectedKey in
+    interactor.onSelectedChanged.subscribe(with: self) { selectedKey in
       XCTAssertEqual(selectedKey, "k3")
       selectionExpectation.fulfill()
     }
     
-    viewModel.selected = "k3"
+    interactor.selected = "k3"
     
-    XCTAssertEqual(viewModel.selected, "k3")
+    XCTAssertEqual(interactor.selected, "k3")
     
     waitForExpectations(timeout: 2, handler: nil)
     
@@ -61,32 +61,32 @@ class SelectableSegmentViewModelTests: XCTestCase {
   
   func testSelectionComputed() {
     
-    let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
+    let interactor = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
 
     let selectionComputedExpectation = expectation(description: "selection computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { computedSelection in
+    interactor.onSelectedComputed.subscribe(with: self) { computedSelection in
       XCTAssertEqual(computedSelection, "k3")
       selectionComputedExpectation.fulfill()
     }
     
-    viewModel.computeSelected(selecting: "k3")
+    interactor.computeSelected(selecting: "k3")
     
     waitForExpectations(timeout: 2, handler: .none)
 
   }
   
   func nilSelectedComputedTest() {
-    let viewModel = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
+    let interactor = VM(items: ["k1": "i1", "k2": "i2", "k3": "i3"])
     
     let selectionComputedExp = expectation(description: "selection computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { computedSelection in
+    interactor.onSelectedComputed.subscribe(with: self) { computedSelection in
       XCTAssertNil(computedSelection)
       selectionComputedExp.fulfill()
     }
     
-    viewModel.computeSelected(selecting: nil)
+    interactor.computeSelected(selecting: nil)
     
     waitForExpectations(timeout: 2, handler: .none)
   }

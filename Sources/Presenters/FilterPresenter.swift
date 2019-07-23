@@ -47,5 +47,4 @@ public extension DefaultPresenter {
 
   }
 
-
 }

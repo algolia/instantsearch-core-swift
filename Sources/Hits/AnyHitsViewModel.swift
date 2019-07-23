@@ -1,5 +1,5 @@
 //
-//  AnyHitsViewModel.swift
+//  AnyHitsInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 15/03/2019.
@@ -17,14 +17,14 @@ public protocol AnyHitsInteractor: class {
   var pageLoader: PageLoadable? { get set }
   
   /// Updates search results with a search results with a hit of JSON type.
-  /// Internally it tries to convert JSON to a record type of hits ViewModel
+  /// Internally it tries to convert JSON to a record type of hits Interactor
   /// - Parameter searchResults:
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor
 
   func update(_ searchResults: SearchResults) throws
   
   /// Returns a hit for row of a desired type
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor
   
   func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R?
   

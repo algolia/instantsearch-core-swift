@@ -1,5 +1,5 @@
 //
-//  SelectableListViewModel.swift
+//  SelectableListInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 18/04/2019.
@@ -13,7 +13,7 @@ public enum SelectionMode {
   case multiple
 }
 
-public class SelectableListViewModel<Key: Hashable, Item: Equatable> {
+public class SelectableListInteractor<Key: Hashable, Item: Equatable> {
   
   public var items: [Item] {
     didSet {

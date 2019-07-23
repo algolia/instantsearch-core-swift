@@ -1,5 +1,5 @@
 //
-//  SelectableViewModel+Filter.swift
+//  SelectableInteractor+Filter.swift
 //  InstantSearchCore-iOS
 //
 //  Created by Vladislav Fitc on 06/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension SelectableViewModel where Item: FilterType {
+public extension SelectableInteractor where Item: FilterType {
 
   func connectFilterState(_ filterState: FilterState,
                           operator: RefinementOperator = .or,
@@ -27,7 +27,7 @@ public extension SelectableViewModel where Item: FilterType {
   
 }
 
-private extension SelectableViewModel where Item: FilterType {
+private extension SelectableInteractor where Item: FilterType {
   
   func connectTo<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                           via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
@@ -98,7 +98,7 @@ private extension SelectableViewModel where Item: FilterType {
 
 }
 
-public extension SelectableViewModel where Item: FilterType {
+public extension SelectableInteractor where Item: FilterType {
 
   func connectController<C: SelectableController>(_ controller: C) where C.Item == Item {
     controller.setItem(item)

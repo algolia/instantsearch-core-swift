@@ -1,5 +1,5 @@
 //
-//  FilterListViewModel+Numeric.swift
+//  FilterListInteractor+Numeric.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 17/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension SelectableListViewModel where Key == Filter.Numeric, Item == Filter.Numeric {
+public extension SelectableListInteractor where Key == Filter.Numeric, Item == Filter.Numeric {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .single)

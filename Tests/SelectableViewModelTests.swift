@@ -1,5 +1,5 @@
 //
-//  SelectableViewModelTests.swift
+//  SelectableInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 20/05/2019.
@@ -10,43 +10,43 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SelectableViewModelTests: XCTestCase {
+class SelectableInteractorTests: XCTestCase {
   
-  typealias VM = SelectableViewModel<String>
+  typealias VM = SelectableInteractor<String>
   
   func testConstruction() {
     
-    let viewModel = SelectableViewModel(item: "i")
+    let interactor = SelectableInteractor(item: "i")
     
-    XCTAssertFalse(viewModel.isSelected)
-    XCTAssertEqual(viewModel.item, "i")
+    XCTAssertFalse(interactor.isSelected)
+    XCTAssertEqual(interactor.item, "i")
     
   }
   
   func testSwitchItem() {
     
-    let viewModel = SelectableViewModel(item: "i")
+    let interactor = SelectableInteractor(item: "i")
 
     let switchItemExpectation = expectation(description: "item changed")
     
-    viewModel.onItemChanged.subscribe(with: self) { newItem in
+    interactor.onItemChanged.subscribe(with: self) { newItem in
       XCTAssertEqual(newItem, "o")
       switchItemExpectation.fulfill()
     }
     
-    viewModel.item = "o"
+    interactor.item = "o"
     
     waitForExpectations(timeout: 2, handler: nil)
   }
   
   func testSelection() {
     
-    let viewModel = SelectableViewModel(item: "i")
+    let interactor = SelectableInteractor(item: "i")
 
     let selectionExpectation = expectation(description: "item selected")
     let deselectionExpectation = expectation(description: "item deselected")
     
-    viewModel.onSelectedChanged.subscribe(with: self) { isSelected in
+    interactor.onSelectedChanged.subscribe(with: self) { isSelected in
       if isSelected {
         selectionExpectation.fulfill()
       } else {
@@ -54,8 +54,8 @@ class SelectableViewModelTests: XCTestCase {
       }
     }
     
-    viewModel.isSelected = true
-    viewModel.isSelected = false
+    interactor.isSelected = true
+    interactor.isSelected = false
     
     waitForExpectations(timeout: 2, handler: nil)
     
@@ -63,16 +63,16 @@ class SelectableViewModelTests: XCTestCase {
   
   func testSelectedComputed() {
     
-    let viewModel = SelectableViewModel(item: "i")
+    let interactor = SelectableInteractor(item: "i")
 
     let selectedComputedExpectation = expectation(description: "computed selected")
 
-    viewModel.onSelectedComputed.subscribe(with: self) { isSelected in
+    interactor.onSelectedComputed.subscribe(with: self) { isSelected in
       XCTAssertEqual(isSelected, false)
       selectedComputedExpectation.fulfill()
     }
     
-    viewModel.computeIsSelected(selecting: false)
+    interactor.computeIsSelected(selecting: false)
     
     waitForExpectations(timeout: 2, handler: nil)
     

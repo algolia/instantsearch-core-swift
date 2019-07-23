@@ -1,5 +1,5 @@
 //
-//  FilterListViewModel+Facet.swift
+//  FilterListInteractor+Facet.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 17/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension SelectableListViewModel where Key == Filter.Facet, Item == Filter.Facet {
+public extension SelectableListInteractor where Key == Filter.Facet, Item == Filter.Facet {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .multiple)

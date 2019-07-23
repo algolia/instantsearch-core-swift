@@ -1,5 +1,5 @@
 //
-//  SelectableListViewModel+Filter.swift
+//  SelectableListInteractor+Filter.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 17/05/2019.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public typealias FilterListViewModel<F: FilterType & Hashable> = SelectableListViewModel<F, F>
+public typealias FilterListInteractor<F: FilterType & Hashable> = SelectableListInteractor<F, F>
 
-public extension SelectableListViewModel where Key == Item, Item: FilterType {
+public extension SelectableListInteractor where Key == Item, Item: FilterType {
   
   func connectFilterState(_ filterState: FilterState,
                           operator: RefinementOperator,
@@ -25,7 +25,7 @@ public extension SelectableListViewModel where Key == Item, Item: FilterType {
   
 }
 
-private extension SelectableListViewModel where Key == Item, Item: FilterType {
+private extension SelectableListInteractor where Key == Item, Item: FilterType {
   
   func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, via accessor: Accessor) where Accessor.Filter == Key {
     whenSelectionsComputedThenUpdateFilterState(filterState, via: accessor)
@@ -62,7 +62,7 @@ private extension SelectableListViewModel where Key == Item, Item: FilterType {
   
 }
 
-public extension SelectableListViewModel where Key == Item, Item: FilterType {
+public extension SelectableListInteractor where Key == Item, Item: FilterType {
   
   func connect<C: SelectableListController>(to controller: C) where C.Item == Item {
     

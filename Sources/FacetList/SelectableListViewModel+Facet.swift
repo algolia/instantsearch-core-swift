@@ -1,5 +1,5 @@
 //
-//  RefinementFacetViewModel.swift
+//  RefinementFacetInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 19/04/2019.
@@ -8,9 +8,9 @@
 
 import Foundation
 
-public typealias SelectableFacetsViewModel = SelectableListViewModel<String, Facet>
+public typealias SelectableFacetsInteractor = SelectableListInteractor<String, Facet>
 
-public class FacetListViewModel: SelectableListViewModel<String, Facet> {
+public class FacetListInteractor: SelectableListInteractor<String, Facet> {
   public init(selectionMode: SelectionMode = .multiple) {
     super.init(selectionMode: selectionMode)
   }
@@ -39,7 +39,7 @@ public enum RefinementOperator {
 
 }
 
-public extension SelectableListViewModel where Key == String, Item == Facet {
+public extension SelectableListInteractor where Key == String, Item == Facet {
 
   func connectSearcher(_ searcher: SingleIndexSearcher, with attribute: Attribute) {
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
@@ -121,7 +121,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
   
 }
 
-public extension SelectableListViewModel where Key == String, Item == Facet {
+public extension SelectableListInteractor where Key == String, Item == Facet {
   
   func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) {
     

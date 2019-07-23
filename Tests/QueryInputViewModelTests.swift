@@ -1,5 +1,5 @@
 //
-//  QueryInputViewModelTests.swift
+//  QueryInputInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 28/05/2019.
@@ -58,22 +58,22 @@ class TestQueryInputController: QueryInputController {
   
 }
 
-class QueryInputViewModelTests: XCTestCase {
+class QueryInputInteractorTests: XCTestCase {
   
   func testOnQueryChangedEvent() {
     
-    let viewModel = QueryInputInteractor()
+    let interactor = QueryInputInteractor()
     
     let onQueryChangedExpectation = expectation(description: "on query changed")
     
     let changedQuery = "q1"
     
-    viewModel.onQueryChanged.subscribe(with: self) { query in
+    interactor.onQueryChanged.subscribe(with: self) { query in
       XCTAssertEqual(query, changedQuery)
       onQueryChangedExpectation.fulfill()
     }
     
-    viewModel.query = changedQuery
+    interactor.query = changedQuery
     
     waitForExpectations(timeout: 2, handler: nil)
     
@@ -81,17 +81,17 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testOnQuerySubmittedEvent() {
     
-    let viewModel = QueryInputInteractor()
+    let interactor = QueryInputInteractor()
     let onQuerySubmittedExpectation = expectation(description: "on query submitted")
     let submittedQuery = "q2"
 
-    viewModel.onQuerySubmitted.subscribe(with: self) { query in
+    interactor.onQuerySubmitted.subscribe(with: self) { query in
       XCTAssertEqual(submittedQuery, query)
       onQuerySubmittedExpectation.fulfill()
     }
     
-    viewModel.query = submittedQuery
-    viewModel.submitQuery()
+    interactor.query = submittedQuery
+    interactor.submitQuery()
     
     waitForExpectations(timeout: 2, handler: nil)
     
@@ -99,16 +99,16 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testSearcherQuerySet() {
     let searcher = TestSearcher()
-    let viewModel = QueryInputInteractor()
+    let interactor = QueryInputInteractor()
     let query = "q1"
     searcher.query = query
-    viewModel.connectSearcher(searcher, searchTriggeringMode: .searchOnSubmit)
-    XCTAssertEqual(viewModel.query, query)
+    interactor.connectSearcher(searcher, searchTriggeringMode: .searchOnSubmit)
+    XCTAssertEqual(interactor.query, query)
   }
   
   func testSearchAsYouTypeSearcherConnect() {
     let searcher = TestSearcher()
-    let viewModel = QueryInputInteractor()
+    let interactor = QueryInputInteractor()
     let query = "q1"
     
     let launchSearchExpectation = expectation(description: "launched search")
@@ -116,7 +116,7 @@ class QueryInputViewModelTests: XCTestCase {
     let querySubmittedExpectation = expectation(description: "submitted expectation")
     querySubmittedExpectation.isInverted = true
     
-    viewModel.onQuerySubmitted.subscribe(with: self) { _ in
+    interactor.onQuerySubmitted.subscribe(with: self) { _ in
       querySubmittedExpectation.fulfill()
     }
   
@@ -125,16 +125,16 @@ class QueryInputViewModelTests: XCTestCase {
       launchSearchExpectation.fulfill()
     }
     
-    viewModel.connectSearcher(searcher, searchTriggeringMode: .searchAsYouType)
+    interactor.connectSearcher(searcher, searchTriggeringMode: .searchAsYouType)
     
-    viewModel.query = query
+    interactor.query = query
     
     waitForExpectations(timeout: 2, handler: nil)
   }
   
   func testSubmitToSearcherSearcherConnect() {
     let searcher = TestSearcher()
-    let viewModel = QueryInputInteractor()
+    let interactor = QueryInputInteractor()
     let query = "q1"
     
     let launchSearchExpectation = expectation(description: "launched search")
@@ -144,10 +144,10 @@ class QueryInputViewModelTests: XCTestCase {
       launchSearchExpectation.fulfill()
     }
     
-    viewModel.connectSearcher(searcher, searchTriggeringMode: .searchOnSubmit)
+    interactor.connectSearcher(searcher, searchTriggeringMode: .searchOnSubmit)
     
-    viewModel.query = query
-    viewModel.submitQuery()
+    interactor.query = query
+    interactor.submitQuery()
     
     waitForExpectations(timeout: 2, handler: nil)
 
@@ -156,23 +156,23 @@ class QueryInputViewModelTests: XCTestCase {
   func testConnectController() {
     
     let controller = TestQueryInputController()
-    let viewModel = QueryInputInteractor()
+    let interactor = QueryInputInteractor()
     let presetQuery = "q1"
-    viewModel.query = presetQuery
+    interactor.query = presetQuery
     
-    viewModel.connectController(controller)
+    interactor.connectController(controller)
     
     XCTAssertEqual(controller.query, presetQuery)
     
     controller.query = "q2"
     
-    XCTAssertEqual(viewModel.query, "q2")
+    XCTAssertEqual(interactor.query, "q2")
     
     controller.query = "q3"
   
     let querySubmittedExpectation = expectation(description: "query submitted")
     
-    viewModel.onQuerySubmitted.subscribe(with: self) { query in
+    interactor.onQuerySubmitted.subscribe(with: self) { query in
       XCTAssertEqual(query, "q3")
       querySubmittedExpectation.fulfill()
     }
