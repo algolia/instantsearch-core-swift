@@ -72,11 +72,11 @@ public struct OrGroupAccessor<Filter: FilterType>: SpecializedGroupAccessor {
     }
   
     public func filters(for attribute: Attribute) -> [Filter] {
-      return filtersContainer.filters.getFilters(for: attribute).compactMap { $0.filter as? Filter }
+      return filtersContainer.filters.getFilters(forGroupWithID: groupID).filter { $0.attribute == attribute }.compactMap { $0.filter as? Filter }
     }
   
     public func filters() -> [Filter] {
-      return filtersContainer.filters.getFilters().compactMap { $0.filter as? Filter }
+      return filtersContainer.filters.getFilters(forGroupWithID: groupID).compactMap { $0.filter as? Filter }
     }
     
 }

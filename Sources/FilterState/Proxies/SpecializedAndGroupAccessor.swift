@@ -18,7 +18,7 @@ public struct SpecializedAndGroupAccessor<Filter: FilterType>: SpecializedGroupA
       return genericAccessor.filtersContainer
     }
     
-  public var groupID: FilterGroup.ID {
+    public var groupID: FilterGroup.ID {
         return genericAccessor.groupID
     }
     
@@ -79,11 +79,11 @@ public struct SpecializedAndGroupAccessor<Filter: FilterType>: SpecializedGroupA
     }
   
     public func filters(for attribute: Attribute) -> [Filter] {
-      return filtersContainer.filters.getFilters(for: attribute).compactMap { $0.filter as? Filter }
+      return filtersContainer.filters.getFilters(forGroupWithID: groupID).filter { $0.attribute == attribute }.compactMap { $0.filter as? Filter }
     }
 
     public func filters() -> [Filter] {
-      return filtersContainer.filters.getFilters().compactMap { $0.filter as? Filter }
+      return filtersContainer.filters.getFilters(forGroupWithID: groupID).compactMap { $0.filter as? Filter }
     }
     
 }
