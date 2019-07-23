@@ -1,5 +1,5 @@
 //
-//  MultiIndexHitsViewModel.swift
+//  MultiIndexHitsInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 15/03/2019.
@@ -9,52 +9,52 @@
 import Foundation
 
 /**
- ViewModel which constitutes the aggregation of nested hits ViewModels providing a convenient functions for managing them.
+ Interactor which constitutes the aggregation of nested hits interactors providing a convenient functions for managing them.
  Designed for a joint usage with multi index searcher, but can be used with multiple separate single index searchers as well.
  */
 
-public class MultiIndexHitsViewModel {
+public class MultiIndexHitsInteractor {
   
   public let onRequestChanged: Observer<Void>
   public let onResultsUpdated: Observer<[SearchResults]>
   public let onError: Observer<Swift.Error>
   
-  /// List of nested hits ViewModels
+  /// List of nested hits interactors
   
-  let hitsViewModels: [AnyHitsViewModel]
+  let hitsInteractors: [AnyHitsInteractor]
   
   /// Common initializer
   
-  public init(hitsViewModels: [AnyHitsViewModel]) {
-    self.hitsViewModels = hitsViewModels
+  public init(hitsInteractors: [AnyHitsInteractor]) {
+    self.hitsInteractors = hitsInteractors
     self.onRequestChanged = .init()
     self.onResultsUpdated = .init()
     self.onError = .init()
   }
   
-  /// Returns the index of provided hits ViewModel.
-  /// - Parameter hitsViewModel: the ViewModel to search for
-  /// - Returns: The index of desired ViewModel. If no there is no such ViewModel, returns `nil`
+  /// Returns the index of provided hits interactor.
+  /// - Parameter hitsInteractor: the interactor to search for
+  /// - Returns: The index of desired interactor. If no there is no such interactor, returns `nil`
   
-  public func section<R>(of hitsViewModel: HitsViewModel<R>) -> Int? {
-    return hitsViewModels.firstIndex { ($0 as? HitsViewModel<R>) === hitsViewModel }
+  public func section<R>(of hitsInteractor: HitsInteractor<R>) -> Int? {
+    return hitsInteractors.firstIndex { ($0 as? HitsInteractor<R>) === hitsInteractor }
   }
   
-  /// Returns boolean value indicating if desired ViewModel is nested in current multi hits ViewModel
-  /// - Parameter hitsViewModel: the ViewModel to check
+  /// Returns boolean value indicating if desired hitsInteractor is nested in current multi hits hitsInteractor
+  /// - Parameter hitsInteractor: the interactor to check
   
-  public func contains<R>(_ hitsViewModel: HitsViewModel<R>) -> Bool {
-    return section(of: hitsViewModel) != nil
+  public func contains<R>(_ hitsInteractor: HitsInteractor<R>) -> Bool {
+    return section(of: hitsInteractor) != nil
   }
   
-  /// Returns a hits ViewModel at specified index
-  /// - Parameter section: the section index of nested hits ViewModel
-  /// - Throws: HitsViewModel.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits ViewModel
-  /// - Returns: The nested ViewModel at specified index.
+  /// Returns a hits interactor at specified index
+  /// - Parameter section: the section index of nested hits interactor
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits interactor
+  /// - Returns: The nested interactor at specified index.
   
-  public func hitsViewModel<R>(forSection section: Int) throws -> HitsViewModel<R> {
-    guard let typedViewModel = hitsViewModels[section] as? HitsViewModel<R> else {
-      throw HitsViewModel<R>.Error.incompatibleRecordType
+  public func hitsViewModel<R>(forSection section: Int) throws -> HitsInteractor<R> {
+    guard let typedViewModel = hitsInteractors[section] as? HitsInteractor<R> else {
+      throw HitsInteractor<R>.Error.incompatibleRecordType
     }
     
     return typedViewModel
@@ -66,7 +66,7 @@ public class MultiIndexHitsViewModel {
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits ViewModel
   
   public func update(_ results: SearchResults, forViewModelInSection section: Int) throws {
-    try hitsViewModels[section].update(results)
+    try hitsInteractors[section].update(results)
   }
   
   /// Updates the results of all nested hits ViewModels.
@@ -76,7 +76,7 @@ public class MultiIndexHitsViewModel {
   /// - Throws: HitsViewModel.Error.incompatibleRecordType if the conversion of search results for one of a nested hits ViewModels is impossible due to a record type mismatch
   
   public func update(_ results: [SearchResults]) throws {
-    try zip(hitsViewModels, results).forEach { arg in
+    try zip(hitsInteractors, results).forEach { arg in
       let (viewModel, results) = arg
       try viewModel.update(results)
     }
@@ -85,13 +85,13 @@ public class MultiIndexHitsViewModel {
   
   public func process(_ error: Error, for queries: [Query]) {
     let pages = queries.compactMap { $0.page }.map { Int($0) }
-    zip(hitsViewModels, pages).forEach { (hitsViewModel, page) in
+    zip(hitsInteractors, pages).forEach { (hitsViewModel, page) in
       hitsViewModel.notifyPending(atIndex: page)
     }
   }
   
   public func notifyQueryChanged() {
-    hitsViewModels.forEach {
+    hitsInteractors.forEach {
       $0.notifyQueryChanged()
     }
     onRequestChanged.fire(())
@@ -104,7 +104,7 @@ public class MultiIndexHitsViewModel {
   /// - Returns: The hit at row for index path or `nil` if there is no element at index in a specified section
   
   public func hit<R: Codable>(atIndex index: Int, inSection section: Int) throws -> R? {
-    return try hitsViewModels[section].genericHitAtIndex(index)
+    return try hitsInteractors[section].genericHitAtIndex(index)
   }
   
   /// Returns the hit in raw dictionary form
@@ -113,27 +113,27 @@ public class MultiIndexHitsViewModel {
   /// - Returns: The hit in raw dictionary form or `nil` if there is no element at index in a specified section
   
   public func rawHit(atIndex index: Int, inSection section: Int) -> [String: Any]? {
-    return hitsViewModels[section].rawHitAtIndex(index)
+    return hitsInteractors[section].rawHitAtIndex(index)
   }
   
   /// Returns number of nested hits ViewModels
   
   public func numberOfSections() -> Int {
-    return hitsViewModels.count
+    return hitsInteractors.count
   }
   
   /// Returns number rows in the nested hits ViewModel at section
   /// - Parameter section: the index of nested hits ViewModel
   
   public func numberOfHits(inSection section: Int) -> Int {
-    return hitsViewModels[section].numberOfHits()
+    return hitsInteractors[section].numberOfHits()
   }
   
 }
 
 #if os(iOS) || os(tvOS)
 
-public extension MultiIndexHitsViewModel {
+public extension MultiIndexHitsInteractor {
   
   /// Returns the hit of a desired type
   /// - Parameter indexPath: the pointer to a hit, where section points to a nested hits ViewModel, and item defines the index of a hit in a ViewModel

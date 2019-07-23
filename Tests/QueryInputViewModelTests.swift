@@ -62,7 +62,7 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testOnQueryChangedEvent() {
     
-    let viewModel = QueryInputViewModel()
+    let viewModel = QueryInputInteractor()
     
     let onQueryChangedExpectation = expectation(description: "on query changed")
     
@@ -81,7 +81,7 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testOnQuerySubmittedEvent() {
     
-    let viewModel = QueryInputViewModel()
+    let viewModel = QueryInputInteractor()
     let onQuerySubmittedExpectation = expectation(description: "on query submitted")
     let submittedQuery = "q2"
 
@@ -99,7 +99,7 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testSearcherQuerySet() {
     let searcher = TestSearcher()
-    let viewModel = QueryInputViewModel()
+    let viewModel = QueryInputInteractor()
     let query = "q1"
     searcher.query = query
     viewModel.connectSearcher(searcher, searchTriggeringMode: .searchOnSubmit)
@@ -108,7 +108,7 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testSearchAsYouTypeSearcherConnect() {
     let searcher = TestSearcher()
-    let viewModel = QueryInputViewModel()
+    let viewModel = QueryInputInteractor()
     let query = "q1"
     
     let launchSearchExpectation = expectation(description: "launched search")
@@ -134,7 +134,7 @@ class QueryInputViewModelTests: XCTestCase {
   
   func testSubmitToSearcherSearcherConnect() {
     let searcher = TestSearcher()
-    let viewModel = QueryInputViewModel()
+    let viewModel = QueryInputInteractor()
     let query = "q1"
     
     let launchSearchExpectation = expectation(description: "launched search")
@@ -156,7 +156,7 @@ class QueryInputViewModelTests: XCTestCase {
   func testConnectController() {
     
     let controller = TestQueryInputController()
-    let viewModel = QueryInputViewModel()
+    let viewModel = QueryInputInteractor()
     let presetQuery = "q1"
     viewModel.query = presetQuery
     

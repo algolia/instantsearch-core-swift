@@ -1,5 +1,5 @@
 //
-//  FilterClearViewModel+FilterClearController.swift
+//  FilterClearInteractor+FilterClearController.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 13/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension FilterClearViewModel {
+public extension FilterClearInteractor {
   func connectController(_ controller: FilterClearController) {
     controller.onClick = { [weak self] in
       self?.onTriggered.fire(())

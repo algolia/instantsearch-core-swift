@@ -12,7 +12,7 @@ import XCTest
 
 class ItemViewModelTests: XCTestCase {
   
-  typealias VM = ItemViewModel<String>
+  typealias VM = ItemInteractor<String>
   
   func testConstruction() {
     

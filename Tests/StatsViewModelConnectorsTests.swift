@@ -25,7 +25,7 @@ class StatsViewModelConnectorsTests: XCTestCase {
   
   func testConnectSearcher() {
     
-    let vm = StatsViewModel()
+    let vm = StatsInteractor()
     let results = SearchResults(hits: [], stats: .init())
     let query = Query()
     
@@ -46,7 +46,7 @@ class StatsViewModelConnectorsTests: XCTestCase {
   
   func testConnectController() {
     
-    let vm = StatsViewModel()
+    let vm = StatsInteractor()
 
     let controller = TestStatsController()
     

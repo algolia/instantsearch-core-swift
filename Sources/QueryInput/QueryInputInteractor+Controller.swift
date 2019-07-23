@@ -1,5 +1,5 @@
 //
-//  QueryInputViewModel+Controller.swift
+//  QueryInputInteractor+Controller.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 28/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension QueryInputViewModel {
+extension QueryInputInteractor {
   
   public func connectController<C: QueryInputController>(_ controller: C) {
     onQueryChanged.subscribePast(with: controller, callback: controller.setQuery)

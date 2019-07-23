@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SelectableViewModel<Item>: ItemViewModel<Item> {
+public class SelectableViewModel<Item>: ItemInteractor<Item> {
 
   public var isSelected: Bool {
     didSet {

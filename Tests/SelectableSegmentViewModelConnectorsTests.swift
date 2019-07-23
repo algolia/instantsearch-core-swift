@@ -40,7 +40,7 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
     let filterState = FilterState()
     let searcher = SingleIndexSearcher(index: .test, query: query)
     
-    let viewModel = SelectableSegmentViewModel<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
+    let viewModel = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     viewModel.connectSearcher(searcher, attribute: "tags")
     viewModel.connectFilterState(filterState, attribute: "tags", operator: .or)
     
@@ -51,7 +51,7 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
   func testConnectFilterState() {
     
     let filterState = FilterState()
-    let viewModel = SelectableSegmentViewModel<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
+    let viewModel = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     
     viewModel.connectFilterState(filterState, attribute: "tags", operator: .or)
     // ViewModel -> FilterState
@@ -74,7 +74,7 @@ class SelectableSegmentViewModelConnectorsTests: XCTestCase {
   
   func testConnectController() {
     
-    let viewModel = SelectableSegmentViewModel<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
+    let viewModel = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     let controller = TestController()
 
     viewModel.selected = 1

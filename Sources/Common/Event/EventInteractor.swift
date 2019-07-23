@@ -1,5 +1,5 @@
 //
-//  EventViewModel.swift
+//  EventInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 10/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol EventViewModel {
+public protocol EventInteractor {
   associatedtype Arg
 
   var onTriggered: Observer<Arg> { get }

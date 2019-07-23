@@ -1,5 +1,5 @@
 //
-//  HitsViewModel.swift
+//  HitsInteractor.swift
 //  InstantSearch
 //
 //  Created by Guy Daher on 15/02/2019.
@@ -8,7 +8,7 @@
 import Foundation
 import InstantSearchClient
 
-public class HitsViewModel<Record: Codable>: AnyHitsViewModel {
+public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
   
   public let settings: Settings
 
@@ -99,7 +99,7 @@ public class HitsViewModel<Record: Codable>: AnyHitsViewModel {
 
 }
 
-extension HitsViewModel {
+extension HitsInteractor {
   
   public enum Error: Swift.Error, LocalizedError {
     case incompatibleRecordType
@@ -112,7 +112,7 @@ extension HitsViewModel {
   
 }
 
-private extension HitsViewModel {
+private extension HitsInteractor {
   
   func notifyForInfiniteScrolling(rowNumber: Int) {
     guard
@@ -124,7 +124,7 @@ private extension HitsViewModel {
   
 }
 
-public extension HitsViewModel where Record == JSON {
+public extension HitsInteractor where Record == JSON {
   
   func rawHitForRow(_ row: Int) -> [String: Any]? {
     return hit(atIndex: row).flatMap([String: Any].init)
@@ -132,7 +132,7 @@ public extension HitsViewModel where Record == JSON {
   
 }
 
-extension HitsViewModel {
+extension HitsInteractor {
   
   public struct Settings {
     
@@ -154,7 +154,7 @@ public enum InfiniteScrolling {
   case off
 }
 
-extension HitsViewModel {
+extension HitsInteractor {
   
   public func notifyQueryChanged() {
     if case .on = settings.infiniteScrolling {

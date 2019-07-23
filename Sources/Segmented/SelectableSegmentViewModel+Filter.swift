@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: FilterType {
+public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: FilterType {
 
   func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
     searcher.indexQueryState.query.updateQueryFacets(with: attribute)
@@ -68,7 +68,7 @@ public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: Fi
   
 }
 
-public extension SelectableSegmentViewModel where Segment: FilterType {
+public extension SelectableSegmentInteractor where Segment: FilterType {
   
   func connectController<C: SelectableSegmentController>(_ controller: C, presenter: FilterPresenter? = .none) where C.SegmentKey == SegmentKey {
     

@@ -1,5 +1,5 @@
 //
-//  ClearRefinementsViewModel.swift
+//  FilterClearInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 13/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FilterClearViewModel: EventViewModel {
+public class FilterClearInteractor: EventInteractor {
   public let onTriggered: Observer<Void>
 
   public init() {

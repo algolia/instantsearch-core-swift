@@ -1,5 +1,5 @@
 //
-//  NumberRangeViewModel.swift
+//  NumberRangeInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 14/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NumberRangeViewModel<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemViewModel<ClosedRange<Number>?>, Boundable {
+public class NumberRangeInteractor<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemInteractor<ClosedRange<Number>?>, Boundable {
 
   public let onNumberRangeComputed: Observer<ClosedRange<Number>?>
   // TODO: Need to move that info at the view/controller level.

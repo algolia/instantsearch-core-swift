@@ -1,5 +1,5 @@
 //
-//  HiearchicalViewModel.swift
+//  HiearchicalInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 03/07/2019.
@@ -8,10 +8,9 @@
 
 import Foundation
 
-//public typealias HierarchicalPath = [(attribute: Attribute, facetValue: String)]
 public typealias HierarchicalPath = [Filter.Facet]
 
-public class HierarchicalViewModel: ItemViewModel<[[Facet]]> {
+public class HierarchicalInteractor: ItemInteractor<[[Facet]]> {
 
   let hierarchicalAttributes: [Attribute]
   let separator: String

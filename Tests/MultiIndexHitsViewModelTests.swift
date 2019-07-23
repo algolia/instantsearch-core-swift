@@ -23,14 +23,14 @@ class TestPageLoader: PageLoadable {
 class MultiIndexHitsViewModelTests: XCTestCase {
   
   func testConstruction() {
-    let viewModel = MultiIndexHitsViewModel(hitsViewModels: [])
+    let viewModel = MultiIndexHitsInteractor(hitsInteractors: [])
     XCTAssertEqual(viewModel.numberOfSections(), 0)
   }
   
   func testAppend() {
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    let multiViewModel = MultiIndexHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
+    let viewModel1 = HitsInteractor<[String: Int]>()
+    let viewModel2 = HitsInteractor<[String: [String: Int]]>()
+    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
     XCTAssertTrue(multiViewModel.contains(viewModel1))
@@ -39,9 +39,9 @@ class MultiIndexHitsViewModelTests: XCTestCase {
   }
   
   func testSearchByIndex() {
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: [String: Int]]>()
-    let multiViewModel = MultiIndexHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
+    let viewModel1 = HitsInteractor<[String: Int]>()
+    let viewModel2 = HitsInteractor<[String: [String: Int]]>()
+    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
     
     XCTAssertEqual(multiViewModel.numberOfSections(), 2)
     XCTAssertTrue(multiViewModel.contains(viewModel1))
@@ -53,23 +53,23 @@ class MultiIndexHitsViewModelTests: XCTestCase {
   
   func testSearchByIndexThrows() {
     
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: [String: Int]]>()
+    let viewModel1 = HitsInteractor<[String: Int]>()
+    let viewModel2 = HitsInteractor<[String: [String: Int]]>()
     
-    let multiViewModel = MultiIndexHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
+    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
     
-    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 0) as HitsViewModel<[String: Int]>)
-    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 1) as HitsViewModel<[String: [String: Int]]>)
-    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 0) as HitsViewModel<[String: [String: String]]>)
-    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 1) as HitsViewModel<String>)
+    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 0) as HitsInteractor<[String: Int]>)
+    XCTAssertNoThrow(try multiViewModel.hitsViewModel(forSection: 1) as HitsInteractor<[String: [String: Int]]>)
+    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 0) as HitsInteractor<[String: [String: String]]>)
+    XCTAssertThrowsError(try multiViewModel.hitsViewModel(forSection: 1) as HitsInteractor<String>)
 
   }
   
   func testUpdatePerViewModel() {
 
-    let viewModel1 = HitsViewModel<[String: Int]>()
-    let viewModel2 = HitsViewModel<[String: Bool]>()
-    let multiViewModel = MultiIndexHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
+    let viewModel1 = HitsInteractor<[String: Int]>()
+    let viewModel2 = HitsInteractor<[String: Bool]>()
+    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
     
     let hits1 = try! [["a": 1], ["b": 2], ["c": 3]].map(JSON.init)
     let results1 = SearchResults(hits: hits1, stats: .init())
@@ -89,12 +89,12 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     
     let pageLoader = TestPageLoader()
 
-    let viewModel1 = HitsViewModel<[String: Int]>()
+    let viewModel1 = HitsInteractor<[String: Int]>()
     viewModel1.pageLoader = pageLoader
-    let viewModel2 = HitsViewModel<[String: Bool]>()
+    let viewModel2 = HitsInteractor<[String: Bool]>()
     viewModel2.pageLoader = pageLoader
     
-    let multiViewModel = MultiIndexHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
+    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
     
     let hits1: [JSON] = [
       .dictionary(["a": .number(1)]),
@@ -132,12 +132,12 @@ class MultiIndexHitsViewModelTests: XCTestCase {
 
     let pageLoader = TestPageLoader()
     
-    let viewModel1 = HitsViewModel<[String: Int]>()
+    let viewModel1 = HitsInteractor<[String: Int]>()
     viewModel1.pageLoader = pageLoader
-    let viewModel2 = HitsViewModel<[String: Bool]>()
+    let viewModel2 = HitsInteractor<[String: Bool]>()
     viewModel2.pageLoader = pageLoader
     
-    let multiViewModel = MultiIndexHitsViewModel(hitsViewModels: [viewModel1, viewModel2])
+    let multiViewModel = MultiIndexHitsInteractor(hitsInteractors: [viewModel1, viewModel2])
     
     let hits1: [JSON] = [
       .dictionary(["a": .number(1)]),
@@ -175,7 +175,7 @@ class MultiIndexHitsViewModelTests: XCTestCase {
     
   }
   
-  class TestHitsViewModel: AnyHitsViewModel {
+  class TestHitsViewModel: AnyHitsInteractor {
     
     var pageLoader: PageLoadable?
     

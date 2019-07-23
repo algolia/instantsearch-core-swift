@@ -1,5 +1,5 @@
 //
-//  NumberRangeViewModel+FilterState.swift
+//  NumberRangeInteractor+FilterState.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 14/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension NumberRangeViewModel {
+public extension NumberRangeInteractor {
   
   func connectFilterState(_ filterState: FilterState,
                           attribute: Attribute,

@@ -20,11 +20,11 @@ public protocol HitsController: class {
   
 }
 
-extension HitsViewModel: HitsSource {}
+extension HitsInteractor: HitsSource {}
 
-public extension HitsViewModel {
+public extension HitsInteractor {
   
-  func connectController<Controller: HitsController>(_ controller: Controller) where Controller.DataSource == HitsViewModel<Record> {
+  func connectController<Controller: HitsController>(_ controller: Controller) where Controller.DataSource == HitsInteractor<Record> {
     
     controller.hitsSource = self
     

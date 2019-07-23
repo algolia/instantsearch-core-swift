@@ -18,9 +18,9 @@ public protocol MultiIndexHitsController: class {
   
 }
 
-extension MultiIndexHitsViewModel: MultiIndexHitsSource {}
+extension MultiIndexHitsInteractor: MultiIndexHitsSource {}
 
-public extension MultiIndexHitsViewModel {
+public extension MultiIndexHitsInteractor {
   
   func connectController<Controller: MultiIndexHitsController>(_ controller: Controller) {
     

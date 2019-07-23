@@ -1,5 +1,5 @@
 //
-//  IndexSegmentViewModel+Controller.swift
+//  IndexSegmentInteractor+Controller.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 06/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension IndexSegmentViewModel {
+public extension IndexSegmentInteractor {
   func connectController<C: SelectableSegmentController>(_ controller: C, presenter: IndexPresenter? = .none) where C.SegmentKey == SegmentKey {
 
     let presenter = presenter ?? DefaultPresenter.Index.present

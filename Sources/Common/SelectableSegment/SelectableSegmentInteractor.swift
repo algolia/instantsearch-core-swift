@@ -1,5 +1,5 @@
 //
-//  SelectableMapViewModel.swift
+//  SelectableSegmentInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 10/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SelectableSegmentViewModel<SegmentKey: Hashable, Segment> {
+public class SelectableSegmentInteractor<SegmentKey: Hashable, Segment> {
   
   public var items: [SegmentKey: Segment] {
     didSet {

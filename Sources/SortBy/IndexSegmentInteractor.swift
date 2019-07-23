@@ -1,5 +1,5 @@
 //
-//  IndexSegmentViewModel.swift
+//  IndexSegmentInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 06/06/2019.
@@ -8,4 +8,4 @@
 
 import Foundation
 
-public typealias IndexSegmentViewModel = SelectableSegmentViewModel<Int, Index>
+public typealias IndexSegmentInteractor = SelectableSegmentInteractor<Int, Index>

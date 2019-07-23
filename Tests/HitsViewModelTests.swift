@@ -44,13 +44,13 @@ class HitsViewModelTests: XCTestCase {
   
   func testConstructionWithExplicitSettings() {
     
-    let vm = HitsViewModel<String>(infiniteScrolling: .off, showItemsOnEmptyQuery: false)
+    let vm = HitsInteractor<String>(infiniteScrolling: .off, showItemsOnEmptyQuery: false)
     
     if case .off = vm.settings.infiniteScrolling {
     } else { XCTFail() }
     XCTAssertFalse(vm.settings.showItemsOnEmptyQuery)
     
-    let vm1 = HitsViewModel<String>(infiniteScrolling: .on(withOffset: 1000), showItemsOnEmptyQuery: true)
+    let vm1 = HitsInteractor<String>(infiniteScrolling: .on(withOffset: 1000), showItemsOnEmptyQuery: true)
     
     if case .on(let offset) = vm1.settings.infiniteScrolling {
       XCTAssertEqual(offset, 1000)
@@ -61,7 +61,7 @@ class HitsViewModelTests: XCTestCase {
   
   func testUpdateAndContent() {
     
-    let vm = HitsViewModel<String>(infiniteScrolling: .off, showItemsOnEmptyQuery: true)
+    let vm = HitsInteractor<String>(infiniteScrolling: .off, showItemsOnEmptyQuery: true)
     
     let queryText = "test query"
     let hits = ["h1", "h2", "h3"].map { JSON.string($0) }
@@ -96,7 +96,7 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(showItemsOnEmptyQuery: false),
       paginationController: paginator,
       infiniteScrollingController: TestInfiniteScrollingController())
@@ -121,7 +121,7 @@ class HitsViewModelTests: XCTestCase {
     query.filters = ""
     query.page = 0
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(showItemsOnEmptyQuery: true),
       paginationController: paginationController,
       infiniteScrollingController: infiniteScrollingController
@@ -142,7 +142,7 @@ class HitsViewModelTests: XCTestCase {
     let results = SearchResults(hits: hits, stats: .init())
 
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(showItemsOnEmptyQuery: true),
       paginationController: paginationController,
       infiniteScrollingController: infiniteScrollingController
@@ -167,7 +167,7 @@ class HitsViewModelTests: XCTestCase {
     
     let loadPagesTriggered = expectation(description: "load pages triggered")
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
       paginationController: pc,
       infiniteScrollingController: isc)
@@ -192,7 +192,7 @@ class HitsViewModelTests: XCTestCase {
     let isc = TestInfiniteScrollingController()
     isc.pendingPages = [0, 2]
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
       paginationController: pc,
       infiniteScrollingController: isc)
@@ -222,7 +222,7 @@ class HitsViewModelTests: XCTestCase {
     let isc = TestInfiniteScrollingController()
     isc.pendingPages = [0, 2]
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
       paginationController: pc,
       infiniteScrollingController: isc)
@@ -254,7 +254,7 @@ class HitsViewModelTests: XCTestCase {
     let isc = TestInfiniteScrollingController()
     isc.pendingPages = [0, 2]
     
-    let vm = HitsViewModel(
+    let vm = HitsInteractor(
       settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
       paginationController: pc,
       infiniteScrollingController: isc)

@@ -1,5 +1,5 @@
 //
-//  IndexSegmentViewModel+Searcher.swift
+//  IndexSegmentInteractor+Searcher.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 06/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension IndexSegmentViewModel {
+public extension IndexSegmentInteractor {
   func connectSearcher(searcher: SingleIndexSearcher) {
     if let selected = selected, let index = items[selected] {
       searcher.indexQueryState.index = index

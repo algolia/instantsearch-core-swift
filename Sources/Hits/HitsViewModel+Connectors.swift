@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension AnyHitsViewModel {
+extension AnyHitsInteractor {
   
   public func connectFilterState(_ filterState: FilterState) {
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
@@ -18,7 +18,7 @@ extension AnyHitsViewModel {
   
 }
 
-extension HitsViewModel {
+extension HitsInteractor {
   
   public func connectSearcher(_ searcher: SingleIndexSearcher) {
     

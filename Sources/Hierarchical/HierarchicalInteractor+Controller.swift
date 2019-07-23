@@ -1,5 +1,5 @@
 //
-//  HierarchicalViewModel+Controller.swift
+//  HierarchicalInteractor+Controller.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 08/07/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension HierarchicalViewModel {
+public extension HierarchicalInteractor {
 
   func connectController<O, C>(_ controller: C, presenter: @escaping ([HierarchicalFacet]) -> O) where O == C.Item, C: HierarchicalController {
     onItemChanged.subscribePast(with: self) { facets in
@@ -28,7 +28,7 @@ public extension HierarchicalViewModel {
 
 }
 
-public extension HierarchicalViewModel {
+public extension HierarchicalInteractor {
   func connectController<C>(_ controller: C, presenter: @escaping HierarchicalPresenter = DefaultPresenter.Hierarchical.present) where C: HierarchicalController, C.Item == [HierarchicalFacet] {
     onItemChanged.subscribePast(with: self) { facets in
 

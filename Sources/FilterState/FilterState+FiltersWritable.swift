@@ -42,7 +42,7 @@ extension FilterState: FiltersWritable {
     return self.filters.remove(filter)
   }
   
-  public func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType {
+  @discardableResult public func removeAll<S: Sequence>(_ filters: S) -> Bool where S.Element == FilterType {
     return self.filters.removeAll(filters)
   }
   

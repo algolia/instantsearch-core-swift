@@ -55,7 +55,7 @@ private extension FilterState {
       if let groupID = groupID {
         filterState.removeAll(filters, fromGroupWithID: groupID)
       } else {
-        filterState.removeAll(filters)
+        _ = filterState.removeAll(filters)
       }
     }
     

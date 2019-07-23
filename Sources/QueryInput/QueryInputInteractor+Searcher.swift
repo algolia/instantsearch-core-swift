@@ -1,5 +1,5 @@
 //
-//  QueryInputViewModel+Searcher.swift
+//  QueryInputInteractor+Searcher.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 28/05/2019.
@@ -13,7 +13,7 @@ public enum SearchTriggeringMode {
   case searchOnSubmit
 }
 
-extension QueryInputViewModel {
+extension QueryInputInteractor {
 
   public func connectSearcher<S: Searcher>(_ searcher: S, searchTriggeringMode: SearchTriggeringMode) {
     

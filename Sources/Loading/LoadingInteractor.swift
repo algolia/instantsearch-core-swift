@@ -1,5 +1,5 @@
 //
-//  LoadingViewModel.swift
+//  LoadingInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 10/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class LoadingViewModel: ItemViewModel<Bool> {
+public class LoadingInteractor: ItemInteractor<Bool> {
   public init() {
     super.init(item: false)
   }

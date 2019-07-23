@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension NumberViewModel {
+public extension NumberInteractor {
   
   func connectFilterState(_ filterState: FilterState,
                           attribute: Attribute,

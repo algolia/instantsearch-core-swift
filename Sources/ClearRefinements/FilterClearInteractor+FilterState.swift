@@ -1,5 +1,5 @@
 //
-//  ClearRefinementsController+FilterState.swift
+//  FilterClearInteractor+FilterState.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 24/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension FilterClearViewModel {
+public extension FilterClearInteractor {
   
   func connectFilterState(_ filterState: FilterState,
                           filterGroupIDs: [FilterGroup.ID]? = nil,

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NumberViewModel {
+extension NumberInteractor {
   public func connectController<Controller: NumberController>(_ controller: Controller) where Controller.Item == Number {
 
     let computation = Computation(numeric: item) { [weak self] numeric in

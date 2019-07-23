@@ -12,7 +12,7 @@ import XCTest
 
 class SelectableSegmentViewModelTests: XCTestCase {
   
-  typealias VM = SelectableSegmentViewModel<String, String>
+  typealias VM = SelectableSegmentInteractor<String, String>
   
   func testConstruction() {
     

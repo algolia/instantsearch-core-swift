@@ -15,7 +15,7 @@ public protocol ItemListController: class {
   func setItems(_ item: [Item])
 
   // TODO: Potentially we could change from Item to a Int which is position of item in list.
-  // It is enough to identify the items in viewModel, so in that way we only pass the
+  // It is enough to identify the items in interactor, so in that way we only pass the
   // Filter without the ID
   var onRemoveItem: ((Item) -> Void)? { get set }
 

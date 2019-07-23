@@ -1,5 +1,5 @@
 //
-//  NumberViewModel.swift
+//  NumberInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 04/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NumberViewModel<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemViewModel<Number?>, Boundable {
+public class NumberInteractor<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemInteractor<Number?>, Boundable {
 
   public let onNumberComputed: Observer<Number?>
   public let onBoundsComputed: Observer<ClosedRange<Number>?>

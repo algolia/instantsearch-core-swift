@@ -1,5 +1,5 @@
 //
-//  NumberRangeViewModel+Controller.swift
+//  NumberRangeInteractor+Controller.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 14/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension NumberRangeViewModel {
+extension NumberRangeInteractor {
   public func connectController<Controller: NumberRangeController>(_ controller: Controller) where Controller.Number == Number {
 
     onItemChanged.subscribePast(with: self) { (item) in

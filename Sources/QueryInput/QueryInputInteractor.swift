@@ -1,5 +1,5 @@
 //
-//  QueryInputViewModel.swift
+//  QueryInputInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 28/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class QueryInputViewModel {
+public class QueryInputInteractor {
   
   public var query: String? {
     didSet {

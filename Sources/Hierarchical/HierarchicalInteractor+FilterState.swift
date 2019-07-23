@@ -1,5 +1,5 @@
 //
-//  HierarchicalViewModel+FilterState.swift
+//  HierarchicalInteractor+FilterState.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 03/07/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension HierarchicalViewModel {
+public extension HierarchicalInteractor {
 
   func connectFilterState(_ filterState: FilterState) {
     

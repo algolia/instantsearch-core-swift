@@ -1,5 +1,5 @@
 //
-//  StatsViewModel.swift
+//  StatsInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 31/05/2019.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-public class StatsViewModel: ItemViewModel<SearchStats?> {
+public class StatsInteractor: ItemInteractor<SearchStats?> {
   public init() {
     super.init(item: .none)
   }
 }
 
-public extension StatsViewModel {
+public extension StatsInteractor {
   
   func connectSearcher(_ searcher: SingleIndexSearcher) {
     

@@ -8,11 +8,11 @@
 
 import Foundation
 
-/** This is a type-erasure protocol for HitsViewModel which makes possible
-    to create a collections of hits ViewModels with different record types.
+/** This is a type-erasure protocol for HitsInteractor which makes possible
+    to create a collections of hits interactors with different record types.
 */
 
-public protocol AnyHitsViewModel: class {
+public protocol AnyHitsInteractor: class {
   
   var pageLoader: PageLoadable? { get set }
   

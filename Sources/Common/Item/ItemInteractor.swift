@@ -1,5 +1,5 @@
 //
-//  ItemViewModel.swift
+//  ItemInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 31/05/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ItemViewModel<Item> {
+public class ItemInteractor<Item> {
   
   public var item: Item {
     didSet {
@@ -25,7 +25,7 @@ public class ItemViewModel<Item> {
   
 }
 
-public extension ItemViewModel {
+public extension ItemInteractor {
   
   func connectController<O, C: ItemController>(_ controller: C, dispatchOnMainThread: Bool = false, presenter: @escaping Presenter<Item, O>) where C.Item == O {
     let sub = onItemChanged.subscribePast(with: controller) { (item) in

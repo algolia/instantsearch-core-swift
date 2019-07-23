@@ -1,5 +1,5 @@
 //
-//  DeletableListViewModel.swift
+//  ItemsListInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 12/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ItemsListViewModel<Item: Hashable> {
+public class ItemsListInteractor<Item: Hashable> {
 
   public var items: Set<Item> {
     didSet {

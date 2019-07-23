@@ -1,5 +1,5 @@
 //
-//  LoadingViewModel+Controller.swift
+//  LoadingInteractor+Controller.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 12/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension LoadingViewModel {
+public extension LoadingInteractor {
   func connectController<C: LoadingController>(_ controller: C) {
     connectController(controller, dispatchOnMainThread: true) { $0 }
   }

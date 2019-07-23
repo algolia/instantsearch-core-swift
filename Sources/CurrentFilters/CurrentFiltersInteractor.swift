@@ -1,5 +1,5 @@
 //
-//  CurrentFiltersViewModel.swift
+//  CurrentFiltersInteractor.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 12/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias CurrentFiltersViewModel = ItemsListViewModel<FilterAndID>
+public typealias CurrentFiltersInteractor = ItemsListInteractor<FilterAndID>
 
 public struct FilterAndID: Hashable {
   public let filter: Filter
@@ -22,7 +22,7 @@ public struct FilterAndID: Hashable {
   }
 }
 
-public extension CurrentFiltersViewModel {
+public extension CurrentFiltersInteractor {
   
   func connectFilterState(_ filterState: FilterState,
                           filterGroupID: FilterGroup.ID? = nil) {
@@ -53,7 +53,7 @@ public extension CurrentFiltersViewModel {
   }
 }
 
-public extension ItemsListViewModel {
+public extension ItemsListInteractor {
 
   func connectController<C: ItemListController>(_ controller: C, presenter: Presenter<Filter, String>? = nil) where C.Item == Item, Item == FilterAndID {
 

@@ -1,5 +1,5 @@
 //
-//  MultiIndexHitsViewModel+Connectors.swift
+//  MultiIndexHitsInteractor+Connectors.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 07/06/2019.
@@ -8,13 +8,13 @@
 
 import Foundation
 
-public extension MultiIndexHitsViewModel {
+public extension MultiIndexHitsInteractor {
   
   func connectSearcher(_ searcher: MultiIndexSearcher) {
     
-    zip(hitsViewModels.indices, searcher.pageLoaders).forEach {
+    zip(hitsInteractors.indices, searcher.pageLoaders).forEach {
       let (index, pageLoader) = $0
-      hitsViewModels[index].pageLoader = pageLoader
+      hitsInteractors[index].pageLoader = pageLoader
     }
     
     searcher.onResults.subscribePast(with: self) { [weak self] searchResults in

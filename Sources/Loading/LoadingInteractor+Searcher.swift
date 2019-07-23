@@ -1,5 +1,5 @@
 //
-//  LoadingViewModel+Searcher.swift
+//  LoadingInteractor+Searcher.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 10/06/2019.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension LoadingViewModel {
+public extension LoadingInteractor {
 
   func connectSearcher<S: Searcher>(_ searcher: S) {
     searcher.isLoading.subscribePast(with: self) { [weak self] isLoading in
