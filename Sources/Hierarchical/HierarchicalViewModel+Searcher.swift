@@ -10,7 +10,7 @@ import Foundation
 
 public extension HierarchicalViewModel {
   func connectSearcher(searcher: SingleIndexSearcher) {
-    hierarchicalAttributes.forEach(searcher.indexSearchData.query.updateQueryFacets)
+    hierarchicalAttributes.forEach(searcher.indexQueryState.query.updateQueryFacets)
   
     searcher.onResults.subscribePast(with: self) { (searchResults) in
 

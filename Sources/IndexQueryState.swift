@@ -28,8 +28,8 @@ public struct IndexQueryState {
 
 extension IndexQuery {
   
-  convenience init(indexSearchData: IndexQueryState) {
-    self.init(index: indexSearchData.index, query: indexSearchData.query)
+  convenience init(indexQueryState: IndexQueryState) {
+    self.init(index: indexQueryState.index, query: indexQueryState.query)
   }
   
 }

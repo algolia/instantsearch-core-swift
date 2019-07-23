@@ -272,7 +272,7 @@ class HitsViewModelTests: XCTestCase {
     }
     
     searcher.query = "query"
-    searcher.indexSearchData.query.page = 0
+    searcher.indexQueryState.query.page = 0
     isc.pendingPages = [0]
     
     let resultsUpdatedExpectation = expectation(description: "results updated")
@@ -286,7 +286,7 @@ class HitsViewModelTests: XCTestCase {
     searcher.onResults.fire(searchResults)
     
     isc.pendingPages = [0]
-    searcher.onError.fire((searcher.indexSearchData.query, NSError()))
+    searcher.onError.fire((searcher.indexQueryState.query, NSError()))
     XCTAssertTrue(isc.pendingPages.isEmpty)
     
     waitForExpectations(timeout: 2, handler: nil)

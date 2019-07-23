@@ -43,7 +43,7 @@ public extension SelectableListViewModel where Key == String, Item == Facet {
 
   func connectSearcher(_ searcher: SingleIndexSearcher, with attribute: Attribute) {
     whenNewSearchResultsThenUpdateItems(of: searcher, attribute)
-    searcher.indexSearchData.query.updateQueryFacets(with: attribute)
+    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
   }
 
   func connectFacetSearcher(_ facetSearcher: FacetSearcher) {

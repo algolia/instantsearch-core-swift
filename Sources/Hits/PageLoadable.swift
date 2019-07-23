@@ -17,7 +17,7 @@ public protocol PageLoadable: class {
 extension SingleIndexSearcher: PageLoadable {
   
   public func loadPage(atIndex pageIndex: Int) {
-    indexSearchData.query.page = UInt(pageIndex)
+    indexQueryState.query.page = UInt(pageIndex)
     search()
   }
   
@@ -26,7 +26,7 @@ extension SingleIndexSearcher: PageLoadable {
 extension FacetSearcher: PageLoadable {
   
   public func loadPage(atIndex pageIndex: Int) {
-    indexSearchData.query.page = UInt(pageIndex)
+    indexQueryState.query.page = UInt(pageIndex)
     search()
   }
   

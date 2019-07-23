@@ -11,7 +11,7 @@ import Foundation
 public extension SelectableSegmentViewModel where SegmentKey == Int, Segment: FilterType {
 
   func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
-    searcher.indexSearchData.query.updateQueryFacets(with: attribute)
+    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
   }
   
   func connectFilterState(_ filterState: FilterState,

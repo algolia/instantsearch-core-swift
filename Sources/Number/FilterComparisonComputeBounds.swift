@@ -11,7 +11,7 @@ import Foundation
 extension Boundable {
 
   public func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
-    searcher.indexSearchData.query.updateQueryFacets(with: attribute)
+    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
 
     searcher.onResults.subscribePastOnce(with: self) { [weak self] searchResults in
       self?.computeBoundsFromFacetStats(attribute: attribute, facetStats: searchResults.facetStats)

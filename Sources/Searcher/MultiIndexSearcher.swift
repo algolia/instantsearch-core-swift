@@ -15,21 +15,21 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   public var query: String? {
     
     set {
-      let oldValue = indexSearchDatas.first?.query.query
+      let oldValue = indexQueryStates.first?.query.query
       guard oldValue != newValue else { return }
-      indexSearchDatas.forEach { $0.query.query = newValue }
-      indexSearchDatas.forEach { $0.query.page = 0 }
+      indexQueryStates.forEach { $0.query.query = newValue }
+      indexQueryStates.forEach { $0.query.page = 0 }
       onQueryChanged.fire(newValue)
     }
     
     get {
-      return indexSearchDatas.first?.query.query
+      return indexQueryStates.first?.query.query
     }
 
   }
   
   public let client: Client
-  public let indexSearchDatas: [IndexQueryState]
+  public let indexQueryStates: [IndexQueryState]
   public let sequencer: Sequencer
   public let isLoading: Observer<Bool>
   public let onQueryChanged: Observer<String?>
@@ -40,18 +40,18 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   internal var pageLoaders: [PageLoaderProxy]
   
   public convenience init(client: Client, indices: [Index], requestOptions: RequestOptions? = nil) {
-    let indexSearchDatas = indices.map { IndexQueryState(index: $0, query: .init()) }
+    let indexQueryStates = indices.map { IndexQueryState(index: $0, query: .init()) }
     self.init(client: client,
-              indexSearchDatas: indexSearchDatas,
+              indexQueryStates: indexQueryStates,
               requestOptions: requestOptions)
   }
   
   public init(client: Client,
-              indexSearchDatas: [IndexQueryState],
+              indexQueryStates: [IndexQueryState],
               requestOptions: RequestOptions? = nil) {
     
     self.client = client
-    self.indexSearchDatas = indexSearchDatas
+    self.indexQueryStates = indexQueryStates
     self.requestOptions = requestOptions
     self.pageLoaders = []
     
@@ -66,7 +66,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     isLoading.retainLastData = true
     updateClientUserAgents()
     
-    self.pageLoaders = indexSearchDatas.map { isd in
+    self.pageLoaders = indexQueryStates.map { isd in
       return PageLoaderProxy(setPage: { isd.query.page = UInt($0) }, launchSearch: self.search)
     }
 
@@ -74,8 +74,8 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   
   public func search() {
     
-    let indexQueries = indexSearchDatas.map(IndexQuery.init(indexSearchData:))
-    let queries = indexSearchDatas.map { $0.query.copy() as! Query }
+    let indexQueries = indexQueryStates.map(IndexQuery.init(indexQueryState:))
+    let queries = indexQueryStates.map { $0.query.copy() as! Query }
     let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
       
       guard let searcher = self else { return }
@@ -128,7 +128,7 @@ extension MultiIndexSearcher {
   
   func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) {
     filterState.onChange.subscribe(with: self) { [weak self] filters in
-      self?.indexSearchDatas[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      self?.indexQueryStates[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
     }
   }

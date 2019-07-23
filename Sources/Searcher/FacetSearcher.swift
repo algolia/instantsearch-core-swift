@@ -19,7 +19,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     }
   }
   
-  public let indexSearchData: IndexQueryState
+  public let indexQueryState: IndexQueryState
   public let sequencer: Sequencer
   public var onQueryChanged: Observer<String?>
   public let isLoading: Observer<Bool>
@@ -29,7 +29,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public var requestOptions: RequestOptions?
 
   public init(index: Index, query: Query = .init(), facetName: String, requestOptions: RequestOptions? = nil) {
-    self.indexSearchData = IndexQueryState(index: index, query: query)
+    self.indexQueryState = IndexQueryState(index: index, query: query)
     self.isLoading = Observer()
     self.onQueryChanged = Observer()
     self.onResults = Observer()
@@ -46,7 +46,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public func search() {
     
     let query = self.query ?? ""
-    let operation = indexSearchData.index.searchForFacetValues(of: facetName, matching: query, requestOptions: requestOptions) { [weak self] (content, error) in
+    let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, requestOptions: requestOptions) { [weak self] (content, error) in
       
       guard let searcher = self else { return }
       
@@ -75,7 +75,7 @@ public extension FacetSearcher {
   
   func connectFilterState(_ filterState: FilterState) {
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      self?.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
     }
   }

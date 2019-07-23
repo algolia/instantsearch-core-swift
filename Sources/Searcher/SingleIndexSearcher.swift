@@ -15,24 +15,24 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   public var query: String? {
 
     set {
-      let oldValue = indexSearchData.query.query
+      let oldValue = indexQueryState.query.query
       guard oldValue != newValue else { return }
-      indexSearchData.query.query = newValue
-      indexSearchData.query.page = 0
+      indexQueryState.query.query = newValue
+      indexQueryState.query.page = 0
       onQueryChanged.fire(newValue)
     }
     
     get {
-      return indexSearchData.query.query
+      return indexQueryState.query.query
     }
 
   }
   
   public let sequencer: Sequencer
-  public var indexSearchData: IndexQueryState {
+  public var indexQueryState: IndexQueryState {
     didSet {
-      if oldValue.index != indexSearchData.index {
-        onIndexChanged.fire(indexSearchData.index)
+      if oldValue.index != indexQueryState.index {
+        onIndexChanged.fire(indexQueryState.index)
       }
     }
   }
@@ -50,7 +50,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   public init(index: Index,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
-    indexSearchData = IndexQueryState(index: index, query: query)
+    indexQueryState = IndexQueryState(index: index, query: query)
     self.requestOptions = requestOptions
     sequencer = Sequencer()
     isLoading = .init()
@@ -65,10 +65,10 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     updateClientUserAgents()
   }
   
-  public convenience init(indexSearchData: IndexQueryState,
+  public convenience init(indexQueryState: IndexQueryState,
                           requestOptions: RequestOptions? = nil) {
-    self.init(index: indexSearchData.index,
-              query: indexSearchData.query,
+    self.init(index: indexQueryState.index,
+              query: indexQueryState.query,
               requestOptions: requestOptions)
   }
   
@@ -108,7 +108,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
   public func search() {
   
-    let query = Query(copy: indexSearchData.query)
+    let query = Query(copy: indexQueryState.query)
     
     let operation: Operation
 
@@ -118,10 +118,10 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       let hierarchicalFilters = hierarchicalFacetingDelegate?.hierarchicalFilters ?? []
       var queriesBuilder = QueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
-      let queries = queriesBuilder.build().map { IndexQuery(index: indexSearchData.index, query: $0) }
-      operation = indexSearchData.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
+      let queries = queriesBuilder.build().map { IndexQuery(index: indexQueryState.index, query: $0) }
+      operation = indexQueryState.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
     } else {
-      operation = indexSearchData.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
+      operation = indexQueryState.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
     }
     
     sequencer.orderOperation(operationLauncher: { return operation })
@@ -147,7 +147,7 @@ public extension SingleIndexSearcher {
     hierarchicalFacetingDelegate = filterState
     
     filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.indexSearchData.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      self?.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       self?.search()
     }
     
