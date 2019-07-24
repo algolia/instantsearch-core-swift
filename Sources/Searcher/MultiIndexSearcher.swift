@@ -39,7 +39,21 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   public var requestOptions: RequestOptions?
   internal var pageLoaders: [PageLoaderProxy]
   
-  public convenience init(client: Client, indices: [Index], requestOptions: RequestOptions? = nil) {
+  public convenience init(appID: String,
+                          apiKey: String,
+                          indexNames: [String],
+                          requestOptions: RequestOptions? = nil) {
+    let client = Client(appID: appID, apiKey: apiKey)
+    let indices = indexNames.map(client.index(withName:))
+    let indexQueryStates = indices.map { IndexQueryState(index: $0, query: .init()) }
+    self.init(client: client,
+              indexQueryStates: indexQueryStates,
+              requestOptions: requestOptions)
+  }
+  
+  public convenience init(client: Client,
+                          indices: [Index],
+                          requestOptions: RequestOptions? = nil) {
     let indexQueryStates = indices.map { IndexQueryState(index: $0, query: .init()) }
     self.init(client: client,
               indexQueryStates: indexQueryStates,

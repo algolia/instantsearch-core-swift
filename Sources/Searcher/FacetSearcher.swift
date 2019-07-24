@@ -28,7 +28,24 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public var facetName: String
   public var requestOptions: RequestOptions?
 
-  public init(index: Index, query: Query = .init(), facetName: String, requestOptions: RequestOptions? = nil) {
+  public convenience init(appID: String,
+                          apiKey: String,
+                          indexName: String,
+                          facetName: String,
+                          query: Query = .init(),
+                          requestOptions: RequestOptions? = nil) {
+    let client = Client(appID: appID, apiKey: apiKey)
+    let index = client.index(withName: indexName)
+    self.init(index: index,
+              query: query,
+              facetName: facetName,
+              requestOptions: requestOptions)
+  }
+  
+  public init(index: Index,
+              query: Query = .init(),
+              facetName: String,
+              requestOptions: RequestOptions? = nil) {
     self.indexQueryState = IndexQueryState(index: index, query: query)
     self.isLoading = Observer()
     self.onQueryChanged = Observer()
