@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol QueryInputController: class {
-  var onQueryChanged: (String?) -> Void { get set }
-  var onQuerySubmitted: (String?) -> Void { get set }
+  var onQueryChanged: ((String?) -> Void)? { get set }
+  var onQuerySubmitted: ((String?) -> Void)? { get set }
   func setQuery(_ query: String?)
 }

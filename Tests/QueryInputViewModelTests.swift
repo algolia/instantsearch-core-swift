@@ -39,20 +39,19 @@ class TestQueryInputController: QueryInputController {
   var query: String? {
     didSet {
       guard oldValue != query else { return }
-      onQueryChanged(query)
+      onQueryChanged?(query)
     }
   }
   
-  var onQueryChanged: (String?) -> Void = { _ in }
-  
-  var onQuerySubmitted: (String?) -> Void = { _ in }
+  var onQueryChanged: ((String?) -> Void)?
+  var onQuerySubmitted: ((String?) -> Void)?
   
   func setQuery(_ query: String?) {
     self.query = query
   }
   
   func submitQuery() {
-    onQuerySubmitted(query)
+    onQuerySubmitted?(query)
   }
   
   
