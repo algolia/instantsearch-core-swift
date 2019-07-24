@@ -47,6 +47,16 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
   public var isDisjunctiveFacetingEnabled = true
   
+  public convenience init(appID: String,
+                          apiKey: String,
+                          indexName: String,
+                          query: Query = .init(),
+                          requestOptions: RequestOptions? = nil)  {
+    let client = Client(appID: appID, apiKey: apiKey)
+    let index = client.index(withName: indexName)
+    self.init(index: index, query: query, requestOptions: requestOptions)
+  }
+  
   public init(index: Index,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
