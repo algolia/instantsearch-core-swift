@@ -15,7 +15,7 @@ public enum SearchTriggeringMode {
 
 extension QueryInputInteractor {
 
-  public func connectSearcher<S: Searcher>(_ searcher: S, searchTriggeringMode: SearchTriggeringMode) {
+  public func connectSearcher<S: Searcher>(_ searcher: S, searchTriggeringMode: SearchTriggeringMode = .searchAsYouType) {
     
     query = searcher.query
     
