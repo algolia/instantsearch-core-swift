@@ -51,7 +51,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                           apiKey: String,
                           indexName: String,
                           query: Query = .init(),
-                          requestOptions: RequestOptions? = nil)  {
+                          requestOptions: RequestOptions? = nil) {
     let client = Client(appID: appID, apiKey: apiKey)
     let index = client.index(withName: indexName)
     self.init(index: index, query: query, requestOptions: requestOptions)
