@@ -17,7 +17,7 @@ public extension FilterClearInteractor {
       defer {
         filterState.notifyChange()
       }
-      
+
       guard let filterGroupIDs = filterGroupIDs else {
         filterState.filters.removeAll()
         return

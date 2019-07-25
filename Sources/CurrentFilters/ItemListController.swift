@@ -21,3 +21,5 @@ public protocol ItemListController: class {
 
   func reload()
 }
+
+public protocol CurrentFiltersController: ItemListController where Item == FilterAndID {}
