@@ -19,7 +19,7 @@ public extension IndexSegmentInteractor {
       if
         let selected = computed,
         let index = viewModel.items[selected] {
-        searcher.indexSearchData.index = index
+        searcher.indexQueryState.index = index
         searcher.search()
       }
     }

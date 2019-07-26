@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Signals
 
 extension Signal: Observable {
   public typealias ParameterType = T

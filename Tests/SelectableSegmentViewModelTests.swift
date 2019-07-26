@@ -29,7 +29,7 @@ class SelectableSegmentInteractorTests: XCTestCase {
 
     let switchItemsExpectation = expectation(description: "switch items")
     
-    viewModel.onItemsChanged.subscribe(with: self) { _, newItems in
+    interactor.onItemsChanged.subscribe(with: self) { _, newItems in
       XCTAssertEqual(newItems, ["k4": "i4"])
       switchItemsExpectation.fulfill()
     }
@@ -46,7 +46,7 @@ class SelectableSegmentInteractorTests: XCTestCase {
 
     let selectionExpectation = expectation(description: "selection")
     
-    viewModel.onSelectedChanged.subscribe(with: self) { _, selectedKey in
+    interactor.onSelectedChanged.subscribe(with: self) { _, selectedKey in
       XCTAssertEqual(selectedKey, "k3")
       selectionExpectation.fulfill()
     }
@@ -65,7 +65,7 @@ class SelectableSegmentInteractorTests: XCTestCase {
 
     let selectionComputedExpectation = expectation(description: "selection computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { _, computedSelection in
+    interactor.onSelectedComputed.subscribe(with: self) { _, computedSelection in
       XCTAssertEqual(computedSelection, "k3")
       selectionComputedExpectation.fulfill()
     }
@@ -81,7 +81,7 @@ class SelectableSegmentInteractorTests: XCTestCase {
     
     let selectionComputedExp = expectation(description: "selection computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { _, computedSelection in
+    interactor.onSelectedComputed.subscribe(with: self) { _, computedSelection in
       XCTAssertNil(computedSelection)
       selectionComputedExp.fulfill()
     }

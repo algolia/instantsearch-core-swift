@@ -37,7 +37,7 @@ private extension SelectableInteractor where Item: FilterType {
   
   func whenFilterStateChangedThenUpdateSelections<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState, via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
     
-    let onChange: (SelectableViewModel, ReadOnlyFiltersContainer) -> Void = {  viewModel, _ in
+    let onChange: (SelectableInteractor, ReadOnlyFiltersContainer) -> Void = {  viewModel, _ in
       viewModel.isSelected = accessor.contains(viewModel.item)
     }
     

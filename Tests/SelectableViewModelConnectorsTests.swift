@@ -89,11 +89,7 @@ class SelectableInteractorConnectorsTests: XCTestCase {
     
     let selectedComputedExpectation = expectation(description: "selected computed")
     
-<<<<<<< HEAD
-    interactor.onSelectedComputed.subscribe(with: self) { isSelected in
-=======
-    viewModel.onSelectedComputed.subscribe(with: self) { _, isSelected in
->>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
+    interactor.onSelectedComputed.subscribe(with: self) { _, isSelected in
       XCTAssertTrue(isSelected)
       selectedComputedExpectation.fulfill()
     }

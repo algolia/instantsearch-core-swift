@@ -28,11 +28,7 @@ class ItemInteractorTests: XCTestCase {
     
     let switchItemExpectation = expectation(description: "item changed")
     
-<<<<<<< HEAD
-    interactor.onItemChanged.subscribe(with: self) { newItem in
-=======
-    viewModel.onItemChanged.subscribe(with: self) { _, newItem in
->>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
+    interactor.onItemChanged.subscribe(with: self) { _, newItem in
       XCTAssertEqual(newItem, "o")
       switchItemExpectation.fulfill()
     }

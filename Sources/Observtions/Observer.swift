@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Signals
 
 /// This is where you can change the implementation detail of the observer
 /// If you want to change a new one, then you need just implement the Observable protocol

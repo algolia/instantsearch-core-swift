@@ -132,6 +132,7 @@ public class MultiIndexHitsInteractor {
 }
 
 #if os(iOS) || os(tvOS)
+import UIKit
 
 public extension MultiIndexHitsInteractor {
   

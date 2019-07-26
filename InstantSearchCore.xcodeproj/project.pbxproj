@@ -246,6 +246,10 @@
 		AFBAA6EE22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */; };
 		AFBAA6EF22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */; };
 		AFBAA6F022EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */; };
+		AFBAA6F222EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F322EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F422EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F522EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
 		AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF375F2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF37602285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
@@ -409,10 +413,6 @@
 		AFCF8DDF22E5C0690044F728 /* SelectableViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */; };
 		AFCF8DE022E5C06A0044F728 /* SelectableViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */; };
 		AFCF8DE122E5C06B0044F728 /* SelectableViewModel+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C0E2B22807B9C00EEB6CE /* SelectableViewModel+Filter.swift */; };
-		AFCF8DE322E61EC60044F728 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCF8DE222E61EC60044F728 /* Signal.swift */; };
-		AFCF8DE422E61EC60044F728 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCF8DE222E61EC60044F728 /* Signal.swift */; };
-		AFCF8DE522E61EC60044F728 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCF8DE222E61EC60044F728 /* Signal.swift */; };
-		AFCF8DE622E61EC60044F728 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCF8DE222E61EC60044F728 /* Signal.swift */; };
 		AFDA412D2268AB7000100CB5 /* FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDA412C2268AB7000100CB5 /* FilterState.swift */; };
 		AFDA412E2268AB7000100CB5 /* FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDA412C2268AB7000100CB5 /* FilterState.swift */; };
 		AFDA412F2268AB7000100CB5 /* FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFDA412C2268AB7000100CB5 /* FilterState.swift */; };
@@ -793,6 +793,7 @@
 		AFB9783522D49933001C2718 /* disjunctive.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = disjunctive.json; sourceTree = "<group>"; };
 		AFBAA6E722EA2F6D0009856B /* HitsInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+Controller.swift"; sourceTree = "<group>"; };
+		AFBAA6F122EBC1050009856B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = SOURCE_ROOT; };
 		AFBF375D2285D5C600787D24 /* FilterConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConverter.swift; sourceTree = "<group>"; };
 		AFBF37622285D5D300787D24 /* FilterGroupConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupConverter.swift; sourceTree = "<group>"; };
 		AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractor.swift; sourceTree = "<group>"; };
@@ -835,7 +836,6 @@
 		AFCDEDEC223C0694001459BE /* MultiIndexHitsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexHitsInteractor.swift; sourceTree = "<group>"; };
 		AFCDEDF1223C070F001459BE /* AnyHitsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyHitsInteractor.swift; sourceTree = "<group>"; };
 		AFCF8DDA22E5BFEE0044F728 /* IndexQueryState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IndexQueryState.swift; sourceTree = "<group>"; };
-		AFCF8DE222E61EC60044F728 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		AFDA412C2268AB7000100CB5 /* FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterState.swift; sourceTree = "<group>"; };
 		AFE3437A228997E000829AC1 /* SelectableSegmentViewModel+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SelectableSegmentViewModel+Filter.swift"; sourceTree = "<group>"; };
 		AFE3437F228997FB00829AC1 /* SelectableSegmentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentController.swift; sourceTree = "<group>"; };
@@ -916,7 +916,6 @@
 		E2CF1A4B22A6B06200DE24FC /* FilterComparisonComputeBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterComparisonComputeBounds.swift; sourceTree = "<group>"; };
 		E2E09E282231793C00F3056D /* HitsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractor.swift; sourceTree = "<group>"; };
 		E2E09E2C2231796800F3056D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		E2E09E2F22326FEA00F3056D /* Signals.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Signals.framework; path = Carthage/Build/iOS/Signals.framework; sourceTree = "<group>"; };
 		E2EBE72B22B1347D00B91B23 /* ItemsListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListInteractor.swift; sourceTree = "<group>"; };
 		E2EBE73022B1367C00B91B23 /* CurrentFiltersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentFiltersInteractor.swift; sourceTree = "<group>"; };
 		E2EBE73522B14B1D00B91B23 /* ItemListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListController.swift; sourceTree = "<group>"; };
@@ -1299,7 +1298,6 @@
 				AFCDEDA0222E7B6B001459BE /* Hit.swift */,
 				BC34264B1D4613CB0055E0F2 /* Highlighter.swift */,
 				AF21EEA922B40170004A0542 /* TaggedString.swift */,
-				AFCF8DE222E61EC60044F728 /* Signal.swift */,
 				AF21EEAE22B401A6004A0542 /* HighlightedString.swift */,
 				AF21EEB322B401C3004A0542 /* NSAttributedString+TaggedString.swift */,
 				AFCDED38222D9697001459BE /* JSON.swift */,
@@ -1429,6 +1427,7 @@
 			isa = PBXGroup;
 			children = (
 				E24234092243A43D008F24FB /* Signals+Observable.swift */,
+				AFBAA6F122EBC1050009856B /* Signal.swift */,
 				E29E455D2243F322005B358D /* Observer.swift */,
 				E29E45672243F335005B358D /* Subscription.swift */,
 				E29E456C2243F351005B358D /* Observation.swift */,
@@ -1440,7 +1439,6 @@
 		E29F2D2A1F2F5C6B0052335F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E2E09E2F22326FEA00F3056D /* Signals.framework */,
 				E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */,
 				E2960CD920AF2D350056E874 /* InstantSearchClient.framework */,
 				E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */,
@@ -1843,7 +1841,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/InstantSearchClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Signals.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -1859,7 +1856,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/InstantSearchClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Signals.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -1875,7 +1871,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/tvOS/InstantSearchClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Signals.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -1919,8 +1914,6 @@
 				E2146C0B22B3D1CA00927350 /* NumberRangeInteractor+Controller.swift in Sources */,
 				AF9396892298154900757257 /* FilterClearController.swift in Sources */,
 				AF3DE583224A984B00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */,
-				AF3DE583224A984B00C8BC08 /* MultiIndexHitsViewModel.swift in Sources */,
-				AFCF8DE322E61EC60044F728 /* Signal.swift in Sources */,
 				E2146BFC22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
 				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
 				E26F424A229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
@@ -1938,6 +1931,7 @@
 				AFCDED54222E7A4E001459BE /* Sequencer.swift in Sources */,
 				AFF1E758229696F700941401 /* MultiIndexHitsSource.swift in Sources */,
 				E2CF1A4722A6B04100DE24FC /* FilterComparisonConnectFilterState.swift in Sources */,
+				AFBAA6F222EBC1050009856B /* Signal.swift in Sources */,
 				AFCDED4B222E7A4E001459BE /* JSON.swift in Sources */,
 				AFC2E29C228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
 				E2B1AC8622D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
@@ -2129,7 +2123,6 @@
 				AFC2E284228ED58300859EBA /* FilterListViewController.swift in Sources */,
 				AF9396AB229D52D600757257 /* QueryInputInteractor+Controller.swift in Sources */,
 				E2BAE6B6223FF7A500B89EA3 /* Group.swift in Sources */,
-				AFCF8DE422E61EC60044F728 /* Signal.swift in Sources */,
 				AFCF8DDF22E5C0690044F728 /* SelectableViewModel+Filter.swift in Sources */,
 				AF322D4222DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AFC2E29D228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
@@ -2168,6 +2161,7 @@
 				AFE6E38722A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0222B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				AFBAA6F322EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				E29E45642243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E39222A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -2184,16 +2178,9 @@
 				AF21EEB522B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6EE22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3822DCDDB600010428 /* GroupStorage.swift in Sources */,
-<<<<<<< HEAD
 				AFBF37692285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */,
-				AF117807225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
 				E2146C1F22CD058D00927350 /* HiearchicalInteractor.swift in Sources */,
-=======
-				AFBF37692285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
-				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsViewModel+Connectors.swift in Sources */,
-				E2146C1F22CD058D00927350 /* HiearchicalViewModel.swift in Sources */,
->>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
 				AFE6E3C422A82B1B005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73722B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				E2EFA61222B101E2008C9CAA /* Presenter.swift in Sources */,
@@ -2321,7 +2308,6 @@
 				AFC2E285228ED58300859EBA /* FilterListViewController.swift in Sources */,
 				AF9396AC229D52D600757257 /* QueryInputInteractor+Controller.swift in Sources */,
 				AF1177D9225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
-				AFCF8DE522E61EC60044F728 /* Signal.swift in Sources */,
 				AFCF8DE022E5C06A0044F728 /* SelectableViewModel+Filter.swift in Sources */,
 				AF322D4322DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AFC2E29E228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
@@ -2360,6 +2346,7 @@
 				AFE6E38822A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0322B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				AFBAA6F422EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				AFE6E39322A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -2372,11 +2359,6 @@
 				AFE6E3BC22A6E07A005BA44D /* PageLoadable.swift in Sources */,
 				E2BAE6B2223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7322538179001E5E3C /* FacetSearcher.swift in Sources */,
-<<<<<<< HEAD
-				AF117808225E484000C5B59B /* AbstractClass.swift in Sources */,
-=======
-				AFE6E3B022A6DC7F005BA44D /* HitsViewModel+Connectors.swift in Sources */,
->>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
 				AF21EEB622B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6EF22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3922DCDDB600010428 /* GroupStorage.swift in Sources */,
@@ -2511,7 +2493,6 @@
 				AFC2E286228ED58300859EBA /* FilterListViewController.swift in Sources */,
 				AF9396AD229D52D600757257 /* QueryInputInteractor+Controller.swift in Sources */,
 				AF1177DA225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
-				AFCF8DE622E61EC60044F728 /* Signal.swift in Sources */,
 				AFCF8DE122E5C06B0044F728 /* SelectableViewModel+Filter.swift in Sources */,
 				AF322D4422DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AFC2E29F228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
@@ -2550,6 +2531,7 @@
 				AFE6E38922A185CA005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0422B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				AFBAA6F522EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				AFE6E39422A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -2562,11 +2544,6 @@
 				AFE6E3BD22A6E07C005BA44D /* PageLoadable.swift in Sources */,
 				E2BAE6B3223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7422538179001E5E3C /* FacetSearcher.swift in Sources */,
-<<<<<<< HEAD
-				AF117809225E484000C5B59B /* AbstractClass.swift in Sources */,
-=======
-				AFE6E3B122A6DC80005BA44D /* HitsViewModel+Connectors.swift in Sources */,
->>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
 				AF21EEB722B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6F022EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3A22DCDDB600010428 /* GroupStorage.swift in Sources */,

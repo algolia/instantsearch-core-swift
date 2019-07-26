@@ -57,7 +57,7 @@ public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: F
     
   private func whenFilterStateChangedThenUpdateSelected<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                             via accessor: Accessor) where Accessor.Filter == Segment {
-    let onChange: (SelectableSegmentViewModel, ReadOnlyFiltersContainer) -> Void = { viewModel, _ in
+    let onChange: (SelectableSegmentInteractor, ReadOnlyFiltersContainer) -> Void = { viewModel, _ in
       viewModel.selected = viewModel.items.first(where: { accessor.contains($0.value) })?.key
     }
     

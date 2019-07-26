@@ -98,7 +98,7 @@ class SelectableSegmentInteractorConnectorsTests: XCTestCase {
     
     let selectedComputedExpectation = expectation(description: "selected computed")
     
-    viewModel.onSelectedComputed.subscribe(with: self) { _, selected in
+    interactor.onSelectedComputed.subscribe(with: self) { _, selected in
       XCTAssertEqual(selected, 0)
       selectedComputedExpectation.fulfill()
     }
