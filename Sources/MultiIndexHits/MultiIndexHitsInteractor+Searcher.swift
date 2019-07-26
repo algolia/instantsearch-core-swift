@@ -1,5 +1,5 @@
 //
-//  MultiIndexHitsInteractor+Connectors.swift
+//  MultiIndexHitsInteractor+Searcher.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 07/06/2019.

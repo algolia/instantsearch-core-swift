@@ -24,6 +24,22 @@ public class FilterState {
     onChange.fire(ReadOnlyFiltersContainer(filtersContainer: self))
   }
   
+  public subscript(and groupName: String) -> AndGroupAccessor {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
+  public subscript<F: FilterType>(or groupName: String, type: F.Type) -> OrGroupAccessor<F> {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
+  public subscript<F: FilterType>(or groupName: String) -> OrGroupAccessor<F> {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
+  public subscript(hierarchical groupName: String) -> HierarchicalGroupAccessor {
+    return .init(filtersContainer: self, groupName: groupName)
+  }
+  
 }
 
 extension FilterState: FiltersContainer {}
@@ -36,10 +52,27 @@ extension FilterState: FilterGroupsConvertible {
   
 }
 
+extension FilterState: CustomStringConvertible {
+  
+  public var description: String {
+    return FilterGroupConverter().sql(toFilterGroups()) ?? ""
+  }
+
+}
+
 extension FilterState: CustomDebugStringConvertible {
 
   public var debugDescription: String {
-    return FilterGroupConverter().sql(toFilterGroups()) ?? "empty"
+    let filterGroups = toFilterGroups()
+    guard !filterGroups.isEmpty else {
+      return "FilterState {}"
+    }
+    let body = filterGroups.map { group in
+      let groupName = (group.name ?? "")
+      let filtersDescription = FilterGroupConverter().sql(group) ?? ""
+      return " \"\(groupName)\": \(filtersDescription)"
+    }.joined(separator: "\n")
+    return "FilterState {\n\(body)\n}"
   }
 
 }

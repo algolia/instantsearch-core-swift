@@ -8,16 +8,6 @@
 
 import Foundation
 
-extension AnyHitsInteractor {
-  
-  public func connectFilterState(_ filterState: FilterState) {
-    filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.notifyQueryChanged()
-    }
-  }
-  
-}
-
 extension HitsInteractor {
   
   public func connectSearcher(_ searcher: SingleIndexSearcher) {

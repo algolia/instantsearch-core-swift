@@ -16,3 +16,5 @@ public protocol HitsSource: class {
   func hit(atIndex index: Int) -> Record?
   
 }
+
+extension HitsInteractor: HitsSource {}

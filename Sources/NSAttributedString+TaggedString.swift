@@ -21,6 +21,12 @@ extension NSAttributedString {
     self.init(attributedString: attributedString)
   }
   
+  public convenience init(highlightedString: HighlightedString,
+                          inverted: Bool = false,
+                          attributes: [NSAttributedString.Key: Any]) {
+    self.init(taggedString: highlightedString.taggedString, inverted: inverted, attributes: attributes)
+  }
+  
   public convenience init<T>(highlightResult: Hit<T>.HighlightResult,
                              inverted: Bool = false,
                              attributes: [NSAttributedString.Key: Any]) {

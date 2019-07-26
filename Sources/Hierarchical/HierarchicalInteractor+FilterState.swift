@@ -33,7 +33,7 @@ public extension HierarchicalInteractor {
 
     }
 
-    filterState.onChange.subscribePast(with: self) { (filters) in
+    filterState.onChange.subscribePast(with: self) { _ in
       // TODO
     }
   }

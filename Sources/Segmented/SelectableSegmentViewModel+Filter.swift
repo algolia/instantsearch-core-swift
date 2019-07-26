@@ -44,7 +44,7 @@ public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: F
     }
     
     let addItem: (SegmentKey?) -> Void = { [weak self] itemKey in
-      itemKey.flatMap { self?.items[$0] }.flatMap(accessor.add)
+      itemKey.flatMap { self?.items[$0] }.flatMap { accessor.add($0) }
     }
     
     onSelectedComputed.subscribePast(with: self) { [weak filterState] computedSelectionKey in

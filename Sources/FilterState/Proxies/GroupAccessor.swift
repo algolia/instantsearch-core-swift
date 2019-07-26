@@ -14,19 +14,19 @@ protocol FiltersContainer: class {
 
 extension FiltersContainer {
   
-  subscript(and groupName: String) -> AndGroupAccessor {
+  public subscript(and groupName: String) -> AndGroupAccessor {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
-  subscript<F: FilterType>(or groupName: String, type: F.Type) -> OrGroupAccessor<F> {
+  public subscript<F: FilterType>(or groupName: String, type: F.Type) -> OrGroupAccessor<F> {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
-  subscript<F: FilterType>(or groupName: String) -> OrGroupAccessor<F> {
+  public subscript<F: FilterType>(or groupName: String) -> OrGroupAccessor<F> {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
-  subscript(hierarchical groupName: String) -> HierarchicalGroupAccessor {
+  public subscript(hierarchical groupName: String) -> HierarchicalGroupAccessor {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
@@ -110,7 +110,7 @@ public protocol SpecializedGroupAccessor: GroupAccessor {
   func filters() -> [Filter]
   func filters(for attribute: Attribute) -> [Filter]
   
-  func add(_ filter: Filter)
+  func add(_ filters: Filter...)
   func addAll<S: Sequence>(_ filters: S) where S.Element == Filter
   func contains(_ filter: Filter) -> Bool
   func remove(_ filter: Filter)

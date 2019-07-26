@@ -228,75 +228,75 @@ class FilterStateTests: XCTestCase {
         """)
     
     // Try to delete one more time
-//    XCTAssertFalse(filterState.remove(Filter.Tag(value: "a")))
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "_tags":"b" AND "price":1.0 TO 10.0 ) AND ( "_tags":"b" )
-//        """)
-//
-//    // Remove filter occuring in multiple groups from one group
-//
-//    XCTAssertTrue(filterState.remove(Filter.Tag(value: "b"), fromGroupWithID: .and(name: "any")))
-//
-//    XCTAssertTrue(filterState.contains(Filter.Tag(value: "b")))
-//    XCTAssertFalse(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .and(name: "any")))
-//    XCTAssertTrue(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .or(name: "orTags", filterType: .tag)))
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "price":1.0 TO 10.0 ) AND ( "_tags":"b" )
-//        """)
-//
-//    // Remove all from group
-//    filterState.removeAll(fromGroupWithID: .and(name: "any"))
-//    XCTAssertTrue(filterState.getFilters(forGroupWithID: .and(name: "any")).isEmpty)
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "_tags":"b" )
-//        """)
-//
-//    // Remove all anywhere
-//    filterState.removeAll()
-//    XCTAssertTrue(filterState.isEmpty)
-//
-//    XCTAssertEqual(filterState.buildSQL(), nil)
-//
-//  }
-//
-//  func testSubscriptAndOperatorPlayground() {
-//
-//    var filterState = GroupsStorage()
-//
-//    let filterFacet1 = Filter.Facet(attribute: "category", value: "table")
-//    let filterFacet2 = Filter.Facet(attribute: "category", value: "chair")
-//    let filterNumeric1 = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
-//    let filterNumeric2 = Filter.Numeric(attribute: "price", operator: .lessThan, value: 20)
-//    let filterTag1 = Filter.Tag(value: "Tom")
-//
-//    filterState.add(filterFacet1, toGroupWithID: .or(name: "a", filterType: .facet))
-//    filterState.remove(filterFacet2, fromGroupWithID: .or(name: "a", filterType: .facet))
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "category":"table" )
-//        """)
-//
-//    filterState.add(filterNumeric1, toGroupWithID: .and(name: "b"))
-//    filterState.add(filterTag1, toGroupWithID: .and(name: "b"))
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "category":"table" ) AND ( "_tags":"Tom" AND "price" > 10.0 )
-//        """)
-//
-//    filterState.addAll(filters: [filterFacet1, filterFacet2], toGroupWithID: .or(name:"a", filterType: .facet))
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "category":"chair" OR "category":"table" ) AND ( "_tags":"Tom" AND "price" > 10.0 )
-//        """)
-//
-//    filterState.addAll(filters: [filterNumeric1, filterNumeric2], toGroupWithID: .and(name: "b"))
-//
-//    XCTAssertEqual(filterState.buildSQL(), """
-//        ( "category":"chair" OR "category":"table" ) AND ( "_tags":"Tom" AND "price" < 20.0 AND "price" > 10.0 )
-//        """)
+    XCTAssertFalse(filterState.remove(Filter.Tag(value: "a")))
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "_tags":"b" AND "price":1.0 TO 10.0 ) AND ( "_tags":"b" )
+        """)
+
+    // Remove filter occuring in multiple groups from one group
+
+    XCTAssertTrue(filterState.remove(Filter.Tag(value: "b"), fromGroupWithID: .and(name: "any")))
+
+    XCTAssertTrue(filterState.contains(Filter.Tag(value: "b")))
+    XCTAssertFalse(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .and(name: "any")))
+    XCTAssertTrue(filterState.contains(Filter.Tag(value: "b"), inGroupWithID: .or(name: "orTags", filterType: .tag)))
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "price":1.0 TO 10.0 ) AND ( "_tags":"b" )
+        """)
+
+    // Remove all from group
+    filterState.removeAll(fromGroupWithID: .and(name: "any"))
+    XCTAssertTrue(filterState.getFilters(forGroupWithID: .and(name: "any")).isEmpty)
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "_tags":"b" )
+        """)
+
+    // Remove all anywhere
+    filterState.removeAll()
+    XCTAssertTrue(filterState.isEmpty)
+
+    XCTAssertEqual(filterState.buildSQL(), nil)
+
+  }
+
+  func testSubscriptAndOperatorPlayground() {
+
+    var filterState = GroupsStorage()
+
+    let filterFacet1 = Filter.Facet(attribute: "category", value: "table")
+    let filterFacet2 = Filter.Facet(attribute: "category", value: "chair")
+    let filterNumeric1 = Filter.Numeric(attribute: "price", operator: .greaterThan, value: 10)
+    let filterNumeric2 = Filter.Numeric(attribute: "price", operator: .lessThan, value: 20)
+    let filterTag1 = Filter.Tag(value: "Tom")
+
+    filterState.add(filterFacet1, toGroupWithID: .or(name: "a", filterType: .facet))
+    filterState.remove(filterFacet2, fromGroupWithID: .or(name: "a", filterType: .facet))
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "category":"table" )
+        """)
+
+    filterState.add(filterNumeric1, toGroupWithID: .and(name: "b"))
+    filterState.add(filterTag1, toGroupWithID: .and(name: "b"))
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "category":"table" ) AND ( "_tags":"Tom" AND "price" > 10.0 )
+        """)
+
+    filterState.addAll(filters: [filterFacet1, filterFacet2], toGroupWithID: .or(name:"a", filterType: .facet))
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "category":"chair" OR "category":"table" ) AND ( "_tags":"Tom" AND "price" > 10.0 )
+        """)
+
+    filterState.addAll(filters: [filterNumeric1, filterNumeric2], toGroupWithID: .and(name: "b"))
+
+    XCTAssertEqual(filterState.buildSQL(), """
+        ( "category":"chair" OR "category":"table" ) AND ( "_tags":"Tom" AND "price" < 20.0 AND "price" > 10.0 )
+        """)
     
   }
   
@@ -520,5 +520,5 @@ class FilterStateTests: XCTestCase {
     XCTAssertEqual(filterState.buildSQL(), expectedResult)
     
   }
-  
+    
 }

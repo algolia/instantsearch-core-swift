@@ -28,8 +28,8 @@ public struct OrGroupAccessor<Filter: FilterType>: SpecializedGroupAccessor {
     
     /// Adds filter to group
     /// - parameter filter: filter to add
-    public func add(_ filter: Filter) {
-        filtersContainer.filters.add(filter, toGroupWithID: groupID)
+    public func add(_ filters: Filter...) {
+        filtersContainer.filters.addAll(filters: filters, toGroupWithID: groupID)
     }
     
     /// Adds the filters of a sequence to group

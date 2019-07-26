@@ -27,14 +27,14 @@ public struct AndGroupAccessor: GroupAccessor {
     
     /// Adds filter to group
     /// - parameter filter: filter to add
-    public func add(_ filter: FilterType) {
-        filtersContainer.filters.add(filter, toGroupWithID: groupID)
+    public func add(_ filters: FilterType...) {
+        filtersContainer.filters.addAll(filters: filters, toGroupWithID: groupID)
     }
     
     /// Adds the filters of a sequence to group
     /// - parameter filters: sequence of filters to add
-    public func addAll<S: Sequence>(_ filters: S) where S.Element == FilterType {
-        filtersContainer.filters.addAll(filters: filters.map { $0 as FilterType }, toGroupWithID: groupID)
+    public func addAll(_ filters: [FilterType]) {
+        filtersContainer.filters.addAll(filters: filters, toGroupWithID: groupID)
     }
     
     /// Tests whether group contains a filter

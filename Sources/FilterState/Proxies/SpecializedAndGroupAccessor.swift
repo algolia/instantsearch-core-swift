@@ -33,8 +33,8 @@ public struct SpecializedAndGroupAccessor<Filter: FilterType>: SpecializedGroupA
     
     /// Adds filter to group
     /// - parameter filter: filter to add
-    public func add(_ filter: Filter) {
-      genericAccessor.add(filter)
+    public func add(_ filters: Filter...) {
+      genericAccessor.addAll(filters)
     }
     
     /// Adds the filters of a sequence to group

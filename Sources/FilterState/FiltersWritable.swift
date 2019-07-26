@@ -89,11 +89,11 @@ extension FiltersWritable {
     addAll(filters: [filter], toGroupWithID: groupID)
   }
   
-  mutating func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
+  @discardableResult mutating func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
     return removeAll([filter], fromGroupWithID: groupID)
   }
   
-  mutating func remove(_ filter: FilterType) -> Bool {
+  @discardableResult mutating func remove(_ filter: FilterType) -> Bool {
     return removeAll([filter])
   }
   

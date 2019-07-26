@@ -20,21 +20,3 @@ public protocol MultiIndexHitsController: class {
 
 extension MultiIndexHitsInteractor: MultiIndexHitsSource {}
 
-public extension MultiIndexHitsInteractor {
-  
-  func connectController<Controller: MultiIndexHitsController>(_ controller: Controller) {
-    
-    controller.hitsSource = self
-    
-    onRequestChanged.subscribe(with: controller) { _ in
-      controller.scrollToTop()
-    }.onQueue(.main)
-    
-    onResultsUpdated.subscribePast(with: controller) { _ in
-      controller.reload()
-    }.onQueue(.main)
-    
-    controller.reload()
-  }
-  
-}

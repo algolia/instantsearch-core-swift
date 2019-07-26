@@ -10,31 +10,31 @@ import Foundation
 
 extension FilterState: FiltersWritable {
   
-  public func add(_ filter: FilterType, toGroupWithID groupID: FilterGroup.ID) {
+  func add(_ filter: FilterType, toGroupWithID groupID: FilterGroup.ID) {
     self.filters.add(filter, toGroupWithID: groupID)
   }
   
-  public func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
+  func addAll<S: Sequence>(filters: S, toGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     self.filters.addAll(filters: filters, toGroupWithID: groupID)
   }
   
-  @discardableResult public func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
+  @discardableResult func remove(_ filter: FilterType, fromGroupWithID groupID: FilterGroup.ID) -> Bool {
     return self.filters.remove(filter, fromGroupWithID: groupID)
   }
   
-  @discardableResult public func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
+  @discardableResult func removeAll<S: Sequence>(_ filters: S, fromGroupWithID groupID: FilterGroup.ID) -> Bool where S.Element == FilterType {
     return self.filters.removeAll(filters, fromGroupWithID: groupID)
   }
   
-  public func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
+  func removeAll(fromGroupWithID groupID: FilterGroup.ID) {
     return self.filters.removeAll(fromGroupWithID: groupID)
   }
   
-  public func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
+  func removeAll(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
     return self.filters.removeAll(fromGroupWithIDs: groupIDs)
   }
   
-  public func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
+  func removeAllExcept(fromGroupWithIDs groupIDs: [FilterGroup.ID]) {
     return self.filters.removeAllExcept(groupIDs)
   }
   
@@ -46,7 +46,7 @@ extension FilterState: FiltersWritable {
     return self.filters.removeAll(filters)
   }
   
-  public func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID) {
+  func removeAll(for attribute: Attribute, fromGroupWithID groupID: FilterGroup.ID) {
     self.filters.removeAll(for: attribute, fromGroupWithID: groupID)
   }
   
@@ -58,11 +58,11 @@ extension FilterState: FiltersWritable {
     self.filters.removeAll()
   }
   
-  public func toggle(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) {
+  func toggle(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) {
     self.filters.toggle(filter, inGroupWithID: groupID)
   }
   
-  public func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
+  func toggle<S: Sequence>(_ filters: S, inGroupWithID groupID: FilterGroup.ID) where S.Element == FilterType {
     self.filters.toggle(filters, inGroupWithID: groupID)
   }
   
