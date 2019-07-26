@@ -11,8 +11,8 @@ import Foundation
 extension AnyHitsInteractor {
   
   public func connectFilterState(_ filterState: FilterState) {
-    filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.notifyQueryChanged()
+    filterState.onChange.subscribePast(with: self) { interactor, _ in
+      interactor.notifyQueryChanged()
     }
   }
   

@@ -13,7 +13,6 @@ public protocol Observation {
 
   associatedtype ParameterType
 
-  typealias ObserverCallback = (ParameterType) -> Void
   typealias ObserverFilter = (ParameterType) -> Bool
 
   /// Whether the observer should be removed once it observes the `Signal` firing once. Defaults to false.

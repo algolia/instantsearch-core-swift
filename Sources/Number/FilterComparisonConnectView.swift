@@ -17,7 +17,7 @@ extension NumberInteractor {
 
     controller.setComputation(computation: computation)
 
-    onItemChanged.subscribePast(with: self) { (item) in
+    onItemChanged.subscribePast(with: controller) { controller, item in
       guard let item = item else {
         controller.invalidate()
         return

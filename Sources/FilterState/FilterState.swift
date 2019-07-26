@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Signals
 
 public class FilterState {
   

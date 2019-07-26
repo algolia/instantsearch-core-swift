@@ -17,20 +17,21 @@ public extension MultiIndexHitsInteractor {
       hitsInteractors[index].pageLoader = pageLoader
     }
     
-    searcher.onResults.subscribePast(with: self) { [weak self] searchResults in
+    searcher.onResults.subscribePast(with: self) { viewModel, searchResults in
       do {
-        try self?.update(searchResults.searchResults)
+        try viewModel.update(searchResults.searchResults)
       } catch let error {
-        self?.onError.fire(error)
+        viewModel.onError.fire(error)
       }
     }
     
-    searcher.onError.subscribe(with: self) { [weak self] (queries, error)  in
-      self?.process(error, for: queries)
+    searcher.onError.subscribe(with: self) { (viewModel, args) in
+      let (queries, error) = args
+      viewModel.process(error, for: queries)
     }
     
-    searcher.onQueryChanged.subscribe(with: self) { [weak self] _ in
-      self?.notifyQueryChanged()
+    searcher.onQueryChanged.subscribe(with: self) { viewModel, _ in
+      viewModel.notifyQueryChanged()
     }
         
   }

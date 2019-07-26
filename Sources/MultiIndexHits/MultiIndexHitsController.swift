@@ -19,4 +19,3 @@ public protocol MultiIndexHitsController: class {
 }
 
 extension MultiIndexHitsInteractor: MultiIndexHitsSource {}
-

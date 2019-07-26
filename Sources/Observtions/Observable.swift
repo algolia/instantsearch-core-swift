@@ -8,12 +8,12 @@
 
 import Foundation
 
-public protocol  Observable {
+public protocol Observable {
 
   associatedtype ParameterType
   associatedtype Obs: Observation
 
-  typealias ObserverCallback = (ParameterType) -> Void
+  typealias ObserverCallback<O: AnyObject> = (O, ParameterType) -> Void
 
   /// Whether or not the `Signal` should retain a reference to the last data it was fired with. Defaults to false.
   var retainLastData: Bool { get set }
@@ -28,7 +28,7 @@ public protocol  Observable {
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke whenever the `Signal` fires.
   /// - returns: A `SignalSubscription` that can be used to cancel or filter the subscription.
-  func subscribe(with observer: AnyObject, callback: @escaping ObserverCallback) -> Obs
+  func subscribe<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Obs
 
   /// Subscribes an observer to the `Signal`. The subscription is automatically canceled after the `Signal` has
   /// fired once.
@@ -36,7 +36,7 @@ public protocol  Observable {
   /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke when the signal fires for the first time.
-  func subscribeOnce(with observer: AnyObject, callback: @escaping ObserverCallback) -> Obs
+  func subscribeOnce<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Obs
 
   /// Subscribes an observer to the `Signal` and invokes its callback immediately with the last data fired by the
   /// `Signal` if it has fired at least once and if the `retainLastData` property has been set to true.
@@ -44,7 +44,7 @@ public protocol  Observable {
   /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke whenever the `Signal` fires.
-  func subscribePast(with observer: AnyObject, callback: @escaping ObserverCallback) -> Obs
+  func subscribePast<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Obs
 
   /// Subscribes an observer to the `Signal` and invokes its callback immediately with the last data fired by the
   /// `Signal` if it has fired at least once and if the `retainLastData` property has been set to true. If it has
@@ -53,7 +53,7 @@ public protocol  Observable {
   /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke whenever the signal fires.
-  func subscribePastOnce(with observer: AnyObject, callback: @escaping ObserverCallback) -> Obs
+  func subscribePastOnce<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Obs
 
   /// Cancels all subscriptions for an observer.
   ///

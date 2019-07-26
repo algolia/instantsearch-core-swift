@@ -89,7 +89,7 @@ class SelectableInteractorConnectorsTests: XCTestCase {
     
     let selectedComputedExpectation = expectation(description: "selected computed")
     
-    interactor.onSelectedComputed.subscribe(with: self) { isSelected in
+    interactor.onSelectedComputed.subscribe(with: self) { _, isSelected in
       XCTAssertTrue(isSelected)
       selectedComputedExpectation.fulfill()
     }

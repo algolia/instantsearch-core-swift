@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Signals
 
 /// A SignalLister represenents an instance and its association with a `Signal`.
 final public class Subscription<T>: Observation {

@@ -34,7 +34,7 @@ class StatsInteractorConnectorsTests: XCTestCase {
     
     let exp = expectation(description: "on item changed")
     
-    vm.onItemChanged.subscribe(with: self) { sr in
+    vm.onItemChanged.subscribe(with: self) { _, sr in
       exp.fulfill()
     }
     

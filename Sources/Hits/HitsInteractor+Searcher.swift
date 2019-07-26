@@ -14,21 +14,21 @@ extension HitsInteractor {
     
     pageLoader = searcher
     
-    searcher.onResults.subscribePast(with: self) { [weak self] searchResults in
-      try? self?.update(searchResults)
+    searcher.onResults.subscribePast(with: self) { viewModel, searchResults in
+      try? viewModel.update(searchResults)
     }
     
-    searcher.onError.subscribe(with: self) { [weak self] (arg) in
+    searcher.onError.subscribe(with: self) { viewModel, arg in
       let (query, error) = arg
-      self?.process(error, for: query)
+      viewModel.process(error, for: query)
     }
     
-    searcher.onIndexChanged.subscribePast(with: self) { [weak self] _ in
-      self?.notifyQueryChanged()
+    searcher.onIndexChanged.subscribePast(with: self) { viewModel, _ in
+      viewModel.notifyQueryChanged()
     }
     
-    searcher.onQueryChanged.subscribePast(with: self) { [weak self] _ in
-      self?.notifyQueryChanged()
+    searcher.onQueryChanged.subscribePast(with: self) { viewModel, _ in
+      viewModel.notifyQueryChanged()
     }
     
   }

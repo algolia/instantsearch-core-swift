@@ -12,14 +12,14 @@ public extension HierarchicalInteractor {
   func connectSearcher(searcher: SingleIndexSearcher) {
     hierarchicalAttributes.forEach(searcher.indexQueryState.query.updateQueryFacets)
   
-    searcher.onResults.subscribePast(with: self) { (searchResults) in
+    searcher.onResults.subscribePast(with: self) { viewModel, searchResults in
 
       if let hierarchicalFacets = searchResults.hierarchicalFacets {
-        self.item = self.hierarchicalAttributes.map { hierarchicalFacets[$0] }.compactMap { $0 }
-      } else if let firstHierarchicalAttribute = self.hierarchicalAttributes.first {
-        self.item = searchResults.facets?[firstHierarchicalAttribute].flatMap { [$0] } ?? []
+        viewModel.item = viewModel.hierarchicalAttributes.map { hierarchicalFacets[$0] }.compactMap { $0 }
+      } else if let firstHierarchicalAttribute = viewModel.hierarchicalAttributes.first {
+        viewModel.item = searchResults.facets?[firstHierarchicalAttribute].flatMap { [$0] } ?? []
       } else {
-        self.item = []
+        viewModel.item = []
       }
     }
 

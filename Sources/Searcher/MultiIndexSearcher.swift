@@ -141,9 +141,9 @@ extension MultiIndexSearcher {
 extension MultiIndexSearcher {
   
   func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) {
-    filterState.onChange.subscribe(with: self) { [weak self] filters in
-      self?.indexQueryStates[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      self?.search()
+    filterState.onChange.subscribe(with: self) { searcher, filters in
+      searcher.indexQueryStates[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      searcher.search()
     }
   }
   

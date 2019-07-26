@@ -48,7 +48,7 @@ protocol FiltersReadable {
 extension FiltersReadable {
   
   func contains(_ filter: FilterType) -> Bool {
-    return getGroupIDs().anySatisfy { self.contains(filter, inGroupWithID: $0) }
+    return getGroupIDs().anySatisfy { contains(filter, inGroupWithID: $0) }
   }
   
 }
@@ -65,7 +65,7 @@ extension FiltersReadable {
           return false
         }
       }
-      .map(self.getFilters(forGroupWithID:))
+      .map(getFilters(forGroupWithID:))
       .flatMap({ $0 })
       .map { $0.attribute }
     return Set(attributes)

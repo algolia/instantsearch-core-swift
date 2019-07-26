@@ -48,8 +48,8 @@ public extension NumberInteractor {
       }
     }
     
-    filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.item = accessor.filters(for: attribute).compactMap(extractValue).first
+    filterState.onChange.subscribePast(with: self) { viewModel, _ in
+      viewModel.item = accessor.filters(for: attribute).compactMap(extractValue).first
     }
     
   }
@@ -71,7 +71,7 @@ public extension NumberInteractor {
       accessor.add(filter)
     }
     
-    onNumberComputed.subscribePast(with: self) { [weak filterState] computed in
+    onNumberComputed.subscribePast(with: self) { [weak filterState] _, computed in
       removeCurrentItem()
       addItem(computed)
       filterState?.notifyChange()

@@ -14,11 +14,11 @@ public extension HitsInteractor {
     
     controller.hitsSource = self
     
-    onRequestChanged.subscribe(with: self) { _ in
+    onRequestChanged.subscribe(with: controller) { controller, _ in
       controller.scrollToTop()
-      }.onQueue(.main)
+    }.onQueue(.main)
     
-    onResultsUpdated.subscribePast(with: controller) { _ in
+    onResultsUpdated.subscribePast(with: controller) { controller, _ in
       controller.reload()
     }.onQueue(.main)
   }

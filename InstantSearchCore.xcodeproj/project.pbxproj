@@ -55,10 +55,6 @@
 		AF1177D8225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */; };
 		AF1177D9225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */; };
 		AF1177DA225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */; };
-		AF117806225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
-		AF117807225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
-		AF117808225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
-		AF117809225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
 		AF11780A225F650F00C5B59B /* GroupAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupAccessor.swift */; };
 		AF11780B225F651000C5B59B /* GroupAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupAccessor.swift */; };
 		AF11780C225F651200C5B59B /* GroupAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupAccessor.swift */; };
@@ -250,6 +246,10 @@
 		AFBAA6EE22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */; };
 		AFBAA6EF22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */; };
 		AFBAA6F022EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */; };
+		AFBAA6F222EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F322EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F422EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F522EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
 		AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF375F2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF37602285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
@@ -741,7 +741,6 @@
 		AF1177DD225E342300C5B59B /* OrGroupAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrGroupAccessor.swift; sourceTree = "<group>"; };
 		AF1177DE225E342300C5B59B /* AndGroupAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndGroupAccessor.swift; sourceTree = "<group>"; };
 		AF1177DF225E342300C5B59B /* SpecializedAndGroupAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializedAndGroupAccessor.swift; sourceTree = "<group>"; };
-		AF117805225E484000C5B59B /* AbstractClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractClass.swift; sourceTree = "<group>"; };
 		AF11782F225F70E900C5B59B /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateGroupTests.swift; sourceTree = "<group>"; };
 		AF117832225F70E900C5B59B /* FilterStateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateTests.swift; sourceTree = "<group>"; };
@@ -794,6 +793,7 @@
 		AFB9783522D49933001C2718 /* disjunctive.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = disjunctive.json; sourceTree = "<group>"; };
 		AFBAA6E722EA2F6D0009856B /* HitsInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+Controller.swift"; sourceTree = "<group>"; };
+		AFBAA6F122EBC1050009856B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = SOURCE_ROOT; };
 		AFBF375D2285D5C600787D24 /* FilterConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConverter.swift; sourceTree = "<group>"; };
 		AFBF37622285D5D300787D24 /* FilterGroupConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupConverter.swift; sourceTree = "<group>"; };
 		AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractor.swift; sourceTree = "<group>"; };
@@ -916,7 +916,6 @@
 		E2CF1A4B22A6B06200DE24FC /* FilterComparisonComputeBounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterComparisonComputeBounds.swift; sourceTree = "<group>"; };
 		E2E09E282231793C00F3056D /* HitsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractor.swift; sourceTree = "<group>"; };
 		E2E09E2C2231796800F3056D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
-		E2E09E2F22326FEA00F3056D /* Signals.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Signals.framework; path = Carthage/Build/iOS/Signals.framework; sourceTree = "<group>"; };
 		E2EBE72B22B1347D00B91B23 /* ItemsListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsListInteractor.swift; sourceTree = "<group>"; };
 		E2EBE73022B1367C00B91B23 /* CurrentFiltersInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentFiltersInteractor.swift; sourceTree = "<group>"; };
 		E2EBE73522B14B1D00B91B23 /* ItemListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListController.swift; sourceTree = "<group>"; };
@@ -1312,7 +1311,6 @@
 				E2E09E2C2231796800F3056D /* Result.swift */,
 				AFCDEDC1223979E1001459BE /* Optional+String.swift */,
 				AF322D3122D8D5B000010428 /* Optional+Collection.swift */,
-				AF117805225E484000C5B59B /* AbstractClass.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1429,6 +1427,7 @@
 			isa = PBXGroup;
 			children = (
 				E24234092243A43D008F24FB /* Signals+Observable.swift */,
+				AFBAA6F122EBC1050009856B /* Signal.swift */,
 				E29E455D2243F322005B358D /* Observer.swift */,
 				E29E45672243F335005B358D /* Subscription.swift */,
 				E29E456C2243F351005B358D /* Observation.swift */,
@@ -1440,7 +1439,6 @@
 		E29F2D2A1F2F5C6B0052335F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E2E09E2F22326FEA00F3056D /* Signals.framework */,
 				E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */,
 				E2960CD920AF2D350056E874 /* InstantSearchClient.framework */,
 				E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */,
@@ -1843,7 +1841,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/InstantSearchClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Signals.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -1859,7 +1856,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/Mac/InstantSearchClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Signals.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -1875,7 +1871,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/tvOS/InstantSearchClient.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Signals.framework",
 			);
 			name = "Carthage Copy Frameworks";
 			outputPaths = (
@@ -1936,6 +1931,7 @@
 				AFCDED54222E7A4E001459BE /* Sequencer.swift in Sources */,
 				AFF1E758229696F700941401 /* MultiIndexHitsSource.swift in Sources */,
 				E2CF1A4722A6B04100DE24FC /* FilterComparisonConnectFilterState.swift in Sources */,
+				AFBAA6F222EBC1050009856B /* Signal.swift in Sources */,
 				AFCDED4B222E7A4E001459BE /* JSON.swift in Sources */,
 				AFC2E29C228ED8B600859EBA /* FilterListViewModel+Tag.swift in Sources */,
 				E2B1AC8622D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
@@ -2001,7 +1997,6 @@
 				AF06184722E9F3D000FDBAAE /* HitsInteractor+Searcher.swift in Sources */,
 				AF6C6F7122538179001E5E3C /* FacetSearcher.swift in Sources */,
 				AFC2E2B1228EE1EC00859EBA /* FacetListController.swift in Sources */,
-				AF117806225E484000C5B59B /* AbstractClass.swift in Sources */,
 				E2CF1A3322A6A8C000DE24FC /* Computation.swift in Sources */,
 				AF9396A5229D52A900757257 /* QueryInputInteractor+Searcher.swift in Sources */,
 				AFE34380228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
@@ -2166,6 +2161,7 @@
 				AFE6E38722A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0222B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				AFBAA6F322EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				E29E45642243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E39222A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -2183,7 +2179,6 @@
 				AFBAA6EE22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3822DCDDB600010428 /* GroupStorage.swift in Sources */,
 				AFBF37692285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */,
-				AF117807225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
 				E2146C1F22CD058D00927350 /* HiearchicalInteractor.swift in Sources */,
 				AFE6E3C422A82B1B005BA44D /* InfiniteScrollingController.swift in Sources */,
@@ -2351,6 +2346,7 @@
 				AFE6E38822A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0322B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				AFBAA6F422EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				AFE6E39322A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -2363,7 +2359,6 @@
 				AFE6E3BC22A6E07A005BA44D /* PageLoadable.swift in Sources */,
 				E2BAE6B2223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7322538179001E5E3C /* FacetSearcher.swift in Sources */,
-				AF117808225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AF21EEB622B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6EF22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3922DCDDB600010428 /* GroupStorage.swift in Sources */,
@@ -2536,6 +2531,7 @@
 				AFE6E38922A185CA005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0422B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
+				AFBAA6F522EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				AFE6E39422A18AE4005BA44D /* ItemController.swift in Sources */,
@@ -2548,7 +2544,6 @@
 				AFE6E3BD22A6E07C005BA44D /* PageLoadable.swift in Sources */,
 				E2BAE6B3223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7422538179001E5E3C /* FacetSearcher.swift in Sources */,
-				AF117809225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AF21EEB722B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6F022EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3A22DCDDB600010428 /* GroupStorage.swift in Sources */,

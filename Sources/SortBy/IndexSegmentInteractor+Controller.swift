@@ -15,8 +15,10 @@ public extension IndexSegmentInteractor {
 
     controller.setItems(items: items.mapValues { presenter($0) })
     controller.onClick = computeSelected(selecting:)
-    onSelectedChanged.subscribePast(with: controller, callback: controller.setSelected)
-    onItemsChanged.subscribePast(with: controller) { (newItems) in
+    onSelectedChanged.subscribePast(with: controller) { controller, selectedItem in
+      controller.setSelected(selectedItem)
+    }
+    onItemsChanged.subscribePast(with: controller) { controller, newItems in
       controller.setItems(items: newItems.mapValues { presenter($0) })
     }
 

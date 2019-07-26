@@ -28,7 +28,7 @@ class ItemInteractorTests: XCTestCase {
     
     let switchItemExpectation = expectation(description: "item changed")
     
-    interactor.onItemChanged.subscribe(with: self) { newItem in
+    interactor.onItemChanged.subscribe(with: self) { _, newItem in
       XCTAssertEqual(newItem, "o")
       switchItemExpectation.fulfill()
     }

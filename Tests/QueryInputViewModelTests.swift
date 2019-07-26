@@ -67,7 +67,7 @@ class QueryInputInteractorTests: XCTestCase {
     
     let changedQuery = "q1"
     
-    interactor.onQueryChanged.subscribe(with: self) { query in
+    interactor.onQueryChanged.subscribe(with: self) { _, query in
       XCTAssertEqual(query, changedQuery)
       onQueryChangedExpectation.fulfill()
     }
@@ -84,7 +84,7 @@ class QueryInputInteractorTests: XCTestCase {
     let onQuerySubmittedExpectation = expectation(description: "on query submitted")
     let submittedQuery = "q2"
 
-    interactor.onQuerySubmitted.subscribe(with: self) { query in
+    interactor.onQuerySubmitted.subscribe(with: self) { _, query in
       XCTAssertEqual(submittedQuery, query)
       onQuerySubmittedExpectation.fulfill()
     }
@@ -115,7 +115,7 @@ class QueryInputInteractorTests: XCTestCase {
     let querySubmittedExpectation = expectation(description: "submitted expectation")
     querySubmittedExpectation.isInverted = true
     
-    interactor.onQuerySubmitted.subscribe(with: self) { _ in
+    interactor.onQuerySubmitted.subscribe(with: self) { _, _ in
       querySubmittedExpectation.fulfill()
     }
   
@@ -171,7 +171,7 @@ class QueryInputInteractorTests: XCTestCase {
   
     let querySubmittedExpectation = expectation(description: "query submitted")
     
-    interactor.onQuerySubmitted.subscribe(with: self) { query in
+    interactor.onQuerySubmitted.subscribe(with: self) { _, query in
       XCTAssertEqual(query, "q3")
       querySubmittedExpectation.fulfill()
     }

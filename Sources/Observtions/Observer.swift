@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Signals
 
 /// This is where you can change the implementation detail of the observer
 /// If you want to change a new one, then you need just implement the Observable protocol
@@ -16,6 +15,7 @@ import Signals
 public class Observer<P>: Observable {
 
   public typealias ParameterType = P
+  public typealias Obs = Subscription<P>
 
   private let signal: Signal<P>
 
@@ -46,7 +46,7 @@ public class Observer<P>: Observable {
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke whenever the `Signal` fires.
   /// - returns: A `SignalSubscription` that can be used to cancel or filter the subscription.
-  @discardableResult public func subscribe(with observer: AnyObject, callback: @escaping ObserverCallback) -> Subscription<P> {
+  @discardableResult public func subscribe<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Subscription<P> {
     return Subscription(signalSubscription: signal.subscribe(with: observer, callback: callback))
   }
 
@@ -56,7 +56,7 @@ public class Observer<P>: Observable {
   /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke when the signal fires for the first time.
-  @discardableResult public func subscribeOnce(with observer: AnyObject, callback: @escaping ObserverCallback) -> Subscription<P> {
+  @discardableResult public func subscribeOnce<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Subscription<P> {
     return Subscription(signalSubscription: signal.subscribeOnce(with: observer, callback: callback))
   }
 
@@ -66,7 +66,7 @@ public class Observer<P>: Observable {
   /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke whenever the `Signal` fires.
-  @discardableResult public func subscribePast(with observer: AnyObject, callback: @escaping ObserverCallback) -> Subscription<P> {
+  @discardableResult public func subscribePast<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Subscription<P> {
     return Subscription(signalSubscription: signal.subscribePast(with: observer, callback: callback))
   }
 
@@ -77,7 +77,7 @@ public class Observer<P>: Observable {
   /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
   ///   subscription is automatically cancelled.
   /// - parameter callback: The closure to invoke whenever the signal fires.
-  @discardableResult public func subscribePastOnce(with observer: AnyObject, callback: @escaping ObserverCallback) -> Subscription<P> {
+  @discardableResult public func subscribePastOnce<O: AnyObject>(with observer: O, callback: @escaping ObserverCallback<O>) -> Subscription<P> {
     return Subscription(signalSubscription: signal.subscribePastOnce(with: observer, callback: callback))
   }
 

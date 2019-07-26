@@ -42,8 +42,8 @@ public extension NumberRangeInteractor {
       }
     }
     
-    filterState.onChange.subscribePast(with: self) { [weak self] _ in
-      self?.item = accessor.filters(for: attribute).compactMap(extractRange).first
+    filterState.onChange.subscribePast(with: self) { viewModel, _ in
+      viewModel.item = accessor.filters(for: attribute).compactMap(extractRange).first
     }
 
   }
@@ -66,7 +66,7 @@ public extension NumberRangeInteractor {
       accessor.add(numericFilter(with: range))
     }
     
-    onNumberRangeComputed.subscribePast(with: self) { [weak filterState] computedRange in
+    onNumberRangeComputed.subscribePast(with: self) { [weak filterState] _, computedRange in
       removeCurrentItem()
       addItem(computedRange)
       filterState?.notifyChange()

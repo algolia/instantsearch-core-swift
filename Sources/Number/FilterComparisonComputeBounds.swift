@@ -13,8 +13,8 @@ extension Boundable {
   public func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
     searcher.indexQueryState.query.updateQueryFacets(with: attribute)
 
-    searcher.onResults.subscribePastOnce(with: self) { [weak self] searchResults in
-      self?.computeBoundsFromFacetStats(attribute: attribute, facetStats: searchResults.facetStats)
+    searcher.onResults.subscribePastOnce(with: self) { boundable, searchResults in
+      boundable.computeBoundsFromFacetStats(attribute: attribute, facetStats: searchResults.facetStats)
     }
   }
 

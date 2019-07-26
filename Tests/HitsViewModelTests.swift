@@ -199,7 +199,7 @@ class HitsInteractorTests: XCTestCase {
     
     let onRequestChangedExpectation = expectation(description: "on request changed")
     
-    vm.onRequestChanged.subscribe(with: self) { _ in
+    vm.onRequestChanged.subscribe(with: self) { _, _ in
       onRequestChangedExpectation.fulfill()
     }
     
@@ -233,7 +233,7 @@ class HitsInteractorTests: XCTestCase {
     
     let exp = expectation(description: "change query when filter state changed")
     
-    vm.onRequestChanged.subscribe(with: self) { _ in
+    vm.onRequestChanged.subscribe(with: self) { _, _ in
       exp.fulfill()
     }
     
@@ -267,7 +267,7 @@ class HitsInteractorTests: XCTestCase {
     
     let queryChangedExpectation = expectation(description: "query changed")
     
-    vm.onRequestChanged.subscribe(with: self) { _ in
+    vm.onRequestChanged.subscribe(with: self) { _, _ in
       queryChangedExpectation.fulfill()
     }
     
@@ -277,7 +277,7 @@ class HitsInteractorTests: XCTestCase {
     
     let resultsUpdatedExpectation = expectation(description: "results updated")
     
-    vm.onResultsUpdated.subscribe(with: self) { _ in
+    vm.onResultsUpdated.subscribe(with: self) { _, _ in
       resultsUpdatedExpectation.fulfill()
       XCTAssertTrue(isc.pendingPages.isEmpty)
     }
