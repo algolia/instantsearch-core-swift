@@ -55,10 +55,6 @@
 		AF1177D8225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */; };
 		AF1177D9225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */; };
 		AF1177DA225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */; };
-		AF117806225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
-		AF117807225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
-		AF117808225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
-		AF117809225E484000C5B59B /* AbstractClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF117805225E484000C5B59B /* AbstractClass.swift */; };
 		AF11780A225F650F00C5B59B /* GroupAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupAccessor.swift */; };
 		AF11780B225F651000C5B59B /* GroupAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupAccessor.swift */; };
 		AF11780C225F651200C5B59B /* GroupAccessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177DC225E342300C5B59B /* GroupAccessor.swift */; };
@@ -745,7 +741,6 @@
 		AF1177DD225E342300C5B59B /* OrGroupAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrGroupAccessor.swift; sourceTree = "<group>"; };
 		AF1177DE225E342300C5B59B /* AndGroupAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AndGroupAccessor.swift; sourceTree = "<group>"; };
 		AF1177DF225E342300C5B59B /* SpecializedAndGroupAccessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecializedAndGroupAccessor.swift; sourceTree = "<group>"; };
-		AF117805225E484000C5B59B /* AbstractClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractClass.swift; sourceTree = "<group>"; };
 		AF11782F225F70E900C5B59B /* FilterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterTests.swift; sourceTree = "<group>"; };
 		AF117831225F70E900C5B59B /* FilterStateGroupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateGroupTests.swift; sourceTree = "<group>"; };
 		AF117832225F70E900C5B59B /* FilterStateTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterStateTests.swift; sourceTree = "<group>"; };
@@ -1318,7 +1313,6 @@
 				E2E09E2C2231796800F3056D /* Result.swift */,
 				AFCDEDC1223979E1001459BE /* Optional+String.swift */,
 				AF322D3122D8D5B000010428 /* Optional+Collection.swift */,
-				AF117805225E484000C5B59B /* AbstractClass.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -2009,7 +2003,6 @@
 				AF06184722E9F3D000FDBAAE /* HitsInteractor+Searcher.swift in Sources */,
 				AF6C6F7122538179001E5E3C /* FacetSearcher.swift in Sources */,
 				AFC2E2B1228EE1EC00859EBA /* FacetListController.swift in Sources */,
-				AF117806225E484000C5B59B /* AbstractClass.swift in Sources */,
 				E2CF1A3322A6A8C000DE24FC /* Computation.swift in Sources */,
 				AF9396A5229D52A900757257 /* QueryInputInteractor+Searcher.swift in Sources */,
 				AFE34380228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
@@ -2191,10 +2184,16 @@
 				AF21EEB522B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6EE22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3822DCDDB600010428 /* GroupStorage.swift in Sources */,
+<<<<<<< HEAD
 				AFBF37692285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */,
 				AF117807225E484000C5B59B /* AbstractClass.swift in Sources */,
 				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
 				E2146C1F22CD058D00927350 /* HiearchicalInteractor.swift in Sources */,
+=======
+				AFBF37692285D8F100787D24 /* SelectableSegmentViewModel.swift in Sources */,
+				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsViewModel+Connectors.swift in Sources */,
+				E2146C1F22CD058D00927350 /* HiearchicalViewModel.swift in Sources */,
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
 				AFE6E3C422A82B1B005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73722B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				E2EFA61222B101E2008C9CAA /* Presenter.swift in Sources */,
@@ -2373,7 +2372,11 @@
 				AFE6E3BC22A6E07A005BA44D /* PageLoadable.swift in Sources */,
 				E2BAE6B2223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7322538179001E5E3C /* FacetSearcher.swift in Sources */,
+<<<<<<< HEAD
 				AF117808225E484000C5B59B /* AbstractClass.swift in Sources */,
+=======
+				AFE6E3B022A6DC7F005BA44D /* HitsViewModel+Connectors.swift in Sources */,
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
 				AF21EEB622B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6EF22EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3922DCDDB600010428 /* GroupStorage.swift in Sources */,
@@ -2559,7 +2562,11 @@
 				AFE6E3BD22A6E07C005BA44D /* PageLoadable.swift in Sources */,
 				E2BAE6B3223FF77100B89EA3 /* FacetListPresenter.swift in Sources */,
 				AF6C6F7422538179001E5E3C /* FacetSearcher.swift in Sources */,
+<<<<<<< HEAD
 				AF117809225E484000C5B59B /* AbstractClass.swift in Sources */,
+=======
+				AFE6E3B122A6DC80005BA44D /* HitsViewModel+Connectors.swift in Sources */,
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
 				AF21EEB722B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
 				AFBAA6F022EA2FD30009856B /* HitsInteractor+Controller.swift in Sources */,
 				AF322D3A22DCDDB600010428 /* GroupStorage.swift in Sources */,

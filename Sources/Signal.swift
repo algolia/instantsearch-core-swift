@@ -40,7 +40,7 @@ final public class Signal<T> {
         }
     }
     
-    private var signalListeners = [AnySignalSubscription<T>]()
+    private var signalListeners = [SignalSubscription<T>]()
     
     /// Initializer.
     /// 
@@ -57,10 +57,10 @@ final public class Signal<T> {
     /// - parameter callback: The closure to invoke whenever the `Signal` fires.
     /// - returns: A `SignalSubscription` that can be used to cancel or filter the subscription.
     @discardableResult
-  public func subscribe<O: AnyObject>(with observer: O, callback: @escaping SignalCallback<O>) -> SignalSubscription<O, T> {
+  public func subscribe<O: AnyObject>(with observer: O, callback: @escaping SignalCallback<O>) -> SignalSubscription<T> {
         flushCancelledListeners()
-        let signalListener = SignalSubscription<O, T>(observer: observer, callback: callback)
-        signalListeners.append(AnySignalSubscription(signalListener))
+        let signalListener = SignalSubscription<T>(observer: observer, callback: callback)
+        signalListeners.append(signalListener)
         return signalListener
     }
     
@@ -71,7 +71,7 @@ final public class Signal<T> {
     ///   subscription is automatically cancelled.
     /// - parameter callback: The closure to invoke when the signal fires for the first time.
     @discardableResult
-    public func subscribeOnce<O: AnyObject>(with observer: O, callback: @escaping  SignalCallback<O>) -> SignalSubscription<O, T> {
+    public func subscribeOnce<O: AnyObject>(with observer: O, callback: @escaping  SignalCallback<O>) -> SignalSubscription<T> {
         let signalListener = self.subscribe(with: observer, callback: callback)
         signalListener.once = true
         return signalListener
@@ -84,13 +84,13 @@ final public class Signal<T> {
     ///   subscription is automatically cancelled.
     /// - parameter callback: The closure to invoke whenever the `Signal` fires.
     @discardableResult
-    public func subscribePast<O: AnyObject>(with observer: O, callback: @escaping SignalCallback<O>) -> SignalSubscription<O, T> {
+    public func subscribePast<O: AnyObject>(with observer: O, callback: @escaping SignalCallback<O>) -> SignalSubscription<T> {
         #if DEBUG
             signalsAssert(retainLastData, "can't subscribe to past events on Signal with retainLastData set to false")
         #endif
         let signalListener = self.subscribe(with: observer, callback: callback)
         if let lastDataFired = lastDataFired {
-            signalListener.callback(observer, lastDataFired)
+            signalListener.callback(lastDataFired)
         }
         return signalListener
     }
@@ -103,13 +103,13 @@ final public class Signal<T> {
     ///   subscription is automatically cancelled.
     /// - parameter callback: The closure to invoke whenever the signal fires.
     @discardableResult
-  public func subscribePastOnce<O: AnyObject>(with observer: O, callback: @escaping SignalCallback<O>) -> SignalSubscription<O, T> {
+  public func subscribePastOnce<O: AnyObject>(with observer: O, callback: @escaping SignalCallback<O>) -> SignalSubscription<T> {
         #if DEBUG
             signalsAssert(retainLastData, "can't subscribe to past events on Signal with retainLastData set to false")
         #endif
         let signalListener = self.subscribe(with: observer, callback: callback)
         if let lastDataFired = lastDataFired {
-            signalListener.callback(observer, lastDataFired)
+            signalListener.callback(lastDataFired)
             signalListener.cancel()
         } else {
             signalListener.once = true
@@ -173,32 +173,15 @@ public extension Signal where T == Void {
     }
 }
 
-final class AnySignalSubscription<T> {
-  
-  public typealias SignalFilter = (T) -> Bool
-  
-  fileprivate var filter: (SignalFilter)?
-  var observer: AnyObject!
-  
-  init<O: AnyObject, T>(_ subscription: SignalSubscription<O, T>) {
-    
-  }
-  
-  func dispatch(data: T) {
-    
-  }
-  
-}
-
 /// A SignalLister represenents an instance and its association with a `Signal`.
-final public class SignalSubscription<O: AnyObject, T> {
+final public class SignalSubscription<T> {
+  
     public typealias ParameterType = T
-    public typealias Observer = O
-    public typealias SignalCallback = (O, T) -> Void
+    public typealias SignalCallback = (T) -> Void
     public typealias SignalFilter = (T) -> Bool
     
     // The observer.
-    weak public var observer: O?
+    weak public var observer: AnyObject?
     
     /// Whether the observer should be removed once it observes the `Signal` firing once. Defaults to false.
     public var once = false
@@ -209,9 +192,12 @@ final public class SignalSubscription<O: AnyObject, T> {
     fileprivate var dispatchQueue: DispatchQueue?
     private var sampleInterval: TimeInterval?
     
-    fileprivate init(observer: O, callback: @escaping SignalCallback) {
+    fileprivate init<O: AnyObject>(observer: O, callback: @escaping (O, T) -> Void) {
         self.observer = observer
-        self.callback = callback
+        self.callback = { [weak observer] value in
+          guard let observer = observer else { return }
+          callback(observer, value)
+        }
     }
     
     /// Assigns a filter to the `SignalSubscription`. This lets you define conditions under which a observer should actually
@@ -278,9 +264,7 @@ final public class SignalSubscription<O: AnyObject, T> {
                   if let definiteSelf = self {
                         let data = definiteSelf.queuedData!
                         definiteSelf.queuedData = nil
-                        if let definiteObserver = definiteSelf.observer {
-                            definiteSelf.callback(definiteObserver, data)
-                        }
+                        definiteSelf.callback(data)
                     }
                 }
                 let dispatchQueue = self.dispatchQueue ?? DispatchQueue.main
@@ -288,14 +272,12 @@ final public class SignalSubscription<O: AnyObject, T> {
                 dispatchQueue.asyncAfter(deadline: deadline, execute: block)
             }
         } else {
-            if let queue = self.dispatchQueue {
+            if let queue = dispatchQueue {
                 queue.async { [weak self] in
-                  guard let definiteObserver = self?.observer else { return }
-                  self?.callback(definiteObserver, data)
+                  self?.callback(data)
                 }
             } else {
-              guard let definiteObserver = self.observer else { return false }
-              callback(definiteObserver, data)
+              callback(data)
             }
         }
         

@@ -35,14 +35,14 @@ private extension SelectableListInteractor where Key == Item, Item: FilterType {
   func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                        via accessor: Accessor) where Accessor.Filter == Item {
     
-    onSelectionsComputed.subscribePast(with: self) { [weak filterState] _, filters in
+    onSelectionsComputed.subscribePast(with: self) { [weak filterState] viewModel, filters in
       
-      switch self.selectionMode {
+      switch viewModel.selectionMode {
       case .multiple:
         accessor.removeAll()
         
       case .single:
-        accessor.removeAll(self.items)
+        accessor.removeAll(viewModel.items)
       }
       
       accessor.addAll(filters)

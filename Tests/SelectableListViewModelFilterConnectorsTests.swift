@@ -157,7 +157,7 @@ class SelectableListInteractorFilterConnectorsTests: XCTestCase {
     
     let selectionsComputedExpectation = expectation(description: "selections computed")
     
-    interactor.onSelectionsComputed.subscribe(with: self) { selectedTags in
+    viewModel.onSelectionsComputed.subscribe(with: self) { _, selectedTags in
       XCTAssertEqual(selectedTags, ["tag1", "tag3", "tag4"])
       selectionsComputedExpectation.fulfill()
     }

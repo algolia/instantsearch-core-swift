@@ -59,9 +59,9 @@ public extension ItemsListInteractor {
 
     let filterPresenter = presenter ?? DefaultPresenter.Filter.present
 
-    controller.onRemoveItem = { item in
+    controller.onRemoveItem = { [weak self] item in
       let filterAndID = FilterAndID(filter: item.filter, id: item.id)
-      self.remove(item: filterAndID)
+      self?.remove(item: filterAndID)
     }
 
     onItemsChanged.subscribePast(with: controller) { controller, items in

@@ -29,7 +29,7 @@ class SelectableInteractorTests: XCTestCase {
 
     let switchItemExpectation = expectation(description: "item changed")
     
-    interactor.onItemChanged.subscribe(with: self) { newItem in
+    viewModel.onItemChanged.subscribe(with: self) { _, newItem in
       XCTAssertEqual(newItem, "o")
       switchItemExpectation.fulfill()
     }
@@ -46,7 +46,7 @@ class SelectableInteractorTests: XCTestCase {
     let selectionExpectation = expectation(description: "item selected")
     let deselectionExpectation = expectation(description: "item deselected")
     
-    interactor.onSelectedChanged.subscribe(with: self) { isSelected in
+    viewModel.onSelectedChanged.subscribe(with: self) { _, isSelected in
       if isSelected {
         selectionExpectation.fulfill()
       } else {
@@ -67,7 +67,7 @@ class SelectableInteractorTests: XCTestCase {
 
     let selectedComputedExpectation = expectation(description: "computed selected")
 
-    interactor.onSelectedComputed.subscribe(with: self) { isSelected in
+    viewModel.onSelectedComputed.subscribe(with: self) { _, isSelected in
       XCTAssertEqual(isSelected, false)
       selectedComputedExpectation.fulfill()
     }

@@ -10,18 +10,17 @@ import Foundation
 import Signals
 
 /// A SignalLister represenents an instance and its association with a `Signal`.
-final public class Subscription<O: AnyObject, T>: Observation {
+final public class Subscription<T>: Observation {
 
   public typealias ParameterType = T
-  public typealias Observer = O
 
-  public typealias SignalCallback = (O, T) -> Void
+  public typealias SignalCallback = (T) -> Void
 
   public typealias SignalFilter = (T) -> Bool
 
-  private let signalSubscription: SignalSubscription<O, T>
+  private let signalSubscription: SignalSubscription<T>
 
-  init(signalSubscription: SignalSubscription<O, T>) {
+  init(signalSubscription: SignalSubscription<T>) {
     self.signalSubscription = signalSubscription
   }
 
@@ -48,7 +47,7 @@ final public class Subscription<O: AnyObject, T>: Observation {
   ///
   /// - parameter predicate: A closure that can decide whether the `Signal` fire should be dispatched to its observer.
   /// - returns: Returns self so you can chain calls.
-  @discardableResult public func filter(_ predicate: @escaping Subscription<O, T>.SignalFilter) -> Subscription<O, T> {
+  @discardableResult public func filter(_ predicate: @escaping Subscription<T>.SignalFilter) -> Subscription<T> {
     return .init(signalSubscription: signalSubscription.filter(predicate))
   }
 
@@ -58,7 +57,7 @@ final public class Subscription<O: AnyObject, T>: Observation {
   ///
   /// - parameter sampleInterval: The number of seconds to delay dispatch.
   /// - returns: Returns self so you can chain calls.
-  @discardableResult public func sample(every sampleInterval: TimeInterval) -> Subscription<O, T> {
+  @discardableResult public func sample(every sampleInterval: TimeInterval) -> Subscription<T> {
     return .init(signalSubscription: signalSubscription.sample(every: sampleInterval))
   }
 
@@ -68,7 +67,7 @@ final public class Subscription<O: AnyObject, T>: Observation {
   ///
   /// - parameter queue: A queue for performing the observer's calls.
   /// - returns: Returns self so you can chain calls.
-  @discardableResult public func onQueue(_ queue: DispatchQueue) -> Subscription<O, T> {
+  @discardableResult public func onQueue(_ queue: DispatchQueue) -> Subscription<T> {
     return .init(signalSubscription: signalSubscription.onQueue(queue))
   }
 

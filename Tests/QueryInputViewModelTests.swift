@@ -67,7 +67,11 @@ class QueryInputInteractorTests: XCTestCase {
     
     let changedQuery = "q1"
     
+<<<<<<< HEAD
     interactor.onQueryChanged.subscribe(with: self) { query in
+=======
+    viewModel.onQueryChanged.subscribe(with: self) { _, query in
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
       XCTAssertEqual(query, changedQuery)
       onQueryChangedExpectation.fulfill()
     }
@@ -84,7 +88,11 @@ class QueryInputInteractorTests: XCTestCase {
     let onQuerySubmittedExpectation = expectation(description: "on query submitted")
     let submittedQuery = "q2"
 
+<<<<<<< HEAD
     interactor.onQuerySubmitted.subscribe(with: self) { query in
+=======
+    viewModel.onQuerySubmitted.subscribe(with: self) { _, query in
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
       XCTAssertEqual(submittedQuery, query)
       onQuerySubmittedExpectation.fulfill()
     }
@@ -115,7 +123,11 @@ class QueryInputInteractorTests: XCTestCase {
     let querySubmittedExpectation = expectation(description: "submitted expectation")
     querySubmittedExpectation.isInverted = true
     
+<<<<<<< HEAD
     interactor.onQuerySubmitted.subscribe(with: self) { _ in
+=======
+    viewModel.onQuerySubmitted.subscribe(with: self) { _, _ in
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
       querySubmittedExpectation.fulfill()
     }
   
@@ -171,7 +183,11 @@ class QueryInputInteractorTests: XCTestCase {
   
     let querySubmittedExpectation = expectation(description: "query submitted")
     
+<<<<<<< HEAD
     interactor.onQuerySubmitted.subscribe(with: self) { query in
+=======
+    viewModel.onQuerySubmitted.subscribe(with: self) { _, query in
+>>>>>>> Add weak reference to observer in observation callback. Replac all [weak self] by reference to observer
       XCTAssertEqual(query, "q3")
       querySubmittedExpectation.fulfill()
     }

@@ -13,7 +13,7 @@ public extension FilterClearInteractor {
   func connectFilterState(_ filterState: FilterState,
                           filterGroupIDs: [FilterGroup.ID]? = nil,
                           clearMode: ClearMode = .specified) {
-    onTriggered.subscribe(with: self) { [weak filterState] _,_ in
+    onTriggered.subscribe(with: self) { [weak filterState] _, _ in
       defer {
         filterState?.notifyChange()
       }

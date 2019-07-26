@@ -28,10 +28,10 @@ public class ItemsListInteractor<Item: Hashable> {
   }
 
   public func remove(item: Item) {
-    self.onItemsComputed.fire(items.subtracting([item]))
+    onItemsComputed.fire(items.subtracting([item]))
   }
 
   public func add(item: Item) {
-    self.onItemsComputed.fire(items.union([item]))
+    onItemsComputed.fire(items.union([item]))
   }
 }
