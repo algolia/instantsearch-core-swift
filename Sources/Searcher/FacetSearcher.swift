@@ -91,7 +91,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
 public extension FacetSearcher {
   
   func connectFilterState(_ filterState: FilterState) {
-    filterState.onChange.subscribePast(with: self) { searcher, _ in
+    filterState.onChange.subscribePast(with: self) { searcher, filterState in
       searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
       searcher.search()
     }

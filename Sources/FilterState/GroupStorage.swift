@@ -162,14 +162,6 @@ extension GroupsStorage: FiltersWritable {
       filterGroups[id] = group.withFilters(updatedFilters)
       wasRemoved = wasRemoved || updatedFilters.count < group.filters.count
     }
-//    var wasRemoved = false
-//    let groupIDs = getGroupIDs()
-//    print(">>> Group IDs \(groupIDs)")
-//    for groupID in groupIDs {
-//      print("=== Remove \(filters) from \(groupID) of \(filterGroups)")
-//      wasRemoved = wasRemoved || removeAll(filters, fromGroupWithID: groupID)
-//      print("=== After \(filterGroups)")
-//    }
     return wasRemoved
   }
   

@@ -37,8 +37,8 @@ private extension SelectableInteractor where Item: FilterType {
   
   func whenFilterStateChangedThenUpdateSelections<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState, via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
     
-    let onChange: (SelectableInteractor, ReadOnlyFiltersContainer) -> Void = {  viewModel, _ in
-      viewModel.isSelected = accessor.contains(viewModel.item)
+    let onChange: (SelectableInteractor, ReadOnlyFiltersContainer) -> Void = {  interactor, _ in
+      interactor.isSelected = accessor.contains(interactor.item)
     }
     
     onChange(self, ReadOnlyFiltersContainer(filtersContainer: filterState))
@@ -50,16 +50,16 @@ private extension SelectableInteractor where Item: FilterType {
                                                                                             attribute: Attribute,
                                                                                             via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
     
-    onSelectedComputed.subscribePast(with: self) { [weak filterState] viewModel, computedSelected in
+    onSelectedComputed.subscribePast(with: self) { [weak filterState] interactor, computedSelected in
       
       guard
         let filterState = filterState
         else { return }
       
       if computedSelected {
-        accessor.add(viewModel.item)
+        accessor.add(interactor.item)
       } else {
-        accessor.remove(viewModel.item)
+        accessor.remove(interactor.item)
       }
       
       filterState.notifyChange()
@@ -73,15 +73,15 @@ private extension SelectableInteractor where Item: FilterType {
                                                                   groupID: FilterGroup.ID,
                                                                   default: F) {
     
-    onSelectedComputed.subscribePast(with: self) { [weak filterState] viewModel, computedSelected in
+    onSelectedComputed.subscribePast(with: self) { [weak filterState] interactor, computedSelected in
       
       guard let filterState = filterState else { return }
       
       if computedSelected {
         filterState.filters.remove(`default`, fromGroupWithID: groupID)
-        filterState.filters.add(viewModel.item, toGroupWithID: groupID)
+        filterState.filters.add(interactor.item, toGroupWithID: groupID)
       } else {
-        filterState.filters.remove(viewModel.item, fromGroupWithID: groupID)
+        filterState.filters.remove(interactor.item, fromGroupWithID: groupID)
         filterState.filters.add(`default`, toGroupWithID: groupID)
       }
       

@@ -18,12 +18,12 @@ public extension StatsInteractor {
   
   func connectSearcher(_ searcher: SingleIndexSearcher) {
     
-    searcher.onResults.subscribePast(with: self) { viewModel, searchResults in
-        viewModel.item = searchResults.stats
+    searcher.onResults.subscribePast(with: self) { interactor, searchResults in
+        interactor.item = searchResults.stats
     }
     
-    searcher.onError.subscribe(with: self) { viewModel, _ in
-      viewModel.item = .none
+    searcher.onError.subscribe(with: self) { interactor, _ in
+      interactor.item = .none
     }
   }
 

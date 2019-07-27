@@ -35,14 +35,14 @@ private extension SelectableListInteractor where Key == Item, Item: FilterType {
   func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                        via accessor: Accessor) where Accessor.Filter == Item {
     
-    onSelectionsComputed.subscribePast(with: self) { [weak filterState] viewModel, filters in
+    onSelectionsComputed.subscribePast(with: self) { [weak filterState] interactor, filters in
       
-      switch viewModel.selectionMode {
+      switch interactor.selectionMode {
       case .multiple:
         accessor.removeAll()
         
       case .single:
-        accessor.removeAll(viewModel.items)
+        accessor.removeAll(interactor.items)
       }
       
       accessor.addAll(filters)
@@ -55,8 +55,8 @@ private extension SelectableListInteractor where Key == Item, Item: FilterType {
   func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
                                                                                       via accessor: Accessor) where Accessor.Filter == Item {
 
-    filterState.onChange.subscribePast(with: self) { viewModel, _ in
-      viewModel.selections = Set(accessor.filters())
+    filterState.onChange.subscribePast(with: self) { interactor, _ in
+      interactor.selections = Set(accessor.filters())
     }
   }
   
@@ -76,12 +76,12 @@ public extension SelectableListInteractor where Key == Item, Item: FilterType {
     
     controller.onClick = computeSelections(selectingItemForKey:)
     
-    onItemsChanged.subscribePast(with: self) { viewModel, items in
-      setControllerItemsWith(items: items, selections: viewModel.selections)
+    onItemsChanged.subscribePast(with: self) { interactor, items in
+      setControllerItemsWith(items: items, selections: interactor.selections)
     }
     
-    onSelectionsChanged.subscribePast(with: self) { viewModel, selections in
-      setControllerItemsWith(items: viewModel.items, selections: selections)
+    onSelectionsChanged.subscribePast(with: self) { interactor, selections in
+      setControllerItemsWith(items: interactor.items, selections: selections)
     }
     
   }

@@ -15,27 +15,27 @@ extension FilterState: FiltersReadable {
   }
   
   public var isEmpty: Bool {
-    return self.filters.isEmpty
+    return filters.isEmpty
   }
   
   func contains(_ filter: FilterType, inGroupWithID groupID: FilterGroup.ID) -> Bool {
-    return self.filters.contains(filter, inGroupWithID: groupID)
+    return filters.contains(filter, inGroupWithID: groupID)
   }
   
   func getFilters(forGroupWithID groupID: FilterGroup.ID) -> Set<Filter> {
-    return self.filters.getFilters(forGroupWithID: groupID)
+    return filters.getFilters(forGroupWithID: groupID)
   }
   
   public func getFilters(for attribute: Attribute) -> Set<Filter> {
-    return self.filters.getFilters(for: attribute)
+    return filters.getFilters(for: attribute)
   }
   
   public func getFilters() -> Set<Filter> {
-    return self.filters.getFilters()
+    return filters.getFilters()
   }
   
   public func getFiltersAndID() -> Set<FilterAndID> {
-    return self.filters.getFiltersAndID()
+    return filters.getFiltersAndID()
   }
   
 }
