@@ -38,8 +38,6 @@ protocol FiltersReadable {
   
   func getFilters(for attribute: Attribute) -> Set<Filter>
   
-  func getFiltersAndID() -> Set<FilterAndID>
-  
   /// Returns a set of all the filters contained by all the groups
   func getFilters() -> Set<Filter>
   
@@ -49,6 +47,15 @@ extension FiltersReadable {
   
   func contains(_ filter: FilterType) -> Bool {
     return getGroupIDs().anySatisfy { contains(filter, inGroupWithID: $0) }
+  }
+  
+  func getFiltersAndID() -> Set<FilterAndID> {
+    return Set(getGroupIDs()
+      .map { groupID in
+      getFilters(forGroupWithID: groupID).map { (groupID, $0)  }
+      }
+      .flatMap { $0 }
+      .map { FilterAndID(filter: $0.1, id: $0.0) })
   }
   
 }

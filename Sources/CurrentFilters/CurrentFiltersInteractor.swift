@@ -27,28 +27,28 @@ public extension CurrentFiltersInteractor {
   func connectFilterState(_ filterState: FilterState,
                           filterGroupID: FilterGroup.ID? = nil) {
     
-    filterState.onChange.subscribePast(with: self) { [weak filterState] viewModel, _  in
+    filterState.onChange.subscribePast(with: self) { [weak filterState] interactor, _  in
       guard let filterState = filterState else { return }
       if let filterGroupID = filterGroupID {
-        viewModel.items = Set(filterState.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
+        interactor.items = Set(filterState.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
       } else {
-        viewModel.items = filterState.getFiltersAndID()
+        interactor.items = filterState.getFiltersAndID()
       }
     }
 
-    onItemsComputed.subscribePast(with: self) { _, items in
+    onItemsComputed.subscribePast(with: self) { [weak filterState] _, items in
 
       if let filterGroupID = filterGroupID {
-        filterState.filters.removeAll(fromGroupWithID: filterGroupID)
-        filterState.filters.addAll(filters: items.map { $0.filter.filter }, toGroupWithID: filterGroupID)
+        filterState?.filters.removeAll(fromGroupWithID: filterGroupID)
+        filterState?.filters.addAll(filters: items.map { $0.filter.filter }, toGroupWithID: filterGroupID)
       } else {
-        filterState.filters.removeAll()
+        filterState?.filters.removeAll()
         items.forEach({ (filterAndID) in
-          filterState.filters.add(filterAndID.filter.filter, toGroupWithID: filterAndID.id)
+          filterState?.filters.add(filterAndID.filter.filter, toGroupWithID: filterAndID.id)
         })
       }
 
-      filterState.notifyChange()
+      filterState?.notifyChange()
     }
   }
 }

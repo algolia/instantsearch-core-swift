@@ -92,15 +92,15 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
       }
     }
 
-    filterState.onChange.subscribePast(with: self) { viewModel, _ in
-      viewModel.selections = Set(accessor.filters().compactMap(extractString))
+    filterState.onChange.subscribePast(with: self) { interactor, _ in
+      interactor.selections = Set(accessor.filters().compactMap(extractString))
     }
   }
 
   private func whenNewFacetSearchResultsThenUpdateItems(of facetSearcher: FacetSearcher) {
     
-    facetSearcher.onResults.subscribePast(with: self) { viewModel, searchResults in
-      viewModel.items = searchResults.facetHits
+    facetSearcher.onResults.subscribePast(with: self) { interactor, searchResults in
+      interactor.items = searchResults.facetHits
     }
     
     facetSearcher.onError.subscribe(with: self) { _, error in
@@ -114,8 +114,8 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
   }
   
   private func whenNewSearchResultsThenUpdateItems(of searcher: SingleIndexSearcher, _ attribute: Attribute) {
-    searcher.onResults.subscribePast(with: self) { viewModel, searchResults in
-      viewModel.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
+    searcher.onResults.subscribePast(with: self) { interactor, searchResults in
+      interactor.items = searchResults.disjunctiveFacets?[attribute] ?? searchResults.facets?[attribute] ?? []
     }
   }
   
@@ -145,12 +145,12 @@ public extension SelectableListInteractor where Key == String, Item == Facet {
       self?.computeSelections(selectingItemForKey: facet.value)
     }
     
-    onItemsChanged.subscribePast(with: self) { viewModel, facets in
-      setControllerItemsWith(facets: facets, selections: viewModel.selections)
+    onItemsChanged.subscribePast(with: self) { interactor, facets in
+      setControllerItemsWith(facets: facets, selections: interactor.selections)
     }
     
-    onSelectionsChanged.subscribePast(with: self) { viewModel, selections in
-      setControllerItemsWith(facets: viewModel.items, selections: selections)
+    onSelectionsChanged.subscribePast(with: self) { interactor, selections in
+      setControllerItemsWith(facets: interactor.items, selections: selections)
     }
     
   }

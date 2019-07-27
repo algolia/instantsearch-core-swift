@@ -48,8 +48,8 @@ public extension NumberInteractor {
       }
     }
     
-    filterState.onChange.subscribePast(with: self) { viewModel, _ in
-      viewModel.item = accessor.filters(for: attribute).compactMap(extractValue).first
+    filterState.onChange.subscribePast(with: self) { interactor, _ in
+      interactor.item = accessor.filters(for: attribute).compactMap(extractValue).first
     }
     
   }

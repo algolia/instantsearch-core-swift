@@ -42,8 +42,8 @@ public extension NumberRangeInteractor {
       }
     }
     
-    filterState.onChange.subscribePast(with: self) { viewModel, _ in
-      viewModel.item = accessor.filters(for: attribute).compactMap(extractRange).first
+    filterState.onChange.subscribePast(with: self) { interactor, _ in
+      interactor.item = accessor.filters(for: attribute).compactMap(extractRange).first
     }
 
   }

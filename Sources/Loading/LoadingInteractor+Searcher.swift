@@ -11,8 +11,8 @@ import Foundation
 public extension LoadingInteractor {
 
   func connectSearcher<S: Searcher>(_ searcher: S) {
-    searcher.isLoading.subscribePast(with: self) { viewModel, isLoading in
-      viewModel.item = isLoading
+    searcher.isLoading.subscribePast(with: self) { interactor, isLoading in
+      interactor.item = isLoading
     }
   }
 }
