@@ -250,6 +250,18 @@
 		AFBAA6F322EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
 		AFBAA6F422EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
 		AFBAA6F522EBC1050009856B /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA6F122EBC1050009856B /* Signal.swift */; };
+		AFBAA6F622EC79D00009856B /* FilterState+FiltersReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */; };
+		AFBAA6F722EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */; };
+		AFBAA6F822EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */; };
+		AFBAA6FA22EC79D60009856B /* FilterState+FiltersWritable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */; };
+		AFBAA6FB22EC79D80009856B /* FilterState+FiltersWritable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */; };
+		AFBAA6FC22EC79D90009856B /* FilterState+FiltersWritable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */; };
+		AFBAA6FD22EC79E70009856B /* SelectableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C24227C6802006DAE84 /* SelectableController.swift */; };
+		AFBAA6FE22EC79E70009856B /* SelectableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C24227C6802006DAE84 /* SelectableController.swift */; };
+		AFBAA6FF22EC79E90009856B /* SelectableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C24227C6802006DAE84 /* SelectableController.swift */; };
+		AFBAA70022EC79FD0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
+		AFBAA70122EC79FE0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
+		AFBAA70222EC79FF0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF375F2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF37602285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
@@ -2097,6 +2109,7 @@
 				AFCB30A822CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424B229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
+				AFBAA6FD22EC79E70009856B /* SelectableController.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
 				AF9396A1229D527C00757257 /* QueryInputInteractor.swift in Sources */,
 				AFE3437C228997E000829AC1 /* SelectableSegmentInteractor+Filter.swift in Sources */,
@@ -2127,6 +2140,7 @@
 				AF322D4222DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AFC2E29D228ED8B600859EBA /* FilterListInteractor+Tag.swift in Sources */,
 				AF1177D8225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
+				AFBAA70022EC79FD0009856B /* SelectableInteractor.swift in Sources */,
 				E2146C0722B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AFCDEDDA22397E31001459BE /* Result.swift in Sources */,
 				AFC2E289228ED80200859EBA /* FilterPresenter.swift in Sources */,
@@ -2145,6 +2159,7 @@
 				E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
+				AFBAA6FA22EC79D60009856B /* FilterState+FiltersWritable.swift in Sources */,
 				E2146BFD22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
 				E25D634822D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				E225EDB02268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
@@ -2163,6 +2178,7 @@
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AFBAA6F322EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				AFBAA6F622EC79D00009856B /* FilterState+FiltersReadable.swift in Sources */,
 				E29E45642243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E39222A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA6E922EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
@@ -2282,6 +2298,7 @@
 				AFCB30A922CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424C229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
+				AFBAA6FE22EC79E70009856B /* SelectableController.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
 				AF9396A2229D527C00757257 /* QueryInputInteractor.swift in Sources */,
 				AFE3437D228997E000829AC1 /* SelectableSegmentInteractor+Filter.swift in Sources */,
@@ -2312,6 +2329,7 @@
 				AF322D4322DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AFC2E29E228ED8B600859EBA /* FilterListInteractor+Tag.swift in Sources */,
 				AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */,
+				AFBAA70122EC79FE0009856B /* SelectableInteractor.swift in Sources */,
 				E2146C0822B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AF1177A9225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E28A228ED80200859EBA /* FilterPresenter.swift in Sources */,
@@ -2330,6 +2348,7 @@
 				E2146BF822B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
+				AFBAA6FB22EC79D80009856B /* FilterState+FiltersWritable.swift in Sources */,
 				E2146BFE22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
 				E25D634922D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
@@ -2348,6 +2367,7 @@
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AFBAA6F422EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				AFBAA6F722EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				AFE6E39322A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA6EA22EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
@@ -2467,6 +2487,7 @@
 				AFCB30AA22CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424D229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
+				AFBAA6FF22EC79E90009856B /* SelectableController.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
 				AF9396A3229D527C00757257 /* QueryInputInteractor.swift in Sources */,
 				AFE3437E228997E000829AC1 /* SelectableSegmentInteractor+Filter.swift in Sources */,
@@ -2497,6 +2518,7 @@
 				AF322D4422DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AFC2E29F228ED8B600859EBA /* FilterListInteractor+Tag.swift in Sources */,
 				BC5DC12D1D86BD1A0066D705 /* Highlighter.swift in Sources */,
+				AFBAA70222EC79FF0009856B /* SelectableInteractor.swift in Sources */,
 				E2146C0922B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AF1177AA225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E28B228ED80200859EBA /* FilterPresenter.swift in Sources */,
@@ -2515,6 +2537,7 @@
 				E2146BF922B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
+				AFBAA6FC22EC79D90009856B /* FilterState+FiltersWritable.swift in Sources */,
 				E2146BFF22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
 				E25D634A22D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				AF1177A4225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
@@ -2533,6 +2556,7 @@
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AFBAA6F522EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				AFBAA6F822EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				AFE6E39422A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA6EB22EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
