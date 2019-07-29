@@ -24,5 +24,4 @@ Pod::Spec.new do |s|
     # Dependencies
     # ------------
     s.dependency 'InstantSearchClient', '~> 6.0'
-    s.dependency 'Signals', '~> 6.0'
 end
