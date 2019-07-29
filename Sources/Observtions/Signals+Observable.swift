@@ -10,7 +10,6 @@ import Foundation
 
 extension Signal: Observable {
   public typealias ParameterType = T
-  public typealias Obs = SignalSubscription
 }
 
 extension SignalSubscription: Observation {}
