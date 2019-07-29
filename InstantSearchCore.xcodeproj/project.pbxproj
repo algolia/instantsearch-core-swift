@@ -262,6 +262,14 @@
 		AFBAA70022EC79FD0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AFBAA70122EC79FE0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AFBAA70222EC79FF0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
+		AFBAA70422EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
+		AFBAA70522EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
+		AFBAA70622EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
+		AFBAA70722EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
+		AFBAA70922EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
+		AFBAA70A22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
+		AFBAA70B22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
+		AFBAA70C22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
 		AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF375F2285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
 		AFBF37602285D5C600787D24 /* FilterConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF375D2285D5C600787D24 /* FilterConverter.swift */; };
@@ -806,6 +814,8 @@
 		AFBAA6E722EA2F6D0009856B /* HitsInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+Controller.swift"; sourceTree = "<group>"; };
 		AFBAA6F122EBC1050009856B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = SOURCE_ROOT; };
+		AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+Searcher.swift"; sourceTree = "<group>"; };
+		AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+Controller.swift"; sourceTree = "<group>"; };
 		AFBF375D2285D5C600787D24 /* FilterConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConverter.swift; sourceTree = "<group>"; };
 		AFBF37622285D5D300787D24 /* FilterGroupConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupConverter.swift; sourceTree = "<group>"; };
 		AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractor.swift; sourceTree = "<group>"; };
@@ -1430,6 +1440,8 @@
 			isa = PBXGroup;
 			children = (
 				AFE6E38522A185C9005BA44D /* StatsInteractor.swift */,
+				AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */,
+				AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */,
 				E26F423A2296A45500583D39 /* StatsController.swift */,
 			);
 			path = Stats;
@@ -1920,6 +1932,7 @@
 				AF47F98322E1E72400A6AA01 /* FilterState+FiltersReadable.swift in Sources */,
 				E265DBF022733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFE6E39122A18AE4005BA44D /* ItemController.swift in Sources */,
+				AFBAA70422EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
 				AFE6E38622A185C9005BA44D /* StatsInteractor.swift in Sources */,
@@ -1990,6 +2003,7 @@
 				E2146C2322CD0B3200927350 /* HierarchicalInteractor+FilterState.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
 				E2CF1A2E22A6947700DE24FC /* NumberInteractor.swift in Sources */,
+				AFBAA70922EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				AFBF37632285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				E2146C2822CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2CF1A4C22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
@@ -2109,6 +2123,7 @@
 				AFCB30A822CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424B229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
+				AFBAA70522EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AFBAA6FD22EC79E70009856B /* SelectableController.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
 				AF9396A1229D527C00757257 /* QueryInputInteractor.swift in Sources */,
@@ -2179,6 +2194,7 @@
 				AFBAA6F322EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFBAA6F622EC79D00009856B /* FilterState+FiltersReadable.swift in Sources */,
+				AFBAA70A22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				E29E45642243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E39222A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA6E922EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
@@ -2298,6 +2314,7 @@
 				AFCB30A922CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424C229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
+				AFBAA70622EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AFBAA6FE22EC79E70009856B /* SelectableController.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
 				AF9396A2229D527C00757257 /* QueryInputInteractor.swift in Sources */,
@@ -2368,6 +2385,7 @@
 				AFBAA6F422EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFBAA6F722EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */,
+				AFBAA70B22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				AFCDEDCD22397E1E001459BE /* PageMap.swift in Sources */,
 				AFE6E39322A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA6EA22EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
@@ -2487,6 +2505,7 @@
 				AFCB30AA22CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424D229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
+				AFBAA70722EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AFBAA6FF22EC79E90009856B /* SelectableController.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
 				AF9396A3229D527C00757257 /* QueryInputInteractor.swift in Sources */,
@@ -2557,6 +2576,7 @@
 				AFBAA6F522EBC1050009856B /* Signal.swift in Sources */,
 				E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
 				AFBAA6F822EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */,
+				AFBAA70C22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				AFCDEDCE22397E20001459BE /* PageMap.swift in Sources */,
 				AFE6E39422A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA6EB22EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
