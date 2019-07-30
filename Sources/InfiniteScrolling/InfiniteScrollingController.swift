@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class InfiniteScrollingController: InfiniteScrollable {
+class InfiniteScrollingController: InfiniteScrollable {
   
   public var lastPageIndex: Int?
   public weak var pageLoader: PageLoadable?
