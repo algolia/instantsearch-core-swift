@@ -13,13 +13,13 @@ public extension IndexSegmentInteractor {
 
     let presenter = presenter ?? DefaultPresenter.Index.present
 
-    controller.setItems(items: items.mapValues { presenter($0) })
+    controller.setItems(items: items.mapValues(presenter))
     controller.onClick = computeSelected(selecting:)
     onSelectedChanged.subscribePast(with: controller) { controller, selectedItem in
       controller.setSelected(selectedItem)
     }
     onItemsChanged.subscribePast(with: controller) { controller, newItems in
-      controller.setItems(items: newItems.mapValues { presenter($0) })
+      controller.setItems(items: newItems.mapValues(presenter))
     }
 
   }

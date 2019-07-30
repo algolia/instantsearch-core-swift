@@ -21,9 +21,9 @@ class TestSearcher: Searcher {
   
   var didLaunchSearch: (() -> Void)?
   
-  var isLoading: Observer<Bool> = Observer()
+  var isLoading: Observer<Bool> = .init()
   
-  var onQueryChanged: Observer<String?> = Observer()
+  var onQueryChanged: Observer<String?> = .init()
   
   func search() {
     didLaunchSearch?()

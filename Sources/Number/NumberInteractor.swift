@@ -20,8 +20,8 @@ public class NumberInteractor<Number: Comparable & Numeric & InitaliazableWithFl
   }
 
   public override init(item: Number?) {
-    self.onNumberComputed = Observer()
-    self.onBoundsComputed = Observer()
+    self.onNumberComputed = .init()
+    self.onBoundsComputed = .init()
     super.init(item: item)
   }
 

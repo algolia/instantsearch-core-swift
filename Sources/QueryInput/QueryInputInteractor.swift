@@ -21,8 +21,8 @@ public class QueryInputInteractor {
   public let onQuerySubmitted: Observer<String?>
   
   public init() {
-    onQueryChanged = Observer()
-    onQuerySubmitted = Observer()
+    onQueryChanged = .init()
+    onQuerySubmitted = .init()
   }
   
   public func submitQuery() {

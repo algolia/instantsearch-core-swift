@@ -1019,7 +1019,7 @@
 		AF1177A5225E2B2300C5B59B /* FilterState */ = {
 			isa = PBXGroup;
 			children = (
-				AF1177DB225E342300C5B59B /* Proxies */,
+				AF1177DB225E342300C5B59B /* Accessors */,
 				AF1177AB225E2B6600C5B59B /* FIlter */,
 				AF8DA1FF22E11D7B00C3C03C /* FilterGroupsConvertible.swift */,
 				AF322D3B22DDC87E00010428 /* FiltersReadable.swift */,
@@ -1063,15 +1063,15 @@
 		AF1177CB225E2CD300C5B59B /* Groups */ = {
 			isa = PBXGroup;
 			children = (
-				AF1177CD225E2CEB00C5B59B /* AndFilterGroup.swift */,
 				AF1177CC225E2CEA00C5B59B /* FilterGroupType.swift */,
+				AF1177CD225E2CEB00C5B59B /* AndFilterGroup.swift */,
 				AF1177CE225E2CEB00C5B59B /* OrFilterGroup.swift */,
 				AF7F669B22D63D830063F756 /* HierarchicalFilterGroup.swift */,
 			);
 			path = Groups;
 			sourceTree = "<group>";
 		};
-		AF1177DB225E342300C5B59B /* Proxies */ = {
+		AF1177DB225E342300C5B59B /* Accessors */ = {
 			isa = PBXGroup;
 			children = (
 				AF1177DC225E342300C5B59B /* GroupAccessor.swift */,
@@ -1080,7 +1080,7 @@
 				AF1177DF225E342300C5B59B /* SpecializedAndGroupAccessor.swift */,
 				AF322D2722D8BD8300010428 /* HierarchicalGroupAccessor.swift */,
 			);
-			path = Proxies;
+			path = Accessors;
 			sourceTree = "<group>";
 		};
 		AF11782E225F70A400C5B59B /* FilterState */ = {
@@ -1387,8 +1387,8 @@
 			isa = PBXGroup;
 			children = (
 				E2146BF022B3C56F00927350 /* NumberRangeInteractor.swift */,
-				E2146C0022B3CE6700927350 /* NumberRangeInteractor+FilterState.swift */,
 				E2146C0522B3D07F00927350 /* NumberRangeController.swift */,
+				E2146C0022B3CE6700927350 /* NumberRangeInteractor+FilterState.swift */,
 				E2146C0A22B3D1CA00927350 /* NumberRangeInteractor+Controller.swift */,
 			);
 			path = NumberRange;
@@ -1533,8 +1533,8 @@
 			isa = PBXGroup;
 			children = (
 				E2EFA5FB22AEBE29008C9CAA /* LoadingInteractor.swift */,
-				E2EFA60022AEBF22008C9CAA /* LoadingInteractor+Searcher.swift */,
 				E2EFA60522B0FFD2008C9CAA /* LoadingController.swift */,
+				E2EFA60022AEBF22008C9CAA /* LoadingInteractor+Searcher.swift */,
 				E2EFA60A22B10062008C9CAA /* LoadingInteractor+Controller.swift */,
 			);
 			path = Loading;

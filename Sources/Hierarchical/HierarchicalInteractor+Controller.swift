@@ -29,6 +29,7 @@ public extension HierarchicalInteractor {
 }
 
 public extension HierarchicalInteractor {
+  
   func connectController<C>(_ controller: C, presenter: @escaping HierarchicalPresenter = DefaultPresenter.Hierarchical.present) where C: HierarchicalController, C.Item == [HierarchicalFacet] {
     onItemChanged.subscribePast(with: self) { interactor, facets in
 
@@ -44,6 +45,7 @@ public extension HierarchicalInteractor {
 
     controller.onClick = computeSelection(key:)
   }
+  
 }
 
 public typealias HierarchicalFacet = (facet: Facet, level: Int, isSelected: Bool)

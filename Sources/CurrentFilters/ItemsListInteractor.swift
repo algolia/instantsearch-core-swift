@@ -23,8 +23,8 @@ public class ItemsListInteractor<Item: Hashable> {
 
   public init(items: Set<Item> = []) {
     self.items = items
-    self.onItemsChanged = Observer()
-    self.onItemsComputed = Observer()
+    self.onItemsChanged = .init()
+    self.onItemsComputed = .init()
   }
 
   public func remove(item: Item) {

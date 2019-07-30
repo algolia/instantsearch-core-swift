@@ -30,8 +30,8 @@ public class HierarchicalInteractor: ItemInteractor<[[Facet]]> {
   public init(hierarchicalAttributes: [Attribute], separator: String) {
     self.hierarchicalAttributes = hierarchicalAttributes
     self.separator = separator
-    self.onSelectionsChanged = Observer()
-    self.onSelectionsComputed = Observer()
+    self.onSelectionsChanged = .init()
+    self.onSelectionsComputed = .init()
     self.selections = []
     super.init(item: [])
 

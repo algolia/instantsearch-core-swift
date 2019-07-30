@@ -69,11 +69,11 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     self.requestOptions = requestOptions
     self.pageLoaders = []
     
-    sequencer = Sequencer()
-    onQueryChanged = Observer()
-    isLoading = Observer()
-    onResults = Observer()
-    onError = Observer()
+    sequencer = .init()
+    onQueryChanged = .init()
+    isLoading = .init()
+    onResults = .init()
+    onError = .init()
     
     sequencer.delegate = self
     onResults.retainLastData = true

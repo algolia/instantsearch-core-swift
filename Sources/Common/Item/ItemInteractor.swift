@@ -20,7 +20,7 @@ public class ItemInteractor<Item> {
   
   init(item: Item) {
     self.item = item
-    self.onItemChanged = Observer()
+    self.onItemChanged = .init()
   }
   
 }

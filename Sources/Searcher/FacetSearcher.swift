@@ -47,12 +47,12 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
               facetName: String,
               requestOptions: RequestOptions? = nil) {
     self.indexQueryState = IndexQueryState(index: index, query: query)
-    self.isLoading = Observer()
-    self.onQueryChanged = Observer()
-    self.onResults = Observer()
-    self.onError = Observer()
+    self.isLoading = .init()
+    self.onQueryChanged = .init()
+    self.onResults = .init()
+    self.onError = .init()
     self.facetName = facetName
-    self.sequencer = Sequencer()
+    self.sequencer = .init()
     self.requestOptions = requestOptions
     sequencer.delegate = self
     onResults.retainLastData = true

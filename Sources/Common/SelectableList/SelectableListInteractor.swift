@@ -40,9 +40,9 @@ public class SelectableListInteractor<Key: Hashable, Item: Equatable> {
   public init(items: [Item] = [], selectionMode: SelectionMode) {
     self.items = items
     self.selections = []
-    self.onItemsChanged = Observer()
-    self.onSelectionsChanged = Observer()
-    self.onSelectionsComputed = Observer()
+    self.onItemsChanged = .init()
+    self.onSelectionsChanged = .init()
+    self.onSelectionsComputed = .init()
     self.selectionMode = selectionMode
   }
 

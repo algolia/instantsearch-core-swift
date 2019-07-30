@@ -21,8 +21,8 @@ public class SelectableInteractor<Item>: ItemInteractor<Item> {
 
   public override init(item: Item) {
     self.isSelected = false
-    self.onSelectedChanged = Observer()
-    self.onSelectedComputed = Observer()
+    self.onSelectedChanged = .init()
+    self.onSelectedComputed = .init()
     super.init(item: item)
   }
   
