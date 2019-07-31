@@ -55,9 +55,8 @@ public extension CurrentFiltersInteractor {
 
 public extension ItemsListInteractor {
 
-  func connectController<C: ItemListController>(_ controller: C, presenter: Presenter<Filter, String>? = nil) where C.Item == Item, Item == FilterAndID {
-
-    let filterPresenter = presenter ?? DefaultPresenter.Filter.present
+  func connectController<C: ItemListController>(_ controller: C,
+                                                presenter: @escaping Presenter<Filter, String> = DefaultPresenter.Filter.present) where C.Item == Item, Item == FilterAndID {
 
     controller.onRemoveItem = { [weak self] item in
       let filterAndID = FilterAndID(filter: item.filter, id: item.id)
@@ -65,7 +64,7 @@ public extension ItemsListInteractor {
     }
 
     onItemsChanged.subscribePast(with: controller) { controller, items in
-      let itemsWithPresenterApplied = items.map { FilterAndID(filter: $0.filter, id: $0.id, text: filterPresenter($0.filter))}
+      let itemsWithPresenterApplied = items.map { FilterAndID(filter: $0.filter, id: $0.id, text: presenter($0.filter))}
       controller.setItems(itemsWithPresenterApplied)
       controller.reload()
     }
