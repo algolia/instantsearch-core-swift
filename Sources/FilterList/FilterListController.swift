@@ -8,4 +8,4 @@
 
 import Foundation
 
-public protocol FilterListController: SelectableController where Item: FilterType {}
+public protocol FilterListController: SelectableListController where Item: FilterType {}
