@@ -64,7 +64,7 @@ private extension SelectableListInteractor where Key == Item, Item: FilterType {
 
 public extension SelectableListInteractor where Key == Item, Item: FilterType {
   
-  func connect<C: SelectableListController>(to controller: C) where C.Item == Item {
+  func connectController<C: SelectableListController>(_ controller: C) where C.Item == Item {
     
     func setControllerItemsWith(items: [Item], selections: Set<Key>) {
       let selectableItems = items.map { ($0, selections.contains($0)) }
