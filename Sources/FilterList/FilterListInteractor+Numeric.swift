@@ -12,8 +12,8 @@ public typealias NumericFilterListInteractor = FilterListInteractor<Filter.Numer
 
 public extension NumericFilterListInteractor {
   
-  convenience init(items: [Item] = []) {
-    self.init(items: items, selectionMode: .single)
+  convenience init(numericFilters: [Filter.Numeric] = []) {
+    self.init(items: numericFilters, selectionMode: .single)
   }
   
 }
