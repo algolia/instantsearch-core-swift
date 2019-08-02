@@ -15,8 +15,8 @@ public extension FacetListInteractor {
     /// Add missing refinements with a count of 0 to all returned facets
     /// Example: if in result we have color: [(red, 10), (green, 5)] and that in the refinements
     /// we have "color: red" and "color: yellow", the final output would be [(red, 10), (green, 5), (yellow, 0)]
-    func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [RefinementFacet] {
-      return facets.map { RefinementFacet($0, selections.contains($0.value)) }
+    func merge(_ facets: [Facet], withSelectedValues selections: Set<String>) -> [SelectableItem<Facet>] {
+      return facets.map { SelectableItem<Facet>($0, selections.contains($0.value)) }
     }
     
     func setControllerItemsWith(facets: [Facet], selections: Set<String>) {

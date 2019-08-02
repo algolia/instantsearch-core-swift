@@ -9,11 +9,10 @@
 import Foundation
 
 public typealias SelectableItem<T> = (item: T, isSelected: Bool)
-public typealias RefinementFacet = SelectableItem<Facet>
 
 public protocol SelectableListPresentable {
 
-  func transform(refinementFacets: [RefinementFacet]) -> [RefinementFacet]
+  func transform(refinementFacets: [SelectableItem<Facet>]) -> [SelectableItem<Facet>]
 }
 
 /// Takes care of building the content of a refinement list given the following:
@@ -35,7 +34,7 @@ public class FacetListPresenter: SelectableListPresentable {
   }
 
   /// Builds the final list to be displayed in the refinement list
-  public func transform(refinementFacets: [RefinementFacet]) -> [RefinementFacet] {
+  public func transform(refinementFacets: [SelectableItem<Facet>]) -> [SelectableItem<Facet>] {
     let filteredOutput = refinementFacets.filter { showEmptyFacets ? true : !$0.item.isEmpty }
     let sortedOutput = filteredOutput.sorted(by: sorter(using: sortBy))
     let upperBoundIndex = min(limit, sortedOutput.count)
@@ -43,7 +42,7 @@ public class FacetListPresenter: SelectableListPresentable {
     return Array(boundedOutput)
   }
   
-  private func sorter(using sortCriterions: [FacetSortCriterion]) -> (RefinementFacet, RefinementFacet) -> (Bool) {
+  private func sorter(using sortCriterions: [FacetSortCriterion]) -> (SelectableItem<Facet>, SelectableItem<Facet>) -> (Bool) {
     return { (lhs, rhs) in
       
       let lhsChecked: Bool = lhs.isSelected
