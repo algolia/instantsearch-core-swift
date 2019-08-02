@@ -8,7 +8,9 @@
 
 import Foundation
 
-public extension SelectableListInteractor where Key == Filter.Tag, Item == Filter.Tag {
+public typealias TagFilterListInteractor = FilterListInteractor<Filter.Tag>
+
+public extension TagFilterListInteractor {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .multiple)

@@ -8,7 +8,9 @@
 
 import Foundation
 
-public extension SelectableListInteractor where Key == Filter.Numeric, Item == Filter.Numeric {
+public typealias NumericFilterListInteractor = FilterListInteractor<Filter.Numeric>
+
+public extension NumericFilterListInteractor {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .single)

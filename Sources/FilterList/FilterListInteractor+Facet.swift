@@ -8,7 +8,9 @@
 
 import Foundation
 
-public extension SelectableListInteractor where Key == Filter.Facet, Item == Filter.Facet {
+public typealias FacetFilterListInteractor = FilterListInteractor<Filter.Facet>
+
+public extension FacetFilterListInteractor {
   
   convenience init(items: [Item] = []) {
     self.init(items: items, selectionMode: .multiple)
