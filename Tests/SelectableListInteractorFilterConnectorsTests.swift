@@ -89,7 +89,7 @@ class SelectableListInteractorFilterConnectorsTests: XCTestCase {
     interactor.items = ["tag1", "tag2", "tag3"]
     interactor.selections = ["tag2"]
     
-    interactor.connect(to: controller)
+    interactor.connectController(controller)
     
     // Test preselection
     
