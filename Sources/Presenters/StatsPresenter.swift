@@ -11,7 +11,8 @@ import Foundation
 public typealias StatsPresenter<Output> = Presenter<SearchStats?, Output>
 
 public extension DefaultPresenter {
-  struct Stats {
+  
+  enum Stats {
 
     public static let present: StatsPresenter<String?> = { stats in
       return (stats?.totalHitsCount).flatMap { "\($0) results" }

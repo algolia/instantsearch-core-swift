@@ -12,7 +12,7 @@ public typealias IndexPresenter = (Index) -> String
 
 public extension DefaultPresenter {
 
-  struct Index {
+  enum Index {
 
     public static let present: IndexPresenter = { index in
       return index.name

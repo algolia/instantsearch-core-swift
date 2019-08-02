@@ -12,7 +12,7 @@ public typealias FilterPresenter = (Filter) -> String
 
 public extension DefaultPresenter {
 
-  struct Filter {
+  enum Filter {
 
     public static let present: FilterPresenter = { filter in
       let attributeName = filter.filter.attribute.name

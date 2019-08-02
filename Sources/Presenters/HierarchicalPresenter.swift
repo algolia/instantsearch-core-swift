@@ -12,7 +12,7 @@ public typealias HierarchicalPresenter = ([HierarchicalFacet]) -> [HierarchicalF
 
 public extension DefaultPresenter {
 
-  struct Hierarchical {
+  enum Hierarchical {
 
     public static let present: HierarchicalPresenter = { facets in
       let levels = Set(facets.map { $0.level }).sorted()
