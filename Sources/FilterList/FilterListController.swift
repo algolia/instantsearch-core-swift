@@ -1,5 +1,5 @@
 //
-//  FilterListViewController.swift
+//  FilterListController.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 17/05/2019.
@@ -8,4 +8,4 @@
 
 import Foundation
 
-public protocol SegmentedFilterViewController: SelectableController where Item: FilterType {}
+public protocol FilterListController: SelectableController where Item: FilterType {}
