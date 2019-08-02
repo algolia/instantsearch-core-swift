@@ -10,7 +10,7 @@ import Foundation
 
 public extension StatsInteractor {
   
-  func connectController<C: StatsTextController>(_ controller: C) {
+  func connectController<Controller: StatsTextController>(_ controller: Controller) {
     connectController(controller, presenter: DefaultPresenter.Stats.present)
   }
   

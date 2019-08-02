@@ -26,19 +26,23 @@ public extension NumberInteractor {
     }
 
   }
+
+}
+
+private extension NumberInteractor {
   
-  private func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                      attribute: Attribute,
-                                                                      numericOperator: Filter.Numeric.Operator,
-                                                                      via accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+  func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                              attribute: Attribute,
+                                                              numericOperator: Filter.Numeric.Operator,
+                                                              via accessor: Accessor) where Accessor.Filter == Filter.Numeric {
     whenFilterStateChangedUpdateExpression(filterState, attribute: attribute, numericOperator: numericOperator, accessor: accessor)
     whenExpressionComputedUpdateFilterState(filterState, attribute: attribute, numericOperator: numericOperator, accessor: accessor)
   }
   
-  private func whenFilterStateChangedUpdateExpression<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                          attribute: Attribute,
-                                                                                          numericOperator: Filter.Numeric.Operator,
-                                                                                          accessor: Accessor) where Accessor.Filter == Filter.Numeric {
+  func whenFilterStateChangedUpdateExpression<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                  attribute: Attribute,
+                                                                                  numericOperator: Filter.Numeric.Operator,
+                                                                                  accessor: Accessor) where Accessor.Filter == Filter.Numeric {
     
     func extractValue(from numericFilter: Filter.Numeric) -> Number? {
       if case .comparison(numericOperator, let value) = numericFilter.value {
@@ -54,10 +58,10 @@ public extension NumberInteractor {
     
   }
   
-  private func whenExpressionComputedUpdateFilterState<P: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                    attribute: Attribute,
-                                                                                    numericOperator: Filter.Numeric.Operator,
-                                                                                    accessor: P) where P.Filter == Filter.Numeric {
+  func whenExpressionComputedUpdateFilterState<P: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                            attribute: Attribute,
+                                                                            numericOperator: Filter.Numeric.Operator,
+                                                                            accessor: P) where P.Filter == Filter.Numeric {
     
     let removeCurrentItem = { [weak self] in
       guard let item = self?.item else { return }

@@ -9,9 +9,11 @@
 import Foundation
 
 public extension FilterClearInteractor {
+  
   func connectController(_ controller: FilterClearController) {
     controller.onClick = { [weak self] in
       self?.onTriggered.fire(())
     }
   }
+  
 }

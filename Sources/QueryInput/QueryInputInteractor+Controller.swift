@@ -10,7 +10,8 @@ import Foundation
 
 extension QueryInputInteractor {
   
-  public func connectController<C: QueryInputController>(_ controller: C) {
+  public func connectController<Controller: QueryInputController>(_ controller: Controller) {
+    
     onQueryChanged.subscribePast(with: controller) { controller, query in
       controller.setQuery(query)
     }
@@ -21,6 +22,7 @@ extension QueryInputInteractor {
       self?.query = $0
       self?.submitQuery()
     }
+    
   }
   
 }

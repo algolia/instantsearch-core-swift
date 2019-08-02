@@ -9,7 +9,9 @@
 import Foundation
 
 public extension LoadingInteractor {
-  func connectController<C: LoadingController>(_ controller: C) {
+  
+  func connectController<Controller: LoadingController>(_ controller: Controller) {
     connectController(controller, dispatchOnMainThread: true) { $0 }
   }
+  
 }

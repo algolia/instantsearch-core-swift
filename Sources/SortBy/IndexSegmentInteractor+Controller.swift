@@ -9,8 +9,9 @@
 import Foundation
 
 public extension IndexSegmentInteractor {
-  func connectController<C: SelectableSegmentController>(_ controller: C,
-                                                         presenter: @escaping IndexPresenter = DefaultPresenter.Index.present) where C.SegmentKey == SegmentKey {
+  
+  func connectController<Controller: SelectableSegmentController>(_ controller: Controller,
+                                                                  presenter: @escaping IndexPresenter = DefaultPresenter.Index.present) where Controller.SegmentKey == SegmentKey {
 
     controller.setItems(items: items.mapValues(presenter))
     controller.onClick = computeSelected(selecting:)
@@ -22,4 +23,5 @@ public extension IndexSegmentInteractor {
     }
 
   }
+  
 }

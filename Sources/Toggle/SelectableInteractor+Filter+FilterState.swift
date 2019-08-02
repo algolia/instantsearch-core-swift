@@ -18,9 +18,9 @@ public extension SelectableInteractor where Item: FilterType {
     
     switch `operator` {
     case .and:
-      connectTo(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
+      connectFilterState(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
     case .or:
-      connectTo(filterState, via: filterState[or: groupName])
+      connectFilterState(filterState, via: filterState[or: groupName])
     }
 
   }
@@ -29,8 +29,8 @@ public extension SelectableInteractor where Item: FilterType {
 
 private extension SelectableInteractor where Item: FilterType {
   
-  func connectTo<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                          via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
+  func connectFilterState<GroupAccessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                   via accessor: GroupAccessor) where GroupAccessor.Filter == Item {
     whenFilterStateChangedThenUpdateSelections(filterState, via: accessor)
     whenSelectionsComputedThenUpdateFilterState(filterState, attribute: item.attribute, via: accessor)
   }
@@ -89,22 +89,6 @@ private extension SelectableInteractor where Item: FilterType {
       
     }
     
-  }
-
-}
-
-public extension SelectableInteractor where Item: FilterType {
-
-  func connectController<C: SelectableController>(_ controller: C) where C.Item == Item {
-    controller.setItem(item)
-    controller.setSelected(isSelected)
-    controller.onClick = computeIsSelected(selecting:)
-    onSelectedChanged.subscribePast(with: controller) { controller, isSelected in
-      controller.setSelected(isSelected)
-    }
-    onItemChanged.subscribePast(with: controller) { controller, item in
-      controller.setItem(item)
-    }
   }
 
 }

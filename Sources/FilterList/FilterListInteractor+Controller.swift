@@ -10,7 +10,7 @@ import Foundation
 
 public extension SelectableListInteractor where Key == Item, Item: FilterType {
 
-  func connectController<C: SelectableListController>(_ controller: C) where C.Item == Item {
+  func connectController<Controller: SelectableListController>(_ controller: Controller) where Controller.Item == Item {
     
     func setControllerItemsWith(items: [Item], selections: Set<Key>) {
       let selectableItems = items.map { ($0, selections.contains($0)) }

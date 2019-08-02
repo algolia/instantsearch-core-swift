@@ -15,7 +15,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testCountDescSelectedOnTop() {
     
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -24,7 +24,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
 
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "green", count: 0, highlighted: nil), true),
@@ -42,7 +42,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testCountDescNotSelectedOnTop() {
     
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -51,7 +51,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
 
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "blue", count: 40, highlighted: nil), false),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
       (.init(value: "orange", count: 20, highlighted: nil), true),
@@ -70,7 +70,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testCountAscSelectedOnTop() {
 
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -79,7 +79,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "green", count: 0, highlighted: nil), true),
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
@@ -97,7 +97,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testCountAscNotSelectedOnTop() {
 
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -106,7 +106,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "blue", count: 40, highlighted: nil), false),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
       (.init(value: "orange", count: 20, highlighted: nil), true),
@@ -124,7 +124,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testNameAscSelectedOnTop() {
 
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -133,7 +133,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "green", count: 0, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "red", count: 10, highlighted: nil), true),
@@ -150,7 +150,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testNameAscNotSelectedOnTop() {
 
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -159,7 +159,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "black", count: 5, highlighted: nil), false),
       (.init(value: "blue", count: 40, highlighted: nil), false),
       (.init(value: "green", count: 0, highlighted: nil), true),
@@ -176,7 +176,7 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testNameDescSelectedOnTop() {
     
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -185,7 +185,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "green", count: 0, highlighted: nil), true),
@@ -201,7 +201,7 @@ class RefinementListPresenterTests: XCTestCase {
   }
 
   func testNameDescNotSelectedOnTop() {
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
       (.init(value: "yellow", count: 30, highlighted: nil), false),
@@ -210,7 +210,7 @@ class RefinementListPresenterTests: XCTestCase {
       (.init(value: "green", count: 0, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "yellow", count: 30, highlighted: nil), false),
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "orange", count: 20, highlighted: nil), true),
@@ -244,14 +244,14 @@ class RefinementListPresenterTests: XCTestCase {
 
   func testSortWithEqualCounts() {
     
-    let initial: [RefinementFacet] = [
+    let initial: [SelectableItem<Facet>] = [
       (.init(value: "blue", count: 10, highlighted: nil), false),
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "green", count: 5, highlighted: nil), true),
       (.init(value: "orange", count: 10, highlighted: nil), true),
     ]
     
-    let expected: [RefinementFacet] = [
+    let expected: [SelectableItem<Facet>] = [
       (.init(value: "orange", count: 10, highlighted: nil), true),
       (.init(value: "red", count: 10, highlighted: nil), true),
       (.init(value: "green", count: 5, highlighted: nil), true),
