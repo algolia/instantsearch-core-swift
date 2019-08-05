@@ -17,7 +17,6 @@ extension MultiIndexSearcher {
    - Parameter index: index of query to attach to filter state
    */
 
-  
   func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) {
     filterState.onChange.subscribe(with: self) { searcher, filterState in
       searcher.indexQueryStates[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())

@@ -8,8 +8,7 @@
 
 import Foundation
 
-/// Provides a specific type-safe interface for FilterState specialized for a disjunctive group
-
+/// Provides a convenient interface to a disjunctive group contained by FilterState
 public struct OrGroupAccessor<Filter: FilterType>: SpecializedGroupAccessor {
   
     let filtersContainer: FiltersContainer

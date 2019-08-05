@@ -235,6 +235,14 @@
 		AF5DAA9D22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5DAA9B22F83356000DDB27 /* FacetSearcher+FilterState.swift */; };
 		AF5DAA9E22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5DAA9B22F83356000DDB27 /* FacetSearcher+FilterState.swift */; };
 		AF5DAA9F22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5DAA9B22F83356000DDB27 /* FacetSearcher+FilterState.swift */; };
+		AF67786B22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786A22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift */; };
+		AF67786C22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786A22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift */; };
+		AF67786D22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786A22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift */; };
+		AF67786E22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786A22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift */; };
+		AF67787022F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786F22F89C6800850ACC /* FilterState+HierarchicalFaceting.swift */; };
+		AF67787122F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786F22F89C6800850ACC /* FilterState+HierarchicalFaceting.swift */; };
+		AF67787222F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786F22F89C6800850ACC /* FilterState+HierarchicalFaceting.swift */; };
+		AF67787322F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF67786F22F89C6800850ACC /* FilterState+HierarchicalFaceting.swift */; };
 		AF6C6F6222538156001E5E3C /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F6122538156001E5E3C /* Searcher.swift */; };
 		AF6C6F6322538156001E5E3C /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F6122538156001E5E3C /* Searcher.swift */; };
 		AF6C6F6422538156001E5E3C /* Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF6C6F6122538156001E5E3C /* Searcher.swift */; };
@@ -868,6 +876,8 @@
 		AF5DAA9122F6E38A000DDB27 /* HierarchicalFacetingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalFacetingDelegate.swift; sourceTree = "<group>"; };
 		AF5DAA9622F6E3DA000DDB27 /* MultiIndexSearcher+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MultiIndexSearcher+FilterState.swift"; sourceTree = "<group>"; };
 		AF5DAA9B22F83356000DDB27 /* FacetSearcher+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacetSearcher+FilterState.swift"; sourceTree = "<group>"; };
+		AF67786A22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+DisjunctiveFaceting.swift"; sourceTree = "<group>"; };
+		AF67786F22F89C6800850ACC /* FilterState+HierarchicalFaceting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+HierarchicalFaceting.swift"; sourceTree = "<group>"; };
 		AF6C6F6122538156001E5E3C /* Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Searcher.swift; sourceTree = "<group>"; };
 		AF6C6F6622538160001E5E3C /* SingleIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleIndexSearcher.swift; sourceTree = "<group>"; };
 		AF6C6F6B2253816A001E5E3C /* MultiIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexSearcher.swift; sourceTree = "<group>"; };
@@ -1102,6 +1112,8 @@
 				AF322D4522DE062800010428 /* HierarchicalManageable.swift */,
 				AF322D3622DCDDB600010428 /* GroupStorage.swift */,
 				AFDA412C2268AB7000100CB5 /* FilterState.swift */,
+				AF67786A22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift */,
+				AF67786F22F89C6800850ACC /* FilterState+HierarchicalFaceting.swift */,
 				AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */,
 				AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */,
 				AF2B26132281AC18006DE798 /* FilterState+Commands.swift */,
@@ -2121,6 +2133,7 @@
 				AF7F669C22D63D830063F756 /* HierarchicalFilterGroup.swift in Sources */,
 				AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5DC22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */,
+				AF67786B22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */,
 				E2146C2322CD0B3200927350 /* HierarchicalInteractor+FilterState.swift in Sources */,
 				AF5D104422F47C6700DE13AA /* FacetListInteractor+Searcher.swift in Sources */,
 				AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */,
@@ -2187,6 +2200,7 @@
 				AF322D4122DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AF6C6F6C2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				AFF1E75D2296971200941401 /* MultiIndexHitsController.swift in Sources */,
+				AF67787022F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */,
 				AF5DAA9222F6E38A000DDB27 /* HierarchicalFacetingDelegate.swift in Sources */,
 				E2CF1A4222A6B03300DE24FC /* FilterComparison+Controller.swift in Sources */,
 				AF21EEB422B401C3004A0542 /* NSAttributedString+TaggedString.swift in Sources */,
@@ -2327,6 +2341,7 @@
 				AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				AFE6E38722A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0222B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
+				AF67786C22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */,
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AF5D104522F47C6700DE13AA /* FacetListInteractor+Searcher.swift in Sources */,
 				AFBAA6F322EBC1050009856B /* Signal.swift in Sources */,
@@ -2393,6 +2408,7 @@
 				AF6C6F6D2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC4CB8A21D534C20004618DD /* Highlighter.swift in Sources */,
 				AF1177D0225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
+				AF67787122F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */,
 				AF5DAA9322F6E38A000DDB27 /* HierarchicalFacetingDelegate.swift in Sources */,
 				AF322D3D22DDC87E00010428 /* FiltersReadable.swift in Sources */,
 				AFBF375F2285D5C600787D24 /* FilterConverter.swift in Sources */,
@@ -2533,6 +2549,7 @@
 				E29E45652243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38822A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0322B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
+				AF67786D22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */,
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AF5D104622F47C6700DE13AA /* FacetListInteractor+Searcher.swift in Sources */,
 				AFBAA6F422EBC1050009856B /* Signal.swift in Sources */,
@@ -2599,6 +2616,7 @@
 				AF6C6F6E2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC4CB8C51D535CA4004618DD /* Highlighter.swift in Sources */,
 				AF1177D1225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
+				AF67787222F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */,
 				AF5DAA9422F6E38A000DDB27 /* HierarchicalFacetingDelegate.swift in Sources */,
 				AF322D3E22DDC87E00010428 /* FiltersReadable.swift in Sources */,
 				AFBF37602285D5C600787D24 /* FilterConverter.swift in Sources */,
@@ -2739,6 +2757,7 @@
 				E29E45662243F32C005B358D /* Observable.swift in Sources */,
 				AFE6E38922A185CA005BA44D /* StatsInteractor.swift in Sources */,
 				E2146C0422B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */,
+				AF67786E22F89C5900850ACC /* FilterState+DisjunctiveFaceting.swift in Sources */,
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AF5D104722F47C6700DE13AA /* FacetListInteractor+Searcher.swift in Sources */,
 				AFBAA6F522EBC1050009856B /* Signal.swift in Sources */,
@@ -2805,6 +2824,7 @@
 				AF6C6F6F2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC28C4CF1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				AF1177D2225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
+				AF67787322F89C6800850ACC /* FilterState+HierarchicalFaceting.swift in Sources */,
 				AF5DAA9522F6E38A000DDB27 /* HierarchicalFacetingDelegate.swift in Sources */,
 				AF322D3F22DDC87E00010428 /* FiltersReadable.swift in Sources */,
 				AFBF37612285D5C600787D24 /* FilterConverter.swift in Sources */,

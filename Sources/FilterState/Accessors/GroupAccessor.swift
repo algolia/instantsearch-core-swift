@@ -61,7 +61,7 @@ extension ReadOnlyFiltersContainer: FilterGroupsConvertible {
 
 }
 
-/// Group accessor provides a specific type-safe interface for FilterState specialized for a concrete group
+/// Provides a convenient interface to a concrete group contained by FilterState
 public protocol GroupAccessor {
   
   var isEmpty: Bool { get }

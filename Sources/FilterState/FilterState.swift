@@ -8,10 +8,16 @@
 
 import Foundation
 
+/**
+ Encapsulates search filters providing a convenient interface to manage them
+ */
 public class FilterState {
   
+  /// Filters container
   var filters: FiltersReadable & FiltersWritable & FilterGroupsConvertible & HierarchicalManageable
   
+  /// Triggered when an error occured during search query execution
+  /// - Parameter: a tuple of query and error
   public var onChange: Observer<ReadOnlyFiltersContainer>
 
   public init() {
@@ -19,22 +25,36 @@ public class FilterState {
     self.onChange = .init()
   }
 
+  /// Force trigger onChange event
   public func notifyChange() {
     onChange.fire(ReadOnlyFiltersContainer(filtersContainer: self))
   }
   
+  /// Subscript providing access to a conjunctive group with specified name
+  /// - Parameter groupName: required group name
+  /// - Returns: required group accessor
   public subscript(and groupName: String) -> AndGroupAccessor {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
+  /// Subscript providing access to disjunctive group with specified name and manually defined filter type
+  /// To use if filter type cannot be inferred
+  /// - Parameter groupName: required group name
+  /// - Returns: required group accessor
   public subscript<F: FilterType>(or groupName: String, type: F.Type) -> OrGroupAccessor<F> {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
+  /// Subscript providing access to a disjunctive group with specified name
+  /// - Parameter groupName: required group name
+  /// - Returns: required group accessor
   public subscript<F: FilterType>(or groupName: String) -> OrGroupAccessor<F> {
     return .init(filtersContainer: self, groupName: groupName)
   }
   
+  /// Subscript providing access to a hierarchical group with specified name
+  /// - Parameter groupName: required group name
+  /// - Returns: required group accessor
   public subscript(hierarchical groupName: String) -> HierarchicalGroupAccessor {
     return .init(filtersContainer: self, groupName: groupName)
   }
@@ -74,41 +94,4 @@ extension FilterState: CustomDebugStringConvertible {
     return "FilterState {\n\(body)\n}"
   }
 
-}
-
-extension FilterState: DisjunctiveFacetingDelegate {
-    
-  public var disjunctiveFacetsAttributes: Set<Attribute> {
-    return filters.disjunctiveFacetsAttributes
-  }
-  
-}
-
-extension FilterState: HierarchicalFacetingDelegate {
-  
-  private var hierarchicalGroupName: String {
-    return "_hierarchical"
-  }
-  
-  public var hierarchicalFilters: [Filter.Facet] {
-    get {
-      return self[hierarchical: hierarchicalGroupName].hierarchicalFilters
-    }
-    
-    set {
-      self[hierarchical: hierarchicalGroupName].set(newValue)
-
-    }
-  }
-  
-  public var hierarchicalAttributes: [Attribute] {
-    get {
-      return self[hierarchical: hierarchicalGroupName].hierarchicalAttributes
-    }
-    
-    set {
-      self[hierarchical: hierarchicalGroupName].set(newValue)
-    }
-  }
-  
 }

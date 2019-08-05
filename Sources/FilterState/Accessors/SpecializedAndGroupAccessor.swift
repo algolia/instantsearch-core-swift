@@ -8,8 +8,7 @@
 
 import Foundation
 
-/// Provides a specific type-safe interface for FilterState specialized for a conjunctive group specialized for filters of concrete type
-
+/// Provides a convenient interface to a conjunctive group contained by FilterState specialized for filters of concrete type
 public struct SpecializedAndGroupAccessor<Filter: FilterType>: SpecializedGroupAccessor {
 
     private var genericAccessor: AndGroupAccessor
