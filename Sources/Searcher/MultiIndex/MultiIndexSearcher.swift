@@ -8,6 +8,9 @@
 
 import Foundation
 
+/** An entity performing search queries targeting multiple indices.
+*/
+
 public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = MultiSearchResults
@@ -28,17 +31,38 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
 
   }
   
+  /// `Client` instance containing indices in which search will be performed
   public let client: Client
+  
+  /// List of  index & query tuples
   public let indexQueryStates: [IndexQueryState]
-  public let sequencer: Sequencer
+  
   public let isLoading: Observer<Bool>
+  
   public let onQueryChanged: Observer<String?>
+  
   public let onResults: Observer<SearchResult>
+  
+  /// Triggered when an error occured during search query execution
+  /// - Parameter: a tuple of query and error
   public let onError: Observer<([Query], Error)>
-  public var applyDisjunctiveFacetingWhenNecessary = true
+  
+  /// Custom request options
   public var requestOptions: RequestOptions?
+  
+  /// Sequencer which orders and debounce redundant search operations
+  internal let sequencer: Sequencer
+
+  /// Helpers for separate pagination management
   internal var pageLoaders: [PageLoaderProxy]
   
+  /**
+   - Parameters:
+   - appID: Application ID
+   - apiKey: API Key
+   - indexNames: List of the indices names in which search will be performed
+   - requestOptions: Custom request options. Default is nil.
+   */
   public convenience init(appID: String,
                           apiKey: String,
                           indexNames: [String],
@@ -51,6 +75,14 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
               requestOptions: requestOptions)
   }
   
+  /**
+   - Parameters:
+   - appID: Application ID
+   - apiKey: API Key
+   - indexNames: List of the indices names in which search will be performed
+   - requestOptions: Custom request options. Default is `nil`.
+   */
+
   public convenience init(client: Client,
                           indices: [Index],
                           requestOptions: RequestOptions? = nil) {
@@ -59,6 +91,14 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
               indexQueryStates: indexQueryStates,
               requestOptions: requestOptions)
   }
+  
+  /**
+   - Parameters:
+   - appID: Application ID
+   - apiKey: API Key
+   - indexQueryStates: List of the instances of IndexQueryStates encapsulating index value in which search will be performed and a correspondant Query instance
+   - requestOptions: Custom request options. Default is nil.
+   */
   
   public init(client: Client,
               indexQueryStates: [IndexQueryState],
@@ -115,7 +155,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   
 }
 
-extension MultiIndexSearcher {
+internal extension MultiIndexSearcher {
   
   class PageLoaderProxy: PageLoadable {
     
@@ -132,19 +172,6 @@ extension MultiIndexSearcher {
       launchSearch()
     }
     
-  }
-  
-}
-
-//TODO: do a proper connection between each query and filterState
-
-extension MultiIndexSearcher {
-  
-  func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) {
-    filterState.onChange.subscribe(with: self) { searcher, filterState in
-      searcher.indexQueryStates[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      searcher.search()
-    }
   }
   
 }

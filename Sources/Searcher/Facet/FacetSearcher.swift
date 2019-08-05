@@ -8,6 +8,9 @@
 
 import Foundation
 
+/** An entity performing search for facet values
+ */
+
 public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = FacetResults
@@ -19,15 +22,37 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     }
   }
   
+  /// Current tuple of index and query
   public let indexQueryState: IndexQueryState
-  public let sequencer: Sequencer
+  
   public var onQueryChanged: Observer<String?>
+  
   public let isLoading: Observer<Bool>
+  
   public let onResults: Observer<SearchResult>
+  
+  /// Triggered when an error occured during search query execution
+  /// - Parameter: a tuple of query text and error
   public let onError: Observer<(String, Error)>
+  
+  /// Name of facet attribute for which the values will be searched
   public var facetName: String
+  
+  /// Custom request options
   public var requestOptions: RequestOptions?
+  
+  /// Sequencer which orders and debounce redundant search operations
+  internal let sequencer: Sequencer
 
+  /**
+   - Parameters:
+   - appID: Application ID
+   - apiKey: API Key
+   - indexName: Name of the index in which search will be performed
+   - facetName: Name of facet attribute for which the values will be searched
+   - query: Instance of Query. By default a new empty instant of Query will be created.
+   - requestOptions: Custom request options. Default is `nil`.
+   */
   public convenience init(appID: String,
                           apiKey: String,
                           indexName: String,
@@ -37,14 +62,21 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     let client = Client(appID: appID, apiKey: apiKey)
     let index = client.index(withName: indexName)
     self.init(index: index,
-              query: query,
               facetName: facetName,
+              query: query,
               requestOptions: requestOptions)
   }
   
+  /**
+   - Parameters:
+   - index: Index value in which search will be performed
+   - facetName: Name of facet attribute for which the values will be searched
+   - query: Instance of Query. By default a new empty instant of Query will be created.
+   - requestOptions: Custom request options. Default is `nil`.
+   */
   public init(index: Index,
-              query: Query = .init(),
               facetName: String,
+              query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
     self.indexQueryState = IndexQueryState(index: index, query: query)
     self.isLoading = .init()
@@ -84,17 +116,6 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   
   public func cancel() {
     sequencer.cancelPendingOperations()
-  }
-  
-}
-
-public extension FacetSearcher {
-  
-  func connectFilterState(_ filterState: FilterState) {
-    filterState.onChange.subscribePast(with: self) { searcher, filterState in
-      searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      searcher.search()
-    }
   }
   
 }

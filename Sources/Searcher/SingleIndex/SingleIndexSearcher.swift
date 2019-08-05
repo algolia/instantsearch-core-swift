@@ -8,6 +8,9 @@
 
 import Foundation
 
+/** An entity performing search queries targeting one index
+*/
+
 public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = SearchResults
@@ -28,7 +31,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
 
   }
   
-  public let sequencer: Sequencer
+  /// Current index & query tuple
   public var indexQueryState: IndexQueryState {
     didSet {
       if oldValue.index != indexQueryState.index {
@@ -36,17 +39,45 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       }
     }
   }
-  public let isLoading: Observer<Bool>
-  public let onResults: Observer<SearchResults>
-  public let onError: Observer<(Query, Error)>
-  public let onQueryChanged: Observer<String?>
-  public let onIndexChanged: Observer<Index>
-  public var requestOptions: RequestOptions?
-  public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
-  public weak var hierarchicalFacetingDelegate: HierarchicalDelegate?
   
+  public let isLoading: Observer<Bool>
+  
+  public let onResults: Observer<SearchResults>
+  
+  /// Triggered when an error occured during search query execution
+  /// - Parameter: a tuple of query and error
+  public let onError: Observer<(Query, Error)>
+  
+  public let onQueryChanged: Observer<String?>
+  
+  /// Triggered when an index of Searcher changed
+  /// - Parameter: equals to a new index value
+  public let onIndexChanged: Observer<Index>
+  
+  /// Custom request options
+  public var requestOptions: RequestOptions?
+  
+  /// Delegate providing a necessary information for disjuncitve faceting
+  public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
+  
+  /// Delegate providing a necessary information for hierarchical faceting
+  public weak var hierarchicalFacetingDelegate: HierarchicalFacetingDelegate?
+  
+  /// Flag defining if disjunctive faceting is enabled
+  /// - Default value: true
   public var isDisjunctiveFacetingEnabled = true
   
+  /// Sequencer which orders and debounce redundant search operations
+  internal let sequencer: Sequencer
+  
+  /**
+   - Parameters:
+      - appID: Application ID
+      - apiKey: API Key
+      - indexName: Name of the index in which search will be performed
+      - query: Instance of Query. By default a new empty instant of Query will be created.
+      - requestOptions: Custom request options. Default is `nil`.
+  */
   public convenience init(appID: String,
                           apiKey: String,
                           indexName: String,
@@ -57,12 +88,18 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     self.init(index: index, query: query, requestOptions: requestOptions)
   }
   
+  /**
+   - Parameters:
+      - index: Index value in which search will be performed
+      - query: Instance of Query. By default a new empty instant of Query will be created.
+      - requestOptions: Custom request options. Default is nil.
+  */
   public init(index: Index,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
-    indexQueryState = IndexQueryState(index: index, query: query)
+    indexQueryState = .init(index: index, query: query)
     self.requestOptions = requestOptions
-    sequencer = Sequencer()
+    sequencer = .init()
     isLoading = .init()
     onResults = .init()
     onError = .init()
@@ -73,47 +110,19 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     onError.retainLastData = false
     isLoading.retainLastData = true
     updateClientUserAgents()
+    
   }
   
+  /**
+   - Parameters:
+      - indexQueryState: Instance of `IndexQueryState` encapsulating index value in which search will be performed and a `Query` instance.
+      - requestOptions: Custom request options. Default is nil.
+   */
   public convenience init(indexQueryState: IndexQueryState,
                           requestOptions: RequestOptions? = nil) {
     self.init(index: indexQueryState.index,
               query: indexQueryState.query,
               requestOptions: requestOptions)
-  }
-  
-  fileprivate func handle(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
-    return { [weak self] value, error in
-      let result = Result<SearchResults, Error>(rawValue: value, error: error)
-      
-      switch result {
-      case .success(let searchResults):
-        self?.onResults.fire(searchResults)
-        
-      case .failure(let error):
-        self?.onError.fire((query, error))
-      }
-
-    }
-  }
-  
-  fileprivate func handleDisjunctiveFacetingResponse(for queryBuilder: QueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
-    return { [weak self] value, error in
-      let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
-      
-      switch result {
-      case .failure(let error):
-        self?.onError.fire((queryBuilder.query, error))
-        
-      case .success(let results):
-        do {
-          let result = try queryBuilder.aggregate(results.searchResults)
-          self?.onResults.fire(result)
-        } catch let error {
-          self?.onError.fire((queryBuilder.query, error))
-        }
-      }
-    }
   }
   
   public func search() {
@@ -126,7 +135,10 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       let filterGroups = disjunctiveFacetingDelegate?.toFilterGroups() ?? []
       let hierarchicalAttributes = hierarchicalFacetingDelegate?.hierarchicalAttributes ?? []
       let hierarchicalFilters = hierarchicalFacetingDelegate?.hierarchicalFilters ?? []
-      var queriesBuilder = QueryBuilder(query: query, filterGroups: filterGroups, hierarchicalAttributes: hierarchicalAttributes, hierachicalFilters: hierarchicalFilters)
+      var queriesBuilder = QueryBuilder(query: query,
+                                        filterGroups: filterGroups,
+                                        hierarchicalAttributes: hierarchicalAttributes,
+                                        hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { IndexQuery(index: indexQueryState.index, query: $0) }
       operation = indexQueryState.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
@@ -143,24 +155,40 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
 }
 
-public protocol DisjunctiveFacetingDelegate: class, FilterGroupsConvertible {
+private extension SingleIndexSearcher {
   
-  var disjunctiveFacetsAttributes: Set<Attribute> { get }
-  
-}
-
-public extension SingleIndexSearcher {
-  
-  func connectFilterState(_ filterState: FilterState) {
-    
-    disjunctiveFacetingDelegate = filterState
-    hierarchicalFacetingDelegate = filterState
-    
-    filterState.onChange.subscribePast(with: self) { searcher, filterState in
-      searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      searcher.search()
+  func handle(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
+    return { [weak self] value, error in
+      let result = Result<SearchResults, Error>(rawValue: value, error: error)
+      
+      switch result {
+      case .success(let searchResults):
+        self?.onResults.fire(searchResults)
+        
+      case .failure(let error):
+        self?.onError.fire((query, error))
+      }
+      
     }
-    
+  }
+  
+  func handleDisjunctiveFacetingResponse(for queryBuilder: QueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
+    return { [weak self] value, error in
+      let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
+      
+      switch result {
+      case .failure(let error):
+        self?.onError.fire((queryBuilder.query, error))
+        
+      case .success(let results):
+        do {
+          let result = try queryBuilder.aggregate(results.searchResults)
+          self?.onResults.fire(result)
+        } catch let error {
+          self?.onError.fire((queryBuilder.query, error))
+        }
+      }
+    }
   }
   
 }

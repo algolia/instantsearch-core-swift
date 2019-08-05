@@ -8,15 +8,36 @@
 
 import Foundation
 
+/// Protocol describing an entity capable to perform search requests
 public protocol Searcher: class {
   
+  /// Current query string
   var query: String? { get set }
-    
+  
+  /// Triggered when query execution started or stopped
+  /// - Parameter: boolean value equal to true if query execution started, false otherwise
   var isLoading: Observer<Bool> { get }
+  
+  /// Triggered when query text changed
+  /// - Parameter: a new query text value
   var onQueryChanged: Observer<String?> { get }
   
+  /// Launches search query execution with current query text value
   func search()
+  
+  /// Stops search query execution
   func cancel()
+  
+}
+
+/// Protocol describing an entity capable to receive search result
+public protocol SearchResultObservable {
+  
+  /// Search result type
+  associatedtype SearchResult
+  
+  /// Triggered when a new search result received
+  var onResults: Observer<SearchResult> { get }
   
 }
 
@@ -74,16 +95,10 @@ extension Searcher {
 }
 
 extension Searcher where Self: SequencerDelegate {
-  public func didChangeOperationsState(hasPendingOperations: Bool) {
+  
+  func didChangeOperationsState(hasPendingOperations: Bool) {
     isLoading.fire(hasPendingOperations)
   }
-}
-
-public protocol SearchResultObservable {
-  
-  associatedtype SearchResult
-  
-  var onResults: Observer<SearchResult> { get }
   
 }
 
