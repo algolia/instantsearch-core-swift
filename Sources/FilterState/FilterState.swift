@@ -84,7 +84,7 @@ extension FilterState: DisjunctiveFacetingDelegate {
   
 }
 
-extension FilterState: HierarchicalDelegate {
+extension FilterState: HierarchicalFacetingDelegate {
   
   private var hierarchicalGroupName: String {
     return "_hierarchical"

@@ -8,11 +8,6 @@
 
 import Foundation
 
-public protocol HierarchicalDelegate: class {
-  var hierarchicalAttributes: [Attribute] { get set }
-  var hierarchicalFilters: [Filter.Facet] { get set }
-}
-
 public protocol HierarchicalManageable {
   
   func hierarchicalAttributes(forGroupWithName groupName: String) -> [Attribute]

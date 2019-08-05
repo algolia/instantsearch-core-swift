@@ -24,14 +24,13 @@
 import Foundation
 import InstantSearchClient
 
-// TODO: Make Sequencer internal after moving searchers to core lib
 /// Manages a sequence of operations.
 /// A `Sequencer` keeps track of the order in which operations have been issued, and cancels obsolete requests whenever a
 /// response to a more recent operation is received. This ensures that responses are always received in the right order,
 /// or discarded.
 ///
 
-public protocol Sequencable {
+protocol Sequencable {
     
     typealias OperationLauncher = () -> Operation
 
@@ -39,11 +38,11 @@ public protocol Sequencable {
     func cancelPendingOperations()
 }
 
-public protocol SequencerDelegate: class {
+protocol SequencerDelegate: class {
   func didChangeOperationsState(hasPendingOperations: Bool)
 }
 
-public class Sequencer: Sequencable {
+class Sequencer: Sequencable {
     
   // MARK: Properties
 
@@ -67,24 +66,24 @@ public class Sequencer: Sequencable {
   /// If many operations are made in a short time, this will keep only the N most recent and cancel the older ones.
   /// This helps to avoid filling up the operation queue when the network is slow.
   /// Default value: 3
-  public var maxPendingOperationsCount: Int = 3
+  var maxPendingOperationsCount: Int = 3
   
   /// Maximum number of concurrent sequencer completion operations allowed
   /// Default value: 5
-  public var maxConcurrentCompletionOperationsCount: Int = 5
+  var maxConcurrentCompletionOperationsCount: Int = 5
     
   /// Indicates whether there are any pending operations.
-  public var hasPendingOperations: Bool {
+  var hasPendingOperations: Bool {
     //print("has pending operation. pending operations: \(pendingOperations) ")
     return !pendingOperations.isEmpty
   }
 
-  public weak var delegate: SequencerDelegate?
+  weak var delegate: SequencerDelegate?
 
   /// Queue containing SequencerCompletion operations
   private let sequencerQueue: OperationQueue
 
-  public init() {
+  init() {
     self.sequencerQueue = OperationQueue()
     self.sequencerQueue.maxConcurrentOperationCount = maxConcurrentCompletionOperationsCount
   }
@@ -92,7 +91,7 @@ public class Sequencer: Sequencable {
   // MARK: - Sequencing logic
 
   /// Launch next operation.
-  public func orderOperation(operationLauncher: Sequencable.OperationLauncher) {
+  func orderOperation(operationLauncher: Sequencable.OperationLauncher) {
     // Increase sequence number.
     let currentSeqNo: Int = incrementSequenceQueue.sync {
       nextSeqNo += 1
@@ -117,7 +116,7 @@ public class Sequencer: Sequencable {
   // MARK: - Manage operations
 
   /// Cancel all pending operations.
-  public func cancelPendingOperations() {
+  func cancelPendingOperations() {
     for seqNo in pendingOperations.keys {
       cancelOperation(withSeqNo: seqNo)
     }
