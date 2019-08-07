@@ -26,7 +26,7 @@ public class FacetListPresenter: SelectableListPresentable {
   let showEmptyFacets: Bool
 
   public init(sortBy: [FacetSortCriterion] = [.count(order: .descending)],
-              limit: Int = 10,
+              limit: Int = .max,
               showEmptyFacets: Bool = true) {
     self.sortBy = sortBy
     self.limit = limit
