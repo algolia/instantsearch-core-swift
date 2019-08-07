@@ -1,1 +1,2 @@
-github "algolia/algoliasearch-client-swift" "search-filter-state"
+github "algolia/algoliasearch-client-swift" 
+#"search-filter-state"
