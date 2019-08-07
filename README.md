@@ -54,3 +54,7 @@ github "algolia/instantsearch-core-swift" ~> 5.0
 ```ruby
 github "algolia/instantsearch-core-swift" ~> 3.3 
 ```
+
+# License
+
+InstantSearch Core iOS is [Apache 2.0 licensed](LICENSE.md).
