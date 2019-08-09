@@ -1,5 +1,6 @@
 disabled_rules: # rule identifiers to exclude from running
   - trailing_whitespace
+  - nesting
   - force_cast
   - todo
   - weak_delegate

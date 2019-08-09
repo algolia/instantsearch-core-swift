@@ -21,7 +21,8 @@ platform :ios do
 		scan(
 			scheme: "InstantSearchCore-iOS",
 			configuration: "Debug",
-			clean: true
+			clean: true,
+			xcargs: prepare_api_keys
 		)
 		code_coverage
 		run_swift_lint
@@ -40,7 +41,8 @@ platform :mac do
 		scan(
 			scheme: "InstantSearchCore-macOS",
 			configuration: "Debug",
-			clean: true
+			clean: true,
+			xcargs: prepare_api_keys
 		)
 	end
 end
@@ -57,7 +59,8 @@ platform :tv do
 		scan(
 			scheme: "InstantSearchCore-tvOS",
 			configuration: "Debug",
-			clean: true
+			clean: true,
+			xcargs: prepare_api_keys
 		)
 	end
 end
@@ -172,4 +175,24 @@ end
 
 after_all do
   #slack
+end
+
+def prepare_api_keys()
+	xcargs = []  
+	api_key = ENV["ALGOLIA_API_KEY"]
+	if api_key
+		xcargs << %Q[ALGOLIA_API_KEY="#{api_key}"]
+	end
+	
+	api_id = ENV["ALGOLIA_APPLICATION_ID"]
+	if api_id
+		xcargs << %Q[ALGOLIA_APPLICATION_ID="#{api_id}"]
+	end
+
+	bitrise_build_number = ENV["BITRISE_BUILD_NUMBER"]
+	if bitrise_build_number
+		xcargs << %Q[BITRISE_BUILD_NUMBER="#{bitrise_build_number}"]
+	end
+
+	return xcargs.join(" ")
 end
