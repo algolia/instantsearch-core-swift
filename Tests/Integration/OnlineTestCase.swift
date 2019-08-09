@@ -26,8 +26,8 @@ class OnlineTestCase: XCTestCase {
   var client: Client!
   var index: Index!
   
-  let appID = Bundle(for: OnlineTestCase.self).object(forInfoDictionaryKey: "ALGOLIA_APPLICATION_ID") as? String ?? ""
-  let apiKey = Bundle(for: OnlineTestCase.self).object(forInfoDictionaryKey: "ALGOLIA_API_KEY") as? String ?? ""
+  var appID: String { return ProcessInfo.processInfo.environment["ALGOLIA_APPLICATION_ID"] ?? "" }
+  var apiKey: String { return ProcessInfo.processInfo.environment["ALGOLIA_API_KEY"] ?? "" }
   
   override func setUp() {
     super.setUp()
