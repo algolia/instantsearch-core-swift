@@ -22,7 +22,7 @@ To install InstantSearch, simply add the following line to your Podfile:
 #### Swift 4.2+
 
 ```ruby
-pod 'InstantSearchCore', '~> 5.0'
+pod 'InstantSearchCore', '~> 6.0'
 ```
 
 #### Swift 4.1
@@ -46,7 +46,7 @@ To install InstantSearch, simply add the following line to your Cartfile:
 #### Swift 4.2+
 
 ```ruby
-github "algolia/instantsearch-core-swift" ~> 5.0 
+github "algolia/instantsearch-core-swift" ~> 6.0 
 ```
 
 #### Swift 4.1
