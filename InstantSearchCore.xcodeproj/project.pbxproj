@@ -447,10 +447,7 @@
 		AFCDED65222E7A50001459BE /* EitherSingleOrList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */; };
 		AFCDED6F222E7A51001459BE /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED38222D9697001459BE /* JSON.swift */; };
 		AFCDED70222E7A51001459BE /* EitherSingleOrList.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED3A222D97A3001459BE /* EitherSingleOrList.swift */; };
-		AFCDED81222E7A60001459BE /* SequencerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC28C4D01E5B2EE700EFC4A0 /* SequencerTest.swift */; };
-		AFCDED8D222E7A62001459BE /* SequencerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC28C4D01E5B2EE700EFC4A0 /* SequencerTest.swift */; };
 		AFCDED8F222E7A62001459BE /* SearchResultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */; };
-		AFCDED99222E7A63001459BE /* SequencerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC28C4D01E5B2EE700EFC4A0 /* SequencerTest.swift */; };
 		AFCDED9B222E7A63001459BE /* SearchResultsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */; };
 		AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
 		AFCDEDA1222E7B6B001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
@@ -2250,7 +2247,6 @@
 				AFE6E3C722A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AFC2E2CE2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift in Sources */,
 				AFB9783222D4959B001C2718 /* OnlineTestCase.swift in Sources */,
-				AFCDED81222E7A60001459BE /* SequencerTest.swift in Sources */,
 				AF1178512260919400C5B59B /* FilterTests.swift in Sources */,
 				AF19B03A223FF9F400FA2FE0 /* MultiIndexHitsInteractorTests.swift in Sources */,
 				AFCDEDE5223AC4E8001459BE /* PaginatorTests.swift in Sources */,
@@ -2456,7 +2452,6 @@
 			files = (
 				AF9396B4229D544F00757257 /* QueryInputInteractorTests.swift in Sources */,
 				AFC2E2CF2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift in Sources */,
-				AFCDED8D222E7A62001459BE /* SequencerTest.swift in Sources */,
 				AF1178522260919500C5B59B /* FilterTests.swift in Sources */,
 				E2BAE6BB223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
 				AFC2E2C32292A1F400859EBA /* CallbackTester.swift in Sources */,
@@ -2663,7 +2658,6 @@
 			files = (
 				AF9396B5229D545000757257 /* QueryInputInteractorTests.swift in Sources */,
 				AFC2E2D02292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift in Sources */,
-				AFCDED99222E7A63001459BE /* SequencerTest.swift in Sources */,
 				AF1178532260919600C5B59B /* FilterTests.swift in Sources */,
 				E2BAE6BC223FFBC300B89EA3 /* RefinementListPresenterTests.swift in Sources */,
 				AFC2E2C42292A1F400859EBA /* CallbackTester.swift in Sources */,
