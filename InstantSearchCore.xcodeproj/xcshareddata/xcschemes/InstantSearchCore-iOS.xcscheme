@@ -71,18 +71,6 @@
             ReferencedContainer = "container:InstantSearchCore.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "ALGOLIA_APPLICATION_ID"
-            value = "1M1U6ZWKZP"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "ALGOLIA_API_KEY"
-            value = "c762c14ebbd970c7f5c7ec6654b26472"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
