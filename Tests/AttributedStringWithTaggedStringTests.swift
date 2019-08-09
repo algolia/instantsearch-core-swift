@@ -12,6 +12,12 @@ import XCTest
 
 class AttributedStringWithTaggedStringTests: XCTestCase {
   
+  #if os(iOS) || os(watchOS) || os(tvOS)
+  let color = UIColor.red
+  #elseif os(OSX)
+  let color = NSColor.red
+  #endif
+  
   private func checkRanges(string: NSAttributedString, ranges: [NSRange: [NSAttributedString.Key: Any]]) {
     string.enumerateAttributes(in: NSMakeRange(0, string.length), options: []) { attributes, range, _ in
       guard let expectedAttributes = ranges[range] else {
@@ -29,7 +35,7 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
     let input = "Woodstock is <em>Snoopy</em>'s friend"
     let highlightedString = HighlightedString(string: input)
     let attributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: UIColor.red
+      .foregroundColor: color
     ]
     let attributedString = NSAttributedString(taggedString: highlightedString.taggedString, attributes: attributes)
     checkRanges(string: attributedString, ranges: [
@@ -43,7 +49,7 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
     let input = "Woodstock is <em>Snoopy</em>'s friend"
     let highlightedString = HighlightedString(string: input)
     let attributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: UIColor.red
+      .foregroundColor: color
     ]
     let attributedString = NSAttributedString(taggedString: highlightedString.taggedString, inverted: true, attributes: attributes)
     checkRanges(string: attributedString, ranges: [
@@ -56,7 +62,7 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
   func testAttributedStringList() {
     let input = ["aaa<em>bbb</em>ccc", "ddd<em>eee</em>fff"].map(HighlightedString.init).map { $0.taggedString }
     let attributes: [NSAttributedString.Key: Any] = [
-      .foregroundColor: UIColor.red
+      .foregroundColor: color
     ]
     let attributedString = NSAttributedString(taggedStrings: input, separator: NSAttributedString(string: ", "), attributes: attributes)
     checkRanges(string: attributedString, ranges: [
