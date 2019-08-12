@@ -4,11 +4,14 @@ If you're looking to build search interfaces on iOS with Algolia, then you shoul
 
 # InstantSearch Core for Swift
 
-This is the **InstantSearch Core** library for Swift and Objective-C, built on top of Algolia's [Swift API Client](https://github.com/algolia/algoliasearch-client-swift), using Algolia's [Search API](https://www.algolia.com/). It works on macOS, iOS, tvOS and watchOS.
+This is the **InstantSearch Core** library for Swift, built on top of Algolia's [Swift API Client](https://github.com/algolia/algoliasearch-client-swift), using Algolia's [Search API](https://www.algolia.com/). It works on macOS, iOS, tvOS and watchOS.
 
-You can always find the latest version of the **user documentation** on [Algolia Community](https://community.algolia.com/instantsearch-core-swift/).
+You can always find the latest version of the **user documentation** on [Algolia Documentation](https://www.algolia.com/doc/api-reference/widgets/ios/).
 
 ## Installation
+
+If you use Swift version earlier than 4.2, you have to use the version 3.3 of InstantSearch Core.
+This version is outdated and not recommended for use. 
 
 ### CocoaPods
 
@@ -16,10 +19,10 @@ You can always find the latest version of the **user documentation** on [Algolia
 
 To install InstantSearch, simply add the following line to your Podfile:
 
-#### Swift 4.2
+#### Swift 4.2+
 
 ```ruby
-pod 'InstantSearchCore', '~> 4.0'
+pod 'InstantSearchCore', '~> 6.0'
 ```
 
 #### Swift 4.1
@@ -40,10 +43,10 @@ $ pod update
 
 To install InstantSearch, simply add the following line to your Cartfile:
 
-#### Swift 4.2
+#### Swift 4.2+
 
 ```ruby
-github "algolia/instantsearch-core-swift" ~> 4.0 
+github "algolia/instantsearch-core-swift" ~> 6.0 
 ```
 
 #### Swift 4.1
@@ -52,4 +55,6 @@ github "algolia/instantsearch-core-swift" ~> 4.0
 github "algolia/instantsearch-core-swift" ~> 3.3 
 ```
 
+# License
 
+InstantSearch Core iOS is [Apache 2.0 licensed](LICENSE.md).
