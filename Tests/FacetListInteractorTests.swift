@@ -1,5 +1,5 @@
 //
-//  SelectableListInteractorFacetConnectorsTests.swift
+//  FacetListInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 20/05/2019.
@@ -10,7 +10,7 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
-class SelectableListInteractorFacetConnectorsTests: XCTestCase {
+class FacetListInteractorTests: XCTestCase {
   
   class TestController: FacetListController {
     
@@ -28,6 +28,17 @@ class SelectableListInteractorFacetConnectorsTests: XCTestCase {
       didReload?()
     }
     
+  }
+  
+  func testFacetListInteractorConstructor() {
+    let defaultMultipleSelectionInteractor = FacetListInteractor()
+    XCTAssertEqual(defaultMultipleSelectionInteractor.selectionMode, .multiple)
+    
+    let singleSelectionFacetInteractor = FacetListInteractor(selectionMode: .single)
+    XCTAssertEqual(singleSelectionFacetInteractor.selectionMode, .single)
+    
+    let multipleSelectionFacetInteractor = FacetListInteractor(selectionMode: .multiple)
+    XCTAssertEqual(multipleSelectionFacetInteractor.selectionMode, .multiple)
   }
   
   func testConnectFilterState() {
@@ -67,7 +78,7 @@ class SelectableListInteractorFacetConnectorsTests: XCTestCase {
     
     interactor.connectSearcher(searcher, with: "type")
     
-    let bundle = Bundle(for: SelectableListInteractorFacetConnectorsTests.self)
+    let bundle = Bundle(for: FacetListInteractorTests.self)
     
     do {
       let results = try SearchResults(jsonFile: "SearchResultFacets", bundle: bundle)

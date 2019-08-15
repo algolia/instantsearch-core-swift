@@ -409,9 +409,9 @@
 		AFC2E2CE2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2CD2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift */; };
 		AFC2E2CF2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2CD2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift */; };
 		AFC2E2D02292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2CD2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift */; };
-		AFC2E2D22292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D12292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift */; };
-		AFC2E2D32292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D12292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift */; };
-		AFC2E2D42292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D12292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift */; };
+		AFC2E2D22292EEB200859EBA /* FacetListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D12292EEB200859EBA /* FacetListInteractorTests.swift */; };
+		AFC2E2D32292EEB200859EBA /* FacetListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D12292EEB200859EBA /* FacetListInteractorTests.swift */; };
+		AFC2E2D42292EEB200859EBA /* FacetListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D12292EEB200859EBA /* FacetListInteractorTests.swift */; };
 		AFC2E2D62293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D52293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift */; };
 		AFC2E2D72293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D52293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift */; };
 		AFC2E2D82293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E2D52293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift */; };
@@ -914,7 +914,7 @@
 		AFC2E2C52292A2CF00859EBA /* SelectableSegmentInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractorTests.swift; sourceTree = "<group>"; };
 		AFC2E2C92292D0D500859EBA /* SelectableInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableInteractorTests.swift; sourceTree = "<group>"; };
 		AFC2E2CD2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableInteractorConnectorsTests.swift; sourceTree = "<group>"; };
-		AFC2E2D12292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListInteractorFacetConnectorsTests.swift; sourceTree = "<group>"; };
+		AFC2E2D12292EEB200859EBA /* FacetListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetListInteractorTests.swift; sourceTree = "<group>"; };
 		AFC2E2D52293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListInteractorFilterConnectorsTests.swift; sourceTree = "<group>"; };
 		AFC2E2D92294103300859EBA /* SearchResultFacets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResultFacets.json; sourceTree = "<group>"; };
 		AFC2E2DD22941C1F00859EBA /* SelectableSegmentInteractorConnectorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractorConnectorsTests.swift; sourceTree = "<group>"; };
@@ -1521,7 +1521,7 @@
 				AFC2E2C92292D0D500859EBA /* SelectableInteractorTests.swift */,
 				AFC2E2CD2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift */,
 				AFC2E2DD22941C1F00859EBA /* SelectableSegmentInteractorConnectorsTests.swift */,
-				AFC2E2D12292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift */,
+				AFC2E2D12292EEB200859EBA /* FacetListInteractorTests.swift */,
 				AFC2E2D52293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift */,
 				AF9396AE229D536F00757257 /* QueryInputInteractorTests.swift */,
 				AFC2E2C12292A1F400859EBA /* CallbackTester.swift */,
@@ -2268,7 +2268,7 @@
 				AF1178572260934F00C5B59B /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC2E2BE2292953400859EBA /* SelectableListInteractorTests.swift in Sources */,
 				AFC2E2C22292A1F400859EBA /* CallbackTester.swift in Sources */,
-				AFC2E2D22292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift in Sources */,
+				AFC2E2D22292EEB200859EBA /* FacetListInteractorTests.swift in Sources */,
 				AFB9782F22D4959B001C2718 /* DisjunctiveFacetingIntegrationTests.swift in Sources */,
 				AFCB30B022CB96DF0094ED2E /* Helpers.swift in Sources */,
 				AFCDEDE1223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
@@ -2460,7 +2460,7 @@
 				AFCDEDE6223AC4E8001459BE /* PaginatorTests.swift in Sources */,
 				AFB9782A22D4959B001C2718 /* HierarchicalIntegrationTests.swift in Sources */,
 				AF19B03B223FF9F400FA2FE0 /* MultiIndexHitsInteractorTests.swift in Sources */,
-				AFC2E2D32292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift in Sources */,
+				AFC2E2D32292EEB200859EBA /* FacetListInteractorTests.swift in Sources */,
 				AF21EEEF22C3CAD4004A0542 /* DisjunctiveFacetingsTests.swift in Sources */,
 				AF117840225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117855226091CE00C5B59B /* FilterGroupTests.swift in Sources */,
@@ -2666,7 +2666,7 @@
 				AFCDEDE7223AC4E8001459BE /* PaginatorTests.swift in Sources */,
 				AFB9782B22D4959B001C2718 /* HierarchicalIntegrationTests.swift in Sources */,
 				AF19B03C223FF9F400FA2FE0 /* MultiIndexHitsInteractorTests.swift in Sources */,
-				AFC2E2D42292EEB200859EBA /* SelectableListInteractorFacetConnectorsTests.swift in Sources */,
+				AFC2E2D42292EEB200859EBA /* FacetListInteractorTests.swift in Sources */,
 				AF21EEF022C3CAD6004A0542 /* DisjunctiveFacetingsTests.swift in Sources */,
 				AF117841225F70E900C5B59B /* FilterStateTests.swift in Sources */,
 				AF117856226091CF00C5B59B /* FilterGroupTests.swift in Sources */,

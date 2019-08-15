@@ -13,7 +13,7 @@ public typealias FacetListInteractor = SelectableListInteractor<String, Facet>
 public extension FacetListInteractor {
   
   convenience init(selectionMode: SelectionMode = .multiple) {
-    self.init(items: [], selectionMode: .multiple)
+    self.init(items: [], selectionMode: selectionMode)
   }
   
 }
