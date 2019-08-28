@@ -191,6 +191,22 @@
 		AF5151532316C89000F88B6A /* PlacesSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151512316C89000F88B6A /* PlacesSearcher.swift */; };
 		AF5151542316C89000F88B6A /* PlacesSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151512316C89000F88B6A /* PlacesSearcher.swift */; };
 		AF5151552316C89000F88B6A /* PlacesSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151512316C89000F88B6A /* PlacesSearcher.swift */; };
+		AF5151572316D95D00F88B6A /* PlacesResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151562316D95D00F88B6A /* PlacesResults.swift */; };
+		AF5151582316D95D00F88B6A /* PlacesResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151562316D95D00F88B6A /* PlacesResults.swift */; };
+		AF5151592316D95D00F88B6A /* PlacesResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151562316D95D00F88B6A /* PlacesResults.swift */; };
+		AF51515A2316D95D00F88B6A /* PlacesResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151562316D95D00F88B6A /* PlacesResults.swift */; };
+		AF51515C2316DE6000F88B6A /* PlaceHit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF51515B2316DE6000F88B6A /* PlaceHit.swift */; };
+		AF51515D2316DE6000F88B6A /* PlaceHit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF51515B2316DE6000F88B6A /* PlaceHit.swift */; };
+		AF51515E2316DE6000F88B6A /* PlaceHit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF51515B2316DE6000F88B6A /* PlaceHit.swift */; };
+		AF51515F2316DE6000F88B6A /* PlaceHit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF51515B2316DE6000F88B6A /* PlaceHit.swift */; };
+		AF5151612316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */; };
+		AF5151622316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */; };
+		AF5151632316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */; };
+		AF5151642316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */; };
+		AF5151662316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */; };
+		AF5151672316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */; };
+		AF5151682316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */; };
+		AF5151692316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */; };
 		AF536C23227C66DC006DAE84 /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AF536C25227C6802006DAE84 /* SelectableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C24227C6802006DAE84 /* SelectableController.swift */; };
 		AF5D103322F46EFD00DE13AA /* FacetPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5D103222F46EFD00DE13AA /* FacetPresenter.swift */; };
@@ -876,6 +892,10 @@
 		AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+FiltersReadable.swift"; sourceTree = "<group>"; };
 		AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+FiltersWritable.swift"; sourceTree = "<group>"; };
 		AF5151512316C89000F88B6A /* PlacesSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearcher.swift; sourceTree = "<group>"; };
+		AF5151562316D95D00F88B6A /* PlacesResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesResults.swift; sourceTree = "<group>"; };
+		AF51515B2316DE6000F88B6A /* PlaceHit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceHit.swift; sourceTree = "<group>"; };
+		AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceHit+Geolocation.swift"; sourceTree = "<group>"; };
+		AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceHit+Geolocation+CoreLocation.swift"; sourceTree = "<group>"; };
 		AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableInteractor.swift; sourceTree = "<group>"; };
 		AF536C24227C6802006DAE84 /* SelectableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableController.swift; sourceTree = "<group>"; };
 		AF5D103222F46EFD00DE13AA /* FacetPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetPresenter.swift; sourceTree = "<group>"; };
@@ -1269,6 +1289,7 @@
 				AFCDEDA2222E7B98001459BE /* FacetResults.swift */,
 				AFCDEDA9222EB789001459BE /* SearchResults.swift */,
 				AF6778AD22FB0BAA00850ACC /* MultiSearchResults.swift */,
+				AF5151562316D95D00F88B6A /* PlacesResults.swift */,
 			);
 			path = Results;
 			sourceTree = "<group>";
@@ -1347,6 +1368,9 @@
 				AFCDED9E222E7B56001459BE /* GeoLocation.swift */,
 				AF6778A022FB07ED00850ACC /* Attribute.swift */,
 				AFCDEDA0222E7B6B001459BE /* Hit.swift */,
+				AF51515B2316DE6000F88B6A /* PlaceHit.swift */,
+				AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */,
+				AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */,
 				AF6778A722FB0AD700850ACC /* Constants.swift */,
 				AFCDED38222D9697001459BE /* JSON.swift */,
 				AF24560C2327A93000F78D09 /* TreeModel.swift */,
@@ -2124,6 +2148,7 @@
 				AFE6E39122A18AE4005BA44D /* ItemController.swift in Sources */,
 				AFBAA70422EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */,
+				AF51515C2316DE6000F88B6A /* PlaceHit.swift in Sources */,
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
 				AFE6E38622A185C9005BA44D /* StatsInteractor.swift in Sources */,
 				AF5D105322F48A2500DE13AA /* ItemInteractor+Controller.swift in Sources */,
@@ -2177,6 +2202,7 @@
 				AF1177D7225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFC2E283228ED58300859EBA /* FilterListController.swift in Sources */,
+				AF5151572316D95D00F88B6A /* PlacesResults.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFCB30A722CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
 				E29E45632243F32C005B358D /* Observable.swift in Sources */,
@@ -2229,6 +2255,7 @@
 				AF1177D3225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
 				AF8C0E2C22807B9C00EEB6CE /* SelectableInteractor+Filter+FilterState.swift in Sources */,
 				AF1177AD225E2B7800C5B59B /* FacetFilter.swift in Sources */,
+				AF5151612316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */,
 				AFBAA6E822EA2F6D0009856B /* HitsInteractor+FilterState.swift in Sources */,
 				E24233DD223947FC008F24FB /* Result+ConvenientInit.swift in Sources */,
 				AF11780A225F650F00C5B59B /* GroupAccessor.swift in Sources */,
@@ -2259,6 +2286,7 @@
 				AFC2E292228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				AFE3437B228997E000829AC1 /* SelectableSegmentInteractor+Filter+Searcher.swift in Sources */,
 				AFCDEDA1222E7B6B001459BE /* Hit.swift in Sources */,
+				AF5151662316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */,
 				AF5D104922F47C7900DE13AA /* FacetListInteractor+FilterState.swift in Sources */,
 				E24233D9223947FC008F24FB /* SearchResults.swift in Sources */,
 				AF5DAA9C22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
@@ -2334,6 +2362,7 @@
 				E26F424B229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
 				AFBAA70522EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AFBAA6FD22EC79E70009856B /* SelectableController.swift in Sources */,
+				AF51515D2316DE6000F88B6A /* PlaceHit.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
 				AF9396A1229D527C00757257 /* QueryInputInteractor.swift in Sources */,
 				AF5D105422F48A2500DE13AA /* ItemInteractor+Controller.swift in Sources */,
@@ -2386,6 +2415,7 @@
 				E2146C2922CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
+				AF5151582316D95D00F88B6A /* PlacesResults.swift in Sources */,
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				AFBAA6FA22EC79D60009856B /* FilterState+FiltersWritable.swift in Sources */,
 				E2146BFD22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
@@ -2439,6 +2469,7 @@
 				AFE6E38122A18369005BA44D /* ItemInteractor.swift in Sources */,
 				E2EFA60222AEBF22008C9CAA /* LoadingInteractor+Searcher.swift in Sources */,
 				AF1177D4225E2CEB00C5B59B /* AndFilterGroup.swift in Sources */,
+				AF5151622316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */,
 				E2CF1A3422A6A8C000DE24FC /* Computation.swift in Sources */,
 				AF1177AE225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				AFCDEDCC22397E1D001459BE /* PageMap.swift in Sources */,
@@ -2469,6 +2500,7 @@
 				AF21EEB022B401A6004A0542 /* HighlightedString.swift in Sources */,
 				AFCDEDD722397E31001459BE /* HitsInteractor.swift in Sources */,
 				AFCDEDB0222ED38D001459BE /* Hit.swift in Sources */,
+				AF5151672316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */,
 				AF5D104A22F47C7900DE13AA /* FacetListInteractor+FilterState.swift in Sources */,
 				AF322D4722DE062800010428 /* HierarchicalManageable.swift in Sources */,
 				AF5DAA9D22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
@@ -2544,6 +2576,7 @@
 				E26F424C229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
 				AFBAA70622EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AFBAA6FE22EC79E70009856B /* SelectableController.swift in Sources */,
+				AF51515E2316DE6000F88B6A /* PlaceHit.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
 				AF9396A2229D527C00757257 /* QueryInputInteractor.swift in Sources */,
 				AF5D105522F48A2500DE13AA /* ItemInteractor+Controller.swift in Sources */,
@@ -2596,6 +2629,7 @@
 				E2146C2A22CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2146BF822B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E294228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
+				AF5151592316D95D00F88B6A /* PlacesResults.swift in Sources */,
 				E225EDB12268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
 				AFBAA6FB22EC79D80009856B /* FilterState+FiltersWritable.swift in Sources */,
 				E2146BFE22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
@@ -2649,6 +2683,7 @@
 				AFE6E38222A18369005BA44D /* ItemInteractor.swift in Sources */,
 				E2EFA60322AEBF22008C9CAA /* LoadingInteractor+Searcher.swift in Sources */,
 				AF1177AF225E2B7800C5B59B /* FacetFilter.swift in Sources */,
+				AF5151632316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */,
 				E2CF1A3522A6A8C000DE24FC /* Computation.swift in Sources */,
 				E2E09E332232709700F3056D /* HitsInteractor.swift in Sources */,
 				AF11780C225F651200C5B59B /* GroupAccessor.swift in Sources */,
@@ -2679,6 +2714,7 @@
 				AF21EEB122B401A6004A0542 /* HighlightedString.swift in Sources */,
 				AFCDEDB4222ED38E001459BE /* Hit.swift in Sources */,
 				BC28C4CE1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
+				AF5151682316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */,
 				AF5D104B22F47C7900DE13AA /* FacetListInteractor+FilterState.swift in Sources */,
 				AF322D4822DE062800010428 /* HierarchicalManageable.swift in Sources */,
 				AF5DAA9E22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
@@ -2754,6 +2790,7 @@
 				E26F424D229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
 				AFBAA70722EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
 				AFBAA6FF22EC79E90009856B /* SelectableController.swift in Sources */,
+				AF51515F2316DE6000F88B6A /* PlaceHit.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
 				AF9396A3229D527C00757257 /* QueryInputInteractor.swift in Sources */,
 				AF5D105622F48A2500DE13AA /* ItemInteractor+Controller.swift in Sources */,
@@ -2806,6 +2843,7 @@
 				E2146BF922B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
+				AF51515A2316D95D00F88B6A /* PlacesResults.swift in Sources */,
 				AFBAA6FC22EC79D90009856B /* FilterState+FiltersWritable.swift in Sources */,
 				E2146BFF22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
 				E25D634A22D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
@@ -2859,6 +2897,7 @@
 				E2EFA60422AEBF22008C9CAA /* LoadingInteractor+Searcher.swift in Sources */,
 				AF1177B0225E2B7800C5B59B /* FacetFilter.swift in Sources */,
 				E2CF1A3622A6A8C000DE24FC /* Computation.swift in Sources */,
+				AF5151642316DE8400F88B6A /* PlaceHit+Geolocation.swift in Sources */,
 				E2E09E342232709800F3056D /* HitsInteractor.swift in Sources */,
 				AF11780D225F651300C5B59B /* GroupAccessor.swift in Sources */,
 				AF5D103622F46EFD00DE13AA /* FacetPresenter.swift in Sources */,
@@ -2889,6 +2928,7 @@
 				AFCDEDAD222EB789001459BE /* SearchResults.swift in Sources */,
 				AFCDEDB8222ED390001459BE /* Hit.swift in Sources */,
 				AF5D104C22F47C7900DE13AA /* FacetListInteractor+FilterState.swift in Sources */,
+				AF5151692316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */,
 				AF322D4922DE062800010428 /* HierarchicalManageable.swift in Sources */,
 				AF5DAA9F22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
 				AF6C6F6F2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
