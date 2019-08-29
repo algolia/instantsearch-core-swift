@@ -19,10 +19,10 @@ public extension SingleIndexSearcher {
   
   struct FilterStateConnection: Connection {
     
-    let singleIndexSearcher: SingleIndexSearcher
-    let filterState: FilterState
+    public let singleIndexSearcher: SingleIndexSearcher
+    public let filterState: FilterState
         
-    func connect() {
+    public func connect() {
       singleIndexSearcher.disjunctiveFacetingDelegate = filterState
       singleIndexSearcher.hierarchicalFacetingDelegate = filterState
       
@@ -33,7 +33,7 @@ public extension SingleIndexSearcher {
       }
     }
     
-    func disconnect() {
+    public func disconnect() {
       singleIndexSearcher.disjunctiveFacetingDelegate = nil
       singleIndexSearcher.hierarchicalFacetingDelegate = nil
       filterState.onChange.cancelSubscription(for: singleIndexSearcher)

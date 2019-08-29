@@ -19,11 +19,11 @@ public extension MultiIndexSearcher {
   
   struct FilterStateConnection: Connection {
     
-    let multiIndexSearcher: MultiIndexSearcher
-    let filterState: FilterState
-    let queryIndex: Int
+    public let multiIndexSearcher: MultiIndexSearcher
+    public let filterState: FilterState
+    public let queryIndex: Int
     
-    func connect() {
+    public func connect() {
       filterState.onChange.subscribe(with: multiIndexSearcher) { searcher, filterState in
         searcher.indexQueryStates[self.queryIndex].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
         searcher.indexQueryStates[index].query.page = 0
@@ -31,7 +31,7 @@ public extension MultiIndexSearcher {
       }
     }
     
-    func disconnect() {
+    public func disconnect() {
       filterState.onChange.cancelSubscription(for: multiIndexSearcher)
     }
     
