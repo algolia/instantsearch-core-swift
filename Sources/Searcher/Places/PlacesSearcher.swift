@@ -68,9 +68,7 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
   
   public func search() {
     
-    let query = self.query ?? ""
-    
-    let operation = placesClient.search(PlacesQuery(query: query)) { [weak self] (content, error) in
+    let operation = placesClient.search(placesQuery) { [weak self] (content, error) in
       guard let searcher = self else { return }
       let result: Result<PlacesResults, Error> = searcher.transform(content: content, error: error)
       
@@ -79,6 +77,7 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
         searcher.onResults.fire(results)
         
       case .failure(let error):
+        let query = searcher.placesQuery.query ?? ""
         searcher.onError.fire((query, error))
       }
     }
