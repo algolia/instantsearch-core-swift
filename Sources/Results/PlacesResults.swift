@@ -10,6 +10,6 @@ import Foundation
 
 public struct PlacesResults: Codable {
   
-  let hits: [PlaceHit]
+  public let hits: [PlaceHit]
   
 }
