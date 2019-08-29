@@ -8,12 +8,12 @@
 
 import Foundation
 
-extension PlaceHit {
+public extension PlaceHit {
   
   struct Geolocation: Codable {
     
-    let latitude: Double
-    let longitude: Double
+    public let latitude: Double
+    public let longitude: Double
     
     enum CodingKeys: String, CodingKey {
       case latitude = "lat"
@@ -26,7 +26,7 @@ extension PlaceHit {
 
 extension PlaceHit.Geolocation: CustomDebugStringConvertible {
   
-  var debugDescription: String {
+  public var debugDescription: String {
     return "{ lat: \(latitude), lon: \(longitude) }"
   }
   
