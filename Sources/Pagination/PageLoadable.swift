@@ -31,3 +31,11 @@ extension FacetSearcher: PageLoadable {
   }
   
 }
+
+extension PlacesSearcher: PageLoadable {
+  
+  public func loadPage(atIndex pageIndex: Int) {
+    search()
+  }
+  
+}

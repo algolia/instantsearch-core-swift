@@ -12,6 +12,8 @@ extension HitsInteractor where Record == Place {
   
   public func connectPlacesSearcher(_ searcher: PlacesSearcher) {
     
+    self.pageLoader = searcher
+    
     searcher.onResults.subscribePast(with: self) { interactor, searchResults in
       try? interactor.update(searchResults)
     }
