@@ -12,7 +12,7 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
   
   public let settings: Settings
 
-  private let paginator: Paginator<Record>
+  internal let paginator: Paginator<Record>
   private var isLastQueryEmpty: Bool = true
   private let infiniteScrollingController: InfiniteScrollable
   

@@ -8,9 +8,9 @@
 
 import Foundation
 
-public extension PlaceHit {
+public extension Place {
   
-  struct Geolocation: Codable {
+  struct Geolocation: Codable, Equatable {
     
     public let latitude: Double
     public let longitude: Double
@@ -21,10 +21,10 @@ public extension PlaceHit {
     }
     
   }
-  
+    
 }
 
-extension PlaceHit.Geolocation: CustomDebugStringConvertible {
+extension Place.Geolocation: CustomDebugStringConvertible {
   
   public var debugDescription: String {
     return "{ lat: \(latitude), lon: \(longitude) }"

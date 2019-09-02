@@ -8,9 +8,8 @@
 
 import Foundation
 
-public struct PlaceHit: Codable {
+public struct Place: Codable {
   
-  public let id: String
   public let localeNames: [String]
   public let country: String
   public let county: [String]?
@@ -18,7 +17,6 @@ public struct PlaceHit: Codable {
   public let geolocation: Geolocation
   
   enum CodingKeys: String, CodingKey {
-    case id = "objectID"
     case geolocation = "_geoloc"
     case localeNames = "locale_names"
     case country
@@ -28,7 +26,7 @@ public struct PlaceHit: Codable {
   
 }
 
-extension PlaceHit: CustomStringConvertible {
+extension Place: CustomStringConvertible {
   
   public var description: String {
     return localeNames.first ?? ""
@@ -36,10 +34,10 @@ extension PlaceHit: CustomStringConvertible {
   
 }
 
-extension PlaceHit: CustomDebugStringConvertible {
+extension Place: CustomDebugStringConvertible {
   
   public var debugDescription: String {
-    return "{ id: \(id), locale names: \(localeNames), country: \(country), county: \(county ?? []), administrative: \(administrative), location: \(geolocation) }"
+    return "{ locale names: \(localeNames), country: \(country), county: \(county ?? []), administrative: \(administrative), location: \(geolocation) }"
   }
   
 }
