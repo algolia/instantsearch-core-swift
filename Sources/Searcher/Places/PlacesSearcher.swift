@@ -10,7 +10,7 @@ import Foundation
 
 public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
-  public typealias SearchResult = PlacesResults
+  public typealias SearchResult = SearchResults
   
   public var query: String? {
     
@@ -23,7 +23,6 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
       guard oldValue != newValue else { return }
       placesQuery.query = newValue
       onQueryChanged.fire(newValue)
-      
     }
 
   }
@@ -70,7 +69,7 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
     
     let operation = placesClient.search(placesQuery) { [weak self] (content, error) in
       guard let searcher = self else { return }
-      let result: Result<PlacesResults, Error> = searcher.transform(content: content, error: error)
+      let result: Result<SearchResults, Error> = searcher.transform(content: content, error: error)
       
       switch result {
       case .success(let results):

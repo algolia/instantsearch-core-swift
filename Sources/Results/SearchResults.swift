@@ -250,9 +250,9 @@ public struct SearchStats: Codable {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     
     self.totalHitsCount = try container.decode(Int.self, forKey: .totalHitsCount)
-    self.page = try container.decode(Int.self, forKey: .page)
-    self.pagesCount = try container.decode(Int.self, forKey: .pagesCount)
-    self.hitsPerPage = try container.decode(Int.self, forKey: .hitsPerPage)
+    self.page = try container.decodeIfPresent(Int.self, forKey: .page) ?? 0
+    self.pagesCount = try container.decodeIfPresent(Int.self, forKey: .pagesCount) ?? 1
+    self.hitsPerPage = try container.decodeIfPresent(Int.self, forKey: .hitsPerPage) ?? 20
     self.processingTimeMS = try container.decode(Int.self, forKey: .processingTimeMS)
     self.query = try container.decodeIfPresent(String.self, forKey: .query)
     self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
@@ -322,4 +322,3 @@ extension SearchResults {
   }
   
 }
-
