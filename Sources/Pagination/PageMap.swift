@@ -211,7 +211,6 @@ extension PageMap {
     let pagesToRemove = loadedPageIndexes.filter { $0 < leastPageIndex || $0 > lastPageIndex }
     
     for pageIndex in pagesToRemove {
-      debugPrint("[PageMap] Removed page \(pageIndex)")
       storage.removeValue(forKey: pageIndex)
     }
     

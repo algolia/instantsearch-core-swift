@@ -95,7 +95,6 @@ class DelayedOperation: AsyncOperation {
   }
 
   override func main() {
-    print("\(name ?? "") >> launched")
     let deadline = DispatchTime.now() + .milliseconds(delay)
     DispatchQueue.main.asyncAfter(deadline: deadline) { [weak self] in
       guard let operation = self else { return }
@@ -105,7 +104,6 @@ class DelayedOperation: AsyncOperation {
       if operation.isCancelled {
         return
       }
-      print("\(operation.name ?? "") >> finished")
       operation.completionHandler?()
     }
 
@@ -113,7 +111,6 @@ class DelayedOperation: AsyncOperation {
 
   override func cancel() {
     super.cancel()
-    print("\(name ?? "") >> cancelled")
   }
 
 }

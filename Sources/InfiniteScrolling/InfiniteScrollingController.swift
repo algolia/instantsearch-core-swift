@@ -52,7 +52,6 @@ class InfiniteScrollingController: InfiniteScrollable {
     let pagesToLoad = previousPagesToLoad.union(nextPagesToLoad)
     
     for pageIndex in pagesToLoad {
-      debugPrint("[InfiniteScrollingController] Requested loading page: \(pageIndex)")
       pendingPageIndexes.insert(pageIndex)
       pageLoader.loadPage(atIndex: pageIndex)
     }
