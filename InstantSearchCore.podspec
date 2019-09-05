@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
     # ------------
     s.name = 'InstantSearchCore'
     s.module_name = 'InstantSearchCore'
-    s.version = '6.0.1'
+    s.version = '6.0.2'
     s.license = 'Apache 2.0'
     s.summary = 'Instant Search library for Swift by Algolia'
     s.homepage = 'https://github.com/algolia/instantsearch-core-swift'
