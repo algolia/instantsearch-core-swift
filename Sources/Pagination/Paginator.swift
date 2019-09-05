@@ -14,8 +14,6 @@ class Paginator<Item> {
   var pageCleanUpOffset: Int? = 3
   
   func process<IP: Pageable>(_ page: IP) where IP.Item == Item {
-  
-    debugPrint("[Paginator] Loaded page: \(page.index)")
     
     let updatedPageMap: PageMap<Item>?
     
@@ -34,7 +32,6 @@ class Paginator<Item> {
   }
   
   public func invalidate() {
-    debugPrint("[Paginator] Invalidated")
     pageMap = .none
   }
   
