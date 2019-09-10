@@ -42,8 +42,13 @@ class TestPlaces: XCTestCase {
         XCTFail("missing highlight result")
         return
       }
-      let highlightKeysSet = Set(highlightResult.keys)
-      XCTAssertEqual(highlightKeysSet, ["country", "postcode", "county", "administrative", "locale_names"])
+      switch highlightResult {
+      case .dictionary(let dict):
+        XCTAssertEqual(Set(dict.keys), ["country", "postcode", "county", "administrative", "locale_names"])
+
+      default:
+        XCTFail("Highlight result root must be a dictionary")
+      }
     } catch let error {
       XCTFail("\(error)")
     }
