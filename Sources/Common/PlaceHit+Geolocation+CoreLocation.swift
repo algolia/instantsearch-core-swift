@@ -10,7 +10,7 @@ import Foundation
 
 import CoreLocation
 
-extension Place.Geolocation {
+public extension Place.Geolocation {
   
   init(_ coordinate: CLLocationCoordinate2D) {
     self.init(latitude: coordinate.latitude, longitude: coordinate.longitude)
@@ -18,9 +18,17 @@ extension Place.Geolocation {
   
 }
 
-extension CLLocationCoordinate2D {
+public extension CLLocationCoordinate2D {
   
   init(_ geolocation: Place.Geolocation) {
+    self.init(latitude: geolocation.latitude, longitude: geolocation.longitude)
+  }
+  
+}
+
+public extension CLLocation {
+  
+  convenience init(_ geolocation: Place.Geolocation) {
     self.init(latitude: geolocation.latitude, longitude: geolocation.longitude)
   }
   
