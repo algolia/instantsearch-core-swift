@@ -14,8 +14,8 @@ public struct Hit<T: Codable>: Codable {
   
     public let objectID: String
     public let object: T
-    public let snippetResult: [String: SnippetResult]?
-    public let highlightResult: [String: [HighlightResult]]?
+    public let snippetResult: TreeModel<SnippetResult>?
+    public let highlightResult: TreeModel<HighlightResult>?
     public let rankingInfo: RankingInfo?
     
     enum CodingKeys: String, CodingKey {
@@ -37,16 +37,8 @@ public struct Hit<T: Codable>: Codable {
         self.object = try T(from: decoder)
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.objectID = try container.decode(String.self, forKey: .objectID)
-        self.snippetResult = try container.decodeIfPresent([String: SnippetResult].self, forKey: .snippetResult)
-        if let rawHighlightResult = try container.decodeIfPresent([String: EitherSingleOrList<HighlightResult>].self, forKey: .highlightResult) {
-          var highlightResult: [String: [HighlightResult]] = [:]
-          rawHighlightResult.forEach { (key, value) in
-            highlightResult[key] = Array(value)
-          }
-          self.highlightResult = highlightResult
-        } else {
-          self.highlightResult = nil
-        }
+        self.snippetResult = try container.decodeIfPresent(TreeModel<SnippetResult>.self, forKey: .snippetResult)
+        self.highlightResult = try container.decodeIfPresent(TreeModel<HighlightResult>.self, forKey: .highlightResult)
       
         self.rankingInfo = try container.decodeIfPresent(RankingInfo.self, forKey: .rankingInfo)
     }

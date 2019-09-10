@@ -16,7 +16,7 @@ class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
     let objectID: String = UUID().uuidString
     let category: String
     let color: String?
-    let promotions: EitherSingleOrList<String>?
+    let promotions: TreeModel<String>?
   }
   
   let disjunctiveAttributes: [Attribute] = [
