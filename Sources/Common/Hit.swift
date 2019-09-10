@@ -17,12 +17,14 @@ public struct Hit<T: Codable>: Codable {
     public let snippetResult: TreeModel<SnippetResult>?
     public let highlightResult: TreeModel<HighlightResult>?
     public let rankingInfo: RankingInfo?
+    public let geolocation: Place.Geolocation?
     
     enum CodingKeys: String, CodingKey {
         case objectID
         case snippetResult = "_snippetResult"
         case highlightResult = "_highlightResult"
         case rankingInfo = "_rankingInfo"
+        case geolocation = "_geoloc"
     }
   
     public init(objectID: String, object: T) {
@@ -31,6 +33,7 @@ public struct Hit<T: Codable>: Codable {
         self.snippetResult = nil
         self.highlightResult = nil
         self.rankingInfo = nil
+        self.geolocation = nil
     }
     
     public init(from decoder: Decoder) throws {
@@ -39,8 +42,8 @@ public struct Hit<T: Codable>: Codable {
         self.objectID = try container.decode(String.self, forKey: .objectID)
         self.snippetResult = try container.decodeIfPresent(TreeModel<SnippetResult>.self, forKey: .snippetResult)
         self.highlightResult = try container.decodeIfPresent(TreeModel<HighlightResult>.self, forKey: .highlightResult)
-      
         self.rankingInfo = try container.decodeIfPresent(RankingInfo.self, forKey: .rankingInfo)
+        self.geolocation = try container.decodeIfPresent(Place.Geolocation.self, forKey: .geolocation)
     }
     
 }
