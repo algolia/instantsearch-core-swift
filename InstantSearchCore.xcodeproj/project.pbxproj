@@ -143,6 +143,12 @@
 		AF24560E2327A93000F78D09 /* TreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24560C2327A93000F78D09 /* TreeModel.swift */; };
 		AF24560F2327A93000F78D09 /* TreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24560C2327A93000F78D09 /* TreeModel.swift */; };
 		AF2456102327A93000F78D09 /* TreeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24560C2327A93000F78D09 /* TreeModel.swift */; };
+		AF2456162327C18B00F78D09 /* HitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456112327C16300F78D09 /* HitTests.swift */; };
+		AF2456172327C18C00F78D09 /* HitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456112327C16300F78D09 /* HitTests.swift */; };
+		AF2456182327C18D00F78D09 /* HitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456112327C16300F78D09 /* HitTests.swift */; };
+		AF24561A2327C1A900F78D09 /* hit.json in Resources */ = {isa = PBXBuildFile; fileRef = AF2456192327C1A900F78D09 /* hit.json */; };
+		AF24561B2327C1A900F78D09 /* hit.json in Resources */ = {isa = PBXBuildFile; fileRef = AF2456192327C1A900F78D09 /* hit.json */; };
+		AF24561C2327C1A900F78D09 /* hit.json in Resources */ = {isa = PBXBuildFile; fileRef = AF2456192327C1A900F78D09 /* hit.json */; };
 		AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
@@ -845,6 +851,8 @@
 		AF21EEF222C523B0004A0542 /* DisjFacetingResult3.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DisjFacetingResult3.json; sourceTree = "<group>"; };
 		AF21EEF322C523B0004A0542 /* DisjFacetingResult2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = DisjFacetingResult2.json; sourceTree = "<group>"; };
 		AF24560C2327A93000F78D09 /* TreeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeModel.swift; sourceTree = "<group>"; };
+		AF2456112327C16300F78D09 /* HitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTests.swift; sourceTree = "<group>"; };
+		AF2456192327C1A900F78D09 /* hit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hit.json; sourceTree = "<group>"; };
 		AF2B26132281AC18006DE798 /* FilterState+Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+Commands.swift"; sourceTree = "<group>"; };
 		AF322D2722D8BD8300010428 /* HierarchicalGroupAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalGroupAccessor.swift; sourceTree = "<group>"; };
 		AF322D3122D8D5B000010428 /* Optional+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Collection.swift"; sourceTree = "<group>"; };
@@ -1507,12 +1515,14 @@
 				AFCB30B722CB97DE0094ED2E /* hierarchical.json */,
 				AFB9783522D49933001C2718 /* disjunctive.json */,
 				AF7F669322D52C3F0063F756 /* disjunctiveHierarchical.json */,
+				AF2456192327C1A900F78D09 /* hit.json */,
 				AFCDEDE0223A5C0E001459BE /* HitsInteractorTests.swift */,
 				AF19B039223FF9F400FA2FE0 /* MultiIndexHitsInteractorTests.swift */,
 				E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */,
 				AFCDEDE4223AC4E8001459BE /* PaginatorTests.swift */,
 				AFE6E3C622A830BF005BA44D /* InfiniteScrollingControllerTests.swift */,
 				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
+				AF2456112327C16300F78D09 /* HitTests.swift */,
 				AFCB30AF22CB96DF0094ED2E /* Helpers.swift */,
 				AFE6E39522A18BC7005BA44D /* ItemInteractorTests.swift */,
 				AFE6E39D22A18CA9005BA44D /* StatsInteractorConnectorsTests.swift */,
@@ -1945,6 +1955,8 @@
 				AF7F669422D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */,
 				AF21EF0222C52762004A0542 /* DisjFacetingResult3.json in Resources */,
 				AFCB30B822CB97DE0094ED2E /* hierarchical.json in Resources */,
+				AF24561A2327C1A900F78D09 /* hit.json in Resources */,
+				AF58088323198BDA00C5BDFA /* PlacesResult.json in Resources */,
 				AFC2E2DA2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D52229356400FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0122C52762004A0542 /* DisjFacetingResult2.json in Resources */,
@@ -1968,6 +1980,8 @@
 				AF7F669522D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */,
 				AF21EF0522C52763004A0542 /* DisjFacetingResult3.json in Resources */,
 				AFCB30B922CB97DE0094ED2E /* hierarchical.json in Resources */,
+				AF24561B2327C1A900F78D09 /* hit.json in Resources */,
+				AF58088423198BDA00C5BDFA /* PlacesResult.json in Resources */,
 				AFC2E2DB2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D42229356300FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0422C52763004A0542 /* DisjFacetingResult2.json in Resources */,
@@ -1991,6 +2005,8 @@
 				AF7F669622D52C3F0063F756 /* disjunctiveHierarchical.json in Resources */,
 				AF21EF0822C52764004A0542 /* DisjFacetingResult3.json in Resources */,
 				AFCB30BA22CB97DE0094ED2E /* hierarchical.json in Resources */,
+				AF24561C2327C1A900F78D09 /* hit.json in Resources */,
+				AF58088523198BDA00C5BDFA /* PlacesResult.json in Resources */,
 				AFC2E2DC2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D32229356200FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0722C52764004A0542 /* DisjFacetingResult2.json in Resources */,
@@ -2274,6 +2290,7 @@
 				AFCDEDE1223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
 				AF21EEBD22B4065F004A0542 /* AttributedStringWithTaggedStringTests.swift in Sources */,
 				AFB9782C22D4959B001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
+				AF2456162327C18B00F78D09 /* HitTests.swift in Sources */,
 				AF11784B22608CBB00C5B59B /* FilterStateGroupTests.swift in Sources */,
 				AFB9782922D4959B001C2718 /* HierarchicalIntegrationTests.swift in Sources */,
 			);
@@ -2480,6 +2497,7 @@
 				AFE6E3C822A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AFB9782D22D4959B001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AF21EEA722B3E989004A0542 /* TaggedStringTests.swift in Sources */,
+				AF2456172327C18C00F78D09 /* HitTests.swift in Sources */,
 				AFC2E2C72292A2CF00859EBA /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFCDEDE2223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
 			);
@@ -2686,6 +2704,7 @@
 				AFE6E3C922A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AFB9782E22D4959B001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AF21EEA622B3E988004A0542 /* TaggedStringTests.swift in Sources */,
+				AF2456182327C18D00F78D09 /* HitTests.swift in Sources */,
 				AFC2E2C82292A2CF00859EBA /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFCDEDE3223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
 			);
