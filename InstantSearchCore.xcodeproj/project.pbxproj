@@ -153,6 +153,14 @@
 		AF245645232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF245643232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift */; };
 		AF245646232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF245643232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift */; };
 		AF245647232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF245643232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift */; };
+		AF2456372329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
+		AF2456382329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
+		AF2456392329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
+		AF24563A2329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
+		AF24563C2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
+		AF24563D2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
+		AF24563E2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
+		AF24563F2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
 		AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
@@ -891,6 +899,8 @@
 		AF2456112327C16300F78D09 /* HitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitTests.swift; sourceTree = "<group>"; };
 		AF2456192327C1A900F78D09 /* hit.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = hit.json; sourceTree = "<group>"; };
 		AF245643232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentInteractor+MultiIndexSearcher.swift"; sourceTree = "<group>"; };
+		AF2456362329107800F78D09 /* PlaceFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceFormatter.swift; sourceTree = "<group>"; };
+		AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesIntegrationTests.swift; sourceTree = "<group>"; };
 		AF2B26132281AC18006DE798 /* FilterState+Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+Commands.swift"; sourceTree = "<group>"; };
 		AF322D2722D8BD8300010428 /* HierarchicalGroupAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalGroupAccessor.swift; sourceTree = "<group>"; };
 		AF322D3122D8D5B000010428 /* Optional+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Collection.swift"; sourceTree = "<group>"; };
@@ -1344,6 +1354,7 @@
 				AFB9782522D4959A001C2718 /* HierarchicalIntegrationTests.swift */,
 				AFB9782622D4959A001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift */,
 				AFB9782722D4959A001C2718 /* DisjunctiveFacetingIntegrationTests.swift */,
+				AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */,
 				AFB9782822D4959A001C2718 /* OnlineTestCase.swift */,
 			);
 			path = Integration;
@@ -1380,6 +1391,7 @@
 				AF6778A022FB07ED00850ACC /* Attribute.swift */,
 				AFCDEDA0222E7B6B001459BE /* Hit.swift */,
 				AF51515B2316DE6000F88B6A /* Place.swift */,
+				AF2456362329107800F78D09 /* PlaceFormatter.swift */,
 				AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */,
 				AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */,
 				AF6778A722FB0AD700850ACC /* Constants.swift */,
@@ -2203,6 +2215,7 @@
 				AF245644232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFF1E74E229696B200941401 /* HitsSource.swift in Sources */,
 				AFC2E288228ED80200859EBA /* FilterPresenter.swift in Sources */,
+				AF24563C2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AFE6E3D022AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
 				AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */,
 				AF21EEAF22B401A6004A0542 /* HighlightedString.swift in Sources */,
@@ -2282,6 +2295,7 @@
 				E2EFA5E822A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift in Sources */,
 				AF536C25227C6802006DAE84 /* SelectableController.swift in Sources */,
 				E24233DB223947FC008F24FB /* HitsInteractor.swift in Sources */,
+				AF2456372329107800F78D09 /* PlaceFormatter.swift in Sources */,
 				E242340A2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AF6778A122FB07ED00850ACC /* Attribute.swift in Sources */,
 				AF24560D2327A93000F78D09 /* TreeModel.swift in Sources */,
@@ -2418,6 +2432,7 @@
 				AF245645232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFCDEDDA22397E31001459BE /* Result+ConvenientInit.swift in Sources */,
 				AFC2E289228ED80200859EBA /* FilterPresenter.swift in Sources */,
+				AF24563D2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				E2CF1A4D22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AF1177A8225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E298228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
@@ -2497,6 +2512,7 @@
 				E2EBE73E22B1529000B91B23 /* CurrentFiltersListController.swift in Sources */,
 				E242340B2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AFF1E759229696F700941401 /* MultiIndexHitsSource.swift in Sources */,
+				AF2456382329107800F78D09 /* PlaceFormatter.swift in Sources */,
 				AFC2E2B2228EE1EC00859EBA /* FacetListController.swift in Sources */,
 				AF6778A222FB07ED00850ACC /* Attribute.swift in Sources */,
 				AF24560E2327A93000F78D09 /* TreeModel.swift in Sources */,
@@ -2633,6 +2649,7 @@
 				AF245646232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AF1177A9225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E28A228ED80200859EBA /* FilterPresenter.swift in Sources */,
+				AF24563E2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				E2CF1A4E22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFC2E299228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
@@ -2712,6 +2729,7 @@
 				E2EBE73F22B1529000B91B23 /* CurrentFiltersListController.swift in Sources */,
 				E242340C2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AFF1E75A229696F700941401 /* MultiIndexHitsSource.swift in Sources */,
+				AF2456392329107800F78D09 /* PlaceFormatter.swift in Sources */,
 				AFC2E2B3228EE1EC00859EBA /* FacetListController.swift in Sources */,
 				AF6778A322FB07ED00850ACC /* Attribute.swift in Sources */,
 				AF24560F2327A93000F78D09 /* TreeModel.swift in Sources */,
@@ -2848,6 +2866,7 @@
 				AF245647232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFC2E28B228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				E2CF1A4F22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
+				AF24563F2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFC2E29A228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
 				E2EFA5DF22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */,
@@ -2927,6 +2946,7 @@
 				E242340D2243A43D008F24FB /* Signals+Observable.swift in Sources */,
 				AFF1E75B229696F700941401 /* MultiIndexHitsSource.swift in Sources */,
 				AFC2E2B4228EE1EC00859EBA /* FacetListController.swift in Sources */,
+				AF24563A2329107800F78D09 /* PlaceFormatter.swift in Sources */,
 				AF6778A422FB07ED00850ACC /* Attribute.swift in Sources */,
 				E26F423E2296A45500583D39 /* StatsController.swift in Sources */,
 				AF2456102327A93000F78D09 /* TreeModel.swift in Sources */,
