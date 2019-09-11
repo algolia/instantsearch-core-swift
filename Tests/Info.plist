@@ -24,5 +24,9 @@
 	<string>$(ALGOLIA_APPLICATION_ID)</string>
 	<key>ALGOLIA_API_KEY</key>
 	<string>$(ALGOLIA_API_KEY)</string>
+	<key>ALGOLIA_PLACES_APPLICATION_ID</key>
+	<string>$(ALGOLIA_PLACES_APPLICATION_ID)</string>
+	<key>ALGOLIA_PLACES_API_KEY</key>
+	<string>$(ALGOLIA_PLACES_API_KEY)</string>
 </dict>
 </plist>
