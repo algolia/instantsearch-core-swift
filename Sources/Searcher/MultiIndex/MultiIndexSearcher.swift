@@ -35,7 +35,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   public let client: Client
   
   /// List of  index & query tuples
-  public let indexQueryStates: [IndexQueryState]
+  public internal(set) var indexQueryStates: [IndexQueryState]
   
   public let isLoading: Observer<Bool>
   
