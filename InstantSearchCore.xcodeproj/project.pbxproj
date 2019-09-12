@@ -157,10 +157,9 @@
 		AF2456382329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
 		AF2456392329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
 		AF24563A2329107800F78D09 /* PlaceFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2456362329107800F78D09 /* PlaceFormatter.swift */; };
-		AF24563C2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
-		AF24563D2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
-		AF24563E2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
-		AF24563F2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
+		AF2456402329143100F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
+		AF2456412329143200F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
+		AF2456422329143400F78D09 /* PlacesIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF24563B2329138700F78D09 /* PlacesIntegrationTests.swift */; };
 		AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
@@ -2215,7 +2214,6 @@
 				AF245644232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFF1E74E229696B200941401 /* HitsSource.swift in Sources */,
 				AFC2E288228ED80200859EBA /* FilterPresenter.swift in Sources */,
-				AF24563C2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AFE6E3D022AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
 				AFBF375E2285D5C600787D24 /* FilterConverter.swift in Sources */,
 				AF21EEAF22B401A6004A0542 /* HighlightedString.swift in Sources */,
@@ -2377,6 +2375,7 @@
 				AFCDEDE1223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
 				AF21EEBD22B4065F004A0542 /* AttributedStringWithTaggedStringTests.swift in Sources */,
 				AFB9782C22D4959B001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
+				AF2456412329143200F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AF2456162327C18B00F78D09 /* HitTests.swift in Sources */,
 				AF11784B22608CBB00C5B59B /* FilterStateGroupTests.swift in Sources */,
 				AFB9782922D4959B001C2718 /* HierarchicalIntegrationTests.swift in Sources */,
@@ -2432,7 +2431,6 @@
 				AF245645232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFCDEDDA22397E31001459BE /* Result+ConvenientInit.swift in Sources */,
 				AFC2E289228ED80200859EBA /* FilterPresenter.swift in Sources */,
-				AF24563D2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				E2CF1A4D22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AF1177A8225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E298228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
@@ -2594,6 +2592,7 @@
 				AFE6E3C822A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AFB9782D22D4959B001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AF21EEA722B3E989004A0542 /* TaggedStringTests.swift in Sources */,
+				AF2456402329143100F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AF2456172327C18C00F78D09 /* HitTests.swift in Sources */,
 				AFC2E2C72292A2CF00859EBA /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFCDEDE2223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
@@ -2649,7 +2648,6 @@
 				AF245646232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AF1177A9225E2B4800C5B59B /* Filter.swift in Sources */,
 				AFC2E28A228ED80200859EBA /* FilterPresenter.swift in Sources */,
-				AF24563E2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				E2CF1A4E22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
 				AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */,
 				AFC2E299228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
@@ -2811,6 +2809,7 @@
 				AFE6E3C922A830BF005BA44D /* InfiniteScrollingControllerTests.swift in Sources */,
 				AFB9782E22D4959B001C2718 /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
 				AF21EEA622B3E988004A0542 /* TaggedStringTests.swift in Sources */,
+				AF2456422329143400F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AF2456182327C18D00F78D09 /* HitTests.swift in Sources */,
 				AFC2E2C82292A2CF00859EBA /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFCDEDE3223A5C0E001459BE /* HitsInteractorTests.swift in Sources */,
@@ -2866,7 +2865,6 @@
 				AF245647232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFC2E28B228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				E2CF1A4F22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
-				AF24563F2329138700F78D09 /* PlacesIntegrationTests.swift in Sources */,
 				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFC2E29A228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
 				E2EFA5DF22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */,
