@@ -24,6 +24,7 @@ public extension SingleIndexSearcher {
     
     filterState.onChange.subscribePast(with: self) { searcher, filterState in
       searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+      searcher.indexQueryState.query.page = 0
       searcher.search()
     }
     
