@@ -192,6 +192,7 @@ public struct SearchStats: Codable {
     case hitsPerPage
     case processingTimeMS
     case query
+    case queryID
   }
 
   /// Number of hits per page.
@@ -211,6 +212,12 @@ public struct SearchStats: Codable {
   
   /// Query text that produced these results.
   public let query: String?
+
+  /// Query ID that produced these results.
+  /// Mandatory when reporting click and conversion events
+  /// Only reported when `clickAnalytics=true` in the `Query`
+  ///
+  public let queryID: String?
   
   init() {
     self.hitsPerPage = 0
@@ -219,6 +226,7 @@ public struct SearchStats: Codable {
     self.page = 0
     self.processingTimeMS = 0
     self.query = nil
+    self.queryID = nil
   }
   
   init(hitsPerPage: Int,
@@ -226,13 +234,15 @@ public struct SearchStats: Codable {
        pagesCount: Int,
        page: Int,
        processingTimeMS: Int,
-       query: String?) {
+       query: String?,
+       queryID: String? = nil) {
     self.hitsPerPage = hitsPerPage
     self.totalHitsCount = totalHitsCount
     self.pagesCount = pagesCount
     self.page = page
     self.processingTimeMS = processingTimeMS
     self.query = query
+    self.queryID = queryID
   }
   
   public init(from decoder: Decoder) throws {
@@ -245,6 +255,7 @@ public struct SearchStats: Codable {
     self.hitsPerPage = try container.decode(Int.self, forKey: .hitsPerPage)
     self.processingTimeMS = try container.decode(Int.self, forKey: .processingTimeMS)
     self.query = try container.decodeIfPresent(String.self, forKey: .query)
+    self.queryID = try container.decodeIfPresent(String.self, forKey: .queryID)
   }
   
   public func encode(to encoder: Encoder) throws {
@@ -256,6 +267,7 @@ public struct SearchStats: Codable {
     try container.encode(hitsPerPage, forKey: .hitsPerPage)
     try container.encode(processingTimeMS, forKey: .processingTimeMS)
     try container.encodeIfPresent(query, forKey: .query)
+    try container.encodeIfPresent(queryID, forKey: .queryID)
     
   }
   

@@ -1586,6 +1586,7 @@
     "exhaustiveFacetsCount": true,
     "exhaustiveNbHits": true,
     "query": "Amazon",
+    "queryID": "queryID",
     "params": "query=Amazon&hitsPerPage=10&page=0&analytics=false&attributesToRetrieve=*&highlightPreTag=%3Cais-highlight-0000000000%3E&highlightPostTag=%3C%2Fais-highlight-0000000000%3E&getRankingInfo=true&responseFields=*&optionalFilters=%5B%22categories%3AContemporary%20AND%20type%3Abook%20AND%20binding%3APaperback%22%5D&facets=*%2Ctype%2Cbrand%2Ccolor%2Cprice%2Cauthor%2Cbinding%2CpubYear%2Cfeatured%2Cpublisher%2Ccategories%2CproductGroup&tagFilters=",
     "index": "ios@algolia.com#atis-prods",
     "serverUsed": "d52-usw-3.algolia.net",
