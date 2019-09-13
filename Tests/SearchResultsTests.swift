@@ -52,6 +52,10 @@ class SearchResultsTests: XCTestCase {
       XCTAssertEqual(searchResults.stats.hitsPerPage, 10)
       XCTAssertEqual(searchResults.stats.processingTimeMS, 4)
       XCTAssertEqual(searchResults.stats.query, "Amazon")
+      XCTAssertEqual(searchResults.stats.queryID, "queryID")
+
+      XCTAssertEqual(searchResults.queryID, "queryID")
+
       XCTAssertEqual(searchResults.hits.count, 10)
       XCTAssertEqual(searchResults.areFacetsCountExhaustive, true)
       XCTAssertNil(searchResults.message)
