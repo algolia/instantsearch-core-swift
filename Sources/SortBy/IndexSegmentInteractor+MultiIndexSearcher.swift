@@ -21,6 +21,7 @@ public extension IndexSegmentInteractor {
       if
         let selected = computed,
         let index = interactor.items[selected] {
+        self.selected = selected
         searcher.indexQueryStates[queryIndex].index = index
         searcher.indexQueryStates[queryIndex].query.page = 0
         searcher.search()
