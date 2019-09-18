@@ -664,6 +664,10 @@
 		E26F424B229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F4249229830E500583D39 /* FilterClearInteractor+FilterState.swift */; };
 		E26F424C229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F4249229830E500583D39 /* FilterClearInteractor+FilterState.swift */; };
 		E26F424D229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26F4249229830E500583D39 /* FilterClearInteractor+FilterState.swift */; };
+		E27859FA23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27859F923322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift */; };
+		E27859FB23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27859F923322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift */; };
+		E27859FC23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27859F923322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift */; };
+		E27859FD23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27859F923322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift */; };
 		E2960CD820AF2CEF0056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */; };
 		E2960CDA20AF2D350056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CD920AF2D350056E874 /* InstantSearchClient.framework */; };
 		E2960CDC20AF2D480056E874 /* InstantSearchClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */; };
@@ -1003,6 +1007,7 @@
 		E265DBEF22733D4C002DC989 /* SelectableListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableListController.swift; sourceTree = "<group>"; };
 		E26F423A2296A45500583D39 /* StatsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsController.swift; sourceTree = "<group>"; };
 		E26F4249229830E500583D39 /* FilterClearInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterClearInteractor+FilterState.swift"; sourceTree = "<group>"; };
+		E27859F923322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MultiIndexHitsInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		E2960CD720AF2CEF0056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/iOS/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CD920AF2D350056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/Mac/InstantSearchClient.framework; sourceTree = "<group>"; };
 		E2960CDB20AF2D480056E874 /* InstantSearchClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = InstantSearchClient.framework; path = Carthage/Build/tvOS/InstantSearchClient.framework; sourceTree = "<group>"; };
@@ -1434,6 +1439,7 @@
 				AFF1E757229696F700941401 /* MultiIndexHitsSource.swift */,
 				AFE6E3CF22AAD5A9005BA44D /* MultiIndexHitsInteractor+Searcher.swift */,
 				AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */,
+				E27859F923322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift */,
 			);
 			path = MultiIndexHits;
 			sourceTree = "<group>";
@@ -2163,6 +2169,7 @@
 				E225EDAF2268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
 				AFC2E2A7228EDF6A00859EBA /* Query+Facets.swift in Sources */,
 				AF47F98522E1E73300A6AA01 /* FilterState+FiltersWritable.swift in Sources */,
+				E27859FA23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */,
 				E2146BE422B2952E00927350 /* FilterClearInteractor.swift in Sources */,
 				E2EBE73122B1367C00B91B23 /* CurrentFiltersInteractor.swift in Sources */,
 				E2EFA60622B0FFD2008C9CAA /* LoadingController.swift in Sources */,
@@ -2371,6 +2378,7 @@
 				E225EDB02268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
 				E2EFA5F722AEBD72008C9CAA /* EventInteractor.swift in Sources */,
 				E2146BEA22B29CE200927350 /* FilterClearInteractor+FilterClearController.swift in Sources */,
+				E27859FB23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */,
 				AFBF37642285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A322A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AF06184822E9F3D000FDBAAE /* HitsInteractor+Searcher.swift in Sources */,
@@ -2579,6 +2587,7 @@
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5F822AEBD72008C9CAA /* EventInteractor.swift in Sources */,
 				E2146BEB22B29CE200927350 /* FilterClearInteractor+FilterClearController.swift in Sources */,
+				E27859FC23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */,
 				AFBF37652285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
 				AFE6E3A422A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AF06184922E9F3D000FDBAAE /* HitsInteractor+Searcher.swift in Sources */,
@@ -2787,6 +2796,7 @@
 				E2EFA5F922AEBD72008C9CAA /* EventInteractor.swift in Sources */,
 				E2146BEC22B29CE200927350 /* FilterClearInteractor+FilterClearController.swift in Sources */,
 				AFBF37662285D5D300787D24 /* FilterGroupConverter.swift in Sources */,
+				E27859FD23322C1000D7720A /* MultiIndexHitsInteractor+FilterState.swift in Sources */,
 				AFE6E3A522A6B994005BA44D /* SynchronizedSet.swift in Sources */,
 				AF06184A22E9F3D000FDBAAE /* HitsInteractor+Searcher.swift in Sources */,
 				AF5DAA9022F6E355000DDB27 /* DisjunctiveFacetingDelegate.swift in Sources */,
