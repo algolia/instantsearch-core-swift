@@ -23,14 +23,14 @@ public struct FilterAndID: Hashable {
 }
 
 public extension CurrentFiltersInteractor {
-  
+
   func connectFilterState(_ filterState: FilterState,
-                          filterGroupID: FilterGroup.ID? = nil) {
-    
+                          filterGroupIDs: Set<FilterGroup.ID>? = nil) {
+
     filterState.onChange.subscribePast(with: self) { [weak filterState] interactor, _  in
       guard let filterState = filterState else { return }
-      if let filterGroupID = filterGroupID {
-        interactor.items = Set(filterState.getFilters(forGroupWithID: filterGroupID).map { FilterAndID(filter: $0, id: filterGroupID) })
+      if let filterGroupIDs = filterGroupIDs {
+        interactor.items = filterState.getFiltersAndID().filter { filterGroupIDs.contains($0.id) }
       } else {
         interactor.items = filterState.getFiltersAndID()
       }
@@ -38,18 +38,28 @@ public extension CurrentFiltersInteractor {
 
     onItemsComputed.subscribePast(with: self) { [weak filterState] _, items in
 
-      if let filterGroupID = filterGroupID {
-        filterState?.filters.removeAll(fromGroupWithID: filterGroupID)
-        filterState?.filters.addAll(filters: items.map { $0.filter.filter }, toGroupWithID: filterGroupID)
-      } else {
-        filterState?.filters.removeAll()
+      guard let filterState = filterState else { return }
+
+      if let filterGroupIDs = filterGroupIDs {
+        filterState.filters.removeAll(fromGroupWithIDs: Array(filterGroupIDs))
         items.forEach({ (filterAndID) in
-          filterState?.filters.add(filterAndID.filter.filter, toGroupWithID: filterAndID.id)
+          filterState.filters.add(filterAndID.filter.filter, toGroupWithID: filterAndID.id)
+        })
+      } else {
+        filterState.filters.removeAll()
+        items.forEach({ (filterAndID) in
+          filterState.filters.add(filterAndID.filter.filter, toGroupWithID: filterAndID.id)
         })
       }
 
-      filterState?.notifyChange()
+      filterState.notifyChange()
     }
+  }
+
+  func connectFilterState(_ filterState: FilterState,
+                          filterGroupID: FilterGroup.ID) {
+    
+    connectFilterState(filterState, filterGroupIDs: Set([filterGroupID]))
   }
 }
 
