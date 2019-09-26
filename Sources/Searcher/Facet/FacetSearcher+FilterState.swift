@@ -16,10 +16,13 @@ public extension FacetSearcher {
    - Parameter filterState: filter state to connect
    */
   
-  func connectFilterState(_ filterState: FilterState) {
+  func connectFilterState(_ filterState: FilterState, triggerSearchOnFilterStateChange: Bool = true) {
     filterState.onChange.subscribePast(with: self) { searcher, filterState in
       searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      searcher.search()
+
+      if triggerSearchOnFilterStateChange {
+        searcher.search()
+      }
     }
   }
   
