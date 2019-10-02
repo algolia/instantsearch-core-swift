@@ -194,6 +194,18 @@
 		AF3DE586224A984D00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDEC223C0694001459BE /* MultiIndexHitsInteractor.swift */; };
 		AF47F98322E1E72400A6AA01 /* FilterState+FiltersReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */; };
 		AF47F98522E1E73300A6AA01 /* FilterState+FiltersWritable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */; };
+		AF4E2A5D2344FBE9003EC036 /* Geolocated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A5C2344FBE9003EC036 /* Geolocated.swift */; };
+		AF4E2A5E2344FBE9003EC036 /* Geolocated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A5C2344FBE9003EC036 /* Geolocated.swift */; };
+		AF4E2A5F2344FBE9003EC036 /* Geolocated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A5C2344FBE9003EC036 /* Geolocated.swift */; };
+		AF4E2A602344FBE9003EC036 /* Geolocated.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A5C2344FBE9003EC036 /* Geolocated.swift */; };
+		AF4E2A622344FC08003EC036 /* GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A612344FC08003EC036 /* GeoHitsController.swift */; };
+		AF4E2A632344FC08003EC036 /* GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A612344FC08003EC036 /* GeoHitsController.swift */; };
+		AF4E2A642344FC08003EC036 /* GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A612344FC08003EC036 /* GeoHitsController.swift */; };
+		AF4E2A652344FC08003EC036 /* GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A612344FC08003EC036 /* GeoHitsController.swift */; };
+		AF4E2A672344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A662344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift */; };
+		AF4E2A682344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A662344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift */; };
+		AF4E2A692344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A662344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift */; };
+		AF4E2A6A2344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF4E2A662344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift */; };
 		AF5151522316C89000F88B6A /* PlacesSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151512316C89000F88B6A /* PlacesSearcher.swift */; };
 		AF5151532316C89000F88B6A /* PlacesSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151512316C89000F88B6A /* PlacesSearcher.swift */; };
 		AF5151542316C89000F88B6A /* PlacesSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF5151512316C89000F88B6A /* PlacesSearcher.swift */; };
@@ -909,6 +921,9 @@
 		AF322D4522DE062800010428 /* HierarchicalManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalManageable.swift; sourceTree = "<group>"; };
 		AF47F98222E1E72400A6AA01 /* FilterState+FiltersReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+FiltersReadable.swift"; sourceTree = "<group>"; };
 		AF47F98422E1E73300A6AA01 /* FilterState+FiltersWritable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+FiltersWritable.swift"; sourceTree = "<group>"; };
+		AF4E2A5C2344FBE9003EC036 /* Geolocated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Geolocated.swift; sourceTree = "<group>"; };
+		AF4E2A612344FC08003EC036 /* GeoHitsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoHitsController.swift; sourceTree = "<group>"; };
+		AF4E2A662344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+GeoHitsController.swift"; sourceTree = "<group>"; };
 		AF5151512316C89000F88B6A /* PlacesSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesSearcher.swift; sourceTree = "<group>"; };
 		AF51515B2316DE6000F88B6A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlaceHit+Geolocation.swift"; sourceTree = "<group>"; };
@@ -1390,6 +1405,7 @@
 				AF6778A022FB07ED00850ACC /* Attribute.swift */,
 				AFCDEDA0222E7B6B001459BE /* Hit.swift */,
 				AF51515B2316DE6000F88B6A /* Place.swift */,
+				AF4E2A5C2344FBE9003EC036 /* Geolocated.swift */,
 				AF2456362329107800F78D09 /* PlaceFormatter.swift */,
 				AF5151602316DE8400F88B6A /* PlaceHit+Geolocation.swift */,
 				AF5151652316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift */,
@@ -1485,9 +1501,11 @@
 				AF5808702318243A00C5BDFA /* HitsInteractor+PlacesSearcher.swift */,
 				AFBAA6E722EA2F6D0009856B /* HitsInteractor+FilterState.swift */,
 				AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */,
+				AF4E2A662344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift */,
 				AFCDEDF1223C070F001459BE /* AnyHitsInteractor.swift */,
 				AFF1E74D229696B200941401 /* HitsSource.swift */,
 				AFF1E752229696CD00941401 /* HitsController.swift */,
+				AF4E2A612344FC08003EC036 /* GeoHitsController.swift */,
 			);
 			path = Hits;
 			sourceTree = "<group>";
@@ -2187,6 +2205,7 @@
 				AF3DE583224A984B00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */,
 				E2146BFC22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
 				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
+				AF4E2A5D2344FBE9003EC036 /* Geolocated.swift in Sources */,
 				E26F424A229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
 				AF5DAA9722F6E3DA000DDB27 /* MultiIndexSearcher+FilterState.swift in Sources */,
 				AF11785E2264CC9C00C5B59B /* AndGroupAccessor.swift in Sources */,
@@ -2226,6 +2245,7 @@
 				AF1177B2225E2B7F00C5B59B /* NumericFilter.swift in Sources */,
 				AF8DA20022E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */,
 				AF5D105822F48AEE00DE13AA /* SelectableSegmentInteractor+Filter+FilterState.swift in Sources */,
+				AF4E2A672344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */,
 				AF5DAA8822F6E326000DDB27 /* SingleIndexSearcher+FilterState.swift in Sources */,
 				AFCF8DDB22E5BFEE0044F728 /* IndexQueryState.swift in Sources */,
 				AF1177D7225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
@@ -2243,6 +2263,7 @@
 				E2EFA60622B0FFD2008C9CAA /* LoadingController.swift in Sources */,
 				E25D634722D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				AF5DAA8D22F6E355000DDB27 /* DisjunctiveFacetingDelegate.swift in Sources */,
+				AF4E2A622344FC08003EC036 /* GeoHitsController.swift in Sources */,
 				E2B1AC8B22D8C8C0000B913E /* IndexPresenter.swift in Sources */,
 				E2B1AC7C22D8C3E1000B913E /* DefaultPresenter.swift in Sources */,
 				AF5D106222F48BC800DE13AA /* SelectableInteractor+Filter+Controller.swift in Sources */,
@@ -2404,6 +2425,7 @@
 				AF3DE584224A984C00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */,
 				AFF1E74F229696B200941401 /* HitsSource.swift in Sources */,
 				AFCDEDC922397E18001459BE /* SearchResults+PageMap.swift in Sources */,
+				AF4E2A5E2344FBE9003EC036 /* Geolocated.swift in Sources */,
 				AF11785F2264CC9D00C5B59B /* AndGroupAccessor.swift in Sources */,
 				AF5DAA9822F6E3DA000DDB27 /* MultiIndexSearcher+FilterState.swift in Sources */,
 				E29E456E2243F351005B358D /* Observation.swift in Sources */,
@@ -2443,6 +2465,7 @@
 				AF5D105922F48AEE00DE13AA /* SelectableSegmentInteractor+Filter+FilterState.swift in Sources */,
 				E2146BF222B3C56F00927350 /* NumberRangeInteractor.swift in Sources */,
 				AF5DAA8922F6E326000DDB27 /* SingleIndexSearcher+FilterState.swift in Sources */,
+				AF4E2A682344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */,
 				AF322D2922D8BD8300010428 /* HierarchicalGroupAccessor.swift in Sources */,
 				E2146C2922CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */,
@@ -2460,6 +2483,7 @@
 				AF06184822E9F3D000FDBAAE /* HitsInteractor+SingleIndexSearcher.swift in Sources */,
 				AF5DAA8E22F6E355000DDB27 /* DisjunctiveFacetingDelegate.swift in Sources */,
 				AFC2E2A8228EDF6A00859EBA /* Query+Facets.swift in Sources */,
+				AF4E2A632344FC08003EC036 /* GeoHitsController.swift in Sources */,
 				AF06184F22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */,
 				AF5D106322F48BC800DE13AA /* SelectableInteractor+Filter+Controller.swift in Sources */,
 				E2B1AC8722D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
@@ -2621,6 +2645,7 @@
 				AF3DE585224A984D00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */,
 				AFF1E750229696B200941401 /* HitsSource.swift in Sources */,
 				E2E09E392232709F00F3056D /* Result+ConvenientInit.swift in Sources */,
+				AF4E2A5F2344FBE9003EC036 /* Geolocated.swift in Sources */,
 				AF1178602264CC9E00C5B59B /* AndGroupAccessor.swift in Sources */,
 				AF5DAA9922F6E3DA000DDB27 /* MultiIndexSearcher+FilterState.swift in Sources */,
 				E29E456F2243F351005B358D /* Observation.swift in Sources */,
@@ -2660,6 +2685,7 @@
 				AF5D105A22F48AEE00DE13AA /* SelectableSegmentInteractor+Filter+FilterState.swift in Sources */,
 				E2146BF322B3C56F00927350 /* NumberRangeInteractor.swift in Sources */,
 				AF5DAA8A22F6E326000DDB27 /* SingleIndexSearcher+FilterState.swift in Sources */,
+				AF4E2A692344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */,
 				AF322D2A22D8BD8300010428 /* HierarchicalGroupAccessor.swift in Sources */,
 				E2146C2A22CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2146BF822B3CC2E00927350 /* Boundable.swift in Sources */,
@@ -2677,6 +2703,7 @@
 				AF06184922E9F3D000FDBAAE /* HitsInteractor+SingleIndexSearcher.swift in Sources */,
 				AF5DAA8F22F6E355000DDB27 /* DisjunctiveFacetingDelegate.swift in Sources */,
 				AFC2E2A9228EDF6A00859EBA /* Query+Facets.swift in Sources */,
+				AF4E2A642344FC08003EC036 /* GeoHitsController.swift in Sources */,
 				AF06185022EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */,
 				AF5D106422F48BC800DE13AA /* SelectableInteractor+Filter+Controller.swift in Sources */,
 				E2B1AC8822D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
@@ -2838,6 +2865,7 @@
 				AF3DE586224A984D00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */,
 				AFF1E751229696B200941401 /* HitsSource.swift in Sources */,
 				E2E09E3A2232709F00F3056D /* Result+ConvenientInit.swift in Sources */,
+				AF4E2A602344FBE9003EC036 /* Geolocated.swift in Sources */,
 				AF1178612264CC9F00C5B59B /* AndGroupAccessor.swift in Sources */,
 				AF5DAA9A22F6E3DA000DDB27 /* MultiIndexSearcher+FilterState.swift in Sources */,
 				E29E45702243F351005B358D /* Observation.swift in Sources */,
@@ -2877,6 +2905,7 @@
 				E2146BF422B3C56F00927350 /* NumberRangeInteractor.swift in Sources */,
 				AF5DAA8B22F6E326000DDB27 /* SingleIndexSearcher+FilterState.swift in Sources */,
 				AF322D2B22D8BD8300010428 /* HierarchicalGroupAccessor.swift in Sources */,
+				AF4E2A6A2344FC2E003EC036 /* HitsInteractor+GeoHitsController.swift in Sources */,
 				E2146C2B22CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2146BF922B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E295228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
@@ -2894,6 +2923,7 @@
 				AF5DAA9022F6E355000DDB27 /* DisjunctiveFacetingDelegate.swift in Sources */,
 				AFC2E2AA228EDF6A00859EBA /* Query+Facets.swift in Sources */,
 				AF06185122EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */,
+				AF4E2A652344FC08003EC036 /* GeoHitsController.swift in Sources */,
 				AF5D106522F48BC800DE13AA /* SelectableInteractor+Filter+Controller.swift in Sources */,
 				E2B1AC8922D8C865000B913E /* HierarchicalPresenter.swift in Sources */,
 				AF21EEE822C3CAB9004A0542 /* QueryBuilder+DisjunctiveFaceting.swift in Sources */,
