@@ -70,6 +70,11 @@ public struct SpecializedAndGroupAccessor<Filter: FilterType>: SpecializedGroupA
     public func removeAll() {
         genericAccessor.removeAll()
     }
+
+    /// Removes all filters in other all groups
+    public func removeAllOthers() {
+      genericAccessor.removeAllOthers()
+    }
     
     /// Removes filter from group if contained by it, otherwise adds filter to group
     /// - parameter filter: filter to toggle
