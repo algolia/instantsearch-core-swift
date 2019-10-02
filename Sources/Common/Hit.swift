@@ -147,3 +147,5 @@ extension Hit {
     }
     
 }
+
+public extension Hit: Geolocated {}
