@@ -68,6 +68,7 @@ public protocol GroupAccessor {
 
   func removeAll(for attribute: Attribute)
   func removeAll()
+  func removeAllOthers()
   
 }
 

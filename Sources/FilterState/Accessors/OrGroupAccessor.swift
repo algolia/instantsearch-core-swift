@@ -63,6 +63,11 @@ public struct OrGroupAccessor<Filter: FilterType>: SpecializedGroupAccessor {
     public func removeAll() {
         filtersContainer.filters.removeAll(fromGroupWithID: groupID)
     }
+
+    /// Removes all filters in other all groups
+    public func removeAllOthers() {
+      filtersContainer.filters.removeAllExcept([groupID])
+    }
     
     /// Removes filter from group if contained by it, otherwise adds filter to group
     /// - parameter filter: filter to toggleE
