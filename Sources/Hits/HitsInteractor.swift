@@ -9,7 +9,7 @@ import Foundation
 import InstantSearchClient
 
 public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
-  
+
   public let settings: Settings
 
   internal let paginator: Paginator<Record>
@@ -74,9 +74,7 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
   
   public func rawHitAtIndex(_ row: Int) -> [String: Any]? {
     guard let hit = hit(atIndex: row) else { return nil }
-    guard let data = try? JSONEncoder().encode(hit) else { return nil }
-    guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return nil }
-    return [String: Any](jsonValue)
+    return toRaw(hit)
   }
   
   public func notifyPending(atIndex index: Int) {
@@ -84,17 +82,23 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
   }
   
   public func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R? {
-    
-    guard let hit = hit(atIndex: index) else {
-      return .none
-    }
-    
-    if let castedHit = hit as? R {
-      return castedHit
-    } else {
-      throw Error.incompatibleRecordType
-    }
-    
+    guard let hit = hit(atIndex: index) else { return .none }
+    return try cast(hit)
+  }
+  
+  public func getCurrentHits() -> [Record] {
+    guard let pageMap = paginator.pageMap else { return [] }
+    return pageMap.loadedPages.flatMap { $0.items }
+  }
+
+  public func getCurrentGenericHits<R>() throws -> [R] where R: Decodable {
+    guard let pageMap = paginator.pageMap else { return [] }
+    return try pageMap.loadedPages.flatMap { $0.items }.map(cast)
+  }
+  
+  public func getCurrentRawHits() -> [[String: Any]] {
+    guard let pageMap = paginator.pageMap else { return [] }
+    return pageMap.loadedPages.flatMap { $0.items }.compactMap(toRaw)
   }
 
 }
@@ -120,6 +124,20 @@ private extension HitsInteractor {
       let hitsPageMap = paginator.pageMap else { return }
     
     infiniteScrollingController.calculatePagesAndLoad(currentRow: rowNumber, offset: pageLoadOffset, pageMap: hitsPageMap)
+  }
+  
+  func toRaw(_ hit: Record) -> [String: Any]? {
+    guard let data = try? JSONEncoder().encode(hit) else { return .none }
+    guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return .none }
+    return [String: Any](jsonValue)
+  }
+  
+  func cast<R: Decodable>(_ hit: Record) throws -> R {
+    if let castedHit = hit as? R {
+      return castedHit
+    } else {
+      throw Error.incompatibleRecordType
+    }
   }
   
 }
