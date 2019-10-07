@@ -35,6 +35,15 @@ public protocol AnyHitsInteractor: class {
   /// Returns number of hits
   func numberOfHits() -> Int
   
+  /// Returns currently stored hits of a desired type
+  /// This method doesn't trigger pages loading for infinite scrolling
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor
+  func getCurrentGenericHits<R: Decodable>() throws -> [R]
+  
+  /// Returns currently stored raw hits
+  /// This method doesn't trigger pages loading for infinite scrolling
+  func getCurrentRawHits() -> [[String: Any]]
+  
   func notifyQueryChanged()
   func notifyPending(atIndex index: Int)
 
