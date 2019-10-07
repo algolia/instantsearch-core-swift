@@ -16,6 +16,12 @@ public struct Facet: Codable, Equatable, Hashable {
     public let value: String
     public let count: Int
     public let highlighted: String?
+
+  public init(value: String, count: Int, highlighted: String? = nil) {
+    self.value = value
+    self.count = count
+    self.highlighted = highlighted
+  }
 }
 
 public extension Facet {
