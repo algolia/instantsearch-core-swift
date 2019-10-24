@@ -20,7 +20,6 @@ class PlaceFormatter {
     
     let name = place.localeNames.first
     let country = place.country
-    let administrative = place.administrative.first.flatMap { $0 == name ? nil : $0  }
 //    let city = place.
     
     return ""

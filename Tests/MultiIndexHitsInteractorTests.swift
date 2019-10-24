@@ -177,6 +177,14 @@ class MultiIndexHitsInteractorTests: XCTestCase {
   
   class TestHitsInteractor: AnyHitsInteractor {
     
+    func getCurrentGenericHits<R>() throws -> [R] where R : Decodable {
+      return []
+    }
+    
+    func getCurrentRawHits() -> [[String : Any]] {
+      return []
+    }
+    
     var pageLoader: PageLoadable?
     
     var didCallLoadMoreResults: () -> Void
