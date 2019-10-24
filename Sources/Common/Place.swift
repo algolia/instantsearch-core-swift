@@ -8,20 +8,45 @@
 
 import Foundation
 
+enum PlaceCodingKeys: String, CodingKey {
+  case localeNames = "locale_names"
+  case country
+  case county
+  case postcode
+  case city
+  case isCity = "is_city"
+}
+
+public struct GenericPlace: Codable {
+  
+  public let localeNames: [String: [String]]
+  public let country: [String: String]
+  public let county: [String: [String]]
+  public let postcode: [String]?
+  public let city: [String: [String]]?
+  public let isCity: Bool
+
+  typealias CodingKeys = PlaceCodingKeys
+}
+
 public struct Place: Codable {
   
   public let localeNames: [String]
   public let country: String
-  public let county: [String]?
-  public let administrative: [String]
-  public let geolocation: Geolocation
+  public let county: [String]
+  public let postcode: [String]?
+  public let city: [String]?
+  public let isCity: Bool
   
-  enum CodingKeys: String, CodingKey {
-    case geolocation = "_geoloc"
-    case localeNames = "locale_names"
-    case country
-    case county
-    case administrative
+  typealias CodingKeys = PlaceCodingKeys
+
+  init(genericPlace: GenericPlace, language: String = "default") {
+    self.localeNames = genericPlace.localeNames[language] ?? []
+    self.country = genericPlace.country[language] ?? ""
+    self.county = genericPlace.county[language] ?? []
+    self.postcode = genericPlace.postcode
+    self.city = genericPlace.city?[language] ?? []
+    self.isCity = genericPlace.isCity
   }
   
 }
@@ -37,7 +62,8 @@ extension Place: CustomStringConvertible {
 extension Place: CustomDebugStringConvertible {
   
   public var debugDescription: String {
-    return "{ locale names: \(localeNames), country: \(country), county: \(county ?? []), administrative: \(administrative), location: \(geolocation) }"
+    return "{ locale names: \(localeNames), country: \(country), county: \(county ) }"
   }
   
 }
+
