@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Hit {
+public extension Hit {
   
   func getBestHighlightedForm(from highlightResults: [HighlightResult]) -> HighlightedString? {
     
