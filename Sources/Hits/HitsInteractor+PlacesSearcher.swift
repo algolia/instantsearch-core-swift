@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension HitsInteractor where Record == Place {
+extension HitsInteractor where Record == Hit<Place> {
   
   public func connectPlacesSearcher(_ searcher: PlacesSearcher) {
     
