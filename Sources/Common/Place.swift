@@ -19,9 +19,9 @@ enum PlaceCodingKeys: String, CodingKey {
 
 public struct GenericPlace: Codable {
   
-  public let localeNames: [String: [String]]
-  public let country: [String: String]
-  public let county: [String: [String]]
+  public let localeNames: [String: [String]]?
+  public let country: [String: String]?
+  public let county: [String: [String]]?
   public let postcode: [String]?
   public let city: [String: [String]]?
   public let isCity: Bool
@@ -31,9 +31,9 @@ public struct GenericPlace: Codable {
 
 public struct Place: Codable {
   
-  public let localeNames: [String]
-  public let country: String
-  public let county: [String]
+  public let localeNames: [String]?
+  public let country: String?
+  public let county: [String]?
   public let postcode: [String]?
   public let city: [String]?
   public let isCity: Bool
@@ -41,9 +41,9 @@ public struct Place: Codable {
   typealias CodingKeys = PlaceCodingKeys
 
   init(genericPlace: GenericPlace, language: String = "default") {
-    self.localeNames = genericPlace.localeNames[language] ?? []
-    self.country = genericPlace.country[language] ?? ""
-    self.county = genericPlace.county[language] ?? []
+    self.localeNames = genericPlace.localeNames?[language] ?? []
+    self.country = genericPlace.country?[language] ?? ""
+    self.county = genericPlace.county?[language] ?? []
     self.postcode = genericPlace.postcode
     self.city = genericPlace.city?[language] ?? []
     self.isCity = genericPlace.isCity
@@ -54,7 +54,7 @@ public struct Place: Codable {
 extension Place: CustomStringConvertible {
   
   public var description: String {
-    return localeNames.first ?? ""
+    return localeNames?.first ?? ""
   }
   
 }
@@ -62,8 +62,7 @@ extension Place: CustomStringConvertible {
 extension Place: CustomDebugStringConvertible {
   
   public var debugDescription: String {
-    return "{ locale names: \(localeNames), country: \(country), county: \(county ) }"
+    return "{ locale names: \(localeNames ?? []), country: \(country ?? ""), county: \(county ?? []) }"
   }
   
 }
-
