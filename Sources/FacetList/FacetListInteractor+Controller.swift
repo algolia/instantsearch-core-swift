@@ -34,11 +34,11 @@ public extension FacetListInteractor {
     
     onItemsChanged.subscribePast(with: self) { interactor, facets in
       setControllerItemsWith(facets: facets, selections: interactor.selections)
-    }
+    }.onQueue(.main)
     
     onSelectionsChanged.subscribePast(with: self) { interactor, selections in
       setControllerItemsWith(facets: interactor.items, selections: selections)
-    }
+    }.onQueue(.main)
     
   }
   
