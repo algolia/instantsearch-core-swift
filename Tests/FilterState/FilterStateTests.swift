@@ -105,6 +105,44 @@ class FilterStateTests: XCTestCase {
     
   }
   
+  func testCopyConstructor() {
+    
+    let filterState = FilterState()
+    
+    filterState[and: "a"].add(Filter.Facet(attribute: "f1", boolValue: true), Filter.Numeric(attribute: "f2", range: 0...10))
+    filterState[or: "b"].add(Filter.Tag(value: "t1"), Filter.Tag(value: "t2"))
+    filterState[hierarchical: "c"].add(.init(attribute: "f", stringValue: "test"))
+    
+    let filterStateCopy = FilterState(filterState)
+    
+    XCTAssert(filterStateCopy[and: "a"].contains(Filter.Facet(attribute: "f1", boolValue: true)))
+    XCTAssert(filterStateCopy[and: "a"].contains(Filter.Numeric(attribute: "f2", range: 0...10)))
+    XCTAssert(filterStateCopy[or: "b"].contains(Filter.Tag(value: "t1")))
+    XCTAssert(filterStateCopy[or: "b"].contains(Filter.Tag(value: "t2")))
+    XCTAssert(filterStateCopy[hierarchical: "c"].contains(.init(attribute: "f", stringValue: "test")))
+
+  }
+  
+  func testSetWithContent() {
+    
+    let filterState = FilterState()
+    
+    filterState[and: "a"].add(Filter.Facet(attribute: "f1", boolValue: true), Filter.Numeric(attribute: "f2", range: 0...10))
+    filterState[or: "b"].add(Filter.Tag(value: "t1"), Filter.Tag(value: "t2"))
+    filterState[hierarchical: "c"].add(.init(attribute: "f", stringValue: "test"))
+    
+    let anotherFilterState = FilterState()
+    anotherFilterState.setWithContent(of: filterState)
+    
+    XCTAssert(anotherFilterState[and: "a"].contains(Filter.Facet(attribute: "f1", boolValue: true)))
+    XCTAssert(anotherFilterState[and: "a"].contains(Filter.Numeric(attribute: "f2", range: 0...10)))
+    XCTAssert(anotherFilterState[or: "b"].contains(Filter.Tag(value: "t1")))
+    XCTAssert(anotherFilterState[or: "b"].contains(Filter.Tag(value: "t2")))
+    XCTAssert(anotherFilterState[hierarchical: "c"].contains(.init(attribute: "f", stringValue: "test")))
+
+    
+  }
+  
   func testAdd() {
     
     var filterState = GroupsStorage()
