@@ -357,7 +357,6 @@ class MultiIndexHitsInteractorTests: XCTestCase {
   
   class TestHitsInteractor: AnyHitsInteractor {
     
-<<<<<<< HEAD
     func getCurrentGenericHits<R>() throws -> [R] where R : Decodable {
       return []
     }
@@ -366,10 +365,8 @@ class MultiIndexHitsInteractorTests: XCTestCase {
       return []
     }
     
-=======
     var onError: Observer<Error> = .init()
         
->>>>>>> Synchronised hits interactors
     var pageLoader: PageLoadable?
     
     var didCallLoadMoreResults: () -> Void
