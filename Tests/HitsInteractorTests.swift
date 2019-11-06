@@ -74,13 +74,20 @@ class HitsInteractorTests: XCTestCase {
     XCTAssertEqual(vm.numberOfHits(), 0)
     XCTAssertEqual(vm.hit(atIndex: 0), .none)
     
-    XCTAssertNoThrow(try vm.update(results))
+    let exp = expectation(description: "on results updated")
     
-    XCTAssertEqual(vm.numberOfHits(), 3)
-    XCTAssertEqual(vm.hit(atIndex: 0), "h1")
-    XCTAssertEqual(vm.hit(atIndex: 1), "h2")
-    XCTAssertEqual(vm.hit(atIndex: 2), "h3")
+    vm.onResultsUpdated.subscribe(with: self) { (_, _) in
+      XCTAssertEqual(vm.numberOfHits(), 3)
+      XCTAssertEqual(vm.hit(atIndex: 0), "h1")
+      XCTAssertEqual(vm.hit(atIndex: 1), "h2")
+      XCTAssertEqual(vm.hit(atIndex: 2), "h3")
+      exp.fulfill()
+    }
     
+    vm.update(results)
+        
+    waitForExpectations(timeout: 3, handler: .none)
+        
   }
 
   func testHitsAppearanceOnEmptyQueryIfDesactivated() {
@@ -101,10 +108,16 @@ class HitsInteractorTests: XCTestCase {
       paginationController: paginator,
       infiniteScrollingController: TestInfiniteScrollingController())
     
-    XCTAssertNoThrow(try vm.update(results))
+    let exp = expectation(description: "on results updated")
+
+    vm.onResultsUpdated.subscribe(with: self) { (_, _) in
+      XCTAssertEqual(vm.numberOfHits(), 0)
+      exp.fulfill()
+    }
     
-    XCTAssertEqual(vm.numberOfHits(), 0)
+    vm.update(results)
     
+    waitForExpectations(timeout: 3, handler: .none)
   }
   
   func testHitsAppearanceOnEmptyQueryIfActivated() {
@@ -127,10 +140,16 @@ class HitsInteractorTests: XCTestCase {
       infiniteScrollingController: infiniteScrollingController
     )
     
-    XCTAssertNoThrow(try vm.update(results))
+    let exp = expectation(description: "on results updated")
+
+    vm.onResultsUpdated.subscribe(with: self) { (_, _) in
+      XCTAssertEqual(vm.numberOfHits(), hits.count)
+      exp.fulfill()
+    }
     
-    XCTAssertEqual(vm.numberOfHits(), hits.count)
-    
+    vm.update(results)
+
+    waitForExpectations(timeout: 3, handler: .none)
   }
   
   func testRawHitAtIndex() {
@@ -148,12 +167,18 @@ class HitsInteractorTests: XCTestCase {
       infiniteScrollingController: infiniteScrollingController
     )
     
-    XCTAssertNoThrow(try vm.update(results))
+    let exp = expectation(description: "on results updated")
     
-    let rawHit = vm.rawHitAtIndex(5)?.first
-    XCTAssertEqual(rawHit?.key, "5")
-    XCTAssertEqual(rawHit?.value as? String, "5")
+    vm.onResultsUpdated.subscribe(with: self) { (_, _) in
+      let rawHit = vm.rawHitAtIndex(5)?.first
+      XCTAssertEqual(rawHit?.key, "5")
+      XCTAssertEqual(rawHit?.value as? String, "5")
+      exp.fulfill()
+    }
     
+    vm.update(results)
+    
+    waitForExpectations(timeout: 3, handler: .none)
   }
   
   func testInfiniteScrollingTriggering() {
@@ -200,15 +225,16 @@ class HitsInteractorTests: XCTestCase {
     let onRequestChangedExpectation = expectation(description: "on request changed")
     
     vm.onRequestChanged.subscribe(with: self) { _, _ in
+      
+      XCTAssertNil(pc.pageMap)
+      XCTAssertTrue(isc.pendingPages.isEmpty)
+
       onRequestChangedExpectation.fulfill()
     }
     
     vm.notifyQueryChanged()
-    
-    XCTAssertNil(pc.pageMap)
-    XCTAssertTrue(isc.pendingPages.isEmpty)
-    
-    waitForExpectations(timeout: 2, handler: nil)
+        
+    waitForExpectations(timeout: 3, handler: nil)
     
   }
   

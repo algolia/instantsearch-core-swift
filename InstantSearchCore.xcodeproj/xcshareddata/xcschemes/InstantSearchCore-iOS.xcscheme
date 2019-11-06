@@ -69,10 +69,13 @@
             ReferencedContainer = "container:InstantSearchCore.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+<<<<<<< HEAD
       <LocationScenarioReference
          identifier = "../spb.gpx"
          referenceType = "0">
       </LocationScenarioReference>
+=======
+>>>>>>> Synchronised hits interactors
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

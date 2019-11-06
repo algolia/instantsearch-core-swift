@@ -14,6 +14,8 @@ import Foundation
 
 public protocol AnyHitsInteractor: class {
   
+  var onError: Observer<Swift.Error> { get }
+  
   var pageLoader: PageLoadable? { get set }
   
   /// Updates search results with a search results with a hit of JSON type.
@@ -21,7 +23,7 @@ public protocol AnyHitsInteractor: class {
   /// - Parameter searchResults:
   /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor
 
-  func update(_ searchResults: SearchResults) throws
+  @discardableResult func update(_ searchResults: SearchResults) -> Operation
   
   /// Returns a hit for row of a desired type
   /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor
@@ -45,6 +47,6 @@ public protocol AnyHitsInteractor: class {
   func getCurrentRawHits() -> [[String: Any]]
   
   func notifyQueryChanged()
-  func notifyPending(atIndex index: Int)
+  func process(_ error: Swift.Error, for query: Query)
 
 }

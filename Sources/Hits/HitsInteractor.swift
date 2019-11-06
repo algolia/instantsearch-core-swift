@@ -15,6 +15,7 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
   internal let paginator: Paginator<Record>
   private var isLastQueryEmpty: Bool = true
   private let infiniteScrollingController: InfiniteScrollable
+  private let mutationQueue: OperationQueue
   
   public let onRequestChanged: Observer<Void>
   public let onResultsUpdated: Observer<SearchResults>
@@ -54,6 +55,9 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
     self.onRequestChanged = .init()
     self.onResultsUpdated = .init()
     self.onError = .init()
+    self.mutationQueue = .init()
+    self.mutationQueue.maxConcurrentOperationCount = 1
+    self.mutationQueue.qualityOfService = .userInitiated
   }
 
   public func numberOfHits() -> Int {
@@ -76,11 +80,7 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
     guard let hit = hit(atIndex: row) else { return nil }
     return toRaw(hit)
   }
-  
-  public func notifyPending(atIndex index: Int) {
-    infiniteScrollingController.notifyPending(pageIndex: index)
-  }
-  
+    
   public func genericHitAtIndex<R: Decodable>(_ index: Int) throws -> R? {
     guard let hit = hit(atIndex: index) else { return .none }
     return try cast(hit)
@@ -174,32 +174,47 @@ public enum InfiniteScrolling {
 
 extension HitsInteractor {
   
-  public func notifyQueryChanged() {
-    if case .on = settings.infiniteScrolling {
-      infiniteScrollingController.notifyPendingAll()
+  @discardableResult public func update(_ searchResults: SearchResults) -> Operation {
+    
+    let updateOperation = BlockOperation { [weak self] in
+      guard let hitsInteractor = self else { return }
+      if case .on = hitsInteractor.settings.infiniteScrolling {
+        hitsInteractor.infiniteScrollingController.notifyPending(pageIndex: searchResults.stats.page)
+        hitsInteractor.infiniteScrollingController.lastPageIndex = searchResults.stats.pagesCount - 1
+      }
+      hitsInteractor.isLastQueryEmpty = searchResults.stats.query.isNilOrEmpty
+
+      do {
+        let page: HitsPage<Record> = try HitsPage(searchResults: searchResults)
+        hitsInteractor.paginator.process(page)
+        hitsInteractor.onResultsUpdated.fire(searchResults)
+      } catch let error {
+        hitsInteractor.onError.fire(error)
+      }
     }
     
-    paginator.invalidate()
-    onRequestChanged.fire(())
+    mutationQueue.addOperation(updateOperation)
+    
+    return updateOperation
+    
   }
   
-  public func update(_ searchResults: SearchResults) throws {
+  public func notifyQueryChanged() {
     
-    if case .on = settings.infiniteScrolling {
-      infiniteScrollingController.notifyPending(pageIndex: searchResults.stats.page)
-      infiniteScrollingController.lastPageIndex = searchResults.stats.pagesCount - 1
-    }
-    isLastQueryEmpty = searchResults.stats.query.isNilOrEmpty
-
-    do {
-      let page: HitsPage<Record> = try HitsPage(searchResults: searchResults)
-      paginator.process(page)
-      onResultsUpdated.fire(searchResults)
-    } catch let error {
-      onError.fire(error)
-      throw error
+    mutationQueue.cancelAllOperations()
+    
+    let queryChangedCompletion = { [weak self] in
+      guard let hitsInteractor = self else { return }
+      if case .on = hitsInteractor.settings.infiniteScrolling {
+        hitsInteractor.infiniteScrollingController.notifyPendingAll()
+      }
+      
+      hitsInteractor.paginator.invalidate()
+      hitsInteractor.onRequestChanged.fire(())
     }
     
+    mutationQueue.addOperation(queryChangedCompletion)
+        
   }
   
   public func process(_ error: Swift.Error, for query: Query) {
