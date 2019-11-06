@@ -19,6 +19,8 @@ public class MultiIndexHitsInteractor {
   public let onResultsUpdated: Observer<[SearchResults]>
   public let onError: Observer<Swift.Error>
   
+  private let mutationQueue: OperationQueue
+  
   /// List of nested hits interactors
   
   let hitsInteractors: [AnyHitsInteractor]
@@ -30,6 +32,14 @@ public class MultiIndexHitsInteractor {
     self.onRequestChanged = .init()
     self.onResultsUpdated = .init()
     self.onError = .init()
+    self.mutationQueue = .init()
+    self.mutationQueue.maxConcurrentOperationCount = 1
+    self.mutationQueue.qualityOfService = .userInitiated
+    for interactor in hitsInteractors {
+      interactor.onError.subscribe(with: self) { multIndexInteractor, error in
+        multIndexInteractor.onError.fire(error)
+      }
+    }
   }
   
   /// Returns the index of provided hits interactor.
@@ -58,43 +68,6 @@ public class MultiIndexHitsInteractor {
     }
     
     return typedInteractor
-  }
-  
-  /// Updates the results of a nested hits Interactor at specified index
-  /// - Parameter results: list of typed search results.
-  /// - Parameter section: the section index of nested hits Interactor
-  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits Interactor
-  
-  public func update(_ results: SearchResults, forInteractorInSection section: Int) throws {
-    try hitsInteractors[section].update(results)
-  }
-  
-  /// Updates the results of all nested hits Interactors.
-  /// Each search results element will be converted to a corresponding nested hits Interactor search results type.
-  /// - Parameter results: list of generic search results. Order of results must match the order of nested hits Interactors.
-  /// - Parameter metadata: the metadata of query corresponding to results
-  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the conversion of search results for one of a nested hits Interactors is impossible due to a record type mismatch
-  
-  public func update(_ results: [SearchResults]) throws {
-    try zip(hitsInteractors, results).forEach { arg in
-      let (interactor, results) = arg
-      try interactor.update(results)
-    }
-    onResultsUpdated.fire(results)
-  }
-  
-  public func process(_ error: Error, for queries: [Query]) {
-    let pages = queries.compactMap { $0.page }.map { Int($0) }
-    zip(hitsInteractors, pages).forEach { (hitsInteractor, page) in
-      hitsInteractor.notifyPending(atIndex: page)
-    }
-  }
-  
-  public func notifyQueryChanged() {
-    hitsInteractors.forEach {
-      $0.notifyQueryChanged()
-    }
-    onRequestChanged.fire(())
   }
   
   /// Returns the hit of a desired type
@@ -129,6 +102,61 @@ public class MultiIndexHitsInteractor {
     return hitsInteractors[section].numberOfHits()
   }
   
+}
+
+extension MultiIndexHitsInteractor {
+  
+  /// Updates the results of a nested hits Interactor at specified index
+  /// - Parameter results: list of typed search results.
+  /// - Parameter section: the section index of nested hits Interactor
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the record type of results mismatches the record type of corresponding hits Interactor
+  
+  public func update(_ results: SearchResults, forInteractorInSection section: Int) {
+    
+    let completion = BlockOperation { [weak self] in
+      self?.onResultsUpdated.fire([results])
+    }
+    
+    completion.addDependency(hitsInteractors[section].update(results))
+    
+    mutationQueue.addOperation(completion)
+
+  }
+  
+  /// Updates the results of all nested hits Interactors.
+  /// Each search results element will be converted to a corresponding nested hits Interactor search results type.
+  /// - Parameter results: list of generic search results. Order of results must match the order of nested hits Interactors.
+  /// - Parameter metadata: the metadata of query corresponding to results
+  /// - Throws: HitsInteractor.Error.incompatibleRecordType if the conversion of search results for one of a nested hits Interactors is impossible due to a record type mismatch
+  
+  public func update(_ results: [SearchResults]) {
+    
+    let completion = BlockOperation { [weak self] in
+      self?.onResultsUpdated.fire(results)
+    }
+    
+    zip(hitsInteractors, results).map { arg in
+      let (interactor, results) = arg
+      return interactor.update(results)
+    }.forEach(completion.addDependency)
+    
+    mutationQueue.addOperation(completion)
+    
+  }
+  
+  public func process(_ error: Error, for queries: [Query]) {
+    zip(hitsInteractors, queries).forEach { (hitsInteractor, query) in
+      hitsInteractor.process(error, for: query)
+    }
+  }
+  
+  public func notifyQueryChanged() {
+    hitsInteractors.forEach {
+      $0.notifyQueryChanged()
+    }
+    onRequestChanged.fire(())
+  }
+
 }
 
 #if os(iOS) || os(tvOS)
