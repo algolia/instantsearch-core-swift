@@ -43,6 +43,8 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   
   /// Sequencer which orders and debounce redundant search operations
   internal let sequencer: Sequencer
+  
+  private let processingQueue: OperationQueue
 
   /**
    - Parameters:
@@ -85,29 +87,40 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     self.onError = .init()
     self.facetName = facetName
     self.sequencer = .init()
+    self.processingQueue = .init()
     self.requestOptions = requestOptions
     sequencer.delegate = self
     onResults.retainLastData = true
     isLoading.retainLastData = true
     updateClientUserAgents()
+    processingQueue.maxConcurrentOperationCount = 1
+    processingQueue.qualityOfService = .userInitiated
   }
   
   public func search() {
     
     let query = self.query ?? ""
+<<<<<<< HEAD
     let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, query: indexQueryState.query, requestOptions: requestOptions) { [weak self] (content, error) in
       
+=======
+    let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, requestOptions: requestOptions) { [weak self] (content, error) in
+
+>>>>>>> Add processing queue to each searcher
       guard let searcher = self else { return }
       
-      let result: Result<FacetResults, Error> = searcher.transform(content: content, error: error)
-      
-      switch result {
-      case .success(let results):
-        searcher.onResults.fire(results)
+      searcher.processingQueue.addOperation {
+        let result: Result<FacetResults, Error> = searcher.transform(content: content, error: error)
         
-      case .failure(let error):
-        searcher.onError.fire((query, error))
+        switch result {
+        case .success(let results):
+          searcher.onResults.fire(results)
+          
+        case .failure(let error):
+          searcher.onError.fire((query, error))
+        }
       }
+      
     }
     
     sequencer.orderOperation(operationLauncher: { return operation })

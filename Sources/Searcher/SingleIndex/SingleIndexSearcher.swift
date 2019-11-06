@@ -70,6 +70,8 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   /// Sequencer which orders and debounce redundant search operations
   internal let sequencer: Sequencer
   
+  private let processingQueue: OperationQueue
+  
   /**
    - Parameters:
       - appID: Application ID
@@ -105,12 +107,14 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     onError = .init()
     onQueryChanged = .init()
     onIndexChanged = .init()
+    processingQueue = .init()
     sequencer.delegate = self
     onResults.retainLastData = true
     onError.retainLastData = false
     isLoading.retainLastData = true
     updateClientUserAgents()
-    
+    processingQueue.maxConcurrentOperationCount = 1
+    processingQueue.qualityOfService = .userInitiated
   }
   
   /**
@@ -159,33 +163,38 @@ private extension SingleIndexSearcher {
   
   func handle(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
     return { [weak self] value, error in
-      let result = Result<SearchResults, Error>(rawValue: value, error: error)
-      
-      switch result {
-      case .success(let searchResults):
-        self?.onResults.fire(searchResults)
-        
-      case .failure(let error):
-        self?.onError.fire((query, error))
+      guard let searcher = self else { return }
+      searcher.processingQueue.addOperation {
+        let result = Result<SearchResults, Error>(rawValue: value, error: error)
+  
+        switch result {
+        case .success(let searchResults):
+          searcher.onResults.fire(searchResults)
+          
+        case .failure(let error):
+          searcher.onError.fire((query, error))
+        }
       }
-      
     }
   }
   
   func handleDisjunctiveFacetingResponse(for queryBuilder: QueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
     return { [weak self] value, error in
-      let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
-      
-      switch result {
-      case .failure(let error):
-        self?.onError.fire((queryBuilder.query, error))
+      guard let searcher = self else { return }
+      searcher.processingQueue.addOperation {
+        let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
         
-      case .success(let results):
-        do {
-          let result = try queryBuilder.aggregate(results.searchResults)
-          self?.onResults.fire(result)
-        } catch let error {
-          self?.onError.fire((queryBuilder.query, error))
+        switch result {
+        case .failure(let error):
+          searcher.onError.fire((queryBuilder.query, error))
+          
+        case .success(let results):
+          do {
+            let result = try queryBuilder.aggregate(results.searchResults)
+            searcher.onResults.fire(result)
+          } catch let error {
+            searcher.onError.fire((queryBuilder.query, error))
+          }
         }
       }
     }

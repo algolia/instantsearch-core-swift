@@ -56,6 +56,8 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   /// Helpers for separate pagination management
   internal var pageLoaders: [PageLoaderProxy]
   
+  private let processingQueue: OperationQueue
+  
   /**
    - Parameters:
    - appID: Application ID
@@ -109,6 +111,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     self.requestOptions = requestOptions
     self.pageLoaders = []
     
+    processingQueue = .init()
     sequencer = .init()
     onQueryChanged = .init()
     isLoading = .init()
@@ -119,6 +122,8 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     onResults.retainLastData = true
     isLoading.retainLastData = true
     updateClientUserAgents()
+    processingQueue.maxConcurrentOperationCount = 1
+    processingQueue.qualityOfService = .userInitiated
     
     self.pageLoaders = indexQueryStates.map { isd in
       return PageLoaderProxy(setPage: { isd.query.page = UInt($0) }, launchSearch: self.search)
@@ -131,19 +136,18 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     let indexQueries = indexQueryStates.map(IndexQuery.init(indexQueryState:))
     let queries = indexQueryStates.map { $0.query.copy() as! Query }
     let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
-      
       guard let searcher = self else { return }
-      
-      let result: Result<MultiSearchResults, Error> = searcher.transform(content: content, error: error)
-      
-      switch result {
-      case .success(let searchResults):
-        searcher.onResults.fire(searchResults)
+      searcher.processingQueue.addOperation {
+        let result: Result<MultiSearchResults, Error> = searcher.transform(content: content, error: error)
         
-      case .failure(let error):
-        searcher.onError.fire((queries, error))
+        switch result {
+        case .success(let searchResults):
+          searcher.onResults.fire(searchResults)
+          
+        case .failure(let error):
+          searcher.onError.fire((queries, error))
+        }
       }
-      
     }
     
     sequencer.orderOperation(operationLauncher: { return operation })
