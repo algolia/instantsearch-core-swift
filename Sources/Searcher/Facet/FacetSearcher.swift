@@ -100,14 +100,9 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public func search() {
     
     let query = self.query ?? ""
-<<<<<<< HEAD
-    let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, query: indexQueryState.query, requestOptions: requestOptions) { [weak self] (content, error) in
-      
-=======
-    let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, requestOptions: requestOptions) { [weak self] (content, error) in
 
->>>>>>> Add processing queue to each searcher
-      guard let searcher = self else { return }
+    let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, query: indexQueryState.query, requestOptions: requestOptions) { [weak self] (content, error) in
+            guard let searcher = self else { return }
       
       searcher.processingQueue.addOperation {
         let result: Result<FacetResults, Error> = searcher.transform(content: content, error: error)
