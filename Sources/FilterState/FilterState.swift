@@ -20,9 +20,22 @@ public class FilterState {
   /// - Parameter: a tuple of query and error
   public var onChange: Observer<ReadOnlyFiltersContainer>
 
+  /// Default constructor
   public init() {
     self.filters = GroupsStorage()
     self.onChange = .init()
+  }
+  
+  /// Copy constructor
+  public init(_ filterState: FilterState) {
+    self.filters = filterState.filters
+    self.onChange = .init()
+  }
+  
+  /// Replace the groups of filter state by the groups of the filter state passed as parameter
+  /// - Parameter filterState: source filter state
+  public func setWithContent(of filterState: FilterState) {
+    self.filters = filterState.filters
   }
 
   /// Force trigger onChange event
