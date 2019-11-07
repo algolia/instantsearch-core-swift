@@ -24,11 +24,11 @@ public extension SelectableListInteractor where Key == Item, Item: FilterType {
     
     onItemsChanged.subscribePast(with: self) { interactor, items in
       setControllerItemsWith(items: items, selections: interactor.selections)
-    }
+    }.onQueue(.main)
     
     onSelectionsChanged.subscribePast(with: self) { interactor, selections in
       setControllerItemsWith(items: interactor.items, selections: selections)
-    }
+    }.onQueue(.main)
     
   }
   

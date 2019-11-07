@@ -14,7 +14,8 @@ extension QueryInputInteractor {
     
     onQueryChanged.subscribePast(with: controller) { controller, query in
       controller.setQuery(query)
-    }
+    }.onQueue(.main)
+    
     controller.onQueryChanged = { [weak self] in
       self?.query = $0
     }
