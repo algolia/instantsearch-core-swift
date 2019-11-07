@@ -17,10 +17,11 @@ public extension IndexSegmentInteractor {
     controller.onClick = computeSelected(selecting:)
     onSelectedChanged.subscribePast(with: controller) { controller, selectedItem in
       controller.setSelected(selectedItem)
-    }
+    }.onQueue(.main)
+    
     onItemsChanged.subscribePast(with: controller) { controller, newItems in
       controller.setItems(items: newItems.mapValues(presenter))
-    }
+    }.onQueue(.main)
 
   }
   

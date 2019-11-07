@@ -24,7 +24,7 @@ extension NumberInteractor {
         return
       }
       controller.setItem(item)
-    }
+    }.onQueue(.main)
   }
   
 }

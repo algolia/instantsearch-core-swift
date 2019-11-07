@@ -24,8 +24,8 @@ public extension SelectableSegmentInteractor where Segment: FilterType {
     controller.onClick = computeSelected(selecting:)
     onSelectedChanged.subscribePast(with: controller) { controller, selectedItem in
       controller.setSelected(selectedItem)
-    }
-    onItemsChanged.subscribePast(with: controller, callback: setControllerItems)
+    }.onQueue(.main)
+    onItemsChanged.subscribePast(with: controller, callback: setControllerItems).onQueue(.main)
     
   }
   

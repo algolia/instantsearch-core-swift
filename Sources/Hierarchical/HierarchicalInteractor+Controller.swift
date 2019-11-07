@@ -22,7 +22,7 @@ public extension HierarchicalInteractor {
         }.flatMap { $0 }
 
       controller.setItem(presenter(hierarchicalFacets)) 
-    }
+    }.onQueue(.main)
 
     controller.onClick = computeSelection(key:)
   }
@@ -43,7 +43,7 @@ public extension HierarchicalInteractor {
         }.flatMap { $0 }
       
       controller.setItem(presenter(hierarchicalFacets))
-    }
+    }.onQueue(.main)
 
     controller.onClick = computeSelection(key:)
   }

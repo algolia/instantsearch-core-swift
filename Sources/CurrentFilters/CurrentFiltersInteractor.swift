@@ -77,6 +77,6 @@ public extension ItemsListInteractor {
       let itemsWithPresenterApplied = items.map { FilterAndID(filter: $0.filter, id: $0.id, text: presenter($0.filter))}
       controller.setItems(itemsWithPresenterApplied)
       controller.reload()
-    }
+    }.onQueue(.main)
   }
 }

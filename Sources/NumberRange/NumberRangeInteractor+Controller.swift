@@ -17,7 +17,7 @@ extension NumberRangeInteractor {
         return
       }
       controller.setItem(item)
-    }
+    }.onQueue(.main)
 
     controller.onRangeChanged = { [weak self] closedRange in
       self?.computeNumberRange(numberRange: closedRange)
@@ -25,7 +25,7 @@ extension NumberRangeInteractor {
 
     onBoundsComputed.subscribePast(with: controller) { controller, bounds in
       bounds.flatMap(controller.setBounds)
-    }
+    }.onQueue(.main)
     
   }
 }

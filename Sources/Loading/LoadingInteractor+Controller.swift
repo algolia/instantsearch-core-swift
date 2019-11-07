@@ -11,7 +11,7 @@ import Foundation
 public extension LoadingInteractor {
   
   func connectController<Controller: LoadingController>(_ controller: Controller) {
-    connectController(controller, dispatchOnMainThread: true) { $0 }
+    connectController(controller) { $0 }
   }
   
 }

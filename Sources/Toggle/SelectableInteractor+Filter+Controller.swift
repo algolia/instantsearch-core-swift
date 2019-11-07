@@ -16,10 +16,10 @@ public extension SelectableInteractor where Item: FilterType {
     controller.onClick = computeIsSelected(selecting:)
     onSelectedChanged.subscribePast(with: controller) { controller, isSelected in
       controller.setSelected(isSelected)
-    }
+    }.onQueue(.main)
     onItemChanged.subscribePast(with: controller) { controller, item in
       controller.setItem(item)
-    }
+    }.onQueue(.main)
   }
   
 }
