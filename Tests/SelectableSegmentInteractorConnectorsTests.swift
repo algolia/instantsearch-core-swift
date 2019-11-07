@@ -20,12 +20,17 @@ class SelectableSegmentInteractorConnectorsTests: XCTestCase {
     var onClick: ((Int) -> Void)?
     var items: [Int: String] = [:]
     
+    var onSelectedChanged: (() -> Void)?
+    var onItemsChanged: (() -> Void)?
+    
     func setSelected(_ selected: Int?) {
       self.selected = selected
+      onSelectedChanged?()
     }
     
     func setItems(items: [Int : String]) {
       self.items = items
+      onItemsChanged?()
     }
     
     func clickItem(withKey key: Int) {
@@ -79,20 +84,38 @@ class SelectableSegmentInteractorConnectorsTests: XCTestCase {
 
     interactor.selected = 1
     
-    interactor.connectController(controller)
-
+    let onChangeExp = expectation(description: "on change")
+    onChangeExp.expectedFulfillmentCount = 5
+    
     // Preselection
     
-    XCTAssertEqual(controller.items, [0: "t1", 1: "t2", 2: "t3"])
-    XCTAssertEqual(controller.selected, 1)
+    controller.onItemsChanged = {
+      XCTAssertEqual(controller.items, [0: "t1", 1: "t2", 2: "t3"])
+      onChangeExp.fulfill()
+    }
+    
+    controller.onSelectedChanged = {
+      XCTAssertEqual(controller.selected, 1)
+      onChangeExp.fulfill()
+    }
+
+    interactor.connectController(controller)
     
     // Interactor -> Controller
+      
+    controller.onSelectedChanged = {
+      XCTAssertEqual(controller.selected, 2)
+      onChangeExp.fulfill()
+    }
     
     interactor.selected = 2
-    XCTAssertEqual(controller.selected, 2)
+        
+    controller.onItemsChanged = {
+      XCTAssertEqual(controller.items, [0: "t4", 1: "t5", 2: "t6"])
+      onChangeExp.fulfill()
+    }
 
     interactor.items = [0: "t4", 1: "t5", 2: "t6"]
-    XCTAssertEqual(controller.items, [0: "t4", 1: "t5", 2: "t6"])
     
     // Controller -> Interactor
     

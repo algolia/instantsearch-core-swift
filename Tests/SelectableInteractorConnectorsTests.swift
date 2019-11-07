@@ -17,12 +17,18 @@ class TestSelectableController<Item>: SelectableController {
   
   var isSelected: Bool = false
   
+  var onSelectedChanged: (() -> Void)?
+  var onItemChanged: (() -> Void)?
+
+  
   func setSelected(_ isSelected: Bool) {
     self.isSelected = isSelected
+    onSelectedChanged?()
   }
   
   func setItem(_ item: Item) {
     self.item = item
+    onItemChanged?()
   }
   
   func toggle() {
@@ -72,21 +78,41 @@ class SelectableInteractorConnectorsTests: XCTestCase {
     interactor.isSelected = true
 
     let controller = TestSelectableController<Filter.Tag>()
-    
-    interactor.connectController(controller)
+        
+    let onChangeExp = expectation(description: "on change")
+    onChangeExp.expectedFulfillmentCount = 3
     
     // Pre-selection transmission
     
-    XCTAssertTrue(controller.isSelected)
+    controller.onSelectedChanged = {
+      XCTAssertTrue(controller.isSelected)
+      onChangeExp.fulfill()
+    }
+    
+    interactor.connectController(controller)
+
     
     // Interactor -> Controller
     
+    controller.onSelectedChanged = {
+      XCTAssertFalse(controller.isSelected)
+      onChangeExp.fulfill()
+    }
+    
     interactor.isSelected = false
     
-    XCTAssertFalse(controller.isSelected)
+    waitForExpectations(timeout: 5, handler: nil)
+  }
+  
+  func testConnectControllerToggle() {
+    let interactor = SelectableInteractor<Filter.Tag>(item: "tag")
     
-    // Controller -> Interactor
+    interactor.isSelected = false
+
+    let controller = TestSelectableController<Filter.Tag>()
     
+    interactor.connectController(controller)
+
     let selectedComputedExpectation = expectation(description: "selected computed")
     
     interactor.onSelectedComputed.subscribe(with: self) { _, isSelected in
@@ -95,8 +121,9 @@ class SelectableInteractorConnectorsTests: XCTestCase {
     }
     
     controller.toggle()
-    
-    waitForExpectations(timeout: 2, handler: nil)
+
+    waitForExpectations(timeout: 5, handler: nil)
+
   }
   
 }

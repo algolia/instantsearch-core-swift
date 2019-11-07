@@ -113,7 +113,15 @@ class FacetListInteractorTests: XCTestCase {
     let reloadExpectation = expectation(description: "reload")
     reloadExpectation.expectedFulfillmentCount = 2
     
+    let expectedItems = [
+      (item: Facet(value: "cat1", count: 10, highlighted: nil), isSelected: false),
+      (item: Facet(value: "cat2", count: 20, highlighted: nil), isSelected: false),
+      (item: Facet(value: "cat3", count: 30, highlighted: nil), isSelected: false),
+    ]
+    
     controller.didReload = {
+      XCTAssertEqual(controller.selectableItems.map { $0.0 }, expectedItems.map { $0.0 })
+      XCTAssertEqual(controller.selectableItems.map { $0.1 }, expectedItems.map { $0.1 })
       reloadExpectation.fulfill()
     }
     
@@ -123,25 +131,19 @@ class FacetListInteractorTests: XCTestCase {
       .init(value: "cat3", count: 30, highlighted: nil)
     ]
     
-    let expectedItems = [
-      (item: Facet(value: "cat1", count: 10, highlighted: nil), isSelected: false),
-      (item: Facet(value: "cat2", count: 20, highlighted: nil), isSelected: false),
-      (item: Facet(value: "cat3", count: 30, highlighted: nil), isSelected: false),
-    ]
-    
-    XCTAssertEqual(controller.selectableItems.map { $0.0 }, expectedItems.map { $0.0 })
-    XCTAssertEqual(controller.selectableItems.map { $0.1 }, expectedItems.map { $0.1 })
-    
-    interactor.selections = ["cat1", "cat3"]
-    
     let expectedItems2 = [
       (item: Facet(value: "cat1", count: 10, highlighted: nil), isSelected: true),
       (item: Facet(value: "cat2", count: 20, highlighted: nil), isSelected: false),
       (item: Facet(value: "cat3", count: 30, highlighted: nil), isSelected: true),
     ]
     
-    XCTAssertEqual(controller.selectableItems.map { $0.0 }, expectedItems2.map { $0.0 })
-    XCTAssertEqual(controller.selectableItems.map { $0.1 }, expectedItems2.map { $0.1 })
+    controller.didReload = {
+      XCTAssertEqual(controller.selectableItems.map { $0.0 }, expectedItems2.map { $0.0 })
+      XCTAssertEqual(controller.selectableItems.map { $0.1 }, expectedItems2.map { $0.1 })
+      reloadExpectation.fulfill()
+    }
+    
+    interactor.selections = ["cat1", "cat3"]    
     
     waitForExpectations(timeout: 2, handler: nil)
     

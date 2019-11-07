@@ -109,23 +109,26 @@ class SelectableListInteractorFilterConnectorsTests: XCTestCase {
     
     let itemsChangedReloadExpectation = expectation(description: "items changed reload expectation")
     
-    controller.didReload = itemsChangedReloadExpectation.fulfill
+    controller.didReload = {
+      
+      XCTAssertEqual(controller.selectableItems.map { $0.0 }, [
+        Filter.Tag(value: "tag1"),
+        Filter.Tag(value: "tag2"),
+        Filter.Tag(value: "tag3"),
+        Filter.Tag(value: "tag4"),
+      ])
+      
+      XCTAssertEqual(controller.selectableItems.map { $0.1 }, [
+        false,
+        true,
+        false,
+        false
+      ])
+
+      itemsChangedReloadExpectation.fulfill()
+    }
     
     interactor.items = ["tag1", "tag2", "tag3", "tag4"]
-    
-    XCTAssertEqual(controller.selectableItems.map { $0.0 }, [
-      Filter.Tag(value: "tag1"),
-      Filter.Tag(value: "tag2"),
-      Filter.Tag(value: "tag3"),
-      Filter.Tag(value: "tag4"),
-    ])
-    
-    XCTAssertEqual(controller.selectableItems.map { $0.1 }, [
-      false,
-      true,
-      false,
-      false
-    ])
     
     waitForExpectations(timeout: 2, handler: nil)
     
@@ -133,23 +136,26 @@ class SelectableListInteractorFilterConnectorsTests: XCTestCase {
     
     let selectionsChangedReloadExpectation = expectation(description: "selections changed reload expectation")
     
-    controller.didReload = selectionsChangedReloadExpectation.fulfill
+    controller.didReload = {
+      
+      XCTAssertEqual(controller.selectableItems.map { $0.0 }, [
+        Filter.Tag(value: "tag1"),
+        Filter.Tag(value: "tag2"),
+        Filter.Tag(value: "tag3"),
+        Filter.Tag(value: "tag4"),
+        ])
+      
+      XCTAssertEqual(controller.selectableItems.map { $0.1 }, [
+        false,
+        false,
+        true,
+        true
+      ])
+      
+      selectionsChangedReloadExpectation.fulfill()
+    }
     
     interactor.selections = ["tag3", "tag4"]
-    
-    XCTAssertEqual(controller.selectableItems.map { $0.0 }, [
-      Filter.Tag(value: "tag1"),
-      Filter.Tag(value: "tag2"),
-      Filter.Tag(value: "tag3"),
-      Filter.Tag(value: "tag4"),
-      ])
-    
-    XCTAssertEqual(controller.selectableItems.map { $0.1 }, [
-      false,
-      false,
-      true,
-      true
-    ])
 
     waitForExpectations(timeout: 2, handler: nil)
     
