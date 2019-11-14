@@ -20,6 +20,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     set {
       let oldValue = indexQueryState.query.query
       guard oldValue != newValue else { return }
+      cancel()
       indexQueryState.query.query = newValue
       indexQueryState.query.page = 0
       onQueryChanged.fire(newValue)
@@ -163,7 +164,8 @@ private extension SingleIndexSearcher {
   
   func handle(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
     return { [weak self] value, error in
-      guard let searcher = self else { return }
+      guard let searcher = self, searcher.query == query.query else { return }
+      
       searcher.processingQueue.addOperation {
         let result = Result<SearchResults, Error>(rawValue: value, error: error)
   
@@ -180,7 +182,8 @@ private extension SingleIndexSearcher {
   
   func handleDisjunctiveFacetingResponse(for queryBuilder: QueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
     return { [weak self] value, error in
-      guard let searcher = self else { return }
+      guard let searcher = self, searcher.query == queryBuilder.query.query else { return }
+      
       searcher.processingQueue.addOperation {
         let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
         
@@ -197,6 +200,7 @@ private extension SingleIndexSearcher {
           }
         }
       }
+      
     }
   }
   
