@@ -983,6 +983,7 @@
 		AFBAA6F122EBC1050009856B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = SOURCE_ROOT; };
 		AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+Searcher.swift"; sourceTree = "<group>"; };
 		AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+Controller.swift"; sourceTree = "<group>"; };
+		AFBBD771237D8F5900F6C33C /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		AFBF375D2285D5C600787D24 /* FilterConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConverter.swift; sourceTree = "<group>"; };
 		AFBF37622285D5D300787D24 /* FilterGroupConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupConverter.swift; sourceTree = "<group>"; };
 		AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractor.swift; sourceTree = "<group>"; };
@@ -1388,6 +1389,40 @@
 			path = InfiniteScrolling;
 			sourceTree = "<group>";
 		};
+		AFBBD770237B706F00F6C33C /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */,
+				AF21EEA122B3E949004A0542 /* TaggedStringTests.swift */,
+				AF21EEB822B4062C004A0542 /* AttributedStringWithTaggedStringTests.swift */,
+				BC28C4D01E5B2EE700EFC4A0 /* SequencerTest.swift */,
+				AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */,
+				AFCDEDA4222E8161001459BE /* FacetResultsTests.swift */,
+				AFCDEDE0223A5C0E001459BE /* HitsInteractorTests.swift */,
+				AF19B039223FF9F400FA2FE0 /* MultiIndexHitsInteractorTests.swift */,
+				E2BAE6B9223FFBC300B89EA3 /* RefinementListPresenterTests.swift */,
+				AFCDEDE4223AC4E8001459BE /* PaginatorTests.swift */,
+				AFE6E3C622A830BF005BA44D /* InfiniteScrollingControllerTests.swift */,
+				AFCDEDE8223AC514001459BE /* PageMapTests.swift */,
+				AF2456112327C16300F78D09 /* HitTests.swift */,
+				AFCB30AF22CB96DF0094ED2E /* Helpers.swift */,
+				AFE6E39522A18BC7005BA44D /* ItemInteractorTests.swift */,
+				AFE6E39D22A18CA9005BA44D /* StatsInteractorConnectorsTests.swift */,
+				AFC2E2BD2292953400859EBA /* SelectableListInteractorTests.swift */,
+				AFC2E2C52292A2CF00859EBA /* SelectableSegmentInteractorTests.swift */,
+				AFC2E2C92292D0D500859EBA /* SelectableInteractorTests.swift */,
+				AFC2E2CD2292DBEF00859EBA /* SelectableInteractorConnectorsTests.swift */,
+				AFC2E2DD22941C1F00859EBA /* SelectableSegmentInteractorConnectorsTests.swift */,
+				AFC2E2D12292EEB200859EBA /* FacetListInteractorTests.swift */,
+				AFC2E2D52293F1D500859EBA /* SelectableListInteractorFilterConnectorsTests.swift */,
+				AF9396AE229D536F00757257 /* QueryInputInteractorTests.swift */,
+				AFC2E2C12292A1F400859EBA /* CallbackTester.swift */,
+				AF11782E225F70A400C5B59B /* FilterState */,
+				AFB9782422D4959A001C2718 /* Integration */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
 		AFC2E280228ED4DF00859EBA /* FilterList */ = {
 			isa = PBXGroup;
 			children = (
@@ -1532,6 +1567,7 @@
 		BC3426271D460DB70055E0F2 = {
 			isa = PBXGroup;
 			children = (
+				AFBBD771237D8F5900F6C33C /* Package.swift */,
 				BC3426331D460DB70055E0F2 /* Sources */,
 				BC34263F1D460DB70055E0F2 /* Tests */,
 				BC3426321D460DB70055E0F2 /* Products */,
@@ -1591,17 +1627,10 @@
 		BC34263F1D460DB70055E0F2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				AFB9782422D4959A001C2718 /* Integration */,
-				AF11782E225F70A400C5B59B /* FilterState */,
-				AF21EEE922C3CAC9004A0542 /* DisjunctiveFacetingsTests.swift */,
-				AF21EEA122B3E949004A0542 /* TaggedStringTests.swift */,
-				AF21EEB822B4062C004A0542 /* AttributedStringWithTaggedStringTests.swift */,
+				AFBBD770237B706F00F6C33C /* Sources */,
 				BC3426421D460DB70055E0F2 /* Info.plist */,
 				BC5DC1301D86BDB00066D705 /* InstantSearchCore-Tests-Bridging-Header.h */,
 				BC5DC1331D86BDB00066D705 /* ObjcBridgingTest.m */,
-				BC28C4D01E5B2EE700EFC4A0 /* SequencerTest.swift */,
-				AFE807C6222934A800FC1D50 /* SearchResultsTests.swift */,
-				AFCDEDA4222E8161001459BE /* FacetResultsTests.swift */,
 				AFE807CE2229355900FC1D50 /* SearchResult.json */,
 				AFC2E2D92294103300859EBA /* SearchResultFacets.json */,
 				AF21EEF122C523B0004A0542 /* DisjFacetingResult1.json */,
