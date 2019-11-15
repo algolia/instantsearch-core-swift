@@ -9,12 +9,22 @@
 import Foundation
 
 public extension ItemInteractor {
-  
+
   func connectController<Controller: ItemController, Output>(_ controller: Controller,
                                                              presenter: @escaping Presenter<Item, Output>) where Controller.Item == Output {
-    onItemChanged.subscribePast(with: controller) { controller, item in
+    connectController(controller, dispatchOnMainThread: true, presenter: presenter)
+  }
+
+  func connectController<Controller: ItemController, Output>(_ controller: Controller,
+                                                             dispatchOnMainThread: Bool,
+                                                             presenter: @escaping Presenter<Item, Output>) where Controller.Item == Output {
+    let sub = onItemChanged.subscribePast(with: controller) { controller, item in
       controller.setItem(presenter(item))
-    }.onQueue(.main)
+    }
+
+    if dispatchOnMainThread {
+      sub.onQueue(.main)
+    }
   }
   
 }

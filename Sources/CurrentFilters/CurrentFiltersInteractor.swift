@@ -25,6 +25,16 @@ public struct FilterAndID: Hashable {
 public extension CurrentFiltersInteractor {
 
   func connectFilterState(_ filterState: FilterState,
+                          filterGroupID: FilterGroup.ID?) {
+    if let filterGroupID = filterGroupID {
+      connectFilterState(filterState, filterGroupIDs: Set([filterGroupID]))
+    } else {
+      connectFilterState(filterState)
+    }
+
+  }
+
+  func connectFilterState(_ filterState: FilterState,
                           filterGroupIDs: Set<FilterGroup.ID>? = nil) {
 
     filterState.onChange.subscribePast(with: self) { [weak filterState] interactor, _  in
