@@ -3234,6 +3234,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SKIP_INSTALL = YES;
@@ -3267,6 +3268,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SKIP_INSTALL = YES;
