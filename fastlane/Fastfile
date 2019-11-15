@@ -130,6 +130,17 @@ def update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client()
 	end
 end
 
+desc "bump minor version"
+lane :version_minor_bump do
+	# version_bump_podspec(
+	# 	bump_type: "minor",
+	# 	path: "InstantSearchCore.podspec"
+	# )
+	increment_version_number(
+		bump_type: "minor"
+	)
+end
+
 desc "Upgrade Swift Version in .swift-version"
 # Force cocoapods to compile with 'swift-version'
 lane :upgrade_swift do |options|
