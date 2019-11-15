@@ -24,7 +24,7 @@ platform :ios do
 			clean: true,
 			xcargs: prepare_api_keys
 		)
-		code_coverage
+		# code_coverage #commented this xcov not fixed for the new XCode for now. 
 		run_swift_lint
 	end
 end
