@@ -15,14 +15,14 @@ extension HitsInteractor where Record == Hit<Place> {
     self.pageLoader = searcher
     
     searcher.onResults.subscribePast(with: self) { interactor, searchResults in
-      try? interactor.update(searchResults)
+      interactor.update(searchResults)
     }
 
-    searcher.onError.subscribe(with: self) { interactor, arg in
+    searcher.onError.subscribe(with: self) { _, _ in
       //TODO: when pagination added, notify pending query in infinite scrolling controller
     }
     
-    searcher.onQueryChanged.subscribe(with: self) { (interactor, query) in
+    searcher.onQueryChanged.subscribe(with: self) { (interactor, _) in
       interactor.notifyQueryChanged()
     }
     

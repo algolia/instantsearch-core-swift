@@ -18,11 +18,7 @@ public extension MultiIndexHitsInteractor {
     }
     
     searcher.onResults.subscribePast(with: self) { interactor, searchResults in
-      do {
-        try interactor.update(searchResults.searchResults)
-      } catch let error {
-        interactor.onError.fire(error)
-      }
+      interactor.update(searchResults.searchResults)
     }
     
     searcher.onError.subscribe(with: self) { interactor, args in
