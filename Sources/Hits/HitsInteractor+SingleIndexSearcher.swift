@@ -15,7 +15,7 @@ extension HitsInteractor {
     pageLoader = searcher
     
     searcher.onResults.subscribePast(with: self) { interactor, searchResults in
-      try? interactor.update(searchResults)
+      interactor.update(searchResults)
     }
     
     searcher.onError.subscribe(with: self) { interactor, arg in
