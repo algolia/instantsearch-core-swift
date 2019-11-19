@@ -19,10 +19,17 @@ This version is outdated and not recommended for use.
 
 To install InstantSearch, simply add the following line to your Podfile:
 
-#### Swift 4.2+
+
+#### Swift 5.0
 
 ```ruby
 pod 'InstantSearchCore', '~> 6.0'
+```
+
+#### Swift 4.2+
+
+```ruby
+pod 'InstantSearchCore', '~> 5.0'
 ```
 
 #### Swift 4.1
@@ -43,10 +50,17 @@ $ pod update
 
 To install InstantSearch, simply add the following line to your Cartfile:
 
-#### Swift 4.2+
+
+#### Swift 5.0
 
 ```ruby
 github "algolia/instantsearch-core-swift" ~> 6.0 
+```
+
+#### Swift 4.2+
+
+```ruby
+github "algolia/instantsearch-core-swift" ~> 5.0 
 ```
 
 #### Swift 4.1
