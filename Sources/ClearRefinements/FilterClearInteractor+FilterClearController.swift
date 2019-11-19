@@ -10,10 +10,30 @@ import Foundation
 
 public extension FilterClearInteractor {
   
-  func connectController(_ controller: FilterClearController) {
-    controller.onClick = { [weak self] in
-      self?.onTriggered.fire(())
+  struct ControllerConnection: Connection {
+    
+    public let interactor: FilterClearInteractor
+    public let controller: FilterClearController
+    
+    public func connect() {
+      controller.onClick = { [weak interactor] in
+        interactor?.onTriggered.fire(())
+      }
     }
+    
+    public func disconnect() {
+      controller.onClick = .none
+    }
+  }
+  
+}
+
+public extension FilterClearInteractor {
+  
+  func connectController(_ controller: FilterClearController) -> ControllerConnection {
+    let connection = ControllerConnection(interactor: self, controller: controller)
+    connection.connect()
+    return connection
   }
   
 }
