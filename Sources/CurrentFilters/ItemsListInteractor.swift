@@ -34,4 +34,5 @@ public class ItemsListInteractor<Item: Hashable> {
   public func add(item: Item) {
     onItemsComputed.fire(items.union([item]))
   }
+  
 }
