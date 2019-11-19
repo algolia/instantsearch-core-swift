@@ -24,9 +24,10 @@ public extension MultiIndexSearcher {
     public let queryIndex: Int
     
     public func connect() {
+      let queryIndex = self.queryIndex
       filterState.onChange.subscribe(with: multiIndexSearcher) { searcher, filterState in
         searcher.indexQueryStates[self.queryIndex].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-        searcher.indexQueryStates[index].query.page = 0
+        searcher.indexQueryStates[queryIndex].query.page = 0
         searcher.search()
       }
     }

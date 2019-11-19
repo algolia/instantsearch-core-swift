@@ -16,7 +16,6 @@ public extension FacetSearcher {
    - Parameter filterState: filter state to connect
    */
   
-
   struct FilterStateConnection: Connection {
     
     public let facetSearcher: FacetSearcher
@@ -24,9 +23,10 @@ public extension FacetSearcher {
     public let triggerSearchOnFilterStateChange: Bool
 
     public func connect() {
+      let shouldTriggerSearch = triggerSearchOnFilterStateChange
       filterState.onChange.subscribePast(with: facetSearcher) { searcher, filterState in
         searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-        if triggerSearchOnFilterStateChange {
+        if shouldTriggerSearch {
           searcher.search()
         }
       }
