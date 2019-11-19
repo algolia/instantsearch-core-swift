@@ -74,7 +74,7 @@ class Sequencer: Sequencable {
     
   /// Indicates whether there are any pending operations.
   var hasPendingOperations: Bool {
-    return !pendingOperations.isEmpty
+    return !pendingOperations.filter { !($0.value.isCancelled || $0.value.isFinished) }.isEmpty
   }
 
   weak var delegate: SequencerDelegate?
