@@ -3,8 +3,8 @@ Pod::Spec.new do |s|
     # ------------
     s.name = 'InstantSearchCore'
     s.module_name = 'InstantSearchCore'
-    s.version = '5.0.0'
-    s.license = 'MIT'
+    s.version = '6.3.0'
+    s.license = 'Apache 2.0'
     s.summary = 'Instant Search library for Swift by Algolia'
     s.homepage = 'https://github.com/algolia/instantsearch-core-swift'
     s.author   = { 'Algolia' => 'contact@algolia.com' }
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
     s.tvos.deployment_target = '9.0'
 
     s.source_files = [
-        'Sources/*.swift'
+        'Sources/**/*.{swift}'
     ]
 
     # Dependencies

@@ -15,10 +15,18 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.0.0</string>
+	<string>6.3.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>2.0.0-beta1</string>
+	<key>ALGOLIA_APPLICATION_ID</key>
+	<string>$(ALGOLIA_APPLICATION_ID)</string>
+	<key>ALGOLIA_API_KEY</key>
+	<string>$(ALGOLIA_API_KEY)</string>
+	<key>ALGOLIA_PLACES_APPLICATION_ID</key>
+	<string>plLZT201S6XM</string>
+	<key>ALGOLIA_PLACES_API_KEY</key>
+	<string>95429eb4fd405d30409ddbb76f1c5639</string>
 </dict>
 </plist>
