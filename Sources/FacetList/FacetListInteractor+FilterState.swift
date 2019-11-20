@@ -8,9 +8,9 @@
 
 import Foundation
 
-public extension FacetListInteractor {
+public enum FacetList {
   
-  struct FilterStateConnection: Connection {
+  public struct FilterStateConnection: Connection {
     
     public let facetListInteractor: FacetListInteractor
     public let filterState: FilterState
@@ -36,7 +36,7 @@ public extension FacetListInteractor {
     }
     
   }
-  
+
 }
 
 public extension FacetListInteractor {
@@ -44,8 +44,8 @@ public extension FacetListInteractor {
   @discardableResult func connectFilterState(_ filterState: FilterState,
                                              with attribute: Attribute,
                                              operator: RefinementOperator,
-                                             groupName: String? = nil) -> FilterStateConnection {
-    let connection = FilterStateConnection(facetListInteractor: self, filterState: filterState, attribute: attribute, operator: `operator`, groupName: groupName)
+                                             groupName: String? = nil) -> FacetList.FilterStateConnection {
+    let connection = FacetList.FilterStateConnection(facetListInteractor: self, filterState: filterState, attribute: attribute, operator: `operator`, groupName: groupName)
     connection.connect()
     return connection
   }

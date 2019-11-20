@@ -8,9 +8,9 @@
 
 import Foundation
 
-public extension FacetListInteractor {
+extension FacetList {
   
-  struct ControllerConnection<Controller: FacetListController>: Connection {
+  public struct ControllerConnection<Controller: FacetListController>: Connection {
     
     public let facetListInteractor: FacetListInteractor
     public let controller: Controller
@@ -60,8 +60,8 @@ public extension FacetListInteractor {
 
 public extension FacetListInteractor {
   
-  @discardableResult func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) -> ControllerConnection<C> {
-    let connection = ControllerConnection(facetListInteractor: self, controller: controller, presenter: presenter)
+  @discardableResult func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) -> FacetList.ControllerConnection<C> {
+    let connection = FacetList.ControllerConnection(facetListInteractor: self, controller: controller, presenter: presenter)
     connection.connect()
     return connection
   }
