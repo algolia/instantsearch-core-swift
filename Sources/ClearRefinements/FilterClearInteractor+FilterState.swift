@@ -62,9 +62,9 @@ public extension FilterClearInteractor {
 
 public extension FilterClearInteractor {
   
-  func connectFilterState(_ filterState: FilterState,
-                          filterGroupIDs: [FilterGroup.ID]? = nil,
-                          clearMode: ClearMode = .specified) -> FilterStateConnection {
+  @discardableResult func connectFilterState(_ filterState: FilterState,
+                                             filterGroupIDs: [FilterGroup.ID]? = nil,
+                                             clearMode: ClearMode = .specified) -> FilterStateConnection {
     let connection = FilterStateConnection(filterClearInteractor: self, filterState: filterState, filterGroupIDs: filterGroupIDs, clearMode: clearMode)
     connection.connect()
     return connection

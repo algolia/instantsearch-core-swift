@@ -30,7 +30,7 @@ public extension FilterClearInteractor {
 
 public extension FilterClearInteractor {
   
-  func connectController(_ controller: FilterClearController) -> ControllerConnection {
+  @discardableResult func connectController(_ controller: FilterClearController) -> ControllerConnection {
     let connection = ControllerConnection(interactor: self, controller: controller)
     connection.connect()
     return connection

@@ -1724,9 +1724,9 @@
 			isa = PBXGroup;
 			children = (
 				AF14E31922F45A110088D2A7 /* HierarchicalInteractor.swift */,
+				E25D634122D36AD8008CD0FD /* HierarchicalController.swift */,
 				E2146C2222CD0B3200927350 /* HierarchicalInteractor+FilterState.swift */,
 				E2146C2722CD0F5500927350 /* HierarchicalInteractor+Searcher.swift */,
-				E25D634122D36AD8008CD0FD /* HierarchicalController.swift */,
 				E25D634622D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift */,
 			);
 			path = Hierarchical;
