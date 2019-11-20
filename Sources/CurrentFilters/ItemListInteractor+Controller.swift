@@ -52,8 +52,8 @@ public extension ItemsListInteractor {
 
 public extension ItemsListInteractor {
 
-  func connectController<C: ItemListController>(_ controller: C,
-                                                presenter: @escaping Presenter<Filter, String> = DefaultPresenter.Filter.present) -> ControllerConnection<C> where C.Item == Item, Item == FilterAndID {
+  @discardableResult func connectController<C: ItemListController>(_ controller: C,
+                                                                   presenter: @escaping Presenter<Filter, String> = DefaultPresenter.Filter.present) -> ControllerConnection<C> where C.Item == Item, Item == FilterAndID {
     let connection = ControllerConnection(interactor: self, controller: controller, presenter: presenter)
     connection.connect()
     return connection

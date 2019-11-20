@@ -67,8 +67,8 @@ public extension CurrentFiltersInteractor {
 
 public extension CurrentFiltersInteractor {
 
-  func connectFilterState(_ filterState: FilterState,
-                          filterGroupIDs: Set<FilterGroup.ID>? = nil) -> FilterStateConnection {
+  @discardableResult func connectFilterState(_ filterState: FilterState,
+                                             filterGroupIDs: Set<FilterGroup.ID>? = nil) -> FilterStateConnection {
     return FilterStateConnection(interactor: self, filterState: filterState, filterGroupIDs: filterGroupIDs)
   }
   
