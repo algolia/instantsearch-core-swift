@@ -10,17 +10,41 @@ import Foundation
 
 public extension HitsInteractor {
   
-  func connectController<Controller: HitsController>(_ controller: Controller) where Controller.DataSource == HitsInteractor<Record> {
+  struct ControllerConnection<Controller: HitsController>: Connection where Controller.DataSource == HitsInteractor<Record> {
     
-    controller.hitsSource = self
+    public let interactor: HitsInteractor
+    public let controller: Controller
     
-    onRequestChanged.subscribe(with: controller) { controller, _ in
-      controller.scrollToTop()
-    }.onQueue(.main)
+    public func connect() {
+      controller.hitsSource = interactor
+      
+      interactor.onRequestChanged.subscribe(with: controller) { controller, _ in
+        controller.scrollToTop()
+      }.onQueue(.main)
+      
+      interactor.onResultsUpdated.subscribePast(with: controller) { controller, _ in
+        controller.reload()
+      }.onQueue(.main)
+    }
     
-    onResultsUpdated.subscribePast(with: controller) { controller, _ in
-      controller.reload()
-    }.onQueue(.main)
+    public func disconnect() {
+      if controller.hitsSource === interactor {
+        controller.hitsSource = nil
+      }
+      interactor.onRequestChanged.cancelSubscription(for: controller)
+      interactor.onResultsUpdated.cancelSubscription(for: controller)
+    }
+    
+  }
+  
+}
+
+public extension HitsInteractor {
+  
+  func connectController<Controller: HitsController>(_ controller: Controller) -> ControllerConnection<Controller> where Controller.DataSource == HitsInteractor<Record> {
+    let connection = ControllerConnection(interactor: self, controller: controller)
+    connection.connect()
+    return connection
   }
   
 }
