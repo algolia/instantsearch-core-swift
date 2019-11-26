@@ -30,9 +30,9 @@ public enum FilterList {
     public func connect() {
       switch `operator` {
       case .or:
-        interactor.connectFilterState(filterState, via: filterState[or: groupName])
+        connectFilterState(filterState, to: interactor, via: filterState[or: groupName])
       case .and:
-        interactor.connectFilterState(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
+        connectFilterState(filterState, to: interactor, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
       }
     }
     
@@ -41,56 +41,54 @@ public enum FilterList {
       filterState.onChange.cancelSubscription(for: interactor)
     }
     
+    private func connectFilterState<Interactor: SelectableListInteractor<Filter, Filter>, Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                                                                              to interactor: Interactor, via accessor: Accessor) where Accessor.Filter == Filter {
+      whenSelectionsComputedThenUpdateFilterState(interactor: interactor, filterState: filterState, via: accessor)
+      whenFilterStateChangedThenUpdateSelections(interactor: interactor, filterState: filterState, via: accessor)
+    }
+     
+    private func whenSelectionsComputedThenUpdateFilterState<Interactor: SelectableListInteractor<Filter, Filter>, Accessor: SpecializedGroupAccessor>(interactor: Interactor,
+                                                                                                                                                       filterState: FilterState,
+                                                                                          
+                                                                                                                                                       via accessor: Accessor) where Accessor.Filter == Filter {
+       
+      interactor.onSelectionsComputed.subscribePast(with: filterState) { [weak interactor] filterState, filters in
+         
+        guard let strongInteractor = interactor else { return }
+         switch strongInteractor.selectionMode {
+         case .multiple:
+           accessor.removeAll()
+           
+         case .single:
+           accessor.removeAll(strongInteractor.items)
+         }
+         
+         accessor.addAll(filters)
+         
+         filterState.notifyChange()
+       }
+       
+     }
+     
+    private func whenFilterStateChangedThenUpdateSelections<Interactor: SelectableListInteractor<Filter, Filter>, Accessor: SpecializedGroupAccessor>(interactor: Interactor, filterState: FilterState,
+                                                                                                                                                      via accessor: Accessor) where Accessor.Filter == Filter {
+       filterState.onChange.subscribePast(with: interactor) { interactor, _ in
+         interactor.selections = Set(accessor.filters())
+       }
+     }
+    
   }
   
 }
 
 public extension SelectableListInteractor where Key == Item, Item: FilterType {
   
-  func connectFilterState(_ filterState: FilterState,
-                          operator: RefinementOperator,
-                          groupName: String = "") -> FilterList.FilterStateConnection<Key> {
+  @discardableResult func connectFilterState(_ filterState: FilterState,
+                                             operator: RefinementOperator,
+                                             groupName: String = "") -> FilterList.FilterStateConnection<Key> {
     let connection = FilterList.FilterStateConnection(interactor: self, filterState: filterState, operator: `operator`, groupName: groupName)
     connection.connect()
     return connection
-  }
-  
-}
-
-private extension SelectableListInteractor where Key == Item, Item: FilterType {
-  
-  func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, via accessor: Accessor) where Accessor.Filter == Key {
-    whenSelectionsComputedThenUpdateFilterState(filterState, via: accessor)
-    whenFilterStateChangedThenUpdateSelections(filterState, via: accessor)
-  }
-  
-  func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                       via accessor: Accessor) where Accessor.Filter == Item {
-    
-    onSelectionsComputed.subscribePast(with: filterState) { [weak self] filterState, filters in
-      
-      guard let interactor = self else { return }
-      
-      switch interactor.selectionMode {
-      case .multiple:
-        accessor.removeAll()
-        
-      case .single:
-        accessor.removeAll(interactor.items)
-      }
-      
-      accessor.addAll(filters)
-      
-      filterState.notifyChange()
-    }
-    
-  }
-  
-  func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                      via accessor: Accessor) where Accessor.Filter == Item {
-    filterState.onChange.subscribePast(with: self) { interactor, _ in
-      interactor.selections = Set(accessor.filters())
-    }
   }
   
 }
