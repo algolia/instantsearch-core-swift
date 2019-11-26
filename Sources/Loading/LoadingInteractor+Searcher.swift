@@ -9,10 +9,32 @@
 import Foundation
 
 public extension LoadingInteractor {
-
-  func connectSearcher<S: Searcher>(_ searcher: S) {
-    searcher.isLoading.subscribePast(with: self) { interactor, isLoading in
-      interactor.item = isLoading
+  
+  struct SearcherConnection<S: Searcher>: Connection {
+    
+    public let interactor: LoadingInteractor
+    public let searcher: S
+    
+    public func connect() {
+      searcher.isLoading.subscribePast(with: interactor) { interactor, isLoading in
+        interactor.item = isLoading
+      }
     }
+    
+    public func disconnect() {
+      searcher.isLoading.cancelSubscription(for: interactor)
+    }
+    
   }
+  
+}
+
+public extension LoadingInteractor {
+
+  @discardableResult func connectSearcher<S: Searcher>(_ searcher: S) -> SearcherConnection<S> {
+    let connection = SearcherConnection(interactor: self, searcher: searcher)
+    connection.connect()
+    return connection
+  }
+  
 }

@@ -10,8 +10,8 @@ import Foundation
 
 public extension LoadingInteractor {
   
-  func connectController<Controller: LoadingController>(_ controller: Controller) {
-    connectController(controller) { $0 }
+  @discardableResult func connectController<Controller: LoadingController>(_ controller: Controller) -> ControllerConnection<Controller, Bool> {
+    return connectController(controller) { $0 }
   }
   
 }
