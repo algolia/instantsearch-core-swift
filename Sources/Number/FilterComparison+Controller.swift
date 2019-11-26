@@ -7,24 +7,41 @@
 //
 
 import Foundation
-
-extension NumberInteractor {
   
-  public func connectController<Controller: NumberController>(_ controller: Controller) where Controller.Item == Number {
-
-    let computation = Computation(numeric: item) { [weak self] numeric in
-      self?.computeNumber(number: numeric)
+public struct NumberInteractorControllerConnection<Controller: NumberController, Number: Comparable &  InitaliazableWithFloat>: Connection where Controller.Item == Number {
+  
+  public let interactor: NumberInteractor<Number>
+  public let controller: Controller
+  
+  public func connect() {
+    let computation = Computation(numeric: interactor.item) { [weak interactor] numeric in
+      interactor?.computeNumber(number: numeric)
     }
 
     controller.setComputation(computation: computation)
 
-    onItemChanged.subscribePast(with: controller) { controller, item in
+    interactor.onItemChanged.subscribePast(with: controller) { controller, item in
       guard let item = item else {
         controller.invalidate()
         return
       }
       controller.setItem(item)
     }.onQueue(.main)
+  }
+  
+  public func disconnect() {
+    controller.invalidate()
+    interactor.onItemChanged.cancelSubscription(for: controller)
+  }
+  
+}
+  
+public extension NumberInteractor {
+    
+  @discardableResult func connectNumberController<Controller: NumberController>(_ controller: Controller) -> NumberInteractorControllerConnection<Controller, Number> where Controller.Item == Number {
+    let connection = NumberInteractorControllerConnection(interactor: self, controller: controller)
+    connection.connect()
+    return connection
   }
   
 }
