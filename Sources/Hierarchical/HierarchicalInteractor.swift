@@ -44,6 +44,8 @@ public class HierarchicalInteractor: ItemInteractor<[[Facet]]> {
   }
 }
 
+public enum Hierarchical {}
+
 extension String {
 
   func subPaths(withSeparator separator: String) -> [String] {
