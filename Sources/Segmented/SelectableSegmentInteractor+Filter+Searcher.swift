@@ -8,10 +8,28 @@
 
 import Foundation
 
+public struct SelectableFilterInteractorSearcherConnection<Filter: FilterType>: Connection {
+  
+  public let interactor: SelectableSegmentInteractor<Int, Filter>
+  public let searcher: SingleIndexSearcher
+  public let attribute: Attribute
+  
+  public func connect() {
+    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
+  }
+  
+  public func disconnect() {
+    
+  }
+  
+}
+
 public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: FilterType {
 
-  func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
-    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
+  @discardableResult func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) -> SelectableFilterInteractorSearcherConnection<Segment> {
+    let connection = SelectableFilterInteractorSearcherConnection(interactor: self, searcher: searcher, attribute: attribute)
+    connection.connect()
+    return connection
   }
   
 }

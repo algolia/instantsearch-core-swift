@@ -8,62 +8,94 @@
 
 import Foundation
 
-public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: FilterType {
-
-  func connectFilterState(_ filterState: FilterState,
-                          attribute: Attribute,
-                          operator: RefinementOperator,
-                          groupName: String? = nil) {
-    
-    let groupName = groupName ?? attribute.name
-    
+public struct SelectableFilterInteractorFilterStateConnection<Filter: FilterType>: Connection {
+  
+  public typealias Interactor = SelectableSegmentInteractor<Int, Filter>
+  
+  public let interactor: Interactor
+  public let filterState: FilterState
+  public let attribute: Attribute
+  public let `operator`: RefinementOperator
+  public let groupName: String
+  
+  public init(interactor: Interactor,
+              filterState: FilterState,
+              attribute: Attribute,
+              `operator`: RefinementOperator,
+              groupName: String? = nil) {
+    self.interactor = interactor
+    self.filterState = filterState
+    self.attribute = attribute
+    self.operator = `operator`
+    self.groupName = groupName ?? attribute.name
+  }
+  
+  public func connect() {
     switch `operator` {
     case .and:
-      connectFilterState(filterState, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
+      connectFilterState(filterState, to: interactor, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
     case .or:
-      connectFilterState(filterState, via: filterState[or: groupName])
+      connectFilterState(filterState, to: interactor, via: filterState[or: groupName])
     }
-    
   }
   
-}
-
-private extension SelectableSegmentInteractor where SegmentKey == Int, Segment: FilterType {
-
-  func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                              via accessor: Accessor) where Accessor.Filter == Segment {
-    whenSelectedComputedThenUpdateFilterState(filterState, via: accessor)
-    whenFilterStateChangedThenUpdateSelected(filterState, via: accessor)
+  public func disconnect() {
+    interactor.onSelectedComputed.cancelSubscription(for: filterState)
+    filterState.onChange.cancelSubscription(for: interactor)
   }
   
-  func whenSelectedComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                     via accessor: Accessor) where Accessor.Filter == Segment {
+  private func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                                      to interactor: Interactor,
+                                                              
+                                                                      via accessor: Accessor) where Accessor.Filter == Filter {
+    whenSelectedComputedThenUpdateFilterState(interactor: interactor, filterState: filterState, via: accessor)
+    whenFilterStateChangedThenUpdateSelected(interactor: interactor, filterState: filterState, via: accessor)
+  }
+  
+  private func whenSelectedComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(interactor: Interactor,
+                                                                                             filterState: FilterState,
+                                                                                     
+                                                                                             via accessor: Accessor) where Accessor.Filter == Filter {
     
-    let removeSelectedItem = { [weak self] in
-      self?.selected.flatMap { self?.items[$0] }.flatMap(accessor.remove)
+    let removeSelectedItem = { [weak interactor] in
+      interactor?.selected.flatMap { interactor?.items[$0] }.flatMap(accessor.remove)
     }
     
-    let addItem: (SegmentKey?) -> Void = { [weak self] itemKey in
-      itemKey.flatMap { self?.items[$0] }.flatMap { accessor.add($0) }
+    let addItem: (Int?) -> Void = { [weak interactor] itemKey in
+      itemKey.flatMap { interactor?.items[$0] }.flatMap { accessor.add($0) }
     }
     
-    onSelectedComputed.subscribePast(with: self) { [weak filterState] _, computedSelectionKey in
+    interactor.onSelectedComputed.subscribePast(with: filterState) { filterState, computedSelectionKey in
       removeSelectedItem()
       addItem(computedSelectionKey)
-      filterState?.notifyChange()
+      filterState.notifyChange()
     }
     
   }
   
-  func whenFilterStateChangedThenUpdateSelected<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                    via accessor: Accessor) where Accessor.Filter == Segment {
-    let onChange: (SelectableSegmentInteractor, ReadOnlyFiltersContainer) -> Void = { interactor, _ in
+  private func whenFilterStateChangedThenUpdateSelected<Accessor: SpecializedGroupAccessor>(interactor: Interactor,
+                                                                                            filterState: FilterState,
+                                                                                            via accessor: Accessor) where Accessor.Filter == Filter {
+    let onChange: (Interactor, ReadOnlyFiltersContainer) -> Void = { interactor, _ in
       interactor.selected = interactor.items.first(where: { accessor.contains($0.value) })?.key
     }
     
-    onChange(self, ReadOnlyFiltersContainer(filtersContainer: filterState))
+    onChange(interactor, ReadOnlyFiltersContainer(filtersContainer: filterState))
     
-    filterState.onChange.subscribePast(with: self, callback: onChange)
+    filterState.onChange.subscribePast(with: interactor, callback: onChange)
+  }
+
+}
+
+public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: FilterType {
+
+  @discardableResult func connectFilterState(_ filterState: FilterState,
+                                             attribute: Attribute,
+                                             operator: RefinementOperator,
+                                             groupName: String? = nil) -> SelectableFilterInteractorFilterStateConnection<Segment> {
+    let connection = SelectableFilterInteractorFilterStateConnection(interactor: self, filterState: filterState, attribute: attribute, operator: `operator`, groupName: groupName)
+    connection.connect()
+    return connection
   }
   
 }
