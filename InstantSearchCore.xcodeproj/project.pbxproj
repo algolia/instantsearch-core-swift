@@ -376,10 +376,10 @@
 		AFBAA70022EC79FD0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AFBAA70122EC79FE0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AFBAA70222EC79FF0009856B /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
-		AFBAA70422EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
-		AFBAA70522EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
-		AFBAA70622EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
-		AFBAA70722EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */; };
+		AFBAA70422EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift */; };
+		AFBAA70522EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift */; };
+		AFBAA70622EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift */; };
+		AFBAA70722EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70322EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift */; };
 		AFBAA70922EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
 		AFBAA70A22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
 		AFBAA70B22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */; };
@@ -824,10 +824,10 @@
 		E2EFA5DD22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentInteractor.swift */; };
 		E2EFA5DE22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentInteractor.swift */; };
 		E2EFA5DF22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5DB22A94D5B008C9CAA /* IndexSegmentInteractor.swift */; };
-		E2EFA5E322A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift */; };
-		E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift */; };
-		E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift */; };
-		E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift */; };
+		E2EFA5E322A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift */; };
+		E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift */; };
+		E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift */; };
+		E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift */; };
 		E2EFA5E822A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift */; };
 		E2EFA5E922A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift */; };
 		E2EFA5EA22A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EFA5E722A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift */; };
@@ -984,7 +984,7 @@
 		AFBAA6E722EA2F6D0009856B /* HitsInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		AFBAA6EC22EA2FD30009856B /* HitsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+Controller.swift"; sourceTree = "<group>"; };
 		AFBAA6F122EBC1050009856B /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Signal.swift; path = Sources/Signal.swift; sourceTree = SOURCE_ROOT; };
-		AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+Searcher.swift"; sourceTree = "<group>"; };
+		AFBAA70322EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+SingleIndexSearcher.swift"; sourceTree = "<group>"; };
 		AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatsInteractor+Controller.swift"; sourceTree = "<group>"; };
 		AFBBD771237D8F5900F6C33C /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		AFBF375D2285D5C600787D24 /* FilterConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConverter.swift; sourceTree = "<group>"; };
@@ -1140,7 +1140,7 @@
 		E2EBE73522B14B1D00B91B23 /* ItemListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListController.swift; sourceTree = "<group>"; };
 		E2EBE73C22B1529000B91B23 /* CurrentFiltersListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentFiltersListController.swift; sourceTree = "<group>"; };
 		E2EFA5DB22A94D5B008C9CAA /* IndexSegmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexSegmentInteractor.swift; sourceTree = "<group>"; };
-		E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentInteractor+Searcher.swift"; sourceTree = "<group>"; };
+		E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentInteractor+SingleIndexSearcher.swift"; sourceTree = "<group>"; };
 		E2EFA5E722A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "IndexSegmentInteractor+Controller.swift"; sourceTree = "<group>"; };
 		E2EFA5F522AEBD72008C9CAA /* EventInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventInteractor.swift; sourceTree = "<group>"; };
 		E2EFA5FB22AEBE29008C9CAA /* LoadingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingInteractor.swift; sourceTree = "<group>"; };
@@ -1761,7 +1761,7 @@
 			isa = PBXGroup;
 			children = (
 				AFE6E38522A185C9005BA44D /* StatsInteractor.swift */,
-				AFBAA70322EEF2840009856B /* StatsInteractor+Searcher.swift */,
+				AFBAA70322EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift */,
 				AFBAA70822EEF2900009856B /* StatsInteractor+Controller.swift */,
 				E26F423A2296A45500583D39 /* StatsController.swift */,
 			);
@@ -1839,7 +1839,7 @@
 			isa = PBXGroup;
 			children = (
 				E2EFA5DB22A94D5B008C9CAA /* IndexSegmentInteractor.swift */,
-				E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift */,
+				E2EFA5E222A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift */,
 				AF245643232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift */,
 				E2EFA5E722A95ECC008C9CAA /* IndexSegmentInteractor+Controller.swift */,
 			);
@@ -2268,7 +2268,7 @@
 				AF9104762370757000B0D8B2 /* AsyncOperation.swift in Sources */,
 				E265DBF022733D4C002DC989 /* SelectableListController.swift in Sources */,
 				AFE6E39122A18AE4005BA44D /* ItemController.swift in Sources */,
-				AFBAA70422EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
+				AFBAA70422EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */,
 				AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */,
 				AF51515C2316DE6000F88B6A /* Place.swift in Sources */,
 				AFCDEDC822397A9A001459BE /* SearchResults+PageMap.swift in Sources */,
@@ -2404,7 +2404,7 @@
 				AF6C6F6722538160001E5E3C /* SingleIndexSearcher.swift in Sources */,
 				E2146BE922B29CE200927350 /* FilterClearInteractor+FilterClearController.swift in Sources */,
 				AF6C6F6222538156001E5E3C /* Searcher.swift in Sources */,
-				E2EFA5E322A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				E2EFA5E322A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */,
 				E2EBE73D22B1529000B91B23 /* CurrentFiltersListController.swift in Sources */,
 				E26F423B2296A45500583D39 /* StatsController.swift in Sources */,
 				AF5D103A22F47ABA00DE13AA /* FilterListInteractor+FilterState.swift in Sources */,
@@ -2492,7 +2492,7 @@
 				AF9104772370757000B0D8B2 /* AsyncOperation.swift in Sources */,
 				E265DBF122733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424B229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
-				AFBAA70522EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
+				AFBAA70522EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6FD22EC79E70009856B /* SelectableController.swift in Sources */,
 				AF51515D2316DE6000F88B6A /* Place.swift in Sources */,
 				AFCDED59222E7A4F001459BE /* JSON.swift in Sources */,
@@ -2577,7 +2577,7 @@
 				AFE34381228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AF5D104522F47C6700DE13AA /* FacetListInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6F322EBC1050009856B /* Signal.swift in Sources */,
-				E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				E2EFA5E422A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6F622EC79D00009856B /* FilterState+FiltersReadable.swift in Sources */,
 				AFBAA70A22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				AF5D104F22F47C8400DE13AA /* FacetListInteractor+Controller.swift in Sources */,
@@ -2716,7 +2716,7 @@
 				AF9104782370757000B0D8B2 /* AsyncOperation.swift in Sources */,
 				E265DBF222733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424C229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
-				AFBAA70622EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
+				AFBAA70622EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6FE22EC79E70009856B /* SelectableController.swift in Sources */,
 				AF51515E2316DE6000F88B6A /* Place.swift in Sources */,
 				AFCDED64222E7A50001459BE /* JSON.swift in Sources */,
@@ -2801,7 +2801,7 @@
 				AFE34382228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AF5D104622F47C6700DE13AA /* FacetListInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6F422EBC1050009856B /* Signal.swift in Sources */,
-				E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				E2EFA5E522A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6F722EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */,
 				AFBAA70B22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				AF5D105022F47C8400DE13AA /* FacetListInteractor+Controller.swift in Sources */,
@@ -2940,7 +2940,7 @@
 				AF9104792370757000B0D8B2 /* AsyncOperation.swift in Sources */,
 				E265DBF322733D4C002DC989 /* SelectableListController.swift in Sources */,
 				E26F424D229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
-				AFBAA70722EEF2840009856B /* StatsInteractor+Searcher.swift in Sources */,
+				AFBAA70722EEF2840009856B /* StatsInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6FF22EC79E90009856B /* SelectableController.swift in Sources */,
 				AF51515F2316DE6000F88B6A /* Place.swift in Sources */,
 				AFCDED6F222E7A51001459BE /* JSON.swift in Sources */,
@@ -3024,7 +3024,7 @@
 				AFE34383228997FB00829AC1 /* SelectableSegmentController.swift in Sources */,
 				AF5D104722F47C6700DE13AA /* FacetListInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6F522EBC1050009856B /* Signal.swift in Sources */,
-				E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+Searcher.swift in Sources */,
+				E2EFA5E622A95CED008C9CAA /* IndexSegmentInteractor+SingleIndexSearcher.swift in Sources */,
 				AFBAA6F822EC79D10009856B /* FilterState+FiltersReadable.swift in Sources */,
 				AFBAA70C22EEF2900009856B /* StatsInteractor+Controller.swift in Sources */,
 				AF5D105122F47C8400DE13AA /* FacetListInteractor+Controller.swift in Sources */,
