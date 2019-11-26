@@ -9,3 +9,5 @@
 import Foundation
 
 public typealias IndexSegmentInteractor = SelectableSegmentInteractor<Int, Index>
+
+public enum IndexSegment {}

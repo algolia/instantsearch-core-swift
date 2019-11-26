@@ -8,26 +8,53 @@
 
 import Foundation
 
-public extension IndexSegmentInteractor {
+public extension IndexSegment {
   
-  func connectSearcher(searcher: MultiIndexSearcher, toQueryAtIndex queryIndex: Int) {
+  struct MultiIndexSearcherConnection: Connection {
     
-    if let selected = selected, let index = items[selected] {
-      searcher.indexQueryStates[queryIndex].index = index
-      searcher.indexQueryStates[queryIndex].query.page = 0
-    }
-    
-    onSelectedComputed.subscribePast(with: self) { interactor, computed in
+    let interactor: IndexSegmentInteractor
+    let searcher: MultiIndexSearcher
+    let queryIndex: Int
+        
+    public func connect() {
+      
       if
-        let selected = computed,
-        let index = interactor.items[selected] {
-        self.selected = selected
+        let selected = interactor.selected,
+        let index = interactor.items[selected]
+      {
         searcher.indexQueryStates[queryIndex].index = index
         searcher.indexQueryStates[queryIndex].query.page = 0
-        searcher.search()
       }
+      
+      let queryIndex = self.queryIndex
+      interactor.onSelectedComputed.subscribePast(with: searcher) { [weak interactor] searcher, computed in
+        if
+          let selected = computed,
+          let index = interactor?.items[selected]
+        {
+          interactor?.selected = selected
+          searcher.indexQueryStates[queryIndex].index = index
+          searcher.indexQueryStates[queryIndex].query.page = 0
+          searcher.search()
+        }
+      }
+
     }
     
+    public func disconnect() {
+      interactor.onSelectedComputed.cancelSubscription(for: searcher)
+    }
+    
+  }
+  
+}
+
+public extension IndexSegmentInteractor {
+  
+  @discardableResult func connectSearcher(searcher: MultiIndexSearcher, toQueryAtIndex queryIndex: Int) -> IndexSegment.MultiIndexSearcherConnection {
+    let connection = IndexSegment.MultiIndexSearcherConnection(interactor: self, searcher: searcher, queryIndex: queryIndex)
+    connection.connect()
+    return connection
   }
   
 }
