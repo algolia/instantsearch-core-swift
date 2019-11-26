@@ -41,7 +41,7 @@ public extension HitsInteractor {
 
 public extension HitsInteractor {
   
-  func connectController<Controller: HitsController>(_ controller: Controller) -> ControllerConnection<Controller> where Controller.DataSource == HitsInteractor<Record> {
+  @discardableResult func connectController<Controller: HitsController>(_ controller: Controller) -> ControllerConnection<Controller> where Controller.DataSource == HitsInteractor<Record> {
     let connection = ControllerConnection(interactor: self, controller: controller)
     connection.connect()
     return connection
