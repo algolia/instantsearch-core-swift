@@ -12,7 +12,7 @@ public enum FacetList {
   
   public struct FilterStateConnection: Connection {
     
-    public let facetListInteractor: FacetListInteractor
+    public let interactor: FacetListInteractor
     public let filterState: FilterState
     public let attribute: Attribute
     public let `operator`: RefinementOperator
@@ -23,16 +23,54 @@ public enum FacetList {
       
       switch `operator` {
       case .and:
-        facetListInteractor.connectFilterState(filterState, with: attribute, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
+        connect(filterState, to: interactor, with: attribute, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
         
       case .or:
-        facetListInteractor.connectFilterState(filterState, with: attribute, via: filterState[or: groupName])
+        connect(filterState, to: interactor, with: attribute, via: filterState[or: groupName])
       }
     }
     
     public func disconnect() {
-      facetListInteractor.onSelectionsComputed.cancelSubscription(for: filterState)
-      filterState.onChange.cancelSubscription(for: facetListInteractor)
+      interactor.onSelectionsComputed.cancelSubscription(for: filterState)
+      filterState.onChange.cancelSubscription(for: interactor)
+    }
+    
+    private func connect<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
+                                                             to interactor: FacetListInteractor,
+                                                             with attribute: Attribute,
+                                                             via accessor: Accessor) where Accessor.Filter == Filter.Facet {
+      whenSelectionsComputedThenUpdateFilterState(interactor: interactor, filterState: filterState, attribute: attribute, via: accessor)
+      whenFilterStateChangedThenUpdateSelections(interactor: interactor, filterState: filterState, via: accessor)
+    }
+    
+    private func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(interactor: FacetListInteractor,
+                                                                                                 filterState: FilterState,
+                                                                                                 attribute: Attribute,
+                                                                                                 via accessor: Accessor) where Accessor.Filter == Filter.Facet {
+      interactor.onSelectionsComputed.subscribePast(with: filterState) { filterState, selections in
+        let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
+        accessor.removeAll()
+        accessor.addAll(filters)
+        filterState.notifyChange()
+      }
+      
+    }
+    
+    private func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(interactor: FacetListInteractor,
+                                                                                                filterState: FilterState,
+                                                                                                via accessor: Accessor) where Accessor.Filter == Filter.Facet {
+      
+      func extractString(from filter: Filter.Facet) -> String? {
+        if case .string(let stringValue) = filter.value {
+          return stringValue
+        } else {
+          return nil
+        }
+      }
+      
+      filterState.onChange.subscribePast(with: interactor) { interactor, _ in
+        interactor.selections = Set(accessor.filters().compactMap(extractString))
+      }
     }
     
   }
@@ -45,45 +83,9 @@ public extension FacetListInteractor {
                                              with attribute: Attribute,
                                              operator: RefinementOperator,
                                              groupName: String? = nil) -> FacetList.FilterStateConnection {
-    let connection = FacetList.FilterStateConnection(facetListInteractor: self, filterState: filterState, attribute: attribute, operator: `operator`, groupName: groupName)
+    let connection = FacetList.FilterStateConnection(interactor: self, filterState: filterState, attribute: attribute, operator: `operator`, groupName: groupName)
     connection.connect()
     return connection
   }
   
-}
-
-private extension FacetListInteractor {
-  
-  func connectFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState, with attribute: Attribute, via accessor: Accessor) where Accessor.Filter == Filter.Facet {
-    whenSelectionsComputedThenUpdateFilterState(filterState, attribute: attribute, via: accessor)
-    whenFilterStateChangedThenUpdateSelections(filterState: filterState, via: accessor)
-  }
-  
-  func whenSelectionsComputedThenUpdateFilterState<Accessor: SpecializedGroupAccessor>(_ filterState: FilterState,
-                                                                                       attribute: Attribute,
-                                                                                       via accessor: Accessor) where Accessor.Filter == Filter.Facet {
-    onSelectionsComputed.subscribePast(with: filterState) { filterState, selections in
-      let filters = selections.map { Filter.Facet(attribute: attribute, stringValue: $0) }
-      accessor.removeAll()
-      accessor.addAll(filters)
-      filterState.notifyChange()
-    }
-    
-  }
-  
-  func whenFilterStateChangedThenUpdateSelections<Accessor: SpecializedGroupAccessor>(filterState: FilterState, via accessor: Accessor) where Accessor.Filter == Filter.Facet {
-    
-    func extractString(from filter: Filter.Facet) -> String? {
-      if case .string(let stringValue) = filter.value {
-        return stringValue
-      } else {
-        return nil
-      }
-    }
-    
-    filterState.onChange.subscribePast(with: self) { interactor, _ in
-      interactor.selections = Set(accessor.filters().compactMap(extractString))
-    }
-  }
-    
 }
