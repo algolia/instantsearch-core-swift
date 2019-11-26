@@ -42,7 +42,7 @@ public extension MultiIndexSearcher {
 
 public extension MultiIndexSearcher {
   
-  func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) -> FilterStateConnection {
+  @discardableResult func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) -> FilterStateConnection {
     let connection = FilterStateConnection(multiIndexSearcher: self, filterState: filterState, queryIndex: index)
     connection.connect()
     return connection

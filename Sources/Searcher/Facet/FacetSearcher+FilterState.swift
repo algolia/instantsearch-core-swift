@@ -42,7 +42,7 @@ public extension FacetSearcher {
 
 public extension FacetSearcher {
 
-  func connectFilterState(_ filterState: FilterState, triggerSearchOnFilterStateChange: Bool = true) -> FilterStateConnection {
+  @discardableResult func connectFilterState(_ filterState: FilterState, triggerSearchOnFilterStateChange: Bool = true) -> FilterStateConnection {
     let connection = FilterStateConnection(facetSearcher: self, filterState: filterState, triggerSearchOnFilterStateChange: triggerSearchOnFilterStateChange)
     connection.connect()
     return connection

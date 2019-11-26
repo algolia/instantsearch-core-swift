@@ -45,7 +45,7 @@ public extension SingleIndexSearcher {
 
 public extension SingleIndexSearcher {
   
-  func connectFilterState(_ filterState: FilterState) -> FilterStateConnection {
+  @discardableResult func connectFilterState(_ filterState: FilterState) -> FilterStateConnection {
     let connection = FilterStateConnection(singleIndexSearcher: self, filterState: filterState)
     connection.connect()
     return connection
