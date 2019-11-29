@@ -23,6 +23,7 @@ public class SelectableFilterConnector<Filter: FilterType>: Connection {
   public init(searcher: SingleIndexSearcher,
               filterState: FilterState,
               items: [Int: Filter],
+              selected: Int,
               attribute: Attribute,
               `operator`: RefinementOperator,
               groupName: String? = nil) {
@@ -38,6 +39,7 @@ public class SelectableFilterConnector<Filter: FilterType>: Connection {
                                                                     attribute: attribute,
                                                                     operator: `operator`,
                                                                     groupName: groupName)
+    self.interactor.selected = selected
   }
 
   public func connect() {
