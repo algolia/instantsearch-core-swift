@@ -207,6 +207,21 @@
 		AF28645A2395109500E9E845 /* MultiIndexConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864582395109500E9E845 /* MultiIndexConnector.swift */; };
 		AF28645B2395109500E9E845 /* MultiIndexConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864582395109500E9E845 /* MultiIndexConnector.swift */; };
 		AF28645C2395109500E9E845 /* MultiIndexConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864582395109500E9E845 /* MultiIndexConnector.swift */; };
+		AF28645F2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28645E2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift */; };
+		AF2864602395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28645E2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift */; };
+		AF2864612395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28645E2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift */; };
+		AF2864632395212000E9E845 /* TestInfiniteScrollingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864622395212000E9E845 /* TestInfiniteScrollingController.swift */; };
+		AF2864642395212000E9E845 /* TestInfiniteScrollingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864622395212000E9E845 /* TestInfiniteScrollingController.swift */; };
+		AF2864652395212000E9E845 /* TestInfiniteScrollingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864622395212000E9E845 /* TestInfiniteScrollingController.swift */; };
+		AF2864672395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864662395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift */; };
+		AF2864682395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864662395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift */; };
+		AF2864692395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2864662395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift */; };
+		AF28646B239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */; };
+		AF28646C239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */; };
+		AF28646D239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */; };
+		AF28646F239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
+		AF286470239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
+		AF286471239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
 		AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
@@ -1019,6 +1034,11 @@
 		AF28644E23912FAB00E9E845 /* SelectableFilterConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableFilterConnector.swift; sourceTree = "<group>"; };
 		AF286453239159EA00E9E845 /* SelectableFilterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableFilterInteractor.swift; sourceTree = "<group>"; };
 		AF2864582395109500E9E845 /* MultiIndexConnector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexConnector.swift; sourceTree = "<group>"; };
+		AF28645E2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractorSearcherConnectionTests.swift; sourceTree = "<group>"; };
+		AF2864622395212000E9E845 /* TestInfiniteScrollingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestInfiniteScrollingController.swift; sourceTree = "<group>"; };
+		AF2864662395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractorFilterStateConnectionTests.swift; sourceTree = "<group>"; };
+		AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractorControllerConnectionTests.swift; sourceTree = "<group>"; };
+		AF28646E239572B800E9E845 /* TestHitsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHitsController.swift; sourceTree = "<group>"; };
 		AF2B26132281AC18006DE798 /* FilterState+Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+Commands.swift"; sourceTree = "<group>"; };
 		AF322D2722D8BD8300010428 /* HierarchicalGroupAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalGroupAccessor.swift; sourceTree = "<group>"; };
 		AF322D3122D8D5B000010428 /* Optional+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Collection.swift"; sourceTree = "<group>"; };
@@ -1382,11 +1402,17 @@
 			path = Accessors;
 			sourceTree = "<group>";
 		};
-		AF2863FD238D805F00E9E845 /* Connectors */ = {
+		AF28645D23951FC600E9E845 /* Hits */ = {
 			isa = PBXGroup;
 			children = (
+				AFC60889237F1AC500B10B58 /* HitsInteractorTests.swift */,
+				AF28645E2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift */,
+				AF2864662395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift */,
+				AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */,
+				AF2864622395212000E9E845 /* TestInfiniteScrollingController.swift */,
+				AF28646E239572B800E9E845 /* TestHitsController.swift */,
 			);
-			path = Connectors;
+			path = Hits;
 			sourceTree = "<group>";
 		};
 		AF5151502316C87600F88B6A /* Places */ = {
@@ -1510,6 +1536,7 @@
 		AFBBD770237B706F00F6C33C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AF28645D23951FC600E9E845 /* Hits */,
 				AFC60874237F1AC400B10B58 /* AttributedStringWithTaggedStringTests.swift */,
 				AFC60883237F1AC500B10B58 /* CallbackTester.swift */,
 				AFC6086D237F1AC400B10B58 /* DisjunctiveFacetingsTests.swift */,
@@ -1517,7 +1544,6 @@
 				AFC6088A237F1AC500B10B58 /* FacetResultsTests.swift */,
 				AFC60875237F1AC400B10B58 /* FilterState */,
 				AFC6088D237F1AC500B10B58 /* Helpers.swift */,
-				AFC60889237F1AC500B10B58 /* HitsInteractorTests.swift */,
 				AFC60888237F1AC500B10B58 /* HitTests.swift */,
 				AFC60886237F1AC500B10B58 /* InfiniteScrollingControllerTests.swift */,
 				AFC6086E237F1AC400B10B58 /* Integration */,
@@ -1743,7 +1769,6 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				AF2863FD238D805F00E9E845 /* Connectors */,
 				AF9396872298153800757257 /* FilterClear */,
 				AFC2E281228ED52900859EBA /* Common */,
 				E2EBE72A22B1330500B91B23 /* CurrentFilters */,
@@ -2593,8 +2618,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC60939237F1B2500B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AF28646F239572B800E9E845 /* TestHitsController.swift in Sources */,
 				AFC6093A237F1B2500B10B58 /* CallbackTester.swift in Sources */,
 				AFC6093B237F1B2500B10B58 /* DisjunctiveFacetingsTests.swift in Sources */,
+				AF2864632395212000E9E845 /* TestInfiniteScrollingController.swift in Sources */,
 				AFC6093C237F1B2500B10B58 /* FacetListInteractorTests.swift in Sources */,
 				AFC6093D237F1B2500B10B58 /* FacetResultsTests.swift in Sources */,
 				AFC6093E237F1B2500B10B58 /* FilterGroupTests.swift in Sources */,
@@ -2603,6 +2630,7 @@
 				AFC60941237F1B2500B10B58 /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC60942237F1B2500B10B58 /* FilterStateTests.swift in Sources */,
 				AFC60943237F1B2500B10B58 /* Helpers.swift in Sources */,
+				AF28645F2395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift in Sources */,
 				AFC60944237F1B2500B10B58 /* HitsInteractorTests.swift in Sources */,
 				AFC60945237F1B2500B10B58 /* HitTests.swift in Sources */,
 				AFC60946237F1B2500B10B58 /* InfiniteScrollingControllerTests.swift in Sources */,
@@ -2614,10 +2642,12 @@
 				AFC6094C237F1B2500B10B58 /* MultiIndexHitsInteractorTests.swift in Sources */,
 				AFC6094D237F1B2500B10B58 /* PageMapTests.swift in Sources */,
 				AFC6094E237F1B2500B10B58 /* PaginatorTests.swift in Sources */,
+				AF28646B239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6094F237F1B2500B10B58 /* QueryInputInteractorTests.swift in Sources */,
 				AFC60950237F1B2500B10B58 /* RefinementListPresenterTests.swift in Sources */,
 				AFC60951237F1B2500B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC60952237F1B2500B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
+				AF2864672395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
 				AFC60953237F1B2500B10B58 /* SelectableInteractorTests.swift in Sources */,
 				AFC60954237F1B2500B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60955237F1B2500B10B58 /* SelectableListInteractorTests.swift in Sources */,
@@ -2837,8 +2867,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC60917237F1B1A00B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AF286470239572B800E9E845 /* TestHitsController.swift in Sources */,
 				AFC60918237F1B1A00B10B58 /* CallbackTester.swift in Sources */,
 				AFC60919237F1B1A00B10B58 /* DisjunctiveFacetingsTests.swift in Sources */,
+				AF2864642395212000E9E845 /* TestInfiniteScrollingController.swift in Sources */,
 				AFC6091A237F1B1A00B10B58 /* FacetListInteractorTests.swift in Sources */,
 				AFC6091B237F1B1A00B10B58 /* FacetResultsTests.swift in Sources */,
 				AFC6091C237F1B1A00B10B58 /* FilterGroupTests.swift in Sources */,
@@ -2847,6 +2879,7 @@
 				AFC6091F237F1B1A00B10B58 /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC60920237F1B1A00B10B58 /* FilterStateTests.swift in Sources */,
 				AFC60921237F1B1A00B10B58 /* Helpers.swift in Sources */,
+				AF2864602395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift in Sources */,
 				AFC60922237F1B1A00B10B58 /* HitsInteractorTests.swift in Sources */,
 				AFC60923237F1B1A00B10B58 /* HitTests.swift in Sources */,
 				AFC60924237F1B1A00B10B58 /* InfiniteScrollingControllerTests.swift in Sources */,
@@ -2858,10 +2891,12 @@
 				AFC6092A237F1B1B00B10B58 /* MultiIndexHitsInteractorTests.swift in Sources */,
 				AFC6092B237F1B1B00B10B58 /* PageMapTests.swift in Sources */,
 				AFC6092C237F1B1B00B10B58 /* PaginatorTests.swift in Sources */,
+				AF28646C239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6092D237F1B1B00B10B58 /* QueryInputInteractorTests.swift in Sources */,
 				AFC6092E237F1B1B00B10B58 /* RefinementListPresenterTests.swift in Sources */,
 				AFC6092F237F1B1B00B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC60930237F1B1B00B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
+				AF2864682395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
 				AFC60931237F1B1B00B10B58 /* SelectableInteractorTests.swift in Sources */,
 				AFC60932237F1B1B00B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60933237F1B1B00B10B58 /* SelectableListInteractorTests.swift in Sources */,
@@ -3081,8 +3116,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC608F5237F1B0D00B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
+				AF286471239572B800E9E845 /* TestHitsController.swift in Sources */,
 				AFC608F6237F1B0D00B10B58 /* CallbackTester.swift in Sources */,
 				AFC608F7237F1B0D00B10B58 /* DisjunctiveFacetingsTests.swift in Sources */,
+				AF2864652395212000E9E845 /* TestInfiniteScrollingController.swift in Sources */,
 				AFC608F8237F1B0D00B10B58 /* FacetListInteractorTests.swift in Sources */,
 				AFC608F9237F1B0D00B10B58 /* FacetResultsTests.swift in Sources */,
 				AFC608FA237F1B0D00B10B58 /* FilterGroupTests.swift in Sources */,
@@ -3091,6 +3128,7 @@
 				AFC608FD237F1B0D00B10B58 /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC608FE237F1B0D00B10B58 /* FilterStateTests.swift in Sources */,
 				AFC608FF237F1B0D00B10B58 /* Helpers.swift in Sources */,
+				AF2864612395204600E9E845 /* HitsInteractorSearcherConnectionTests.swift in Sources */,
 				AFC60900237F1B0D00B10B58 /* HitsInteractorTests.swift in Sources */,
 				AFC60901237F1B0D00B10B58 /* HitTests.swift in Sources */,
 				AFC60902237F1B0D00B10B58 /* InfiniteScrollingControllerTests.swift in Sources */,
@@ -3102,10 +3140,12 @@
 				AFC60908237F1B0D00B10B58 /* MultiIndexHitsInteractorTests.swift in Sources */,
 				AFC60909237F1B0D00B10B58 /* PageMapTests.swift in Sources */,
 				AFC6090A237F1B0D00B10B58 /* PaginatorTests.swift in Sources */,
+				AF28646D239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6090B237F1B0D00B10B58 /* QueryInputInteractorTests.swift in Sources */,
 				AFC6090C237F1B0D00B10B58 /* RefinementListPresenterTests.swift in Sources */,
 				AFC6090D237F1B0D00B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC6090E237F1B0D00B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
+				AF2864692395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
 				AFC6090F237F1B0D00B10B58 /* SelectableInteractorTests.swift in Sources */,
 				AFC60910237F1B0D00B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60911237F1B0D00B10B58 /* SelectableListInteractorTests.swift in Sources */,

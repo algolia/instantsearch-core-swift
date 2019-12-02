@@ -16,30 +16,6 @@ extension Index {
   
 }
 
-class TestInfiniteScrollingController: InfiniteScrollable {
-  
-  var lastPageIndex: Int?
-  
-  var pageLoader: PageLoadable?
-  
-  var pendingPages = Set<Int>()
-  
-  var didCalculatePages: ((Int, Int) -> Void)?
-  
-  func calculatePagesAndLoad<T>(currentRow: Int, offset: Int, pageMap: PageMap<T>) {
-    didCalculatePages?(currentRow, offset)
-  }
-  
-  func notifyPending(pageIndex: Int) {
-    pendingPages.remove(pageIndex)
-  }
-  
-  func notifyPendingAll() {
-    pendingPages.removeAll()
-  }
-  
-}
-
 class HitsInteractorTests: XCTestCase {
   
   func testConstructionWithExplicitSettings() {
@@ -238,86 +214,8 @@ class HitsInteractorTests: XCTestCase {
     
   }
   
-  func testConnectFilterState() {
-    
-    let pc = Paginator<JSON>()
-    
-    let page1 = ["i1", "i2", "i3"].map { JSON.string($0) }
-    pc.pageMap = PageMap([1:  page1])
-    
-    let isc = TestInfiniteScrollingController()
-    isc.pendingPages = [0, 2]
-    
-    let vm = HitsInteractor(
-      settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
-      paginationController: pc,
-      infiniteScrollingController: isc)
-    
-    let fs = FilterState()
-    
-    vm.connectFilterState(fs)
-    
-    let exp = expectation(description: "change query when filter state changed")
-    
-    vm.onRequestChanged.subscribe(with: self) { _, _ in
-      exp.fulfill()
-    }
-    
-    fs.add(Filter.Tag("t"), toGroupWithID: .and(name: ""))
-    fs.notifyChange()
-    
-    waitForExpectations(timeout: 2, handler: nil)
-    
-  }
+ 
   
-  func testConnectSearcher() {
-    
-    let pc = Paginator<JSON>()
-    
-    let page1 = ["i1", "i2", "i3"].map { JSON.string($0) }
-    pc.pageMap = PageMap([1:  page1])
-    
-    let isc = TestInfiniteScrollingController()
-    isc.pendingPages = [0, 2]
-    
-    let vm = HitsInteractor(
-      settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
-      paginationController: pc,
-      infiniteScrollingController: isc)
-    
-    let searcher = SingleIndexSearcher(index: .test)
-    
-    vm.connectSearcher(searcher)
-    
-    XCTAssertTrue(searcher === isc.pageLoader)
-    
-    let queryChangedExpectation = expectation(description: "query changed")
-    
-    vm.onRequestChanged.subscribe(with: self) { _, _ in
-      queryChangedExpectation.fulfill()
-    }
-    
-    searcher.query = "query"
-    searcher.indexQueryState.query.page = 0
-    isc.pendingPages = [0]
-    
-    let resultsUpdatedExpectation = expectation(description: "results updated")
-    
-    vm.onResultsUpdated.subscribe(with: self) { _, _ in
-      resultsUpdatedExpectation.fulfill()
-      XCTAssertTrue(isc.pendingPages.isEmpty)
-    }
-    
-    let searchResults = SearchResults(hits: [.string("r")], stats: .init())
-    searcher.onResults.fire(searchResults)
-    
-    isc.pendingPages = [0]
-    searcher.onError.fire((searcher.indexQueryState.query, NSError()))
-    XCTAssertTrue(isc.pendingPages.isEmpty)
-    
-    waitForExpectations(timeout: 2, handler: nil)
-    
-  }
   
 }
 
