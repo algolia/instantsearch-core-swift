@@ -7,3 +7,22 @@
 //
 
 import Foundation
+
+public class ConnectionHandler: Connection {
+  
+  public var connections: [Connection]
+  
+  public init(connections: [Connection] = []) {
+    self.connections = connections
+    connect()
+  }
+  
+  public func connect() {
+    connections.forEach { $0.connect() }
+  }
+  
+  public func disconnect() {
+    connections.forEach { $0.disconnect() }
+  }
+  
+}
