@@ -27,7 +27,7 @@ public struct HitsInteractorFilterStateConnection<Interactor: AnyHitsInteractor>
 
 public extension AnyHitsInteractor {
   
-  @discardableResult func connectFilterState(_ filterState: FilterState) -> HitsInteractorFilterStateConnection<Self> {
+  @discardableResult func connectFilterState(_ filterState: FilterState) -> Connection {
     let connection = HitsInteractorFilterStateConnection(interactor: self, filterState: filterState)
     connection.connect()
     return connection
