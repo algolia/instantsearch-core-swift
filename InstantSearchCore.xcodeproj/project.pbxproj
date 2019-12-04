@@ -491,6 +491,18 @@
 		AFBF37692285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */; };
 		AFBF376A2285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */; };
 		AFBF376B2285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */; };
+		AFC1565B23980A80008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1564C23980A4F008AC1A0 /* QueryInputSearcherConnectionTests.swift */; };
+		AFC1565D23980A80008AC1A0 /* QueryInputControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1565623980A77008AC1A0 /* QueryInputControllerConnectionTests.swift */; };
+		AFC1565E23980A81008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1564C23980A4F008AC1A0 /* QueryInputSearcherConnectionTests.swift */; };
+		AFC1566023980A81008AC1A0 /* QueryInputControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1565623980A77008AC1A0 /* QueryInputControllerConnectionTests.swift */; };
+		AFC1566123980A82008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1564C23980A4F008AC1A0 /* QueryInputSearcherConnectionTests.swift */; };
+		AFC1566323980A82008AC1A0 /* QueryInputControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1565623980A77008AC1A0 /* QueryInputControllerConnectionTests.swift */; };
+		AFC1566523980AAD008AC1A0 /* TestQueryInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1566423980AAD008AC1A0 /* TestQueryInputController.swift */; };
+		AFC1566623980AAD008AC1A0 /* TestQueryInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1566423980AAD008AC1A0 /* TestQueryInputController.swift */; };
+		AFC1566723980AAD008AC1A0 /* TestQueryInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1566423980AAD008AC1A0 /* TestQueryInputController.swift */; };
+		AFC1566923980ABB008AC1A0 /* TestSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1566823980ABB008AC1A0 /* TestSearcher.swift */; };
+		AFC1566A23980ABB008AC1A0 /* TestSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1566823980ABB008AC1A0 /* TestSearcher.swift */; };
+		AFC1566B23980ABB008AC1A0 /* TestSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC1566823980ABB008AC1A0 /* TestSearcher.swift */; };
 		AFC2E283228ED58300859EBA /* FilterListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E282228ED58300859EBA /* FilterListController.swift */; };
 		AFC2E284228ED58300859EBA /* FilterListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E282228ED58300859EBA /* FilterListController.swift */; };
 		AFC2E285228ED58300859EBA /* FilterListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC2E282228ED58300859EBA /* FilterListController.swift */; };
@@ -1110,6 +1122,10 @@
 		AFBF375D2285D5C600787D24 /* FilterConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConverter.swift; sourceTree = "<group>"; };
 		AFBF37622285D5D300787D24 /* FilterGroupConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupConverter.swift; sourceTree = "<group>"; };
 		AFBF37672285D8F100787D24 /* SelectableSegmentInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableSegmentInteractor.swift; sourceTree = "<group>"; };
+		AFC1564C23980A4F008AC1A0 /* QueryInputSearcherConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputSearcherConnectionTests.swift; sourceTree = "<group>"; };
+		AFC1565623980A77008AC1A0 /* QueryInputControllerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryInputControllerConnectionTests.swift; sourceTree = "<group>"; };
+		AFC1566423980AAD008AC1A0 /* TestQueryInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestQueryInputController.swift; sourceTree = "<group>"; };
+		AFC1566823980ABB008AC1A0 /* TestSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSearcher.swift; sourceTree = "<group>"; };
 		AFC2E282228ED58300859EBA /* FilterListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterListController.swift; sourceTree = "<group>"; };
 		AFC2E287228ED80200859EBA /* FilterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPresenter.swift; sourceTree = "<group>"; };
 		AFC2E291228ED8A300859EBA /* FilterListInteractor+Facet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterListInteractor+Facet.swift"; sourceTree = "<group>"; };
@@ -1536,6 +1552,7 @@
 		AFBBD770237B706F00F6C33C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AFC1564B2398099A008AC1A0 /* QueryInput */,
 				AF28645D23951FC600E9E845 /* Hits */,
 				AFC60874237F1AC400B10B58 /* AttributedStringWithTaggedStringTests.swift */,
 				AFC60883237F1AC500B10B58 /* CallbackTester.swift */,
@@ -1551,7 +1568,6 @@
 				AFC60887237F1AC500B10B58 /* MultiIndexHitsInteractorTests.swift */,
 				AFC6087C237F1AC400B10B58 /* PageMapTests.swift */,
 				AFC6087D237F1AC400B10B58 /* PaginatorTests.swift */,
-				AFC60885237F1AC500B10B58 /* QueryInputInteractorTests.swift */,
 				AFC6087B237F1AC400B10B58 /* RefinementListPresenterTests.swift */,
 				AFC6086C237F1AC400B10B58 /* SearchResultsTests.swift */,
 				AFC6087E237F1AC400B10B58 /* SelectableInteractorConnectorsTests.swift */,
@@ -1565,6 +1581,18 @@
 				AFC6088E237F1AC500B10B58 /* TaggedStringTests.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		AFC1564B2398099A008AC1A0 /* QueryInput */ = {
+			isa = PBXGroup;
+			children = (
+				AFC60885237F1AC500B10B58 /* QueryInputInteractorTests.swift */,
+				AFC1564C23980A4F008AC1A0 /* QueryInputSearcherConnectionTests.swift */,
+				AFC1565623980A77008AC1A0 /* QueryInputControllerConnectionTests.swift */,
+				AFC1566423980AAD008AC1A0 /* TestQueryInputController.swift */,
+				AFC1566823980ABB008AC1A0 /* TestSearcher.swift */,
+			);
+			path = QueryInput;
 			sourceTree = "<group>";
 		};
 		AFC2E280228ED4DF00859EBA /* FilterList */ = {
@@ -2617,6 +2645,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC1566123980A82008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC60939237F1B2500B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
 				AF28646F239572B800E9E845 /* TestHitsController.swift in Sources */,
 				AFC6093A237F1B2500B10B58 /* CallbackTester.swift in Sources */,
@@ -2645,12 +2674,15 @@
 				AF28646B239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6094F237F1B2500B10B58 /* QueryInputInteractorTests.swift in Sources */,
 				AFC60950237F1B2500B10B58 /* RefinementListPresenterTests.swift in Sources */,
+				AFC1566523980AAD008AC1A0 /* TestQueryInputController.swift in Sources */,
 				AFC60951237F1B2500B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC60952237F1B2500B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
 				AF2864672395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
+				AFC1566323980A82008AC1A0 /* QueryInputControllerConnectionTests.swift in Sources */,
 				AFC60953237F1B2500B10B58 /* SelectableInteractorTests.swift in Sources */,
 				AFC60954237F1B2500B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60955237F1B2500B10B58 /* SelectableListInteractorTests.swift in Sources */,
+				AFC1566923980ABB008AC1A0 /* TestSearcher.swift in Sources */,
 				AFC60956237F1B2500B10B58 /* SelectableSegmentInteractorConnectorsTests.swift in Sources */,
 				AFC60957237F1B2500B10B58 /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFC60958237F1B2500B10B58 /* SequencerTest.swift in Sources */,
@@ -2866,6 +2898,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC1565E23980A81008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC60917237F1B1A00B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
 				AF286470239572B800E9E845 /* TestHitsController.swift in Sources */,
 				AFC60918237F1B1A00B10B58 /* CallbackTester.swift in Sources */,
@@ -2894,12 +2927,15 @@
 				AF28646C239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6092D237F1B1B00B10B58 /* QueryInputInteractorTests.swift in Sources */,
 				AFC6092E237F1B1B00B10B58 /* RefinementListPresenterTests.swift in Sources */,
+				AFC1566623980AAD008AC1A0 /* TestQueryInputController.swift in Sources */,
 				AFC6092F237F1B1B00B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC60930237F1B1B00B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
 				AF2864682395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
+				AFC1566023980A81008AC1A0 /* QueryInputControllerConnectionTests.swift in Sources */,
 				AFC60931237F1B1B00B10B58 /* SelectableInteractorTests.swift in Sources */,
 				AFC60932237F1B1B00B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60933237F1B1B00B10B58 /* SelectableListInteractorTests.swift in Sources */,
+				AFC1566A23980ABB008AC1A0 /* TestSearcher.swift in Sources */,
 				AFC60934237F1B1B00B10B58 /* SelectableSegmentInteractorConnectorsTests.swift in Sources */,
 				AFC60935237F1B1B00B10B58 /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFC60936237F1B1B00B10B58 /* SequencerTest.swift in Sources */,
@@ -3115,6 +3151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFC1565B23980A80008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC608F5237F1B0D00B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
 				AF286471239572B800E9E845 /* TestHitsController.swift in Sources */,
 				AFC608F6237F1B0D00B10B58 /* CallbackTester.swift in Sources */,
@@ -3143,12 +3180,15 @@
 				AF28646D239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6090B237F1B0D00B10B58 /* QueryInputInteractorTests.swift in Sources */,
 				AFC6090C237F1B0D00B10B58 /* RefinementListPresenterTests.swift in Sources */,
+				AFC1566723980AAD008AC1A0 /* TestQueryInputController.swift in Sources */,
 				AFC6090D237F1B0D00B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC6090E237F1B0D00B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
 				AF2864692395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
+				AFC1565D23980A80008AC1A0 /* QueryInputControllerConnectionTests.swift in Sources */,
 				AFC6090F237F1B0D00B10B58 /* SelectableInteractorTests.swift in Sources */,
 				AFC60910237F1B0D00B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60911237F1B0D00B10B58 /* SelectableListInteractorTests.swift in Sources */,
+				AFC1566B23980ABB008AC1A0 /* TestSearcher.swift in Sources */,
 				AFC60912237F1B0D00B10B58 /* SelectableSegmentInteractorConnectorsTests.swift in Sources */,
 				AFC60913237F1B0D00B10B58 /* SelectableSegmentInteractorTests.swift in Sources */,
 				AFC60914237F1B0D00B10B58 /* SequencerTest.swift in Sources */,
