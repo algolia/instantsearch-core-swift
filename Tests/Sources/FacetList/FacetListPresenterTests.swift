@@ -1,5 +1,5 @@
 //
-//  RefinementListInteractorTests.swift
+//  FacetListInteractorTests.swift
 //  InstantSearchCore
 //
 //  Created by Guy Daher on 18/03/2019.
@@ -7,11 +7,10 @@
 //
 
 import Foundation
-
 @testable import InstantSearchCore
 import XCTest
 
-class RefinementListPresenterTests: XCTestCase {
+class FacetListPresenterTests: XCTestCase {
 
   func testCountDescSelectedOnTop() {
     
