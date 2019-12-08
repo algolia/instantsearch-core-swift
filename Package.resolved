@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "AlgoliaSearch",
+        "package": "InstantSearchClient",
         "repositoryURL": "https://github.com/algolia/algoliasearch-client-swift",
         "state": {
-          "branch": null,
-          "revision": "5a98a1b15b0cadba192f728d16a86ea03f05c5b5",
-          "version": "7.0.0"
+          "branch": "release/7.0.2",
+          "revision": "281736ddd41f9f93e7d60311bb41380da0ceec00",
+          "version": null
         }
       }
     ]

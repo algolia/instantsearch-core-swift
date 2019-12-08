@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 extension Query {
   

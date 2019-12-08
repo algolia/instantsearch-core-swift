@@ -9,6 +9,7 @@
 import Foundation
 @testable import InstantSearchCore
 import XCTest
+import InstantSearchClient
 
 extension Index {
   

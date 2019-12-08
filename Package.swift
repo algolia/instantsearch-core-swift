@@ -21,10 +21,10 @@ let package = Package(
         .target(
             name: "InstantSearchCore",
             dependencies: ["InstantSearchClient"],
-	    path: "./Sources"),
+            path: "./Sources"),
         .testTarget(
-            name: "instantsearch-core-swiftTests",
-            dependencies: ["InstantSearchCore"],
+            name: "InstantSearchCoreTests",
+            dependencies: ["InstantSearchCore", "InstantSearchClient"],
             path: "./Tests/Sources"),
     ]
 )

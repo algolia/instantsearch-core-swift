@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 public struct SelectableFilterInteractorSearcherConnection<Filter: FilterType>: Connection {
   

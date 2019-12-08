@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import InstantSearchClient
 import XCTest
+import InstantSearchClient
 
 /// Abstract base class for online test cases.
 ///

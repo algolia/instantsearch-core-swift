@@ -7,7 +7,6 @@
 //
 
 import Foundation
-@_exported import InstantSearchClient
 
 //TODO: Add exhaustive nb hits
 //TODO: Add hierarchicalFacet serialisation

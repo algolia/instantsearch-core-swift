@@ -22,7 +22,6 @@
 //
 
 import Foundation
-import InstantSearchClient
 
 /// Manages a sequence of operations.
 /// A `Sequencer` keeps track of the order in which operations have been issued, and cancels obsolete requests whenever a

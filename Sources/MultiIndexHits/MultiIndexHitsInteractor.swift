@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 /**
  Interactor which constitutes the aggregation of nested hits interactors providing a convenient functions for managing them.

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 /** An entity performing search queries targeting multiple indices.
 */
