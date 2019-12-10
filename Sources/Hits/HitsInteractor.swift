@@ -209,7 +209,7 @@ extension HitsInteractor {
         hitsInteractor.infiniteScrollingController.notifyPendingAll()
       }
       
-      hitsInteractor.paginator.invalidate()
+      hitsInteractor.paginator.replacePageMap = true
       hitsInteractor.onRequestChanged.fire(())
     }
     
