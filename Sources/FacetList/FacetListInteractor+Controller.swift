@@ -15,6 +15,17 @@ extension FacetList {
     public let facetListInteractor: FacetListInteractor
     public let controller: Controller
     public let presenter: SelectableListPresentable?
+    public let externalReload: Bool
+    
+    public init(facetListInteractor: FacetListInteractor,
+                controller: Controller,
+                presenter: SelectableListPresentable? = nil,
+                externalReload: Bool) {
+      self.facetListInteractor = facetListInteractor
+      self.controller = controller
+      self.presenter = presenter
+      self.externalReload = externalReload
+    }
     
     public func connect() {
       
@@ -60,8 +71,13 @@ extension FacetList {
 
 public extension FacetListInteractor {
   
-  @discardableResult func connectController<C: FacetListController>(_ controller: C, with presenter: SelectableListPresentable? = nil) -> FacetList.ControllerConnection<C> {
-    let connection = FacetList.ControllerConnection(facetListInteractor: self, controller: controller, presenter: presenter)
+  @discardableResult func connectController<C: FacetListController>(_ controller: C,
+                                                                    with presenter: SelectableListPresentable? = nil,
+                                                                    externalReload: Bool = false) -> FacetList.ControllerConnection<C> {
+    let connection = FacetList.ControllerConnection(facetListInteractor: self,
+                                                    controller: controller,
+                                                    presenter: presenter,
+                                                    externalReload: externalReload)
     connection.connect()
     return connection
   }
