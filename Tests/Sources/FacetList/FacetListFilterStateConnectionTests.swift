@@ -17,7 +17,7 @@ class FacetListFilterStateConnectionTests: XCTestCase {
   let facets: [Facet] = .init(prefix: "v", count: 4)
   
   func testConnect() {
-    let interactor = FacetListInteractor(items: facets, selectionMode: .single)
+    let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let filterState = FilterState()
     
     let connection = FacetList.FilterStateConnection(interactor: interactor,
@@ -37,7 +37,7 @@ class FacetListFilterStateConnectionTests: XCTestCase {
   
   func testConnectFunction() {
     
-    let interactor = FacetListInteractor(items: facets, selectionMode: .single)
+    let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let filterState = FilterState()
     
     interactor.connectFilterState(filterState, with: attribute, operator: .and, groupName: groupName)
@@ -52,7 +52,7 @@ class FacetListFilterStateConnectionTests: XCTestCase {
   
   func testDisconnect() {
     
-    let interactor = FacetListInteractor(items: facets, selectionMode: .single)
+    let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let filterState = FilterState()
     
     let connection = FacetList.FilterStateConnection(interactor: interactor,

@@ -14,6 +14,15 @@ public extension HitsInteractor {
     
     public let interactor: HitsInteractor
     public let controller: Controller
+    public let externalReload: Bool
+    
+    public init(interactor: HitsInteractor,
+                controller: Controller,
+                externalReload: Bool = false) {
+      self.interactor = interactor
+      self.controller = controller
+      self.externalReload = externalReload
+    }
     
     public func connect() {
       controller.hitsSource = interactor
@@ -22,9 +31,11 @@ public extension HitsInteractor {
         controller.scrollToTop()
       }.onQueue(.main)
       
-      interactor.onResultsUpdated.subscribePast(with: controller) { controller, _ in
-        controller.reload()
-      }.onQueue(.main)
+      if !externalReload {
+        interactor.onResultsUpdated.subscribePast(with: controller) { controller, _ in
+          controller.reload()
+        }.onQueue(.main)
+      }
     }
     
     public func disconnect() {
@@ -32,7 +43,9 @@ public extension HitsInteractor {
         controller.hitsSource = nil
       }
       interactor.onRequestChanged.cancelSubscription(for: controller)
-      interactor.onResultsUpdated.cancelSubscription(for: controller)
+      if !externalReload {
+        interactor.onResultsUpdated.cancelSubscription(for: controller)
+      }
     }
     
   }

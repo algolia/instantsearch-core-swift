@@ -23,7 +23,7 @@ class FacetListFacetSearcherConnectionTests: XCTestCase {
     let interactor = FacetListInteractor(selectionMode: .single)
     let searcher = FacetSearcher(appID: "", apiKey: "", indexName: "", facetName: "facet")
     
-    let connection = FacetListInteractor.FacetSearcherConnection(facetListInteractor: interactor, facetSearcher: searcher)
+    let connection = FacetListInteractor.FacetSearcherConnection(interactor: interactor, searcher: searcher)
     connection.connect()
     
     check(interactor: interactor, searcher: searcher, isConnected: true)
@@ -46,7 +46,7 @@ class FacetListFacetSearcherConnectionTests: XCTestCase {
     let interactor = FacetListInteractor(selectionMode: .single)
     let searcher = FacetSearcher(appID: "", apiKey: "", indexName: "", facetName: "facet")
     
-    let connection = FacetListInteractor.FacetSearcherConnection(facetListInteractor: interactor, facetSearcher: searcher)
+    let connection = FacetListInteractor.FacetSearcherConnection(interactor: interactor, searcher: searcher)
     connection.connect()
     connection.disconnect()
     

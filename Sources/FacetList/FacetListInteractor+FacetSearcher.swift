@@ -12,21 +12,21 @@ public extension FacetListInteractor {
   
   struct FacetSearcherConnection: Connection {
     
-    public let facetListInteractor: FacetListInteractor
-    public let facetSearcher: FacetSearcher
+    public let interactor: FacetListInteractor
+    public let searcher: FacetSearcher
     
     public func connect() {
       
       // When new facet search results then update items
       
-      facetSearcher.onResults.subscribePast(with: facetListInteractor) { interactor, searchResults in
-        interactor.items = searchResults.facetHits
+      searcher.onResults.subscribePast(with: interactor) { interactor, facetResults in
+        interactor.update(facetResults)
       }
       
       // For the case of SFFV, very possible that we forgot to add the
       // attribute as searchable in `attributesForFaceting`.
       
-      facetSearcher.onError.subscribe(with: facetListInteractor) { _, error in
+      searcher.onError.subscribe(with: interactor) { _, error in
         if let error = error.1 as? HTTPError, error.statusCode == StatusCode.badRequest.rawValue {
           assertionFailure(error.message ?? "")
         }
@@ -35,8 +35,8 @@ public extension FacetListInteractor {
     }
     
     public func disconnect() {
-      facetSearcher.onResults.cancelSubscription(for: facetListInteractor)
-      facetSearcher.onError.cancelSubscription(for: facetListInteractor)
+      searcher.onResults.cancelSubscription(for: interactor)
+      searcher.onError.cancelSubscription(for: interactor)
     }
     
   }
@@ -46,7 +46,7 @@ public extension FacetListInteractor {
 public extension FacetListInteractor {
   
   @discardableResult func connectFacetSearcher(_ facetSearcher: FacetSearcher) -> FacetSearcherConnection {
-    let connection = FacetSearcherConnection(facetListInteractor: self, facetSearcher: facetSearcher)
+    let connection = FacetSearcherConnection(interactor: self, searcher: facetSearcher)
     connection.connect()
     return connection
   }

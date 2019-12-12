@@ -86,7 +86,7 @@ public class FacetListConnector: Connection {
                           groupName: String? = nil) {
     self.init(searcher: .singleIndex(searcher),
               filterState: filterState,
-              interactor: .init(items: facets, selectionMode: selectionMode),
+              interactor: .init(facets: facets, selectionMode: selectionMode),
               attribute: attribute,
               operator: `operator`,
               groupName: groupName)
@@ -101,14 +101,12 @@ public class FacetListConnector: Connection {
                           groupName: String? = nil) {
     self.init(searcher: .facet(searcher),
               filterState: filterState,
-              interactor: .init(items: facets, selectionMode: selectionMode),
+              interactor: .init(facets: facets, selectionMode: selectionMode),
               attribute: attribute,
               operator: `operator`,
               groupName: groupName)
   }
 
-
-    
   public func connect() {
     filterStateConnection.connect()
     searcherConnection.connect()

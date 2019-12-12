@@ -52,9 +52,9 @@ public extension HitsInteractor {
   
 }
 
-extension HitsInteractor {
+public extension HitsInteractor {
   
-  @discardableResult public func connectSearcher(_ searcher: SingleIndexSearcher) -> SingleIndexSearcherConnection {
+  @discardableResult func connectSearcher(_ searcher: SingleIndexSearcher) -> SingleIndexSearcherConnection {
     let connection = SingleIndexSearcherConnection(interactor: self, searcher: searcher)
     connection.connect()
     return connection

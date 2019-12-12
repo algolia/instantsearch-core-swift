@@ -8,12 +8,34 @@
 
 import Foundation
 
-public typealias FacetListInteractor = SelectableListInteractor<String, Facet>
-
-public extension FacetListInteractor {
+public class FacetListInteractor: SelectableListInteractor<String, Facet> {
   
-  convenience init(selectionMode: SelectionMode = .multiple) {
-    self.init(items: [], selectionMode: selectionMode)
+  public let onResultsUpdated: Observer<FacetResults>
+  private let mutationQueue: OperationQueue
+
+  public init(facets: [Facet] = [], selectionMode: SelectionMode = .multiple) {
+    self.onResultsUpdated = .init()
+    self.mutationQueue = .init()
+    super.init(items: facets, selectionMode: selectionMode)
+    self.mutationQueue.maxConcurrentOperationCount = 1
+    self.mutationQueue.qualityOfService = .userInitiated
+  }
+
+}
+
+extension FacetListInteractor: ResultUpdatable {
+    
+  @discardableResult public func update(_ facetResults: FacetResults) -> Operation {
+    
+    let updateOperation = BlockOperation { [weak self] in
+      self?.items = facetResults.facetHits
+      self?.onResultsUpdated.fire(facetResults)
+    }
+    
+    mutationQueue.addOperation(updateOperation)
+    
+    return updateOperation
+    
   }
   
 }

@@ -20,7 +20,7 @@ class FacetListControllerConnectionTests: XCTestCase {
     
   func testConnect() {
     
-    let interactor = FacetListInteractor(items: facets, selectionMode: .single)
+    let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let controller = TestFacetListController()
 
     let connection = FacetList.ControllerConnection(facetListInteractor: interactor, controller: controller, presenter: FacetListPresenter())
@@ -33,7 +33,7 @@ class FacetListControllerConnectionTests: XCTestCase {
   
   func testConnectFunction() {
     
-    let interactor = FacetListInteractor(items: facets, selectionMode: .single)
+    let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let controller = TestFacetListController()
     
     interactor.connectController(controller)
@@ -45,7 +45,7 @@ class FacetListControllerConnectionTests: XCTestCase {
   }
   
   func testDisconnect() {
-    let interactor = FacetListInteractor(items: facets, selectionMode: .single)
+    let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let controller = TestFacetListController()
 
     let connection = FacetList.ControllerConnection(facetListInteractor: interactor, controller: controller, presenter: FacetListPresenter())
