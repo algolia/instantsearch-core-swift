@@ -1,5 +1,5 @@
 //
-//  MultiSearchConnection.swift
+//  MultiSourceReloadNotifier.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 10/12/2019.
@@ -7,6 +7,38 @@
 //
 
 import Foundation
+
+public class MultiSourceReloadNotifier {
+  
+  public let target: Reloadable
+  
+  private var resultsUpdatableWrappers: [ResultsUpdatableNotificationWrapper] = []
+  
+  public init(target: Reloadable) {
+    self.target = target
+    self.resultsUpdatableWrappers = []
+  }
+    
+  public func register<Updatable: ResultUpdatable>(_ updatable: Updatable) {
+    let wrapper = ResultsUpdatableNotificationWrapper(updatable: updatable)
+    wrapper.connect()
+    resultsUpdatableWrappers.append(wrapper)
+  }
+  
+  public func notifyReload() {
+    let group = DispatchGroup()
+    for updatable in resultsUpdatableWrappers {
+      group.enter()
+      updatable.onResultsUpdated.subscribeOnce(with: self) { (_, _) in
+        group.leave()
+      }
+    }
+    group.notify(queue: .main) { [weak self] in
+      self?.target.reload()
+    }
+  }
+  
+}
 
 private class ResultsUpdatableNotificationWrapper: Connection {
   
@@ -37,38 +69,6 @@ private class ResultsUpdatableNotificationWrapper: Connection {
   
   public func disconnect() {
     unsubscribe()
-  }
-  
-}
-
-public class MultiSourceReloadNotifier {
-  
-  public let target: Reloadable
-  
-  private var resultsUpdatableWrappers: [ResultsUpdatableNotificationWrapper] = []
-  
-  public init(target: Reloadable) {
-    self.target = target
-    self.resultsUpdatableWrappers = []
-  }
-    
-  func register<Updatable: ResultUpdatable>(_ updatable: Updatable) {
-    let wrapper = ResultsUpdatableNotificationWrapper(updatable: updatable)
-    wrapper.connect()
-    resultsUpdatableWrappers.append(wrapper)
-  }
-  
-  func notifyReload() {
-    let group = DispatchGroup()
-    for updatable in resultsUpdatableWrappers {
-      group.enter()
-      updatable.onResultsUpdated.subscribeOnce(with: self) { (_, _) in
-        group.leave()
-      }
-    }
-    group.notify(queue: .main) { [weak self] in
-      self?.target.reload()
-    }
   }
   
 }
