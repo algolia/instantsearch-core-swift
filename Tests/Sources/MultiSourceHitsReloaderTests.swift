@@ -44,11 +44,11 @@ class MultiSourceHitsReloaderTests: XCTestCase {
     
     let controller = TestHitsController<Int>()
     
-    let connection = MultiSourceHitsReloader(controller: controller)
+    let connection = MultiSourceReloadNotifier(target: controller)
     
-    connection.subscribe(interactor1)
-    connection.subscribe(interactor2)
-    connection.subscribe(interactor3)
+    connection.register(interactor1)
+    connection.register(interactor2)
+    connection.register(interactor3)
     
     let reloadExpectation = expectation(description: "Reload")
     

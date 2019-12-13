@@ -20,7 +20,7 @@ extension FacetList {
     public init(facetListInteractor: FacetListInteractor,
                 controller: Controller,
                 presenter: SelectableListPresentable? = nil,
-                externalReload: Bool) {
+                externalReload: Bool = false) {
       self.facetListInteractor = facetListInteractor
       self.controller = controller
       self.presenter = presenter

@@ -29,7 +29,6 @@ private class ResultsUpdatableNotificationWrapper: Connection {
       guard let wrapper = self else { return }
       updatable.onResultsUpdated.cancelSubscription(for: wrapper)
     }
-    connect()
   }
   
   public func connect() {
@@ -42,34 +41,34 @@ private class ResultsUpdatableNotificationWrapper: Connection {
   
 }
 
-public class MultiSourceHitsReloader<Controller: HitsController> {
+public class MultiSourceReloadNotifier {
   
-  public let controller: Controller
+  public let target: Reloadable
   
   private var resultsUpdatableWrappers: [ResultsUpdatableNotificationWrapper] = []
   
-  public init(controller: Controller) {
-    self.controller = controller
+  public init(target: Reloadable) {
+    self.target = target
     self.resultsUpdatableWrappers = []
   }
     
-  func subscribe<Updatable: ResultUpdatable>(_ updatable: Updatable) {
-    resultsUpdatableWrappers.append(.init(updatable: updatable))
+  func register<Updatable: ResultUpdatable>(_ updatable: Updatable) {
+    let wrapper = ResultsUpdatableNotificationWrapper(updatable: updatable)
+    wrapper.connect()
+    resultsUpdatableWrappers.append(wrapper)
   }
   
   func notifyReload() {
     let group = DispatchGroup()
-    for interactor in resultsUpdatableWrappers {
+    for updatable in resultsUpdatableWrappers {
       group.enter()
-      interactor.onResultsUpdated.subscribeOnce(with: self) { (_, _) in
+      updatable.onResultsUpdated.subscribeOnce(with: self) { (_, _) in
         group.leave()
       }
     }
-    
     group.notify(queue: .main) { [weak self] in
-      self?.controller.reload()
+      self?.target.reload()
     }
-    
   }
   
 }

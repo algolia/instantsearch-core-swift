@@ -8,12 +8,10 @@
 
 import Foundation
 
-public protocol MultiIndexHitsController: class {
+public protocol MultiIndexHitsController: class, Reloadable {
   
   var hitsSource: MultiIndexHitsSource? { get set }
-  
-  func reload()
-  
+    
   func scrollToTop()
   
 }
