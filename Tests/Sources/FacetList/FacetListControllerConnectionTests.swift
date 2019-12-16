@@ -17,7 +17,7 @@ class FacetListControllerConnectionTests: XCTestCase {
   
   let facets: [Facet] = .init(prefix: "f", count: 3)
   let facetsWithAddition: [Facet] = .init(prefix: "f", count: 4)
-    
+  
   func testConnect() {
     
     let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
@@ -32,18 +32,18 @@ class FacetListControllerConnectionTests: XCTestCase {
   }
   
   func testConnectFunction() {
-    
+
     let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let controller = TestFacetListController()
-    
+
     interactor.connectController(controller)
-    
+
     checkConnection(interactor: interactor,
                     controller: controller,
                     isConnected: true)
 
   }
-  
+
   func testDisconnect() {
     let interactor = FacetListInteractor(facets: facets, selectionMode: .single)
     let controller = TestFacetListController()
@@ -51,12 +51,11 @@ class FacetListControllerConnectionTests: XCTestCase {
     let connection = FacetList.ControllerConnection(facetListInteractor: interactor, controller: controller, presenter: FacetListPresenter())
     connection.connect()
     connection.disconnect()
-    
+
     checkConnection(interactor: interactor,
                     controller: controller,
                     isConnected: false)
   }
-  
   
   func checkConnection(interactor: FacetListInteractor,
                        controller: TestFacetListController,
@@ -99,7 +98,7 @@ class FacetListControllerConnectionTests: XCTestCase {
     interactor.selections = [facets[selectedIndex].value]
     let reloadExpectation = expectation(description: "reload expectation")
     reloadExpectation.isInverted = !isConnected
-    
+    reloadExpectation.expectedFulfillmentCount = 3
     controller.didReload = {
       let selections: [Bool] = (0...3).compactMap { i in
         return controller.selectableItems.first { $0.item.value == "f\(i)" }.flatMap { $0.isSelected }
