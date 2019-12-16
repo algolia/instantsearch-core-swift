@@ -5,9 +5,9 @@
         "package": "InstantSearchClient",
         "repositoryURL": "https://github.com/algolia/algoliasearch-client-swift",
         "state": {
-          "branch": "release/7.0.2",
-          "revision": "281736ddd41f9f93e7d60311bb41380da0ceec00",
-          "version": null
+          "branch": null,
+          "revision": "962592ddb8d0620d7f32327d8f2c91e964c5f8ab",
+          "version": "7.0.2"
         }
       }
     ]
