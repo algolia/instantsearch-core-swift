@@ -25,9 +25,7 @@ public extension FacetListInteractor {
       controller.setSelectableItems(selectableItems: sortedFacetValues)
       controller.reload()
     }
-    
-    setControllerItemsWith(facets: items, selections: selections)
-    
+        
     controller.onClick = { [weak self] facet in
       self?.computeSelections(selectingItemForKey: facet.value)
     }
