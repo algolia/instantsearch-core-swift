@@ -12,12 +12,12 @@ end
 platform :ios do
 	lane :test do
 		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
-		carthage(
-			command: "update",
-			platform: "iOS",
-			configuration: "Release",
-			cache_builds: true
-		)
+#		carthage(
+#			command: "update",
+#			platform: "iOS",
+#			configuration: "Release",
+#			cache_builds: true
+#		)
 		scan(
 			scheme: "InstantSearchCore-iOS",
 			configuration: "Debug",
@@ -32,12 +32,12 @@ end
 platform :mac do
 	lane :test do
 		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
-		carthage(
-			command: "update",
-			platform: "Mac",
-			configuration: "Release",
-			cache_builds: true
-		)
+#		carthage(
+#			command: "update",
+#			platform: "Mac",
+#			configuration: "Release",
+#			cache_builds: true
+#		)
 		scan(
 			scheme: "InstantSearchCore-macOS",
 			configuration: "Debug",
@@ -50,12 +50,12 @@ end
 platform :tv do
 	lane :test do
 		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
-		carthage(
-			command: "update",
-			platform: "tvOS",
-			configuration: "Release",
-			cache_builds: true
-		)
+#		carthage(
+#			command: "update",
+#			platform: "tvOS",
+#			configuration: "Release",
+#			cache_builds: true
+#		)
 		scan(
 			scheme: "InstantSearchCore-tvOS",
 			configuration: "Debug",
