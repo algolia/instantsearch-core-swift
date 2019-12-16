@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "InstantSearchClient",
+        "repositoryURL": "https://github.com/algolia/algoliasearch-client-swift",
+        "state": {
+          "branch": null,
+          "revision": "962592ddb8d0620d7f32327d8f2c91e964c5f8ab",
+          "version": "7.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
