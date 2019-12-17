@@ -12,17 +12,17 @@ class Paginator<Item> {
   
   var pageMap: PageMap<Item>?
   var pageCleanUpOffset: Int? = 3
-  var replacePageMap: Bool = false
+  var isInvalidated: Bool = false
   
   func process<IP: Pageable>(_ page: IP) where IP.Item == Item {
     
     let updatedPageMap: PageMap<Item>?
     
-    if let pageMap = pageMap, !replacePageMap {
+    if let pageMap = pageMap, !isInvalidated {
       updatedPageMap = pageMap.inserting(page.items, withIndex: page.index)
     } else {
       updatedPageMap = PageMap(page)
-      replacePageMap = false
+      isInvalidated = false
     }
     
     pageMap = updatedPageMap
@@ -34,7 +34,7 @@ class Paginator<Item> {
   }
   
   public func invalidate() {
-    pageMap = .none
+    isInvalidated = true
   }
   
 }

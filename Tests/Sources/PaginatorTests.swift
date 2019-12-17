@@ -80,13 +80,17 @@ class PaginatorTests: XCTestCase {
   func testInvalidation() {
     
     let paginator = Paginator<String>()
-    let p0 = ["i1", "i2", "i3"]
-    let page = TestPageable(index: 0, items: p0)
-    paginator.process(page)
+    let page0 = TestPageable(index: 0, items: ["i1", "i2", "i3"])
+    let page1 = TestPageable(index: 0, items: ["i4", "i5", "i6"])
+    paginator.process(page0)
     XCTAssertNotNil(paginator.pageMap)
-    XCTAssertFalse(paginator.pageMap!.isEmpty)
+    XCTAssertEqual(paginator.pageMap?.count, 3)
+    XCTAssertFalse(paginator.isInvalidated)
     paginator.invalidate()
-    XCTAssertNil(paginator.pageMap)
+    XCTAssertTrue(paginator.isInvalidated)
+    paginator.process(page1)
+    XCTAssertNotNil(paginator.pageMap)
+    XCTAssertEqual(paginator.pageMap?.count, 3)
 
   }
   
