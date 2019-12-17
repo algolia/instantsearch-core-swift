@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/algolia/algoliasearch-client-swift",
         "state": {
           "branch": null,
-          "revision": "962592ddb8d0620d7f32327d8f2c91e964c5f8ab",
-          "version": "7.0.2"
+          "revision": "ef949269c6119a69ed574edb8ccecd67b2e1cf38",
+          "version": "7.0.3"
         }
       }
     ]
