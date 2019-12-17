@@ -226,7 +226,7 @@ class HitsInteractorTests: XCTestCase {
     
     vm.onRequestChanged.subscribe(with: self) { _, _ in
       
-      XCTAssertNil(pc.pageMap)
+      XCTAssertTrue(pc.isInvalidated)
       XCTAssertTrue(isc.pendingPages.isEmpty)
 
       onRequestChangedExpectation.fulfill()
