@@ -3350,6 +3350,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SDKROOT = macosx;
@@ -3381,6 +3382,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SDKROOT = macosx;
@@ -3462,6 +3464,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SDKROOT = appletvos;
@@ -3492,6 +3495,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SDKROOT = appletvos;
@@ -3576,6 +3580,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SDKROOT = watchos;
@@ -3613,6 +3618,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				MARKETING_VERSION = 6.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.algolia.InstantSearchCore;
 				PRODUCT_NAME = InstantSearchCore;
 				SDKROOT = watchos;
