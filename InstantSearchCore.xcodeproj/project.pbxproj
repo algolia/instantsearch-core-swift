@@ -791,6 +791,8 @@
 		AFED9BF123C69D5B005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BF023C69D5B005C2D93 /* InstantSearchInsights */; };
 		AFED9BF323C69D61005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BF223C69D61005C2D93 /* InstantSearchInsights */; };
 		AFED9BF523C69D66005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BF423C69D66005C2D93 /* InstantSearchInsights */; };
+		AFEDF7DA23AA22DF00FF4A1F /* HitsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDF7D923AA22DF00FF4A1F /* HitsTracker.swift */; };
+		AFEDF7E123AA441300FF4A1F /* FilterTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFEDF7E023AA441300FF4A1F /* FilterTracker.swift */; };
 		AFF1E74E229696B200941401 /* HitsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF1E74D229696B200941401 /* HitsSource.swift */; };
 		AFF1E74F229696B200941401 /* HitsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF1E74D229696B200941401 /* HitsSource.swift */; };
 		AFF1E750229696B200941401 /* HitsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF1E74D229696B200941401 /* HitsSource.swift */; };
@@ -1240,6 +1242,8 @@
 		AFE6E3CA22AA6CDF005BA44D /* InfiniteScrollable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfiniteScrollable.swift; sourceTree = "<group>"; };
 		AFE6E3CF22AAD5A9005BA44D /* MultiIndexHitsInteractor+Searcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MultiIndexHitsInteractor+Searcher.swift"; sourceTree = "<group>"; };
 		AFE807CE2229355900FC1D50 /* SearchResult.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = SearchResult.json; sourceTree = "<group>"; };
+		AFEDF7D923AA22DF00FF4A1F /* HitsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsTracker.swift; sourceTree = "<group>"; };
+		AFEDF7E023AA441300FF4A1F /* FilterTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTracker.swift; sourceTree = "<group>"; };
 		AFF1E74D229696B200941401 /* HitsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsSource.swift; sourceTree = "<group>"; };
 		AFF1E752229696CD00941401 /* HitsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsController.swift; sourceTree = "<group>"; };
 		AFF1E757229696F700941401 /* MultiIndexHitsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiIndexHitsSource.swift; sourceTree = "<group>"; };
@@ -1783,6 +1787,15 @@
 			path = Item;
 			sourceTree = "<group>";
 		};
+		AFEDF7E523AA76D100FF4A1F /* Tracker */ = {
+			isa = PBXGroup;
+			children = (
+				AFEDF7D923AA22DF00FF4A1F /* HitsTracker.swift */,
+				AFEDF7E023AA441300FF4A1F /* FilterTracker.swift */,
+			);
+			path = Tracker;
+			sourceTree = "<group>";
+		};
 		AFF1E74B2296966400941401 /* Hits */ = {
 			isa = PBXGroup;
 			children = (
@@ -1844,6 +1857,7 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AFEDF7E523AA76D100FF4A1F /* Tracker */,
 				AF9396872298153800757257 /* FilterClear */,
 				AFC2E281228ED52900859EBA /* Common */,
 				E2EBE72A22B1330500B91B23 /* CurrentFilters */,
@@ -2561,6 +2575,7 @@
 				AF1177D7225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
 				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFC2E283228ED58300859EBA /* FilterListController.swift in Sources */,
+				AFEDF7E123AA441300FF4A1F /* FilterTracker.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
 				AF28642C2390800900E9E845 /* NumberRangeConnector.swift in Sources */,
 				AFCB30A722CB8F8D0094ED2E /* QueryBuilder+HierarchicalFaceting.swift in Sources */,
@@ -2652,6 +2667,7 @@
 				E2146BF622B3CC2E00927350 /* Boundable.swift in Sources */,
 				AF286431239084B400E9E845 /* HierarchicalConnector.swift in Sources */,
 				E2EBE73622B14B1D00B91B23 /* ItemListController.swift in Sources */,
+				AFEDF7DA23AA22DF00FF4A1F /* HitsTracker.swift in Sources */,
 				AFC2E292228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				AFE3437B228997E000829AC1 /* SelectableFilterInteractor+Searcher.swift in Sources */,
 				AFCDEDA1222E7B6B001459BE /* Hit.swift in Sources */,
