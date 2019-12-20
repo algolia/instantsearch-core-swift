@@ -19,10 +19,9 @@ extension InsightsTracker {
   
   public init(eventName: String,
               searcher: SingleIndexSearcher,
-              appID: String,
-              apiKey: String,
               userToken: String? = .none) {
-    let insights = Insights.register(appId: appID, apiKey: apiKey, userToken: userToken)
+    let client = searcher.indexQueryState.index.client
+    let insights = Insights.register(appId: client.appID, apiKey: client.apiKey, userToken: userToken)
     self.init(eventName: eventName,
               searcher: .singleIndex(searcher),
               insights: insights)
@@ -39,10 +38,9 @@ extension InsightsTracker {
   public init(eventName: String,
               searcher: MultiIndexSearcher,
               pointer: Int,
-              appID: String,
-              apiKey: String,
               userToken: String? = .none) {
-    let insights = Insights.register(appId: appID, apiKey: apiKey, userToken: userToken)
+    let client = searcher.indexQueryStates[pointer].index.client
+    let insights = Insights.register(appId: client.appID, apiKey: client.apiKey, userToken: userToken)
     self.init(eventName: eventName,
               searcher: .multiIndex(searcher, pointer: pointer),
               insights: insights)
