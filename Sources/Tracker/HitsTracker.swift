@@ -46,54 +46,6 @@ public class HitsTracker: InsightsTracker {
   
 }
 
-public extension HitsTracker {
-  
-  convenience init(eventName: String,
-                   searcher: SingleIndexSearcher,
-                   appID: String,
-                   apiKey: String,
-                   userToken: String? = .none) {
-    let insights = Insights.register(appId: appID, apiKey: apiKey, userToken: userToken)
-    self.init(eventName: eventName,
-              searcher: .singleIndex(searcher),
-              tracker: insights)
-  }
-  
-  convenience init(eventName: String,
-                   searcher: SingleIndexSearcher,
-                   insights: Insights) {
-    self.init(eventName: eventName,
-              searcher: .singleIndex(searcher),
-              tracker: insights)
-  }
-  
-}
-
-public extension HitsTracker {
-  
-  convenience init(eventName: String,
-                   searcher: MultiIndexSearcher,
-                   pointer: Int,
-                   appID: String,
-                   apiKey: String,
-                   userToken: String? = .none) {
-    let insights = Insights.register(appId: appID, apiKey: apiKey, userToken: userToken)
-    self.init(eventName: eventName,
-              searcher: .multiIndex(searcher, pointer: pointer),
-              tracker: insights)
-  }
-  
-  convenience init(eventName: String,
-                   searcher: MultiIndexSearcher,
-                   pointer: Int,
-                   insights: Insights) {
-    self.init(eventName: eventName,
-              searcher: .multiIndex(searcher, pointer: pointer),
-              tracker: insights)
-  }
-  
-}
-
 // MARK: - Hits tracking methods
 
 public extension HitsTracker {
