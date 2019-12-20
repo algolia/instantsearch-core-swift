@@ -74,13 +74,13 @@ public extension FilterTracker {
   func trackView(for facet: Facet,
                  attribute: Attribute,
                  eventName customEventName: String? = nil) {
-    trackClick(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
+    trackView(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
   }
   
   func trackConversion(for facet: Facet,
                        attribute: Attribute,
                        eventName customEventName: String? = nil) {
-    trackClick(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
+    trackConversion(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
   }
   
 }
