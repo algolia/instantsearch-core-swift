@@ -7,25 +7,28 @@
 //
 
 import Foundation
-import InstantSearchClient
 import InstantSearchInsights
 
-public class FilterTracker {
+public class FilterTracker: InsightsTracker {
   
-  public var eventName: String
-  public var searcher: SingleIndexSearcher
-  public var insights: Insights?
-  
-  private var indexName: String {
-    return searcher.indexQueryState.index.name
-  }
+  public let eventName: String
+  internal let searcher: TrackableSearcher
+  internal let tracker: FilterTrackable
 
-  public init(eventName: String,
-              searcher: SingleIndexSearcher,
-              insights: Insights? = .shared) {
+  required convenience init(eventName: String,
+                            searcher: TrackableSearcher,
+                            insights: Insights) {
+    self.init(eventName: eventName,
+              searcher: searcher,
+              tracker: insights)
+  }
+  
+  init(eventName: String,
+       searcher: TrackableSearcher,
+       tracker: FilterTrackable) {
     self.eventName = eventName
     self.searcher = searcher
-    self.insights = insights
+    self.tracker = tracker
   }
     
 }
@@ -37,19 +40,19 @@ public extension FilterTracker {
   func trackClick<F: FilterType>(for filter: F,
                                  eventName customEventName: String? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    insights?.clicked(eventName: customEventName ?? eventName, indexName: indexName, filters: [sqlForm])
+    tracker.clicked(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
   }
   
   func trackView<F: FilterType>(for filter: F,
                                 eventName customEventName: String? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    insights?.viewed(eventName: customEventName ?? eventName, indexName: indexName, filters: [sqlForm])
+    tracker.viewed(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
   }
   
   func trackConversion<F: FilterType>(for filter: F,
                                       eventName customEventName: String? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    insights?.converted(eventName: customEventName ?? eventName, indexName: indexName, filters: [sqlForm])
+    tracker.converted(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
   }
   
 }

@@ -7,34 +7,89 @@
 //
 
 import Foundation
-import InstantSearchClient
 import InstantSearchInsights
 
-public class HitsTracker {
+public class HitsTracker: InsightsTracker {
   
   public let eventName: String
-  public let searcher: SingleIndexSearcher
-  public var insights: Insights?
-  private var queryID: String?
-  
-  private var indexName: String {
-    return searcher.indexQueryState.index.name
+  internal let searcher: TrackableSearcher
+  internal let tracker: HitsAfterSearchTrackable
+  internal var queryID: String?
+      
+  required convenience init(eventName: String,
+                            searcher: TrackableSearcher,
+                            insights: Insights) {
+    self.init(eventName: eventName,
+              searcher: searcher,
+              tracker: insights)
   }
   
-  public init(eventName: String,
-              searcher: SingleIndexSearcher,
-              insights: Insights? = .shared) {
+  init(eventName: String,
+       searcher: TrackableSearcher,
+       tracker: HitsAfterSearchTrackable) {
     self.eventName = eventName
     self.searcher = searcher
-    self.insights = insights
-    searcher.indexQueryState.query.clickAnalytics = true
-    searcher.onResults.subscribe(with: self) { (tracker, results) in
-      tracker.queryID = results.queryID
-    }
+    self.tracker = tracker
+    
+    searcher.setClickAnalyticsOn(true)
+    searcher.subscribeForQueryIDChange(self)
   }
   
   deinit {
-    searcher.onResults.cancelSubscription(for: self)
+    switch searcher {
+    case .singleIndex(let searcher):
+      searcher.onResults.cancelSubscription(for: self)
+    case .multiIndex(let searcher, _):
+      searcher.onResults.cancelSubscription(for: self)
+    }
+  }
+  
+}
+
+public extension HitsTracker {
+  
+  convenience init(eventName: String,
+                   searcher: SingleIndexSearcher,
+                   appID: String,
+                   apiKey: String,
+                   userToken: String? = .none) {
+    let insights = Insights.register(appId: appID, apiKey: apiKey, userToken: userToken)
+    self.init(eventName: eventName,
+              searcher: .singleIndex(searcher),
+              tracker: insights)
+  }
+  
+  convenience init(eventName: String,
+                   searcher: SingleIndexSearcher,
+                   insights: Insights) {
+    self.init(eventName: eventName,
+              searcher: .singleIndex(searcher),
+              tracker: insights)
+  }
+  
+}
+
+public extension HitsTracker {
+  
+  convenience init(eventName: String,
+                   searcher: MultiIndexSearcher,
+                   pointer: Int,
+                   appID: String,
+                   apiKey: String,
+                   userToken: String? = .none) {
+    let insights = Insights.register(appId: appID, apiKey: apiKey, userToken: userToken)
+    self.init(eventName: eventName,
+              searcher: .multiIndex(searcher, pointer: pointer),
+              tracker: insights)
+  }
+  
+  convenience init(eventName: String,
+                   searcher: MultiIndexSearcher,
+                   pointer: Int,
+                   insights: Insights) {
+    self.init(eventName: eventName,
+              searcher: .multiIndex(searcher, pointer: pointer),
+              tracker: insights)
   }
   
 }
@@ -47,18 +102,29 @@ public extension HitsTracker {
                                    position: Int,
                                    eventName customEventName: String? = nil) {
     guard let queryID = queryID else { return }
-    insights?.clickedAfterSearch(eventName: customEventName ?? self.eventName, indexName: indexName, objectID: hit.objectID, position: position, queryID: queryID)
+    tracker.clickedAfterSearch(eventName: customEventName ?? self.eventName,
+                               indexName: searcher.indexName,
+                               objectIDsWithPositions: [(hit.objectID, position)],
+                               queryID: queryID,
+                               userToken: .none)
   }
   
   func trackConvert<Record: Codable>(for hit: Hit<Record>,
                                      eventName customEventName: String? = nil) {
     guard let queryID = queryID else { return }
-    insights?.convertedAfterSearch(eventName: customEventName ?? self.eventName, indexName: indexName, objectID: hit.objectID, queryID: queryID)
+    tracker.convertedAfterSearch(eventName: customEventName ?? self.eventName,
+                                 indexName: searcher.indexName,
+                                 objectIDs: [hit.objectID],
+                                 queryID: queryID,
+                                 userToken: .none)
   }
   
   func trackView<Record: Codable>(for hit: Hit<Record>,
                                   eventName customEventName: String? = nil) {
-    insights?.viewed(eventName: customEventName ?? self.eventName, indexName: indexName, objectID: hit.objectID)
+    tracker.viewed(eventName: customEventName ?? self.eventName,
+                   indexName: searcher.indexName,
+                   objectIDs: [hit.objectID],
+                   userToken: .none)
   }
   
 }
