@@ -787,6 +787,10 @@
 		AFE6E3D322AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFE6E3CF22AAD5A9005BA44D /* MultiIndexHitsInteractor+Searcher.swift */; };
 		AFE807D32229356200FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
 		AFE807D52229356400FC1D50 /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
+		AFED9BEF23C69D50005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BEE23C69D50005C2D93 /* InstantSearchInsights */; };
+		AFED9BF123C69D5B005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BF023C69D5B005C2D93 /* InstantSearchInsights */; };
+		AFED9BF323C69D61005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BF223C69D61005C2D93 /* InstantSearchInsights */; };
+		AFED9BF523C69D66005C2D93 /* InstantSearchInsights in Frameworks */ = {isa = PBXBuildFile; productRef = AFED9BF423C69D66005C2D93 /* InstantSearchInsights */; };
 		AFF1E74E229696B200941401 /* HitsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF1E74D229696B200941401 /* HitsSource.swift */; };
 		AFF1E74F229696B200941401 /* HitsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF1E74D229696B200941401 /* HitsSource.swift */; };
 		AFF1E750229696B200941401 /* HitsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFF1E74D229696B200941401 /* HitsSource.swift */; };
@@ -1315,6 +1319,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AF17D69A23A8EC560068D76E /* InstantSearchClient in Frameworks */,
+				AFED9BEF23C69D50005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1331,6 +1336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC68D9523C62201006841EF /* InstantSearchClient in Frameworks */,
+				AFED9BF123C69D5B005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1339,6 +1345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC68D9723C62207006841EF /* InstantSearchClient in Frameworks */,
+				AFED9BF323C69D61005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1355,6 +1362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC68D9923C6220C006841EF /* InstantSearchClient in Frameworks */,
+				AFED9BF523C69D66005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2127,6 +2135,7 @@
 			name = "InstantSearchCore-iOS";
 			packageProductDependencies = (
 				AF17D69923A8EC560068D76E /* InstantSearchClient */,
+				AFED9BEE23C69D50005C2D93 /* InstantSearchInsights */,
 			);
 			productName = InstantSearch;
 			productReference = BC3426311D460DB70055E0F2 /* InstantSearchCore.framework */;
@@ -2166,6 +2175,7 @@
 			name = "InstantSearchCore-macOS";
 			packageProductDependencies = (
 				AFC68D9423C62201006841EF /* InstantSearchClient */,
+				AFED9BF023C69D5B005C2D93 /* InstantSearchInsights */,
 			);
 			productName = "InstantSearchCore-macOS";
 			productReference = BC4CB88A1D534B6E004618DD /* InstantSearchCore.framework */;
@@ -2187,6 +2197,7 @@
 			name = "InstantSearchCore-tvOS";
 			packageProductDependencies = (
 				AFC68D9623C62207006841EF /* InstantSearchClient */,
+				AFED9BF223C69D61005C2D93 /* InstantSearchInsights */,
 			);
 			productName = "InstantSearchCore-tvOS";
 			productReference = BC4CB8AD1D535AB3004618DD /* InstantSearchCore.framework */;
@@ -2226,6 +2237,7 @@
 			name = "InstantSearchCore-watchOS";
 			packageProductDependencies = (
 				AFC68D9823C6220C006841EF /* InstantSearchClient */,
+				AFED9BF423C69D66005C2D93 /* InstantSearchInsights */,
 			);
 			productName = InstantSearchCore;
 			productReference = BC5DC11B1D8688C10066D705 /* InstantSearchCore.framework */;
@@ -2283,6 +2295,7 @@
 			mainGroup = BC3426271D460DB70055E0F2;
 			packageReferences = (
 				AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */,
+				AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */,
 			);
 			productRefGroup = BC3426321D460DB70055E0F2 /* Products */;
 			projectDirPath = "";
@@ -4086,6 +4099,14 @@
 				minimumVersion = 7.0.3;
 			};
 		};
+		AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/algolia/instantsearch-ios-insights";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -4108,6 +4129,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
 			productName = InstantSearchClient;
+		};
+		AFED9BEE23C69D50005C2D93 /* InstantSearchInsights */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */;
+			productName = InstantSearchInsights;
+		};
+		AFED9BF023C69D5B005C2D93 /* InstantSearchInsights */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */;
+			productName = InstantSearchInsights;
+		};
+		AFED9BF223C69D61005C2D93 /* InstantSearchInsights */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */;
+			productName = InstantSearchInsights;
+		};
+		AFED9BF423C69D66005C2D93 /* InstantSearchInsights */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */;
+			productName = InstantSearchInsights;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
