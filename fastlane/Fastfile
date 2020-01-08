@@ -12,6 +12,7 @@ end
 platform :ios do
 	lane :test do
 		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
+		sh("cd ..; xcodebuild -resolvePackageDependencies")
 		scan(
 			scheme: "InstantSearchCore-iOS",
 			configuration: "Debug",
@@ -26,6 +27,7 @@ end
 platform :mac do
 	lane :test do
 		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
+		sh("cd ..; xcodebuild -resolvePackageDependencies")
 		scan(
 			scheme: "InstantSearchCore-macOS",
 			configuration: "Debug",
@@ -38,6 +40,7 @@ end
 platform :tv do
 	lane :test do
 		update_cartfile_with_clent_commit_hash_if_workflow_triggered_by_client
+		sh("cd ..; xcodebuild -resolvePackageDependencies")
 		scan(
 			scheme: "InstantSearchCore-tvOS",
 			configuration: "Debug",
