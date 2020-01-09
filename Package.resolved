@@ -9,6 +9,15 @@
           "revision": "962592ddb8d0620d7f32327d8f2c91e964c5f8ab",
           "version": "7.0.2"
         }
+      },
+      {
+        "package": "InstantSearchInsights",
+        "repositoryURL": "https://github.com/algolia/instantsearch-ios-insights",
+        "state": {
+          "branch": null,
+          "revision": "5c929e8b5c02b406f743f6530fa724e1bdc0d35b",
+          "version": "2.3.0"
+        }
       }
     ]
   },
