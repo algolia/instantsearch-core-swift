@@ -9,7 +9,7 @@
 import Foundation
 import InstantSearchInsights
 
-protocol InsightsTracker: class {
+public protocol InsightsTracker: class {
   
   init(eventName: String, searcher: TrackableSearcher, insights: Insights)
   

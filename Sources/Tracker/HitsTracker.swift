@@ -16,9 +16,9 @@ public class HitsTracker: InsightsTracker {
   internal let tracker: HitsAfterSearchTrackable
   internal var queryID: String?
       
-  required convenience init(eventName: String,
-                            searcher: TrackableSearcher,
-                            insights: Insights) {
+  public required convenience init(eventName: String,
+                                   searcher: TrackableSearcher,
+                                   insights: Insights) {
     self.init(eventName: eventName,
               searcher: searcher,
               tracker: insights)

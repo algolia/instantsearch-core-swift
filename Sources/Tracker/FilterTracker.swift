@@ -15,9 +15,9 @@ public class FilterTracker: InsightsTracker {
   internal let searcher: TrackableSearcher
   internal let tracker: FilterTrackable
 
-  required convenience init(eventName: String,
-                            searcher: TrackableSearcher,
-                            insights: Insights) {
+  public required convenience init(eventName: String,
+                                   searcher: TrackableSearcher,
+                                   insights: Insights) {
     self.init(eventName: eventName,
               searcher: searcher,
               tracker: insights)

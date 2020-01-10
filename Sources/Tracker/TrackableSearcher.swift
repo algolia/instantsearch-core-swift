@@ -14,7 +14,7 @@ protocol QueryIDContainer: class {
 
 extension HitsTracker: QueryIDContainer {}
 
-enum TrackableSearcher {
+public enum TrackableSearcher {
   
   case singleIndex(SingleIndexSearcher)
   case multiIndex(MultiIndexSearcher, pointer: Int)
