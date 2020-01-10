@@ -21,11 +21,11 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "InstantSearchCore",
-            dependencies: ["InstantSearchClient"],
+            dependencies: ["InstantSearchClient", "InstantSearchInsights"],
             path: "./Sources"),
         .testTarget(
             name: "InstantSearchCoreTests",
-            dependencies: ["InstantSearchCore", "InstantSearchClient"],
+            dependencies: ["InstantSearchCore", "InstantSearchClient", "InstantSearchInsights"],
             path: "./Tests/Sources"),
     ]
 )

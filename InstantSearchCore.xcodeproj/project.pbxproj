@@ -4204,7 +4204,7 @@
 			repositoryURL = "https://github.com/algolia/instantsearch-ios-insights";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.0;
+				minimumVersion = 2.3.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
