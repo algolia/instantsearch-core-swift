@@ -13,8 +13,8 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-      .package(url:"https://github.com/algolia/algoliasearch-client-swift", .exact("7.0.3")),
-      .package(url:"https://github.com/algolia/instantsearch-ios-insights", .exact("2.3.2"))
+      .package(url:"https://github.com/algolia/algoliasearch-client-swift", from: "7.0.3"),
+      .package(url:"https://github.com/algolia/instantsearch-ios-insights", from: "2.3.2")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
