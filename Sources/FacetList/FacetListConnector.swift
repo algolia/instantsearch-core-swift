@@ -114,7 +114,7 @@ public class FacetListConnector: Connection {
   
   public func disconnect() {
     filterStateConnection.disconnect()
-    searcherConnection.connect()
+    searcherConnection.disconnect()
   }
   
 }
