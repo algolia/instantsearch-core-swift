@@ -11,51 +11,86 @@ import Foundation
 public class HitsConnector<Hit: Codable>: Connection {
     
   public let searcher: Searcher
-  public let filterState: FilterState
   public let interactor: HitsInteractor<Hit>
+  public let filterState: FilterState?
   
-  public let filterStateConnection: Connection
+  public let filterStateConnection: Connection?
   public let searcherConnection: Connection
   
-  internal init<S: Searcher>(searcher: S, filterState: FilterState, interactor: HitsInteractor<Hit>, connectSearcher: (S) -> Connection) {
+  internal init<S: Searcher>(searcher: S,
+                             interactor: HitsInteractor<Hit>,
+                             filterState: FilterState? = .none,
+                             connectSearcher: (S) -> Connection) {
     self.searcher = searcher
     self.filterState = filterState
     self.interactor = interactor
-    self.filterStateConnection = interactor.connectFilterState(filterState)
+    self.filterStateConnection = filterState.flatMap(interactor.connectFilterState)
     self.searcherConnection = connectSearcher(searcher)
   }
   
-  public convenience init(searcher: SingleIndexSearcher,
-              filterState: FilterState,
-              interactor: HitsInteractor<Hit>) {
-    self.init(searcher: searcher,
-              filterState: filterState,
-              interactor: interactor,
-              connectSearcher: interactor.connectSearcher)
-  }
-  
-  
   public func connect() {
-    filterStateConnection.connect()
+    filterStateConnection?.connect()
     searcherConnection.connect()
   }
   
   public func disconnect() {
-    filterStateConnection.disconnect()
+    filterStateConnection?.disconnect()
     searcherConnection.disconnect()
   }
   
 }
 
-extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
+public extension HitsConnector {
   
-  public convenience init(searcher: PlacesSearcher,
-                          filterState: FilterState,
-                          interactor: HitsInteractor<Hit>) {
+  convenience init(searcher: SingleIndexSearcher,
+                   interactor: HitsInteractor<Hit>,
+                   filterState: FilterState? = .none) {
     self.init(searcher: searcher,
-              filterState: filterState,
               interactor: interactor,
+              filterState: filterState,
+              connectSearcher: interactor.connectSearcher)
+  }
+  
+  convenience init(appID: String,
+                   apiKey: String,
+                   indexName: String,
+                   interactor: HitsInteractor<Hit>,
+                   filterState: FilterState? = .none) {
+    let searcher = SingleIndexSearcher(appID: appID,
+                                       apiKey: apiKey,
+                                       indexName: indexName)
+    self.init(searcher: searcher,
+              interactor: interactor,
+              filterState: filterState,
+              connectSearcher: interactor.connectSearcher)
+  }
+
+}
+
+
+
+public extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
+  
+  convenience init(searcher: PlacesSearcher,
+                   interactor: HitsInteractor<Hit>,
+                   filterState: FilterState? = .none) {
+    self.init(searcher: searcher,
+              interactor: interactor,
+              filterState: filterState,
               connectSearcher: interactor.connectPlacesSearcher)
   }
+  
+  convenience init(placesAppID: String,
+                   apiKey: String,
+                   interactor: HitsInteractor<Hit>,
+                   filterState: FilterState? = .none) {
+    let searcher = PlacesSearcher(appID: placesAppID,
+                                  apiKey: apiKey)
+    self.init(searcher: searcher,
+              interactor: interactor,
+              filterState: filterState,
+              connectSearcher: interactor.connectPlacesSearcher)
+  }
+
   
 }
