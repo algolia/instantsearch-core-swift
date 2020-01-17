@@ -8,6 +8,7 @@
 
 import Foundation
 @testable import InstantSearchCore
+import InstantSearchClient
 import XCTest
 
 class SelectableSegmentInteractorConnectorsTests: XCTestCase {

@@ -7,15 +7,34 @@
 //
 
 import Foundation
+import InstantSearchClient
+
+public struct BoundableSingleIndexSearcherConnection<B: Boundable>: Connection {
+  
+  public let boundable: B
+  public let searcher: SingleIndexSearcher
+  public let attribute: Attribute
+  
+  public func connect() {
+    let attribute = self.attribute
+    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
+    searcher.onResults.subscribePastOnce(with: boundable) { boundable, searchResults in
+      boundable.computeBoundsFromFacetStats(attribute: attribute, facetStats: searchResults.facetStats)
+    }
+  }
+  
+  public func disconnect() {
+    searcher.onResults.cancelSubscription(for: searcher)
+  }
+  
+}
 
 extension Boundable {
 
-  public func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) {
-    searcher.indexQueryState.query.updateQueryFacets(with: attribute)
-
-    searcher.onResults.subscribePastOnce(with: self) { boundable, searchResults in
-      boundable.computeBoundsFromFacetStats(attribute: attribute, facetStats: searchResults.facetStats)
-    }
+  @discardableResult public func connectSearcher(_ searcher: SingleIndexSearcher, attribute: Attribute) -> BoundableSingleIndexSearcherConnection<Self> {
+    let connection = BoundableSingleIndexSearcherConnection(boundable: self, searcher: searcher, attribute: attribute)
+    connection.connect()
+    return connection
   }
 
   func computeBoundsFromFacetStats(attribute: Attribute, facetStats: [Attribute: SearchResults.FacetStats]?) {

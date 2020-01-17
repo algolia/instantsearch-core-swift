@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@_exported import InstantSearchClient
 
 /// Structure containing all necessary components to perform a search
 

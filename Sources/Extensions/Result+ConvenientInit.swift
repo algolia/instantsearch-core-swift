@@ -48,4 +48,3 @@ public extension Result where Success: Decodable, Failure == Error {
 public enum ResultError: Error {
   case invalidResultInput
 }
-

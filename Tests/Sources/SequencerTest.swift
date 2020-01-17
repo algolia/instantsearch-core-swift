@@ -21,7 +21,6 @@
 //  THE SOFTWARE.
 //
 
-import InstantSearchClient
 @testable import InstantSearchCore
 import XCTest
 

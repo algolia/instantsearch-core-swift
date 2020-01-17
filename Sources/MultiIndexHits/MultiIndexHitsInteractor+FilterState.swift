@@ -9,9 +9,32 @@
 import Foundation
 
 public extension MultiIndexHitsInteractor {
-  func connectFilterState(_ filterState: FilterState) {
-    filterState.onChange.subscribePast(with: self) { interactor, _ in
-      interactor.notifyQueryChanged()
+  
+  struct FilterStateConnection: Connection {
+    
+    public let interactor: MultiIndexHitsInteractor
+    public let filterState: FilterState
+    
+    public func connect() {
+      filterState.onChange.subscribePast(with: interactor) { interactor, _ in
+        interactor.notifyQueryChanged()
+      }
     }
+    
+    public func disconnect() {
+      filterState.onChange.cancelSubscription(for: interactor)
+    }
+    
   }
+  
+}
+
+public extension MultiIndexHitsInteractor {
+  
+  @discardableResult func connectFilterState(_ filterState: FilterState) -> FilterStateConnection {
+    let connection = FilterStateConnection(interactor: self, filterState: filterState)
+    connection.connect()
+    return connection
+  }
+  
 }

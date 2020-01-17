@@ -16,14 +16,36 @@ public extension FacetSearcher {
    - Parameter filterState: filter state to connect
    */
   
-  func connectFilterState(_ filterState: FilterState, triggerSearchOnFilterStateChange: Bool = true) {
-    filterState.onChange.subscribePast(with: self) { searcher, filterState in
-      searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+  struct FilterStateConnection: Connection {
+    
+    public let facetSearcher: FacetSearcher
+    public let filterState: FilterState
+    public let triggerSearchOnFilterStateChange: Bool
 
-      if triggerSearchOnFilterStateChange {
-        searcher.search()
+    public func connect() {
+      let shouldTriggerSearch = triggerSearchOnFilterStateChange
+      filterState.onChange.subscribePast(with: facetSearcher) { searcher, filterState in
+        searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+        if shouldTriggerSearch {
+          searcher.search()
+        }
       }
     }
+    
+    public func disconnect() {
+      filterState.onChange.cancelSubscription(for: facetSearcher)
+    }
+    
+  }
+  
+}
+
+public extension FacetSearcher {
+
+  @discardableResult func connectFilterState(_ filterState: FilterState, triggerSearchOnFilterStateChange: Bool = true) -> FilterStateConnection {
+    let connection = FilterStateConnection(facetSearcher: self, filterState: filterState, triggerSearchOnFilterStateChange: triggerSearchOnFilterStateChange)
+    connection.connect()
+    return connection
   }
   
 }

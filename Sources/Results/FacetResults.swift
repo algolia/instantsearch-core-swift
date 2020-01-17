@@ -7,7 +7,6 @@
 //
 
 import Foundation
-@_exported import InstantSearchClient
 
 /// A value of a given facet, together with its number of occurrences.
 /// This struct is mainly useful when an ordered list of facet values has to be presented to the user.

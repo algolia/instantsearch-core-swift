@@ -15,19 +15,40 @@ public extension SingleIndexSearcher {
    - Sets `FilterState` as a disjunctive and hierarchical faceting delegate
    - Updates filters parameter of Searcher's `Query` according to a new `FilterState` content and relaunches search once `FilterState` changed
    - Parameter filterState: filter state to connect
-  */
+   */
   
-  func connectFilterState(_ filterState: FilterState) {
+  struct FilterStateConnection: Connection {
     
-    disjunctiveFacetingDelegate = filterState
-    hierarchicalFacetingDelegate = filterState
-    
-    filterState.onChange.subscribePast(with: self) { searcher, filterState in
-      searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      searcher.indexQueryState.query.page = 0
-      searcher.search()
+    public let singleIndexSearcher: SingleIndexSearcher
+    public let filterState: FilterState
+        
+    public func connect() {
+      singleIndexSearcher.disjunctiveFacetingDelegate = filterState
+      singleIndexSearcher.hierarchicalFacetingDelegate = filterState
+      
+      filterState.onChange.subscribePast(with: singleIndexSearcher) { searcher, filterState in
+        searcher.indexQueryState.query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+        searcher.indexQueryState.query.page = 0
+        searcher.search()
+      }
     }
     
+    public func disconnect() {
+      singleIndexSearcher.disjunctiveFacetingDelegate = nil
+      singleIndexSearcher.hierarchicalFacetingDelegate = nil
+      filterState.onChange.cancelSubscription(for: singleIndexSearcher)
+    }
+    
+  }
+  
+}
+
+public extension SingleIndexSearcher {
+  
+  @discardableResult func connectFilterState(_ filterState: FilterState) -> FilterStateConnection {
+    let connection = FilterStateConnection(singleIndexSearcher: self, filterState: filterState)
+    connection.connect()
+    return connection
   }
   
 }

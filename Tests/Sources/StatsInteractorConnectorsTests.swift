@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 @testable import InstantSearchCore
+import InstantSearchClient
 
 class StatsInteractorConnectorsTests: XCTestCase {
   

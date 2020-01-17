@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 /// Provides convenient method for building disjuncitve faceting queries and parsing disjunctive faceting
 

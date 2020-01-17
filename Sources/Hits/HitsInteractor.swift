@@ -8,6 +8,22 @@
 import Foundation
 import InstantSearchClient
 
+extension HitsInteractor {
+  
+  class Tracker {
+    
+  }
+  
+}
+
+extension HitsInteractor.Tracker {
+  
+  func trackClick(on hit: Record) {
+    
+  }
+  
+}
+
 public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
 
   public let settings: Settings
@@ -172,7 +188,7 @@ public enum InfiniteScrolling {
   case off
 }
 
-extension HitsInteractor {
+extension HitsInteractor: ResultUpdatable {
   
   @discardableResult public func update(_ searchResults: SearchResults) -> Operation {
     

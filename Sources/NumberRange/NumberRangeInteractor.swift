@@ -8,6 +8,8 @@
 
 import Foundation
 
+public enum NumberRange {}
+
 public class NumberRangeInteractor<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemInteractor<ClosedRange<Number>?>, Boundable {
 
   public let onNumberRangeComputed: Observer<ClosedRange<Number>?>

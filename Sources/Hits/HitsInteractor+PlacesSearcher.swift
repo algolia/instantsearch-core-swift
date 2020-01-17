@@ -8,24 +8,50 @@
 
 import Foundation
 
-extension HitsInteractor where Record == Hit<Place> {
+public extension HitsInteractor where Record == Hit<Place> {
   
-  public func connectPlacesSearcher(_ searcher: PlacesSearcher) {
+  struct PlacesSearcherConnection: Connection {
     
-    self.pageLoader = searcher
+    public let interactor: HitsInteractor<Record>
+    public let searcher: PlacesSearcher
     
-    searcher.onResults.subscribePast(with: self) { interactor, searchResults in
-      interactor.update(searchResults)
-    }
+    public func connect() {
+      
+      interactor.pageLoader = searcher
+      
+      searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
+        interactor.update(searchResults)
+      }
 
-    searcher.onError.subscribe(with: self) { _, _ in
-      //TODO: when pagination added, notify pending query in infinite scrolling controller
+      searcher.onError.subscribe(with: interactor) { interactor, arg in
+        //TODO: when pagination added, notify pending query in infinite scrolling controller
+      }
+      
+      searcher.onQueryChanged.subscribe(with: interactor) { (interactor, _) in
+        interactor.notifyQueryChanged()
+      }
+
     }
     
-    searcher.onQueryChanged.subscribe(with: self) { (interactor, _) in
-      interactor.notifyQueryChanged()
+    public func disconnect() {
+      if interactor.pageLoader === searcher {
+        interactor.pageLoader = nil
+      }
+      searcher.onResults.cancelSubscription(for: interactor)
+      searcher.onError.cancelSubscription(for: interactor)
+      searcher.onQueryChanged.cancelSubscription(for: interactor)
     }
     
+  }
+    
+}
+
+public extension HitsInteractor where Record == Hit<Place> {
+  
+  @discardableResult func connectPlacesSearcher(_ searcher: PlacesSearcher) -> PlacesSearcherConnection {
+    let connection = PlacesSearcherConnection(interactor: self, searcher: searcher)
+    connection.connect()
+    return connection
   }
   
 }

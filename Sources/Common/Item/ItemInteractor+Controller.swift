@@ -9,22 +9,34 @@
 import Foundation
 
 public extension ItemInteractor {
-
-  func connectController<Controller: ItemController, Output>(_ controller: Controller,
-                                                             presenter: @escaping Presenter<Item, Output>) where Controller.Item == Output {
-    connectController(controller, dispatchOnMainThread: true, presenter: presenter)
+  
+  struct ControllerConnection<Controller: ItemController, Output>: Connection where Controller.Item == Output {
+    
+    public let interactor: ItemInteractor
+    public let controller: Controller
+    public let presenter: Presenter<Item, Output>
+    
+    public func connect() {
+      interactor.onItemChanged.subscribePast(with: controller) { controller, item in
+        controller.setItem(self.presenter(item))
+      }.onQueue(.main)
+    }
+    
+    public func disconnect() {
+      interactor.onItemChanged.cancelSubscription(for: controller)
+    }
+    
   }
+  
+}
 
-  func connectController<Controller: ItemController, Output>(_ controller: Controller,
-                                                             dispatchOnMainThread: Bool,
-                                                             presenter: @escaping Presenter<Item, Output>) where Controller.Item == Output {
-    let sub = onItemChanged.subscribePast(with: controller) { controller, item in
-      controller.setItem(presenter(item))
-    }
+public extension ItemInteractor {
 
-    if dispatchOnMainThread {
-      sub.onQueue(.main)
-    }
+  @discardableResult func connectController<Controller: ItemController, Output>(_ controller: Controller,
+                                                                                presenter: @escaping Presenter<Item, Output>) -> ControllerConnection<Controller, Output> {
+    let connection = ControllerConnection(interactor: self, controller: controller, presenter: presenter)
+    connection.connect()
+    return connection
   }
   
 }

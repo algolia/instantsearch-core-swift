@@ -8,29 +8,56 @@
 
 import Foundation
 
-extension HitsInteractor {
+public extension HitsInteractor {
   
-  public func connectSearcher(_ searcher: SingleIndexSearcher) {
+  struct SingleIndexSearcherConnection: Connection {
     
-    pageLoader = searcher
+    public let interactor: HitsInteractor
+    public let searcher: SingleIndexSearcher
     
-    searcher.onResults.subscribePast(with: self) { interactor, searchResults in
-      interactor.update(searchResults)
+    public func connect() {
+      
+      interactor.pageLoader = searcher
+      
+      searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
+        interactor.update(searchResults)
+      }
+      
+      searcher.onError.subscribe(with: interactor) { interactor, arg in
+        let (query, error) = arg
+        interactor.process(error, for: query)
+      }
+      
+      searcher.onIndexChanged.subscribePast(with: interactor) { interactor, _ in
+        interactor.notifyQueryChanged()
+      }
+      
+      searcher.onQueryChanged.subscribePast(with: interactor) { interactor, _ in
+        interactor.notifyQueryChanged()
+      }
+
     }
     
-    searcher.onError.subscribe(with: self) { interactor, arg in
-      let (query, error) = arg
-      interactor.process(error, for: query)
+    public func disconnect() {
+      if interactor.pageLoader === searcher {
+        interactor.pageLoader = nil
+      }
+      searcher.onResults.cancelSubscription(for: interactor)
+      searcher.onError.cancelSubscription(for: interactor)
+      searcher.onIndexChanged.cancelSubscription(for: interactor)
+      searcher.onQueryChanged.cancelSubscription(for: interactor)
     }
     
-    searcher.onIndexChanged.subscribePast(with: self) { interactor, _ in
-      interactor.notifyQueryChanged()
-    }
-    
-    searcher.onQueryChanged.subscribePast(with: self) { interactor, _ in
-      interactor.notifyQueryChanged()
-    }
-    
+  }
+  
+}
+
+public extension HitsInteractor {
+  
+  @discardableResult func connectSearcher(_ searcher: SingleIndexSearcher) -> SingleIndexSearcherConnection {
+    let connection = SingleIndexSearcherConnection(interactor: self, searcher: searcher)
+    connection.connect()
+    return connection
   }
   
 }

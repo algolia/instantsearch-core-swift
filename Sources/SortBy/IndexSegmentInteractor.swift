@@ -7,5 +7,8 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 public typealias IndexSegmentInteractor = SelectableSegmentInteractor<Int, Index>
+
+public enum IndexSegment {}

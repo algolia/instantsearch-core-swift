@@ -10,26 +10,50 @@ import Foundation
 
 public extension MultiIndexHitsInteractor {
   
-  func connectSearcher(_ searcher: MultiIndexSearcher) {
+  struct SearcherConnection: Connection {
     
-    zip(hitsInteractors.indices, searcher.pageLoaders).forEach {
-      let (index, pageLoader) = $0
-      hitsInteractors[index].pageLoader = pageLoader
+    public let interactor: MultiIndexHitsInteractor
+    public let searcher: MultiIndexSearcher
+    
+    public func connect() {
+      zip(interactor.hitsInteractors.indices, searcher.pageLoaders).forEach {
+        let (index, pageLoader) = $0
+        interactor.hitsInteractors[index].pageLoader = pageLoader
+      }
+      
+      searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
+        interactor.update(searchResults.searchResults)
+      }
+      
+      searcher.onError.subscribe(with: interactor) { interactor, args in
+        let (queries, error) = args
+        interactor.process(error, for: queries)
+      }
+      
+      searcher.onQueryChanged.subscribe(with: interactor) { interactor, _ in
+        interactor.notifyQueryChanged()
+      }
     }
     
-    searcher.onResults.subscribePast(with: self) { interactor, searchResults in
-      interactor.update(searchResults.searchResults)
+    public func disconnect() {
+      for nestedInteractor in interactor.hitsInteractors {
+        nestedInteractor.pageLoader = nil
+      }
+      searcher.onResults.cancelSubscription(for: interactor)
+      searcher.onError.cancelSubscription(for: interactor)
+      searcher.onQueryChanged.cancelSubscription(for: interactor)
     }
     
-    searcher.onError.subscribe(with: self) { interactor, args in
-      let (queries, error) = args
-      interactor.process(error, for: queries)
-    }
-    
-    searcher.onQueryChanged.subscribe(with: self) { interactor, _ in
-      interactor.notifyQueryChanged()
-    }
-        
+  }
+  
+}
+
+public extension MultiIndexHitsInteractor {
+  
+  @discardableResult func connectSearcher(_ searcher: MultiIndexSearcher) -> SearcherConnection {
+    let connection = SearcherConnection(interactor: self, searcher: searcher)
+    connection.connect()
+    return connection
   }
   
 }

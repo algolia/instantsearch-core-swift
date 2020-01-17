@@ -16,13 +16,36 @@ public extension MultiIndexSearcher {
    - Parameter filterState: filter state to connect
    - Parameter index: index of query to attach to filter state
    */
-
-  func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) {
-    filterState.onChange.subscribe(with: self) { searcher, filterState in
-      searcher.indexQueryStates[index].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
-      searcher.indexQueryStates[index].query.page = 0
-      searcher.search()
+  
+  struct FilterStateConnection: Connection {
+    
+    public let multiIndexSearcher: MultiIndexSearcher
+    public let filterState: FilterState
+    public let queryIndex: Int
+    
+    public func connect() {
+      let queryIndex = self.queryIndex
+      filterState.onChange.subscribe(with: multiIndexSearcher) { searcher, filterState in
+        searcher.indexQueryStates[self.queryIndex].query.filters = FilterGroupConverter().sql(filterState.toFilterGroups())
+        searcher.indexQueryStates[queryIndex].query.page = 0
+        searcher.search()
+      }
     }
+    
+    public func disconnect() {
+      filterState.onChange.cancelSubscription(for: multiIndexSearcher)
+    }
+    
+  }
+  
+}
+
+public extension MultiIndexSearcher {
+  
+  @discardableResult func connectFilterState(_ filterState: FilterState, withQueryAtIndex index: Int) -> FilterStateConnection {
+    let connection = FilterStateConnection(multiIndexSearcher: self, filterState: filterState, queryIndex: index)
+    connection.connect()
+    return connection
   }
   
 }

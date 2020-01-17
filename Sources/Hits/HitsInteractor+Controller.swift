@@ -10,17 +10,57 @@ import Foundation
 
 public extension HitsInteractor {
   
-  func connectController<Controller: HitsController>(_ controller: Controller) where Controller.DataSource == HitsInteractor<Record> {
+  struct ControllerConnection<Controller: HitsController>: Connection where Controller.DataSource == HitsInteractor<Record> {
     
-    controller.hitsSource = self
+    public let interactor: HitsInteractor
+    public let controller: Controller
+    public let externalReload: Bool
     
-    onRequestChanged.subscribe(with: controller) { controller, _ in
-      controller.scrollToTop()
-    }.onQueue(.main)
+    public init(interactor: HitsInteractor,
+                controller: Controller,
+                externalReload: Bool = false) {
+      self.interactor = interactor
+      self.controller = controller
+      self.externalReload = externalReload
+    }
     
-    onResultsUpdated.subscribePast(with: controller) { controller, _ in
-      controller.reload()
-    }.onQueue(.main)
+    public func connect() {
+      controller.hitsSource = interactor
+      
+      interactor.onRequestChanged.subscribe(with: controller) { controller, _ in
+        controller.scrollToTop()
+      }.onQueue(.main)
+      
+      if !externalReload {
+        interactor.onResultsUpdated.subscribePast(with: controller) { controller, _ in
+          controller.reload()
+        }.onQueue(.main)
+      }
+    }
+    
+    public func disconnect() {
+      if controller.hitsSource === interactor {
+        controller.hitsSource = nil
+      }
+      interactor.onRequestChanged.cancelSubscription(for: controller)
+      if !externalReload {
+        interactor.onResultsUpdated.cancelSubscription(for: controller)
+      }
+    }
+    
+  }
+  
+}
+
+public extension HitsInteractor {
+  
+  @discardableResult func connectController<Controller: HitsController>(_ controller: Controller,
+                                                                        externalReload: Bool = false) -> ControllerConnection<Controller> where Controller.DataSource == HitsInteractor<Record> {
+    let connection = ControllerConnection(interactor: self,
+                                          controller: controller,
+                                          externalReload: externalReload)
+    connection.connect()
+    return connection
   }
   
 }

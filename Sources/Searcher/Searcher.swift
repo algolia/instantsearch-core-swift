@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import InstantSearchClient
 
 /// Protocol describing an entity capable to perform search requests
 public protocol Searcher: class {
