@@ -148,4 +148,14 @@ extension Hit {
     
 }
 
+public extension Hit {
+  
+  /// Returns a highlighted string for a string key if highlightResult has a flat dictionary structure
+  /// If the value for key is missing or it is an embedded structure, returns nil
+  func hightlightedString(for key: String) -> HighlightedString? {
+    return highlightResult?.value(forKey: key)?.value?.value
+  }
+  
+}
+
 extension Hit: Geolocated {}
