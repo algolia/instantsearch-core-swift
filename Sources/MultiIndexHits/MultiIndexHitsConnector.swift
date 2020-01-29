@@ -45,24 +45,53 @@ public extension MultiIndexHitsConnector {
   
   struct IndexModule {
     
-    public let name: String
+    public let indexName: String
     public let hitsInteractor: AnyHitsInteractor
     public let filterState: FilterState?
     
-    public init<Hit: Codable>(name: String,
+    public init<Hit: Codable>(indexName: String,
                               hitsInteractor: HitsInteractor<Hit>,
                               filterState: FilterState? = .none) {
-      self.name = name
+      self.indexName = indexName
       self.hitsInteractor = hitsInteractor
       self.filterState = filterState
     }
     
+    public init(indexName: String,
+                infiniteScrolling: InfiniteScrolling = .on(withOffset: 10),
+                showItemsOnEmptyQuery: Bool = true,
+                filterState: FilterState? = .none) {
+      let hitsInteractor = HitsInteractor<JSON>(infiniteScrolling: infiniteScrolling,
+                                                showItemsOnEmptyQuery: showItemsOnEmptyQuery)
+      self.init(indexName: indexName,
+                hitsInteractor: hitsInteractor,
+                filterState: filterState)
+    }
+        
   }
   
-  convenience init(appID: String, apiKey: String, indexModules: [IndexModule]) {
-    let searcher = MultiIndexSearcher(appID: appID, apiKey: apiKey, indexNames: indexModules.map { $0.name })
+  convenience init(appID: String,
+                   apiKey: String,
+                   indexModules: [IndexModule]) {
+    let searcher = MultiIndexSearcher(appID: appID,
+                                      apiKey: apiKey,
+                                      indexNames: indexModules.map { $0.indexName })
     let interactor = MultiIndexHitsInteractor(hitsInteractors: indexModules.map { $0.hitsInteractor })
-    self.init(searcher: searcher, interactor: interactor, filterStates: indexModules.map { $0.filterState })
+    self.init(searcher: searcher,
+              interactor: interactor,
+              filterStates: indexModules.map { $0.filterState })
+  }
+  
+}
+
+public extension MultiIndexHitsConnector.IndexModule {
+  
+  init(suggestionsIndexName: String,
+       hitsInteractor: HitsInteractor<Hit<SearchSuggestion>> = .init(infiniteScrolling: .off, showItemsOnEmptyQuery: true),
+       filterState: FilterState? = .none) {
+    self.init(indexName: suggestionsIndexName,
+              hitsInteractor: hitsInteractor,
+              filterState: filterState)
   }
   
 }

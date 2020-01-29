@@ -12,7 +12,7 @@ public protocol ItemListController: class {
 
   associatedtype Item: Hashable
 
-  func setItems(_ item: [Item])
+  func setItems(_ items: [Item])
 
   // TODO: Potentially we could change from Item to a Int which is position of item in list.
   // It is enough to identify the items in interactor, so in that way we only pass the

@@ -26,6 +26,7 @@ public struct SearchResults: Codable {
     case aroundGeoLocation = "aroundLatLng"
     case automaticRadius
     case facetStats = "facets_stats"
+    case userData
   }
   
   /// Hits.
@@ -83,6 +84,10 @@ public struct SearchResults: Codable {
   /// Statistics for a numerical facets.
   public var facetStats: [Attribute: FacetStats]?
   
+  /// Array of userData object.
+  /// Only returned if at least one Rule containing a custom userData consequence was applied.
+  public var userData: [JSON]?
+  
   public init(from decoder: Decoder) throws {
     
     let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -117,6 +122,7 @@ public struct SearchResults: Codable {
     } else {
       self.facetStats = .none
     }
+    self.userData = try container.decodeIfPresent([JSON].self, forKey: .userData)
     
   }
   
@@ -155,6 +161,7 @@ public struct SearchResults: Codable {
     try container.encodeIfPresent(rawFacets, forKey: .facets)
     let rawDisjunctiveFacets = facets.flatMap([String: [String: Int]].init)
     try container.encodeIfPresent(rawDisjunctiveFacets, forKey: .disjunctiveFacets)
+    try container.encodeIfPresent(userData, forKey: .userData)
     //TODO: missing facets stats
   }
   
@@ -167,7 +174,7 @@ public extension SearchResults {
     let decodedTypedHits = try JSONDecoder().decode([T].self, from: encodedHits)
     return decodedTypedHits
   }
-  
+    
 }
 
 extension SearchResults {

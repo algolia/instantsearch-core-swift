@@ -48,3 +48,40 @@ public indirect enum TreeModel<T: Codable>: Codable {
   }
   
 }
+
+public extension TreeModel {
+  
+  var value: T? {
+    guard case let .value(value) = self else {
+      return nil
+    }
+    return value
+  }
+  
+  func value(atIndex index: Int) -> Self? {
+    guard case let .array(array) = self else {
+      return nil
+    }
+    return array[index]
+  }
+  
+  func value(forKey key: String) -> Self? {
+    guard case let .dictionary(dictionary) = self else {
+      return nil
+    }
+    return dictionary[key]
+  }
+  
+  subscript(index: Int) -> Self? {
+    get {
+      return value(atIndex: index)
+    }
+  }
+  
+  subscript(key: String) -> Self? {
+    get {
+      return value(forKey: key)
+    }
+  }
+  
+}

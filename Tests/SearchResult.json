@@ -1583,6 +1583,10 @@
             "sum": 714206
         }
     },
+    "userData": [
+      {"userData1": "content1"},
+      {"userData2": 2}
+    ],
     "exhaustiveFacetsCount": true,
     "exhaustiveNbHits": true,
     "query": "Amazon",

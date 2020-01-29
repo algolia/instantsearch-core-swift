@@ -23,7 +23,7 @@ To install InstantSearch, simply add the following line to your Podfile:
 #### Swift 5.0
 
 ```ruby
-pod 'InstantSearchCore', '~> 6.0'
+pod 'InstantSearchCore', '~> 6.5'
 ```
 
 #### Swift 4.2+
@@ -54,7 +54,7 @@ To install InstantSearch, simply add the following line to your Cartfile:
 #### Swift 5.0
 
 ```ruby
-github "algolia/instantsearch-core-swift" ~> 6.0 
+github "algolia/instantsearch-core-swift" ~> 6.5 
 ```
 
 #### Swift 4.2+
@@ -68,6 +68,26 @@ github "algolia/instantsearch-core-swift" ~> 5.0
 ```ruby
 github "algolia/instantsearch-core-swift" ~> 3.3 
 ```
+
+#### Swift Package Manager
+
+[Swift Package Manager](https://swift.org/package-manager/) (SwiftPM) is a tool for managing the distribution of Swift code as well as C-family dependency. From Xcode 11, SwiftPM got natively integrated with Xcode.
+
+InstantSearch Core support SwiftPM from version 6.4.0. To use SwiftPM, you should use Xcode 11 to open your project. Click `File` -> `Swift Packages` -> `Add Package Dependency`, enter [InstantSearch Core repo's URL](https://github.com/algolia/instantsearch-core-swift.git).
+After select the package, you can choose the dependency type (tagged version, branch or commit). Then Xcode will setup all the stuff for you.
+
+If you're a framework author and use InstantSearch Core  as a dependency, update your `Package.swift` file:
+
+```swift
+let package = Package(
+    // 6.5.0 ..< 7.0.0
+    dependencies: [
+        .package(url: "https://github.com/algolia/instantsearch-core-swift.git", from: "6.5.0")
+    ],
+    // ...
+)
+```
+
 
 # License
 
