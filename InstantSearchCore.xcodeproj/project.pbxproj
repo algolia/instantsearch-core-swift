@@ -451,6 +451,15 @@
 		AF8B64C9238461FD00F0E4F6 /* ItemListInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8B64C6238461FD00F0E4F6 /* ItemListInteractor+Controller.swift */; };
 		AF8B64CA238461FD00F0E4F6 /* ItemListInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8B64C6238461FD00F0E4F6 /* ItemListInteractor+Controller.swift */; };
 		AF8C0E2C22807B9C00EEB6CE /* ToggleFilter+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8C0E2B22807B9C00EEB6CE /* ToggleFilter+FilterState.swift */; };
+		AF8D1C0923E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C0823E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift */; };
+		AF8D1C0A23E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C0823E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift */; };
+		AF8D1C0B23E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C0823E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift */; };
+		AF8D1C0D23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C0C23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift */; };
+		AF8D1C0E23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C0C23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift */; };
+		AF8D1C0F23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C0C23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift */; };
+		AF8D1C1123E09CAE00CB415F /* TestCurrentFiltersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C1023E09CAE00CB415F /* TestCurrentFiltersController.swift */; };
+		AF8D1C1223E09CAE00CB415F /* TestCurrentFiltersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C1023E09CAE00CB415F /* TestCurrentFiltersController.swift */; };
+		AF8D1C1323E09CAE00CB415F /* TestCurrentFiltersController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8D1C1023E09CAE00CB415F /* TestCurrentFiltersController.swift */; };
 		AF8DA20022E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8DA1FF22E11D7B00C3C03C /* FilterGroupsConvertible.swift */; };
 		AF8DA20122E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8DA1FF22E11D7B00C3C03C /* FilterGroupsConvertible.swift */; };
 		AF8DA20222E11D7B00C3C03C /* FilterGroupsConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF8DA1FF22E11D7B00C3C03C /* FilterGroupsConvertible.swift */; };
@@ -1192,6 +1201,9 @@
 		AF8B64C1238461EB00F0E4F6 /* CurrentFiltersInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentFiltersInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		AF8B64C6238461FD00F0E4F6 /* ItemListInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemListInteractor+Controller.swift"; sourceTree = "<group>"; };
 		AF8C0E2B22807B9C00EEB6CE /* ToggleFilter+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToggleFilter+FilterState.swift"; sourceTree = "<group>"; };
+		AF8D1C0823E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentFiltersFilterStateConnectionTests.swift; sourceTree = "<group>"; };
+		AF8D1C0C23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentFiltersControllerConnectionTests.swift; sourceTree = "<group>"; };
+		AF8D1C1023E09CAE00CB415F /* TestCurrentFiltersController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCurrentFiltersController.swift; sourceTree = "<group>"; };
 		AF8DA1FF22E11D7B00C3C03C /* FilterGroupsConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupsConvertible.swift; sourceTree = "<group>"; };
 		AF9104752370757000B0D8B2 /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
 		AF9396882298154900757257 /* FilterClearController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterClearController.swift; sourceTree = "<group>"; };
@@ -1626,6 +1638,16 @@
 			path = Searcher;
 			sourceTree = "<group>";
 		};
+		AF8D1C0723E0934E00CB415F /* CurrentFilters */ = {
+			isa = PBXGroup;
+			children = (
+				AF8D1C0823E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift */,
+				AF8D1C0C23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift */,
+				AF8D1C1023E09CAE00CB415F /* TestCurrentFiltersController.swift */,
+			);
+			path = CurrentFilters;
+			sourceTree = "<group>";
+		};
 		AF9396872298153800757257 /* FilterClear */ = {
 			isa = PBXGroup;
 			children = (
@@ -1650,6 +1672,7 @@
 		AFBBD770237B706F00F6C33C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AF8D1C0723E0934E00CB415F /* CurrentFilters */,
 				AF52270423ACFA43004FF29D /* Tracker */,
 				AF476FB9239AD4DF0071D591 /* Integration */,
 				AFC1566C23981F9B008AC1A0 /* FacetList */,
@@ -2512,10 +2535,12 @@
 				AFC68D8223C621C2006841EF /* TestSearcher.swift in Sources */,
 				AFC68D8923C621CD006841EF /* FacetListSingleIndexSearcherConnectionTests.swift in Sources */,
 				AFC68D7A23C621BE006841EF /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
+				AF8D1C0E23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift in Sources */,
 				AFC68D8023C621C2006841EF /* QueryInputControllerConnectionTests.swift in Sources */,
 				AFC68D8623C621C7006841EF /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC68D6523C6218F006841EF /* HitTests.swift in Sources */,
 				AFC68D8F23C621D2006841EF /* HierarchicalIntegrationTests.swift in Sources */,
+				AF8D1C0A23E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */,
 				AFC68D8D23C621CD006841EF /* TestFacetListController.swift in Sources */,
 				AFC68D7323C6218F006841EF /* SequencerTest.swift in Sources */,
 				AFC68D7C23C621BE006841EF /* TestInfiniteScrollingController.swift in Sources */,
@@ -2529,6 +2554,7 @@
 				AFC68D6A23C6218F006841EF /* MultiSourceHitsReloaderTests.swift in Sources */,
 				AFC68D7623C6218F006841EF /* PlaceTests.swift in Sources */,
 				AFC68D7023C6218F006841EF /* SelectableListInteractorTests.swift in Sources */,
+				AF8D1C1223E09CAE00CB415F /* TestCurrentFiltersController.swift in Sources */,
 				AFC68D6923C6218F006841EF /* PageMapTests.swift in Sources */,
 				AFC68D8823C621CD006841EF /* FacetListPresenterTests.swift in Sources */,
 				AFC68D9123C621D2006841EF /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
@@ -2798,6 +2824,7 @@
 				AFC1567623981FC9008AC1A0 /* FacetListFilterStateConnectionTests.swift in Sources */,
 				AFC60945237F1B2500B10B58 /* HitTests.swift in Sources */,
 				AFC60946237F1B2500B10B58 /* InfiniteScrollingControllerTests.swift in Sources */,
+				AF8D1C1123E09CAE00CB415F /* TestCurrentFiltersController.swift in Sources */,
 				AFC6094B237F1B2500B10B58 /* ItemInteractorTests.swift in Sources */,
 				AFC6094C237F1B2500B10B58 /* MultiIndexHitsInteractorTests.swift in Sources */,
 				AF476F97239A8AA50071D591 /* TestFacetListController.swift in Sources */,
@@ -2810,6 +2837,7 @@
 				AFC60951237F1B2500B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC1567223981FBD008AC1A0 /* FacetListFacetSearcherConnectionTests.swift in Sources */,
 				AFC60952237F1B2500B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
+				AF8D1C0923E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */,
 				AF476FC8239AD4DF0071D591 /* DisjunctiveFacetingIntegrationTests.swift in Sources */,
 				AF2864672395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
 				AF476FBF239AD4DF0071D591 /* HierarchicalIntegrationTests.swift in Sources */,
@@ -2818,6 +2846,7 @@
 				AFC60954237F1B2500B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60955237F1B2500B10B58 /* SelectableListInteractorTests.swift in Sources */,
 				AFC1566923980ABB008AC1A0 /* TestSearcher.swift in Sources */,
+				AF8D1C0D23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift in Sources */,
 				AFC60956237F1B2500B10B58 /* SelectableSegmentInteractorConnectorsTests.swift in Sources */,
 				AFC60957237F1B2500B10B58 /* SelectableSegmentInteractorTests.swift in Sources */,
 				AF52270E23AD517B004FF29D /* TestFiltersTracker.swift in Sources */,
@@ -3285,6 +3314,7 @@
 				AFC1567823981FC9008AC1A0 /* FacetListFilterStateConnectionTests.swift in Sources */,
 				AFC60901237F1B0D00B10B58 /* HitTests.swift in Sources */,
 				AFC60902237F1B0D00B10B58 /* InfiniteScrollingControllerTests.swift in Sources */,
+				AF8D1C1323E09CAE00CB415F /* TestCurrentFiltersController.swift in Sources */,
 				AFC60907237F1B0D00B10B58 /* ItemInteractorTests.swift in Sources */,
 				AFC60908237F1B0D00B10B58 /* MultiIndexHitsInteractorTests.swift in Sources */,
 				AF476F99239A8AA50071D591 /* TestFacetListController.swift in Sources */,
@@ -3297,6 +3327,7 @@
 				AFC6090D237F1B0D00B10B58 /* SearchResultsTests.swift in Sources */,
 				AFC1567423981FBD008AC1A0 /* FacetListFacetSearcherConnectionTests.swift in Sources */,
 				AFC6090E237F1B0D00B10B58 /* SelectableInteractorConnectorsTests.swift in Sources */,
+				AF8D1C0B23E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */,
 				AF476FCA239AD4DF0071D591 /* DisjunctiveFacetingIntegrationTests.swift in Sources */,
 				AF2864692395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift in Sources */,
 				AF476FC1239AD4DF0071D591 /* HierarchicalIntegrationTests.swift in Sources */,
@@ -3305,6 +3336,7 @@
 				AFC60910237F1B0D00B10B58 /* SelectableListInteractorFilterConnectorsTests.swift in Sources */,
 				AFC60911237F1B0D00B10B58 /* SelectableListInteractorTests.swift in Sources */,
 				AFC1566B23980ABB008AC1A0 /* TestSearcher.swift in Sources */,
+				AF8D1C0F23E0937B00CB415F /* CurrentFiltersControllerConnectionTests.swift in Sources */,
 				AFC60912237F1B0D00B10B58 /* SelectableSegmentInteractorConnectorsTests.swift in Sources */,
 				AFC60913237F1B0D00B10B58 /* SelectableSegmentInteractorTests.swift in Sources */,
 				AF52271023AD517B004FF29D /* TestFiltersTracker.swift in Sources */,
