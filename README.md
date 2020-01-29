@@ -80,9 +80,9 @@ If you're a framework author and use InstantSearch Core  as a dependency, update
 
 ```swift
 let package = Package(
-    // 6.4.0 ..< 7.0.0
+    // 6.5.0 ..< 7.0.0
     dependencies: [
-        .package(url: "https://github.com/algolia/instantsearch-core-swift.git", from: "6.4.0")
+        .package(url: "https://github.com/algolia/instantsearch-core-swift.git", from: "6.5.0")
     ],
     // ...
 )
