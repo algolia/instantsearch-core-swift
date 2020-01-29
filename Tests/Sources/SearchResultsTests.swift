@@ -66,6 +66,8 @@ class SearchResultsTests: XCTestCase {
       XCTAssertEqual(searchResults.rankingInfo!.serverUsed, "d52-usw-3.algolia.net")
       XCTAssertFalse(searchResults.rankingInfo!.timeoutCounts)
       XCTAssertFalse(searchResults.rankingInfo!.timeoutHits)
+      XCTAssertEqual(searchResults.userData?.count, 2)
+
       if let facetStats = searchResults.facetStats {
         XCTAssertTrue(facetStats.keys.contains("price"))
         XCTAssertTrue(facetStats.keys.contains("pubYear"))
