@@ -1,5 +1,5 @@
 //
-//  SearchSuggestion.swift
+//  QuerySuggestion.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 20/01/2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SearchSuggestion: Codable {
+public struct QuerySuggestion: Codable {
   
   public let query: String
   public let popularity: Int
