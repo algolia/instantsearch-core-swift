@@ -87,7 +87,7 @@ public extension MultiIndexHitsConnector {
 public extension MultiIndexHitsConnector.IndexModule {
   
   init(suggestionsIndexName: String,
-       hitsInteractor: HitsInteractor<Hit<SearchSuggestion>> = .init(infiniteScrolling: .off, showItemsOnEmptyQuery: true),
+       hitsInteractor: HitsInteractor<Hit<QuerySuggestion>> = .init(infiniteScrolling: .off, showItemsOnEmptyQuery: true),
        filterState: FilterState? = .none) {
     self.init(indexName: suggestionsIndexName,
               hitsInteractor: hitsInteractor,
