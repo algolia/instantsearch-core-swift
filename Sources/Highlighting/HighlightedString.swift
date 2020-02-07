@@ -16,13 +16,14 @@ public struct HighlightedString: Codable, Hashable {
   public let taggedString: TaggedString
   
   public init(string: String) {
-    self.taggedString = TaggedString(string: string, preTag: HighlightedString.preTag, postTag: HighlightedString.postTag, options: [.caseInsensitive])
+    let input = string.cString(using: .utf8).flatMap { .init(cString: $0)  } ?? string
+    self.taggedString = TaggedString(string: input, preTag: HighlightedString.preTag, postTag: HighlightedString.postTag, options: [.caseInsensitive])
   }
   
   public init(from decoder: Decoder) throws {
     let container = try decoder.singleValueContainer()
-    let input = try container.decode(String.self)
-    self.init(string: input)
+    let decodedString = try container.decode(String.self)
+    self.init(string: decodedString)
   }
   
   public func encode(to encoder: Encoder) throws {
