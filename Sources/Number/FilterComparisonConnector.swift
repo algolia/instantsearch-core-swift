@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FilterComparisonConnector<Number: Comparable & Numeric & InitaliazableWithFloat>: Connection {
+public class FilterComparisonConnector<Number: Comparable & DoubleRepresentable>: Connection {
   
   public let interactor: NumberInteractor<Number>
   public let filterState: FilterState

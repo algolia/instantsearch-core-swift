@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NumberRangeConnector<Number: Comparable & Numeric & InitaliazableWithFloat>: Connection {
+public class NumberRangeConnector<Number: Comparable & DoubleRepresentable>: Connection {
   
   public let filterState: FilterState
   public let attribute: Attribute

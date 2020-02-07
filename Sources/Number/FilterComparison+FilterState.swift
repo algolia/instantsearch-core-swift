@@ -88,13 +88,13 @@ public extension NumberInteractor {
       
       let removeCurrentItem = { [weak interactor] in
         guard let item = interactor?.item else { return }
-        let filter = Filter.Numeric(attribute: attribute, operator: numericOperator, value: item.toFloat())
+        let filter = Filter.Numeric(attribute: attribute, operator: numericOperator, value: item.toDouble())
         accessor.remove(filter)
       }
       
       let addItem: (Number?) -> Void = { value in
         guard let value = value else { return }
-        let filter = Filter.Numeric(attribute: attribute, operator: numericOperator, value: value.toFloat())
+        let filter = Filter.Numeric(attribute: attribute, operator: numericOperator, value: value.toDouble())
         accessor.add(filter)
       }
       

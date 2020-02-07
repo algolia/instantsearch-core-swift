@@ -878,10 +878,10 @@
 		E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BF522B3CC2E00927350 /* Boundable.swift */; };
 		E2146BF822B3CC2E00927350 /* Boundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BF522B3CC2E00927350 /* Boundable.swift */; };
 		E2146BF922B3CC2E00927350 /* Boundable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BF522B3CC2E00927350 /* Boundable.swift */; };
-		E2146BFC22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */; };
-		E2146BFD22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */; };
-		E2146BFE22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */; };
-		E2146BFF22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */; };
+		E2146BFC22B3CE3500927350 /* DoubleRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* DoubleRepresentable.swift */; };
+		E2146BFD22B3CE3500927350 /* DoubleRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* DoubleRepresentable.swift */; };
+		E2146BFE22B3CE3500927350 /* DoubleRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* DoubleRepresentable.swift */; };
+		E2146BFF22B3CE3500927350 /* DoubleRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146BFB22B3CE3500927350 /* DoubleRepresentable.swift */; };
 		E2146C0122B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C0022B3CE6700927350 /* NumberRangeInteractor+FilterState.swift */; };
 		E2146C0222B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C0022B3CE6700927350 /* NumberRangeInteractor+FilterState.swift */; };
 		E2146C0322B3CE6700927350 /* NumberRangeInteractor+FilterState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2146C0022B3CE6700927350 /* NumberRangeInteractor+FilterState.swift */; };
@@ -1326,7 +1326,7 @@
 		E2146BE822B29CE200927350 /* FilterClearInteractor+FilterClearController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterClearInteractor+FilterClearController.swift"; sourceTree = "<group>"; };
 		E2146BF022B3C56F00927350 /* NumberRangeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberRangeInteractor.swift; sourceTree = "<group>"; };
 		E2146BF522B3CC2E00927350 /* Boundable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Boundable.swift; sourceTree = "<group>"; };
-		E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitaliazableWithFloat.swift; sourceTree = "<group>"; };
+		E2146BFB22B3CE3500927350 /* DoubleRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleRepresentable.swift; sourceTree = "<group>"; };
 		E2146C0022B3CE6700927350 /* NumberRangeInteractor+FilterState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberRangeInteractor+FilterState.swift"; sourceTree = "<group>"; };
 		E2146C0522B3D07F00927350 /* NumberRangeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumberRangeController.swift; sourceTree = "<group>"; };
 		E2146C0A22B3D1CA00927350 /* NumberRangeInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NumberRangeInteractor+Controller.swift"; sourceTree = "<group>"; };
@@ -2022,7 +2022,7 @@
 			isa = PBXGroup;
 			children = (
 				E2146BF522B3CC2E00927350 /* Boundable.swift */,
-				E2146BFB22B3CE3500927350 /* InitaliazableWithFloat.swift */,
+				E2146BFB22B3CE3500927350 /* DoubleRepresentable.swift */,
 			);
 			path = Number;
 			sourceTree = "<group>";
@@ -2618,7 +2618,7 @@
 				AF8A907D23D5D4AB009DC303 /* QuerySuggestion.swift in Sources */,
 				AF9396892298154900757257 /* FilterClearController.swift in Sources */,
 				AF3DE583224A984B00C8BC08 /* MultiIndexHitsInteractor.swift in Sources */,
-				E2146BFC22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E2146BFC22B3CE3500927350 /* DoubleRepresentable.swift in Sources */,
 				AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */,
 				AF4E2A5D2344FBE9003EC036 /* Geolocated.swift in Sources */,
 				E26F424A229830E600583D39 /* FilterClearInteractor+FilterState.swift in Sources */,
@@ -2959,7 +2959,7 @@
 				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				AFBAA6FA22EC79D60009856B /* FilterState+FiltersWritable.swift in Sources */,
 				AF28642D2390800900E9E845 /* NumberRangeConnector.swift in Sources */,
-				E2146BFD22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E2146BFD22B3CE3500927350 /* DoubleRepresentable.swift in Sources */,
 				E25D634822D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				E225EDB02268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
 				E2EFA5F722AEBD72008C9CAA /* EventInteractor.swift in Sources */,
@@ -3171,7 +3171,7 @@
 				E225EDB12268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
 				AFBAA6FB22EC79D80009856B /* FilterState+FiltersWritable.swift in Sources */,
 				AF28642E2390800900E9E845 /* NumberRangeConnector.swift in Sources */,
-				E2146BFE22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E2146BFE22B3CE3500927350 /* DoubleRepresentable.swift in Sources */,
 				E25D634922D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
 				E2EFA5F822AEBD72008C9CAA /* EventInteractor.swift in Sources */,
@@ -3448,7 +3448,7 @@
 				AFC2E295228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
 				E225EDB22268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */,
 				AFBAA6FC22EC79D90009856B /* FilterState+FiltersWritable.swift in Sources */,
-				E2146BFF22B3CE3500927350 /* InitaliazableWithFloat.swift in Sources */,
+				E2146BFF22B3CE3500927350 /* DoubleRepresentable.swift in Sources */,
 				AF28642F2390800900E9E845 /* NumberRangeConnector.swift in Sources */,
 				E25D634A22D36B5C008CD0FD /* HierarchicalInteractor+Controller.swift in Sources */,
 				AF1177A4225E2B1000C5B59B /* FilterGroupID.swift in Sources */,
