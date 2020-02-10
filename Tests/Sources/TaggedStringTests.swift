@@ -83,4 +83,30 @@ class TaggedStringTests: XCTestCase {
     XCTAssertTrue(taggedString.untaggedRanges.isEmpty)
   }
   
+  func testWithDecodedString() {
+
+    let expectedHighlightedPart = "rennais"
+    
+    let inlineString = "VIDÉO. Des CRS déployés devant un lycée <em>rennais</em> pour les épreuves anticipées du bac"
+
+    let decodedString: String = Bundle(for: DisjunctiveFacetingTests.self)
+      .path(forResource: "HS", ofType: "json")
+      .flatMap { URL(fileURLWithPath: $0) }
+      .flatMap { try? String(contentsOf: $0, encoding: .utf8) }!
+    
+    let inlineHiglighted = TaggedString(string: inlineString, preTag: "<em>", postTag: "</em>")
+    let decodedHighlighted = TaggedString(string: decodedString, preTag: "<em>", postTag: "</em>")
+    
+    func extractHighlightedPart(from title: TaggedString) -> String {
+      let highlightedRange = title.taggedRanges.first!
+      let highlightedPart = title.output[highlightedRange]
+      return String(highlightedPart)
+    }
+    
+    XCTAssertEqual(expectedHighlightedPart, extractHighlightedPart(from: inlineHiglighted))
+    XCTAssertEqual(expectedHighlightedPart, extractHighlightedPart(from: decodedHighlighted))
+
+  }
+
+  
 }

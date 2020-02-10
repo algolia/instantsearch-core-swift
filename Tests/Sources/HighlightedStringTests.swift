@@ -12,7 +12,7 @@ import XCTest
 
 class HighlightedStringTests: XCTestCase {
   
-    func testWeirdTest() {
+    func testWithDecodedString() {
 
       let expectedHighlightedPart = "rennais"
       

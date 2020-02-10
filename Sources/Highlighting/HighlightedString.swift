@@ -16,8 +16,7 @@ public struct HighlightedString: Codable, Hashable {
   public let taggedString: TaggedString
   
   public init(string: String) {
-    let input = string.cString(using: .utf8).flatMap { .init(cString: $0)  } ?? string
-    self.taggedString = TaggedString(string: input, preTag: HighlightedString.preTag, postTag: HighlightedString.postTag, options: [.caseInsensitive])
+    self.taggedString = TaggedString(string: string, preTag: HighlightedString.preTag, postTag: HighlightedString.postTag, options: [.caseInsensitive])
   }
   
   public init(from decoder: Decoder) throws {
