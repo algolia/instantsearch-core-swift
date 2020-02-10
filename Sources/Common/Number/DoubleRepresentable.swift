@@ -20,13 +20,25 @@ extension Int: DoubleRepresentable {
   }
 }
 
-extension Double: DoubleRepresentable {
+extension UInt: DoubleRepresentable {
   public func toDouble() -> Double {
     return Double(self)
   }
 }
 
 extension Float: DoubleRepresentable {
+  public func toDouble() -> Double {
+    return Double(self)
+  }
+}
+
+extension Double: DoubleRepresentable {
+  public func toDouble() -> Double {
+    return Double(self)
+  }
+}
+
+extension Float80: DoubleRepresentable {
   public func toDouble() -> Double {
     return Double(self)
   }

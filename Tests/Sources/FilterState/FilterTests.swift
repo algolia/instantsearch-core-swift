@@ -35,7 +35,7 @@ class FilterTests: XCTestCase {
   
   func testFilterNumericComparisonConstruction() {
     let attribute: Attribute = "a"
-    let value: Float = 10
+    let value: Double = 10
     let op: Filter.Numeric.Operator = .equals
     let expectedExpression = """
     "\(attribute)" \(op.rawValue) \(value)
@@ -50,9 +50,11 @@ class FilterTests: XCTestCase {
     XCTAssertEqual(numericFilter.sqlForm, "NOT \(expectedExpression)")
   }
   
+
+  
   func testFilterNumericRangeConstruction() {
     let attribute: Attribute = "a"
-    let value: ClosedRange<Float> = 0...10
+    let value: ClosedRange<Double> = 0...10
     let expectedExpression = """
     "\(attribute)":\(value.lowerBound) TO \(value.upperBound)
     """
@@ -64,6 +66,13 @@ class FilterTests: XCTestCase {
     numericFilter.not()
     XCTAssertTrue(numericFilter.isNegated)
     XCTAssertEqual(numericFilter.sqlForm, "NOT \(expectedExpression)")
+  }
+  
+  func testTimeStamp() {
+    let attribute: Attribute = "beginDate"
+    let timeStamp = Date().timeIntervalSince1970
+    let numericFilter = Filter.Numeric(attribute: attribute, operator: .greaterThan, value: timeStamp)
+    XCTAssertEqual(numericFilter.sqlForm, "\"beginDate\" > \(timeStamp)")
   }
   
   func testFilterTagConstruction() {
