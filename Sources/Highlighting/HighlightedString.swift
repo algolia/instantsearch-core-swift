@@ -21,8 +21,8 @@ public struct HighlightedString: Codable, Hashable {
   
   public init(from decoder: Decoder) throws {
     let container = try decoder.singleValueContainer()
-    let input = try container.decode(String.self)
-    self.init(string: input)
+    let decodedString = try container.decode(String.self)
+    self.init(string: decodedString)
   }
   
   public func encode(to encoder: Encoder) throws {
