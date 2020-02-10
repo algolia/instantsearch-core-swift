@@ -17,7 +17,6 @@ class NumberInteractorTestsTests: XCTestCase {
     _ = NumberInteractor(item: UInt(1))
     _ = NumberInteractor(item: Float(1))
     _ = NumberInteractor(item: Double(1))
-    _ = NumberInteractor(item: Float80(1))
   }
   
 }

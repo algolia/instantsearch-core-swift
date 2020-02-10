@@ -37,9 +37,3 @@ extension Double: DoubleRepresentable {
     return Double(self)
   }
 }
-
-extension Float80: DoubleRepresentable {
-  public func toDouble() -> Double {
-    return Double(self)
-  }
-}
