@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol Boundable: class {
-  associatedtype Number: Comparable & Numeric & InitaliazableWithFloat
+  associatedtype Number: Comparable & DoubleRepresentable
 
   func applyBounds(bounds: ClosedRange<Number>?)
 }

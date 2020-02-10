@@ -10,7 +10,7 @@ import Foundation
 
 public extension NumberRange {
   
-  struct FilterStateConnection<Number: Comparable & Numeric & InitaliazableWithFloat>: Connection {
+  struct FilterStateConnection<Number: Comparable & DoubleRepresentable>: Connection {
     
     public let interactor: NumberRangeInteractor<Number>
     public let filterState: FilterState
@@ -81,7 +81,7 @@ public extension NumberRange {
                                                                                         accessor: Accessor) where Accessor.Filter == Filter.Numeric {
       
       func numericFilter(with range: ClosedRange<Number>) -> Filter.Numeric {
-        let castedRange: ClosedRange<Float> = range.lowerBound.toFloat()...range.upperBound.toFloat()
+        let castedRange: ClosedRange<Double> = range.lowerBound.toDouble()...range.upperBound.toDouble()
         return .init(attribute: attribute, range: castedRange)
       }
       

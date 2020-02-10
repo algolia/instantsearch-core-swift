@@ -10,7 +10,7 @@ import Foundation
 
 public enum NumberRange {}
 
-public class NumberRangeInteractor<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemInteractor<ClosedRange<Number>?>, Boundable {
+public class NumberRangeInteractor<Number: Comparable & DoubleRepresentable>: ItemInteractor<ClosedRange<Number>?>, Boundable {
 
   public let onNumberRangeComputed: Observer<ClosedRange<Number>?>
   // TODO: Need to move that info at the view/controller level.
