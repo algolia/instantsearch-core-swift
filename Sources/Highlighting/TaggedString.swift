@@ -17,6 +17,7 @@ public struct TaggedString: Hashable {
   
   public init(string: String, preTag: String, postTag: String, options: String.CompareOptions = []) {
     // This string reconstruction is here to avoid a potential problems due to string encoding
+    // Check unit test TaggedStringTests -> testWithDecodedString
     let string = String(string.indices.map { string [$0] })
     self.input = string
     let (output, rangesToHighlight) = TaggedString.computeRanges(for: string, preTag: preTag, postTag: postTag, options: options)
