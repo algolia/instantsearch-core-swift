@@ -316,6 +316,12 @@
 		AF52271423AD51AD004FF29D /* TestHitsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF52271123AD51AD004FF29D /* TestHitsTracker.swift */; };
 		AF536C23227C66DC006DAE84 /* SelectableInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */; };
 		AF536C25227C6802006DAE84 /* SelectableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF536C24227C6802006DAE84 /* SelectableController.swift */; };
+		AF54300223EE26E3004ABC44 /* HighlightedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */; };
+		AF54300323EE26E3004ABC44 /* HighlightedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */; };
+		AF54300423EE26E3004ABC44 /* HighlightedStringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */; };
+		AF54300A23EE2B16004ABC44 /* HS.json in Resources */ = {isa = PBXBuildFile; fileRef = AF54300923EE2B16004ABC44 /* HS.json */; };
+		AF54300B23EE2B16004ABC44 /* HS.json in Resources */ = {isa = PBXBuildFile; fileRef = AF54300923EE2B16004ABC44 /* HS.json */; };
+		AF54300C23EE2B16004ABC44 /* HS.json in Resources */ = {isa = PBXBuildFile; fileRef = AF54300923EE2B16004ABC44 /* HS.json */; };
 		AF58086C2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58086B2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift */; };
 		AF58086D2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58086B2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift */; };
 		AF58086E2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF58086B2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift */; };
@@ -1163,6 +1169,8 @@
 		AF52271123AD51AD004FF29D /* TestHitsTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHitsTracker.swift; sourceTree = "<group>"; };
 		AF536C22227C66DC006DAE84 /* SelectableInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableInteractor.swift; sourceTree = "<group>"; };
 		AF536C24227C6802006DAE84 /* SelectableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableController.swift; sourceTree = "<group>"; };
+		AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedStringTests.swift; sourceTree = "<group>"; };
+		AF54300923EE2B16004ABC44 /* HS.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HS.json; sourceTree = "<group>"; };
 		AF58086B2317D00D00C5BDFA /* FacetListInteractor+FacetSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FacetListInteractor+FacetSearcher.swift"; sourceTree = "<group>"; };
 		AF5808702318243A00C5BDFA /* HitsInteractor+PlacesSearcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+PlacesSearcher.swift"; sourceTree = "<group>"; };
 		AF580875231924D800C5BDFA /* PlaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceTests.swift; sourceTree = "<group>"; };
@@ -1702,6 +1710,7 @@
 				AFC6088B237F1AC500B10B58 /* SequencerTest.swift */,
 				AFC60873237F1AC400B10B58 /* StatsInteractorConnectorsTests.swift */,
 				AFC6088E237F1AC500B10B58 /* TaggedStringTests.swift */,
+				AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */,
 				AF580875231924D800C5BDFA /* PlaceTests.swift */,
 			);
 			path = Sources;
@@ -1985,6 +1994,7 @@
 				AF476FCE239AD51D0071D591 /* DisjFacetingResult1.json */,
 				AF21EEF322C523B0004A0542 /* DisjFacetingResult2.json */,
 				AF21EEF222C523B0004A0542 /* DisjFacetingResult3.json */,
+				AF54300923EE2B16004ABC44 /* HS.json */,
 				AFCDED33222D86E7001459BE /* FacetResult.json */,
 				AFCB30B722CB97DE0094ED2E /* hierarchical.json */,
 				AFB9783522D49933001C2718 /* disjunctive.json */,
@@ -2425,6 +2435,7 @@
 				AFC68D9B23C6223A006841EF /* SearchResultFacets.json in Resources */,
 				AFC68D9C23C6223A006841EF /* DisjFacetingResult1.json in Resources */,
 				AFC68D9E23C6223A006841EF /* DisjFacetingResult3.json in Resources */,
+				AF54300B23EE2B16004ABC44 /* HS.json in Resources */,
 				AFC68D9A23C6223A006841EF /* SearchResult.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2451,6 +2462,7 @@
 				AFC2E2DA2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D52229356400FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0122C52762004A0542 /* DisjFacetingResult2.json in Resources */,
+				AF54300A23EE2B16004ABC44 /* HS.json in Resources */,
 				AF58087F2319253000C5BDFA /* PlaceHit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2484,6 +2496,7 @@
 				AFC2E2DC2294103300859EBA /* SearchResultFacets.json in Resources */,
 				AFE807D32229356200FC1D50 /* SearchResult.json in Resources */,
 				AF21EF0722C52764004A0542 /* DisjFacetingResult2.json in Resources */,
+				AF54300C23EE2B16004ABC44 /* HS.json in Resources */,
 				AF5808812319253000C5BDFA /* PlaceHit.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2543,6 +2556,7 @@
 				AF8D1C0A23E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */,
 				AFC68D8D23C621CD006841EF /* TestFacetListController.swift in Sources */,
 				AFC68D7323C6218F006841EF /* SequencerTest.swift in Sources */,
+				AF54300323EE26E3004ABC44 /* HighlightedStringTests.swift in Sources */,
 				AFC68D7C23C621BE006841EF /* TestInfiniteScrollingController.swift in Sources */,
 				AFC68D8323C621C7006841EF /* FilterGroupTests.swift in Sources */,
 				AFC68D6D23C6218F006841EF /* SelectableInteractorConnectorsTests.swift in Sources */,
@@ -2832,6 +2846,7 @@
 				AFC6094E237F1B2500B10B58 /* PaginatorTests.swift in Sources */,
 				AF28646B239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6094F237F1B2500B10B58 /* QueryInputInteractorTests.swift in Sources */,
+				AF54300223EE26E3004ABC44 /* HighlightedStringTests.swift in Sources */,
 				AFC60950237F1B2500B10B58 /* FacetListPresenterTests.swift in Sources */,
 				AFC1566523980AAD008AC1A0 /* TestQueryInputController.swift in Sources */,
 				AFC60951237F1B2500B10B58 /* SearchResultsTests.swift in Sources */,
@@ -3322,6 +3337,7 @@
 				AFC6090A237F1B0D00B10B58 /* PaginatorTests.swift in Sources */,
 				AF28646D239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC6090B237F1B0D00B10B58 /* QueryInputInteractorTests.swift in Sources */,
+				AF54300423EE26E3004ABC44 /* HighlightedStringTests.swift in Sources */,
 				AFC6090C237F1B0D00B10B58 /* FacetListPresenterTests.swift in Sources */,
 				AFC1566723980AAD008AC1A0 /* TestQueryInputController.swift in Sources */,
 				AFC6090D237F1B0D00B10B58 /* SearchResultsTests.swift in Sources */,
