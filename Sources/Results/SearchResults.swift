@@ -314,16 +314,16 @@ extension SearchResults {
   public struct FacetStats: Codable {
     
     /// The minimum value.
-    public let min: Float
+    public let min: Double
     
     /// The maximum value.
-    public let max: Float
+    public let max: Double
     
     /// The average of all values.
-    public let avg: Float
+    public let avg: Double
     
     /// The sum of all values.
-    public let sum: Float
+    public let sum: Double
     
   }
   

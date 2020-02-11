@@ -8,7 +8,7 @@
 
 import Foundation
   
-public struct NumberInteractorControllerConnection<Controller: NumberController, Number: Comparable &  InitaliazableWithFloat>: Connection where Controller.Item == Number {
+public struct NumberInteractorControllerConnection<Controller: NumberController, Number: Comparable & DoubleRepresentable>: Connection where Controller.Item == Number {
   
   public let interactor: NumberInteractor<Number>
   public let controller: Controller

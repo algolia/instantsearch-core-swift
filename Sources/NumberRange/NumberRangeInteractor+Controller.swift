@@ -10,7 +10,7 @@ import Foundation
 
 public extension NumberRange {
   
-  struct ControllerConnection<Number: Numeric & InitaliazableWithFloat, Controller: NumberRangeController>: Connection where Controller.Number == Number {
+  struct ControllerConnection<Number: DoubleRepresentable, Controller: NumberRangeController>: Connection where Controller.Number == Number {
     public let interactor: NumberRangeInteractor<Number>
     public let controller: Controller
     

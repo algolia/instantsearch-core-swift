@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NumberInteractor<Number: Comparable & Numeric & InitaliazableWithFloat>: ItemInteractor<Number?>, Boundable {
+public class NumberInteractor<Number: Comparable & DoubleRepresentable>: ItemInteractor<Number?>, Boundable {
 
   public let onNumberComputed: Observer<Number?>
   public let onBoundsComputed: Observer<ClosedRange<Number>?>

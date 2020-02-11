@@ -42,7 +42,7 @@ extension Boundable {
       applyBounds(bounds: nil)
       return
     }
-
+    
     applyBounds(bounds: Number(facetStatsOfAttribute.min)...Number(facetStatsOfAttribute.max))
   }
 }

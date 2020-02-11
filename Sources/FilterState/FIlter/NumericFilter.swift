@@ -18,8 +18,8 @@ public extension Filter {
   struct Numeric: FilterType, Equatable {
     
     public enum ValueType: Hashable {
-      case range(ClosedRange<Float>)
-      case comparison(Operator, Float)
+      case range(ClosedRange<Double>)
+      case comparison(Operator, Double)
     }
     
     public enum Operator: String, CustomStringConvertible {
@@ -63,11 +63,11 @@ public extension Filter {
       self.value = value
     }
     
-    public init(attribute: Attribute, range: ClosedRange<Float>, isNegated: Bool = false) {
+    public init(attribute: Attribute, range: ClosedRange<Double>, isNegated: Bool = false) {
       self.init(attribute: attribute, value: .range(range), isNegated: isNegated)
     }
     
-    public init(attribute: Attribute, `operator`: Operator, value: Float, isNegated: Bool = false) {
+    public init(attribute: Attribute, `operator`: Operator, value: Double, isNegated: Bool = false) {
       self.init(attribute: attribute, value: .comparison(`operator`, value), isNegated: isNegated)
     }
     
