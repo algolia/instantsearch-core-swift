@@ -40,13 +40,12 @@ public class PlacesIntegrationTests: XCTestCase {
     searcher.onResults.subscribe(with: self) { (_, result) in
 
       do {
-        let genericPlaces: [GenericPlace] = try result.deserializeHits()
-        exp.fulfill()
+        let _: [GenericPlace] = try result.deserializeHits()
       } catch let error {
         print(error)
-        exp.fulfill()
       }
-      
+      exp.fulfill()
+
     }
     
     searcher.search()
@@ -65,10 +64,7 @@ public class PlacesIntegrationTests: XCTestCase {
     let exp = self.expectation(description: "Response expectation")
     searcher.onResults.subscribe(with: self) { (_, result) in
       do {
-        let places: [Hit<Place>] = try result.deserializeHits()
-        for place in places {
-          print(place)
-        }
+        let _: [Hit<Place>] = try result.deserializeHits()
       } catch let error {
         print(error)
       }
