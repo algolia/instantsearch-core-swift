@@ -175,6 +175,7 @@ private extension SingleIndexSearcher {
           searcher.onResults.fire(searchResults)
           
         case .failure(let error):
+          Logger.error(error)
           searcher.onError.fire((query, error))
         }
       }
@@ -190,6 +191,7 @@ private extension SingleIndexSearcher {
         
         switch result {
         case .failure(let error):
+          Logger.error(error)
           searcher.onError.fire((queryBuilder.query, error))
           
         case .success(let results):
@@ -197,6 +199,7 @@ private extension SingleIndexSearcher {
             let result = try queryBuilder.aggregate(results.searchResults)
             searcher.onResults.fire(result)
           } catch let error {
+            Logger.error(error)
             searcher.onError.fire((queryBuilder.query, error))
           }
         }

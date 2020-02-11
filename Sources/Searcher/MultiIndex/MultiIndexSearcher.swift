@@ -146,6 +146,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
           searcher.onResults.fire(searchResults)
           
         case .failure(let error):
+          Logger.error(error)
           searcher.onError.fire((queries, error))
         }
       }

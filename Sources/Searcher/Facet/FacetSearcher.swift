@@ -113,6 +113,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
           searcher.onResults.fire(results)
           
         case .failure(let error):
+          Logger.error(error)
           searcher.onError.fire((query, error))
         }
       }

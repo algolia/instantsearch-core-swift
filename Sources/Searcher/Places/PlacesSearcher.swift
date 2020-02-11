@@ -78,6 +78,7 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
         
       case .failure(let error):
         let query = searcher.placesQuery.query ?? ""
+        Logger.error(error)
         searcher.onError.fire((query, error))
       }
     }
