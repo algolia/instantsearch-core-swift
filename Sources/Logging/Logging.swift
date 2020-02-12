@@ -63,7 +63,7 @@ extension Logger {
   
   static func resultsReceived(forQuery query: String?, results: SearchResults) {
     let query = query ?? ""
-    let message = "received results - query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)"
+    let message = "received results - query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
     self.info(message)
   }
   
