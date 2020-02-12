@@ -68,14 +68,13 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
   
   public func search() {
     
-    let query = placesQuery.query ?? ""
     let operation = placesClient.search(placesQuery) { [weak self] (content, error) in
       guard let searcher = self else { return }
       let result: Result<SearchResults, Error> = searcher.transform(content: content, error: error)
       
       switch result {
       case .success(let results):
-        Logger.resultsReceived(forQuery: query, results: results)
+        Logger.resultsReceived(fromIndexWithName: "Algolia Places", results: results)
         searcher.onResults.fire(results)
         
       case .failure(let error):

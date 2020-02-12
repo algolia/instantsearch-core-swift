@@ -172,7 +172,7 @@ private extension SingleIndexSearcher {
   
         switch result {
         case .success(let results):
-          Logger.resultsReceived(forQuery: query.query, results: results)
+          Logger.resultsReceived(fromIndexWithName: searcher.indexQueryState.index.name, results: results)
           searcher.onResults.fire(results)
           
         case .failure(let error):
@@ -187,7 +187,7 @@ private extension SingleIndexSearcher {
     return { [weak self] value, error in
       guard let searcher = self, searcher.query == queryBuilder.query.query else { return }
       
-      searcher.processingQueue.addOperation { [weak self] in
+      searcher.processingQueue.addOperation {
         let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
         
         switch result {
@@ -198,7 +198,7 @@ private extension SingleIndexSearcher {
         case .success(let results):
           do {
             let result = try queryBuilder.aggregate(results.searchResults)
-            Logger.resultsReceived(forQuery: self?.query ?? "", results: result)
+            Logger.resultsReceived(fromIndexWithName: searcher.indexQueryState.index.name, results: result)
             searcher.onResults.fire(result)
           } catch let error {
             Logger.error(error)

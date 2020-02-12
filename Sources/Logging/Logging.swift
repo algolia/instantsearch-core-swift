@@ -53,17 +53,19 @@ enum LogLevel {
 
 extension Logger {
     
-  static func error(_ error: Error) {
+  static func error(prefix: String = "", _ error: Error) {
+    let errorMessage: String
     if let decodingError = error as? DecodingError {
-      self.error(DecodingErrorPrettyPrinter(decodingError: decodingError).description)
+      errorMessage = DecodingErrorPrettyPrinter(decodingError: decodingError).description
     } else {
-      self.error("\(error)")
+      errorMessage = "\(error)"
     }
+    self.error("\(prefix) \(errorMessage)")
   }
   
-  static func resultsReceived(forQuery query: String?, results: SearchResults) {
-    let query = query ?? ""
-    let message = "received results - query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
+  static func resultsReceived(fromIndexWithName indexName: String, results: SearchResults) {
+    let query = results.stats.query ?? ""
+    let message = "received results - index: \(indexName) query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
     self.info(message)
   }
   

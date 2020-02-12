@@ -143,9 +143,10 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
         
         switch result {
         case .success(let results):
-          if let results = results.searchResults.first {
-            Logger.resultsReceived(forQuery: searcher.query, results: results)
-          }
+          zip(indexQueries, results.searchResults)
+            .forEach { (indexQuery, searchResults) in
+              Logger.resultsReceived(fromIndexWithName: indexQuery.indexName, results: searchResults)
+            }
           searcher.onResults.fire(results)
           
         case .failure(let error):
