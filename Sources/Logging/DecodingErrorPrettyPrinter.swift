@@ -59,3 +59,11 @@ struct DecodingErrorPrettyPrinter: CustomStringConvertible, CustomDebugStringCon
   }
   
 }
+
+public extension DecodingError {
+  
+  var prettyDescription: String {
+    return DecodingErrorPrettyPrinter(decodingError: self).description
+  }
+  
+}
