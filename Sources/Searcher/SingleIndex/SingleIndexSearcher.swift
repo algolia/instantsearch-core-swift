@@ -187,7 +187,7 @@ private extension SingleIndexSearcher {
     return { [weak self] value, error in
       guard let searcher = self, searcher.query == queryBuilder.query.query else { return }
       
-      searcher.processingQueue.addOperation {
+      searcher.processingQueue.addOperation { [weak self] in
         let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
         
         switch result {
@@ -198,6 +198,7 @@ private extension SingleIndexSearcher {
         case .success(let results):
           do {
             let result = try queryBuilder.aggregate(results.searchResults)
+            Logger.resultsReceived(forQuery: self?.query ?? "", results: result)
             searcher.onResults.fire(result)
           } catch let error {
             Logger.error(error)
