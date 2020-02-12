@@ -19,6 +19,13 @@
 		AF06184F22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */; };
 		AF06185022EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */; };
 		AF06185122EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */; };
+		AF102DCD23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DCE23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DCF23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DD023F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DD623F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
+		AF102DD723F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
+		AF102DD823F438080034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
 		AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
 		AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
 		AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
@@ -208,6 +215,14 @@
 		AF28646D239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */; };
 		AF28646F239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
 		AF286471239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
+		AF28725423F2D923000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725323F2D923000CF2B8 /* Logging */; };
+		AF28725723F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
+		AF28725823F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
+		AF28725923F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
+		AF28725A23F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
+		AF28725C23F2DAB5000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725B23F2DAB5000CF2B8 /* Logging */; };
+		AF28725E23F2DABA000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725D23F2DABA000CF2B8 /* Logging */; };
+		AF28726023F2DABE000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725F23F2DABE000CF2B8 /* Logging */; };
 		AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
@@ -1089,6 +1104,8 @@
 		AF02394B230A897D001471CF /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		AF06184622E9F3D000FDBAAE /* HitsInteractor+SingleIndexSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+SingleIndexSearcher.swift"; sourceTree = "<group>"; };
 		AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MultiIndexHitsInteractor+Controller.swift"; sourceTree = "<group>"; };
+		AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingErrorPrettyPrinter.swift; sourceTree = "<group>"; };
+		AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingErrorPrettyPrinterTests.swift; sourceTree = "<group>"; };
 		AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupID.swift; sourceTree = "<group>"; };
 		AF1177A6225E2B4800C5B59B /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		AF1177AC225E2B7800C5B59B /* FacetFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetFilter.swift; sourceTree = "<group>"; };
@@ -1140,6 +1157,7 @@
 		AF2864662395408A00E9E845 /* HitsInteractorFilterStateConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractorFilterStateConnectionTests.swift; sourceTree = "<group>"; };
 		AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitsInteractorControllerConnectionTests.swift; sourceTree = "<group>"; };
 		AF28646E239572B800E9E845 /* TestHitsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestHitsController.swift; sourceTree = "<group>"; };
+		AF28725623F2DA9C000CF2B8 /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
 		AF2B26132281AC18006DE798 /* FilterState+Commands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterState+Commands.swift"; sourceTree = "<group>"; };
 		AF322D2722D8BD8300010428 /* HierarchicalGroupAccessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HierarchicalGroupAccessor.swift; sourceTree = "<group>"; };
 		AF322D3122D8D5B000010428 /* Optional+Collection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Collection.swift"; sourceTree = "<group>"; };
@@ -1393,6 +1411,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF28725423F2D923000CF2B8 /* Logging in Frameworks */,
 				AF17D69A23A8EC560068D76E /* InstantSearchClient in Frameworks */,
 				AFED9BEF23C69D50005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
@@ -1410,6 +1429,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF28725C23F2DAB5000CF2B8 /* Logging in Frameworks */,
 				AFC68D9523C62201006841EF /* InstantSearchClient in Frameworks */,
 				AFED9BF123C69D5B005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
@@ -1419,6 +1439,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF28725E23F2DABA000CF2B8 /* Logging in Frameworks */,
 				AFC68D9723C62207006841EF /* InstantSearchClient in Frameworks */,
 				AFED9BF323C69D61005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
@@ -1436,6 +1457,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF28726023F2DABE000CF2B8 /* Logging in Frameworks */,
 				AFC68D9923C6220C006841EF /* InstantSearchClient in Frameworks */,
 				AFED9BF523C69D66005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
@@ -1524,6 +1546,15 @@
 				AF28646E239572B800E9E845 /* TestHitsController.swift */,
 			);
 			path = Hits;
+			sourceTree = "<group>";
+		};
+		AF28725523F2DA8A000CF2B8 /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				AF28725623F2DA9C000CF2B8 /* Logging.swift */,
+				AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 		AF476FA1239AB5060071D591 /* Frameworks */ = {
@@ -1730,6 +1761,7 @@
 				AFC6088E237F1AC500B10B58 /* TaggedStringTests.swift */,
 				AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */,
 				AF580875231924D800C5BDFA /* PlaceTests.swift */,
+				AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1967,6 +1999,7 @@
 		BC3426331D460DB70055E0F2 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AF28725523F2DA8A000CF2B8 /* Logging */,
 				AFEDF7E523AA76D100FF4A1F /* Tracker */,
 				AF9396872298153800757257 /* FilterClear */,
 				AFC2E281228ED52900859EBA /* Common */,
@@ -2261,6 +2294,7 @@
 			packageProductDependencies = (
 				AF17D69923A8EC560068D76E /* InstantSearchClient */,
 				AFED9BEE23C69D50005C2D93 /* InstantSearchInsights */,
+				AF28725323F2D923000CF2B8 /* Logging */,
 			);
 			productName = InstantSearch;
 			productReference = BC3426311D460DB70055E0F2 /* InstantSearchCore.framework */;
@@ -2301,6 +2335,7 @@
 			packageProductDependencies = (
 				AFC68D9423C62201006841EF /* InstantSearchClient */,
 				AFED9BF023C69D5B005C2D93 /* InstantSearchInsights */,
+				AF28725B23F2DAB5000CF2B8 /* Logging */,
 			);
 			productName = "InstantSearchCore-macOS";
 			productReference = BC4CB88A1D534B6E004618DD /* InstantSearchCore.framework */;
@@ -2323,6 +2358,7 @@
 			packageProductDependencies = (
 				AFC68D9623C62207006841EF /* InstantSearchClient */,
 				AFED9BF223C69D61005C2D93 /* InstantSearchInsights */,
+				AF28725D23F2DABA000CF2B8 /* Logging */,
 			);
 			productName = "InstantSearchCore-tvOS";
 			productReference = BC4CB8AD1D535AB3004618DD /* InstantSearchCore.framework */;
@@ -2363,6 +2399,7 @@
 			packageProductDependencies = (
 				AFC68D9823C6220C006841EF /* InstantSearchClient */,
 				AFED9BF423C69D66005C2D93 /* InstantSearchInsights */,
+				AF28725F23F2DABE000CF2B8 /* Logging */,
 			);
 			productName = InstantSearchCore;
 			productReference = BC5DC11B1D8688C10066D705 /* InstantSearchCore.framework */;
@@ -2421,6 +2458,7 @@
 			packageReferences = (
 				AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */,
 				AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */,
+				AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			productRefGroup = BC3426321D460DB70055E0F2 /* Products */;
 			projectDirPath = "";
@@ -2582,6 +2620,7 @@
 				AFC68D6C23C6218F006841EF /* SearchResultsTests.swift in Sources */,
 				AFC68D7F23C621C2006841EF /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC68D7423C6218F006841EF /* StatsInteractorConnectorsTests.swift in Sources */,
+				AF102DD723F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AFC68D7D23C621BE006841EF /* TestHitsController.swift in Sources */,
 				AFC68D7E23C621C2006841EF /* QueryInputInteractorTests.swift in Sources */,
 				AF54300F23F1903C004ABC44 /* NumberInteractorTests.swift in Sources */,
@@ -2749,6 +2788,7 @@
 				AF06184722E9F3D000FDBAAE /* HitsInteractor+SingleIndexSearcher.swift in Sources */,
 				AF6C6F7122538179001E5E3C /* FacetSearcher.swift in Sources */,
 				AFC2E2B1228EE1EC00859EBA /* FacetListController.swift in Sources */,
+				AF28725723F2DA9C000CF2B8 /* Logging.swift in Sources */,
 				E2CF1A3322A6A8C000DE24FC /* Computation.swift in Sources */,
 				AF28643623908D6600E9E845 /* ToggleFilterConnector.swift in Sources */,
 				AF286418238D91D300E9E845 /* TagFilterListConnector.swift in Sources */,
@@ -2804,6 +2844,7 @@
 				AF52270023ACF715004FF29D /* InsightsTracker.swift in Sources */,
 				AF322D4122DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AF6346EB23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DCD23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AA239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF2864592395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF6C6F6C2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
@@ -2830,6 +2871,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF102DD623F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AF74C12A23A1A1AF00018F25 /* MultiSourceHitsReloaderTests.swift in Sources */,
 				AFC1566123980A82008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC60939237F1B2500B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
@@ -3030,6 +3072,7 @@
 				AF322D3822DCDDB600010428 /* GroupStorage.swift in Sources */,
 				AFBF37692285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */,
 				AFE6E3D122AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
+				AF28725823F2DA9C000CF2B8 /* Logging.swift in Sources */,
 				AFE6E3C422A82B1B005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73722B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				AF5226F223ABDFC8004FF29D /* TrackableSearcher.swift in Sources */,
@@ -3085,6 +3128,7 @@
 				AF5DAA9D22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
 				AF6C6F6D2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				AF6346EC23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DCE23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AB239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF28645A2395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF1177D0225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
@@ -3242,6 +3286,7 @@
 				AFBF376A2285D8F100787D24 /* SelectableSegmentInteractor.swift in Sources */,
 				AFCDEDDD22397E32001459BE /* Optional+String.swift in Sources */,
 				AFE6E3D222AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
+				AF28725923F2DA9C000CF2B8 /* Logging.swift in Sources */,
 				AFE6E3C322A82B1A005BA44D /* InfiniteScrollingController.swift in Sources */,
 				E2EBE73822B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				AF5226F323ABDFC8004FF29D /* TrackableSearcher.swift in Sources */,
@@ -3297,6 +3342,7 @@
 				AF5DAA9E22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
 				AF6C6F6E2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				AF6346ED23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DCF23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AC239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF28645B2395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF1177D1225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
@@ -3323,6 +3369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF102DD823F438080034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AF74C12D23A1A1B300018F25 /* MultiSourceHitsReloaderTests.swift in Sources */,
 				AFC1565B23980A80008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC608F5237F1B0D00B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
@@ -3523,6 +3570,7 @@
 				AFCDEDDF22397E33001459BE /* Optional+String.swift in Sources */,
 				AFE6E3D322AAD5AA005BA44D /* MultiIndexHitsInteractor+Searcher.swift in Sources */,
 				AFE6E3C222A82B19005BA44D /* InfiniteScrollingController.swift in Sources */,
+				AF28725A23F2DA9C000CF2B8 /* Logging.swift in Sources */,
 				E2EBE73922B14B1D00B91B23 /* ItemListController.swift in Sources */,
 				E2EFA61422B101E2008C9CAA /* Presenter.swift in Sources */,
 				AF5226F423ABDFC8004FF29D /* TrackableSearcher.swift in Sources */,
@@ -3578,6 +3626,7 @@
 				AF6C6F6F2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC28C4CF1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				AF6346EE23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DD023F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AD239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF28645C2395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF1177D2225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
@@ -4281,6 +4330,14 @@
 				minimumVersion = 7.0.3;
 			};
 		};
+		AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.2.0;
+			};
+		};
 		AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/algolia/instantsearch-ios-insights";
@@ -4296,6 +4353,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
 			productName = InstantSearchClient;
+		};
+		AF28725323F2D923000CF2B8 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		AF28725B23F2DAB5000CF2B8 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		AF28725D23F2DABA000CF2B8 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+		AF28725F23F2DABE000CF2B8 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
 		};
 		AFC68D9423C62201006841EF /* InstantSearchClient */ = {
 			isa = XCSwiftPackageProductDependency;
