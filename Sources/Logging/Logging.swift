@@ -11,9 +11,19 @@ import Logging
 
 typealias SwiftLog = Logging.Logger
 
-struct Logger {
+public struct Logger {
   
   static var loggingService: Loggable = SwiftLog(label: "com.algolia.InstantSearch")
+  
+  public static var minSeverityLevel: LogLevel {
+    get {
+      return loggingService.minSeverityLevel
+    }
+    
+    set {
+      loggingService.minSeverityLevel = newValue
+    }
+  }
   
   private init() {}
   
@@ -47,7 +57,7 @@ struct Logger {
   
 }
 
-enum LogLevel {
+public enum LogLevel {
   case trace, debug, info, notice, warning, error, critical
 }
 
@@ -73,6 +83,18 @@ extension Logger {
 
 extension LogLevel {
   
+  init(swiftLogLevel: SwiftLog.Level) {
+    switch swiftLogLevel {
+    case .trace: self = .trace
+    case .debug: self = .debug
+    case .info: self = .info
+    case .notice: self = .notice
+    case .warning: self = .warning
+    case .error: self = .error
+    case .critical: self = .critical
+    }
+  }
+  
   var swiftLogLevel: SwiftLog.Level {
     switch self {
     case .trace: return .trace
@@ -89,11 +111,22 @@ extension LogLevel {
 
 protocol Loggable {
   
+  var minSeverityLevel: LogLevel { get set }
+  
   func log(level: LogLevel, message: String)
   
 }
 
 extension SwiftLog: Loggable {
+  
+  var minSeverityLevel: LogLevel {
+    get {
+      return LogLevel(swiftLogLevel: logLevel)
+    }
+    set {
+      self.logLevel = newValue.swiftLogLevel
+    }
+  }
   
   func log(level: LogLevel, message: String) {
     self.log(level: level.swiftLogLevel, SwiftLog.Message(stringLiteral: message), metadata: .none)
