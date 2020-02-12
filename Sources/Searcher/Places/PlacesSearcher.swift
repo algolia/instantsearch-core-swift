@@ -74,12 +74,12 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
       
       switch result {
       case .success(let results):
-        Logger.resultsReceived(fromIndexWithName: "Algolia Places", results: results)
+        Logger.Results.success(indexName: "Algolia Places", results: results)
         searcher.onResults.fire(results)
         
       case .failure(let error):
         let query = searcher.placesQuery.query ?? ""
-        Logger.error(error)
+        Logger.Results.failure(indexName: "Algolia Places", error)
         searcher.onError.fire((query, error))
       }
     }

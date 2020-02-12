@@ -13,7 +13,12 @@ typealias SwiftLog = Logging.Logger
 
 public struct Logger {
   
-  static var loggingService: Loggable = SwiftLog(label: "com.algolia.InstantSearch")
+  static var loggingService: Loggable = {
+    var swiftLog = SwiftLog(label: "com.algolia.InstantSearch")
+    print("InstantSearch: Default minimal log severity level is info. Change Logger.minLogServerityLevel value if you want to change it.")
+    swiftLog.logLevel = .info
+    return swiftLog
+  }()
   
   public static var minSeverityLevel: LogLevel {
     get {
@@ -62,21 +67,32 @@ public enum LogLevel {
 }
 
 extension Logger {
-    
+  
   static func error(prefix: String = "", _ error: Error) {
     let errorMessage: String
     if let decodingError = error as? DecodingError {
-      errorMessage = DecodingErrorPrettyPrinter(decodingError: decodingError).description
+      errorMessage = decodingError.prettyDescription
     } else {
       errorMessage = "\(error)"
     }
     self.error("\(prefix) \(errorMessage)")
   }
   
-  static func resultsReceived(fromIndexWithName indexName: String, results: SearchResults) {
-    let query = results.stats.query ?? ""
-    let message = "received results - index: \(indexName) query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
-    self.info(message)
+}
+
+extension Logger {
+  
+  enum Results {
+    
+    static func failure(indexName: String, _ error: Error) {
+      Logger.error(prefix: "index: \(indexName)", error)
+    }
+    
+    static func success(indexName: String, results: SearchResults) {
+      let query = results.stats.query ?? ""
+      let message = "received results - index: \(indexName) query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
+      Logger.info(message)
+    }
   }
   
 }

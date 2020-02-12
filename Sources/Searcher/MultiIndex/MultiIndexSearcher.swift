@@ -145,12 +145,13 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
         case .success(let results):
           zip(indexQueries, results.searchResults)
             .forEach { (indexQuery, searchResults) in
-              Logger.resultsReceived(fromIndexWithName: indexQuery.indexName, results: searchResults)
+              Logger.Results.success(indexName: indexQuery.indexName, results: searchResults)
             }
           searcher.onResults.fire(results)
           
         case .failure(let error):
-          Logger.error(error)
+          let indicesDescriptor = "[\(indexQueries.map { $0.indexName }.joined(separator: ", "))]"
+          Logger.Results.failure(indexName: indicesDescriptor, error)
           searcher.onError.fire((queries, error))
         }
       }
