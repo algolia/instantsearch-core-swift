@@ -142,8 +142,11 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
         let result: Result<MultiSearchResults, Error> = searcher.transform(content: content, error: error)
         
         switch result {
-        case .success(let searchResults):
-          searcher.onResults.fire(searchResults)
+        case .success(let results):
+          if let results = results.searchResults.first {
+            Logger.resultsReceived(forQuery: searcher.query, results: results)
+          }
+          searcher.onResults.fire(results)
           
         case .failure(let error):
           Logger.error(error)

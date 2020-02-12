@@ -52,22 +52,25 @@ enum LogLevel {
 }
 
 extension Logger {
-  
-  static func missingHitsSourceWarning() {
-    warning("Missing hits source")
-  }
-  
-  static func missingCellConfiguratorWarning(forSection section: Int) {
-    warning("No cell configurator found for section \(section)")
-  }
-  
-  static func missingClickHandlerWarning(forSection section: Int) {
-    warning("No click handler found for section \(section)")
-  }
-  
+    
   static func error(_ error: Error) {
-    self.error("\(error)")
+    if let decodingError = error as? DecodingError {
+      self.error(DecodingErrorPrettyPrinter(decodingError: decodingError).description)
+    } else {
+      self.error("\(error)")
+    }
   }
+  
+  static func resultsReceived(forQuery query: String?, results: SearchResults) {
+    let query = query ?? ""
+    let message = """
+    Results received for query: \(query)
+    Hits count: \(results.stats.totalHitsCount)
+    Processing time: \(results.stats.processingTimeMS)
+    """
+    self.info(message)
+  }
+  
 }
 
 extension LogLevel {

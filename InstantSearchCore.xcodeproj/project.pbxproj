@@ -19,6 +19,13 @@
 		AF06184F22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */; };
 		AF06185022EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */; };
 		AF06185122EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */; };
+		AF102DCD23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DCE23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DCF23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DD023F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */; };
+		AF102DD623F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
+		AF102DD723F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
+		AF102DD823F438080034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
 		AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
 		AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
 		AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
@@ -1097,6 +1104,8 @@
 		AF02394B230A897D001471CF /* Connection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connection.swift; sourceTree = "<group>"; };
 		AF06184622E9F3D000FDBAAE /* HitsInteractor+SingleIndexSearcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HitsInteractor+SingleIndexSearcher.swift"; sourceTree = "<group>"; };
 		AF06184D22EA2ED200FDBAAE /* MultiIndexHitsInteractor+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MultiIndexHitsInteractor+Controller.swift"; sourceTree = "<group>"; };
+		AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingErrorPrettyPrinter.swift; sourceTree = "<group>"; };
+		AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingErrorPrettyPrinterTests.swift; sourceTree = "<group>"; };
 		AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterGroupID.swift; sourceTree = "<group>"; };
 		AF1177A6225E2B4800C5B59B /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		AF1177AC225E2B7800C5B59B /* FacetFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacetFilter.swift; sourceTree = "<group>"; };
@@ -1543,6 +1552,7 @@
 			isa = PBXGroup;
 			children = (
 				AF28725623F2DA9C000CF2B8 /* Logging.swift */,
+				AF102DCC23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift */,
 			);
 			path = Logging;
 			sourceTree = "<group>";
@@ -1751,6 +1761,7 @@
 				AFC6088E237F1AC500B10B58 /* TaggedStringTests.swift */,
 				AF54300123EE26E3004ABC44 /* HighlightedStringTests.swift */,
 				AF580875231924D800C5BDFA /* PlaceTests.swift */,
+				AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -2609,6 +2620,7 @@
 				AFC68D6C23C6218F006841EF /* SearchResultsTests.swift in Sources */,
 				AFC68D7F23C621C2006841EF /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC68D7423C6218F006841EF /* StatsInteractorConnectorsTests.swift in Sources */,
+				AF102DD723F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AFC68D7D23C621BE006841EF /* TestHitsController.swift in Sources */,
 				AFC68D7E23C621C2006841EF /* QueryInputInteractorTests.swift in Sources */,
 				AF54300F23F1903C004ABC44 /* NumberInteractorTests.swift in Sources */,
@@ -2832,6 +2844,7 @@
 				AF52270023ACF715004FF29D /* InsightsTracker.swift in Sources */,
 				AF322D4122DDC89F00010428 /* FiltersWritable.swift in Sources */,
 				AF6346EB23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DCD23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AA239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF2864592395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF6C6F6C2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
@@ -2858,6 +2871,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF102DD623F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AF74C12A23A1A1AF00018F25 /* MultiSourceHitsReloaderTests.swift in Sources */,
 				AFC1566123980A82008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC60939237F1B2500B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
@@ -3114,6 +3128,7 @@
 				AF5DAA9D22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
 				AF6C6F6D2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				AF6346EC23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DCE23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AB239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF28645A2395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF1177D0225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
@@ -3327,6 +3342,7 @@
 				AF5DAA9E22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
 				AF6C6F6E2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				AF6346ED23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DCF23F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AC239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF28645B2395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF1177D1225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,
@@ -3353,6 +3369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AF102DD823F438080034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AF74C12D23A1A1B300018F25 /* MultiSourceHitsReloaderTests.swift in Sources */,
 				AFC1565B23980A80008AC1A0 /* QueryInputSearcherConnectionTests.swift in Sources */,
 				AFC608F5237F1B0D00B10B58 /* AttributedStringWithTaggedStringTests.swift in Sources */,
@@ -3609,6 +3626,7 @@
 				AF6C6F6F2253816A001E5E3C /* MultiIndexSearcher.swift in Sources */,
 				BC28C4CF1E5B2D1000EFC4A0 /* Sequencer.swift in Sources */,
 				AF6346EE23A3BBE4004A0D17 /* Reloadable.swift in Sources */,
+				AF102DD023F437E30034EB48 /* DecodingErrorPrettyPrinter.swift in Sources */,
 				AFB395AD239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */,
 				AF28645C2395109500E9E845 /* MultiIndexHitsConnector.swift in Sources */,
 				AF1177D2225E2CEB00C5B59B /* FilterGroupType.swift in Sources */,

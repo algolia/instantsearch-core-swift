@@ -171,8 +171,9 @@ private extension SingleIndexSearcher {
         let result = Result<SearchResults, Error>(rawValue: value, error: error)
   
         switch result {
-        case .success(let searchResults):
-          searcher.onResults.fire(searchResults)
+        case .success(let results):
+          Logger.resultsReceived(forQuery: query.query, results: results)
+          searcher.onResults.fire(results)
           
         case .failure(let error):
           Logger.error(error)
