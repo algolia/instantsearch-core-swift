@@ -174,11 +174,11 @@ private extension SingleIndexSearcher {
         
         switch result {
         case .success(let results):
-          Logger.Results.success(indexName: indexName, results: results)
+          Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
           searcher.onResults.fire(results)
           
         case .failure(let error):
-          Logger.Results.failure(indexName: indexName, error)
+          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
           searcher.onError.fire((query, error))
         }
       }
@@ -196,16 +196,16 @@ private extension SingleIndexSearcher {
 
         switch result {
         case .failure(let error):
-          Logger.Results.failure(indexName: indexName, error)
+          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
           searcher.onError.fire((queryBuilder.query, error))
           
         case .success(let results):
           do {
             let result = try queryBuilder.aggregate(results.searchResults)
-            Logger.Results.success(indexName: indexName, results: result)
+            Logger.Results.success(searcher: searcher, indexName: indexName, results: result)
             searcher.onResults.fire(result)
           } catch let error {
-            Logger.Results.failure(indexName: indexName, error)
+            Logger.Results.failure(searcher: searcher, indexName: indexName, error)
             searcher.onError.fire((queryBuilder.query, error))
           }
         }

@@ -82,17 +82,36 @@ extension Logger {
 
 extension Logger {
   
+  enum HitsDecoding {
+    
+    static func failure(hitsInteractor: AnyHitsInteractor, error: Error) {
+      Logger.error(prefix: "\(hitsInteractor): ", error)
+    }
+    
+  }
+  
+}
+
+extension Logger {
+  
   enum Results {
     
-    static func failure(indexName: String, _ error: Error) {
-      Logger.error(prefix: "index: \(indexName)", error)
+    static func failure(searcher: Searcher, indexName: String, _ error: Error) {
+      Logger.error(prefix: "\(searcher): error - index: \(indexName)", error)
     }
     
-    static func success(indexName: String, results: SearchResults) {
+    static func success(searcher: Searcher, indexName: String, results: SearchResults) {
       let query = results.stats.query ?? ""
-      let message = "received results - index: \(indexName) query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
+      let message = "\(searcher): received results - index: \(indexName) query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
       Logger.info(message)
     }
+    
+    static func success(searcher: Searcher, indexName: String, results: FacetResults) {
+      let query = searcher.query ?? ""
+      let message = "\(searcher): received results - index: \(indexName) query: \"\(query)\" hits count: \(results.facetHits.count) in \(results.processingTimeMS)ms"
+      Logger.info(message)
+    }
+
   }
   
 }
