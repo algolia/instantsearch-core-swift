@@ -27,4 +27,5 @@ Pod::Spec.new do |s|
     # ------------
     s.dependency 'InstantSearchClient', '~> 7.0'
     s.dependency 'InstantSearchInsights', '~> 2.3'
+    s.dependency 'Logging'
 end
