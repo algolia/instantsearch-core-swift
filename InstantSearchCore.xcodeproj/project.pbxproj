@@ -26,6 +26,10 @@
 		AF102DD623F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
 		AF102DD723F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
 		AF102DD823F438080034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF102DD123F438010034EB48 /* DecodingErrorPrettyPrinterTests.swift */; };
+		AF102DF423F53C3E0034EB48 /* FilterTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF52270523ACFA62004FF29D /* FilterTrackerTests.swift */; };
+		AF102DF523F53C420034EB48 /* TestFiltersTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF52270D23AD517B004FF29D /* TestFiltersTracker.swift */; };
+		AF102DF623F53C480034EB48 /* TestHitsTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF52271123AD51AD004FF29D /* TestHitsTracker.swift */; };
+		AF102DF723F53C4B0034EB48 /* HitsTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF52270923ACFA6E004FF29D /* HitsTrackerTests.swift */; };
 		AF1177A1225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
 		AF1177A2225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
 		AF1177A3225E2B1000C5B59B /* FilterGroupID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1177A0225E2B1000C5B59B /* FilterGroupID.swift */; };
@@ -2609,6 +2613,7 @@
 				AFC68D8023C621C2006841EF /* QueryInputControllerConnectionTests.swift in Sources */,
 				AFC68D8623C621C7006841EF /* FilterGroupCollectionsTests.swift in Sources */,
 				AFC68D6523C6218F006841EF /* HitTests.swift in Sources */,
+				AF102DF623F53C480034EB48 /* TestHitsTracker.swift in Sources */,
 				AFC68D8F23C621D2006841EF /* HierarchicalIntegrationTests.swift in Sources */,
 				AF8D1C0A23E0936F00CB415F /* CurrentFiltersFilterStateConnectionTests.swift in Sources */,
 				AFC68D8D23C621CD006841EF /* TestFacetListController.swift in Sources */,
@@ -2619,6 +2624,7 @@
 				AFC68D6D23C6218F006841EF /* SelectableInteractorConnectorsTests.swift in Sources */,
 				AFC68D6C23C6218F006841EF /* SearchResultsTests.swift in Sources */,
 				AFC68D7F23C621C2006841EF /* QueryInputSearcherConnectionTests.swift in Sources */,
+				AF102DF423F53C3E0034EB48 /* FilterTrackerTests.swift in Sources */,
 				AFC68D7423C6218F006841EF /* StatsInteractorConnectorsTests.swift in Sources */,
 				AF102DD723F438070034EB48 /* DecodingErrorPrettyPrinterTests.swift in Sources */,
 				AFC68D7D23C621BE006841EF /* TestHitsController.swift in Sources */,
@@ -2631,9 +2637,11 @@
 				AFC68D6923C6218F006841EF /* PageMapTests.swift in Sources */,
 				AFC68D8823C621CD006841EF /* FacetListPresenterTests.swift in Sources */,
 				AFC68D9123C621D2006841EF /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */,
+				AF102DF523F53C420034EB48 /* TestFiltersTracker.swift in Sources */,
 				AFC68D7823C621BE006841EF /* HitsInteractorTests.swift in Sources */,
 				AFC68D7123C6218F006841EF /* SelectableSegmentInteractorConnectorsTests.swift in Sources */,
 				AFC68D9323C621D2006841EF /* OnlineTestCase.swift in Sources */,
+				AF102DF723F53C4B0034EB48 /* HitsTrackerTests.swift in Sources */,
 				AFC68D6423C6218F006841EF /* Helpers.swift in Sources */,
 				AFC68D7B23C621BE006841EF /* HitsInteractorControllerConnectionTests.swift in Sources */,
 				AFC68D6723C6218F006841EF /* ItemInteractorTests.swift in Sources */,
