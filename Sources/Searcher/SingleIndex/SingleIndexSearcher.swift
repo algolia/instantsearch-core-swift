@@ -170,11 +170,15 @@ private extension SingleIndexSearcher {
       searcher.processingQueue.addOperation {
         let result = Result<SearchResults, Error>(rawValue: value, error: error)
   
+        let indexName = searcher.indexQueryState.index.name
+        
         switch result {
-        case .success(let searchResults):
-          searcher.onResults.fire(searchResults)
+        case .success(let results):
+          Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
+          searcher.onResults.fire(results)
           
         case .failure(let error):
+          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
           searcher.onError.fire((query, error))
         }
       }
@@ -187,16 +191,21 @@ private extension SingleIndexSearcher {
       
       searcher.processingQueue.addOperation {
         let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
-        
+
+        let indexName = searcher.indexQueryState.index.name
+
         switch result {
         case .failure(let error):
+          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
           searcher.onError.fire((queryBuilder.query, error))
           
         case .success(let results):
           do {
             let result = try queryBuilder.aggregate(results.searchResults)
+            Logger.Results.success(searcher: searcher, indexName: indexName, results: result)
             searcher.onResults.fire(result)
           } catch let error {
+            Logger.Results.failure(searcher: searcher, indexName: indexName, error)
             searcher.onError.fire((queryBuilder.query, error))
           }
         }

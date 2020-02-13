@@ -101,7 +101,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public func search() {
     
     let query = self.query ?? ""
-
+    let indexName = indexQueryState.index.name
     let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, query: indexQueryState.query, requestOptions: requestOptions) { [weak self] (content, error) in
             guard let searcher = self else { return }
       
@@ -110,9 +110,11 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
         
         switch result {
         case .success(let results):
+          Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
           searcher.onResults.fire(results)
           
         case .failure(let error):
+          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
           searcher.onError.fire((query, error))
         }
       }
