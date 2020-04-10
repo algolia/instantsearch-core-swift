@@ -45,11 +45,11 @@ public extension MultiIndexHitsConnector {
   
   struct IndexModule {
     
-    public let indexName: String
+    public let indexName: IndexName
     public let hitsInteractor: AnyHitsInteractor
     public let filterState: FilterState?
     
-    public init<Hit: Codable>(indexName: String,
+    public init<Hit: Codable>(indexName: IndexName,
                               hitsInteractor: HitsInteractor<Hit>,
                               filterState: FilterState? = .none) {
       self.indexName = indexName
@@ -57,7 +57,7 @@ public extension MultiIndexHitsConnector {
       self.filterState = filterState
     }
     
-    public init(indexName: String,
+    public init(indexName: IndexName,
                 infiniteScrolling: InfiniteScrolling = .on(withOffset: 10),
                 showItemsOnEmptyQuery: Bool = true,
                 filterState: FilterState? = .none) {
@@ -70,8 +70,8 @@ public extension MultiIndexHitsConnector {
         
   }
   
-  convenience init(appID: String,
-                   apiKey: String,
+  convenience init(appID: ApplicationID,
+                   apiKey: APIKey,
                    indexModules: [IndexModule]) {
     let searcher = MultiIndexSearcher(appID: appID,
                                       apiKey: apiKey,
@@ -86,7 +86,7 @@ public extension MultiIndexHitsConnector {
 
 public extension MultiIndexHitsConnector.IndexModule {
   
-  init(suggestionsIndexName: String,
+  init(suggestionsIndexName: IndexName,
        hitsInteractor: HitsInteractor<Hit<QuerySuggestion>> = .init(infiniteScrolling: .off, showItemsOnEmptyQuery: true),
        filterState: FilterState? = .none) {
     self.init(indexName: suggestionsIndexName,

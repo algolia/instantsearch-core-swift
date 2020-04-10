@@ -27,7 +27,7 @@ public struct SelectableFilterInteractorFilterStateConnection<Filter: FilterType
     self.filterState = filterState
     self.attribute = attribute
     self.operator = `operator`
-    self.groupName = groupName ?? attribute.name
+    self.groupName = groupName ?? attribute.rawValue
   }
   
   public func connect() {

@@ -32,7 +32,7 @@ public extension NumberRange {
     
     public func connect() {
       
-      let groupName = self.groupName ?? attribute.name
+      let groupName = self.groupName ?? attribute.rawValue
       
       switch `operator` {
       case .and:

@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 public typealias IndexPresenter = (Index) -> String
 
 public extension DefaultPresenter {
@@ -16,7 +15,7 @@ public extension DefaultPresenter {
   enum Index {
 
     public static let present: IndexPresenter = { index in
-      return index.name
+      return index.name.rawValue
     }
 
   }

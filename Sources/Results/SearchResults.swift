@@ -106,7 +106,7 @@ public struct SearchResults: Codable {
       if let rawFacets = try container.decodeIfPresent(Dictionary<String, [String: Int]>.self, forKey: key) {
         var attributeToFacets: [Attribute: [Facet]] = [:]
         for facet in rawFacets {
-          let facetName = Attribute(facet.key)
+          let facetName = Attribute(rawValue: facet.key)
           let facets = facet.value.map { Facet(value: $0.key, count: $0.value, highlighted: .none) }
           attributeToFacets[facetName] = facets
         }
@@ -118,7 +118,7 @@ public struct SearchResults: Codable {
     self.facets = try extractFacets(withKey: .facets)
     self.disjunctiveFacets = try extractFacets(withKey: .disjunctiveFacets)
     if let rawFacetStats = try container.decodeIfPresent([String: FacetStats].self, forKey: .facetStats) {
-      self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (Attribute($0.key), $0.value) })
+      self.facetStats = .init(uniqueKeysWithValues: rawFacetStats.map { (Attribute(rawValue: $0.key), $0.value) })
     } else {
       self.facetStats = .none
     }

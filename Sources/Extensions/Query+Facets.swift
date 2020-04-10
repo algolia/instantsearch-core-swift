@@ -7,20 +7,11 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 extension Query {
   
-  func updateQueryFacets(with attribute: Attribute) {
-    let updatedFacets: [String]
-    
-    if let facets = facets, !facets.contains(attribute.name) {
-      updatedFacets = facets + [attribute.name]
-    } else {
-      updatedFacets = [attribute.name]
-    }
-    
-    facets = updatedFacets
+  mutating func updateQueryFacets(with attribute: Attribute) {
+    facets = (facets ?? []).union([attribute])
   }
   
 }

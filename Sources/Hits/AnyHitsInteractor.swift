@@ -6,8 +6,7 @@
 //  Copyright © 2019 Algolia. All rights reserved.
 //
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 /** This is a type-erasure protocol for HitsInteractor which makes possible
     to create a collections of hits interactors with different record types.
 */

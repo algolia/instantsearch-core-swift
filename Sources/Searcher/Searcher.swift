@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 /// Protocol describing an entity capable to perform search requests
 public protocol Searcher: class {
   

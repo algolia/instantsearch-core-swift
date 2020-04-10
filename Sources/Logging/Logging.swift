@@ -8,6 +8,7 @@
 
 import Foundation
 import Logging
+import AlgoliaSearchClientSwift
 
 typealias SwiftLog = Logging.Logger
 
@@ -96,7 +97,7 @@ extension Logger {
   
   enum Results {
     
-    static func failure(searcher: Searcher, indexName: String, _ error: Error) {
+    static func failure(searcher: Searcher, indexName: IndexName, _ error: Error) {
       Logger.error(prefix: "\(searcher): error - index: \(indexName)", error)
     }
     
@@ -106,9 +107,9 @@ extension Logger {
       Logger.info(message)
     }
     
-    static func success(searcher: Searcher, indexName: String, results: FacetResults) {
+    static func success(searcher: Searcher, indexName: IndexName, results: FacetSearchResponse) {
       let query = searcher.query ?? ""
-      let message = "\(searcher): received results - index: \(indexName) query: \"\(query)\" hits count: \(results.facetHits.count) in \(results.processingTimeMS)ms"
+      let message = "\(searcher): received results - index: \(indexName) query: \"\(query)\" hits count: \(results.facets.count) in \(results.processingTimeMS)ms"
       Logger.info(message)
     }
 

@@ -31,7 +31,7 @@ public class FilterComparisonConnector<Number: Comparable & DoubleRepresentable>
     self.attribute = attribute
     self.numericOperator = numericOperator
     self.operator = `operator`
-    self.groupName = groupName ?? attribute.name
+    self.groupName = groupName ?? attribute.rawValue
     self.filterStateConnection = interactor.connectFilterState(filterState,
                                                                attribute: attribute,
                                                                numericOperator: numericOperator,

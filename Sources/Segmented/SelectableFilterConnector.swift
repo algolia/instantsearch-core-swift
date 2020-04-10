@@ -32,7 +32,7 @@ public class SelectableFilterConnector<Filter: FilterType>: Connection {
     self.interactor = .init(items: items)
     self.attribute = attribute
     self.operator = `operator`
-    self.groupName = groupName ?? attribute.name
+    self.groupName = groupName ?? attribute.rawValue
     self.searcherConnection = self.interactor.connectSearcher(searcher,
                                                               attribute: attribute)
     self.filterStateConnection = self.interactor.connectFilterState(filterState,

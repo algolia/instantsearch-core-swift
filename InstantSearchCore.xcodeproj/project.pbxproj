@@ -105,7 +105,6 @@
 		AF14E31B22F45A110088D2A7 /* HierarchicalInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF14E31922F45A110088D2A7 /* HierarchicalInteractor.swift */; };
 		AF14E31C22F45A110088D2A7 /* HierarchicalInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF14E31922F45A110088D2A7 /* HierarchicalInteractor.swift */; };
 		AF14E31D22F45A110088D2A7 /* HierarchicalInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF14E31922F45A110088D2A7 /* HierarchicalInteractor.swift */; };
-		AF17D69A23A8EC560068D76E /* InstantSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = AF17D69923A8EC560068D76E /* InstantSearchClient */; };
 		AF21EEAA22B40170004A0542 /* TaggedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEA922B40170004A0542 /* TaggedString.swift */; };
 		AF21EEAB22B40170004A0542 /* TaggedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEA922B40170004A0542 /* TaggedString.swift */; };
 		AF21EEAC22B40170004A0542 /* TaggedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF21EEA922B40170004A0542 /* TaggedString.swift */; };
@@ -230,14 +229,10 @@
 		AF28646D239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646A239571F000E9E845 /* HitsInteractorControllerConnectionTests.swift */; };
 		AF28646F239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
 		AF286471239572B800E9E845 /* TestHitsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28646E239572B800E9E845 /* TestHitsController.swift */; };
-		AF28725423F2D923000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725323F2D923000CF2B8 /* Logging */; };
 		AF28725723F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
 		AF28725823F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
 		AF28725923F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
 		AF28725A23F2DA9C000CF2B8 /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF28725623F2DA9C000CF2B8 /* Logging.swift */; };
-		AF28725C23F2DAB5000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725B23F2DAB5000CF2B8 /* Logging */; };
-		AF28725E23F2DABA000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725D23F2DABA000CF2B8 /* Logging */; };
-		AF28726023F2DABE000CF2B8 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = AF28725F23F2DABE000CF2B8 /* Logging */; };
 		AF2B26142281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26152281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
 		AF2B26162281AC18006DE798 /* FilterState+Commands.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF2B26132281AC18006DE798 /* FilterState+Commands.swift */; };
@@ -532,6 +527,10 @@
 		AF9396AB229D52D600757257 /* QueryInputInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396A9229D52D600757257 /* QueryInputInteractor+Controller.swift */; };
 		AF9396AC229D52D600757257 /* QueryInputInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396A9229D52D600757257 /* QueryInputInteractor+Controller.swift */; };
 		AF9396AD229D52D600757257 /* QueryInputInteractor+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF9396A9229D52D600757257 /* QueryInputInteractor+Controller.swift */; };
+		AFAE656B2440990900803CC0 /* AlgoliaSearchClientSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AFAE656A2440990900803CC0 /* AlgoliaSearchClientSwift */; };
+		AFAE656D2440990E00803CC0 /* AlgoliaSearchClientSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AFAE656C2440990E00803CC0 /* AlgoliaSearchClientSwift */; };
+		AFAE656F2440991400803CC0 /* AlgoliaSearchClientSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AFAE656E2440991400803CC0 /* AlgoliaSearchClientSwift */; };
+		AFAE65712440991800803CC0 /* AlgoliaSearchClientSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AFAE65702440991800803CC0 /* AlgoliaSearchClientSwift */; };
 		AFB395AA239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB395A9239FCABD00A69464 /* MultiSourceReloadNotifier.swift */; };
 		AFB395AB239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB395A9239FCABD00A69464 /* MultiSourceReloadNotifier.swift */; };
 		AFB395AC239FCABD00A69464 /* MultiSourceReloadNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB395A9239FCABD00A69464 /* MultiSourceReloadNotifier.swift */; };
@@ -743,9 +742,6 @@
 		AFC68D9123C621D2006841EF /* DisjuncitveAndHierarchicalIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF476FBC239AD4DF0071D591 /* DisjuncitveAndHierarchicalIntegrationTests.swift */; };
 		AFC68D9223C621D2006841EF /* DisjunctiveFacetingIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF476FBD239AD4DF0071D591 /* DisjunctiveFacetingIntegrationTests.swift */; };
 		AFC68D9323C621D2006841EF /* OnlineTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF476FBE239AD4DF0071D591 /* OnlineTestCase.swift */; };
-		AFC68D9523C62201006841EF /* InstantSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = AFC68D9423C62201006841EF /* InstantSearchClient */; };
-		AFC68D9723C62207006841EF /* InstantSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = AFC68D9623C62207006841EF /* InstantSearchClient */; };
-		AFC68D9923C6220C006841EF /* InstantSearchClient in Frameworks */ = {isa = PBXBuildFile; productRef = AFC68D9823C6220C006841EF /* InstantSearchClient */; };
 		AFC68D9A23C6223A006841EF /* SearchResult.json in Resources */ = {isa = PBXBuildFile; fileRef = AFE807CE2229355900FC1D50 /* SearchResult.json */; };
 		AFC68D9B23C6223A006841EF /* SearchResultFacets.json in Resources */ = {isa = PBXBuildFile; fileRef = AFC2E2D92294103300859EBA /* SearchResultFacets.json */; };
 		AFC68D9C23C6223A006841EF /* DisjFacetingResult1.json in Resources */ = {isa = PBXBuildFile; fileRef = AF476FCE239AD51D0071D591 /* DisjFacetingResult1.json */; };
@@ -777,18 +773,12 @@
 		AFCDED6F222E7A51001459BE /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED38222D9697001459BE /* JSON.swift */; };
 		AFCDED9F222E7B56001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
 		AFCDEDA1222E7B6B001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
-		AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
-		AFCDEDAC222EB789001459BE /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResults.swift */; };
-		AFCDEDAD222EB789001459BE /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResults.swift */; };
 		AFCDEDAF222ED38D001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
 		AFCDEDB0222ED38D001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
-		AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
 		AFCDEDB3222ED38E001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
 		AFCDEDB4222ED38E001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
-		AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
 		AFCDEDB7222ED390001459BE /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDED9E222E7B56001459BE /* GeoLocation.swift */; };
 		AFCDEDB8222ED390001459BE /* Hit.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA0222E7B6B001459BE /* Hit.swift */; };
-		AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA2222E7B98001459BE /* FacetResults.swift */; };
 		AFCDEDBE2239797F001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
 		AFCDEDC02239799D001459BE /* PageMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBF2239799D001459BE /* PageMap.swift */; };
 		AFCDEDC2223979E1001459BE /* Optional+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDC1223979E1001459BE /* Optional+String.swift */; };
@@ -802,7 +792,6 @@
 		AFCDEDCF22397E23001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
 		AFCDEDD022397E24001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
 		AFCDEDD122397E25001459BE /* Paginator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDBD2239797F001459BE /* Paginator.swift */; };
-		AFCDEDD422397E31001459BE /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResults.swift */; };
 		AFCDEDD522397E31001459BE /* Sequencer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC28C4CB1E5B2D1000EFC4A0 /* Sequencer.swift */; };
 		AFCDEDD722397E31001459BE /* HitsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E282231793C00F3056D /* HitsInteractor.swift */; };
 		AFCDEDDA22397E31001459BE /* Result+ConvenientInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E2C2231796800F3056D /* Result+ConvenientInit.swift */; };
@@ -942,7 +931,6 @@
 		E225EDB02268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListInteractor.swift */; };
 		E225EDB12268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListInteractor.swift */; };
 		E225EDB22268CFF300B8D2F7 /* SelectableListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E225EDAE2268CFF300B8D2F7 /* SelectableListInteractor.swift */; };
-		E24233D9223947FC008F24FB /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFCDEDA9222EB789001459BE /* SearchResults.swift */; };
 		E24233DB223947FC008F24FB /* HitsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E282231793C00F3056D /* HitsInteractor.swift */; };
 		E24233DD223947FC008F24FB /* Result+ConvenientInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E09E2C2231796800F3056D /* Result+ConvenientInit.swift */; };
 		E242340A2243A43D008F24FB /* Signals+Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24234092243A43D008F24FB /* Signals+Observable.swift */; };
@@ -1429,8 +1417,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF28725423F2D923000CF2B8 /* Logging in Frameworks */,
-				AF17D69A23A8EC560068D76E /* InstantSearchClient in Frameworks */,
+				AFAE656B2440990900803CC0 /* AlgoliaSearchClientSwift in Frameworks */,
 				AFED9BEF23C69D50005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1447,8 +1434,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF28725C23F2DAB5000CF2B8 /* Logging in Frameworks */,
-				AFC68D9523C62201006841EF /* InstantSearchClient in Frameworks */,
+				AFAE656D2440990E00803CC0 /* AlgoliaSearchClientSwift in Frameworks */,
 				AFED9BF123C69D5B005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1457,8 +1443,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF28725E23F2DABA000CF2B8 /* Logging in Frameworks */,
-				AFC68D9723C62207006841EF /* InstantSearchClient in Frameworks */,
+				AFAE656F2440991400803CC0 /* AlgoliaSearchClientSwift in Frameworks */,
 				AFED9BF323C69D61005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1475,8 +1460,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF28726023F2DABE000CF2B8 /* Logging in Frameworks */,
-				AFC68D9923C6220C006841EF /* InstantSearchClient in Frameworks */,
+				AFAE65712440991800803CC0 /* AlgoliaSearchClientSwift in Frameworks */,
 				AFED9BF523C69D66005C2D93 /* InstantSearchInsights in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2321,9 +2305,8 @@
 			);
 			name = "InstantSearchCore-iOS";
 			packageProductDependencies = (
-				AF17D69923A8EC560068D76E /* InstantSearchClient */,
 				AFED9BEE23C69D50005C2D93 /* InstantSearchInsights */,
-				AF28725323F2D923000CF2B8 /* Logging */,
+				AFAE656A2440990900803CC0 /* AlgoliaSearchClientSwift */,
 			);
 			productName = InstantSearch;
 			productReference = BC3426311D460DB70055E0F2 /* InstantSearchCore.framework */;
@@ -2362,9 +2345,8 @@
 			);
 			name = "InstantSearchCore-macOS";
 			packageProductDependencies = (
-				AFC68D9423C62201006841EF /* InstantSearchClient */,
 				AFED9BF023C69D5B005C2D93 /* InstantSearchInsights */,
-				AF28725B23F2DAB5000CF2B8 /* Logging */,
+				AFAE656C2440990E00803CC0 /* AlgoliaSearchClientSwift */,
 			);
 			productName = "InstantSearchCore-macOS";
 			productReference = BC4CB88A1D534B6E004618DD /* InstantSearchCore.framework */;
@@ -2385,9 +2367,8 @@
 			);
 			name = "InstantSearchCore-tvOS";
 			packageProductDependencies = (
-				AFC68D9623C62207006841EF /* InstantSearchClient */,
 				AFED9BF223C69D61005C2D93 /* InstantSearchInsights */,
-				AF28725D23F2DABA000CF2B8 /* Logging */,
+				AFAE656E2440991400803CC0 /* AlgoliaSearchClientSwift */,
 			);
 			productName = "InstantSearchCore-tvOS";
 			productReference = BC4CB8AD1D535AB3004618DD /* InstantSearchCore.framework */;
@@ -2426,9 +2407,8 @@
 			);
 			name = "InstantSearchCore-watchOS";
 			packageProductDependencies = (
-				AFC68D9823C6220C006841EF /* InstantSearchClient */,
 				AFED9BF423C69D66005C2D93 /* InstantSearchInsights */,
-				AF28725F23F2DABE000CF2B8 /* Logging */,
+				AFAE65702440991800803CC0 /* AlgoliaSearchClientSwift */,
 			);
 			productName = InstantSearchCore;
 			productReference = BC5DC11B1D8688C10066D705 /* InstantSearchCore.framework */;
@@ -2487,7 +2467,6 @@
 			packageReferences = (
 				AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */,
 				AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */,
-				AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */,
 			);
 			productRefGroup = BC3426321D460DB70055E0F2 /* Products */;
 			projectDirPath = "";
@@ -2772,7 +2751,6 @@
 				AF5DAA8822F6E326000DDB27 /* SingleIndexSearcher+FilterState.swift in Sources */,
 				AFCF8DDB22E5BFEE0044F728 /* IndexQueryState.swift in Sources */,
 				AF1177D7225E2CEB00C5B59B /* OrFilterGroup.swift in Sources */,
-				AFCDEDA3222E7B98001459BE /* FacetResults.swift in Sources */,
 				AFC2E283228ED58300859EBA /* FilterListController.swift in Sources */,
 				AFEDF7E123AA441300FF4A1F /* FilterTracker.swift in Sources */,
 				AF1177A7225E2B4800C5B59B /* Filter.swift in Sources */,
@@ -2875,7 +2853,6 @@
 				AF5151662316DE9F00F88B6A /* PlaceHit+Geolocation+CoreLocation.swift in Sources */,
 				AF5808712318243A00C5BDFA /* HitsInteractor+PlacesSearcher.swift in Sources */,
 				AF5D104922F47C7900DE13AA /* FacetListInteractor+FilterState.swift in Sources */,
-				E24233D9223947FC008F24FB /* SearchResults.swift in Sources */,
 				AF5DAA9C22F83356000DDB27 /* FacetSearcher+FilterState.swift in Sources */,
 				AF52270023ACF715004FF29D /* InsightsTracker.swift in Sources */,
 				AF322D4122DDC89F00010428 /* FiltersWritable.swift in Sources */,
@@ -3006,7 +2983,6 @@
 				E29E456E2243F351005B358D /* Observation.swift in Sources */,
 				E2B1AC8C22D8C8C0000B913E /* IndexPresenter.swift in Sources */,
 				AFCF8DDC22E5BFEE0044F728 /* IndexQueryState.swift in Sources */,
-				AFCDEDD422397E31001459BE /* SearchResults.swift in Sources */,
 				AF8B64C8238461FD00F0E4F6 /* ItemListInteractor+Controller.swift in Sources */,
 				E2CF1A4322A6B03300DE24FC /* FilterComparison+Controller.swift in Sources */,
 				E2EBE73222B1367C00B91B23 /* CurrentFiltersInteractor.swift in Sources */,
@@ -3059,7 +3035,6 @@
 				E2146C2922CD0F5500927350 /* HierarchicalInteractor+Searcher.swift in Sources */,
 				E2146BF722B3CC2E00927350 /* Boundable.swift in Sources */,
 				AFC2E293228ED8A300859EBA /* FilterListInteractor+Facet.swift in Sources */,
-				AFCDEDB1222ED38D001459BE /* FacetResults.swift in Sources */,
 				AFBAA6FA22EC79D60009856B /* FilterState+FiltersWritable.swift in Sources */,
 				AF28642D2390800900E9E845 /* NumberRangeConnector.swift in Sources */,
 				E2146BFD22B3CE3500927350 /* DoubleRepresentable.swift in Sources */,
@@ -3245,7 +3220,6 @@
 				AFC2E29E228ED8B600859EBA /* FilterListInteractor+Tag.swift in Sources */,
 				AF5226FD23ABE024004FF29D /* FilterTrackable.swift in Sources */,
 				AF6778B022FB0BAA00850ACC /* MultiSearchResults.swift in Sources */,
-				AFCDEDB5222ED38E001459BE /* FacetResults.swift in Sources */,
 				AFBAA70122EC79FE0009856B /* SelectableInteractor.swift in Sources */,
 				E2146C0822B3D07F00927350 /* NumberRangeController.swift in Sources */,
 				AF28641F238FDB3800E9E845 /* StatsConnector.swift in Sources */,
@@ -3346,7 +3320,6 @@
 				AF11780C225F651200C5B59B /* GroupAccessor.swift in Sources */,
 				AF5D103522F46EFD00DE13AA /* FacetPresenter.swift in Sources */,
 				AF1177B9225E2B8500C5B59B /* TagFilter.swift in Sources */,
-				AFCDEDAC222EB789001459BE /* SearchResults.swift in Sources */,
 				AF02394E230A897D001471CF /* Connection.swift in Sources */,
 				AF286429238FDF0A00E9E845 /* QueryInputConnector.swift in Sources */,
 				E2EBE73F22B1529000B91B23 /* CurrentFiltersListController.swift in Sources */,
@@ -3539,7 +3512,6 @@
 				AF245647232A4CD400F78D09 /* IndexSegmentInteractor+MultiIndexSearcher.swift in Sources */,
 				AFC2E28B228ED80200859EBA /* FilterPresenter.swift in Sources */,
 				E2CF1A4F22A6B06200DE24FC /* FilterComparisonComputeBounds.swift in Sources */,
-				AFCDEDB9222ED390001459BE /* FacetResults.swift in Sources */,
 				AFC2E29A228ED8AE00859EBA /* FilterListInteractor+Numeric.swift in Sources */,
 				E2EFA5DF22A94D5B008C9CAA /* IndexSegmentInteractor.swift in Sources */,
 				E2CF1A3B22A6AD0200DE24FC /* NumberController.swift in Sources */,
@@ -3659,7 +3631,6 @@
 				AFCDEDF5223C070F001459BE /* AnyHitsInteractor.swift in Sources */,
 				AF286434239084B400E9E845 /* HierarchicalConnector.swift in Sources */,
 				AF21EEB222B401A6004A0542 /* HighlightedString.swift in Sources */,
-				AFCDEDAD222EB789001459BE /* SearchResults.swift in Sources */,
 				AFCDEDB8222ED390001459BE /* Hit.swift in Sources */,
 				AF5D104C22F47C7900DE13AA /* FacetListInteractor+FilterState.swift in Sources */,
 				AF28644D23912C0D00E9E845 /* LoadingConnector.swift in Sources */,
@@ -4370,16 +4341,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/algolia/algoliasearch-client-swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.3;
-			};
-		};
-		AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-log";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
+				branch = feat/v2/develop;
+				kind = branch;
 			};
 		};
 		AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */ = {
@@ -4393,45 +4356,25 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AF17D69923A8EC560068D76E /* InstantSearchClient */ = {
+		AFAE656A2440990900803CC0 /* AlgoliaSearchClientSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
-			productName = InstantSearchClient;
+			productName = AlgoliaSearchClientSwift;
 		};
-		AF28725323F2D923000CF2B8 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
-			productName = Logging;
-		};
-		AF28725B23F2DAB5000CF2B8 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
-			productName = Logging;
-		};
-		AF28725D23F2DABA000CF2B8 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
-			productName = Logging;
-		};
-		AF28725F23F2DABE000CF2B8 /* Logging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = AF28725223F2D923000CF2B8 /* XCRemoteSwiftPackageReference "swift-log" */;
-			productName = Logging;
-		};
-		AFC68D9423C62201006841EF /* InstantSearchClient */ = {
+		AFAE656C2440990E00803CC0 /* AlgoliaSearchClientSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
-			productName = InstantSearchClient;
+			productName = AlgoliaSearchClientSwift;
 		};
-		AFC68D9623C62207006841EF /* InstantSearchClient */ = {
+		AFAE656E2440991400803CC0 /* AlgoliaSearchClientSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
-			productName = InstantSearchClient;
+			productName = AlgoliaSearchClientSwift;
 		};
-		AFC68D9823C6220C006841EF /* InstantSearchClient */ = {
+		AFAE65702440991800803CC0 /* AlgoliaSearchClientSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = AF17D69823A8EC560068D76E /* XCRemoteSwiftPackageReference "algoliasearch-client-swift" */;
-			productName = InstantSearchClient;
+			productName = AlgoliaSearchClientSwift;
 		};
 		AFED9BEE23C69D50005C2D93 /* InstantSearchInsights */ = {
 			isa = XCSwiftPackageProductDependency;

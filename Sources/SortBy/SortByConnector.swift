@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
+import AlgoliaSearchClientSwift
 
 public class SortByConnector: Connection {
   

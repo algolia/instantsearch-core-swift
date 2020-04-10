@@ -9,8 +9,7 @@
 import Foundation
 import XCTest
 @testable import InstantSearchCore
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
 
   struct Item: Codable {

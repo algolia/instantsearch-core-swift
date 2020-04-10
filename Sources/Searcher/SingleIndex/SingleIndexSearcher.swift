@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 /** An entity performing search queries targeting one index
 */
 
@@ -32,6 +31,8 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     }
 
   }
+  
+  public let client: Client
   
   /// Current index & query tuple
   public var indexQueryState: IndexQueryState {
@@ -82,14 +83,14 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       - query: Instance of Query. By default a new empty instant of Query will be created.
       - requestOptions: Custom request options. Default is `nil`.
   */
-  public convenience init(appID: String,
-                          apiKey: String,
-                          indexName: String,
+  public convenience init(appID: ApplicationID,
+                          apiKey: APIKey,
+                          indexName: IndexName,
                           query: Query = .init(),
                           requestOptions: RequestOptions? = nil) {
     let client = Client(appID: appID, apiKey: apiKey)
     let index = client.index(withName: indexName)
-    self.init(index: index, query: query, requestOptions: requestOptions)
+    self.init(client: client, index: index, query: query, requestOptions: requestOptions)
   }
   
   /**
@@ -98,9 +99,11 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       - query: Instance of Query. By default a new empty instant of Query will be created.
       - requestOptions: Custom request options. Default is nil.
   */
-  public init(index: Index,
+  public init(client: Client,
+              index: Index,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
+    self.client = client
     indexQueryState = .init(index: index, query: query)
     self.requestOptions = requestOptions
     sequencer = .init()
@@ -124,16 +127,18 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       - indexQueryState: Instance of `IndexQueryState` encapsulating index value in which search will be performed and a `Query` instance.
       - requestOptions: Custom request options. Default is nil.
    */
-  public convenience init(indexQueryState: IndexQueryState,
+  public convenience init(client: Client,
+                          indexQueryState: IndexQueryState,
                           requestOptions: RequestOptions? = nil) {
-    self.init(index: indexQueryState.index,
+    self.init(client: client,
+              index: indexQueryState.index,
               query: indexQueryState.query,
               requestOptions: requestOptions)
   }
   
   public func search() {
   
-    let query = Query(copy: indexQueryState.query)
+    let query = indexQueryState.query
     
     let operation: Operation
 
@@ -146,8 +151,30 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                                         hierarchicalAttributes: hierarchicalAttributes,
                                         hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
-      let queries = queriesBuilder.build().map { IndexQuery(index: indexQueryState.index, query: $0) }
-      operation = indexQueryState.index.client.multipleQueries(queries, requestOptions: requestOptions, completionHandler: handleDisjunctiveFacetingResponse(for: queriesBuilder))
+      let queries = queriesBuilder.build().map { (indexQueryState.index.name, query: $0) }
+      operation = client.multipleQueries(queries: queries) { [weak self] result in
+        guard let searcher = self else { return }
+        
+        searcher.processingQueue.addOperation {
+            let indexName = searcher.indexQueryState.index.name
+
+            switch result {
+            case .failure(let error):
+              Logger.Results.failure(searcher: searcher, indexName: indexName, error)
+              searcher.onError.fire((queriesBuilder.query, error))
+              
+            case .success(let results):
+              do {
+                let result = try queriesBuilder.aggregate(results.results)
+                Logger.Results.success(searcher: searcher, indexName: indexName, results: result)
+                searcher.onResults.fire(result)
+              } catch let error {
+                Logger.Results.failure(searcher: searcher, indexName: indexName, error)
+                searcher.onError.fire((queriesBuilder.query, error))
+              }
+            }
+        }
+      }
     } else {
       operation = indexQueryState.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
     }
@@ -174,7 +201,7 @@ private extension SingleIndexSearcher {
         
         switch result {
         case .success(let results):
-          Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
+          Logger.Results.success(searcher: searcher, indexName: indexName.rawValue, results: results)
           searcher.onResults.fire(results)
           
         case .failure(let error):

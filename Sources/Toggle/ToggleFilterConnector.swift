@@ -27,7 +27,7 @@ public class ToggleFilterConnector<Filter: FilterType>: Connection {
     self.interactor.isSelected = isSelected
     self.filterStateConnection = interactor.connectFilterState(filterState,
                                                                operator: refinementOperator,
-                                                               groupName: groupName ?? filter.attribute.name)
+                                                               groupName: groupName ?? filter.attribute.rawValue)
   }
   
   public func connect() {

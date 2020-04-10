@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
   public typealias SearchResult = SearchResults

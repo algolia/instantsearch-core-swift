@@ -7,8 +7,7 @@
 //
 
 import Foundation
-@_exported import InstantSearchClient
-
+@_exported import AlgoliaSearchClientSwift
 /// Structure containing all necessary components to perform a search
 
 public struct IndexQueryState {
@@ -17,27 +16,20 @@ public struct IndexQueryState {
   public var index: Index
   
   /// Query describing a search request
-  public let query: Query
+  public var query: Query
   
-  public init(index: Index,
-              query: Query = .init()) {
+  public init(index: Index, query: Query = .init()) {
     self.index = index
     self.query = query
   }
   
 }
 
-extension IndexQuery {
-  
-  convenience init(indexQueryState: IndexQueryState) {
-    self.init(index: indexQueryState.index, query: indexQueryState.query)
-  }
-  
-}
+extension IndexQueryState: Builder {}
 
 extension Array where Element == IndexQueryState {
   
-  init(indices: [InstantSearchClient.Index], query: Query = .init()) {
+  init(indices: [AlgoliaSearchClientSwift.Index], query: Query = .init()) {
     self = indices.map { IndexQueryState(index: $0, query: query) }
   }
   

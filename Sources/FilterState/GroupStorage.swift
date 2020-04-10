@@ -248,7 +248,7 @@ extension GroupsStorage {
   /// Returns a raw representaton of all facet filters with their associated values
   func getRawFacetFilters() -> [String: [String]] {
     return getFacetFilters()
-      .map { ($0.key.name, $0.value.map { $0.description }) }
+      .map { ($0.key.rawValue, $0.value.map { $0.description }) }
       .reduce([String: [String]]()) { (refinements, arg1) in
         let (attribute, values) = arg1
         return refinements.merging([attribute: values], uniquingKeysWith: { (_, new) -> [String] in

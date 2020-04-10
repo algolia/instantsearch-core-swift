@@ -15,13 +15,13 @@ public extension DefaultPresenter {
   enum Filter {
 
     public static let present: FilterPresenter = { filter in
-      let attributeName = filter.filter.attribute.name
+      let attributeName = filter.filter.attribute.rawValue
 
       switch filter {
       case .facet(let facetFilter):
         switch facetFilter.value {
         case .bool:
-          return filter.filter.attribute.name
+          return filter.filter.attribute.rawValue
 
         case .float(let floatValue):
           return "\(attributeName): \(floatValue)"

@@ -51,9 +51,9 @@ public extension HitsConnector {
               connectSearcher: interactor.connectSearcher)
   }
   
-  convenience init(appID: String,
-                   apiKey: String,
-                   indexName: String,
+  convenience init(appID: ApplicationID,
+                   apiKey: APIKey,
+                   indexName: IndexName,
                    interactor: HitsInteractor<Hit>,
                    filterState: FilterState? = .none) {
     let searcher = SingleIndexSearcher(appID: appID,

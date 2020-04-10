@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import AlgoliaSearchClientSwift
 
 public class FacetListInteractor: SelectableListInteractor<String, Facet> {
   
-  public let onResultsUpdated: Observer<FacetResults>
+  public let onResultsUpdated: Observer<FacetSearchResponse>
   private let mutationQueue: OperationQueue
 
   public init(facets: [Facet] = [], selectionMode: SelectionMode = .multiple) {
@@ -25,10 +26,10 @@ public class FacetListInteractor: SelectableListInteractor<String, Facet> {
 
 extension FacetListInteractor: ResultUpdatable {
     
-  @discardableResult public func update(_ facetResults: FacetResults) -> Operation {
+  @discardableResult public func update(_ facetResults: FacetSearchResponse) -> Operation {
     
     let updateOperation = BlockOperation { [weak self] in
-      self?.items = facetResults.facetHits
+      self?.items = facetResults.facets
       self?.onResultsUpdated.fire(facetResults)
     }
     

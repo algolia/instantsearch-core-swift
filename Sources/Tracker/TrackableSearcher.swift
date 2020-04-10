@@ -19,7 +19,7 @@ public enum TrackableSearcher {
   case singleIndex(SingleIndexSearcher)
   case multiIndex(MultiIndexSearcher, pointer: Int)
   
-  var indexName: String {
+  var indexName: IndexName {
     switch self {
     case .singleIndex(let searcher):
       return searcher.indexQueryState.index.name

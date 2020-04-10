@@ -55,7 +55,7 @@ public extension HitsTracker {
                                    eventName customEventName: String? = nil) {
     guard let queryID = queryID else { return }
     tracker.clickedAfterSearch(eventName: customEventName ?? self.eventName,
-                               indexName: searcher.indexName,
+                               indexName: searcher.indexName.rawValue,
                                objectIDsWithPositions: [(hit.objectID, position)],
                                queryID: queryID,
                                userToken: .none)
@@ -65,7 +65,7 @@ public extension HitsTracker {
                                      eventName customEventName: String? = nil) {
     guard let queryID = queryID else { return }
     tracker.convertedAfterSearch(eventName: customEventName ?? self.eventName,
-                                 indexName: searcher.indexName,
+                                 indexName: searcher.indexName.rawValue,
                                  objectIDs: [hit.objectID],
                                  queryID: queryID,
                                  userToken: .none)
@@ -74,7 +74,7 @@ public extension HitsTracker {
   func trackView<Record: Codable>(for hit: Hit<Record>,
                                   eventName customEventName: String? = nil) {
     tracker.viewed(eventName: customEventName ?? self.eventName,
-                   indexName: searcher.indexName,
+                   indexName: searcher.indexName.rawValue,
                    objectIDs: [hit.objectID],
                    userToken: .none)
   }

@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 public struct BoundableSingleIndexSearcherConnection<B: Boundable>: Connection {
   
   public let boundable: B

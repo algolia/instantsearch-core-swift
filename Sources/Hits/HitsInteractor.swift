@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 extension HitsInteractor {
   
   class Tracker {

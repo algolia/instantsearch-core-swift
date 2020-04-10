@@ -7,14 +7,13 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 /** An entity performing search for facet values
  */
 
 public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable {
   
-  public typealias SearchResult = FacetResults
+  public typealias SearchResult = FacetSearchResponse
   
   public var query: String? {
     didSet {
@@ -24,7 +23,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   }
   
   /// Current tuple of index and query
-  public let indexQueryState: IndexQueryState
+  public var indexQueryState: IndexQueryState
   
   public var onQueryChanged: Observer<String?>
   
@@ -56,9 +55,9 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
    - query: Instance of Query. By default a new empty instant of Query will be created.
    - requestOptions: Custom request options. Default is `nil`.
    */
-  public convenience init(appID: String,
-                          apiKey: String,
-                          indexName: String,
+  public convenience init(appID: ApplicationID,
+                          apiKey: APIKey,
+                          indexName: IndexName,
                           facetName: String,
                           query: Query = .init(),
                           requestOptions: RequestOptions? = nil) {
@@ -102,12 +101,11 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     
     let query = self.query ?? ""
     let indexName = indexQueryState.index.name
-    let operation = indexQueryState.index.searchForFacetValues(of: facetName, matching: query, query: indexQueryState.query, requestOptions: requestOptions) { [weak self] (content, error) in
-            guard let searcher = self else { return }
+    
+    let operation = indexQueryState.index.searchForFacetValues(of: .init(rawValue: facetName), matching: query, applicableFor: indexQueryState.query) { [weak self] result in
+      guard let searcher = self else { return }
       
       searcher.processingQueue.addOperation {
-        let result: Result<FacetResults, Error> = searcher.transform(content: content, error: error)
-        
         switch result {
         case .success(let results):
           Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
@@ -118,6 +116,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
           searcher.onError.fire((query, error))
         }
       }
+
       
     }
     

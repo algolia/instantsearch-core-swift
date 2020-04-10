@@ -8,8 +8,7 @@
 
 import Foundation
 @testable import InstantSearchCore
-import InstantSearchClient
-import XCTest
+import AlgoliaSearchClientSwiftimport XCTest
 
 class TestPageLoader: PageLoadable {
   

@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 /** An entity performing search queries targeting multiple indices.
 */
 
@@ -21,8 +20,10 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     set {
       let oldValue = indexQueryStates.first?.query.query
       guard oldValue != newValue else { return }
-      indexQueryStates.forEach { $0.query.query = newValue }
-      indexQueryStates.forEach { $0.query.page = 0 }
+      self.indexQueryStates = indexQueryStates.map { indexQueryState in
+        let query = indexQueryState.query.set(\.query, to: newValue).set(\.page, to: 0)
+        return indexQueryState.set(\.query, to: query)
+      }
       onQueryChanged.fire(newValue)
     }
     
@@ -66,9 +67,9 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
    - indexNames: List of the indices names in which search will be performed
    - requestOptions: Custom request options. Default is nil.
    */
-  public convenience init(appID: String,
-                          apiKey: String,
-                          indexNames: [String],
+  public convenience init(appID: ApplicationID,
+                          apiKey: APIKey,
+                          indexNames: [IndexName],
                           requestOptions: RequestOptions? = nil) {
     let client = Client(appID: appID, apiKey: apiKey)
     let indices = indexNames.map(client.index(withName:))
@@ -127,7 +128,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     processingQueue.qualityOfService = .userInitiated
     
     self.pageLoaders = indexQueryStates.map { isd in
-      return PageLoaderProxy(setPage: { isd.query.page = UInt($0) }, launchSearch: self.search)
+      return PageLoaderProxy(setPage: { isd.query.page = $0 }, launchSearch: self.search)
     }
 
   }
@@ -135,7 +136,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   public func search() {
     
     let indexQueries = indexQueryStates.map(IndexQuery.init(indexQueryState:))
-    let queries = indexQueryStates.map { $0.query.copy() as! Query }
+    let queries = indexQueryStates.map { $0.query }
     let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
       guard let searcher = self else { return }
       searcher.processingQueue.addOperation {

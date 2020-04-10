@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 public struct SelectableFilterInteractorSearcherConnection<Filter: FilterType>: Connection {
   
   public let interactor: SelectableSegmentInteractor<Int, Filter>

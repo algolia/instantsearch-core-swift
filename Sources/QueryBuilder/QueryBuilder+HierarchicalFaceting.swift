@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
+import AlgoliaSearchClientSwift
 
 extension QueryBuilder {
   
@@ -45,9 +45,9 @@ extension QueryBuilder {
           outputFilterGroups.append(FilterGroup.And(filters: [currentHierarchicalFilter], name: "_hierarchical"))
         }
         
-        let query = Query(copy: query)
+        var query = query
         query.requestOnlyFacets()
-        query.facets = [attribute.name]
+        query.facets = [attribute]
         query.filters = FilterGroupConverter().sql(outputFilterGroups)
         return query
         

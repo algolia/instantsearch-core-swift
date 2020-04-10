@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 public struct QueryBuilder {
   
   public let query: Query
@@ -56,7 +55,7 @@ public struct QueryBuilder {
   
   public func build() -> [Query] {
     
-    let queryForResults = Query(copy: query)
+    var queryForResults = query
     queryForResults.filters = FilterGroupConverter().sql(filterGroups)
         
     let disjunctiveFacetingQueries = buildDisjunctiveFacetingQueries(query: query,
@@ -71,7 +70,7 @@ public struct QueryBuilder {
     return [queryForResults] + disjunctiveFacetingQueries + hierarchicalFacetingQueries
   }
   
-  public func aggregate(_ results: [SearchResults]) throws -> SearchResults {
+  public func aggregate(_ results: [SearchResponse]) throws -> SearchResponse {
     
     guard var aggregatedResult = results.first else {
       throw Error.emptyResults
@@ -100,14 +99,14 @@ public struct QueryBuilder {
     
   }
   
-  func update<C: Collection>(_ results: SearchResults, withResultsForDisjuncitveFaceting resultsForDisjuncitveFaceting: C) -> SearchResults where C.Element == SearchResults {
+  func update<C: Collection>(_ results: SearchResponse, withResultsForDisjuncitveFaceting resultsForDisjuncitveFaceting: C) -> SearchResponse where C.Element == SearchResponse {
     var output = results
     output.disjunctiveFacets = resultsForDisjuncitveFaceting.aggregateFacets()
-    output.areFacetsCountExhaustive = resultsForDisjuncitveFaceting.allSatisfy { $0.areFacetsCountExhaustive == true }
+    output.exhaustiveFacetsCount = resultsForDisjuncitveFaceting.allSatisfy { $0.areFacetsCountExhaustive == true }
     return output
   }
   
-  func update<C: Collection>(_ results: SearchResults, withResultsForHierarchicalFaceting resultsForHierarchicalFaceting: C) -> SearchResults where C.Element == SearchResults {
+  func update<C: Collection>(_ results: SearchResponse, withResultsForHierarchicalFaceting resultsForHierarchicalFaceting: C) -> SearchResponse where C.Element == SearchResponse {
     var output = results
     let hierarchicalFacets = resultsForHierarchicalFaceting.aggregateFacets()
     output.hierarchicalFacets = hierarchicalFacets.isEmpty ? nil : hierarchicalFacets
@@ -120,3 +119,5 @@ public struct QueryBuilder {
   }
   
 }
+
+extension SearchResponse: Builder {}

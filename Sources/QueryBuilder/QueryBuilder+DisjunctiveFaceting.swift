@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 /// Provides convenient method for building disjuncitve faceting queries and parsing disjunctive faceting
 
 extension QueryBuilder {
@@ -104,8 +103,8 @@ extension QueryBuilder {
         return FilterGroup.Or(filters: filtersMinusDisjunctiveFacet, name: group.name)
       }.filter { !$0.filters.isEmpty }
       
-      let query = Query(copy: query)
-      query.facets = [attribute.name]
+      var query = query
+      query.facets = [attribute]
       query.requestOnlyFacets()
       query.filters = FilterGroupConverter().sql(groups)
       return query
@@ -118,7 +117,7 @@ extension QueryBuilder {
 
 extension Query {
   
-  func requestOnlyFacets() {
+  mutating func requestOnlyFacets() {
     attributesToRetrieve = []
     attributesToHighlight = []
     hitsPerPage = 0
@@ -161,7 +160,7 @@ extension Collection {
   
 }
 
-extension Collection where Element == SearchResults {
+extension Collection where Element == SearchResponse {
   
   func aggregateFacets() -> [Attribute: [Facet]] {
     return compactMap { $0.facets }.reduce([:]) { (aggregatedFacets, facets) in
@@ -169,7 +168,7 @@ extension Collection where Element == SearchResults {
     }
   }
   
-  func aggregateFacetStats() -> [Attribute: SearchResults.FacetStats] {
+  func aggregateFacetStats() -> [Attribute: FacetStats] {
     return compactMap { $0.facetStats }.reduce([:]) { (aggregatedFacetStats, facetStats) in
       aggregatedFacetStats.merging(facetStats) { (_, new) in new }
     }

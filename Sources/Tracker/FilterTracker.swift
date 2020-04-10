@@ -40,19 +40,19 @@ public extension FilterTracker {
   func trackClick<F: FilterType>(for filter: F,
                                  eventName customEventName: String? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    tracker.clicked(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
+    tracker.clicked(eventName: customEventName ?? eventName, indexName: searcher.indexName.rawValue, filters: [sqlForm], userToken: .none)
   }
   
   func trackView<F: FilterType>(for filter: F,
                                 eventName customEventName: String? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    tracker.viewed(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
+    tracker.viewed(eventName: customEventName ?? eventName, indexName: searcher.indexName.rawValue, filters: [sqlForm], userToken: .none)
   }
   
   func trackConversion<F: FilterType>(for filter: F,
                                       eventName customEventName: String? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    tracker.converted(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
+    tracker.converted(eventName: customEventName ?? eventName, indexName: searcher.indexName.rawValue, filters: [sqlForm], userToken: .none)
   }
   
 }

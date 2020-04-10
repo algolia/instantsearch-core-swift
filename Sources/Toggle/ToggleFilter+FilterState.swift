@@ -26,7 +26,7 @@ public extension ToggleFilter {
       self.interactor = interactor
       self.filterState = filterState
       self.operator = `operator`
-      self.groupName = groupName ?? interactor.item.attribute.name
+      self.groupName = groupName ?? interactor.item.attribute.rawValue
     }
     
     public func connect() {

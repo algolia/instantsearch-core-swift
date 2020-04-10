@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import InstantSearchClient
-
+import AlgoliaSearchClientSwift
 public extension HierarchicalInteractor {
   
   struct SingleIndexSearcherConnection: Connection {
