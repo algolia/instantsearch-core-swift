@@ -22,6 +22,8 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     }
   }
   
+  public let client: Client
+  
   /// Current tuple of index and query
   public var indexQueryState: IndexQueryState
   
@@ -62,8 +64,8 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
                           query: Query = .init(),
                           requestOptions: RequestOptions? = nil) {
     let client = Client(appID: appID, apiKey: apiKey)
-    let index = client.index(withName: indexName)
-    self.init(index: index,
+    self.init(client: client,
+              indexName: indexName,
               facetName: facetName,
               query: query,
               requestOptions: requestOptions)
@@ -76,11 +78,13 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
    - query: Instance of Query. By default a new empty instant of Query will be created.
    - requestOptions: Custom request options. Default is `nil`.
    */
-  public init(index: Index,
+  public init(client: Client,
+              indexName: IndexName,
               facetName: String,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
-    self.indexQueryState = IndexQueryState(index: index, query: query)
+    self.client = client
+    self.indexQueryState = IndexQueryState(indexName: indexName, query: query)
     self.isLoading = .init()
     self.onQueryChanged = .init()
     self.onResults = .init()
@@ -100,9 +104,9 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
   public func search() {
     
     let query = self.query ?? ""
-    let indexName = indexQueryState.index.name
+    let indexName = indexQueryState.indexName
     
-    let operation = indexQueryState.index.searchForFacetValues(of: .init(rawValue: facetName), matching: query, applicableFor: indexQueryState.query) { [weak self] result in
+    let operation = client.index(withName: indexName).searchForFacetValues(of: Attribute(rawValue: facetName), matching: query, applicableFor: indexQueryState.query) { [weak self] result in
       guard let searcher = self else { return }
       
       searcher.processingQueue.addOperation {
@@ -116,8 +120,6 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
           searcher.onError.fire((query, error))
         }
       }
-
-      
     }
     
     sequencer.orderOperation(operationLauncher: { return operation })

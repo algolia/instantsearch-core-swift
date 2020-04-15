@@ -22,7 +22,7 @@ public extension MultiIndexHitsInteractor {
       }
       
       searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
-        interactor.update(searchResults.searchResults)
+        interactor.update(searchResults.results)
       }
       
       searcher.onError.subscribe(with: interactor) { interactor, args in

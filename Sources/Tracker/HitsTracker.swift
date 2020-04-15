@@ -14,7 +14,7 @@ public class HitsTracker: InsightsTracker {
   public let eventName: String
   internal let searcher: TrackableSearcher
   internal let tracker: HitsAfterSearchTrackable
-  internal var queryID: String?
+  internal var queryID: QueryID?
       
   public required convenience init(eventName: String,
                                    searcher: TrackableSearcher,
@@ -57,7 +57,7 @@ public extension HitsTracker {
     tracker.clickedAfterSearch(eventName: customEventName ?? self.eventName,
                                indexName: searcher.indexName.rawValue,
                                objectIDsWithPositions: [(hit.objectID, position)],
-                               queryID: queryID,
+                               queryID: queryID.rawValue,
                                userToken: .none)
   }
   
@@ -67,7 +67,7 @@ public extension HitsTracker {
     tracker.convertedAfterSearch(eventName: customEventName ?? self.eventName,
                                  indexName: searcher.indexName.rawValue,
                                  objectIDs: [hit.objectID],
-                                 queryID: queryID,
+                                 queryID: queryID.rawValue,
                                  userToken: .none)
   }
   

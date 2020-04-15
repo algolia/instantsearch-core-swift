@@ -17,7 +17,7 @@ public extension IndexSegment {
         
     public func connect() {
       if let selected = interactor.selected, let index = interactor.items[selected] {
-        searcher.indexQueryState.index = index
+        searcher.indexQueryState.indexName = index.name
         searcher.indexQueryState.query.page = 0
       }
 
@@ -27,7 +27,7 @@ public extension IndexSegment {
           let index = interactor?.items[selected]
         {
           interactor?.selected = selected
-          searcher.indexQueryState.index = index
+          searcher.indexQueryState.indexName = index.name
           searcher.indexQueryState.query.page = 0
           searcher.search()
         }

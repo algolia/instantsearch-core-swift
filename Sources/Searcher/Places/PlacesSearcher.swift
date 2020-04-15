@@ -8,10 +8,9 @@
 
 import Foundation
 import AlgoliaSearchClientSwift
+
 public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable {
-  
-  public typealias SearchResult = SearchResults
-  
+    
   public var query: String? {
     
     get {
@@ -33,7 +32,7 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
   
   public let isLoading: Observer<Bool>
 
-  public let onResults: Observer<SearchResult>
+  public let onResults: Observer<PlacesClient.SingleLanguageResponse>
 
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query text and error
@@ -44,8 +43,8 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
 
   internal let placesClient: PlacesClient
   
-  public convenience init(appID: String,
-                          apiKey: String,
+  public convenience init(appID: ApplicationID,
+                          apiKey: APIKey,
                           query: PlacesQuery = .init()) {
     let client = PlacesClient(appID: appID, apiKey: apiKey)
     self.init(client: client, query: query)
@@ -59,7 +58,6 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
     self.onResults = .init()
     self.onError = .init()
     self.sequencer = .init()
-    placesQuery.language = "en"
     sequencer.delegate = self
     onResults.retainLastData = true
     isLoading.retainLastData = true
@@ -67,10 +65,9 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
   
   public func search() {
     
-    let operation = placesClient.search(placesQuery) { [weak self] (content, error) in
+    let operation = placesClient.search(query: placesQuery, language: .english) { [weak self] result in
       guard let searcher = self else { return }
-      let result: Result<SearchResults, Error> = searcher.transform(content: content, error: error)
-      
+
       switch result {
       case .success(let results):
         Logger.Results.success(searcher: searcher, indexName: "Algolia Places", results: results)
@@ -82,7 +79,7 @@ public class PlacesSearcher: Searcher, SequencerDelegate, SearchResultObservable
         searcher.onError.fire((query, error))
       }
     }
-    
+        
     sequencer.orderOperation {
       return operation
     }

@@ -13,13 +13,13 @@ import Foundation
 public struct IndexQueryState {
   
   /// Index in which search will be performed
-  public var index: Index
+  public var indexName: IndexName
   
   /// Query describing a search request
   public var query: Query
   
-  public init(index: Index, query: Query = .init()) {
-    self.index = index
+  public init(indexName: IndexName, query: Query = .init()) {
+    self.indexName = indexName
     self.query = query
   }
   
@@ -30,7 +30,7 @@ extension IndexQueryState: Builder {}
 extension Array where Element == IndexQueryState {
   
   init(indices: [AlgoliaSearchClientSwift.Index], query: Query = .init()) {
-    self = indices.map { IndexQueryState(index: $0, query: query) }
+    self = indices.map { IndexQueryState(indexName: $0.name, query: query) }
   }
   
 }

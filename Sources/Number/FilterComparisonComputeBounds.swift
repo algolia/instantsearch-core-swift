@@ -36,7 +36,7 @@ extension Boundable {
     return connection
   }
 
-  func computeBoundsFromFacetStats(attribute: Attribute, facetStats: [Attribute: SearchResults.FacetStats]?) {
+  func computeBoundsFromFacetStats(attribute: Attribute, facetStats: [Attribute: FacetStats]?) {
     guard let facetStats = facetStats, let facetStatsOfAttribute = facetStats[attribute] else {
       applyBounds(bounds: nil)
       return

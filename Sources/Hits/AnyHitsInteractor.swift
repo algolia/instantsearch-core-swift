@@ -22,7 +22,7 @@ public protocol AnyHitsInteractor: class {
   /// - Parameter searchResults:
   /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor
 
-  @discardableResult func update(_ searchResults: SearchResults) -> Operation
+  @discardableResult func update(_ searchResults: HitsExtractable & SearchStatsConvertible) -> Operation
   
   /// Returns a hit for row of a desired type
   /// - Throws: HitsInteractor.Error.incompatibleRecordType if the derived record type mismatches the record type of corresponding hits Interactor

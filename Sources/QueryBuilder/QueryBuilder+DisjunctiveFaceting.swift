@@ -51,7 +51,7 @@ extension QueryBuilder {
   /// - parameter facets: dictionary of current facets
   /// - returns: disjuncitve faceting results enriched with selected but empty facets
   
-  private func completeMissingFacets(in results: SearchResults, with facets: [Attribute: [String]]) -> SearchResults {
+  private func completeMissingFacets(in results: SearchResponse, with facets: [Attribute: [String]]) -> SearchResponse {
     
     var output = results
     
@@ -80,7 +80,7 @@ extension QueryBuilder {
   /// - parameter facets: set of attribute of facets
   /// - returns: disjuncitve faceting results enriched with selected but empty facets
   
-  func completeMissingFacets(in results: SearchResults, disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> SearchResults {
+  func completeMissingFacets(in results: SearchResponse, disjunctiveFacets: Set<Attribute>, filters: [FilterType]) -> SearchResponse {
     let facetDictionary = self.facetDictionary(with: disjunctiveFacets, filters: filters)
     return completeMissingFacets(in: results, with: facetDictionary)
   }

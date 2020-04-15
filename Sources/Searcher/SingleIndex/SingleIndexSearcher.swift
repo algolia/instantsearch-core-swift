@@ -12,9 +12,7 @@ import AlgoliaSearchClientSwift
 */
 
 public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
-  
-  public typealias SearchResult = SearchResults
-  
+    
   public var query: String? {
 
     set {
@@ -37,15 +35,15 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   /// Current index & query tuple
   public var indexQueryState: IndexQueryState {
     didSet {
-      if oldValue.index != indexQueryState.index {
-        onIndexChanged.fire(indexQueryState.index)
+      if oldValue.indexName != indexQueryState.indexName {
+        onIndexChanged.fire(indexQueryState.indexName)
       }
     }
   }
   
   public let isLoading: Observer<Bool>
   
-  public let onResults: Observer<SearchResults>
+  public let onResults: Observer<SearchResponse>
   
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query and error
@@ -55,7 +53,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
   /// Triggered when an index of Searcher changed
   /// - Parameter: equals to a new index value
-  public let onIndexChanged: Observer<Index>
+  public let onIndexChanged: Observer<IndexName>
   
   /// Custom request options
   public var requestOptions: RequestOptions?
@@ -89,8 +87,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                           query: Query = .init(),
                           requestOptions: RequestOptions? = nil) {
     let client = Client(appID: appID, apiKey: apiKey)
-    let index = client.index(withName: indexName)
-    self.init(client: client, index: index, query: query, requestOptions: requestOptions)
+    self.init(client: client, indexName: indexName, query: query, requestOptions: requestOptions)
   }
   
   /**
@@ -100,11 +97,11 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       - requestOptions: Custom request options. Default is nil.
   */
   public init(client: Client,
-              index: Index,
+              indexName: IndexName,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
     self.client = client
-    indexQueryState = .init(index: index, query: query)
+    indexQueryState = .init(indexName: indexName, query: query)
     self.requestOptions = requestOptions
     sequencer = .init()
     isLoading = .init()
@@ -131,7 +128,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                           indexQueryState: IndexQueryState,
                           requestOptions: RequestOptions? = nil) {
     self.init(client: client,
-              index: indexQueryState.index,
+              indexName: indexQueryState.indexName,
               query: indexQueryState.query,
               requestOptions: requestOptions)
   }
@@ -151,12 +148,12 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                                         hierarchicalAttributes: hierarchicalAttributes,
                                         hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
-      let queries = queriesBuilder.build().map { (indexQueryState.index.name, query: $0) }
+      let queries = queriesBuilder.build().map { (indexQueryState.indexName, query: $0) }
       operation = client.multipleQueries(queries: queries) { [weak self] result in
         guard let searcher = self else { return }
         
         searcher.processingQueue.addOperation {
-            let indexName = searcher.indexQueryState.index.name
+            let indexName = searcher.indexQueryState.indexName
 
             switch result {
             case .failure(let error):
@@ -176,7 +173,22 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
         }
       }
     } else {
-      operation = indexQueryState.index.search(query, requestOptions: requestOptions, completionHandler: handle(for: query))
+      operation = client.index(withName: indexQueryState.indexName).search(query: query, requestOptions: requestOptions) { [weak self] result in
+        guard let searcher = self, searcher.query == query.query else { return }
+        searcher.processingQueue.addOperation {
+          let indexName = searcher.indexQueryState.indexName
+          
+          switch result {
+          case .failure(let error):
+            Logger.Results.failure(searcher: searcher, indexName: indexName, error)
+            searcher.onError.fire((query, error))
+
+          case .success(let results):
+            Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
+            searcher.onResults.fire(results)
+          }
+        }
+      }
     }
     
     sequencer.orderOperation(operationLauncher: { return operation })
@@ -184,61 +196,6 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
   
   public func cancel() {
     sequencer.cancelPendingOperations()
-  }
-  
-}
-
-private extension SingleIndexSearcher {
-  
-  func handle(for query: Query) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
-    return { [weak self] value, error in
-      guard let searcher = self, searcher.query == query.query else { return }
-      
-      searcher.processingQueue.addOperation {
-        let result = Result<SearchResults, Error>(rawValue: value, error: error)
-  
-        let indexName = searcher.indexQueryState.index.name
-        
-        switch result {
-        case .success(let results):
-          Logger.Results.success(searcher: searcher, indexName: indexName.rawValue, results: results)
-          searcher.onResults.fire(results)
-          
-        case .failure(let error):
-          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
-          searcher.onError.fire((query, error))
-        }
-      }
-    }
-  }
-  
-  func handleDisjunctiveFacetingResponse(for queryBuilder: QueryBuilder) -> (_ value: [String: Any]?, _ error: Error?) -> Void {
-    return { [weak self] value, error in
-      guard let searcher = self, searcher.query == queryBuilder.query.query else { return }
-      
-      searcher.processingQueue.addOperation {
-        let result = Result<MultiSearchResults, Error>(rawValue: value, error: error)
-
-        let indexName = searcher.indexQueryState.index.name
-
-        switch result {
-        case .failure(let error):
-          Logger.Results.failure(searcher: searcher, indexName: indexName, error)
-          searcher.onError.fire((queryBuilder.query, error))
-          
-        case .success(let results):
-          do {
-            let result = try queryBuilder.aggregate(results.searchResults)
-            Logger.Results.success(searcher: searcher, indexName: indexName, results: result)
-            searcher.onResults.fire(result)
-          } catch let error {
-            Logger.Results.failure(searcher: searcher, indexName: indexName, error)
-            searcher.onError.fire((queryBuilder.query, error))
-          }
-        }
-      }
-      
-    }
   }
   
 }

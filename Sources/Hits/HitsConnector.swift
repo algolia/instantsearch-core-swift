@@ -80,12 +80,11 @@ public extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
               connectSearcher: interactor.connectPlacesSearcher)
   }
   
-  convenience init(placesAppID: String,
-                   apiKey: String,
+  convenience init(placesAppID: ApplicationID,
+                   apiKey: APIKey,
                    interactor: HitsInteractor<Hit>,
                    filterState: FilterState? = .none) {
-    let searcher = PlacesSearcher(appID: placesAppID,
-                                  apiKey: apiKey)
+    let searcher = PlacesSearcher(appID: placesAppID, apiKey: apiKey)
     self.init(searcher: searcher,
               interactor: interactor,
               filterState: filterState,

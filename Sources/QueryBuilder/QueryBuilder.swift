@@ -102,7 +102,7 @@ public struct QueryBuilder {
   func update<C: Collection>(_ results: SearchResponse, withResultsForDisjuncitveFaceting resultsForDisjuncitveFaceting: C) -> SearchResponse where C.Element == SearchResponse {
     var output = results
     output.disjunctiveFacets = resultsForDisjuncitveFaceting.aggregateFacets()
-    output.exhaustiveFacetsCount = resultsForDisjuncitveFaceting.allSatisfy { $0.areFacetsCountExhaustive == true }
+    output.exhaustiveFacetsCount = resultsForDisjuncitveFaceting.allSatisfy { $0.exhaustiveFacetsCount == true }
     return output
   }
   

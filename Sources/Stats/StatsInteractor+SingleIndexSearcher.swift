@@ -17,7 +17,7 @@ public extension StatsInteractor {
     
     public func connect() {
       searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
-        interactor.item = searchResults.stats
+        interactor.item = searchResults.searchStats
       }
       searcher.onError.subscribe(with: interactor) { interactor, _ in
         interactor.item = .none

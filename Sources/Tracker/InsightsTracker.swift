@@ -20,8 +20,8 @@ extension InsightsTracker {
   public init(eventName: String,
               searcher: SingleIndexSearcher,
               userToken: String? = .none) {
-    let index = searcher.indexQueryState.index
-    let insights = Insights.register(appId: index.applicationID.rawValue, apiKey: index.apiKey.rawValue, userToken: userToken)
+    let credentials: AlgoliaSearchClientSwift.Credentials = searcher.client
+    let insights = Insights.register(appId: credentials.applicationID.rawValue, apiKey: credentials.apiKey.rawValue, userToken: userToken)
     self.init(eventName: eventName,
               searcher: .singleIndex(searcher),
               insights: insights)
@@ -39,8 +39,8 @@ extension InsightsTracker {
               searcher: MultiIndexSearcher,
               pointer: Int,
               userToken: String? = .none) {
-    let index = searcher.indexQueryStates[pointer].index
-    let insights = Insights.register(appId: index.applicationID.rawValue, apiKey: index.apiKey.rawValue, userToken: userToken)
+    let credentials: AlgoliaSearchClientSwift.Credentials = searcher.client
+    let insights = Insights.register(appId: credentials.applicationID.rawValue, apiKey: credentials.apiKey.rawValue, userToken: userToken)
     self.init(eventName: eventName,
               searcher: .multiIndex(searcher, pointer: pointer),
               insights: insights)

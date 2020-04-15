@@ -7,24 +7,11 @@
 
 import Foundation
 import AlgoliaSearchClientSwift
-extension HitsInteractor {
-  
-  class Tracker {
-    
-  }
-  
-}
-
-extension HitsInteractor.Tracker {
-  
-  func trackClick(on hit: Record) {
-    
-  }
-  
-}
 
 public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
-
+  
+  public typealias Result = HitsExtractable & SearchStatsConvertible
+  
   public let settings: Settings
 
   internal let paginator: Paginator<Record>
@@ -33,7 +20,7 @@ public class HitsInteractor<Record: Codable>: AnyHitsInteractor {
   private let mutationQueue: OperationQueue
   
   public let onRequestChanged: Observer<Void>
-  public let onResultsUpdated: Observer<SearchResults>
+  public let onResultsUpdated: Observer<Result>
   public let onError: Observer<Swift.Error>
   
   public var pageLoader: PageLoadable? {
@@ -188,16 +175,16 @@ public enum InfiniteScrolling {
 }
 
 extension HitsInteractor: ResultUpdatable {
-  
-  @discardableResult public func update(_ searchResults: SearchResults) -> Operation {
     
+  @discardableResult public func update(_ searchResults: Result) -> Operation {
+    let stats = searchResults.searchStats
     let updateOperation = BlockOperation { [weak self] in
       guard let hitsInteractor = self else { return }
       if case .on = hitsInteractor.settings.infiniteScrolling {
-        hitsInteractor.infiniteScrollingController.notifyPending(pageIndex: searchResults.stats.page)
-        hitsInteractor.infiniteScrollingController.lastPageIndex = searchResults.stats.pagesCount - 1
+        hitsInteractor.infiniteScrollingController.notifyPending(pageIndex: stats.page)
+        hitsInteractor.infiniteScrollingController.lastPageIndex = stats.pagesCount - 1
       }
-      hitsInteractor.isLastQueryEmpty = searchResults.stats.query.isNilOrEmpty
+      hitsInteractor.isLastQueryEmpty = stats.query.isNilOrEmpty
 
       do {
         let page: HitsPage<Record> = try HitsPage(searchResults: searchResults)

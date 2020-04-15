@@ -98,21 +98,16 @@ extension Logger {
   enum Results {
     
     static func failure(searcher: Searcher, indexName: IndexName, _ error: Error) {
-      Logger.error(prefix: "\(searcher): error - index: \(indexName)", error)
+      Logger.error(prefix: "\(searcher): error - index: \(indexName.rawValue)", error)
     }
     
-    static func success(searcher: Searcher, indexName: String, results: SearchResults) {
-      let query = results.stats.query ?? ""
-      let message = "\(searcher): received results - index: \(indexName) query: \"\(query)\" hits count: \(results.stats.totalHitsCount) in \(results.stats.processingTimeMS)ms"
+    static func success(searcher: Searcher, indexName: IndexName, results: SearchStatsConvertible) {
+      let stats = results.searchStats
+      let query = stats.query ?? ""
+      let message = "\(searcher): received results - index: \(indexName.rawValue) query: \"\(query)\" hits count: \(stats.totalHitsCount) in \(stats.processingTimeMS)ms"
       Logger.info(message)
     }
     
-    static func success(searcher: Searcher, indexName: IndexName, results: FacetSearchResponse) {
-      let query = searcher.query ?? ""
-      let message = "\(searcher): received results - index: \(indexName) query: \"\(query)\" hits count: \(results.facets.count) in \(results.processingTimeMS)ms"
-      Logger.info(message)
-    }
-
   }
   
 }

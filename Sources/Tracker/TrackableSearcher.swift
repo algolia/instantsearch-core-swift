@@ -9,7 +9,7 @@
 import Foundation
 
 protocol QueryIDContainer: class {
-  var queryID: String? { get set }
+  var queryID: QueryID? { get set }
 }
 
 extension HitsTracker: QueryIDContainer {}
@@ -22,10 +22,10 @@ public enum TrackableSearcher {
   var indexName: IndexName {
     switch self {
     case .singleIndex(let searcher):
-      return searcher.indexQueryState.index.name
+      return searcher.indexQueryState.indexName
       
     case .multiIndex(let searcher, pointer: let index):
-      return searcher.indexQueryStates[index].index.name
+      return searcher.indexQueryStates[index].indexName
     }
   }
   
@@ -47,7 +47,7 @@ public enum TrackableSearcher {
       }
     case .multiIndex(let searcher, pointer: let index):
       searcher.onResults.subscribe(with: subscriber) { (subscriber, results) in
-        subscriber.queryID = results.searchResults[index].queryID
+        subscriber.queryID = results.results[index].queryID
       }
     }
 

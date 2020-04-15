@@ -12,9 +12,7 @@ import AlgoliaSearchClientSwift
 */
 
 public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
-  
-  public typealias SearchResult = MultiSearchResults
-  
+    
   public var query: String? {
     
     set {
@@ -43,7 +41,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   
   public let onQueryChanged: Observer<String?>
   
-  public let onResults: Observer<SearchResult>
+  public let onResults: Observer<SearchesResponse>
   
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query and error
@@ -72,8 +70,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
                           indexNames: [IndexName],
                           requestOptions: RequestOptions? = nil) {
     let client = Client(appID: appID, apiKey: apiKey)
-    let indices = indexNames.map(client.index(withName:))
-    let indexQueryStates = indices.map { IndexQueryState(index: $0, query: .init()) }
+    let indexQueryStates = indexNames.map { IndexQueryState(indexName: $0, query: .init()) }
     self.init(client: client,
               indexQueryStates: indexQueryStates,
               requestOptions: requestOptions)
@@ -90,7 +87,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   public convenience init(client: Client,
                           indices: [Index],
                           requestOptions: RequestOptions? = nil) {
-    let indexQueryStates = indices.map { IndexQueryState(index: $0, query: .init()) }
+    let indexQueryStates = indices.map { IndexQueryState(indexName: $0.name, query: .init()) }
     self.init(client: client,
               indexQueryStates: indexQueryStates,
               requestOptions: requestOptions)
@@ -127,37 +124,35 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
     processingQueue.maxConcurrentOperationCount = 1
     processingQueue.qualityOfService = .userInitiated
     
-    self.pageLoaders = indexQueryStates.map { isd in
-      return PageLoaderProxy(setPage: { isd.query.page = $0 }, launchSearch: self.search)
+    self.pageLoaders = indexQueryStates.enumerated().map { (index, _) in
+      return PageLoaderProxy(setPage: { self.indexQueryStates[index].query.page = $0 }, launchSearch: self.search)
     }
 
   }
   
   public func search() {
+      
+    let queries = indexQueryStates.map { ($0.indexName, $0.query) }
     
-    let indexQueries = indexQueryStates.map(IndexQuery.init(indexQueryState:))
-    let queries = indexQueryStates.map { $0.query }
-    let operation = client.multipleQueries(indexQueries, requestOptions: requestOptions) { [weak self] (content, error) in
+    let operation = client.multipleQueries(queries: queries) { [weak self] result in
       guard let searcher = self else { return }
       searcher.processingQueue.addOperation {
-        let result: Result<MultiSearchResults, Error> = searcher.transform(content: content, error: error)
-        
         switch result {
-        case .success(let results):
-          zip(indexQueries, results.searchResults)
-            .forEach { (indexQuery, searchResults) in
-              Logger.Results.success(searcher: searcher, indexName: indexQuery.indexName, results: searchResults)
+        case .success(let response):
+          zip(queries, response.results)
+            .forEach { (query, searchResults) in
+              Logger.Results.success(searcher: searcher, indexName: query.0, results: searchResults)
             }
-          searcher.onResults.fire(results)
+          searcher.onResults.fire(response)
           
         case .failure(let error):
-          let indicesDescriptor = "[\(indexQueries.map { $0.indexName }.joined(separator: ", "))]"
-          Logger.Results.failure(searcher: searcher, indexName: indicesDescriptor, error)
-          searcher.onError.fire((queries, error))
+          let indicesDescriptor = "[\(queries.map { $0.0.rawValue }.joined(separator: ", "))]"
+          Logger.Results.failure(searcher: searcher, indexName: IndexName(rawValue: indicesDescriptor), error)
+          searcher.onError.fire((queries.map { $0.1 }, error))
         }
       }
     }
-    
+        
     sequencer.orderOperation(operationLauncher: { return operation })
   }
   
