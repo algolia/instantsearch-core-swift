@@ -43,7 +43,7 @@ extension Filter.Numeric: LegacySyntaxConvertible {
     case .comparison(let `operator`, let value):
       let `operator` = isNegated ? `operator`.inversion : `operator`
       let expression = """
-      "\(attribute)" \(`operator`.rawValue) \(value)
+      \(attribute) \(`operator`.rawValue) \(value)
       """
       return [[expression]]
       
@@ -64,7 +64,7 @@ extension Filter.Facet: LegacySyntaxConvertible {
     let scoreExpression = score.flatMap { "<score=\(String($0))>" } ?? ""
     let valuePrefix = isNegated ? "-" : ""
     let expression = """
-    "\(attribute)":\(valuePrefix)"\(value)\(scoreExpression)"
+    \(attribute):\(valuePrefix)\(value)\(scoreExpression)
     """
     return [[expression]]
   }
@@ -76,7 +76,7 @@ extension Filter.Tag: LegacySyntaxConvertible {
   public var legacyForm: [[String]] {
     let valuePrefix = isNegated ? "-" : ""
     let expression = """
-    "\(attribute)":\(valuePrefix)"\(value)"
+    \(attribute):\(valuePrefix)\(value)
     """
     return [[expression]]
   }
