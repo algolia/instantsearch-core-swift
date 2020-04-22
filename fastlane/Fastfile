@@ -54,7 +54,7 @@ desc "Available options: type:major|minor|patch"
 lane :deploy do |options|
 	branch = options[:branch] || "master"
 	prepare_git('master')
-	pod_lib_lint(verbose: true)
+	pod_lib_lint(verbose: true, allow_warnings: true)
 	increment_version_number(
   		bump_type: options[:type]
 	)
@@ -88,7 +88,7 @@ lane :deploy do |options|
 	)
 
 	pod_push(
-		path: "InstantSearchCore.podspec"
+		path: "InstantSearchCore.podspec", allow_warnings: true
 	)
 
 end
