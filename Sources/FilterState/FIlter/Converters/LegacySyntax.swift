@@ -94,7 +94,7 @@ extension FilterGroup.And: LegacySyntaxConvertible {
 extension FilterGroup.Or: LegacySyntaxConvertible {
   
   var legacyForm: [[String]] {
-    return filters.compactMap { $0 as? LegacySyntaxConvertible }.flatMap { $0.legacyForm }
+    return [filters.compactMap { $0 as? LegacySyntaxConvertible }.flatMap { $0.legacyForm }.flatMap { $0.first }]
   }
   
 }

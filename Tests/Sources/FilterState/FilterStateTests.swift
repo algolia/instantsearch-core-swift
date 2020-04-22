@@ -545,17 +545,24 @@ class FilterStateTests: XCTestCase {
     
     let filterFacet1 = Filter.Facet(attribute: Attribute("category"), value: "table", score: 5)
     let filterFacet2 = Filter.Facet(attribute: Attribute("category"), value: "chair", score: 10)
+    let filterFacet3 = Filter.Facet(attribute: Attribute("type"), value: "equipment", score: 3)
     
-    let groupFacets = FilterGroup.ID.or(name: "filterFacets", filterType: .facet)
     
-    filterState.add(filterFacet1, toGroupWithID: groupFacets)
-    filterState.add(filterFacet2, toGroupWithID: groupFacets)
+    let groupFacetsOr = FilterGroup.ID.or(name: "filterFacetsOr", filterType: .facet)
+    let groupFacetsAnd = FilterGroup.ID.and(name: "filterFacetsAnd")
+    
+    filterState.add(filterFacet1, toGroupWithID: groupFacetsOr)
+    filterState.add(filterFacet2, toGroupWithID: groupFacetsOr)
+    filterState.add(filterFacet3, toGroupWithID: groupFacetsAnd)
     
     let expectedResult = """
-                                    ( "category":"chair<score=10>" OR "category":"table<score=5>" )
+                                    ( "type":"equipment<score=3>" ) AND ( "category":"chair<score=10>" OR "category":"table<score=5>" )
                                     """
     
     XCTAssertEqual(filterState.buildSQL(), expectedResult)
+    
+    let expectedResultLegacy: [[String]]? = [["\"type\":\"equipment<score=3>\""],["\"category\":\"chair<score=10>\"", "\"category\":\"table<score=5>\""]]
+    XCTAssertEqual(FilterGroupConverter().legacy(filterState.toFilterGroups()), expectedResultLegacy)
     
   }
     
