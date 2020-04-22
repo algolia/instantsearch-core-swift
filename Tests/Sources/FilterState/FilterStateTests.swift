@@ -561,7 +561,7 @@ class FilterStateTests: XCTestCase {
     
     XCTAssertEqual(filterState.buildSQL(), expectedResult)
     
-    let expectedResultLegacy: [[String]]? = [["\"type\":\"equipment<score=3>\""],["\"category\":\"chair<score=10>\"", "\"category\":\"table<score=5>\""]]
+    let expectedResultLegacy: [[String]]? = [["type:equipment<score=3>"],["category:chair<score=10>", "category:table<score=5>"]]
     XCTAssertEqual(FilterGroupConverter().legacy(filterState.toFilterGroups()), expectedResultLegacy)
     
   }
