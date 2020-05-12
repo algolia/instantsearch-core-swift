@@ -29,7 +29,7 @@ extension FacetListInteractor: ResultUpdatable {
   @discardableResult public func update(_ facetResults: FacetSearchResponse) -> Operation {
     
     let updateOperation = BlockOperation { [weak self] in
-      self?.items = facetResults.facets
+      self?.items = facetResults.facetHits
       self?.onResultsUpdated.fire(facetResults)
     }
     

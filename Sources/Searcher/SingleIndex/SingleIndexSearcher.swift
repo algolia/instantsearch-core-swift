@@ -149,13 +149,13 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                                         hierachicalFilters: hierarchicalFilters)
       queriesBuilder.keepSelectedEmptyFacets = true
       let queries = queriesBuilder.build().map { (indexQueryState.indexName, query: $0) }
-      operation = client.multipleQueries(queries: queries) { [weak self] result in
+      operation = client.multipleQueries(queries: queries) { [weak self] response in
         guard let searcher = self else { return }
         
         searcher.processingQueue.addOperation {
             let indexName = searcher.indexQueryState.indexName
 
-            switch result {
+            switch response {
             case .failure(let error):
               Logger.Results.failure(searcher: searcher, indexName: indexName, error)
               searcher.onError.fire((queriesBuilder.query, error))

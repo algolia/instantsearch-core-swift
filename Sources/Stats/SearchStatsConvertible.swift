@@ -45,8 +45,8 @@ extension PlacesResponse: SearchStatsConvertible {
 extension FacetSearchResponse: SearchStatsConvertible {
   
   public var searchStats: SearchStats {
-    return .init(totalHitsCount: facets.count,
-                 hitsPerPage: facets.count,
+    return .init(totalHitsCount: facetHits.count,
+                 hitsPerPage: facetHits.count,
                  pagesCount: 1,
                  page: 0,
                  processingTimeMS: Int(processingTimeMS),

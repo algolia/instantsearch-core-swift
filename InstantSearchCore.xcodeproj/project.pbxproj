@@ -4361,7 +4361,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/algolia/algoliasearch-client-swift";
 			requirement = {
-				branch = feat/v2/develop;
+				branch = feat/v2/synonyms;
 				kind = branch;
 			};
 		};
