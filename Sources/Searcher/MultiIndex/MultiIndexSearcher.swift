@@ -32,7 +32,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
   }
   
   /// `Client` instance containing indices in which search will be performed
-  public let client: Client
+  public let client: SearchClient
   
   /// List of  index & query tuples
   public internal(set) var indexQueryStates: [IndexQueryState]
@@ -69,7 +69,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
                           apiKey: APIKey,
                           indexNames: [IndexName],
                           requestOptions: RequestOptions? = nil) {
-    let client = Client(appID: appID, apiKey: apiKey)
+    let client = SearchClient(appID: appID, apiKey: apiKey)
     let indexQueryStates = indexNames.map { IndexQueryState(indexName: $0, query: .init()) }
     self.init(client: client,
               indexQueryStates: indexQueryStates,
@@ -84,7 +84,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
    - requestOptions: Custom request options. Default is `nil`.
    */
 
-  public convenience init(client: Client,
+  public convenience init(client: SearchClient,
                           indices: [Index],
                           requestOptions: RequestOptions? = nil) {
     let indexQueryStates = indices.map { IndexQueryState(indexName: $0.name, query: .init()) }
@@ -101,7 +101,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
    - requestOptions: Custom request options. Default is nil.
    */
   
-  public init(client: Client,
+  public init(client: SearchClient,
               indexQueryStates: [IndexQueryState],
               requestOptions: RequestOptions? = nil) {
     

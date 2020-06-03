@@ -30,7 +30,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
 
   }
   
-  public let client: Client
+  public let client: SearchClient
   
   /// Current index & query tuple
   public var indexQueryState: IndexQueryState {
@@ -86,7 +86,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
                           indexName: IndexName,
                           query: Query = .init(),
                           requestOptions: RequestOptions? = nil) {
-    let client = Client(appID: appID, apiKey: apiKey)
+    let client = SearchClient(appID: appID, apiKey: apiKey)
     self.init(client: client, indexName: indexName, query: query, requestOptions: requestOptions)
   }
   
@@ -96,7 +96,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       - query: Instance of Query. By default a new empty instant of Query will be created.
       - requestOptions: Custom request options. Default is nil.
   */
-  public init(client: Client,
+  public init(client: SearchClient,
               indexName: IndexName,
               query: Query = .init(),
               requestOptions: RequestOptions? = nil) {
@@ -124,7 +124,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       - indexQueryState: Instance of `IndexQueryState` encapsulating index value in which search will be performed and a `Query` instance.
       - requestOptions: Custom request options. Default is nil.
    */
-  public convenience init(client: Client,
+  public convenience init(client: SearchClient,
                           indexQueryState: IndexQueryState,
                           requestOptions: RequestOptions? = nil) {
     self.init(client: client,

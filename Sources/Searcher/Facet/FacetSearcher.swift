@@ -22,7 +22,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     }
   }
   
-  public let client: Client
+  public let client: SearchClient
   
   /// Current tuple of index and query
   public var indexQueryState: IndexQueryState
@@ -63,7 +63,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
                           facetName: String,
                           query: Query = .init(),
                           requestOptions: RequestOptions? = nil) {
-    let client = Client(appID: appID, apiKey: apiKey)
+    let client = SearchClient(appID: appID, apiKey: apiKey)
     self.init(client: client,
               indexName: indexName,
               facetName: facetName,
@@ -78,7 +78,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
    - query: Instance of Query. By default a new empty instant of Query will be created.
    - requestOptions: Custom request options. Default is `nil`.
    */
-  public init(client: Client,
+  public init(client: SearchClient,
               indexName: IndexName,
               facetName: String,
               query: Query = .init(),

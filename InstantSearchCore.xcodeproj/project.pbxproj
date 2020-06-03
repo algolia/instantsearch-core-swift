@@ -4361,8 +4361,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/algolia/algoliasearch-client-swift";
 			requirement = {
-				branch = feat/v2/synonyms;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = "8.0.0-beta.5";
 			};
 		};
 		AFED9BED23C69D50005C2D93 /* XCRemoteSwiftPackageReference "instantsearch-ios-insights" */ = {

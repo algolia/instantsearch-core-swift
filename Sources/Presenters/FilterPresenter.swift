@@ -33,8 +33,8 @@ public extension DefaultPresenter {
       case .numeric(let numericFilter):
 
         switch numericFilter.value {
-        case .comparison(let comp):
-          return "\(attributeName) \(comp.0) \(comp.1)"
+        case .comparison(let compOperator, let value):
+          return "\(attributeName) \(compOperator) \(value)"
 
         case .range(let range):
           return "\(attributeName): \(range.lowerBound) to \(range.upperBound)"

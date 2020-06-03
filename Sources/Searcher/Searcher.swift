@@ -70,7 +70,7 @@ extension Searcher {
     if let version = bundle.infoDictionary?["CFBundleShortVersionString"] as? String,
       let name = bundle.infoDictionary?["CFBundleName"] as? String {
       let libraryVersion = UserAgent(title: name, version: version)
-      Client.append(userAgent: libraryVersion)
+      SearchClient.append(userAgent: libraryVersion)
     }
     
   }

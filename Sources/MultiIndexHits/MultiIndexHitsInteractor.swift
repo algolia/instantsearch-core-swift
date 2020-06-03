@@ -98,7 +98,6 @@ public class MultiIndexHitsInteractor {
   
   /// Returns number rows in the nested hits Interactor at section
   /// - Parameter section: the index of nested hits Interactor
-  
   public func numberOfHits(inSection section: Int) -> Int {
     return hitsInteractors[section].numberOfHits()
   }
