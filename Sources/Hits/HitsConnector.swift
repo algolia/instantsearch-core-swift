@@ -67,8 +67,6 @@ public extension HitsConnector {
 
 }
 
-
-
 public extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
   
   convenience init(searcher: PlacesSearcher,
@@ -91,5 +89,4 @@ public extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
               connectSearcher: interactor.connectPlacesSearcher)
   }
 
-  
 }

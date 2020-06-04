@@ -8,7 +8,8 @@
 
 import Foundation
 @testable import InstantSearchCore
-import AlgoliaSearchClientSwiftimport XCTest
+import AlgoliaSearchClientSwift
+import XCTest
 
 class TestPageLoader: PageLoadable {
   
@@ -16,6 +17,22 @@ class TestPageLoader: PageLoadable {
   
   func loadPage(atIndex pageIndex: Int) {
     didLoadPage?(pageIndex)
+  }
+  
+}
+
+struct TestRecord<Value: Codable>: Codable {
+  
+  let objectID: ObjectID
+  let value: Value
+  
+  init(_ value: Value, objectID: ObjectID = ObjectID(rawValue: UUID().uuidString)) {
+    self.value = value
+    self.objectID = objectID
+  }
+  
+  static func withValue(_ value: Value) -> Self {
+    .init(value)
   }
   
 }
@@ -65,17 +82,18 @@ class MultiIndexHitsInteractorTests: XCTestCase {
 
   }
   
-  func testUpdatePerInteractor() {
+  func testUpdatePerInteractor() throws {
 
-    let interactor1 = HitsInteractor<[String: Int]>()
-    let interactor2 = HitsInteractor<[String: Bool]>()
+    let interactor1 = HitsInteractor<TestRecord<Int>>()
+    let interactor2 = HitsInteractor<TestRecord<Bool>>()
     let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    let hits1 = try! [["a": 1], ["b": 2], ["c": 3]].map(JSON.init)
-    let results1 = SearchResults(hits: hits1, stats: .init())
 
-    let hits2 = try! [["a": true], ["b": false], ["c": true]].map(JSON.init)
-    let results2 = SearchResults(hits: hits2, stats: .init())
+    let hits1 = (1...3).map(TestRecord.withValue)
+    let results1 = SearchResponse(hits: hits1)
+
+    let hits2 = [true, false, true].map(TestRecord.withValue)
+    let results2 = SearchResponse(hits: hits2)
     
     let noErrorExpectation = expectation(description: "correct update")
     noErrorExpectation.isInverted = true
@@ -98,17 +116,17 @@ class MultiIndexHitsInteractorTests: XCTestCase {
   
   }
   
-  func testIncorrectUpdatePerInteractor() {
+  func testIncorrectUpdatePerInteractor() throws {
     
     let interactor1 = HitsInteractor<[String: Int]>()
     let interactor2 = HitsInteractor<[String: Bool]>()
     let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    let hits1 = try! [["a": 1], ["b": 2], ["c": 3]].map(JSON.init)
-    let results1 = SearchResults(hits: hits1, stats: .init())
+    let hits1 = [["a": 1], ["b": 2], ["c": 3]].map(Hit.withJSON)
+    let results1 = SearchResponse(hits: hits1)
 
-    let hits2 = try! [["a": true], ["b": false], ["c": true]].map(JSON.init)
-    let results2 = SearchResults(hits: hits2, stats: .init())
+    let hits2 = [["a": true], ["b": false], ["c": true]].map(Hit.withJSON)
+    let results2 = SearchResponse(hits: hits2)
     
     let errorExpectation = expectation(description: "incorrect update")
     errorExpectation.expectedFulfillmentCount = 2
@@ -131,31 +149,22 @@ class MultiIndexHitsInteractorTests: XCTestCase {
     
   }
   
-  func testUpdateSimultaneously() {
+  func testUpdateSimultaneously() throws {
     
     let pageLoader = TestPageLoader()
 
-    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor1 = HitsInteractor<TestRecord<Int>>()
     interactor1.pageLoader = pageLoader
-    let interactor2 = HitsInteractor<[String: Bool]>()
+    let interactor2 = HitsInteractor<TestRecord<Bool>>()
     interactor2.pageLoader = pageLoader
     
     let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    let hits1: [JSON] = [
-      .dictionary(["a": .number(1)]),
-      .dictionary(["b": .number(2)]),
-      .dictionary(["c": .number(3)])
-    ]
+    let hits1 = [1, 2, 3].map(TestRecord<Int>.withValue)
+    let results1 = SearchResponse(hits: hits1)
     
-    let results1 = SearchResults(hits: hits1, stats: .init())
-    
-    let hits2: [JSON] = [
-      .dictionary(["a": .bool(true)]),
-      .dictionary(["b": .bool(false)]),
-    ]
-    
-    let results2 = SearchResults(hits: hits2, stats: .init())
+    let hits2 = [true, false].map(TestRecord<Bool>.withValue)
+    let results2 = SearchResponse(hits: hits2)
     
     let interactor1Exp = expectation(description: "Interactor 1")
     let interactor2Exp = expectation(description: "Interactor 2")
@@ -184,7 +193,7 @@ class MultiIndexHitsInteractorTests: XCTestCase {
     
   }
   
-  func testIncorrectUpdateSimultaneously() {
+  func testIncorrectUpdateSimultaneously() throws {
     
     let pageLoader = TestPageLoader()
 
@@ -195,21 +204,12 @@ class MultiIndexHitsInteractorTests: XCTestCase {
     
     let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    let hits1: [JSON] = [
-      .dictionary(["a": .number(1)]),
-      .dictionary(["b": .number(2)]),
-      .dictionary(["c": .number(3)])
-    ]
+    let hits1 = [1, 2, 3].map(TestRecord.withValue)
+    let results1 = SearchResponse(hits: hits1)
     
-    let results1 = SearchResults(hits: hits1, stats: .init())
-    
-    let hits2: [JSON] = [
-      .dictionary(["a": .bool(true)]),
-      .dictionary(["b": .bool(false)]),
-    ]
-    
-    let results2 = SearchResults(hits: hits2, stats: .init())
-    
+    let hits2 = [true, false].map(TestRecord.withValue)
+    let results2 = SearchResponse(hits: hits2)
+
     let interactor1Exp = expectation(description: "Interactor 1")
     let interactor2Exp = expectation(description: "Interactor 2")
     let multiInteractorExp = expectation(description: "MultiInteractor expectation")
@@ -238,32 +238,24 @@ class MultiIndexHitsInteractorTests: XCTestCase {
     
   }
   
-  func testPartiallyCorrectUpdateSimultaneously() {
+  func testPartiallyCorrectUpdateSimultaneously() throws {
     
     let pageLoader = TestPageLoader()
 
-    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor1 = HitsInteractor<TestRecord<Int>>()
     interactor1.pageLoader = pageLoader
-    let interactor2 = HitsInteractor<[String: Bool]>()
+    let interactor2 = HitsInteractor<TestRecord<Bool>>()
     interactor2.pageLoader = pageLoader
     
     let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    let hits1: [JSON] = [
-      .dictionary(["a": .number(1)]),
-      .dictionary(["b": .number(2)]),
-      .dictionary(["c": .number(3)])
-    ]
+    let hits1 = [1, 2, 3].map(TestRecord.withValue)
+    let results1 = SearchResponse(hits: hits1)
     
-    let results1 = SearchResults(hits: hits1, stats: .init())
     
-    let hits2: [JSON] = [
-      .dictionary(["a": .string("a")]),
-      .dictionary(["b": .string("b")]),
-    ]
-    
-    let results2 = SearchResults(hits: hits2, stats: .init())
-    
+    let hits2 = ["a", "b"].map(TestRecord.withValue)
+    let results2 = SearchResponse(hits: hits2)
+        
     let interactor1Exp = expectation(description: "Interactor 1")
     let interactor2Exp = expectation(description: "Interactor 2")
     let multiInteractorResultsExp = expectation(description: "MultiInteractor results expectation")
@@ -282,65 +274,56 @@ class MultiIndexHitsInteractorTests: XCTestCase {
     }
     
     multiInteractor.onResultsUpdated.subscribe(with: self) { (_, _) in
+//      print("ok")
        multiInteractorResultsExp.fulfill()
     }
      
-    multiInteractor.onError.subscribe(with: self) { (_, _) in
+    multiInteractor.onError.subscribe(with: self) { (_, error) in
+//      print("\(error)")
        multiInteractorErrorExp.fulfill()
     }
      
     // Update multihits Interactor with a correct list of results
     multiInteractor.update([results1, results2])
                
-    waitForExpectations(timeout: 3, handler: .none)
+    waitForExpectations(timeout: 100, handler: .none)
     
   }
 
 
-  func testHitForRow() {
+  func testHitForRow() throws {
 
     let pageLoader = TestPageLoader()
     
-    let interactor1 = HitsInteractor<[String: Int]>()
+    let interactor1 = HitsInteractor<TestRecord<Int>>()
     interactor1.pageLoader = pageLoader
-    let interactor2 = HitsInteractor<[String: Bool]>()
+    let interactor2 = HitsInteractor<TestRecord<Bool>>()
     interactor2.pageLoader = pageLoader
     
     let multiInteractor = MultiIndexHitsInteractor(hitsInteractors: [interactor1, interactor2])
     
-    let hits1: [JSON] = [
-      .dictionary(["a": .number(1)]),
-      .dictionary(["b": .number(2)]),
-      .dictionary(["c": .number(3)])
-    ]
+    let hits1 = [1, 2, 3].map(TestRecord.withValue)
+    let results1 = SearchResponse(hits: hits1)
     
-    let results1 = SearchResults(hits: hits1, stats: .init())
-    
-    let hits2: [JSON] = [
-      .dictionary(["a": .bool(true)]),
-      .dictionary(["b": .bool(false)]),
-      ]
-    
-    let results2 = SearchResults(hits: hits2, stats: .init())
+    let hits2 = [true, false].map(TestRecord.withValue)
+    let results2 = SearchResponse(hits: hits2)
     
     let resultsUpdatedExp = expectation(description: "Results updated")
   
     multiInteractor.onResultsUpdated.subscribe(with: self) { (_, _) in
-
-      do {
-        XCTAssertNoThrow(try multiInteractor.hit(atIndex: 0, inSection: 0) as [String: Int]?)
-        XCTAssertNoThrow(try multiInteractor.hit(atIndex: 1, inSection: 1) as [String: Bool]?)
-        XCTAssertThrowsError(try multiInteractor.hit(atIndex: 0, inSection: 0) as [String: Bool]?)
-        XCTAssertThrowsError(try multiInteractor.hit(atIndex: 1, inSection: 1) as [String: Int]?)
-      } catch _ {}
-
+      
       do {
         
-        let hit1 = try multiInteractor.hit(atIndex: 0, inSection: 0) as [String: Int]?
-        XCTAssertEqual(hit1?["a"], 1)
+        XCTAssertNoThrow(try multiInteractor.hit(atIndex: 0, inSection: 0) as TestRecord<Int>?)
+        XCTAssertNoThrow(try multiInteractor.hit(atIndex: 1, inSection: 1) as TestRecord<Bool>?)
+        XCTAssertThrowsError(try multiInteractor.hit(atIndex: 0, inSection: 0) as TestRecord<Bool>?)
+        XCTAssertThrowsError(try multiInteractor.hit(atIndex: 1, inSection: 1) as TestRecord<Int>?)
         
-        let hit2 = try multiInteractor.hit(atIndex: 1, inSection: 1) as [String: Bool]?
-        XCTAssertEqual(hit2?["b"], false)
+        let hit1 = try multiInteractor.hit(atIndex: 0, inSection: 0) as TestRecord<Int>?
+        XCTAssertEqual(hit1?.value, 1)
+        
+        let hit2 = try multiInteractor.hit(atIndex: 1, inSection: 1) as TestRecord<Bool>?
+        XCTAssertEqual(hit2?.value, false)
         
       } catch let error {
         XCTFail("Unexpected error \(error)")
@@ -356,6 +339,7 @@ class MultiIndexHitsInteractorTests: XCTestCase {
   }
   
   class TestHitsInteractor: AnyHitsInteractor {
+    
     
     func getCurrentGenericHits<R>() throws -> [R] where R : Decodable {
       return []
@@ -375,10 +359,10 @@ class MultiIndexHitsInteractorTests: XCTestCase {
       self.didCallLoadMoreResults = didCallLoadMoreResults
     }
     
-    func update(_ searchResults: SearchResults) -> Operation {
+    func update(_ searchResults: HitsExtractable & SearchStatsConvertible) -> Operation {
       return Operation()
     }
-    
+
     func process(_ error: Error, for query: Query) {
 
     }

@@ -12,7 +12,7 @@ import XCTest
 import AlgoliaSearchClientSwift
 extension Index {
   
-  static var test: Index = Client(appID: "", apiKey: "").index(withName: "")
+  static var test: Index = SearchClient(appID: "", apiKey: "").index(withName: "")
   
 }
 
@@ -35,28 +35,23 @@ class HitsInteractorTests: XCTestCase {
     
   }
   
-  func testUpdateAndContent() {
+  func testUpdateAndContent() throws {
     
-    let vm = HitsInteractor<String>(infiniteScrolling: .off, showItemsOnEmptyQuery: true)
+    let vm = HitsInteractor<TestRecord<String>>(infiniteScrolling: .off, showItemsOnEmptyQuery: true)
     
-    let queryText = "test query"
-    let hits = ["h1", "h2", "h3"].map { JSON.string($0) }
-    let results = SearchResults(hits: hits, stats: .init())
-    let query = Query()
-    query.query = queryText
-    query.filters = "test filters"
-    query.page = 0
+    let hits = ["h1", "h2", "h3"].map(TestRecord.withValue)
+    let results = SearchResponse(hits: hits)
         
     XCTAssertEqual(vm.numberOfHits(), 0)
-    XCTAssertEqual(vm.hit(atIndex: 0), .none)
+    XCTAssertNil(vm.hit(atIndex: 0))
     
     let exp = expectation(description: "on results updated")
     
     vm.onResultsUpdated.subscribe(with: self) { (_, _) in
       XCTAssertEqual(vm.numberOfHits(), 3)
-      XCTAssertEqual(vm.hit(atIndex: 0), "h1")
-      XCTAssertEqual(vm.hit(atIndex: 1), "h2")
-      XCTAssertEqual(vm.hit(atIndex: 2), "h3")
+      XCTAssertEqual(vm.hit(atIndex: 0)?.value, "h1")
+      XCTAssertEqual(vm.hit(atIndex: 1)?.value, "h2")
+      XCTAssertEqual(vm.hit(atIndex: 2)?.value, "h3")
       exp.fulfill()
     }
     
@@ -68,16 +63,11 @@ class HitsInteractorTests: XCTestCase {
 
   func testHitsAppearanceOnEmptyQueryIfDesactivated() {
     
-    let paginator = Paginator<String>()
+    let paginator = Paginator<TestRecord<Int>>()
     
-    let hits = (0..<20).map(String.init).map { JSON.string($0) }
-    let queryText = ""
-    let results = SearchResults(hits: hits, stats: .init())
+    let hits = (0..<20).map(TestRecord.withValue)
+    let results = SearchResponse(hits: hits)
     
-    let query = Query()
-    query.query = queryText
-    query.filters = ""
-    query.page = 0
     
     let vm = HitsInteractor(
       settings: .init(showItemsOnEmptyQuery: false),
@@ -98,17 +88,11 @@ class HitsInteractorTests: XCTestCase {
   
   func testHitsAppearanceOnEmptyQueryIfActivated() {
     
-    let paginationController = Paginator<String>()
+    let paginationController = Paginator<TestRecord<Int>>()
     let infiniteScrollingController = TestInfiniteScrollingController()
     
-    let hits = (0..<20).map(String.init).map { JSON.string($0) }
-    let queryText = ""
-    let results = SearchResults(hits: hits, stats: .init())
-    
-    let query = Query()
-    query.query = queryText
-    query.filters = ""
-    query.page = 0
+    let hits = (0..<20).map(TestRecord.withValue)
+    let results = SearchResponse(hits: hits)
     
     let vm = HitsInteractor(
       settings: .init(showItemsOnEmptyQuery: true),
@@ -128,14 +112,13 @@ class HitsInteractorTests: XCTestCase {
     waitForExpectations(timeout: 3, handler: .none)
   }
   
-  func testRawHitAtIndex() {
+  func testRawHitAtIndex() throws {
     
-    let paginationController = Paginator<JSON>()
+    let paginationController = Paginator<TestRecord<Int>>()
     let infiniteScrollingController = TestInfiniteScrollingController()
     
-    let hits = (0..<20).map { JSON.dictionary([String($0): JSON.string("\($0)")]) }
-    let results = SearchResults(hits: hits, stats: .init())
-
+    let hits = (0..<20).map(TestRecord.withValue)
+    let results = SearchResponse(hits: hits)
     
     let vm = HitsInteractor(
       settings: .init(showItemsOnEmptyQuery: true),
@@ -146,9 +129,12 @@ class HitsInteractorTests: XCTestCase {
     let exp = expectation(description: "on results updated")
     
     vm.onResultsUpdated.subscribe(with: self) { (_, _) in
-      let rawHit = vm.rawHitAtIndex(5)?.first
-      XCTAssertEqual(rawHit?.key, "5")
-      XCTAssertEqual(rawHit?.value as? String, "5")
+      do {
+        let rawHit = try XCTUnwrap(vm.rawHitAtIndex(5))
+        XCTAssertEqual(rawHit["value"] as? NSNumber, 5)
+      } catch let error {
+        XCTFail("\(error)")
+      }
       exp.fulfill()
     }
     

@@ -11,13 +11,13 @@ import InstantSearchInsights
 
 public protocol InsightsTracker: class {
   
-  init(eventName: String, searcher: TrackableSearcher, insights: Insights)
+  init(eventName: EventName, searcher: TrackableSearcher, insights: Insights)
   
 }
 
 extension InsightsTracker {
   
-  public init(eventName: String,
+  public init(eventName: EventName,
               searcher: SingleIndexSearcher,
               userToken: String? = .none) {
     let credentials: AlgoliaSearchClientSwift.Credentials = searcher.client
@@ -27,7 +27,7 @@ extension InsightsTracker {
               insights: insights)
   }
 
-  public init(eventName: String,
+  public init(eventName: EventName,
               searcher: SingleIndexSearcher,
               insights: Insights) {
     self.init(eventName: eventName,
@@ -35,7 +35,7 @@ extension InsightsTracker {
               insights: insights)
   }
   
-  public init(eventName: String,
+  public init(eventName: EventName,
               searcher: MultiIndexSearcher,
               pointer: Int,
               userToken: String? = .none) {
@@ -46,7 +46,7 @@ extension InsightsTracker {
               insights: insights)
   }
 
-  public init(eventName: String,
+  public init(eventName: EventName,
               searcher: MultiIndexSearcher,
               pointer: Int,
               insights: Insights) {

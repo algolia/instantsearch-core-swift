@@ -19,7 +19,7 @@ class HierarchicalTests: OnlineTestCase {
   }
   
   static func attribute(for level: Int) -> Attribute {
-    return .init("hierarchicalCategories.lvl\(level)")
+    return .init(rawValue: "hierarchicalCategories.lvl\(level)")
   }
   
   let lvl0 = { attribute(for: 0) }()
@@ -39,13 +39,11 @@ class HierarchicalTests: OnlineTestCase {
   let clothing_men_hats = "Clothing > Men > Hats"
   let clothing_men_shirt = "Clothing > Men > Shirt"
   
-  override func setUp() {
-    super.setUp()
-    let exp = expectation(description: "wait for filling the index")
-    let settings: [String: Any] = ["attributesForFaceting": hierarchicalAttributes.map { $0.name }]
-    let items = try! [Item](jsonFile: "hierarchical", bundle: Bundle(for: HierarchicalTests.self))
-    fillIndex(withItems: items, settings: settings, completionHandler: exp.fulfill)
-    waitForExpectations(timeout: 50, handler: .none)
+  override func setUpWithError() throws {
+    try super.setUpWithError()
+    let settings = Settings().set(\.attributesForFaceting, to: hierarchicalAttributes.map { .default($0) })
+    let items = try [Item](jsonFile: "hierarchical", bundle: Bundle(for: HierarchicalTests.self))
+    try fillIndex(withItems: items, settings: settings)
   }
   
   func testHierachical() {
@@ -76,57 +74,63 @@ class HierarchicalTests: OnlineTestCase {
     ]
     
     
-    let query = Query(query: "")
-    query.facets = hierarchicalAttributes.map { $0.name }
+    let query = Query("").set(\.facets, to: Set(hierarchicalAttributes))
+
     let queryBuilder = QueryBuilder(query: query,
                                            filterGroups: filterGroups,
                                            hierarchicalAttributes: hierarchicalAttributes,
                                            hierachicalFilters: hierarchicalFilters)
-    let queries = queryBuilder.build().map { IndexQuery(index: self.index, query: $0) }
+    let queries = queryBuilder.build().map { (self.index.name, query: $0) }
     
     XCTAssertEqual(queryBuilder.hierarchicalFacetingQueriesCount, 3)
     
     let exp = expectation(description: "results")
     
-    client!.multipleQueries(queries) { (result, error) in
-      self.extract(result, error) { (results: MultiSearchResults) in
-        let finalResult = try! queryBuilder.aggregate(results.searchResults)
+    client.multipleQueries(queries: queries) { result in
+      do {
+        let searchesResponse = try result.get()
+        let finalResult = try queryBuilder.aggregate(searchesResponse.results)
         expectedHierarchicalFacets.forEach { (attribute, facets) in
           XCTAssertTrue(finalResult.hierarchicalFacets?[attribute]?.equalContents(to: facets) == true)
         }
         exp.fulfill()
+      } catch let error {
+        XCTFail("\(error)")
       }
     }
-    
     
     waitForExpectations(timeout: 15, handler: .none)
     
   }
   
-  func testHierachicalEmpty() {
+  func testHierachicalEmpty() throws {
     
     let filterGroups: [FilterGroupType] = []
     
     let hierarchicalFilters: [Filter.Facet] = []
     
-    let query = Query(query: "")
-    query.facets = hierarchicalAttributes.map { $0.name }
+    let query = Query("").set(\.facets, to: Set(hierarchicalAttributes))
+
     let queryBuilder = QueryBuilder(query: query,
                                            filterGroups: filterGroups,
                                            hierarchicalAttributes: hierarchicalAttributes,
                                            hierachicalFilters: hierarchicalFilters)
-    let queries = queryBuilder.build().map { IndexQuery(index: self.index, query: $0) }
+    let queries = queryBuilder.build().map { (self.index.name, query: $0) }
     
     XCTAssertEqual(queryBuilder.hierarchicalFacetingQueriesCount, 0)
     
     let exp = expectation(description: "results")
     
-    client!.multipleQueries(queries) { (result, error) in
-      self.extract(result, error) { (results: MultiSearchResults) in
-        let finalResult = try! queryBuilder.aggregate(results.searchResults)
+    client!.multipleQueries(queries: queries) { result in
+      do {
+        let searchesResponse = try result.get()
+        let finalResult = try queryBuilder.aggregate(searchesResponse.results)
         XCTAssertNil(finalResult.hierarchicalFacets)
         exp.fulfill()
+      } catch let error {
+        XCTFail("\(error)")
       }
+
     }
     
     waitForExpectations(timeout: 15, handler: .none)
@@ -162,25 +166,28 @@ class HierarchicalTests: OnlineTestCase {
     ]
     
     
-    let query = Query(query: "")
-    query.facets = hierarchicalAttributes.map { $0.name }
+    let query = Query("").set(\.facets, to: Set(hierarchicalAttributes))
+    
     let queryBuilder = QueryBuilder(query: query,
                                            filterGroups: filterGroups,
                                            hierarchicalAttributes: hierarchicalAttributes,
                                            hierachicalFilters: hierarchicalFilters)
-    let queries = queryBuilder.build().map { IndexQuery(index: self.index, query: $0) }
+    let queries = queryBuilder.build().map { (self.index.name, query: $0) }
     
     XCTAssertEqual(queryBuilder.hierarchicalFacetingQueriesCount, 3)
     
     let exp = expectation(description: "results")
     
-    client!.multipleQueries(queries) { (result, error) in
-      self.extract(result, error) { (results: MultiSearchResults) in
-        let finalResult = try! queryBuilder.aggregate(results.searchResults)
+    client!.multipleQueries(queries: queries) { result in
+      do {
+        let searchesResponse = try result.get()
+        let finalResult = try queryBuilder.aggregate(searchesResponse.results)
         expectedHierarchicalFacets.forEach { (attribute, facets) in
           XCTAssertTrue(finalResult.hierarchicalFacets?[attribute]?.equalContents(to: facets) == true)
         }
         exp.fulfill()
+      } catch let error {
+        XCTFail("\(error)")
       }
     }
       

@@ -102,7 +102,6 @@ public extension ToggleFilter {
       
     }
 
-    
   }
   
 }

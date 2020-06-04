@@ -8,7 +8,8 @@
 
 import Foundation
 @testable import InstantSearchCore
-import AlgoliaSearchClientSwiftimport XCTest
+import AlgoliaSearchClientSwift
+import XCTest
 
 class FacetListInteractorTests: XCTestCase {
   
@@ -46,9 +47,9 @@ class FacetListInteractorTests: XCTestCase {
     let interactor = FacetListInteractor(selectionMode: .single)
     
     interactor.items = [
-      .init(value: "cat1", count: 10, highlighted: nil),
-      .init(value: "cat2", count: 5, highlighted: nil),
-      .init(value: "cat3", count: 5, highlighted: nil),
+      Facet(value: "cat1", count: 10, highlighted: nil),
+      Facet(value: "cat2", count: 5, highlighted: nil),
+      Facet(value: "cat3", count: 5, highlighted: nil),
     ]
     
     let filterState = FilterState()
@@ -74,14 +75,14 @@ class FacetListInteractorTests: XCTestCase {
     let interactor = FacetListInteractor(selectionMode: .single)
 
     let query = Query()
-    let searcher = SingleIndexSearcher(index: .test, query: query, requestOptions: .none)
+    let searcher = SingleIndexSearcher(client: .init(appID: "", apiKey: ""), indexName: "", query: query)
     
     interactor.connectSearcher(searcher, with: "type")
     
     let bundle = Bundle(for: FacetListInteractorTests.self)
     
     do {
-      let results = try SearchResults(jsonFile: "SearchResultFacets", bundle: bundle)
+      let results = try SearchResponse(jsonFile: "SearchResultFacets", bundle: bundle)
       
       searcher.onResults.fire(results)
 

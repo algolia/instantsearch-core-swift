@@ -8,6 +8,7 @@
 
 import Foundation
 
+///TODO: remove
 enum PlaceCodingKeys: String, CodingKey {
   case localeNames = "locale_names"
   case country

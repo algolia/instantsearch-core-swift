@@ -67,11 +67,11 @@ public extension Hit {
 extension Hit: CustomStringConvertible where T == Place {
   
   public var description: String {
-    let cityKey = object.isCity ? "locale_names" : "city"
+    let cityKey = object.isCity! ? "locale_names" : "city"
     let country = getBestHighlightedForm(forKey: "country")
     let county = getBestHighlightedForm(forKey: "county")
     let city = getBestHighlightedForm(forKey: cityKey)
-    let streetName = object.isCity ? nil : getBestHighlightedForm(forKey: "locale_names")
+    let streetName = object.isCity! ? nil : getBestHighlightedForm(forKey: "locale_names")
     
     return [streetName, city, county, country]
       .compactMap { $0 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AlgoliaSearchClientSwift
 @testable import InstantSearchCore
 import XCTest
 
@@ -32,7 +33,7 @@ class HitsInteractorSearcherConnectionTests: XCTestCase {
     let infiniteScrollingController = TestInfiniteScrollingController()
     infiniteScrollingController.pendingPages = [0, 2]
     
-    let searcher = SingleIndexSearcher(index: .test)
+    let searcher = SingleIndexSearcher(client: SearchClient(appID: "", apiKey: ""), indexName: "")
     let interactor = getInteractor(with: infiniteScrollingController)
     
     let connection: Connection = HitsInteractor.SingleIndexSearcherConnection(interactor: interactor,
@@ -50,7 +51,7 @@ class HitsInteractorSearcherConnectionTests: XCTestCase {
     let infiniteScrollingController = TestInfiniteScrollingController()
     infiniteScrollingController.pendingPages = [0, 2]
     
-    let searcher = SingleIndexSearcher(index: .test)
+    let searcher = SingleIndexSearcher(client: SearchClient(appID: "", apiKey: ""), indexName: "")
     let interactor = getInteractor(with: infiniteScrollingController)
     
     let connection: Connection = HitsInteractor.SingleIndexSearcherConnection(interactor: interactor,
@@ -70,7 +71,7 @@ class HitsInteractorSearcherConnectionTests: XCTestCase {
     let infiniteScrollingController = TestInfiniteScrollingController()
     infiniteScrollingController.pendingPages = [0, 2]
     
-    let searcher = SingleIndexSearcher(index: .test)
+    let searcher = SingleIndexSearcher(client: SearchClient(appID: "", apiKey: ""), indexName: "")
     let interactor = getInteractor(with: infiniteScrollingController)
     
     interactor.connectSearcher(searcher)
@@ -111,8 +112,8 @@ class HitsInteractorSearcherConnectionTests: XCTestCase {
       XCTAssertTrue(infiniteScrollingController.pendingPages.isEmpty)
     }
     
-    let searchResults = SearchResults(hits: [.string("r")], stats: .init())
-    searcher.onResults.fire(searchResults)
+    let searchResponse = SearchResponse(hits: [Hit(object: ["field": "value"])])
+    searcher.onResults.fire(searchResponse)
     
     infiniteScrollingController.pendingPages = [0]
     searcher.onError.fire((searcher.indexQueryState.query, NSError()))

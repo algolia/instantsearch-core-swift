@@ -8,6 +8,7 @@
 
 import Foundation
 
+///TODO: remove
 public struct HighlightedString: Codable, Hashable {
   
   static let preTag = "<em>"

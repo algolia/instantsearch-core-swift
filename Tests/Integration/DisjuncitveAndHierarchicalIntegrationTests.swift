@@ -20,7 +20,7 @@ class DisjuncitveAndHierarchicalIntegrationTests: OnlineTestCase {
   }
   
   static func attribute(for level: Int) -> Attribute {
-    return .init("hierarchicalCategories.lvl\(level)")
+    return .init(rawValue: "hierarchicalCategories.lvl\(level)")
   }
   
   let lvl0 = { attribute(for: 0) }()
@@ -52,13 +52,11 @@ class DisjuncitveAndHierarchicalIntegrationTests: OnlineTestCase {
     return hierarchicalAttributes + [colorAttribute]
   }
   
-  override func setUp() {
-    super.setUp()
-    let exp = expectation(description: "wait for filling the index")
-    let settings: [String: Any] = ["attributesForFaceting": facetAttributes.map { $0.name }]
-    let items = try! [Item](jsonFile: "disjunctiveHierarchical", bundle: Bundle(for: HierarchicalTests.self))
-    fillIndex(withItems: items, settings: settings, completionHandler: exp.fulfill)
-    waitForExpectations(timeout: 50, handler: .none)
+  override func setUpWithError() throws {
+    try super.setUpWithError()
+    let settings = Settings().set(\.attributesForFaceting, to: facetAttributes.map { .default($0) })
+    let items = try [Item](jsonFile: "disjunctiveHierarchical", bundle: Bundle(for: HierarchicalTests.self))
+    try fillIndex(withItems: items, settings: settings)
   }
   
   func testDisjuncitiveHierarchical() {
@@ -98,8 +96,7 @@ class DisjuncitveAndHierarchicalIntegrationTests: OnlineTestCase {
       Filter.Facet(attribute: lvl1, stringValue: cat3_2)
     ]
     
-    let query = Query(query: "")
-    query.facets = facetAttributes.map { $0.name }
+    let query = Query("").set(\.facets, to: Set(facetAttributes))
     
     let queryBuilder = QueryBuilder(query: query,
                                     filterGroups: filterGroups,
@@ -113,19 +110,23 @@ class DisjuncitveAndHierarchicalIntegrationTests: OnlineTestCase {
 
     let exp = expectation(description: "results")
     
-    let indexQueries = queries.map { IndexQuery(index: self.index, query: $0) }
+    let indexQueries = queries.map { (self.index.name, query: $0) }
     
-    client!.multipleQueries(indexQueries) { (result, error) in
-      self.extract(result, error) { (results: MultiSearchResults) in
-        let finalResult = try! queryBuilder.aggregate(results.searchResults)
+    client!.multipleQueries(queries: indexQueries) { result in
+      switch result {
+      case .failure(let error):
+        XCTFail("\(error)")
+      case .success(let response):
+        let finalResult = try! queryBuilder.aggregate(response.results)
         expectedDisjunctiveFacets.forEach { (attribute, facets) in
           XCTAssertTrue(finalResult.disjunctiveFacets?[attribute]?.equalContents(to: facets) == true)
         }
         expectedHierarchicalFacets.forEach { (attribute, facets) in
           XCTAssertTrue(finalResult.hierarchicalFacets?[attribute]?.equalContents(to: facets) == true)
         }
-        exp.fulfill()
+
       }
+      exp.fulfill()
     }
     
     waitForExpectations(timeout: 15, handler: .none)

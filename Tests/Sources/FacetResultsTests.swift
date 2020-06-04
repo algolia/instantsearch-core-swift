@@ -10,6 +10,8 @@ import Foundation
 @testable import InstantSearchCore
 import XCTest
 
+
+//TODO: remove
 class FacetResultsTests: XCTestCase {
 
     func testFacetResultsDecoding() {
@@ -29,7 +31,7 @@ class FacetResultsTests: XCTestCase {
         let decoder = JSONDecoder()
         
         do {
-            let facetResults = try decoder.decode(FacetResults.self, from: data)
+          let facetResults = try decoder.decode(FacetSearchResponse.self, from: data)
             XCTAssertTrue(facetResults.areFacetsCountExhaustive)
             XCTAssertEqual(facetResults.processingTimeMS, 25)
             XCTAssertEqual(facetResults.facetHits.count, 10)

@@ -8,7 +8,8 @@
 
 import Foundation
 @testable import InstantSearchCore
-import AlgoliaSearchClientSwiftimport XCTest
+import AlgoliaSearchClientSwift
+import XCTest
 
 class SelectableSegmentInteractorConnectorsTests: XCTestCase {
   
@@ -41,15 +42,14 @@ class SelectableSegmentInteractorConnectorsTests: XCTestCase {
   
   func testConnectSearcher() {
     
-    let query = Query()
     let filterState = FilterState()
-    let searcher = SingleIndexSearcher(index: .test, query: query)
+    let searcher = SingleIndexSearcher(appID: "", apiKey: "", indexName: "")
     
     let interactor = SelectableSegmentInteractor<Int, Filter.Tag>(items: [0: "t1", 1: "t2", 2: "t3"])
     interactor.connectSearcher(searcher, attribute: "tags")
     interactor.connectFilterState(filterState, attribute: "tags", operator: .or)
     
-    XCTAssertTrue((query.facets ?? []).contains("tags"))
+    XCTAssertTrue((searcher.indexQueryState.query.facets ?? []).contains("tags"))
     
   }
   

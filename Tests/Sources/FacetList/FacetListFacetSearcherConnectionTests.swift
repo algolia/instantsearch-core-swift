@@ -15,7 +15,7 @@ class FacetListFacetSearcherConnectionTests: XCTestCase {
   let facets: [Facet] = .init(prefix: "v", count: 3)
   
   var results: FacetSearcher.SearchResult {
-    return FacetSearcher.SearchResult(facetHits: facets, processingTimeMS: 1, areFacetsCountExhaustive: true)
+    return try! FacetSearcher.SearchResult(json: ["facetHits": try! JSON(facets), "exhaustiveFacetsCount": true, "processingTimeMS": 1])
   }
 
   func testConnect() {

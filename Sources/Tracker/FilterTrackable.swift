@@ -9,23 +9,36 @@
 import Foundation
 import InstantSearchInsights
 
-extension Insights: FilterTrackable {}
-
 protocol FilterTrackable {
   
-  func viewed(eventName: String,
-              indexName: String,
+  func viewed(eventName: EventName,
+              indexName: IndexName,
               filters: [String],
-              userToken: String?)
+              userToken: UserToken?)
   
-  func clicked(eventName: String,
-               indexName: String,
+  func clicked(eventName: EventName,
+               indexName: IndexName,
                filters: [String],
-               userToken: String?)
+               userToken: UserToken?)
   
-  func converted(eventName: String,
-                 indexName: String,
+  func converted(eventName: EventName,
+                 indexName: IndexName,
                  filters: [String],
-                 userToken: String?)
+                 userToken: UserToken?)
   
+}
+
+extension Insights: FilterTrackable {
+  
+  func viewed(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
+    self.viewed(eventName: eventName.rawValue, indexName: indexName.rawValue, filters: filters, userToken: userToken?.rawValue)
+  }
+  
+  func clicked(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
+    self.clicked(eventName: eventName.rawValue, indexName: indexName.rawValue, filters: filters, userToken: userToken?.rawValue)
+  }
+  
+  func converted(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
+    self.converted(eventName: eventName.rawValue, indexName: indexName.rawValue, filters: filters, userToken: userToken?.rawValue)
+  }
 }

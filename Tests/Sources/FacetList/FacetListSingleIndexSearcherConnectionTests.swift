@@ -54,7 +54,7 @@ class FacetListSingleIndexSearcherConnectionTests: XCTestCase {
   func checkConnection(interactor: FacetListInteractor,
                        searcher: SingleIndexSearcher,
                        isConnected: Bool) {
-    var results = SearchResults(hits: [], stats: .init())
+    var results = SearchResponse(hits: [TestRecord<Int>]())
     results.disjunctiveFacets = [attribute: facets]
     
     let onItemsChangedExpectation = expectation(description: "on items changed")
@@ -68,6 +68,31 @@ class FacetListSingleIndexSearcherConnectionTests: XCTestCase {
     searcher.onResults.fire(results)
     
     waitForExpectations(timeout: 5, handler: .none)
+  }
+  
+}
+
+
+extension SearchResponse {
+  
+  init<E: Encodable>(hits: [E]) {
+    let hitsJSON: JSON = try! .array(hits.map(JSON.init))
+    try! self.init(json: ["hits": hitsJSON])
+  }
+  
+}
+
+extension Hit where T == [String: JSON] {
+  
+  init(object: [String: JSON], objectID: ObjectID? = nil) {
+    var mutableCopy = object
+    let objectID = objectID ?? ObjectID(rawValue: UUID().uuidString)
+    mutableCopy["objectID"] = .string(objectID.rawValue)
+    try! self.init(json: .dictionary(mutableCopy))
+  }
+  
+  static func withJSON(_ json: [String: JSON]) -> Self {
+    .init(object: json)
   }
   
 }

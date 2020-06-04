@@ -25,13 +25,11 @@ class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
     "promotions"
   ]
   
-  override func setUp() {
-    super.setUp()
-    let exp = expectation(description: "wait for filling the index")
-    let settings: [String: Any] = ["attributesForFaceting": disjunctiveAttributes.map { $0.name }]
-    let items = try! [Item](jsonFile: "disjunctive", bundle: Bundle(for: HierarchicalTests.self))
-    fillIndex(withItems: items, settings: settings, completionHandler: exp.fulfill)
-    waitForExpectations(timeout: 50, handler: .none)
+  override func setUpWithError() throws {
+    try super.setUpWithError()
+    let settings = Settings().set(\.attributesForFaceting, to: disjunctiveAttributes.map { .default($0) } )
+    let items = try [Item](jsonFile: "disjunctive", bundle: Bundle(for: HierarchicalTests.self))
+    try fillIndex(withItems: items, settings: settings)
   }
   
   func testDisjunctive() {
@@ -58,22 +56,22 @@ class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
       ])
     ]
     
-    let query = Query()
-    query.facets = disjunctiveAttributes.map { $0.name }
+    let query = Query().set(\.facets, to: Set(disjunctiveAttributes))
     let colorFilter = Filter.Facet(attribute: "color", stringValue: "blue")
     let disjunctiveGroup = FilterGroup.Or(filters: [colorFilter], name: "colors")
     let queryBuilder = QueryBuilder(query: query, filterGroups: [disjunctiveGroup])
     
-    let queries = queryBuilder.build()
+    let queries = queryBuilder.build().map { (index.name, $0) }
     
     XCTAssertEqual(queries.count, 2)
     XCTAssertEqual(queryBuilder.disjunctiveFacetingQueriesCount, 1)
     
     let exp = expectation(description: "results")
     
-    index.multipleQueries(queries) { (result, error) in
-      self.extract(result, error) { (results: MultiSearchResults) in
-        let finalResult = try! queryBuilder.aggregate(results.searchResults)
+    client.multipleQueries(queries: queries) { result in
+      do {
+        let searchesResponse = try result.get()
+        let finalResult = try! queryBuilder.aggregate(searchesResponse.results)
         expectedFacets.forEach { (attribute, facets) in
           XCTAssertTrue(finalResult.facets?[attribute]?.equalContents(to: facets) == true)
         }
@@ -81,6 +79,9 @@ class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
           XCTAssertTrue(finalResult.disjunctiveFacets?[attribute]?.equalContents(to: facets) == true)
         }
         exp.fulfill()
+
+      } catch let error {
+        XCTFail("\(error)")
       }
     }
     
@@ -105,24 +106,24 @@ class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
         ])
     ]
     
-    let query = Query()
-    query.facets = disjunctiveAttributes.map { $0.name }
+    let query = Query().set(\.facets, to: Set(disjunctiveAttributes))
     let colorFilter = Filter.Facet(attribute: "color", stringValue: "blue")
     let disjunctiveGroup = FilterGroup.Or(filters: [colorFilter], name: "colors")
     let promotionsFilter = Filter.Facet(attribute: "promotions", stringValue: "coupon")
     let conjunctiveGroup = FilterGroup.And(filters: [promotionsFilter], name: "promotions")
     let queryBuilder = QueryBuilder(query: query, filterGroups: [disjunctiveGroup, conjunctiveGroup])
     
-    let queries = queryBuilder.build()
+    let queries = queryBuilder.build().map { (index.name, $0) }
     
     XCTAssertEqual(queries.count, 2)
     XCTAssertEqual(queryBuilder.disjunctiveFacetingQueriesCount, 1)
     
     let exp = expectation(description: "results")
     
-    index.multipleQueries(queries) { (result, error) in
-      self.extract(result, error) { (results: MultiSearchResults) in
-        let finalResult = try! queryBuilder.aggregate(results.searchResults)
+    client.multipleQueries(queries: queries) { result in
+      do {
+        let searchesResponse = try result.get()
+        let finalResult = try queryBuilder.aggregate(searchesResponse.results)
         expectedFacets.forEach { (attribute, facets) in
           XCTAssertTrue(finalResult.facets?[attribute]?.equalContents(to: facets) == true)
         }
@@ -130,6 +131,8 @@ class DisjunctiveFacetingIntegrationTests: OnlineTestCase {
           XCTAssertTrue(finalResult.disjunctiveFacets?[attribute]?.equalContents(to: facets) == true)
         }
         exp.fulfill()
+      } catch let error {
+        XCTFail("\(error)")
       }
     }
     

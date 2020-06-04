@@ -9,5 +9,5 @@
 import Foundation
 
 public protocol Geolocated {
-  var geolocation: Place.Geolocation? { get }
+  var geolocation: Point? { get }
 }

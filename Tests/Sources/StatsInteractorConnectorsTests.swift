@@ -26,10 +26,10 @@ class StatsInteractorConnectorsTests: XCTestCase {
   func testConnectSearcher() {
     
     let vm = StatsInteractor()
-    let results = SearchResults(hits: [], stats: .init())
+    let results = SearchResponse(hits: [TestRecord<Int>]())
     let query = Query()
     
-    let searcher = SingleIndexSearcher(index: .test, query: query)
+    let searcher = SingleIndexSearcher(appID: "", apiKey: "", indexName: "", query: query)
     vm.connectSearcher(searcher)
     
     let exp = expectation(description: "on item changed")
@@ -59,7 +59,7 @@ class StatsInteractorConnectorsTests: XCTestCase {
       exp.fulfill() 
     }
     
-    vm.item = SearchStats(hitsPerPage: 10, totalHitsCount: 100, pagesCount: 10, page: 0, processingTimeMS: 1, query: "q1")
+    vm.item = SearchStats(totalHitsCount: 100, hitsPerPage: 10, pagesCount: 10, page: 0, processingTimeMS: 1, query: "q1")
     
     waitForExpectations(timeout: 2, handler: nil)
     

@@ -13,12 +13,12 @@ import XCTest
 class FilterTrackerTests: XCTestCase {
   
   struct Constants {
-    static let appID = "test app id"
-    static let apiKey = "test api key"
-    static let indexName = "test index name"
-    static let eventName = "event name"
-    static let customEventName = "custom event name"
-    static let queryID = "test query id"
+    static let appID: ApplicationID = "test_app_id"
+    static let apiKey: APIKey = "test_api_key"
+    static let indexName: IndexName = "test index name"
+    static let eventName: EventName = "event name"
+    static let customEventName: EventName = "custom event name"
+    static let queryID: QueryID = "test query id"
     
     struct Filter {
       static let facet = Facet(value: "test filter value", count: 10)

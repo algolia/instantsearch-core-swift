@@ -37,9 +37,9 @@ class DisjunctiveFacetingTests: XCTestCase {
       FilterGroup.Or(filters: [Filter.Facet(attribute: "pubYear", floatValue: 2000)], name: "pubYear"),
     ])
     
-    let res1 = try! SearchResults(jsonFile: "DisjFacetingResult1", bundle: Bundle(for: DisjunctiveFacetingTests.self))
-    let res2 = try! SearchResults(jsonFile: "DisjFacetingResult2", bundle: Bundle(for: DisjunctiveFacetingTests.self))
-    let res3 = try! SearchResults(jsonFile: "DisjFacetingResult3", bundle: Bundle(for: DisjunctiveFacetingTests.self))
+    let res1 = try! SearchResponse(jsonFile: "DisjFacetingResult1", bundle: Bundle(for: DisjunctiveFacetingTests.self))
+    let res2 = try! SearchResponse(jsonFile: "DisjFacetingResult2", bundle: Bundle(for: DisjunctiveFacetingTests.self))
+    let res3 = try! SearchResponse(jsonFile: "DisjFacetingResult3", bundle: Bundle(for: DisjunctiveFacetingTests.self))
     
     do {
       let output = try queryBuilder.aggregate([res1, res2, res3])
@@ -65,9 +65,7 @@ class DisjunctiveFacetingTests: XCTestCase {
     let sizeGroup = FilterGroup.Or<Filter.Facet>(filters: [.init(attribute: "size", stringValue: "m"), .init(attribute: "size", stringValue: "s")], name: "size")
 
     let filterGroups: [FilterGroupType] = [colorGroup, sizeGroup]
-    
-    let disjunctiveFacets = Set([colorGroup.name, sizeGroup.name].compactMap { $0 }.map(Attribute.init(rawValue:)))
-    
+        
     let queryBuilder = QueryBuilder(query: query, filterGroups: filterGroups)
     
     let queries = queryBuilder.build()

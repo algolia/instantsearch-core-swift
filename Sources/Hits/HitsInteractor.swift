@@ -129,9 +129,8 @@ private extension HitsInteractor {
   }
   
   func toRaw(_ hit: Record) -> [String: Any]? {
-    guard let data = try? JSONEncoder().encode(hit) else { return .none }
-    guard let jsonValue = try? JSONDecoder().decode(JSON.self, from: data) else { return .none }
-    return [String: Any](jsonValue)
+    guard let json = try? JSON(hit) else { return nil }
+    return [String: Any](json)
   }
   
   func cast<R: Decodable>(_ hit: Record) throws -> R {

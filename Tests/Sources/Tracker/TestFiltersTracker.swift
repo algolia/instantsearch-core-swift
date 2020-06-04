@@ -10,20 +10,20 @@ import Foundation
 @testable import InstantSearchCore
 
 class TestFiltersTracker: FilterTrackable {
-  
+
   enum EventType { case view, click, convert }
   
-  var did: (((EventType, eventName: String, indexName: String, filters: [String], userToken: String?)) -> Void)?
+  var did: (((EventType, eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?)) -> Void)?
   
-  func viewed(eventName: String, indexName: String, filters: [String], userToken: String?) {
+  func viewed(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
     did?((.view, eventName, indexName, filters, userToken))
   }
   
-  func clicked(eventName: String, indexName: String, filters: [String], userToken: String?) {
+  func clicked(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
     did?((.click, eventName, indexName, filters, userToken))
   }
   
-  func converted(eventName: String, indexName: String, filters: [String], userToken: String?) {
+  func converted(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
     did?((.convert, eventName, indexName, filters, userToken))
   }
   

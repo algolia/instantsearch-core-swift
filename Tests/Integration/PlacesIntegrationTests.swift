@@ -10,16 +10,8 @@ import Foundation
 import XCTest
 @testable import InstantSearchCore
 
-extension SearchResults {
-  
-  var prettyHitsString: String {
-    let hits = self.hits.compactMap([String: Any].init)
-    let data = try! JSONSerialization.data(withJSONObject: hits, options: .prettyPrinted)
-    return String(data: data, encoding: .utf8)!
-  }
-  
-}
 
+///TODO: remove
 public class PlacesIntegrationTests: XCTestCase {
   
   let appID = Bundle(for: OnlineTestCase.self).object(forInfoDictionaryKey: "ALGOLIA_PLACES_APPLICATION_ID") as? String ?? ""
@@ -31,7 +23,7 @@ public class PlacesIntegrationTests: XCTestCase {
   
   func testGenericResponse() {
     
-    let searcher = PlacesSearcher(appID: appID, apiKey: apiKey)
+    let searcher = PlacesSearcher(appID: ApplicationID(rawValue: appID), apiKey: APIKey(rawValue: apiKey))
     
     searcher.placesQuery.query = "lon"
     searcher.placesQuery.language = nil
@@ -56,8 +48,8 @@ public class PlacesIntegrationTests: XCTestCase {
   
   func testLocalizedResponse() {
     
-    let searcher = PlacesSearcher(appID: appID, apiKey: apiKey)
-    
+    let searcher = PlacesSearcher(appID: ApplicationID(rawValue: appID), apiKey: APIKey(rawValue: apiKey))
+
     searcher.placesQuery.query = "lon"
     searcher.placesQuery.language = "en"
     

@@ -11,12 +11,12 @@ import InstantSearchInsights
 
 public class HitsTracker: InsightsTracker {
   
-  public let eventName: String
+  public let eventName: EventName
   internal let searcher: TrackableSearcher
   internal let tracker: HitsAfterSearchTrackable
   internal var queryID: QueryID?
       
-  public required convenience init(eventName: String,
+  public required convenience init(eventName: EventName,
                                    searcher: TrackableSearcher,
                                    insights: Insights) {
     self.init(eventName: eventName,
@@ -24,7 +24,7 @@ public class HitsTracker: InsightsTracker {
               tracker: insights)
   }
   
-  init(eventName: String,
+  init(eventName: EventName,
        searcher: TrackableSearcher,
        tracker: HitsAfterSearchTrackable) {
     self.eventName = eventName
@@ -52,30 +52,30 @@ public extension HitsTracker {
   
   func trackClick<Record: Codable>(for hit: Hit<Record>,
                                    position: Int,
-                                   eventName customEventName: String? = nil) {
+                                   eventName customEventName: EventName? = nil) {
     guard let queryID = queryID else { return }
     tracker.clickedAfterSearch(eventName: customEventName ?? self.eventName,
-                               indexName: searcher.indexName.rawValue,
-                               objectIDsWithPositions: [(hit.objectID, position)],
-                               queryID: queryID.rawValue,
+                               indexName: searcher.indexName,
+                               objectIDsWithPositions: [(ObjectID(rawValue: hit.objectID), position)],
+                               queryID: queryID,
                                userToken: .none)
   }
   
   func trackConvert<Record: Codable>(for hit: Hit<Record>,
-                                     eventName customEventName: String? = nil) {
+                                     eventName customEventName: EventName? = nil) {
     guard let queryID = queryID else { return }
     tracker.convertedAfterSearch(eventName: customEventName ?? self.eventName,
-                                 indexName: searcher.indexName.rawValue,
-                                 objectIDs: [hit.objectID],
-                                 queryID: queryID.rawValue,
+                                 indexName: searcher.indexName,
+                                 objectIDs: [ObjectID(rawValue: hit.objectID)],
+                                 queryID: queryID,
                                  userToken: .none)
   }
   
   func trackView<Record: Codable>(for hit: Hit<Record>,
-                                  eventName customEventName: String? = nil) {
+                                  eventName customEventName: EventName? = nil) {
     tracker.viewed(eventName: customEventName ?? self.eventName,
-                   indexName: searcher.indexName.rawValue,
-                   objectIDs: [hit.objectID],
+                   indexName: searcher.indexName,
+                   objectIDs: [ObjectID(rawValue: hit.objectID)],
                    userToken: .none)
   }
   

@@ -7,13 +7,13 @@
 //
 
 import Foundation
-
+/// TODO: remove this
 /// Strongly-typed recursuve JSON representation
 
 public enum JSON: Equatable {
     case string(String)
     case number(Float)
-    case dictionary([String:JSON])
+    case dictionary([String: JSON])
     case array([JSON])
     case bool(Bool)
     case null

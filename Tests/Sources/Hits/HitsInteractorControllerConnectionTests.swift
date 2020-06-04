@@ -87,7 +87,7 @@ class HitsInteractorControllerConnectionTests: XCTestCase {
       resultsUpdatedExpectation.fulfill()
     }
     
-    interactor.onResultsUpdated.fire(.init(hits: [], stats: .init()))
+    interactor.onResultsUpdated.fire(SearchResponse(hits: [TestRecord<Int>]()))
         
     waitForExpectations(timeout: 5, handler: .none)
   }

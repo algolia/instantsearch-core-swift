@@ -8,6 +8,8 @@
 
 import Foundation
 
+//TODO: remove
+
 public extension Place {
   
   struct Geolocation: Codable, Equatable {

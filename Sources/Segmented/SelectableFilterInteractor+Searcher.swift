@@ -5,6 +5,7 @@
 //  Created by Vladislav Fitc on 13/05/2019.
 //  Copyright © 2019 Algolia. All rights reserved.
 //
+// swiftlint:disable type_name
 
 import Foundation
 import AlgoliaSearchClientSwift

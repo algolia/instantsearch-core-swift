@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+///TODO: remove
 public indirect enum TreeModel<T: Codable>: Codable {
   
   case value(T)

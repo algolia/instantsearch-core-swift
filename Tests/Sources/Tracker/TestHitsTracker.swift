@@ -11,19 +11,19 @@ import Foundation
 
 class TestHitsTracker: HitsAfterSearchTrackable {
   
-  var didClick: (((eventName: String, indexName: String, objectIDsWithPositions: [(String, Int)], queryID: String, userToken: String?)) -> Void)?
-  var didConvert: (((eventName: String, indexName: String, objectIDs: [String], queryID: String, userToken: String?)) -> Void)?
-  var didView: (((eventName: String, indexName: String, objectIDs: [String], userToken: String?)) -> Void)?
+  var didClick: (((eventName: EventName, indexName: IndexName, objectIDsWithPositions: [(ObjectID, Int)], queryID: QueryID, userToken: UserToken?)) -> Void)?
+  var didConvert: (((eventName: EventName, indexName: IndexName, objectIDs: [ObjectID], queryID: QueryID, userToken: UserToken?)) -> Void)?
+  var didView: (((eventName: EventName, indexName: IndexName, objectIDs: [ObjectID], userToken: UserToken?)) -> Void)?
   
-  func clickedAfterSearch(eventName: String, indexName: String, objectIDsWithPositions: [(String, Int)], queryID: String, userToken: String?) {
+  func clickedAfterSearch(eventName: EventName, indexName: IndexName, objectIDsWithPositions: [(ObjectID, Int)], queryID: QueryID, userToken: UserToken?) {
       didClick?((eventName, indexName, objectIDsWithPositions, queryID, userToken))
   }
   
-  func convertedAfterSearch(eventName: String, indexName: String, objectIDs: [String], queryID: String, userToken: String?) {
+  func convertedAfterSearch(eventName: EventName, indexName: IndexName, objectIDs: [ObjectID], queryID: QueryID, userToken: UserToken?) {
     didConvert?((eventName, indexName, objectIDs, queryID, userToken))
   }
   
-  func viewed(eventName: String, indexName: String, objectIDs: [String], userToken: String?) {
+  func viewed(eventName: EventName, indexName: IndexName, objectIDs: [ObjectID], userToken: UserToken?) {
     didView?((eventName, indexName, objectIDs, userToken))
   }
   

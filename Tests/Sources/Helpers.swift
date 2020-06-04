@@ -1,16 +1,19 @@
 import Foundation
+import AlgoliaSearchClientSwift
 
-func safeIndexName(_ name: String) -> String {
+func safeIndexName(_ name: String) -> IndexName {
   var targetName = Bundle.main.object(forInfoDictionaryKey: "BUILD_TARGET_NAME") as? String ?? ""
   targetName = targetName.replacingOccurrences(of: " ", with: "-")
   
+  let rawName: String
   if let travisBuild = ProcessInfo.processInfo.environment["TRAVIS_JOB_NUMBER"] {
-    return "\(name)_travis_\(travisBuild)"
+    rawName = "\(name)_travis_\(travisBuild)"
   } else if let bitriseBuild = Bundle.main.object(forInfoDictionaryKey: "BITRISE_BUILD_NUMBER") as? String {
-    return "\(name)_bitrise_\(bitriseBuild)_\(targetName)"
+    rawName = "\(name)_bitrise_\(bitriseBuild)_\(targetName)"
   } else {
-    return name
+    rawName = name
   }
+  return IndexName(rawValue: rawName)
 }
 
 func average(values: [Double]) -> Double {

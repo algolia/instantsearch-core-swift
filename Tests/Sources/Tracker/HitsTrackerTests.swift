@@ -13,15 +13,15 @@ import XCTest
 class HitsTrackerTests: XCTestCase {
   
   struct Constants {
-    static let appID = "test app id"
-    static let apiKey = "test api key"
-    static let indexName = "test index name"
-    static let objectID = "test object id"
-    static let eventName = "event name"
-    static let customEventName = "custom event name"
+    static let appID: ApplicationID = "test_app_id"
+    static let apiKey: APIKey = "test_api_key"
+    static let indexName: IndexName = "test index name"
+    static let objectID: ObjectID = "test object id"
+    static let eventName: EventName = "event name"
+    static let customEventName: EventName = "custom event name"
     static let position = 10
-    static let queryID = "test query id"
-    static let contentString = "content string"
+    static let queryID: QueryID = "test query id"
+    static let object: [String: JSON] = ["field": "value"]
   }
   
   let searcher = SingleIndexSearcher(appID: Constants.appID, apiKey: Constants.apiKey, indexName: Constants.indexName)
@@ -34,7 +34,7 @@ class HitsTrackerTests: XCTestCase {
     return tracker
   }()
   
-  let hit = Hit<String>(objectID: Constants.objectID, object: Constants.contentString)
+  let hit = Hit<[String: JSON]>(object: Constants.object, objectID: Constants.objectID)
   
   func testClick() {
     let clickExpectation = expectation(description: #function)

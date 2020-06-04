@@ -8,6 +8,16 @@
 
 import Foundation
 
+public extension Hit {
+  
+  /// Returns a highlighted string for a string key if highlightResult has a flat dictionary structure
+  /// If the value for key is missing or it is an embedded structure, returns nil
+  func hightlightedString(forKey key: String) -> HighlightedString? {
+    return highlightResult?.value(forKey: key)?.value?.value
+  }
+  
+}
+
 extension NSAttributedString {
   
   public convenience init(taggedString: TaggedString,
@@ -27,9 +37,9 @@ extension NSAttributedString {
     self.init(taggedString: highlightedString.taggedString, inverted: inverted, attributes: attributes)
   }
   
-  public convenience init<T>(highlightResult: Hit<T>.HighlightResult,
-                             inverted: Bool = false,
-                             attributes: [NSAttributedString.Key: Any]) {
+  public convenience init(highlightResult: HighlightResult,
+                          inverted: Bool = false,
+                          attributes: [NSAttributedString.Key: Any]) {
     self.init(taggedString: highlightResult.value.taggedString, inverted: inverted, attributes: attributes)
   }
   
@@ -55,10 +65,10 @@ extension NSAttributedString {
     
   }
   
-  public convenience init<T>(highlightedResults: [Hit<T>.HighlightResult],
-                             inverted: Bool = false,
-                             separator: NSAttributedString,
-                             attributes: [NSAttributedString.Key: Any]) {
+  public convenience init(highlightedResults: [HighlightResult],
+                          inverted: Bool = false,
+                          separator: NSAttributedString,
+                          attributes: [NSAttributedString.Key: Any]) {
     let taggedStrings = highlightedResults.map { $0.value.taggedString }
     self.init(taggedStrings: taggedStrings,
               inverted: inverted,

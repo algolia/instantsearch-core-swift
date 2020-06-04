@@ -11,11 +11,11 @@ import InstantSearchInsights
 
 public class FilterTracker: InsightsTracker {
   
-  public let eventName: String
+  public let eventName: EventName
   internal let searcher: TrackableSearcher
   internal let tracker: FilterTrackable
 
-  public required convenience init(eventName: String,
+  public required convenience init(eventName: EventName,
                                    searcher: TrackableSearcher,
                                    insights: Insights) {
     self.init(eventName: eventName,
@@ -23,7 +23,7 @@ public class FilterTracker: InsightsTracker {
               tracker: insights)
   }
   
-  init(eventName: String,
+  init(eventName: EventName,
        searcher: TrackableSearcher,
        tracker: FilterTrackable) {
     self.eventName = eventName
@@ -38,21 +38,21 @@ public class FilterTracker: InsightsTracker {
 public extension FilterTracker {
   
   func trackClick<F: FilterType>(for filter: F,
-                                 eventName customEventName: String? = nil) {
+                                 eventName customEventName: EventName? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    tracker.clicked(eventName: customEventName ?? eventName, indexName: searcher.indexName.rawValue, filters: [sqlForm], userToken: .none)
+    tracker.clicked(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
   }
   
   func trackView<F: FilterType>(for filter: F,
-                                eventName customEventName: String? = nil) {
+                                eventName customEventName: EventName? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    tracker.viewed(eventName: customEventName ?? eventName, indexName: searcher.indexName.rawValue, filters: [sqlForm], userToken: .none)
+    tracker.viewed(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
   }
   
   func trackConversion<F: FilterType>(for filter: F,
-                                      eventName customEventName: String? = nil) {
+                                      eventName customEventName: EventName? = nil) {
     guard let sqlForm = (filter as? SQLSyntaxConvertible)?.sqlForm else { return }
-    tracker.converted(eventName: customEventName ?? eventName, indexName: searcher.indexName.rawValue, filters: [sqlForm], userToken: .none)
+    tracker.converted(eventName: customEventName ?? eventName, indexName: searcher.indexName, filters: [sqlForm], userToken: .none)
   }
   
 }
@@ -67,19 +67,19 @@ public extension FilterTracker {
   
   func trackClick(for facet: Facet,
                   attribute: Attribute,
-                  eventName customEventName: String? = nil) {
+                  eventName customEventName: EventName? = nil) {
     trackClick(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
   }
   
   func trackView(for facet: Facet,
                  attribute: Attribute,
-                 eventName customEventName: String? = nil) {
+                 eventName customEventName: EventName? = nil) {
     trackView(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
   }
   
   func trackConversion(for facet: Facet,
                        attribute: Attribute,
-                       eventName customEventName: String? = nil) {
+                       eventName customEventName: EventName? = nil) {
     trackConversion(for: filter(for: facet, with: attribute), eventName: customEventName ?? eventName)
   }
   

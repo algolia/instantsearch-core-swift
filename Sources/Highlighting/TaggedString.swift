@@ -8,6 +8,7 @@
 
 import Foundation
 
+///TODO: remove
 public struct TaggedString: Hashable {
   
   public let input: String

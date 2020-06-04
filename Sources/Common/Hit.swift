@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// TODO: Remove
 /// Wraps a generic hit object with its meta information
 
 public struct Hit<T: Codable>: Codable {
@@ -147,15 +148,3 @@ extension Hit {
     }
     
 }
-
-public extension Hit {
-  
-  /// Returns a highlighted string for a string key if highlightResult has a flat dictionary structure
-  /// If the value for key is missing or it is an embedded structure, returns nil
-  func hightlightedString(forKey key: String) -> HighlightedString? {
-    return highlightResult?.value(forKey: key)?.value?.value
-  }
-  
-}
-
-extension Hit: Geolocated {}
