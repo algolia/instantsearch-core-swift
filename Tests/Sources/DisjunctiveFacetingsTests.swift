@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 @testable import InstantSearchCore
 import AlgoliaSearchClientSwift
+
 class DisjunctiveFacetingTests: XCTestCase {
   
   class TestDelegate: DisjunctiveFacetingDelegate {
