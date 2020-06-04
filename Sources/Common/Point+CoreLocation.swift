@@ -1,5 +1,5 @@
 //
-//  PlaceHit+Geolocation+CoreLocation.swift
+//  Point+CoreLocation.swift
 //  InstantSearchCore
 //
 //  Created by Vladislav Fitc on 28/08/2019.
