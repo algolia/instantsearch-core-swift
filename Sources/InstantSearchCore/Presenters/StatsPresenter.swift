@@ -11,7 +11,7 @@ import Foundation
 public typealias StatsPresenter<Output> = Presenter<SearchStats?, Output>
 
 public extension DefaultPresenter {
-  
+
   enum Stats {
 
     public static let present: StatsPresenter<String?> = { stats in

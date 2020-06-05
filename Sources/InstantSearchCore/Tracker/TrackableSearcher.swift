@@ -15,30 +15,30 @@ protocol QueryIDContainer: class {
 extension HitsTracker: QueryIDContainer {}
 
 public enum TrackableSearcher {
-  
+
   case singleIndex(SingleIndexSearcher)
   case multiIndex(MultiIndexSearcher, pointer: Int)
-  
+
   var indexName: IndexName {
     switch self {
     case .singleIndex(let searcher):
       return searcher.indexQueryState.indexName
-      
+
     case .multiIndex(let searcher, pointer: let index):
       return searcher.indexQueryStates[index].indexName
     }
   }
-  
+
   func setClickAnalyticsOn(_ on: Bool) {
     switch self {
     case .singleIndex(let searcher):
       return searcher.indexQueryState.query.clickAnalytics = on
-      
+
     case .multiIndex(let searcher, pointer: let index):
       return searcher.indexQueryStates[index].query.clickAnalytics = on
     }
   }
-  
+
   func subscribeForQueryIDChange<S: QueryIDContainer>(_ subscriber: S) {
     switch self {
     case .singleIndex(let searcher):
@@ -52,5 +52,5 @@ public enum TrackableSearcher {
     }
 
   }
-  
+
 }

@@ -11,5 +11,5 @@ import Foundation
 public protocol NumberController: ItemController where Item: Numeric {
 
   func setComputation(computation: Computation<Item>)
-  
+
 }

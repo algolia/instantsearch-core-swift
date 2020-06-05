@@ -9,11 +9,11 @@
 import Foundation
 
 public class FilterClearConnector: Connection {
-  
+
   public let filterState: FilterState
   public let interactor: FilterClearInteractor
   public let filterStateConnection: Connection
-  
+
   init(filterState: FilterState,
        interactor: FilterClearInteractor = .init(),
        clearMode: ClearMode = .specified,
@@ -24,13 +24,13 @@ public class FilterClearConnector: Connection {
                                                                filterGroupIDs: filterGroupIDs,
                                                                clearMode: clearMode)
   }
-  
+
   public func connect() {
     filterStateConnection.connect()
   }
-  
+
   public func disconnect() {
     filterStateConnection.disconnect()
   }
-  
+
 }

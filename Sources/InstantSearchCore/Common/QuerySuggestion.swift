@@ -9,8 +9,8 @@
 import Foundation
 
 public struct QuerySuggestion: Codable {
-  
+
   public let query: String
   public let popularity: Int
-  
+
 }

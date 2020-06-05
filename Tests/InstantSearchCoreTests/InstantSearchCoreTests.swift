@@ -6,6 +6,6 @@ final class InstantSearchCoreTests: XCTestCase {
     }
 
     static var allTests = [
-        ("testExample", testExample),
+        ("testExample", testExample)
     ]
 }

@@ -10,7 +10,7 @@ import Foundation
 import AlgoliaSearchClientSwift
 
 public class FacetListInteractor: SelectableListInteractor<String, Facet> {
-  
+
   public let onResultsUpdated: Observer<FacetSearchResponse>
   private let mutationQueue: OperationQueue
 
@@ -25,24 +25,24 @@ public class FacetListInteractor: SelectableListInteractor<String, Facet> {
 }
 
 extension FacetListInteractor: ResultUpdatable {
-    
+
   @discardableResult public func update(_ facetResults: FacetSearchResponse) -> Operation {
-    
+
     let updateOperation = BlockOperation { [weak self] in
       self?.items = facetResults.facetHits
       self?.onResultsUpdated.fire(facetResults)
     }
-    
+
     mutationQueue.addOperation(updateOperation)
-    
+
     return updateOperation
-    
+
   }
-  
+
 }
 
 public enum FacetSortCriterion {
-  
+
   case count(order: Order)
   case alphabetical(order: Order)
   case isRefined

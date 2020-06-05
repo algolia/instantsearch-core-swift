@@ -9,17 +9,17 @@
 import Foundation
 
 public class SelectableFilterConnector<Filter: FilterType>: Connection {
-  
+
   public let searcher: SingleIndexSearcher
   public let filterState: FilterState
   public let interactor: SelectableSegmentInteractor<Int, Filter>
   public let attribute: Attribute
   public let `operator`: RefinementOperator
   public let groupName: String
-  
+
   public let searcherConnection: SelectableFilterInteractorSearcherConnection<Filter>
   public let filterStateConnection: SelectableFilterInteractorFilterStateConnection<Filter>
-  
+
   public init(searcher: SingleIndexSearcher,
               filterState: FilterState,
               items: [Int: Filter],
@@ -46,10 +46,10 @@ public class SelectableFilterConnector<Filter: FilterType>: Connection {
     searcherConnection.connect()
     filterStateConnection.connect()
   }
-  
+
   public func disconnect() {
     searcherConnection.disconnect()
     filterStateConnection.disconnect()
   }
-  
+
 }

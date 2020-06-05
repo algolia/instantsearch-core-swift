@@ -9,10 +9,10 @@
 import Foundation
 
 public protocol ResultUpdatable {
-  
+
   /// Result type
   associatedtype Result
-  
+
   /// Triggered once result is updated
   var onResultsUpdated: Observer<Result> { get }
 

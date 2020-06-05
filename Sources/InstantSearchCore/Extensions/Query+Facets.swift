@@ -9,9 +9,9 @@
 import Foundation
 import AlgoliaSearchClientSwift
 extension Query {
-  
+
   mutating func updateQueryFacets(with attribute: Attribute) {
     facets = (facets ?? []).union([attribute])
   }
-  
+
 }

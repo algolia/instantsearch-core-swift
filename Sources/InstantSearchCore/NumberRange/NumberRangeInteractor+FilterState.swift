@@ -9,15 +9,15 @@
 import Foundation
 
 public extension NumberRange {
-  
+
   struct FilterStateConnection<Number: Comparable & DoubleRepresentable>: Connection {
-    
+
     public let interactor: NumberRangeInteractor<Number>
     public let filterState: FilterState
     public let attribute: Attribute
     public let `operator`: RefinementOperator
     public let groupName: String?
-    
+
     public init(interactor: NumberRangeInteractor<Number>,
                 filterState: FilterState,
                 attribute: Attribute,
@@ -29,11 +29,11 @@ public extension NumberRange {
       self.operator = `operator`
       self.groupName = groupName
     }
-    
+
     public func connect() {
-      
+
       let groupName = self.groupName ?? attribute.rawValue
-      
+
       switch `operator` {
       case .and:
         connect(interactor, with: filterState, attribute: attribute, via: SpecializedAndGroupAccessor(filterState[and: groupName]))
@@ -41,12 +41,12 @@ public extension NumberRange {
         connect(interactor, with: filterState, attribute: attribute, via: filterState[or: groupName])
       }
     }
-    
+
     public func disconnect() {
       filterState.onChange.cancelSubscription(for: interactor)
       interactor.onNumberRangeComputed.cancelSubscription(for: filterState)
     }
-    
+
     private func connect<Accessor: SpecializedGroupAccessor>(_ interactor: NumberRangeInteractor<Number>,
                                                              with: FilterState,
                                                              attribute: Attribute,
@@ -54,12 +54,12 @@ public extension NumberRange {
       whenFilterStateChangedUpdateRange(interactor: interactor, filterState: with, attribute: attribute, accessor: accessor)
       whenRangeComputedUpdateFilterState(interactor: interactor, filterState: with, attribute: attribute, accessor: accessor)
     }
-    
+
     private func whenFilterStateChangedUpdateRange<Accessor: SpecializedGroupAccessor>(interactor: NumberRangeInteractor<Number>,
                                                                                        filterState: FilterState,
                                                                                        attribute: Attribute,
                                                                                        accessor: Accessor) where Accessor.Filter == Filter.Numeric {
-      
+
       func extractRange(from numericFilter: Filter.Numeric) -> ClosedRange<Number>? {
         switch numericFilter.value {
         case .range(let closedRange):
@@ -68,33 +68,33 @@ public extension NumberRange {
           return nil
         }
       }
-      
+
       filterState.onChange.subscribePast(with: interactor) { interactor, _ in
         interactor.item = accessor.filters(for: attribute).compactMap(extractRange).first
       }
 
     }
-    
+
     private func whenRangeComputedUpdateFilterState<Accessor: SpecializedGroupAccessor>(interactor: NumberRangeInteractor<Number>,
                                                                                         filterState: FilterState,
                                                                                         attribute: Attribute,
                                                                                         accessor: Accessor) where Accessor.Filter == Filter.Numeric {
-      
+
       func numericFilter(with range: ClosedRange<Number>) -> Filter.Numeric {
         let castedRange: ClosedRange<Double> = range.lowerBound.toDouble()...range.upperBound.toDouble()
         return .init(attribute: attribute, range: castedRange)
       }
-      
+
       let removeCurrentItem = { [weak interactor] in
         guard let item = interactor?.item else { return }
         accessor.remove(numericFilter(with: item))
       }
-      
+
       let addItem: (ClosedRange<Number>?) -> Void = { range in
         guard let range = range else { return }
         accessor.add(numericFilter(with: range))
       }
-      
+
       interactor.onNumberRangeComputed.subscribePast(with: filterState) { filterState, computedRange in
         removeCurrentItem()
         addItem(computedRange)
@@ -104,11 +104,11 @@ public extension NumberRange {
     }
 
   }
-  
+
 }
 
 public extension NumberRangeInteractor {
-  
+
   @discardableResult func connectFilterState(_ filterState: FilterState,
                                              attribute: Attribute,
                                              operator: RefinementOperator = .and,
@@ -117,5 +117,5 @@ public extension NumberRangeInteractor {
     connection.connect()
     return connection
   }
-      
+
 }

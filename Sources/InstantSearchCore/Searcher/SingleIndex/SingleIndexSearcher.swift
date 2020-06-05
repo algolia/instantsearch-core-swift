@@ -5,6 +5,7 @@
 //  Created by Vladislav Fitc on 02/04/2019.
 //  Copyright © 2019 Algolia. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import Foundation
 import AlgoliaSearchClientSwift
@@ -12,7 +13,7 @@ import AlgoliaSearchClientSwift
 */
 
 public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
-    
+
   public var query: String? {
 
     set {
@@ -23,15 +24,15 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       indexQueryState.query.page = 0
       onQueryChanged.fire(newValue)
     }
-    
+
     get {
       return indexQueryState.query.query
     }
 
   }
-  
+
   public let client: SearchClient
-  
+
   /// Current index & query tuple
   public var indexQueryState: IndexQueryState {
     didSet {
@@ -40,39 +41,39 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       }
     }
   }
-  
+
   public let isLoading: Observer<Bool>
-  
+
   public let onResults: Observer<SearchResponse>
-  
+
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query and error
   public let onError: Observer<(Query, Error)>
-  
+
   public let onQueryChanged: Observer<String?>
-  
+
   /// Triggered when an index of Searcher changed
   /// - Parameter: equals to a new index value
   public let onIndexChanged: Observer<IndexName>
-  
+
   /// Custom request options
   public var requestOptions: RequestOptions?
-  
+
   /// Delegate providing a necessary information for disjuncitve faceting
   public weak var disjunctiveFacetingDelegate: DisjunctiveFacetingDelegate?
-  
+
   /// Delegate providing a necessary information for hierarchical faceting
   public weak var hierarchicalFacetingDelegate: HierarchicalFacetingDelegate?
-  
+
   /// Flag defining if disjunctive faceting is enabled
   /// - Default value: true
   public var isDisjunctiveFacetingEnabled = true
-  
+
   /// Sequencer which orders and debounce redundant search operations
   internal let sequencer: Sequencer
-  
+
   private let processingQueue: OperationQueue
-  
+
   /**
    - Parameters:
       - appID: Application ID
@@ -89,7 +90,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     let client = SearchClient(appID: appID, apiKey: apiKey)
     self.init(client: client, indexName: indexName, query: query, requestOptions: requestOptions)
   }
-  
+
   /**
    - Parameters:
       - index: Index value in which search will be performed
@@ -118,7 +119,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
     processingQueue.maxConcurrentOperationCount = 1
     processingQueue.qualityOfService = .userInitiated
   }
-  
+
   /**
    - Parameters:
       - indexQueryState: Instance of `IndexQueryState` encapsulating index value in which search will be performed and a `Query` instance.
@@ -132,11 +133,11 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
               query: indexQueryState.query,
               requestOptions: requestOptions)
   }
-  
+
   public func search() {
-  
+
     let query = indexQueryState.query
-    
+
     let operation: Operation
 
     if isDisjunctiveFacetingEnabled {
@@ -151,7 +152,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
       let queries = queriesBuilder.build().map { (indexQueryState.indexName, query: $0) }
       operation = client.multipleQueries(queries: queries) { [weak self] response in
         guard let searcher = self else { return }
-        
+
         searcher.processingQueue.addOperation {
             let indexName = searcher.indexQueryState.indexName
 
@@ -159,7 +160,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
             case .failure(let error):
               Logger.Results.failure(searcher: searcher, indexName: indexName, error)
               searcher.onError.fire((queriesBuilder.query, error))
-              
+
             case .success(let results):
               do {
                 let result = try queriesBuilder.aggregate(results.results)
@@ -177,7 +178,7 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
         guard let searcher = self, searcher.query == query.query else { return }
         searcher.processingQueue.addOperation {
           let indexName = searcher.indexQueryState.indexName
-          
+
           switch result {
           case .failure(let error):
             Logger.Results.failure(searcher: searcher, indexName: indexName, error)
@@ -190,12 +191,12 @@ public class SingleIndexSearcher: Searcher, SequencerDelegate, SearchResultObser
         }
       }
     }
-    
+
     sequencer.orderOperation(operationLauncher: { return operation })
   }
-  
+
   public func cancel() {
     sequencer.cancelPendingOperations()
   }
-  
+
 }

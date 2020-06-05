@@ -9,9 +9,9 @@
 import Foundation
 
 public protocol MultiIndexHitsSource: class {
-  
+
   func numberOfSections() -> Int
   func numberOfHits(inSection section: Int) -> Int
   func hit<R: Codable>(atIndex index: Int, inSection section: Int) throws -> R?
-  
+
 }

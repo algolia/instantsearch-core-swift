@@ -41,47 +41,47 @@ public class FacetListPresenter: SelectableListPresentable {
     let boundedOutput = sortedOutput[..<upperBoundIndex]
     return Array(boundedOutput)
   }
-  
+
   private func sorter(using sortCriterions: [FacetSortCriterion]) -> (SelectableItem<Facet>, SelectableItem<Facet>) -> (Bool) {
     return { (lhs, rhs) in
-      
+
       let lhsChecked: Bool = lhs.isSelected
       let rhsChecked: Bool = rhs.isSelected
-      
+
       let leftCount = lhs.item.count
       let rightCount = rhs.item.count
       let leftValueLowercased = lhs.item.value.lowercased()
       let rightValueLowercased = rhs.item.value.lowercased()
-      
+
       // tiebreaking algorithm to do determine the sorting.
       for sortCriterion in sortCriterions {
-        
+
         switch sortCriterion {
         case .isRefined where lhsChecked != rhsChecked:
           return lhsChecked
-          
+
         case .count(order: .descending) where leftCount != rightCount:
           return leftCount > rightCount
-          
+
         case .count(order: .ascending) where leftCount != rightCount:
           return leftCount < rightCount
-          
+
         case .alphabetical(order: .descending) where leftValueLowercased != rightValueLowercased:
           return leftValueLowercased > rightValueLowercased
-          
+
         // Sort by Name ascending. Else, Biggest Count wins by default
         case .alphabetical(order: .ascending) where leftValueLowercased != rightValueLowercased:
           return leftValueLowercased < rightValueLowercased
-          
+
         default:
           break
         }
-        
+
       }
-      
+
       return true
 
     }
   }
-  
+
 }

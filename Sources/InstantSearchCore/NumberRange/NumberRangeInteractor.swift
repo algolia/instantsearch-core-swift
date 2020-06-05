@@ -40,7 +40,7 @@ public class NumberRangeInteractor<Number: Comparable & DoubleRepresentable>: It
 
     onBoundsComputed.fire(bounds)
     onNumberRangeComputed.fire(coerced)
-    
+
   }
 
   public func computeNumberRange(numberRange: ClosedRange<Number>?) {

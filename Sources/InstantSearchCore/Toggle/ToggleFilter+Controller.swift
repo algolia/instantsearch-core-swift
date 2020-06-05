@@ -9,18 +9,18 @@
 import Foundation
 
 public extension ToggleFilter {
-  
+
   struct ControllerConnection<Filter: FilterType, Controller: SelectableController>: Connection where Controller.Item == Filter {
-    
+
     public let interactor: SelectableInteractor<Filter>
     public let controller: Controller
-    
+
     public init(interactor: SelectableInteractor<Filter>,
                 controller: Controller) {
       self.interactor = interactor
       self.controller = controller
     }
-    
+
     public func connect() {
       controller.setItem(interactor.item)
       controller.setSelected(interactor.isSelected)
@@ -32,23 +32,23 @@ public extension ToggleFilter {
         controller.setItem(item)
       }.onQueue(.main)
     }
-    
+
     public func disconnect() {
       controller.onClick = nil
       interactor.onSelectedChanged.cancelSubscription(for: controller)
       interactor.onItemChanged.cancelSubscription(for: controller)
     }
-    
+
   }
-  
+
 }
 
 public extension SelectableInteractor where Item: FilterType {
-  
+
   @discardableResult func connectController<Controller: SelectableController>(_ controller: Controller) -> ToggleFilter.ControllerConnection<Item, Controller>  where Controller.Item == (Item) {
     let connection = ToggleFilter.ControllerConnection(interactor: self, controller: controller)
     connection.connect()
     return connection
   }
-  
+
 }

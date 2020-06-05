@@ -9,26 +9,26 @@
 import Foundation
 
 public extension MultiIndexHitsInteractor {
-  
+
   struct ControllerConnection<Controller: MultiIndexHitsController>: Connection {
-    
+
     public let interactor: MultiIndexHitsInteractor
     public let controller: Controller
-    
+
     public func connect() {
       controller.hitsSource = interactor
-      
+
       interactor.onRequestChanged.subscribe(with: controller) { controller, _ in
         controller.scrollToTop()
       }.onQueue(.main)
-      
+
       interactor.onResultsUpdated.subscribePast(with: controller) { controller, _ in
         controller.reload()
       }.onQueue(.main)
-      
+
       controller.reload()
     }
-    
+
     public func disconnect() {
       if controller.hitsSource === interactor {
         controller.hitsSource = nil
@@ -36,17 +36,17 @@ public extension MultiIndexHitsInteractor {
       interactor.onRequestChanged.cancelSubscription(for: controller)
       interactor.onResultsUpdated.cancelSubscription(for: controller)
     }
-    
+
   }
-  
+
 }
 
 public extension MultiIndexHitsInteractor {
-  
+
   @discardableResult func connectController<Controller: MultiIndexHitsController>(_ controller: Controller) -> ControllerConnection<Controller> {
     let connection = ControllerConnection(interactor: self, controller: controller)
     connection.connect()
     return connection
   }
-  
+
 }

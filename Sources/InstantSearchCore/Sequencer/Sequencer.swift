@@ -30,7 +30,7 @@ import Foundation
 ///
 
 protocol Sequencable {
-    
+
     typealias OperationLauncher = () -> Operation
 
     func orderOperation(operationLauncher: OperationLauncher)
@@ -42,7 +42,7 @@ protocol SequencerDelegate: class {
 }
 
 class Sequencer: Sequencable {
-    
+
   // MARK: Properties
 
   /// Sequence number for the next operation.
@@ -66,11 +66,11 @@ class Sequencer: Sequencable {
   /// This helps to avoid filling up the operation queue when the network is slow.
   /// Default value: 3
   var maxPendingOperationsCount: Int = 3
-  
+
   /// Maximum number of concurrent sequencer completion operations allowed
   /// Default value: 5
   var maxConcurrentCompletionOperationsCount: Int = 5
-    
+
   /// Indicates whether there are any pending operations.
   var hasPendingOperations: Bool {
     return !pendingOperations.filter { !($0.value.isCancelled || $0.value.isFinished) }.isEmpty
@@ -109,7 +109,7 @@ class Sequencer: Sequencable {
 
     pendingOperations[currentSeqNo] = operation
   }
-    
+
   // MARK: - Manage operations
 
   /// Cancel all pending operations.
@@ -136,52 +136,52 @@ class Sequencer: Sequencable {
   /// - parameter seqNo: The operation's sequence number.
   ///
   private func dismissOperation(withSeqNo seqNo: Int) {
-    
+
     guard let operationToDismiss = pendingOperations[seqNo], !operationToDismiss.isCancelled else {
         return
     }
-    
+
     // Remove the current operation.
     pendingOperations.removeValue(forKey: seqNo)
 
     // Obsolete operations should not happen since they have been cancelled by more recent operations (see above).
     // WARNING: Only works if the current queue is serial!
     assert(lastReceivedSeqNo == nil || lastReceivedSeqNo! < seqNo)
-    
+
     // Update last received response.
     lastReceivedSeqNo = seqNo
   }
-    
+
 }
 
 private extension Sequencer {
-    
+
     class SequencerCompletionOperation: Operation {
-        
+
         let sequenceNo: Int
         weak var sequencer: Sequencer?
         var correspondingOperation: Operation
-        
+
         init(sequenceNo: Int, sequencer: Sequencer, correspondingOperation: Operation) {
             self.sequenceNo = sequenceNo
             self.sequencer = sequencer
             self.correspondingOperation = correspondingOperation
         }
-        
+
         override func main() {
             guard
                 let sequencer = sequencer,
                 !correspondingOperation.isCancelled else { return }
-            
+
             // Cancel all previous operations (as this one is deemed more recent).
             sequencer.pendingOperations
                 .filter { $0.0 < sequenceNo }.keys
                 .forEach(sequencer.cancelOperation)
-            
+
             sequencer.dismissOperation(withSeqNo: sequenceNo)
-            
+
         }
-        
+
     }
-    
+
 }

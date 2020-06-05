@@ -96,7 +96,7 @@ public class Observer<P>: Observable {
 }
 
 public extension Observer {
-  
+
   func fire(_ data: P) {
     signal.fire(data)
   }

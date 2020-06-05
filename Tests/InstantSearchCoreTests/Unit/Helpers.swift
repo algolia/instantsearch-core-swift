@@ -4,7 +4,7 @@ import AlgoliaSearchClientSwift
 func safeIndexName(_ name: String) -> IndexName {
   var targetName = Bundle.main.object(forInfoDictionaryKey: "BUILD_TARGET_NAME") as? String ?? ""
   targetName = targetName.replacingOccurrences(of: " ", with: "-")
-  
+
   let rawName: String
   if let travisBuild = ProcessInfo.processInfo.environment["TRAVIS_JOB_NUMBER"] {
     rawName = "\(name)_travis_\(travisBuild)"

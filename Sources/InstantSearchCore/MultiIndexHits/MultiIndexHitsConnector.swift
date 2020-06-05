@@ -9,13 +9,13 @@
 import Foundation
 
 public class MultiIndexHitsConnector: Connection {
-  
+
   public let searcher: MultiIndexSearcher
   public let interactor: MultiIndexHitsInteractor
   public let filterStates: [FilterState?]
   public let filterStatesConnections: [Connection]
   public let searcherConnection: Connection
-  
+
   public init(searcher: MultiIndexSearcher,
               interactor: MultiIndexHitsInteractor,
               filterStates: [FilterState?]) {
@@ -28,27 +28,27 @@ public class MultiIndexHitsConnector: Connection {
       return filterState.flatMap(interactor.connectFilterState)
     }
   }
-  
+
   public func connect() {
     searcherConnection.connect()
     filterStatesConnections.forEach { $0.connect() }
   }
-  
+
   public func disconnect() {
     searcherConnection.disconnect()
     filterStatesConnections.forEach { $0.disconnect() }
   }
-  
+
 }
 
 public extension MultiIndexHitsConnector {
-  
+
   struct IndexModule {
-    
+
     public let indexName: IndexName
     public let hitsInteractor: AnyHitsInteractor
     public let filterState: FilterState?
-    
+
     public init<Hit: Codable>(indexName: IndexName,
                               hitsInteractor: HitsInteractor<Hit>,
                               filterState: FilterState? = .none) {
@@ -56,7 +56,7 @@ public extension MultiIndexHitsConnector {
       self.hitsInteractor = hitsInteractor
       self.filterState = filterState
     }
-    
+
     public init(indexName: IndexName,
                 infiniteScrolling: InfiniteScrolling = .on(withOffset: 10),
                 showItemsOnEmptyQuery: Bool = true,
@@ -67,9 +67,9 @@ public extension MultiIndexHitsConnector {
                 hitsInteractor: hitsInteractor,
                 filterState: filterState)
     }
-        
+
   }
-  
+
   convenience init(appID: ApplicationID,
                    apiKey: APIKey,
                    indexModules: [IndexModule]) {
@@ -81,11 +81,11 @@ public extension MultiIndexHitsConnector {
               interactor: interactor,
               filterStates: indexModules.map { $0.filterState })
   }
-  
+
 }
 
 public extension MultiIndexHitsConnector.IndexModule {
-  
+
   init(suggestionsIndexName: IndexName,
        hitsInteractor: HitsInteractor<Hit<QuerySuggestion>> = .init(infiniteScrolling: .off, showItemsOnEmptyQuery: true),
        filterState: FilterState? = .none) {
@@ -93,5 +93,5 @@ public extension MultiIndexHitsConnector.IndexModule {
               hitsInteractor: hitsInteractor,
               filterState: filterState)
   }
-  
+
 }

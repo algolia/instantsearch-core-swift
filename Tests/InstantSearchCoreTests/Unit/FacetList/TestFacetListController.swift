@@ -10,17 +10,17 @@ import Foundation
 @testable import InstantSearchCore
 
 class TestFacetListController: FacetListController {
-  
+
   var onClick: ((Facet) -> Void)?
   var didReload: (() -> Void)?
   var selectableItems: [(item: Facet, isSelected: Bool)] = []
-  
+
   func setSelectableItems(selectableItems: [(item: Facet, isSelected: Bool)]) {
     self.selectableItems = selectableItems
   }
-  
+
   func reload() {
     didReload?()
   }
-  
+
 }

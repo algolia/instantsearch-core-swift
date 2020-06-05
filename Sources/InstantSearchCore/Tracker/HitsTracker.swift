@@ -10,12 +10,12 @@ import Foundation
 import InstantSearchInsights
 
 public class HitsTracker: InsightsTracker {
-  
+
   public let eventName: EventName
   internal let searcher: TrackableSearcher
   internal let tracker: HitsAfterSearchTrackable
   internal var queryID: QueryID?
-      
+
   public required convenience init(eventName: EventName,
                                    searcher: TrackableSearcher,
                                    insights: Insights) {
@@ -23,18 +23,18 @@ public class HitsTracker: InsightsTracker {
               searcher: searcher,
               tracker: insights)
   }
-  
+
   init(eventName: EventName,
        searcher: TrackableSearcher,
        tracker: HitsAfterSearchTrackable) {
     self.eventName = eventName
     self.searcher = searcher
     self.tracker = tracker
-    
+
     searcher.setClickAnalyticsOn(true)
     searcher.subscribeForQueryIDChange(self)
   }
-  
+
   deinit {
     switch searcher {
     case .singleIndex(let searcher):
@@ -43,13 +43,13 @@ public class HitsTracker: InsightsTracker {
       searcher.onResults.cancelSubscription(for: self)
     }
   }
-  
+
 }
 
 // MARK: - Hits tracking methods
 
 public extension HitsTracker {
-  
+
   func trackClick<Record: Codable>(for hit: Hit<Record>,
                                    position: Int,
                                    eventName customEventName: EventName? = nil) {
@@ -60,7 +60,7 @@ public extension HitsTracker {
                                queryID: queryID,
                                userToken: .none)
   }
-  
+
   func trackConvert<Record: Codable>(for hit: Hit<Record>,
                                      eventName customEventName: EventName? = nil) {
     guard let queryID = queryID else { return }
@@ -70,7 +70,7 @@ public extension HitsTracker {
                                  queryID: queryID,
                                  userToken: .none)
   }
-  
+
   func trackView<Record: Codable>(for hit: Hit<Record>,
                                   eventName customEventName: EventName? = nil) {
     tracker.viewed(eventName: customEventName ?? self.eventName,
@@ -78,5 +78,5 @@ public extension HitsTracker {
                    objectIDs: [ObjectID(rawValue: hit.objectID)],
                    userToken: .none)
   }
-  
+
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 public class ToggleFilterConnector<Filter: FilterType>: Connection {
-  
+
   public let filterState: FilterState
   public let filter: Filter
   public let interactor: SelectableInteractor<Filter>
-  
+
   public let filterStateConnection: Connection
-  
+
   public init(filterState: FilterState,
               filter: Filter,
               isSelected: Bool,
@@ -29,11 +29,11 @@ public class ToggleFilterConnector<Filter: FilterType>: Connection {
                                                                operator: refinementOperator,
                                                                groupName: groupName ?? filter.attribute.rawValue)
   }
-  
+
   public func connect() {
     filterStateConnection.connect()
   }
-  
+
   public func disconnect() {
     filterStateConnection.disconnect()
   }

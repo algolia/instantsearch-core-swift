@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol DisjunctiveFacetingDelegate: class, FilterGroupsConvertible {
-  
+
   var disjunctiveFacetsAttributes: Set<Attribute> { get }
-  
+
 }

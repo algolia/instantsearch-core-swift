@@ -9,33 +9,33 @@
 import Foundation
 
 public protocol PageLoadable: class {
-  
+
   func loadPage(atIndex pageIndex: Int)
-  
+
 }
 
 extension SingleIndexSearcher: PageLoadable {
-  
+
   public func loadPage(atIndex pageIndex: Int) {
     indexQueryState.query.page = pageIndex
     search()
   }
-  
+
 }
 
 extension FacetSearcher: PageLoadable {
-  
+
   public func loadPage(atIndex pageIndex: Int) {
     indexQueryState.query.page = pageIndex
     search()
   }
-  
+
 }
 
 extension PlacesSearcher: PageLoadable {
-  
+
   public func loadPage(atIndex pageIndex: Int) {
     search()
   }
-  
+
 }

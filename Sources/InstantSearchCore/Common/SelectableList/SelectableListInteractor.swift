@@ -14,7 +14,7 @@ public enum SelectionMode {
 }
 
 public class SelectableListInteractor<Key: Hashable, Item: Equatable> {
-  
+
   public var items: [Item] {
     didSet {
       if oldValue != items {
@@ -22,7 +22,7 @@ public class SelectableListInteractor<Key: Hashable, Item: Equatable> {
       }
     }
   }
-  
+
   public var selections: Set<Key> {
     didSet {
       if oldValue != selections {
@@ -30,7 +30,7 @@ public class SelectableListInteractor<Key: Hashable, Item: Equatable> {
       }
     }
   }
-  
+
   public let onItemsChanged: Observer<[Item]>
   public let onSelectionsChanged: Observer<Set<Key>>
   public let onSelectionsComputed: Observer<Set<Key>>
@@ -47,23 +47,23 @@ public class SelectableListInteractor<Key: Hashable, Item: Equatable> {
   }
 
   public func computeSelections(selectingItemForKey key: Key) {
-    
+
     let computedSelections: Set<Key>
-    
+
     switch (selectionMode, selections.contains(key)) {
     case (.single, true):
       computedSelections = []
-    
+
     case (.single, false):
       computedSelections = [key]
-      
+
     case (.multiple, true):
       computedSelections = selections.subtracting([key])
 
     case (.multiple, false):
       computedSelections = selections.union([key])
     }
-    
+
     onSelectionsComputed.fire(computedSelections)
 
   }

@@ -114,10 +114,8 @@ class DelayedOperation: AsyncOperation {
 
 }
 
-
-
 class SequencerTest: XCTestCase {
-  
+
   override func setUp() {
     super.setUp()
   }
@@ -127,33 +125,33 @@ class SequencerTest: XCTestCase {
   }
 
   func testObsoleteOperationsCancellation() {
-    
+
     let sequencer = Sequencer()
     sequencer.maxPendingOperationsCount = 10
-    
+
     let operationsCount = 100
     let exp = expectation(description: "delayed operation")
     exp.expectedFulfillmentCount = sequencer.maxPendingOperationsCount
-    
+
     let operations: [Operation] = (0..<operationsCount).map { number in
       let op = DelayedOperation(delay: 10, completionHandler: { exp.fulfill() })
       op.name = "\(number+1)"
       return op
     }
-    
+
     let testQueue = OperationQueue()
     testQueue.maxConcurrentOperationCount = 10
-    
+
     operations.forEach { operation in
       testQueue.addOperation(operation)
       sequencer.orderOperation { operation }
     }
-    
+
     waitForExpectations(timeout: 5, handler: .none)
-    
+
     XCTAssertEqual(operations.filter { $0.isCancelled }.count, operationsCount - sequencer.maxPendingOperationsCount)
     XCTAssertEqual(operations.filter { !$0.isCancelled }.count, sequencer.maxPendingOperationsCount)
-    
+
   }
 
   func testPreviousOperationsCancellation() {
@@ -177,7 +175,6 @@ class SequencerTest: XCTestCase {
     let exp = expectation(description: "fast operation")
     let fastOperation = DelayedOperation(delay: 1, completionHandler: exp.fulfill)
     fastOperation.name = "fast"
-
 
     let testQueue = OperationQueue()
     testQueue.maxConcurrentOperationCount = 200

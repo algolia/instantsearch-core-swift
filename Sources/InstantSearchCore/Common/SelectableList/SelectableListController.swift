@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol SelectableListController: class, Reloadable {
-  
+
   associatedtype Item
 
   var onClick: ((Item) -> Void)? { get set }

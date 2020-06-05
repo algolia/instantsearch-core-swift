@@ -9,14 +9,14 @@
 import Foundation
 
 public class HitsConnector<Hit: Codable>: Connection {
-    
+
   public let searcher: Searcher
   public let interactor: HitsInteractor<Hit>
   public let filterState: FilterState?
-  
+
   public let filterStateConnection: Connection?
   public let searcherConnection: Connection
-  
+
   internal init<S: Searcher>(searcher: S,
                              interactor: HitsInteractor<Hit>,
                              filterState: FilterState? = .none,
@@ -27,21 +27,21 @@ public class HitsConnector<Hit: Codable>: Connection {
     self.filterStateConnection = filterState.flatMap(interactor.connectFilterState)
     self.searcherConnection = connectSearcher(searcher)
   }
-  
+
   public func connect() {
     filterStateConnection?.connect()
     searcherConnection.connect()
   }
-  
+
   public func disconnect() {
     filterStateConnection?.disconnect()
     searcherConnection.disconnect()
   }
-  
+
 }
 
 public extension HitsConnector {
-  
+
   convenience init(searcher: SingleIndexSearcher,
                    interactor: HitsInteractor<Hit>,
                    filterState: FilterState? = .none) {
@@ -50,7 +50,7 @@ public extension HitsConnector {
               filterState: filterState,
               connectSearcher: interactor.connectSearcher)
   }
-  
+
   convenience init(appID: ApplicationID,
                    apiKey: APIKey,
                    indexName: IndexName,
@@ -68,7 +68,7 @@ public extension HitsConnector {
 }
 
 public extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
-  
+
   convenience init(searcher: PlacesSearcher,
                    interactor: HitsInteractor<Hit>,
                    filterState: FilterState? = .none) {
@@ -77,7 +77,7 @@ public extension HitsConnector where Hit == InstantSearchCore.Hit<Place> {
               filterState: filterState,
               connectSearcher: interactor.connectPlacesSearcher)
   }
-  
+
   convenience init(placesAppID: ApplicationID,
                    apiKey: APIKey,
                    interactor: HitsInteractor<Hit>,

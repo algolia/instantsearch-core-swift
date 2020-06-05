@@ -8,11 +8,11 @@ let package = Package(
     products: [
         .library(
             name: "InstantSearchCore",
-            targets: ["InstantSearchCore"]),
+            targets: ["InstantSearchCore"])
     ],
     dependencies: [
       .package(name: "AlgoliaSearchClientSwift", url:"https://github.com/algolia/algoliasearch-client-swift", from: "8.0.0-beta.6"),
-      .package(name: "InstantSearchInsights", url:"https://github.com/algolia/instantsearch-ios-insights", from: "2.3.2"),
+      .package(name: "InstantSearchInsights", url:"https://github.com/algolia/instantsearch-ios-insights", from: "2.3.2")
     ],
     targets: [
         .target(
@@ -20,6 +20,6 @@ let package = Package(
             dependencies: ["AlgoliaSearchClientSwift", "InstantSearchInsights"]),
         .testTarget(
             name: "InstantSearchCoreTests",
-            dependencies: ["InstantSearchCore", "AlgoliaSearchClientSwift", "InstantSearchInsights"]),
+            dependencies: ["InstantSearchCore", "AlgoliaSearchClientSwift", "InstantSearchInsights"])
     ]
 )

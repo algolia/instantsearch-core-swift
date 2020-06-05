@@ -9,24 +9,24 @@
 import Foundation
 
 public extension LoadingInteractor {
-  
+
   struct SearcherConnection<S: Searcher>: Connection {
-    
+
     public let interactor: LoadingInteractor
     public let searcher: S
-    
+
     public func connect() {
       searcher.isLoading.subscribePast(with: interactor) { interactor, isLoading in
         interactor.item = isLoading
       }
     }
-    
+
     public func disconnect() {
       searcher.isLoading.cancelSubscription(for: interactor)
     }
-    
+
   }
-  
+
 }
 
 public extension LoadingInteractor {
@@ -36,5 +36,5 @@ public extension LoadingInteractor {
     connection.connect()
     return connection
   }
-  
+
 }

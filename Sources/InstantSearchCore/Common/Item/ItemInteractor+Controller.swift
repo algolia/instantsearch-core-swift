@@ -9,25 +9,25 @@
 import Foundation
 
 public extension ItemInteractor {
-  
+
   struct ControllerConnection<Controller: ItemController, Output>: Connection where Controller.Item == Output {
-    
+
     public let interactor: ItemInteractor
     public let controller: Controller
     public let presenter: Presenter<Item, Output>
-    
+
     public func connect() {
       interactor.onItemChanged.subscribePast(with: controller) { controller, item in
         controller.setItem(self.presenter(item))
       }.onQueue(.main)
     }
-    
+
     public func disconnect() {
       interactor.onItemChanged.cancelSubscription(for: controller)
     }
-    
+
   }
-  
+
 }
 
 public extension ItemInteractor {
@@ -38,5 +38,5 @@ public extension ItemInteractor {
     connection.connect()
     return connection
   }
-  
+
 }

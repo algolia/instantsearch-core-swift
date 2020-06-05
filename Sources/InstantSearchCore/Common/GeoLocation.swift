@@ -9,17 +9,17 @@
 import Foundation
 
 public struct GeoLocation: Codable, RawRepresentable {
-    
+
     public typealias RawValue = String
-    
+
     public let latitude: Double
     public let longitude: Double
-    
+
     public init(latitude: Double, longitude: Double) {
         self.latitude = latitude
         self.longitude = longitude
     }
-    
+
     public init?(rawValue: RawValue) {
         let components = rawValue.split(separator: ",")
         guard
@@ -31,9 +31,9 @@ public struct GeoLocation: Codable, RawRepresentable {
         }
         self.init(latitude: latitude, longitude: longitude)
     }
-    
+
     public var rawValue: String {
         return "\(latitude),\(longitude)"
     }
-    
+
 }

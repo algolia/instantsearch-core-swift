@@ -9,22 +9,22 @@
 import Foundation
 
 public class MultiSourceReloadNotifier {
-  
+
   public let target: Reloadable
-  
+
   private var resultsUpdatableWrappers: [ResultsUpdatableNotificationWrapper] = []
-  
+
   public init(target: Reloadable) {
     self.target = target
     self.resultsUpdatableWrappers = []
   }
-    
+
   public func register<Updatable: ResultUpdatable>(_ updatable: Updatable) {
     let wrapper = ResultsUpdatableNotificationWrapper(updatable: updatable)
     wrapper.connect()
     resultsUpdatableWrappers.append(wrapper)
   }
-  
+
   public func notifyReload() {
     let group = DispatchGroup()
     for updatable in resultsUpdatableWrappers {
@@ -37,16 +37,16 @@ public class MultiSourceReloadNotifier {
       self?.target.reload()
     }
   }
-  
+
 }
 
 private class ResultsUpdatableNotificationWrapper: Connection {
-  
+
   public var onResultsUpdated: Observer<Void>
-  
+
   private var subscribe: () -> Void
   private var unsubscribe: () -> Void
-  
+
   public init<Updatable: ResultUpdatable>(updatable: Updatable) {
     onResultsUpdated = .init()
     subscribe = {}
@@ -62,13 +62,13 @@ private class ResultsUpdatableNotificationWrapper: Connection {
       updatable.onResultsUpdated.cancelSubscription(for: wrapper)
     }
   }
-  
+
   public func connect() {
     subscribe()
   }
-  
+
   public func disconnect() {
     unsubscribe()
   }
-  
+
 }

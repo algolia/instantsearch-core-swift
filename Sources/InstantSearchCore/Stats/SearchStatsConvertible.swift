@@ -9,13 +9,13 @@
 import Foundation
 
 public protocol SearchStatsConvertible {
-  
+
   var searchStats: SearchStats { get }
-  
+
 }
 
 extension SearchResponse: SearchStatsConvertible {
-  
+
   public var searchStats: SearchStats {
     return .init(totalHitsCount: nbHits ?? 0,
                  hitsPerPage: hitsPerPage ?? 20,
@@ -25,11 +25,11 @@ extension SearchResponse: SearchStatsConvertible {
                  query: query,
                  queryID: queryID)
   }
-  
+
 }
 
 extension PlacesResponse: SearchStatsConvertible {
-  
+
   public var searchStats: SearchStats {
     return .init(totalHitsCount: nbHits,
                  hitsPerPage: nbHits,
@@ -39,11 +39,11 @@ extension PlacesResponse: SearchStatsConvertible {
                  query: query,
                  queryID: nil)
   }
-  
+
 }
 
 extension FacetSearchResponse: SearchStatsConvertible {
-  
+
   public var searchStats: SearchStats {
     return .init(totalHitsCount: facetHits.count,
                  hitsPerPage: facetHits.count,
@@ -53,5 +53,5 @@ extension FacetSearchResponse: SearchStatsConvertible {
                  query: nil,
                  queryID: nil)
   }
-  
+
 }

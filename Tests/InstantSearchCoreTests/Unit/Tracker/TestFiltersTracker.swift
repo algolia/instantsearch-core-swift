@@ -12,19 +12,19 @@ import Foundation
 class TestFiltersTracker: FilterTrackable {
 
   enum EventType { case view, click, convert }
-  
+
   var did: (((EventType, eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?)) -> Void)?
-  
+
   func viewed(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
     did?((.view, eventName, indexName, filters, userToken))
   }
-  
+
   func clicked(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
     did?((.click, eventName, indexName, filters, userToken))
   }
-  
+
   func converted(eventName: EventName, indexName: IndexName, filters: [String], userToken: UserToken?) {
     did?((.convert, eventName, indexName, filters, userToken))
   }
-  
+
 }

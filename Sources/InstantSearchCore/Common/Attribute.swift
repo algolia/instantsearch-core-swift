@@ -7,7 +7,7 @@
 import Foundation
 
 extension Attribute {
-  
+
   public static let tags = Attribute("_tags")
-  
+
 }

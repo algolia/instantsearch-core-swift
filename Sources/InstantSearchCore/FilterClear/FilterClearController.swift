@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol FilterClearController: class {
-  
+
   var onClick: (() -> Void)? { get set }
-  
+
 }

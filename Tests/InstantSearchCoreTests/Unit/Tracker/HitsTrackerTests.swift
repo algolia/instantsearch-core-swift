@@ -11,7 +11,7 @@ import XCTest
 @testable import InstantSearchCore
 
 class HitsTrackerTests: XCTestCase {
-  
+
   struct Constants {
     static let appID: ApplicationID = "test_app_id"
     static let apiKey: APIKey = "test_api_key"
@@ -23,22 +23,22 @@ class HitsTrackerTests: XCTestCase {
     static let queryID: QueryID = "test query id"
     static let object: [String: JSON] = ["field": "value"]
   }
-  
+
   let searcher = SingleIndexSearcher(appID: Constants.appID, apiKey: Constants.apiKey, indexName: Constants.indexName)
 
   let testTracker = TestHitsTracker()
-  
+
   lazy var tracker: HitsTracker = {
     let tracker = HitsTracker(eventName: Constants.eventName, searcher: .singleIndex(searcher), tracker: testTracker)
     tracker.queryID = Constants.queryID
     return tracker
   }()
-  
+
   let hit = Hit<[String: JSON]>(object: Constants.object, objectID: Constants.objectID)
-  
+
   func testClick() {
     let clickExpectation = expectation(description: #function)
-    
+
     testTracker.didClick = { arg in
       XCTAssertEqual(arg.eventName, Constants.eventName)
       XCTAssertEqual(arg.indexName, Constants.indexName)
@@ -48,14 +48,14 @@ class HitsTrackerTests: XCTestCase {
       XCTAssertEqual(arg.userToken, nil)
       clickExpectation.fulfill()
     }
-    
+
     tracker.trackClick(for: hit, position: Constants.position)
     waitForExpectations(timeout: 5, handler: .none)
   }
-  
+
   func testClickCustomEventName() {
     let clickCustomEventExpectation = expectation(description: #function)
-    
+
     testTracker.didClick = { arg in
       XCTAssertEqual(arg.eventName, Constants.customEventName)
       XCTAssertEqual(arg.indexName, Constants.indexName)
@@ -65,14 +65,14 @@ class HitsTrackerTests: XCTestCase {
       XCTAssertEqual(arg.userToken, nil)
       clickCustomEventExpectation.fulfill()
     }
-    
+
     tracker.trackClick(for: hit, position: Constants.position, eventName: Constants.customEventName)
     waitForExpectations(timeout: 5, handler: .none)
   }
-  
+
   func testView() {
     let viewExpectation = expectation(description: #function)
-    
+
     testTracker.didView = { arg in
       XCTAssertEqual(arg.eventName, Constants.eventName)
       XCTAssertEqual(arg.indexName, Constants.indexName)
@@ -80,11 +80,11 @@ class HitsTrackerTests: XCTestCase {
       XCTAssertEqual(arg.userToken, nil)
       viewExpectation.fulfill()
     }
-    
+
     tracker.trackView(for: hit)
     waitForExpectations(timeout: 5, handler: .none)
   }
-  
+
   func testViewCustomEventName() {
     let viewCustomEventExpectation = expectation(description: #function)
 
@@ -95,14 +95,14 @@ class HitsTrackerTests: XCTestCase {
       XCTAssertEqual(arg.userToken, nil)
       viewCustomEventExpectation.fulfill()
     }
-    
+
     tracker.trackView(for: hit, eventName: Constants.customEventName)
     waitForExpectations(timeout: 5, handler: .none)
   }
-  
+
   func testConvert() {
     let convertExpectation = expectation(description: #function)
-    
+
     testTracker.didConvert = { arg in
       XCTAssertEqual(arg.eventName, Constants.eventName)
       XCTAssertEqual(arg.indexName, Constants.indexName)
@@ -115,7 +115,7 @@ class HitsTrackerTests: XCTestCase {
     tracker.trackConvert(for: hit)
     waitForExpectations(timeout: 5, handler: .none)
   }
-  
+
   func textConvertCustomEventName() {
     let convertCustomEventExpectation = expectation(description: #function)
 
@@ -127,9 +127,9 @@ class HitsTrackerTests: XCTestCase {
       XCTAssertEqual(arg.userToken, nil)
       convertCustomEventExpectation.fulfill()
     }
-    
+
     tracker.trackConvert(for: hit, eventName: Constants.customEventName)
     waitForExpectations(timeout: 5, handler: .none)
   }
-  
+
 }

@@ -9,11 +9,11 @@
 import Foundation
 
 public protocol HitsController: class, Reloadable {
-  
+
   associatedtype DataSource: HitsSource
-  
+
   var hitsSource: DataSource? { get set }
-    
+
   func scrollToTop()
-  
+
 }

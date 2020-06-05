@@ -12,28 +12,27 @@ import AlgoliaSearchClientSwift
 /// Abstract base class for online test cases.
 ///
 class OnlineTestCase: XCTestCase {
-    
+
     struct Task: Codable {
         let id: Int
         enum CodingKeys: String, CodingKey {
             case id = "taskID"
         }
     }
-    
+
   var expectationTimeout: TimeInterval = 10
-  
+
   var client: SearchClient!
   var index: Index!
-  
-  
+
   override func setUpWithError() throws {
     super.setUp()
-    
+
     // Init client.
     guard let credentials = TestCredentials.search else {
       throw Error.missingCredentials
     }
-    
+
     client = SearchClient(appID: credentials.applicationID, apiKey: credentials.apiKey)
 
     // Init index.
@@ -42,15 +41,15 @@ class OnlineTestCase: XCTestCase {
     let functionName = invocation!.selector.description
     let indexName = "\(className).\(functionName)"
     index = client.index(withName: safeIndexName(indexName))
-    
+
     // Delete the index.
     // Although it's not shared with other test functions, it could remain from a previous execution.
     try index.delete().wait()
   }
-  
+
   override func tearDown() {
     super.tearDown()
-    
+
     let expectation = self.expectation(description: "Delete index")
     client.index(withName: index.name).delete { result in
       switch result {
@@ -63,12 +62,12 @@ class OnlineTestCase: XCTestCase {
     }
     waitForExpectations(timeout: expectationTimeout, handler: nil)
   }
-    
+
     func fillIndex<O: Encodable>(withItems items: [O], settings: Settings) throws {
       try index.saveObjects(items).wait()
       try index.setSettings(settings).wait()
     }
-    
+
 }
 
 extension OnlineTestCase {

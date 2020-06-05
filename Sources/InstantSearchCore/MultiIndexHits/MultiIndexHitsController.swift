@@ -9,11 +9,11 @@
 import Foundation
 
 public protocol MultiIndexHitsController: class, Reloadable {
-  
+
   var hitsSource: MultiIndexHitsSource? { get set }
-    
+
   func scrollToTop()
-  
+
 }
 
 extension MultiIndexHitsInteractor: MultiIndexHitsSource {}

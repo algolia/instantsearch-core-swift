@@ -10,12 +10,12 @@ import Foundation
 import AlgoliaSearchClientSwift
 
 public class SortByConnector: Connection {
-  
+
   public let searcher: SingleIndexSearcher
   public let interactor: IndexSegmentInteractor
-  
+
   public let searcherConnection: Connection
-  
+
   init(searcher: SingleIndexSearcher,
        indices: [Int: Index],
        selected: Int? = nil) {
@@ -24,13 +24,13 @@ public class SortByConnector: Connection {
     self.searcherConnection = interactor.connectSearcher(searcher: searcher)
     self.interactor.selected = selected
   }
-  
+
   public func connect() {
     searcherConnection.connect()
   }
-  
+
   public func disconnect() {
     searcherConnection.disconnect()
   }
-  
+
 }

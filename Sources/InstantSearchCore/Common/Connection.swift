@@ -9,8 +9,8 @@
 import Foundation
 
 public protocol Connection {
-  
+
   func connect()
   func disconnect()
-  
+
 }

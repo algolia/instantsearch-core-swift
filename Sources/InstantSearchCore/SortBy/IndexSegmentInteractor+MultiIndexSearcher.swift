@@ -9,15 +9,15 @@
 import Foundation
 
 public extension IndexSegment {
-  
+
   struct MultiIndexSearcherConnection: Connection {
-    
+
     let interactor: IndexSegmentInteractor
     let searcher: MultiIndexSearcher
     let queryIndex: Int
-        
+
     public func connect() {
-      
+
       if
         let selected = interactor.selected,
         let index = interactor.items[selected]
@@ -25,7 +25,7 @@ public extension IndexSegment {
         searcher.indexQueryStates[queryIndex].indexName = index.name
         searcher.indexQueryStates[queryIndex].query.page = 0
       }
-      
+
       let queryIndex = self.queryIndex
       interactor.onSelectedComputed.subscribePast(with: searcher) { [weak interactor] searcher, computed in
         if
@@ -40,21 +40,21 @@ public extension IndexSegment {
       }
 
     }
-    
+
     public func disconnect() {
       interactor.onSelectedComputed.cancelSubscription(for: searcher)
     }
-    
+
   }
-  
+
 }
 
 public extension IndexSegmentInteractor {
-  
+
   @discardableResult func connectSearcher(searcher: MultiIndexSearcher, toQueryAtIndex queryIndex: Int) -> IndexSegment.MultiIndexSearcherConnection {
     let connection = IndexSegment.MultiIndexSearcherConnection(interactor: self, searcher: searcher, queryIndex: queryIndex)
     connection.connect()
     return connection
   }
-  
+
 }

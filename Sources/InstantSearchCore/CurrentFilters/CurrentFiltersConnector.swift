@@ -9,13 +9,13 @@
 import Foundation
 
 public class CurrentFiltersConnector: Connection {
-  
+
   public let filterState: FilterState
   public let groupIDs: Set<FilterGroup.ID>?
   public let interactor: CurrentFiltersInteractor
-  
+
   public let filterStateConnection: Connection
-  
+
   public init(filterState: FilterState,
               groupIDs: Set<FilterGroup.ID>? = nil,
               interactor: CurrentFiltersInteractor = .init()) {
@@ -25,13 +25,13 @@ public class CurrentFiltersConnector: Connection {
     self.filterStateConnection = interactor.connectFilterState(filterState, filterGroupIDs: groupIDs)
 
   }
-  
+
   public func connect() {
     filterStateConnection.connect()
   }
-  
+
   public func disconnect() {
     filterStateConnection.disconnect()
   }
-  
+
 }

@@ -11,17 +11,17 @@ import Foundation
 import XCTest
 
 class HitsInteractorFilterStateConnectionTests: XCTestCase {
-  
+
   var interactor: HitsInteractor<JSON> {
     return HitsInteractor<JSON>(settings: .init(infiniteScrolling: .on(withOffset: 10), showItemsOnEmptyQuery: true),
           paginationController: .init(),
     infiniteScrollingController: TestInfiniteScrollingController())
   }
-  
+
   var filterState: FilterState {
     return .init()
   }
-      
+
   func testConnection() {
     let interactor = self.interactor
     let filterState = self.filterState
@@ -71,5 +71,5 @@ class HitsInteractorFilterStateConnectionTests: XCTestCase {
     waitForExpectations(timeout: 2, handler: nil)
 
   }
-  
+
 }

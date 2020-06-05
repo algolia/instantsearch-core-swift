@@ -7,18 +7,18 @@
 //
 
 import Foundation
-  
+
 public struct HitsInteractorFilterStateConnection<Interactor: AnyHitsInteractor>: Connection {
-  
+
   public let interactor: Interactor
   public let filterState: FilterState
-  
+
   public func connect() {
     filterState.onChange.subscribePast(with: interactor) { interactor, _ in
       interactor.notifyQueryChanged()
     }
   }
-  
+
   public func disconnect() {
     filterState.onChange.cancelSubscription(for: interactor)
   }
@@ -26,11 +26,11 @@ public struct HitsInteractorFilterStateConnection<Interactor: AnyHitsInteractor>
 }
 
 public extension AnyHitsInteractor {
-  
+
   @discardableResult func connectFilterState(_ filterState: FilterState) -> Connection {
     let connection = HitsInteractorFilterStateConnection(interactor: self, filterState: filterState)
     connection.connect()
     return connection
   }
-  
+
 }

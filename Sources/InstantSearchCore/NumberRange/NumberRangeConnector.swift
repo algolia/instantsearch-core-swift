@@ -9,11 +9,11 @@
 import Foundation
 
 public class NumberRangeConnector<Number: Comparable & DoubleRepresentable>: Connection {
-  
+
   public let filterState: FilterState
   public let attribute: Attribute
   public let filterStateConnection: Connection
-  
+
   public init(filterState: FilterState,
               attribute: Attribute,
               operator: RefinementOperator,
@@ -29,13 +29,13 @@ public class NumberRangeConnector<Number: Comparable & DoubleRepresentable>: Con
                                                                operator: `operator`,
                                                                groupName: groupName)
   }
-  
+
   public func connect() {
     filterStateConnection.connect()
   }
-  
+
   public func disconnect() {
     filterStateConnection.disconnect()
   }
-  
+
 }

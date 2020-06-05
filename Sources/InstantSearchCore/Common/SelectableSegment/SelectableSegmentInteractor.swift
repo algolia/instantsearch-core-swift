@@ -9,23 +9,23 @@
 import Foundation
 
 public class SelectableSegmentInteractor<SegmentKey: Hashable, Segment> {
-  
+
   public var items: [SegmentKey: Segment] {
     didSet {
       onItemsChanged.fire(items)
     }
   }
-  
+
   public var selected: SegmentKey? {
     didSet {
       onSelectedChanged.fire(selected)
     }
   }
-  
+
   public let onItemsChanged: Observer<[SegmentKey: Segment]>
   public let onSelectedChanged: Observer<SegmentKey?>
   public let onSelectedComputed: Observer<SegmentKey?>
-  
+
   public init(items: [SegmentKey: Segment]) {
     self.items = items
     self.selected = .none
@@ -34,9 +34,9 @@ public class SelectableSegmentInteractor<SegmentKey: Hashable, Segment> {
     self.onSelectedComputed = .init()
     onItemsChanged.fire(items)
   }
-  
+
   public func computeSelected(selecting keyToSelect: SegmentKey?) {
     onSelectedComputed.fire(keyToSelect)
   }
-  
+
 }

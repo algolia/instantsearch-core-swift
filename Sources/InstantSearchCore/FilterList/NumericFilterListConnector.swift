@@ -11,7 +11,7 @@ import Foundation
 public typealias NumericFilterListConnector = FilterListConnector<Filter.Numeric>
 
 public extension NumericFilterListConnector {
-  
+
   convenience init(numericFilters: [InstantSearchCore.Filter.Numeric] = [],
                    selectionMode: SelectionMode = .single,
                    filterState: FilterState,
@@ -24,5 +24,5 @@ public extension NumericFilterListConnector {
               operator: `operator`,
               groupName: groupName)
   }
-  
+
 }

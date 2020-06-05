@@ -11,7 +11,7 @@ import Foundation
 public typealias FacetFilterListConnector = FilterListConnector<Filter.Facet>
 
 public extension FacetFilterListConnector {
-  
+
   convenience init(filters: [InstantSearchCore.Filter.Facet] = [],
                    selectionMode: SelectionMode = .multiple,
                    filterState: FilterState,
@@ -24,5 +24,5 @@ public extension FacetFilterListConnector {
               operator: `operator`,
               groupName: groupName)
   }
-  
+
 }

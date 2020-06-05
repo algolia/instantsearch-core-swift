@@ -20,11 +20,11 @@ public extension Result where Failure == Error {
       self = .failure(ResultError.invalidResultInput)
     }
   }
-  
+
 }
 
 public extension Result where Success: Decodable, Failure == Error {
-  
+
   init(rawValue: [String: Any]?, error: Failure?) {
     switch (rawValue, error) {
     case (.none, .some(let error)):

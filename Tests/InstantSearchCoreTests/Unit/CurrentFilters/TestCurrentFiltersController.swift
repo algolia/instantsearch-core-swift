@@ -11,18 +11,18 @@ import Foundation
 import XCTest
 
 class TestCurrentFiltersController: CurrentFiltersController {
-  
+
   var items: [FilterAndID] = []
-  
+
   var didReload: (() -> Void)?
   var onRemoveItem: ((FilterAndID) -> Void)?
-  
+
   func setItems(_ items: [FilterAndID]) {
     self.items = items
   }
-  
+
   func reload() {
     self.didReload?()
   }
-  
+
 }

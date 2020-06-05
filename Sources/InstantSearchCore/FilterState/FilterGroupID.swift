@@ -10,12 +10,12 @@
 import Foundation
 
 extension FilterGroup {
-  
+
   public enum ID: Hashable {
-    
+
     public enum Filter {
       case facet, numeric, tag
-      
+
       init?<F: FilterType>(_ filterType: F.Type) {
         switch filterType {
         case is InstantSearchCore.Filter.Facet.Type:
@@ -28,13 +28,13 @@ extension FilterGroup {
           return nil
         }
       }
-      
+
     }
-    
+
     case or(name: String, filterType: Filter)
     case and(name: String)
     case hierarchical(name: String)
-    
+
     var name: String {
       switch self {
       case .or(name: let name, _),
@@ -43,7 +43,7 @@ extension FilterGroup {
         return name
       }
     }
-    
+
     var isConjunctive: Bool {
       switch self {
       case .and,
@@ -53,11 +53,11 @@ extension FilterGroup {
         return false
       }
     }
-    
+
     var isDisjunctive: Bool {
       return !isConjunctive
     }
-    
+
     init?(_ filterGroup: FilterGroupType) {
       let groupName = filterGroup.name ?? ""
       switch filterGroup {
@@ -75,13 +75,13 @@ extension FilterGroup {
         return nil
       }
     }
-    
+
   }
-  
+
 }
 
 extension FilterGroup.ID: CustomStringConvertible {
-  
+
   public var description: String {
     switch self {
     case .and(name: let name):
@@ -92,5 +92,5 @@ extension FilterGroup.ID: CustomStringConvertible {
       return "hierarchical<\(name)>"
     }
   }
-  
+
 }

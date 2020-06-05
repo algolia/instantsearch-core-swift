@@ -12,40 +12,40 @@ import AlgoliaSearchClientSwift
  */
 
 public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable {
-  
+
   public typealias SearchResult = FacetSearchResponse
-  
+
   public var query: String? {
     didSet {
       guard oldValue != query else { return }
       onQueryChanged.fire(query)
     }
   }
-  
+
   public let client: SearchClient
-  
+
   /// Current tuple of index and query
   public var indexQueryState: IndexQueryState
-  
+
   public var onQueryChanged: Observer<String?>
-  
+
   public let isLoading: Observer<Bool>
-  
+
   public let onResults: Observer<SearchResult>
-  
+
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query text and error
   public let onError: Observer<(String, Error)>
-  
+
   /// Name of facet attribute for which the values will be searched
   public var facetName: String
-  
+
   /// Custom request options
   public var requestOptions: RequestOptions?
-  
+
   /// Sequencer which orders and debounce redundant search operations
   internal let sequencer: Sequencer
-  
+
   private let processingQueue: OperationQueue
 
   /**
@@ -70,7 +70,7 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
               query: query,
               requestOptions: requestOptions)
   }
-  
+
   /**
    - Parameters:
    - index: Index value in which search will be performed
@@ -100,34 +100,34 @@ public class FacetSearcher: Searcher, SequencerDelegate, SearchResultObservable 
     processingQueue.maxConcurrentOperationCount = 1
     processingQueue.qualityOfService = .userInitiated
   }
-  
+
   public func search() {
-    
+
     let query = self.query ?? ""
     let indexName = indexQueryState.indexName
-    
+
     let operation = client.index(withName: indexName).searchForFacetValues(of: Attribute(rawValue: facetName), matching: query, applicableFor: indexQueryState.query) { [weak self] result in
       guard let searcher = self else { return }
-      
+
       searcher.processingQueue.addOperation {
         switch result {
         case .success(let results):
           Logger.Results.success(searcher: searcher, indexName: indexName, results: results)
           searcher.onResults.fire(results)
-          
+
         case .failure(let error):
           Logger.Results.failure(searcher: searcher, indexName: indexName, error)
           searcher.onError.fire((query, error))
         }
       }
     }
-    
+
     sequencer.orderOperation(operationLauncher: { return operation })
-    
+
   }
-  
+
   public func cancel() {
     sequencer.cancelPendingOperations()
   }
-  
+
 }

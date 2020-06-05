@@ -9,9 +9,9 @@
 import Foundation
 
 extension FilterState: DisjunctiveFacetingDelegate {
-  
+
   public var disjunctiveFacetsAttributes: Set<Attribute> {
     return filters.disjunctiveFacetsAttributes
   }
-  
+
 }

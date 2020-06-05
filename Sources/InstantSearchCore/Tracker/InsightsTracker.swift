@@ -10,13 +10,13 @@ import Foundation
 import InstantSearchInsights
 
 public protocol InsightsTracker: class {
-  
+
   init(eventName: EventName, searcher: TrackableSearcher, insights: Insights)
-  
+
 }
 
 extension InsightsTracker {
-  
+
   public init(eventName: EventName,
               searcher: SingleIndexSearcher,
               userToken: String? = .none) {
@@ -34,7 +34,7 @@ extension InsightsTracker {
               searcher: .singleIndex(searcher),
               insights: insights)
   }
-  
+
   public init(eventName: EventName,
               searcher: MultiIndexSearcher,
               pointer: Int,
@@ -54,5 +54,5 @@ extension InsightsTracker {
               searcher: .multiIndex(searcher, pointer: pointer),
               insights: insights)
   }
-  
+
 }

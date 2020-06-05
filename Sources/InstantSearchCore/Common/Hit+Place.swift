@@ -9,11 +9,11 @@
 import Foundation
 
 public extension Hit {
-  
+
   func getBestHighlightedForm(from highlightResults: [HighlightResult]) -> HighlightedString? {
-    
+
     guard let defaultValue = highlightResults.first?.value.taggedString.input else { return nil }
-        
+
     let bestAttributesOrder = highlightResults
       .filter { $0.matchLevel != .none }
       .enumerated()
@@ -26,24 +26,24 @@ public extension Hit {
       }
       .map { $0.offset }
       .first
-    
+
     guard let theBestAttributeIndex = bestAttributesOrder else { return HighlightedString(string: defaultValue) }
 
     return highlightResults[theBestAttributeIndex].value
-    
+
   }
 
   func getBestHighlightedForm(forKey key: String) -> HighlightedString? {
-    
+
     guard case .dictionary(let dictionary) = highlightResult  else {
       return nil
     }
-      
+
     let highlightResults: [HighlightResult]
-    
+
     switch dictionary[key] {
-    case .array(let hl):
-      highlightResults = hl.compactMap {
+    case .array(let highlightResultsList):
+      highlightResults = highlightResultsList.compactMap {
         if case .value(let val) = $0 {
           return val
         } else {
@@ -53,26 +53,26 @@ public extension Hit {
 
     case .value(let value):
       highlightResults = [value]
-      
+
     default:
       return nil
     }
-    
+
     return getBestHighlightedForm(from: highlightResults)
-      
+
   }
 
 }
 
 extension Hit: CustomStringConvertible where T == Place {
-  
+
   public var description: String {
     let cityKey = object.isCity! ? "locale_names" : "city"
     let country = getBestHighlightedForm(forKey: "country")
     let county = getBestHighlightedForm(forKey: "county")
     let city = getBestHighlightedForm(forKey: cityKey)
     let streetName = object.isCity! ? nil : getBestHighlightedForm(forKey: "locale_names")
-    
+
     return [streetName, city, county, country]
       .compactMap { $0 }
       .filter { !$0.taggedString.input.isEmpty }
@@ -80,5 +80,5 @@ extension Hit: CustomStringConvertible where T == Place {
       .joined(separator: ", ")
 
   }
-  
+
 }

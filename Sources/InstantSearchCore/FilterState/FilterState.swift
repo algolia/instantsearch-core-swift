@@ -12,10 +12,10 @@ import Foundation
  Encapsulates search filters providing a convenient interface to manage them
  */
 public class FilterState {
-  
+
   /// Filters container
   var filters: FiltersReadable & FiltersWritable & FilterGroupsConvertible & HierarchicalManageable
-  
+
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query and error
   public var onChange: Observer<ReadOnlyFiltersContainer>
@@ -25,13 +25,13 @@ public class FilterState {
     self.filters = GroupsStorage()
     self.onChange = .init()
   }
-  
+
   /// Copy constructor
   public init(_ filterState: FilterState) {
     self.filters = filterState.filters
     self.onChange = .init()
   }
-  
+
   /// Replace the groups of filter state by the groups of the filter state passed as parameter
   /// - Parameter filterState: source filter state
   public func setWithContent(of filterState: FilterState) {
@@ -42,14 +42,14 @@ public class FilterState {
   public func notifyChange() {
     onChange.fire(ReadOnlyFiltersContainer(filtersContainer: self))
   }
-  
+
   /// Subscript providing access to a conjunctive group with specified name
   /// - Parameter groupName: required group name
   /// - Returns: required group accessor
   public subscript(and groupName: String) -> AndGroupAccessor {
     return .init(filtersContainer: self, groupName: groupName)
   }
-  
+
   /// Subscript providing access to disjunctive group with specified name and manually defined filter type
   /// To use if filter type cannot be inferred
   /// - Parameter groupName: required group name
@@ -57,35 +57,35 @@ public class FilterState {
   public subscript<F: FilterType>(or groupName: String, type: F.Type) -> OrGroupAccessor<F> {
     return .init(filtersContainer: self, groupName: groupName)
   }
-  
+
   /// Subscript providing access to a disjunctive group with specified name
   /// - Parameter groupName: required group name
   /// - Returns: required group accessor
   public subscript<F: FilterType>(or groupName: String) -> OrGroupAccessor<F> {
     return .init(filtersContainer: self, groupName: groupName)
   }
-  
+
   /// Subscript providing access to a hierarchical group with specified name
   /// - Parameter groupName: required group name
   /// - Returns: required group accessor
   public subscript(hierarchical groupName: String) -> HierarchicalGroupAccessor {
     return .init(filtersContainer: self, groupName: groupName)
   }
-  
+
 }
 
 extension FilterState: FiltersContainer {}
 
 extension FilterState: FilterGroupsConvertible {
-  
+
   public func toFilterGroups() -> [FilterGroupType] {
     return filters.toFilterGroups()
   }
-  
+
 }
 
 extension FilterState: CustomStringConvertible {
-  
+
   public var description: String {
     return FilterGroupConverter().sql(toFilterGroups()) ?? ""
   }

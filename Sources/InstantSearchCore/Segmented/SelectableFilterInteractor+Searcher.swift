@@ -10,19 +10,19 @@
 import Foundation
 import AlgoliaSearchClientSwift
 public struct SelectableFilterInteractorSearcherConnection<Filter: FilterType>: Connection {
-  
+
   public let interactor: SelectableSegmentInteractor<Int, Filter>
   public let searcher: SingleIndexSearcher
   public let attribute: Attribute
-  
+
   public func connect() {
     searcher.indexQueryState.query.updateQueryFacets(with: attribute)
   }
-  
+
   public func disconnect() {
-    
+
   }
-  
+
 }
 
 public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: FilterType {
@@ -32,5 +32,5 @@ public extension SelectableSegmentInteractor where SegmentKey == Int, Segment: F
     connection.connect()
     return connection
   }
-  
+
 }

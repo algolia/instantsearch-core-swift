@@ -9,11 +9,11 @@
 import Foundation
 
 public enum Filter: Hashable {
-  
+
   case facet(Facet)
   case numeric(Numeric)
   case tag(Tag)
-  
+
   public var attribute: Attribute {
     switch self {
     case .facet(let filter):
@@ -24,7 +24,7 @@ public enum Filter: Hashable {
       return filter.attribute
     }
   }
-  
+
   public init<F: FilterType>(_ filter: F) {
     switch filter {
     case let facetFilter as Filter.Facet:
@@ -37,7 +37,7 @@ public enum Filter: Hashable {
       fatalError("Filter of type \(F.self) is not supported")
     }
   }
-  
+
   public init(_ filter: FilterType) {
     switch filter {
     case let facetFilter as Filter.Facet:
@@ -55,19 +55,19 @@ public enum Filter: Hashable {
     switch self {
     case .facet(let facetFilter):
       return facetFilter
-      
+
     case .numeric(let numericFilter):
       return numericFilter
-      
+
     case .tag(let tagFilter):
       return tagFilter
     }
   }
-  
+
 }
 
 extension Filter: CustomStringConvertible {
-  
+
   public var description: String {
     switch self {
     case .facet(let facetFilter):
@@ -78,34 +78,34 @@ extension Filter: CustomStringConvertible {
       return tagFilter.description
     }
   }
-  
+
 }
 
 /// Abstract filter protocol
 public protocol FilterType {
-  
+
   /// Identifier of field affected by filter
   var attribute: Attribute { get }
-  
+
   /// A Boolean value indicating whether filter is inverted
   var isNegated: Bool { get set }
-  
+
   /// Replaces isNegated property by a new value
   /// parameter value: new value of isNegated
   mutating func not(value: Bool)
-  
+
 }
 
 public extension FilterType {
-  
+
   mutating func not(value: Bool = true) {
     isNegated = value
   }
-  
+
 }
 
-@discardableResult public prefix func ! <T: FilterType>(f: T) -> T {
-  var mutableFilterCopy = f
-  mutableFilterCopy.not(value: !f.isNegated)
+@discardableResult public prefix func ! <T: FilterType>(filter: T) -> T {
+  var mutableFilterCopy = filter
+  mutableFilterCopy.not(value: !filter.isNegated)
   return mutableFilterCopy
 }

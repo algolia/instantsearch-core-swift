@@ -11,28 +11,28 @@ import XCTest
 @testable import InstantSearchCore
 
 class QueryInputInteractorTests: XCTestCase {
-  
+
   func testOnQueryChangedEvent() {
-    
+
     let interactor = QueryInputInteractor()
-    
+
     let onQueryChangedExpectation = expectation(description: "on query changed")
-    
+
     let changedQuery = "q1"
-    
+
     interactor.onQueryChanged.subscribe(with: self) { _, query in
       XCTAssertEqual(query, changedQuery)
       onQueryChangedExpectation.fulfill()
     }
-    
+
     interactor.query = changedQuery
-    
+
     waitForExpectations(timeout: 2, handler: nil)
-    
+
   }
-  
+
   func testOnQuerySubmittedEvent() {
-    
+
     let interactor = QueryInputInteractor()
     let onQuerySubmittedExpectation = expectation(description: "on query submitted")
     let submittedQuery = "q2"
@@ -41,14 +41,14 @@ class QueryInputInteractorTests: XCTestCase {
       XCTAssertEqual(submittedQuery, query)
       onQuerySubmittedExpectation.fulfill()
     }
-    
+
     interactor.query = submittedQuery
     interactor.submitQuery()
-    
+
     waitForExpectations(timeout: 2, handler: nil)
-    
+
   }
-  
+
   func testSearcherQuerySet() {
     let searcher = TestSearcher()
     let interactor = QueryInputInteractor()
@@ -57,5 +57,5 @@ class QueryInputInteractorTests: XCTestCase {
     interactor.connectSearcher(searcher, searchTriggeringMode: .searchOnSubmit)
     XCTAssertEqual(interactor.query, query)
   }
-        
+
 }

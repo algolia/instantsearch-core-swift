@@ -9,7 +9,7 @@
 import Foundation
 
 extension Optional where Wrapped == String {
-  
+
   var isNilOrEmpty: Bool {
     switch self {
     case .some(let string):
@@ -18,5 +18,5 @@ extension Optional where Wrapped == String {
       return true
     }
   }
-  
+
 }

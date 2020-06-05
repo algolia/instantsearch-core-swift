@@ -9,13 +9,13 @@
 import Foundation
 
 public extension IndexSegment {
-  
+
   struct ControllerConnection<Controller: SelectableSegmentController>: Connection where Controller.SegmentKey == Int {
-    
+
     public let interactor: IndexSegmentInteractor
     public let controller: Controller
     public let presenter: IndexPresenter
-    
+
     public init(interactor: IndexSegmentInteractor,
                 controller: Controller,
                 presenter: @escaping IndexPresenter = DefaultPresenter.Index.present) {
@@ -23,7 +23,7 @@ public extension IndexSegment {
       self.controller = controller
       self.presenter = presenter
     }
-    
+
     public func connect() {
       controller.setItems(items: interactor.items.mapValues(presenter))
       controller.onClick = interactor.computeSelected(selecting:)
@@ -34,25 +34,25 @@ public extension IndexSegment {
         controller.setItems(items: newItems.mapValues(self.presenter))
       }.onQueue(.main)
     }
-    
+
     public func disconnect() {
       controller.setItems(items: [:])
       controller.onClick = nil
       interactor.onSelectedChanged.cancelSubscription(for: controller)
       interactor.onItemsChanged.cancelSubscription(for: controller)
     }
-    
+
   }
-  
+
 }
 
 public extension IndexSegmentInteractor {
-  
+
   @discardableResult func connectController<Controller: SelectableSegmentController>(_ controller: Controller,
                                                                                      presenter: @escaping IndexPresenter = DefaultPresenter.Index.present) -> IndexSegment.ControllerConnection<Controller> where Controller.SegmentKey == SegmentKey {
     let connection = IndexSegment.ControllerConnection(interactor: self, controller: controller, presenter: presenter)
     connection.connect()
     return connection
   }
-  
+
 }

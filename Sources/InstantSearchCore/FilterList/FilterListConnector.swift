@@ -9,7 +9,7 @@
 import Foundation
 
 public class FilterListConnector<Filter: FilterType & Hashable>: Connection {
-  
+
   public let filterState: FilterState
   public let interactor: FilterListInteractor<Filter>
   public let connectionFilterState: Connection
@@ -28,9 +28,9 @@ public class FilterListConnector<Filter: FilterType & Hashable>: Connection {
   public func connect() {
     connectionFilterState.connect()
   }
-  
+
   public func disconnect() {
     connectionFilterState.disconnect()
   }
-  
+
 }

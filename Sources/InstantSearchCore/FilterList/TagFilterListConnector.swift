@@ -11,7 +11,7 @@ import Foundation
 public typealias TagFilterListConnector = FilterListConnector<Filter.Tag>
 
 public extension TagFilterListConnector {
-  
+
   convenience init(tagFilters: [InstantSearchCore.Filter.Tag] = [],
                    selectionMode: SelectionMode = .multiple,
                    filterState: FilterState,
@@ -24,5 +24,5 @@ public extension TagFilterListConnector {
               operator: `operator`,
               groupName: groupName)
   }
-  
+
 }

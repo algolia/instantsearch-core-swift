@@ -9,14 +9,14 @@
 import Foundation
 
 public class HierarchicalConnector: Connection {
-  
+
   public let searcher: SingleIndexSearcher
   public let filterState: FilterState
   public let interactor: HierarchicalInteractor
-  
+
   public let searcherConnection: Connection
   public let filterStateConnection: Connection
-  
+
   public init(searcher: SingleIndexSearcher,
               attribute: Attribute,
               filterState: FilterState,
@@ -28,15 +28,15 @@ public class HierarchicalConnector: Connection {
     self.searcherConnection = interactor.connectSearcher(searcher: searcher)
     self.filterStateConnection = interactor.connectFilterState(filterState)
   }
-  
+
   public func connect() {
     searcherConnection.connect()
     filterStateConnection.connect()
   }
-  
+
   public func disconnect() {
     searcherConnection.disconnect()
     filterStateConnection.disconnect()
   }
-  
+
 }

@@ -9,13 +9,13 @@
 import Foundation
 
 public extension ItemsListInteractor {
-  
+
   struct ControllerConnection<Controller: ItemListController>: Connection where Controller.Item == Item, Item == FilterAndID {
-    
+
     public let interactor: ItemsListInteractor
     public let controller: Controller
     public let presenter: Presenter<Filter, String>
-    
+
     public init(interactor: ItemsListInteractor,
                 controller: Controller,
                 presenter: @escaping Presenter<Filter, String> = DefaultPresenter.Filter.present) {
@@ -23,31 +23,31 @@ public extension ItemsListInteractor {
       self.controller = controller
       self.presenter = presenter
     }
-    
+
     public func connect() {
-      
+
       controller.onRemoveItem = { [weak interactor] item in
         let filterAndID = FilterAndID(filter: item.filter, id: item.id)
         interactor?.remove(item: filterAndID)
       }
 
       let presenter = self.presenter
-      
+
       interactor.onItemsChanged.subscribePast(with: controller) { controller, items in
         let itemsWithPresenterApplied = items.map { FilterAndID(filter: $0.filter, id: $0.id, text: presenter($0.filter))}
         controller.setItems(itemsWithPresenterApplied)
         controller.reload()
       }.onQueue(.main)
-      
+
     }
-    
+
     public func disconnect() {
       controller.onRemoveItem = .none
       interactor.onItemsChanged.cancelSubscription(for: controller)
     }
 
   }
-  
+
 }
 
 public extension ItemsListInteractor {
@@ -58,5 +58,5 @@ public extension ItemsListInteractor {
     connection.connect()
     return connection
   }
-  
+
 }

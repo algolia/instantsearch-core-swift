@@ -12,9 +12,9 @@ import AlgoliaSearchClientSwift
 */
 
 public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObservable {
-    
+
   public var query: String? {
-    
+
     set {
       let oldValue = indexQueryStates.first?.query.query
       guard oldValue != newValue else { return }
@@ -24,40 +24,40 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
       }
       onQueryChanged.fire(newValue)
     }
-    
+
     get {
       return indexQueryStates.first?.query.query
     }
 
   }
-  
+
   /// `Client` instance containing indices in which search will be performed
   public let client: SearchClient
-  
+
   /// List of  index & query tuples
   public internal(set) var indexQueryStates: [IndexQueryState]
-  
+
   public let isLoading: Observer<Bool>
-  
+
   public let onQueryChanged: Observer<String?>
-  
+
   public let onResults: Observer<SearchesResponse>
-  
+
   /// Triggered when an error occured during search query execution
   /// - Parameter: a tuple of query and error
   public let onError: Observer<([Query], Error)>
-  
+
   /// Custom request options
   public var requestOptions: RequestOptions?
-  
+
   /// Sequencer which orders and debounce redundant search operations
   internal let sequencer: Sequencer
 
   /// Helpers for separate pagination management
   internal var pageLoaders: [PageLoaderProxy]
-  
+
   private let processingQueue: OperationQueue
-  
+
   /**
    - Parameters:
    - appID: Application ID
@@ -75,7 +75,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
               indexQueryStates: indexQueryStates,
               requestOptions: requestOptions)
   }
-  
+
   /**
    - Parameters:
    - appID: Application ID
@@ -92,7 +92,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
               indexQueryStates: indexQueryStates,
               requestOptions: requestOptions)
   }
-  
+
   /**
    - Parameters:
    - appID: Application ID
@@ -100,40 +100,40 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
    - indexQueryStates: List of the instances of IndexQueryStates encapsulating index value in which search will be performed and a correspondant Query instance
    - requestOptions: Custom request options. Default is nil.
    */
-  
+
   public init(client: SearchClient,
               indexQueryStates: [IndexQueryState],
               requestOptions: RequestOptions? = nil) {
-    
+
     self.client = client
     self.indexQueryStates = indexQueryStates
     self.requestOptions = requestOptions
     self.pageLoaders = []
-    
+
     processingQueue = .init()
     sequencer = .init()
     onQueryChanged = .init()
     isLoading = .init()
     onResults = .init()
     onError = .init()
-    
+
     sequencer.delegate = self
     onResults.retainLastData = true
     isLoading.retainLastData = true
     updateClientUserAgents()
     processingQueue.maxConcurrentOperationCount = 1
     processingQueue.qualityOfService = .userInitiated
-    
+
     self.pageLoaders = indexQueryStates.enumerated().map { (index, _) in
       return PageLoaderProxy(setPage: { self.indexQueryStates[index].query.page = $0 }, launchSearch: self.search)
     }
 
   }
-  
+
   public func search() {
-      
+
     let queries = indexQueryStates.map { ($0.indexName, $0.query) }
-    
+
     let operation = client.multipleQueries(queries: queries) { [weak self] result in
       guard let searcher = self else { return }
       searcher.processingQueue.addOperation {
@@ -144,7 +144,7 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
               Logger.Results.success(searcher: searcher, indexName: query.0, results: searchResults)
             }
           searcher.onResults.fire(response)
-          
+
         case .failure(let error):
           let indicesDescriptor = "[\(queries.map { $0.0.rawValue }.joined(separator: ", "))]"
           Logger.Results.failure(searcher: searcher, indexName: IndexName(rawValue: indicesDescriptor), error)
@@ -152,33 +152,33 @@ public class MultiIndexSearcher: Searcher, SequencerDelegate, SearchResultObserv
         }
       }
     }
-        
+
     sequencer.orderOperation(operationLauncher: { return operation })
   }
-  
+
   public func cancel() {
     sequencer.cancelPendingOperations()
   }
-  
+
 }
 
 internal extension MultiIndexSearcher {
-  
+
   class PageLoaderProxy: PageLoadable {
-    
+
     let setPage: (Int) -> Void
     let launchSearch: () -> Void
-    
+
     init(setPage: @escaping (Int) -> Void, launchSearch: @escaping () -> Void) {
       self.setPage = setPage
       self.launchSearch = launchSearch
     }
-    
+
     func loadPage(atIndex pageIndex: Int) {
       setPage(pageIndex)
       launchSearch()
     }
-    
+
   }
-  
+
 }

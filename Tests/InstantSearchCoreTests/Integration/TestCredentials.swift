@@ -32,7 +32,7 @@ struct TestCredentials: Credentials {
       return nil
     }
   }()
-  
+
 }
 
 extension String {

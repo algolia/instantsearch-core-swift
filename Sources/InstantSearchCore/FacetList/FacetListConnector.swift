@@ -9,32 +9,32 @@
 import Foundation
 
 public class FacetListConnector: Connection {
-  
+
   public enum Searcher {
     case singleIndex(SingleIndexSearcher)
     case facet(FacetSearcher)
   }
-  
+
   public let filterState: FilterState
   public let searcher: Searcher
   public let interactor: FacetListInteractor
   public let attribute: Attribute
-  
+
   public let filterStateConnection: Connection
   public let searcherConnection: Connection
-    
+
   internal init(searcher: Searcher,
                 filterState: FilterState,
                 interactor: FacetListInteractor = .init(),
                 attribute: Attribute,
                 operator: RefinementOperator,
                 groupName: String? = nil) {
-    
+
     self.filterState = filterState
     self.searcher = searcher
     self.interactor = interactor
     self.attribute = attribute
-    
+
     self.filterStateConnection = interactor.connectFilterState(filterState,
                                                                with: attribute,
                                                                operator: `operator`,
@@ -42,13 +42,13 @@ public class FacetListConnector: Connection {
     switch searcher {
     case .facet(let facetSearcher):
       searcherConnection = interactor.connectFacetSearcher(facetSearcher)
-      
+
     case .singleIndex(let singleIndexSearcher):
       searcherConnection = interactor.connectSearcher(singleIndexSearcher, with: attribute)
     }
-    
+
   }
-  
+
   public convenience init(searcher: SingleIndexSearcher,
                           filterState: FilterState,
                           attribute: Attribute,
@@ -62,7 +62,7 @@ public class FacetListConnector: Connection {
               operator: `operator`,
               groupName: groupName)
   }
-  
+
   public convenience init(searcher: FacetSearcher,
                           filterState: FilterState,
                           attribute: Attribute,
@@ -76,7 +76,7 @@ public class FacetListConnector: Connection {
               operator: `operator`,
               groupName: groupName)
   }
-  
+
   public convenience init(searcher: SingleIndexSearcher,
                           filterState: FilterState,
                           attribute: Attribute,
@@ -91,7 +91,7 @@ public class FacetListConnector: Connection {
               operator: `operator`,
               groupName: groupName)
   }
-  
+
   public convenience init(searcher: FacetSearcher,
                           filterState: FilterState,
                           attribute: Attribute,
@@ -111,10 +111,10 @@ public class FacetListConnector: Connection {
     filterStateConnection.connect()
     searcherConnection.connect()
   }
-  
+
   public func disconnect() {
     filterStateConnection.disconnect()
     searcherConnection.disconnect()
   }
-  
+
 }

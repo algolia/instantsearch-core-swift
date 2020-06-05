@@ -15,7 +15,7 @@ public class SelectableInteractor<Item>: ItemInteractor<Item> {
       onSelectedChanged.fire(isSelected)
     }
   }
-  
+
   public let onSelectedChanged: Observer<Bool>
   public let onSelectedComputed: Observer<Bool>
 
@@ -25,9 +25,9 @@ public class SelectableInteractor<Item>: ItemInteractor<Item> {
     self.onSelectedComputed = .init()
     super.init(item: item)
   }
-  
+
   public func computeIsSelected(selecting: Bool) {
     onSelectedComputed.fire(selecting)
   }
-  
+
 }

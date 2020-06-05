@@ -9,35 +9,35 @@
 import Foundation
 
 public extension HitsInteractor {
-  
+
   struct SingleIndexSearcherConnection: Connection {
-    
+
     public let interactor: HitsInteractor
     public let searcher: SingleIndexSearcher
-    
+
     public func connect() {
-      
+
       interactor.pageLoader = searcher
-      
+
       searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
         interactor.update(searchResults)
       }
-      
+
       searcher.onError.subscribe(with: interactor) { interactor, arg in
         let (query, error) = arg
         interactor.process(error, for: query)
       }
-      
+
       searcher.onIndexChanged.subscribePast(with: interactor) { interactor, _ in
         interactor.notifyQueryChanged()
       }
-      
+
       searcher.onQueryChanged.subscribePast(with: interactor) { interactor, _ in
         interactor.notifyQueryChanged()
       }
 
     }
-    
+
     public func disconnect() {
       if interactor.pageLoader === searcher {
         interactor.pageLoader = nil
@@ -47,17 +47,17 @@ public extension HitsInteractor {
       searcher.onIndexChanged.cancelSubscription(for: interactor)
       searcher.onQueryChanged.cancelSubscription(for: interactor)
     }
-    
+
   }
-  
+
 }
 
 public extension HitsInteractor {
-  
+
   @discardableResult func connectSearcher(_ searcher: SingleIndexSearcher) -> SingleIndexSearcherConnection {
     let connection = SingleIndexSearcherConnection(interactor: self, searcher: searcher)
     connection.connect()
     return connection
   }
-  
+
 }

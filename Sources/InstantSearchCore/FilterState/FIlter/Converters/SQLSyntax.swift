@@ -13,19 +13,19 @@ protocol SQLSyntaxConvertible {
 }
 
 extension FilterConverter {
-  
+
   public func sql(_ filter: FilterType) -> String? {
     return (filter as? SQLSyntaxConvertible)?.sqlForm
   }
-  
+
 }
 
 extension FilterGroupConverter {
-  
+
   public func sql(_ group: FilterGroupType) -> String? {
     return (group as? SQLSyntaxConvertible)?.sqlForm
   }
-  
+
   public func sql<C: Collection>(_ groupList: C) -> String? where C.Element == FilterGroupType {
     guard !groupList.isEmpty else { return nil }
     return groupList
@@ -33,11 +33,11 @@ extension FilterGroupConverter {
       .compactMap(sql)
       .joined(separator: " AND ")
   }
-  
+
 }
 
 extension Filter.Numeric: SQLSyntaxConvertible {
-  
+
   public var sqlForm: String {
     let expression: String
     switch value {
@@ -45,7 +45,7 @@ extension Filter.Numeric: SQLSyntaxConvertible {
       expression = """
       "\(attribute)" \(`operator`.rawValue) \(value)
       """
-      
+
     case .range(let range):
       expression = """
       "\(attribute)":\(range.lowerBound) TO \(range.upperBound)
@@ -54,11 +54,11 @@ extension Filter.Numeric: SQLSyntaxConvertible {
     let prefix = isNegated ? "NOT " : ""
     return prefix + expression
   }
-  
+
 }
 
 extension Filter.Facet: SQLSyntaxConvertible {
-  
+
   public var sqlForm: String {
     let scoreExpression = score.flatMap { "<score=\(String($0))>" } ?? ""
     let expression = """
@@ -67,11 +67,11 @@ extension Filter.Facet: SQLSyntaxConvertible {
     let prefix = isNegated ? "NOT " : ""
     return prefix + expression
   }
-  
+
 }
 
 extension Filter.Tag: SQLSyntaxConvertible {
-  
+
   public var sqlForm: String {
     let expression = """
     "\(attribute)":"\(value)"
@@ -79,15 +79,15 @@ extension Filter.Tag: SQLSyntaxConvertible {
     let prefix = isNegated ? "NOT " : ""
     return prefix + expression
   }
-  
+
 }
 
 extension SQLSyntaxConvertible where Self: FilterGroupType {
-  
+
   func groupSQLForm(for filters: [FilterType], withSeparator separator: String) -> String {
-    
+
     let compatibleFilters = filters.compactMap { $0 as? SQLSyntaxConvertible }
-    
+
     if compatibleFilters.isEmpty {
       return ""
     } else {
@@ -95,21 +95,21 @@ extension SQLSyntaxConvertible where Self: FilterGroupType {
     }
 
   }
-  
+
 }
 
 extension FilterGroup.And: SQLSyntaxConvertible {
-  
+
   public var sqlForm: String {
     return groupSQLForm(for: filters, withSeparator: " AND ")
   }
-  
+
 }
 
 extension FilterGroup.Or: SQLSyntaxConvertible {
-  
+
   public var sqlForm: String {
     return groupSQLForm(for: filters, withSeparator: " OR ")
   }
-  
+
 }

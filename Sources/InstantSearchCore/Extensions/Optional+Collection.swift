@@ -9,7 +9,7 @@
 import Foundation
 
 extension Optional where Wrapped: Collection {
-  
+
   var isNilOrEmpty: Bool {
     switch self {
     case .none:
@@ -18,5 +18,5 @@ extension Optional where Wrapped: Collection {
       return collection.isEmpty
     }
   }
-  
+
 }

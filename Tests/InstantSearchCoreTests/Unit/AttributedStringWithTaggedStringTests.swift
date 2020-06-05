@@ -11,15 +11,15 @@ import XCTest
 @testable import InstantSearchCore
 
 class AttributedStringWithTaggedStringTests: XCTestCase {
-  
+
   #if os(iOS) || os(watchOS) || os(tvOS)
   let color = UIColor.red
   #elseif os(OSX)
   let color = NSColor.red
   #endif
-  
+
   private func checkRanges(string: NSAttributedString, ranges: [NSRange: [NSAttributedString.Key: Any]]) {
-    string.enumerateAttributes(in: NSMakeRange(0, string.length), options: []) { attributes, range, _ in
+    string.enumerateAttributes(in: NSRange(location: 0, length: string.length), options: []) { attributes, range, _ in
       guard let expectedAttributes = ranges[range] else {
         XCTFail("Range [\(range.location), \(range.location + range.length)[ not expected")
         return
@@ -30,7 +30,7 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
       XCTAssertEqual(Array(expectedAttributes.keys), Array(attributes.keys))
     }
   }
-  
+
   func testAttributedString() {
     let input = "Woodstock is <em>Snoopy</em>'s friend"
     let highlightedString = HighlightedString(string: input)
@@ -39,12 +39,12 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
     ]
     let attributedString = NSAttributedString(taggedString: highlightedString.taggedString, attributes: attributes)
     checkRanges(string: attributedString, ranges: [
-      NSMakeRange(0, 13): [:],
-      NSMakeRange(13, 6): attributes,
-      NSMakeRange(19, 9): [:],
+      NSRange(location: 0, length: 13): [:],
+      NSRange(location: 13, length: 6): attributes,
+      NSRange(location: 19, length: 9): [:]
       ])
   }
-  
+
   func testInvertedAttributedString() {
     let input = "Woodstock is <em>Snoopy</em>'s friend"
     let highlightedString = HighlightedString(string: input)
@@ -53,12 +53,12 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
     ]
     let attributedString = NSAttributedString(taggedString: highlightedString.taggedString, inverted: true, attributes: attributes)
     checkRanges(string: attributedString, ranges: [
-      NSMakeRange(0, 13): attributes,
-      NSMakeRange(13, 6): [:],
-      NSMakeRange(19, 9): attributes,
+      NSRange(location: 0, length: 13): attributes,
+      NSRange(location: 13, length: 6): [:],
+      NSRange(location: 19, length: 9): attributes
     ])
   }
-  
+
   func testAttributedStringList() {
     let input = ["aaa<em>bbb</em>ccc", "ddd<em>eee</em>fff"].map(HighlightedString.init).map { $0.taggedString }
     let attributes: [NSAttributedString.Key: Any] = [
@@ -66,12 +66,12 @@ class AttributedStringWithTaggedStringTests: XCTestCase {
     ]
     let attributedString = NSAttributedString(taggedStrings: input, separator: NSAttributedString(string: ", "), attributes: attributes)
     checkRanges(string: attributedString, ranges: [
-      NSMakeRange(0, 3): [:],
-      NSMakeRange(3, 3): attributes,
-      NSMakeRange(6, 8): [:],
-      NSMakeRange(14, 3): attributes,
-      NSMakeRange(17, 3): [:]
+      NSRange(location: 0, length: 3): [:],
+      NSRange(location: 3, length: 3): attributes,
+      NSRange(location: 6, length: 8): [:],
+      NSRange(location: 14, length: 3): attributes,
+      NSRange(location: 17, length: 3): [:]
     ])
   }
-  
+
 }

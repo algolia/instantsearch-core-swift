@@ -9,13 +9,13 @@
 import Foundation
 
 public extension HitsInteractor {
-  
+
   struct ControllerConnection<Controller: HitsController>: Connection where Controller.DataSource == HitsInteractor<Record> {
-    
+
     public let interactor: HitsInteractor
     public let controller: Controller
     public let externalReload: Bool
-    
+
     public init(interactor: HitsInteractor,
                 controller: Controller,
                 externalReload: Bool = false) {
@@ -23,21 +23,21 @@ public extension HitsInteractor {
       self.controller = controller
       self.externalReload = externalReload
     }
-    
+
     public func connect() {
       controller.hitsSource = interactor
-      
+
       interactor.onRequestChanged.subscribe(with: controller) { controller, _ in
         controller.scrollToTop()
       }.onQueue(.main)
-      
+
       if !externalReload {
         interactor.onResultsUpdated.subscribePast(with: controller) { controller, _ in
           controller.reload()
         }.onQueue(.main)
       }
     }
-    
+
     public func disconnect() {
       if controller.hitsSource === interactor {
         controller.hitsSource = nil
@@ -47,13 +47,13 @@ public extension HitsInteractor {
         interactor.onResultsUpdated.cancelSubscription(for: controller)
       }
     }
-    
+
   }
-  
+
 }
 
 public extension HitsInteractor {
-  
+
   @discardableResult func connectController<Controller: HitsController>(_ controller: Controller,
                                                                         externalReload: Bool = false) -> ControllerConnection<Controller> where Controller.DataSource == HitsInteractor<Record> {
     let connection = ControllerConnection(interactor: self,
@@ -62,5 +62,5 @@ public extension HitsInteractor {
     connection.connect()
     return connection
   }
-  
+
 }

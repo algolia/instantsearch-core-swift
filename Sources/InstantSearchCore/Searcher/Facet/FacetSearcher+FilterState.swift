@@ -9,15 +9,15 @@
 import Foundation
 
 public extension FacetSearcher {
-  
+
   /**
    Establishes connection between searcher and filterState
    - Updates filters parameter of Searcher's `Query` according to a new `FilterState` content and relaunches search once `FilterState` changed
    - Parameter filterState: filter state to connect
    */
-  
+
   struct FilterStateConnection: Connection {
-    
+
     public let facetSearcher: FacetSearcher
     public let filterState: FilterState
     public let triggerSearchOnFilterStateChange: Bool
@@ -31,13 +31,13 @@ public extension FacetSearcher {
         }
       }
     }
-    
+
     public func disconnect() {
       filterState.onChange.cancelSubscription(for: facetSearcher)
     }
-    
+
   }
-  
+
 }
 
 public extension FacetSearcher {
@@ -47,5 +47,5 @@ public extension FacetSearcher {
     connection.connect()
     return connection
   }
-  
+
 }

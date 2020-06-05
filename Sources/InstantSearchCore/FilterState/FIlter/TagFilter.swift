@@ -14,38 +14,38 @@ import Foundation
  */
 
 public extension Filter {
-  
+
   struct Tag: FilterType, Equatable {
-    
+
     public let attribute: Attribute = .tags
     public var isNegated: Bool
     public let value: String
-    
+
     public init(value: String, isNegated: Bool = false) {
       self.isNegated = isNegated
       self.value = value
     }
-    
+
   }
-  
+
 }
 
 extension Filter.Tag: Hashable {}
 
 extension Filter.Tag: ExpressibleByStringLiteral {
-  
+
   public typealias StringLiteralType = String
-  
+
   public init(stringLiteral string: String) {
     self.init(value: string, isNegated: false)
   }
-  
+
 }
 
 extension Filter.Tag: CustomStringConvertible {
-  
+
   public var description: String {
     return "\(value)"
   }
-  
+
 }

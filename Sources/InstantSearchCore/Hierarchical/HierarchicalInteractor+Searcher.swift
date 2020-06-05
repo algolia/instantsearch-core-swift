@@ -9,18 +9,18 @@
 import Foundation
 import AlgoliaSearchClientSwift
 public extension HierarchicalInteractor {
-  
+
   struct SingleIndexSearcherConnection: Connection {
-    
+
     public let interactor: HierarchicalInteractor
     public let searcher: SingleIndexSearcher
-    
+
     public func connect() {
-      
+
       for attribute in interactor.hierarchicalAttributes {
         searcher.indexQueryState.query.updateQueryFacets(with: attribute)
       }
-    
+
       searcher.onResults.subscribePast(with: interactor) { interactor, searchResults in
 
         if let hierarchicalFacets = searchResults.hierarchicalFacets {
@@ -33,21 +33,21 @@ public extension HierarchicalInteractor {
       }
 
     }
-    
+
     public func disconnect() {
       searcher.onResults.cancelSubscription(for: interactor)
     }
-    
+
   }
-  
+
 }
 
 public extension HierarchicalInteractor {
-  
+
   @discardableResult func connectSearcher(searcher: SingleIndexSearcher) -> SingleIndexSearcherConnection {
     let connection = SingleIndexSearcherConnection(interactor: self, searcher: searcher)
     connection.connect()
     return connection
   }
-  
+
 }

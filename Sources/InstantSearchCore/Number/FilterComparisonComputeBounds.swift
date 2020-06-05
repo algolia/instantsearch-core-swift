@@ -9,11 +9,11 @@
 import Foundation
 import AlgoliaSearchClientSwift
 public struct BoundableSingleIndexSearcherConnection<B: Boundable>: Connection {
-  
+
   public let boundable: B
   public let searcher: SingleIndexSearcher
   public let attribute: Attribute
-  
+
   public func connect() {
     let attribute = self.attribute
     searcher.indexQueryState.query.updateQueryFacets(with: attribute)
@@ -21,11 +21,11 @@ public struct BoundableSingleIndexSearcherConnection<B: Boundable>: Connection {
       boundable.computeBoundsFromFacetStats(attribute: attribute, facetStats: searchResults.facetStats)
     }
   }
-  
+
   public func disconnect() {
     searcher.onResults.cancelSubscription(for: searcher)
   }
-  
+
 }
 
 extension Boundable {
@@ -41,7 +41,7 @@ extension Boundable {
       applyBounds(bounds: nil)
       return
     }
-    
+
     applyBounds(bounds: Number(facetStatsOfAttribute.min)...Number(facetStatsOfAttribute.max))
   }
 }

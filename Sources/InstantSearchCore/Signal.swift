@@ -10,12 +10,12 @@ import Dispatch
 /// Create instances of `Signal` and assign them to public constants on your class for each event type that your
 /// class fires.
 final public class Signal<T> {
-        
+
     public typealias SignalCallback<O: AnyObject> = (O, T) -> Void
-    
+
     /// The number of times the `Signal` has fired.
     public private(set) var fireCount: Int = 0
-    
+
     /// Whether or not the `Signal` should retain a reference to the last data it was fired with. Defaults to false.
     public var retainLastData: Bool = false {
         didSet {
@@ -24,11 +24,11 @@ final public class Signal<T> {
             }
         }
     }
-    
+
     /// The last data that the `Signal` was fired with. In order for the `Signal` to retain the last fired data, its
     /// `retainLastFired`-property needs to be set to true
     public private(set) var lastDataFired: T?
-    
+
     /// All the observers of to the `Signal`.
     public var observers: [AnyObject] {
         get {
@@ -39,9 +39,9 @@ final public class Signal<T> {
             }
         }
     }
-    
+
     private var signalListeners = [SignalSubscription<T>]()
-    
+
     /// Initializer.
     /// 
     /// - parameter retainLastData: Whether or not the Signal should retain a reference to the last data it was fired 
@@ -49,7 +49,7 @@ final public class Signal<T> {
     public init(retainLastData: Bool = false) {
         self.retainLastData = retainLastData
     }
-    
+
     /// Subscribes an observer to the `Signal`.
     ///
     /// - parameter observer: The observer that subscribes to the `Signal`. Should the observer be deallocated, the
@@ -63,7 +63,7 @@ final public class Signal<T> {
         signalListeners.append(signalListener)
         return signalListener
     }
-    
+
     /// Subscribes an observer to the `Signal`. The subscription is automatically canceled after the `Signal` has
     /// fired once.
     ///
@@ -76,7 +76,7 @@ final public class Signal<T> {
         signalListener.once = true
         return signalListener
     }
-    
+
     /// Subscribes an observer to the `Signal` and invokes its callback immediately with the last data fired by the
     /// `Signal` if it has fired at least once and if the `retainLastData` property has been set to true.
     ///
@@ -94,7 +94,7 @@ final public class Signal<T> {
         }
         return signalListener
     }
-    
+
     /// Subscribes an observer to the `Signal` and invokes its callback immediately with the last data fired by the
     /// `Signal` if it has fired at least once and if the `retainLastData` property has been set to true. If it has
     /// not been fired yet, it will continue listening until it fires for the first time.
@@ -116,7 +116,7 @@ final public class Signal<T> {
         }
         return signalListener
     }
-    
+
     /// Fires the `Singal`.
     ///
     /// - parameter data: The data to fire the `Signal` with.
@@ -124,12 +124,12 @@ final public class Signal<T> {
         fireCount += 1
         lastDataFired = retainLastData ? data : nil
         flushCancelledListeners()
-        
+
       for signalListener in signalListeners where (signalListener.filter?(data)).isNil(or: true) {
           _ = signalListener.dispatch(data: data)
         }
     }
-    
+
     /// Cancels all subscriptions for an observer.
     ///
     /// - parameter observer: The observer whose subscriptions to cancel
@@ -141,19 +141,19 @@ final public class Signal<T> {
             return false
         }
     }
-    
+
     /// Cancels all subscriptions for the `Signal`.
     public func cancelAllSubscriptions() {
         signalListeners.removeAll(keepingCapacity: false)
     }
-    
+
     /// Clears the last fired data from the `Signal` and resets the fire count.
     public func clearLastData() {
         lastDataFired = nil
     }
-    
+
     // MARK: - Private Interface
-    
+
     private func flushCancelledListeners() {
         var removeListeners = false
         for signalListener in signalListeners where signalListener.observer == nil {
@@ -175,23 +175,23 @@ public extension Signal where T == Void {
 
 /// A SignalLister represenents an instance and its association with a `Signal`.
 final public class SignalSubscription<T> {
-  
+
     public typealias ParameterType = T
     public typealias SignalCallback = (T) -> Void
     public typealias SignalFilter = (T) -> Bool
-    
+
     // The observer.
     weak public var observer: AnyObject?
-    
+
     /// Whether the observer should be removed once it observes the `Signal` firing once. Defaults to false.
     public var once = false
-    
+
     fileprivate var queuedData: T?
     fileprivate var filter: (SignalFilter)?
     fileprivate var callback: SignalCallback
     fileprivate var dispatchQueue: DispatchQueue?
     private var sampleInterval: TimeInterval?
-    
+
     fileprivate init<O: AnyObject>(observer: O, callback: @escaping (O, T) -> Void) {
         self.observer = observer
         self.callback = { [weak observer] value in
@@ -199,7 +199,7 @@ final public class SignalSubscription<T> {
           callback(observer, value)
         }
     }
-    
+
     /// Assigns a filter to the `SignalSubscription`. This lets you define conditions under which a observer should actually
     /// receive the firing of a `Singal`. The closure that is passed an argument can decide whether the firing of a
     /// `Signal` should actually be dispatched to its observer depending on the data fired.
@@ -214,7 +214,7 @@ final public class SignalSubscription<T> {
         self.filter = predicate
         return self
     }
-    
+
     /// Tells the observer to sample received `Signal` data and only dispatch the latest data once the time interval
     /// has elapsed. This is useful if the subscriber wants to throttle the amount of data it receives from the
     /// `Signal`.
@@ -226,7 +226,7 @@ final public class SignalSubscription<T> {
         self.sampleInterval = sampleInterval
         return self
     }
-    
+
     /// Assigns a dispatch queue to the `SignalSubscription`. The queue is used for scheduling the observer calls. If not
     /// nil, the callback is fired asynchronously on the specified queue. Otherwise, the block is run synchronously
     /// on the posting thread, which is its default behaviour.
@@ -238,23 +238,23 @@ final public class SignalSubscription<T> {
         self.dispatchQueue = queue
         return self
     }
-    
+
     /// Cancels the observer. This will cancelSubscription the listening object from the `Signal`.
     public func cancel() {
         self.observer = nil
     }
-    
+
     // MARK: - Internal Interface
-    
+
     func dispatch(data: T) -> Bool {
         guard observer != nil else {
             return false
         }
-        
+
         if once {
             observer = nil
         }
-        
+
         if let sampleInterval = sampleInterval {
             if queuedData != nil {
                 queuedData = data
@@ -280,7 +280,7 @@ final public class SignalSubscription<T> {
               callback(data)
             }
         }
-        
+
         return observer != nil
     }
 }
@@ -307,7 +307,7 @@ var assertionHandlerOverride:((_ condition: Bool, _ message: String) -> Void)?
 #endif
 
 extension Optional where Wrapped == Bool {
-  
+
   func isNil(or expectedValue: Bool) -> Bool {
     switch self {
     case .none:
@@ -316,5 +316,5 @@ extension Optional where Wrapped == Bool {
       return value == expectedValue
     }
   }
-  
+
 }
