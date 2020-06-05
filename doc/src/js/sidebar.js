@@ -1,3 +1,0 @@
-function sidebarToggle() {
-    $(".sidebar").toggle();
-}

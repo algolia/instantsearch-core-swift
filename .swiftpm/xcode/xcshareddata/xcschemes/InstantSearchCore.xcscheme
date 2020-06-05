@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1120"
+   LastUpgradeVersion = "1150"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -28,23 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "instantsearch-core-swiftTests"
-               BuildableName = "instantsearch-core-swiftTests"
-               BlueprintName = "instantsearch-core-swiftTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "instantsearch-core-swift"
-               BuildableName = "instantsearch-core-swift"
-               BlueprintName = "instantsearch-core-swift"
+               BlueprintIdentifier = "InstantSearchCoreTests"
+               BuildableName = "InstantSearchCoreTests"
+               BlueprintName = "InstantSearchCoreTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -56,16 +42,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "instantsearch-core-swiftTests"
-               BuildableName = "instantsearch-core-swiftTests"
-               BlueprintName = "instantsearch-core-swiftTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -88,6 +64,28 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "ALGOLIA_APPLICATION_ID_1"
+            value = "NOCTT5TZUU"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "ALGOLIA_ADMIN_KEY_1"
+            value = "fb06538e0d540ab20d122b1532646a15"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "ALGOLIA_PLACES_APPLICATION_ID"
+            value = "plLZT201S6XM"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "ALGOLIA_PLACES_API_KEY"
+            value = "95429eb4fd405d30409ddbb76f1c5639"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
