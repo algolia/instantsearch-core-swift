@@ -1,31 +1,17 @@
-Pod::Spec.new do |s|
-    # Pod metadata
-    # ------------
-    s.name = 'InstantSearchCore'
-    s.module_name = 'InstantSearchCore'
-    s.version = '6.6.3'
-    s.license = 'Apache 2.0'
-    s.summary = 'Instant Search library for Swift by Algolia'
-    s.homepage = 'https://github.com/algolia/instantsearch-core-swift'
-    s.author   = { 'Algolia' => 'contact@algolia.com' }
-    s.source = { :git => 'https://github.com/algolia/instantsearch-core-swift.git', :tag => s.version }
-    s.swift_version = '5.0'
-    s.swift_versions = ['4.0', '4.2', '5.0']
-
-    # Build settings
-    # --------------
-    # NOTE: Deployment targets should be kept in line with the API Client.
-    s.ios.deployment_target = '8.0'
-    s.osx.deployment_target = '10.10'
-    s.tvos.deployment_target = '9.0'
-
-    s.source_files = [
-        'Sources/**/*.{swift}'
-    ]
-
-    # Dependencies
-    # ------------
-    s.dependency 'InstantSearchClient', '~> 7.0'
-    s.dependency 'InstantSearchInsights', '~> 2.3'
-    s.dependency 'Logging'
+Pod::Spec.new do |spec|
+    spec.name = 'InstantSearchCore'
+    spec.module_name = 'InstantSearchCore'
+    spec.version = '7.0.0-beta.1'
+    spec.summary = 'Instant Search library for Swift by Algolia'
+    spec.homepage = 'https://github.com/algolia/instantsearch-core-swift'
+    spec.license = 'Apache 2.0'
+    spec.author   = { 'Algolia' => 'contact@algolia.com' }
+    spec.documentation_url = "https://www.algolia.com/doc/guides/building-search-ui/getting-started/ios/"
+    spec.platforms = { :ios => "8.0", :osx => "10.10", :watchos => "2.0" }
+    spec.swift_version = "5.1"
+    spec.source = { :git => 'https://github.com/algolia/instantsearch-core-swift.git', :tag => spec.version }
+    spec.source_files = "Sources/InstantSEarchCore/**/*.{swift}"
+    spec.dependency 'AlgoliaSearchClientSwift', '~> 8.0'
+    spec.dependency 'InstantSearchInsights', '~> 2.3'
+    spec.dependency 'Logging'
 end
