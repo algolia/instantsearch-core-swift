@@ -1,0 +1,8 @@
+cd Carthage/Checkouts/algoliasearch-client-swift
+swift package generate-xcodeproj
+cd ../swift-log
+swift package generate-xcodeproj
+cd ../instantsearch-core-swift
+swift package generate-xcodeproj
+cd ../../..
+
