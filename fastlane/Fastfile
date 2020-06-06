@@ -34,8 +34,8 @@ lane :coverage do
  xcov(
     project: "fastlane/#{xcodeProject}",
     scheme: "InstantSearchCore-Package",
-    exclude_targets: "Logging.framework",
-    minimum_coverage_percentage: 60.0
+    include_targets: "InstantSearchCore.framework",
+    minimum_coverage_percentage: 45.0
  )
  sh("rm -rf #{xcodeProject}")
 end
