@@ -1,9 +1,9 @@
-[![Pod Version](http://img.shields.io/cocoapods/v/:spec)](https://github.com/algolia/instantsearch-core-swift/)
-[![Pod Platform](http://img.shields.io/cocoapods/p/:spec)](https://github.com/algolia/instantsearch-core-swift/)
+[![Pod Version](http://img.shields.io/cocoapods/v/InstantSearchCore.svg?style=flat)](https://github.com/algolia/instantsearch-core-swift/)
+[![Pod Platform](http://img.shields.io/cocoapods/p/InstantSearchCore.svg?style=flat)](https://github.com/algolia/instantsearch-core-swift/)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-brightgreen.svg)](https://github.com/algolia/instantsearch-core-swift/)
 [![SwiftPM compatible](https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg)](https://swift.org/package-manager/)
 [![Mac Catalyst compatible](https://img.shields.io/badge/Catalyst-compatible-brightgreen.svg)](https://developer.apple.com/documentation/xcode/creating_a_mac_version_of_your_ipad_app/)
-[![Licence](http://img.shields.io/cocoapods/l/:spec)](https://opensource.org/licenses/MIT)
+[![Licence](http://img.shields.io/cocoapods/l/InstantSearchCore.svg?style=flat)](https://opensource.org/licenses/MIT)
 
 # InstantSearch iOS
 
@@ -94,7 +94,7 @@ If you're a framework author and use InstantSearch Core  as a dependency, update
 
 ```swift
 let package = Package(
-	// ...
+    // ...
     dependencies: [
         .package(name: "InstantSearchCore", url: "https://github.com/algolia/instantsearch-core-swift", from: "7.0")
     ],
