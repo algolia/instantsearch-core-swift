@@ -9,26 +9,23 @@
 import Foundation
 
 extension HitsInteractor {
-  
+
   @discardableResult public func connectSearcher<T>(_ searcher: SingleIndexSearcher, withRelatedItemsTo hit: ObjectWrapper<T>, with matchingPatterns: [MatchingPattern<T>]) -> SingleIndexSearcherConnection {
     let connection = SingleIndexSearcherConnection(interactor: self, searcher: searcher)
     connection.connect()
-        
+
     let legacyFilters = generateOptionalFilters(from: matchingPatterns, and: hit)
-    
-    // Temporary workaround as the api client only accepts optionalFilters [Stirng] and not [[String]] for now...
-    let reducedOptionalFilters = convertLegacy2DArrayTo1DArray(with: legacyFilters)
-    
+
     searcher.indexQueryState.query.sumOrFiltersScores = true
     searcher.indexQueryState.query.facetFilters = [["objectID:-\(hit.objectID)"]]
     searcher.indexQueryState.query.optionalFilters = legacyFilters
-    
+
     return connection
   }
-  
+
   func generateOptionalFilters<T>(from matchingPatterns: [MatchingPattern<T>], and hit: ObjectWrapper<T>) -> [[String]]? {
     let filterState = FilterState()
-    
+
     for matchingPattern in matchingPatterns {
       switch matchingPattern.oneOrManyElementsInKeyPath {
       case .one(let keyPath): // // in the case of a single facet associated to a filter -> AND Behaviours
@@ -40,28 +37,8 @@ extension HitsInteractor {
         filterState[or: matchingPattern.attribute.rawValue].addAll(facetFilters)
       }
     }
-    
+
     return FilterGroupConverter().legacy(filterState.toFilterGroups())
   }
-  
-  func convertLegacy2DArrayTo1DArray(with legacyFilters: [[String]]?) -> [String] {
-    var reducedOptionalFilters: [String] = []
-    if let legacyFilters = legacyFilters {
-    
-      for legacyFilter in legacyFilters {
-        if legacyFilter.count == 1 {
-          let string = legacyFilter.first!
-          reducedOptionalFilters.append(string)
-        } else if legacyFilter.count > 1 {
-          let string = "[\(legacyFilter.joined(separator: ","))]" // we won't be doing this hack once we use [[String]] for optionalFilters in new client.
-          if let escapedString = string.addingPercentEncoding(withAllowedCharacters: .alphanumerics) {
-            reducedOptionalFilters.append(escapedString)
-          }
-        }
-      }
-    }
-    
-    return reducedOptionalFilters
-  }
-  
+
 }
