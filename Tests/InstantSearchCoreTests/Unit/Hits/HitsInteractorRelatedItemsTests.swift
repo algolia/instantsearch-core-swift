@@ -30,19 +30,19 @@ class HitsInteractorRelatedItemsTests: XCTestCase {
         MatchingPattern(attribute: "categories", score: 2, filterPath: \.categories),
       ]
 
-    let searcher = SingleIndexSearcher(index: .test)
-    let product = Product.init(name: "productName", brand: "Amazon", type: "Streaming media plyr", categories: ["Streaming Media Players", "TV & Home Theater"], image: URL.init(string: "http://url.com")!)
+    let searcher = SingleIndexSearcher(appID: "", apiKey: "", indexName: "")
+    let product = Product(name: "productName", brand: "Amazon", type: "Streaming media plyr", categories: ["Streaming Media Players", "TV & Home Theater"], image: URL.init(string: "http://url.com")!)
     
     let hitsInteractor = HitsInteractor<JSON>.init()
     
-    let hit: Hit<Product> = .init(objectID: "objectID123", object: product)
+    let hit: ObjectWrapper<Product> = .init(objectID: "objectID123", object: product)
     hitsInteractor.connectSearcher(searcher, withRelatedItemsTo: hit, with: matchingPatterns)
     
-    let expectedOptionalFilter = ["brand:Amazon<score=3>", "%5Bcategories%3AStreaming%20Media%20Players%3Cscore%3D2%3E%2Ccategories%3ATV%20%26%20Home%20Theater%3Cscore%3D2%3E%5D", "type:Streaming media plyr<score=10>"]
+    let expectedOptionalFilter = [["brand:Amazon<score=3>"], ["categories:Streaming Media Players<score=2>", "categories:TV & Home Theater<score=2>"], ["type:Streaming media plyr<score=10>"]]
     
     XCTAssertEqual(searcher.indexQueryState.query.sumOrFiltersScores, true)
     XCTAssertEqual(searcher.indexQueryState.query.optionalFilters, expectedOptionalFilter)
-    XCTAssertEqual(searcher.indexQueryState.query.facetFilters as! [String], ["objectID:-objectID123"])
+    XCTAssertEqual(searcher.indexQueryState.query.facetFilters, [["objectID:-objectID123"]])
     
   }
 }
