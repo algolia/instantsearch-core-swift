@@ -63,7 +63,7 @@ lane :deploy do |options|
 
   #puts changelog_from_git_commits
   git_commit(
-    path: ["InstantSearchCore.podspec", "./Sources/InstantSearchCore/Helpers/Version+Current.swift"],
+    path: ["InstantSearchCore.podspec", "./Sources/InstantSearchCore/Helper/Version+Current.swift"],
     message: "Version #{new_build_number}"
   )
   add_git_tag(
@@ -110,7 +110,7 @@ lane :deployBeta do |options|
   puts "#{new_build_number}"
 
   git_commit(
-    path: ["InstantSearchCore.podspec", "./Sources/InstantSearchCore/Helpers/Version+Current.swift"],
+    path: ["InstantSearchCore.podspec", "./Sources/InstantSearchCore/Helper/Version+Current.swift"],
     message: "Version #{new_build_number}"
   )
 
