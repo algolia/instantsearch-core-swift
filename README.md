@@ -1,3 +1,6 @@
+# Warning: Migrated
+InstantSearch Core has been migrated to the main [InstantSearch repository](https://github.com/algolia/instantsearch-ios). You still can use the Core part of the InstantSearch separately from UI components by following the [provided instructions](https://github.com/algolia/instantsearch-ios#installation). This repository is no longer supported, please create your issues and submit your contributions to the main InstantSearch repository.
+
 # InstantSearch iOS
 
 If you're looking to build search interfaces on iOS with Algolia, then you should check out [InstantSearch iOS](https://github.com/algolia/instantsearch-ios) which is built on top of this library, and provides UI building blocks to build search experiences. Otherwise, keep reading.
